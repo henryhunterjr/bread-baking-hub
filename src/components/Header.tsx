@@ -27,6 +27,9 @@ const Header = () => {
               <Link to="/tools" className="text-stone-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Tools
               </Link>
+              <Link to="/recipe-formatter" className="text-stone-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Recipe Formatter
+              </Link>
               <Link to="/blog" className="text-stone-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Blog
               </Link>
@@ -62,6 +65,9 @@ const Header = () => {
               </Link>
               <Link to="/tools" className="text-stone-300 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Tools
+              </Link>
+              <Link to="/recipe-formatter" className="text-stone-300 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
+                Recipe Formatter
               </Link>
               <Link to="/blog" className="text-stone-300 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Blog
