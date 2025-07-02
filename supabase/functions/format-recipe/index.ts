@@ -84,16 +84,29 @@ serve(async (req) => {
     const data = await response.json();
     const recipeText = data.choices[0].message.content;
     
+    console.log('Raw OpenAI response:', recipeText);
+    
     try {
-      const recipe = JSON.parse(recipeText);
+      // Clean the response text - sometimes OpenAI adds markdown formatting
+      let cleanedText = recipeText.trim();
+      
+      // Remove any markdown code block formatting
+      if (cleanedText.startsWith('```json')) {
+        cleanedText = cleanedText.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+      } else if (cleanedText.startsWith('```')) {
+        cleanedText = cleanedText.replace(/^```\s*/, '').replace(/\s*```$/, '');
+      }
+      
+      const recipe = JSON.parse(cleanedText);
       console.log('Successfully parsed recipe:', recipe.title);
       
       return new Response(JSON.stringify({ recipe }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     } catch (parseError) {
-      console.error('Failed to parse recipe JSON:', recipeText);
-      throw new Error('Failed to parse recipe data');
+      console.error('Failed to parse recipe JSON. Raw text:', recipeText);
+      console.error('Parse error:', parseError.message);
+      throw new Error(`Failed to parse recipe data: ${parseError.message}`);
     }
 
   } catch (error) {
