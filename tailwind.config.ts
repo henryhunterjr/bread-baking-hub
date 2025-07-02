@@ -61,7 +61,38 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				stone: {
+					'950': 'hsl(var(--stone-950))',
+					'900': 'hsl(var(--stone-900))',
+					'800': 'hsl(var(--stone-800))',
+					'700': 'hsl(var(--stone-700))',
+					'600': 'hsl(var(--stone-600))',
+					'500': 'hsl(var(--stone-500))',
+					'400': 'hsl(var(--stone-400))',
+					'300': 'hsl(var(--stone-300))',
+					'200': 'hsl(var(--stone-200))',
+					'100': 'hsl(var(--stone-100))'
+				},
+				amber: {
+					'600': 'hsl(var(--amber-600))',
+					'500': 'hsl(var(--amber-500))',
+					'400': 'hsl(var(--amber-400))',
+					'300': 'hsl(var(--amber-300))',
+					'200': 'hsl(var(--amber-200))'
 				}
+			},
+			backgroundImage: {
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-amber': 'var(--gradient-amber)',
+				'gradient-subtle': 'var(--gradient-subtle)'
+			},
+			boxShadow: {
+				'warm': 'var(--shadow-warm)',
+				'stone': 'var(--shadow-stone)'
+			},
+			transitionTimingFunction: {
+				'smooth': 'var(--transition-smooth)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

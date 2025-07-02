@@ -8,51 +8,76 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Bread & baking theme - warm stone and amber palette */
+    --background: 20 14% 10%;  /* Deep stone */
+    --foreground: 30 25% 90%;  /* Warm white */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 20 14% 12%;
+    --card-foreground: 30 25% 90%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 20 14% 12%;
+    --popover-foreground: 30 25% 90%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 45 85% 60%;  /* Warm amber */
+    --primary-foreground: 20 14% 10%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 20 14% 22%;  /* Medium stone */
+    --secondary-foreground: 30 25% 90%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 20 14% 18%;
+    --muted-foreground: 25 15% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 45 85% 50%;  /* Deeper amber */
+    --accent-foreground: 20 14% 10%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 30 25% 90%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 20 14% 18%;
+    --input: 20 14% 18%;
+    --ring: 45 85% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Stone color variations */
+    --stone-950: 20 14% 4%;
+    --stone-900: 20 14% 10%;
+    --stone-800: 20 14% 15%;
+    --stone-700: 20 14% 22%;
+    --stone-600: 20 14% 35%;
+    --stone-500: 20 14% 50%;
+    --stone-400: 20 15% 60%;
+    --stone-300: 20 20% 70%;
+    --stone-200: 25 30% 85%;
+    --stone-100: 30 40% 95%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Amber variations */
+    --amber-600: 45 85% 50%;
+    --amber-500: 45 85% 55%;
+    --amber-400: 45 85% 60%;
+    --amber-300: 45 85% 70%;
+    --amber-200: 45 85% 80%;
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--stone-800)), hsl(var(--stone-900)));
+    --gradient-amber: linear-gradient(135deg, hsl(var(--amber-600)), hsl(var(--amber-500)));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--stone-800)), hsl(var(--stone-900)));
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    /* Shadows */
+    --shadow-warm: 0 10px 30px -10px hsl(var(--amber-600) / 0.3);
+    --shadow-stone: 0 10px 30px -10px hsl(var(--stone-950) / 0.5);
 
-    --sidebar-accent: 240 4.8% 95.9%;
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 20 14% 15%;
+    --sidebar-foreground: 25 15% 65%;
+    --sidebar-primary: 45 85% 60%;
+    --sidebar-primary-foreground: 20 14% 10%;
+    --sidebar-accent: 20 14% 22%;
+    --sidebar-accent-foreground: 30 25% 90%;
+    --sidebar-border: 20 14% 18%;
+    --sidebar-ring: 45 85% 60%;
   }
 
   .dark {
