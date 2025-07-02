@@ -37,54 +37,27 @@ const RecipeFormatter = () => {
 
     setIsLoading(true);
     
-    // Dummy fetch logic - replace with actual API call later
     try {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
-      // Dummy response data
-      const dummyResponse: FormattedRecipe = {
-        title: "Classic Sourdough Bread",
-        introduction: "This traditional sourdough recipe creates a perfectly tangy loaf with a crispy crust and airy crumb. Perfect for beginners and experienced bakers alike.",
-        ingredients: {
-          metric: [
-            "500g bread flour",
-            "375ml water",
-            "100g active sourdough starter", 
-            "10g salt"
-          ],
-          volume: [
-            "4 cups bread flour",
-            "1½ cups water",
-            "½ cup active sourdough starter",
-            "2 tsp salt"
-          ]
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      const response = await fetch('https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/format-recipe', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeWNrc2t1Y25lbGp2dXF6cnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NDI0MTUsImV4cCI6MjA1MjMxODQxNX0.-Bx7Y0d_aMcHakE27Z5QKriY6KPpG1m8n0uuLaamFfY`,
         },
-        method: [
-          "Mix flour and water in a large bowl until just combined. Let rest for 30 minutes (autolyse).",
-          "Add sourdough starter and salt to the dough. Mix by hand until well incorporated.",
-          "Perform stretch and folds every 30 minutes for the first 2 hours of bulk fermentation.",
-          "Continue bulk fermentation until dough increases by 50% (4-6 hours total).",
-          "Shape the dough and place in a banneton for final proof.",
-          "Proof overnight in refrigerator or 2-3 hours at room temperature.",
-          "Preheat Dutch oven to 450°F (230°C).",
-          "Score the dough and bake covered for 20 minutes, then uncovered for 20-25 minutes."
-        ],
-        tips: [
-          "Use a kitchen scale for accurate measurements",
-          "Water temperature should be around 75-80°F for optimal fermentation",
-          "The dough should feel slightly sticky but manageable after mixing"
-        ],
-        troubleshooting: [
-          "Dense bread: Check starter activity and fermentation time",
-          "Flat loaf: Ensure proper shaping and proofing",
-          "Gummy crumb: Allow bread to cool completely before slicing"
-        ]
-      };
-      
-      setFormattedRecipe(dummyResponse);
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to format recipe');
+      }
+
+      const data = await response.json();
+      setFormattedRecipe(data.recipe);
     } catch (error) {
       console.error('Error formatting recipe:', error);
+      // You could add a toast notification here for better UX
     } finally {
       setIsLoading(false);
     }
