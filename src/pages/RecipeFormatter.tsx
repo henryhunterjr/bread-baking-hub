@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { useToast } from '@/hooks/use-toast';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -23,6 +24,7 @@ const RecipeFormatter = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [formattedRecipe, setFormattedRecipe] = useState<FormattedRecipe | null>(null);
+  const { toast } = useToast();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -55,9 +57,17 @@ const RecipeFormatter = () => {
 
       const data = await response.json();
       setFormattedRecipe(data.recipe);
+      toast({
+        title: "Success!",
+        description: "Your recipe has been formatted successfully.",
+      });
     } catch (error) {
       console.error('Error formatting recipe:', error);
-      // You could add a toast notification here for better UX
+      toast({
+        title: "Error",
+        description: "Failed to format your recipe. Please try again or check if your image is clear and readable.",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
