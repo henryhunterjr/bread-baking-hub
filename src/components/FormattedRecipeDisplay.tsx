@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Printer, Download } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
+import { ProductRecommendations } from './ProductRecommendations';
 
 interface FormattedRecipe {
   title: string;
@@ -233,6 +234,22 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
             </ul>
           </CardContent>
         </Card>
+      </div>
+      
+      {/* Product Recommendations */}
+      <div className="print:hidden">
+        <ProductRecommendations
+          recipeContent={`${recipe.introduction} ${
+            Array.isArray(recipe.ingredients) 
+              ? recipe.ingredients.map(ing => typeof ing === 'object' ? ing.item : ing).join(' ')
+              : (recipe.ingredients as {metric: string[]; volume: string[]}).metric?.join(' ') || ''
+          } ${
+            Array.isArray(recipe.method) 
+              ? recipe.method.map(step => typeof step === 'object' ? step.instruction : step).join(' ')
+              : (recipe.method as string[])?.join(' ') || ''
+          }`}
+          recipeTitle={recipe.title}
+        />
       </div>
       </div>
     </div>
