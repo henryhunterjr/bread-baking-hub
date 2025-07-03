@@ -27,8 +27,8 @@ const HeroSection = () => {
           </div>
           <div className="relative">
             <img 
-              src={heroBreadImage} 
-              alt="Freshly baked artisan bread with golden crust" 
+              src="/lovable-uploads/db15ab36-18a2-4103-b9d5-a5e58af2b2a2.png" 
+              alt="Beautiful artisan bread with perfect crumb structure showing heart-shaped pattern" 
               className="rounded-2xl shadow-stone w-full h-auto"
             />
             <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground p-4 rounded-lg shadow-warm">
