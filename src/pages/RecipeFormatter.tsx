@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import { RecipeUploadSection } from '../components/RecipeUploadSection';
 import { FormattedRecipeDisplay } from '../components/FormattedRecipeDisplay';
 import { AIAssistantSidebar } from '../components/AIAssistantSidebar';
+import { VoiceInterface } from '../components/VoiceInterface';
 
 interface FormattedRecipe {
   title: string;
@@ -26,6 +27,7 @@ interface RecipeWithImage {
 const RecipeFormatter = () => {
   const [formattedRecipe, setFormattedRecipe] = useState<RecipeWithImage | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const { toast } = useToast();
 
   const handleRecipeFormatted = (recipe: FormattedRecipe, imageUrl?: string) => {
@@ -76,6 +78,11 @@ const RecipeFormatter = () => {
         recipeContext={formattedRecipe?.recipe}
         isOpen={isSidebarOpen}
         onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+      />
+      
+      <VoiceInterface
+        onSpeakingChange={setIsSpeaking}
+        recipeContext={formattedRecipe?.recipe}
       />
     </div>
   );

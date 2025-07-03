@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Send, MessageCircle, X } from 'lucide-react';
+import { Send, MessageCircle, X, Mic } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { useAIChat } from '@/hooks/useAIChat';
 import { VoiceControls } from './VoiceControls';
 import { ChatMessage } from './ChatMessage';
+import { VoiceInterface } from './VoiceInterface';
 
 interface AIAssistantSidebarProps {
   recipeContext?: any;
