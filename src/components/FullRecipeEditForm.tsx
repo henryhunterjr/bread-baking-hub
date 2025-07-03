@@ -5,17 +5,19 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, Plus, X } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { ChevronDown, Plus, X, Tag, Folder } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface FullRecipeEditFormProps {
   recipe: any;
-  onSave: (recipeId: string, updates: { data: any; image_url?: string }) => Promise<boolean>;
+  onSave: (recipeId: string, updates: { data: any; image_url?: string; folder?: string; tags?: string[] }) => Promise<boolean>;
   onCancel: () => void;
   updating: boolean;
+  allRecipes?: any[];
 }
 
-export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating }: FullRecipeEditFormProps) => {
+export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allRecipes = [] }: FullRecipeEditFormProps) => {
   const [formData, setFormData] = useState({
     introduction: recipe.data.introduction || '',
     prep_time: recipe.data.prep_time || '',
@@ -26,7 +28,9 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating }: FullR
     method: recipe.data.method || [''],
     tips: recipe.data.tips || [''],
     troubleshooting: recipe.data.troubleshooting || [{ issue: '', solution: '' }],
-    image_url: recipe.image_url || ''
+    image_url: recipe.image_url || '',
+    folder: recipe.folder || '',
+    tags: recipe.tags || []
   });
 
   const [openSections, setOpenSections] = useState({
@@ -35,7 +39,8 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating }: FullR
     method: false,
     tips: false,
     troubleshooting: false,
-    image: false
+    image: false,
+    organization: false
   });
 
   const toggleSection = (section: string) => {
@@ -87,6 +92,12 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating }: FullR
     const updates: any = { data: cleanedData };
     if (formData.image_url !== recipe.image_url) {
       updates.image_url = formData.image_url.trim() || null;
+    }
+    if (formData.folder !== recipe.folder) {
+      updates.folder = formData.folder.trim() || null;
+    }
+    if (JSON.stringify(formData.tags) !== JSON.stringify(recipe.tags)) {
+      updates.tags = formData.tags.filter(tag => tag.trim() !== '');
     }
 
     const success = await onSave(recipe.id, updates);
@@ -355,6 +366,96 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating }: FullR
                 />
               </div>
             )}
+          </CollapsibleContent>
+        </Collapsible>
+
+        {/* Organization */}
+        <Collapsible open={openSections.organization} onOpenChange={() => toggleSection('organization')}>
+          <CollapsibleTrigger className="flex items-center justify-between w-full p-2 hover:bg-accent rounded">
+            <h4 className="font-semibold flex items-center gap-2">
+              <Folder className="h-4 w-4" />
+              Organization
+            </h4>
+            <ChevronDown className={cn("h-4 w-4 transition-transform", openSections.organization && "rotate-180")} />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="space-y-3 mt-2">
+            <div>
+              <Label htmlFor="folder">Folder</Label>
+              <Select value={formData.folder} onValueChange={(value) => updateField('folder', value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select or create folder" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">No Folder</SelectItem>
+                  {[...new Set(allRecipes.map(r => r.folder).filter(Boolean))].map((folder) => (
+                    <SelectItem key={folder} value={folder}>{folder}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Input
+                className="mt-2"
+                value={formData.folder}
+                onChange={(e) => updateField('folder', e.target.value)}
+                placeholder="Or type new folder name"
+              />
+            </div>
+            <div>
+              <Label className="flex items-center gap-2">
+                <Tag className="h-4 w-4" />
+                Tags
+              </Label>
+              <div className="space-y-2">
+                {formData.tags.map((tag, index) => (
+                  <div key={index} className="flex gap-2">
+                    <Input
+                      value={tag}
+                      onChange={(e) => updateArrayItem('tags', index, e.target.value)}
+                      placeholder="Tag name"
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => removeArrayItem('tags', index)}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => addArrayItem('tags')}
+                  className="mt-2"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Tag
+                </Button>
+              </div>
+              <div className="mt-2">
+                <Label className="text-sm text-muted-foreground">Existing tags:</Label>
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {[...new Set(allRecipes.flatMap(r => r.tags || []))].filter(Boolean).map((tag) => (
+                    <Button
+                      key={tag}
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="h-6 text-xs"
+                      onClick={() => {
+                        if (!formData.tags.includes(tag)) {
+                          updateField('tags', [...formData.tags, tag]);
+                        }
+                      }}
+                    >
+                      {tag}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </CollapsibleContent>
         </Collapsible>
 

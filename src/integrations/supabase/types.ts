@@ -67,24 +67,30 @@ export type Database = {
         Row: {
           created_at: string
           data: Json
+          folder: string | null
           id: string
           image_url: string | null
+          tags: string[] | null
           title: string
           user_id: string
         }
         Insert: {
           created_at?: string
           data: Json
+          folder?: string | null
           id?: string
           image_url?: string | null
+          tags?: string[] | null
           title: string
           user_id: string
         }
         Update: {
           created_at?: string
           data?: Json
+          folder?: string | null
           id?: string
           image_url?: string | null
+          tags?: string[] | null
           title?: string
           user_id?: string
         }

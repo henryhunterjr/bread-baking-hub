@@ -37,7 +37,7 @@ export const useRecipes = () => {
     fetchRecipes();
   }, [user]);
 
-  const updateRecipe = async (recipeId: string, updates: { title?: string; data?: any; image_url?: string }) => {
+  const updateRecipe = async (recipeId: string, updates: { title?: string; data?: any; image_url?: string; folder?: string; tags?: string[] }) => {
     if (!user) return false;
 
     try {
@@ -56,6 +56,14 @@ export const useRecipes = () => {
       
       if (updates.image_url !== undefined) {
         updatePayload.image_url = updates.image_url;
+      }
+      
+      if (updates.folder !== undefined) {
+        updatePayload.folder = updates.folder;
+      }
+      
+      if (updates.tags !== undefined) {
+        updatePayload.tags = updates.tags;
       }
 
       const { error } = await supabase

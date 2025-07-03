@@ -12,8 +12,9 @@ interface RecipeCardProps {
   onFullEdit: () => void;
   onCancelEdit: () => void;
   onSave: (recipeId: string, title: string) => Promise<boolean>;
-  onFullSave: (recipeId: string, updates: { data: any; image_url?: string }) => Promise<boolean>;
+  onFullSave: (recipeId: string, updates: { data: any; image_url?: string; folder?: string; tags?: string[] }) => Promise<boolean>;
   onAskAssistant: (recipe: any) => void;
+  allRecipes?: any[];
 }
 
 export const RecipeCard = ({ 
@@ -26,7 +27,8 @@ export const RecipeCard = ({
   onCancelEdit, 
   onSave, 
   onFullSave,
-  onAskAssistant 
+  onAskAssistant,
+  allRecipes = []
 }: RecipeCardProps) => {
   if (isFullEditing) {
     return (
@@ -36,6 +38,7 @@ export const RecipeCard = ({
           onSave={onFullSave}
           onCancel={onCancelEdit}
           updating={updating}
+          allRecipes={allRecipes}
         />
       </div>
     );
