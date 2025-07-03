@@ -141,7 +141,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
             <Input
               id="recipe-file"
               type="file"
-              accept="image/*"
+              accept="image/*,.pdf"
               onChange={handleFileChange}
               className="cursor-pointer"
               disabled={isLoading}
