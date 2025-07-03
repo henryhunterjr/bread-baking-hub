@@ -9,7 +9,7 @@ const AboutHenry = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative">
             <img 
-              src={henryPortraitImage} 
+              src="/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png" 
               alt="Henry Hunter in his kitchen" 
               className="rounded-2xl shadow-stone w-full h-auto"
             />
