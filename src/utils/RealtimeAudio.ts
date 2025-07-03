@@ -119,22 +119,18 @@ class AudioQueue {
   }
 
   private createWavFromPCM(pcmData: Uint8Array): Uint8Array {
-    // Convert bytes to 16-bit samples
+    console.log('Creating WAV from PCM data, length:', pcmData.length);
+    
+    // Convert bytes to 16-bit samples (little endian)
     const int16Data = new Int16Array(pcmData.length / 2);
     for (let i = 0; i < pcmData.length; i += 2) {
-      int16Data[i / 2] = (pcmData[i + 1] << 8) | pcmData[i];
+      int16Data[i / 2] = pcmData[i] | (pcmData[i + 1] << 8);
     }
     
     // Create WAV header
     const wavHeader = new ArrayBuffer(44);
     const view = new DataView(wavHeader);
     
-    const writeString = (view: DataView, offset: number, string: string) => {
-      for (let i = 0; i < string.length; i++) {
-        view.setUint8(offset + i, string.charCodeAt(i));
-      }
-    };
-
     // WAV header parameters
     const sampleRate = 24000;
     const numChannels = 1;
@@ -142,19 +138,23 @@ class AudioQueue {
     const blockAlign = (numChannels * bitsPerSample) / 8;
     const byteRate = sampleRate * blockAlign;
 
-    // Write WAV header
-    writeString(view, 0, 'RIFF');
+    // Write WAV header (RIFF)
+    view.setUint32(0, 0x52494646, false); // "RIFF"
     view.setUint32(4, 36 + int16Data.byteLength, true);
-    writeString(view, 8, 'WAVE');
-    writeString(view, 12, 'fmt ');
-    view.setUint32(16, 16, true);
-    view.setUint16(20, 1, true);
+    view.setUint32(8, 0x57415645, false); // "WAVE"
+    
+    // Write fmt chunk
+    view.setUint32(12, 0x666d7420, false); // "fmt "
+    view.setUint32(16, 16, true); // PCM format size
+    view.setUint16(20, 1, true); // PCM format
     view.setUint16(22, numChannels, true);
     view.setUint32(24, sampleRate, true);
     view.setUint32(28, byteRate, true);
     view.setUint16(32, blockAlign, true);
     view.setUint16(34, bitsPerSample, true);
-    writeString(view, 36, 'data');
+    
+    // Write data chunk
+    view.setUint32(36, 0x64617461, false); // "data"
     view.setUint32(40, int16Data.byteLength, true);
 
     // Combine header and data
@@ -162,6 +162,7 @@ class AudioQueue {
     wavArray.set(new Uint8Array(wavHeader), 0);
     wavArray.set(new Uint8Array(int16Data.buffer), wavHeader.byteLength);
     
+    console.log('WAV created, total length:', wavArray.length);
     return wavArray;
   }
 }
@@ -187,38 +188,54 @@ export class RealtimeChat {
 
   async init() {
     try {
+      // Ensure audio context is resumed (required for autoplay policy)
       this.audioContext = new AudioContext({ sampleRate: 24000 });
+      if (this.audioContext.state === 'suspended') {
+        await this.audioContext.resume();
+      }
       
       // Connect to our Supabase edge function WebSocket
       const projectRef = 'ojyckskucneljvuqzrsw';
       this.ws = new WebSocket(`wss://${projectRef}.functions.supabase.co/functions/v1/realtime-chat`);
 
       this.ws.onopen = () => {
-        console.log('Connected to realtime chat');
+        console.log('✅ Connected to realtime chat WebSocket');
       };
 
       this.ws.onmessage = async (event) => {
         const data = JSON.parse(event.data);
-        console.log('Received message:', data.type);
+        console.log('📨 Received message type:', data.type, data);
         
         if (data.type === 'response.audio.delta') {
-          // Convert base64 to Uint8Array
-          const binaryString = atob(data.delta);
-          const bytes = new Uint8Array(binaryString.length);
-          for (let i = 0; i < binaryString.length; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
+          console.log('🎵 Audio delta received, length:', data.delta.length);
+          try {
+            // Convert base64 to Uint8Array
+            const binaryString = atob(data.delta);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+              bytes[i] = binaryString.charCodeAt(i);
+            }
+            console.log('🎵 Playing audio chunk, bytes:', bytes.length);
+            if (this.audioContext) {
+              await playAudioData(this.audioContext, bytes);
+            }
+            this.onSpeakingChange(true);
+          } catch (error) {
+            console.error('❌ Error processing audio delta:', error);
           }
-          if (this.audioContext) {
-            await playAudioData(this.audioContext, bytes);
-          }
-          this.onSpeakingChange(true);
         } else if (data.type === 'response.audio.done') {
+          console.log('🔇 Audio response done');
           this.onSpeakingChange(false);
         } else if (data.type === 'response.audio_transcript.delta') {
+          console.log('📝 Transcript delta:', data.delta);
           this.onMessage({
             type: 'transcript_delta',
             text: data.delta
           });
+        } else if (data.type === 'input_audio_buffer.speech_started') {
+          console.log('🎤 Speech started detected');
+        } else if (data.type === 'input_audio_buffer.speech_stopped') {
+          console.log('🔇 Speech stopped detected');
         }
       };
 

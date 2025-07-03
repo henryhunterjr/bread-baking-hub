@@ -24,13 +24,18 @@ export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: V
   const startConversation = async () => {
     setIsLoading(true);
     try {
+      console.log('🎤 Starting voice conversation...');
+      
       // Request microphone permission first
       await navigator.mediaDevices.getUserMedia({ audio: true });
+      console.log('🎤 Microphone access granted');
       
+      // Create and start the realtime chat
       chatRef.current = new RealtimeChat(handleMessage, onSpeakingChange);
       await chatRef.current.init();
       setIsConnected(true);
       
+      console.log('✅ Voice conversation ready');
       toast({
         title: "Connected!",
         description: "Baker's Buddy is ready to chat. Start speaking!",
