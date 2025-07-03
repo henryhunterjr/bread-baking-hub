@@ -54,7 +54,7 @@ const RecipeFormatter = () => {
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold text-primary">Upload Your Recipe</h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Upload a photo or PDF of your handwritten recipe and our AI will format it into a beautiful, 
+              Upload a photo of your handwritten recipe and our AI will format it into a beautiful, 
               easy-to-follow digital recipe with metric and volume measurements.
             </p>
           </div>

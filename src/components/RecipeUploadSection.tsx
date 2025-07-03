@@ -55,7 +55,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
           const errorData = JSON.parse(errorText);
           throw new Error(errorData.error || `Failed to format recipe: ${response.status} ${response.statusText}`);
         } catch (parseError) {
-          throw new Error(`Failed to format recipe: ${response.status} ${response.statusText}`);
+          throw new Error(errorText || `Failed to format recipe: ${response.status} ${response.statusText}`);
         }
       }
 
