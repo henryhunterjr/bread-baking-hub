@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { RecipeUploadSection } from '../components/RecipeUploadSection';
 import { FormattedRecipeDisplay } from '../components/FormattedRecipeDisplay';
+import { AIAssistantSidebar } from '../components/AIAssistantSidebar';
 
 interface FormattedRecipe {
   title: string;
@@ -24,6 +25,7 @@ interface RecipeWithImage {
 
 const RecipeFormatter = () => {
   const [formattedRecipe, setFormattedRecipe] = useState<RecipeWithImage | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { toast } = useToast();
 
   const handleRecipeFormatted = (recipe: FormattedRecipe, imageUrl?: string) => {
@@ -43,9 +45,9 @@ const RecipeFormatter = () => {
   };
 
   return (
-    <div className="bg-background text-foreground min-h-screen">
+    <div className="bg-background text-foreground min-h-screen relative">
       <Header />
-      <main className="py-20 px-4">
+      <main className={`py-20 px-4 transition-all duration-300 ${isSidebarOpen ? 'mr-96' : ''}`}>
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold text-primary">Upload Your Recipe</h1>
@@ -69,6 +71,12 @@ const RecipeFormatter = () => {
         </div>
       </main>
       <Footer />
+      
+      <AIAssistantSidebar
+        recipeContext={formattedRecipe?.recipe}
+        isOpen={isSidebarOpen}
+        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+      />
     </div>
   );
 };

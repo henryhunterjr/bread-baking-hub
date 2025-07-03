@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'react-router-dom';
+import { AIAssistantSidebar } from '@/components/AIAssistantSidebar';
 
 const MyRecipes = () => {
   const { user, loading } = useAuth();
@@ -18,6 +19,8 @@ const MyRecipes = () => {
   const [editingRecipe, setEditingRecipe] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [updating, setUpdating] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
   const { toast } = useToast();
 
   // Redirect to auth if not logged in
@@ -154,9 +157,9 @@ const MyRecipes = () => {
   }
 
   return (
-    <div className="bg-background text-foreground min-h-screen">
+    <div className="bg-background text-foreground min-h-screen relative">
       <Header />
-      <main className="py-20 px-4">
+      <main className={`py-20 px-4 transition-all duration-300 ${isSidebarOpen ? 'mr-96' : ''}`}>
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold text-primary">My Recipes</h1>
@@ -223,7 +226,20 @@ const MyRecipes = () => {
                           </Card>
                         ) : (
                           <>
-                            <h3 className="text-lg font-semibold text-primary">{recipe.title}</h3>
+                            <div className="flex items-center gap-2">
+                              <h3 className="text-lg font-semibold text-primary">{recipe.title}</h3>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => {
+                                  setSelectedRecipe(recipe.data);
+                                  setIsSidebarOpen(true);
+                                }}
+                                className="text-xs"
+                              >
+                                Ask Baker's Helper
+                              </Button>
+                            </div>
                             <p className="text-sm text-muted-foreground">
                               Saved on {new Date(recipe.created_at).toLocaleDateString()}
                             </p>
@@ -254,6 +270,12 @@ const MyRecipes = () => {
         </div>
       </main>
       <Footer />
+      
+      <AIAssistantSidebar
+        recipeContext={selectedRecipe}
+        isOpen={isSidebarOpen}
+        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+      />
     </div>
   );
 };
