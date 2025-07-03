@@ -50,7 +50,13 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       if (!response.ok) {
         const errorText = await response.text();
         console.error('Response error:', errorText);
-        throw new Error(`Failed to format recipe: ${response.status} ${response.statusText}`);
+        
+        try {
+          const errorData = JSON.parse(errorText);
+          throw new Error(errorData.error || `Failed to format recipe: ${response.status} ${response.statusText}`);
+        } catch (parseError) {
+          throw new Error(`Failed to format recipe: ${response.status} ${response.statusText}`);
+        }
       }
 
       const data = await response.json();
@@ -112,7 +118,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       onRecipeFormatted(data.recipe, imageUrl);
     } catch (error) {
       console.error('Error formatting recipe:', error);
-      onError("Failed to format your recipe. Please try again or check if your image is clear and readable.");
+      onError(error.message || "Failed to format your recipe. Please try again or check if your image is clear and readable.");
     } finally {
       setIsLoading(false);
     }
@@ -123,7 +129,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       <CardHeader>
         <CardTitle className="text-primary">Recipe Upload</CardTitle>
         <CardDescription>
-          Supported formats: JPG, PNG, PDF (max 10MB)
+          Supported formats: JPG, PNG (max 10MB). Convert PDFs to images first.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -135,7 +141,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
             <Input
               id="recipe-file"
               type="file"
-              accept="image/*,.pdf"
+              accept="image/*"
               onChange={handleFileChange}
               className="cursor-pointer"
               disabled={isLoading}
