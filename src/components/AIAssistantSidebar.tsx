@@ -120,9 +120,21 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
 
   const handleVoiceToggle = () => {
     if (!speechRecognition.isSupported) {
+      const isSecureContext = window.location.protocol === 'https:' || 
+                             window.location.hostname === 'localhost' ||
+                             window.location.hostname === '127.0.0.1';
+      
+      let errorDescription = "Speech recognition is not available in your browser.";
+      
+      if (!isSecureContext) {
+        errorDescription = "Speech recognition requires HTTPS. Please use a secure connection.";
+      } else if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+        errorDescription = "Your browser doesn't support speech recognition. Try Chrome, Edge, or Safari.";
+      }
+      
       toast({
         title: "Voice Not Supported",
-        description: "Speech recognition is not available in your browser.",
+        description: errorDescription,
         variant: "destructive"
       });
       return;
