@@ -24,6 +24,51 @@ const BakersBench = () => {
     }
   ];
 
+  const challenges = [
+    {
+      title: "The Modern Baker's Toolkit",
+      description: "Essential tools and techniques for modern bread baking",
+      thumbnail: "/lovable-uploads/6aad1feb-5cbe-4539-830e-5c5b14ef0b79.png",
+      link: "https://modern-bakers-toolkit-7n439ft.gamma.site/",
+      type: "toolkit"
+    },
+    {
+      title: "Market Fresh Challenge",
+      description: "Farm-to-table bread baking with seasonal ingredients",
+      thumbnail: "/lovable-uploads/fce61684-fea2-4c54-86b5-2e05b69655d5.png",
+      link: "https://market-fresh-6ejlurg.gamma.site/",
+      type: "seasonal"
+    },
+    {
+      title: "Sourdough Starter 101",
+      description: "Master the art of wild yeast cultivation",
+      thumbnail: "/lovable-uploads/3dd9d3e1-4062-40cc-82b2-41f79418dcdb.png",
+      link: "https://sourdough-starter-master-kxo6qxb.gamma.site/",
+      type: "sourdough"
+    },
+    {
+      title: "Score Big Challenge",
+      description: "Perfect your bread scoring techniques",
+      thumbnail: "/lovable-uploads/fecb5d01-9088-44ad-8722-faaccc87696a.png",
+      link: "https://score-big-challenge-4cl87nq.gamma.site/",
+      type: "technique"
+    },
+    {
+      title: "Bewitching Halloween Breads",
+      description: "Fun and festive bread ideas for Halloween",
+      thumbnail: "/lovable-uploads/eef793ee-a94a-4d13-9293-213e2ec9e632.png",
+      link: "https://bewitching-breads-hallow-osjjysy.gamma.site/",
+      type: "seasonal"
+    },
+    {
+      title: "February Love Challenge",
+      description: "Heart-warming breads for Valentine's Day",
+      thumbnail: "/lovable-uploads/c1225388-44e4-4de5-a0c7-15ba9198e7f7.png",
+      link: "https://february-baking-challeng-2xj44f0.gamma.site/",
+      type: "seasonal"
+    }
+  ];
+
   return (
     <section className="py-20 px-4 bg-stone-800">
       <div className="max-w-7xl mx-auto">
@@ -77,6 +122,46 @@ const BakersBench = () => {
               View All Videos
             </a>
           </Button>
+        </div>
+
+        {/* Monthly Challenges Section */}
+        <div className="mt-20">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold text-primary mb-4">Monthly Challenges</h3>
+            <p className="text-lg text-stone-300 max-w-2xl mx-auto">
+              Join our community challenges and level up your bread baking skills
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {challenges.map((challenge, index) => (
+              <div key={index} className="bg-stone-700 rounded-xl overflow-hidden shadow-stone hover:shadow-warm transition-all duration-300 hover:scale-105">
+                <div className="relative">
+                  <img 
+                    src={challenge.thumbnail} 
+                    alt={challenge.title}
+                    className="w-full h-40 object-cover"
+                  />
+                  <div className="absolute top-3 left-3 bg-primary text-primary-foreground px-2 py-1 rounded-full text-xs font-semibold capitalize">
+                    {challenge.type}
+                  </div>
+                </div>
+                <div className="p-5 space-y-3">
+                  <h4 className="text-lg font-bold text-foreground line-clamp-2">{challenge.title}</h4>
+                  <p className="text-stone-300 text-sm line-clamp-2">{challenge.description}</p>
+                  <a 
+                    href={challenge.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
+                  >
+                    Join Challenge
+                    <ArrowRight className="ml-1 w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
