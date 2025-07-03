@@ -23,18 +23,29 @@ interface ProductRecommendationsProps {
   recipeContent?: string;
   recipeTitle?: string;
   userRegion?: string;
+  manualOverrides?: string[];
 }
 
 export const ProductRecommendations = ({ 
   recipeContent = '', 
   recipeTitle = '',
-  userRegion = 'US' 
+  userRegion = 'US',
+  manualOverrides = []
 }: ProductRecommendationsProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const recommendedProducts = useMemo(() => {
-    const allText = `${recipeTitle} ${recipeContent}`.toLowerCase();
     const products = affiliateProducts.products as Product[];
+    
+    // If manual overrides are provided, use those
+    if (manualOverrides.length > 0) {
+      return products
+        .filter(product => manualOverrides.includes(product.id) && product.regions.includes(userRegion))
+        .slice(0, 4);
+    }
+
+    // Otherwise, use automatic matching
+    const allText = `${recipeTitle} ${recipeContent}`.toLowerCase();
     
     // Score products based on keyword matches
     const scoredProducts = products
@@ -55,7 +66,7 @@ export const ProductRecommendations = ({
       .slice(0, 3); // Show top 3 most relevant products
 
     return scoredProducts;
-  }, [recipeContent, recipeTitle, userRegion]);
+  }, [recipeContent, recipeTitle, userRegion, manualOverrides]);
 
   if (recommendedProducts.length === 0) {
     return null;
@@ -88,7 +99,10 @@ export const ProductRecommendations = ({
         <CollapsibleContent>
           <CardContent className="pt-0">
             <p className="text-sm text-muted-foreground mb-4">
-              Based on your recipe, these tools can help you achieve professional results:
+              {manualOverrides.length > 0 
+                ? "Hand-picked tools for this recipe:"
+                : "Based on your recipe, these tools can help you achieve professional results:"
+              }
             </p>
             
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

@@ -9,6 +9,7 @@ import { TroubleshootingSection } from './recipe-edit/TroubleshootingSection';
 import { ImageSection } from './recipe-edit/ImageSection';
 import { OrganizationSection } from './recipe-edit/OrganizationSection';
 import { PublicSharingSection } from './recipe-edit/PublicSharingSection';
+import { RecommendedProductsSection } from './recipe-edit/RecommendedProductsSection';
 
 interface FullRecipeEditFormProps {
   recipe: any;
@@ -33,7 +34,8 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
     folder: recipe.folder || '',
     tags: recipe.tags || [],
     is_public: recipe.is_public || false,
-    slug: recipe.slug || ''
+    slug: recipe.slug || '',
+    recommended_products: recipe.data.recommended_products || []
   });
 
   const [openSections, setOpenSections] = useState({
@@ -44,7 +46,8 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
     troubleshooting: false,
     image: false,
     organization: false,
-    sharing: false
+    sharing: false,
+    products: false
   });
 
   const toggleSection = (section: string) => {
@@ -90,7 +93,8 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
       tips: formData.tips.filter(item => item.trim() !== ''),
       troubleshooting: formData.troubleshooting.filter(item => 
         item.issue?.trim() !== '' || item.solution?.trim() !== ''
-      )
+      ),
+      recommended_products: formData.recommended_products.filter(id => id.trim() !== '')
     };
 
     const updates: any = { data: cleanedData };
@@ -204,6 +208,20 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
           onToggle={() => toggleSection('sharing')}
           onUpdatePublic={(value) => updateField('is_public', value)}
           onUpdateSlug={(value) => updateField('slug', value)}
+        />
+
+        <RecommendedProductsSection
+          recommendedProducts={formData.recommended_products}
+          isOpen={openSections.products}
+          onToggle={() => toggleSection('products')}
+          onAdd={() => addArrayItem('recommended_products')}
+          onRemove={(index) => removeArrayItem('recommended_products', index)}
+          onUpdate={(index, value) => updateArrayItem('recommended_products', index, value)}
+          onQuickAdd={(productId) => {
+            if (!formData.recommended_products.includes(productId)) {
+              updateField('recommended_products', [...formData.recommended_products, productId]);
+            }
+          }}
         />
 
         {/* Action Buttons */}

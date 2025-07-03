@@ -29,7 +29,9 @@ interface FormattedRecipe {
 }
 
 interface FormattedRecipeDisplayProps {
-  recipe: FormattedRecipe;
+  recipe: FormattedRecipe & {
+    recommended_products?: string[];
+  };
   imageUrl?: string;
 }
 
@@ -239,16 +241,21 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
       {/* Product Recommendations */}
       <div className="print:hidden">
         <ProductRecommendations
-          recipeContent={`${recipe.introduction} ${
-            Array.isArray(recipe.ingredients) 
-              ? recipe.ingredients.map(ing => typeof ing === 'object' ? ing.item : ing).join(' ')
-              : (recipe.ingredients as {metric: string[]; volume: string[]}).metric?.join(' ') || ''
-          } ${
-            Array.isArray(recipe.method) 
-              ? recipe.method.map(step => typeof step === 'object' ? step.instruction : step).join(' ')
-              : (recipe.method as string[])?.join(' ') || ''
-          }`}
           recipeTitle={recipe.title}
+          recipeContent={`${recipe.introduction} ${
+            isNewIngredientFormat && Array.isArray(recipe.ingredients)
+              ? (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>).map((ing: any) => ing.item || ing).join(' ')
+              : !isNewIngredientFormat && (recipe.ingredients as {metric: string[]; volume: string[]}).metric
+                ? (recipe.ingredients as {metric: string[]; volume: string[]}).metric.join(' ')
+                : ''
+          } ${
+            isNewMethodFormat && Array.isArray(recipe.method)
+              ? (recipe.method as Array<{step: number; instruction: string}>).map((step: any) => step.instruction).join(' ')
+              : Array.isArray(recipe.method) 
+                ? (recipe.method as string[]).join(' ')
+                : ''
+          }`}
+          manualOverrides={recipe.recommended_products}
         />
       </div>
       </div>
