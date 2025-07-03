@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, signOut } = useAuth();
 
   return (
     <header className="bg-stone-800 shadow-stone">
@@ -36,9 +38,20 @@ const Header = () => {
               <Link to="/community" className="text-stone-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Community
               </Link>
-              <Button variant="warm" size="sm" asChild>
-                <Link to="/login">Login</Link>
-              </Button>
+              {user ? (
+                <>
+                  <Link to="/my-recipes" className="text-stone-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    My Recipes
+                  </Link>
+                  <Button variant="warm" size="sm" onClick={signOut}>
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <Button variant="warm" size="sm" asChild>
+                  <Link to="/auth">Login</Link>
+                </Button>
+              )}
             </div>
           </div>
           
@@ -75,6 +88,11 @@ const Header = () => {
               <Link to="/community" className="text-stone-300 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Community
               </Link>
+              {user && (
+                <Link to="/my-recipes" className="text-stone-300 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
+                  My Recipes
+                </Link>
+              )}
             </div>
           </div>
         )}
