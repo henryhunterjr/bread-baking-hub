@@ -28,6 +28,28 @@ serve(async (req) => {
       );
     }
 
+    // Check file size (limit to 20MB)
+    if (file.size > 20 * 1024 * 1024) {
+      return new Response(
+        JSON.stringify({ error: 'File too large. Please use files under 20MB.' }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400 
+        }
+      );
+    }
+
+    // For PDF files, return a helpful error since OpenAI Vision doesn't support PDFs
+    if (file.type === 'application/pdf') {
+      return new Response(
+        JSON.stringify({ error: 'PDF files are not supported yet. Please convert your PDF to a high-quality image (JPG or PNG) and try again.' }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400 
+        }
+      );
+    }
+
     // Convert file to base64 (handle large files properly)
     const arrayBuffer = await file.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer);
@@ -44,7 +66,7 @@ serve(async (req) => {
     // Determine the file type
     const mimeType = file.type || 'image/jpeg';
 
-    console.log('Processing recipe image with OpenAI Vision...');
+    console.log('Processing recipe image with OpenAI Vision...', { fileType: mimeType, fileSize: file.size });
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
