@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import RecipeFormatter from "./pages/RecipeFormatter";
 import Auth from "./pages/Auth";
 import MyRecipes from "./pages/MyRecipes";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
             <Route path="/recipe-formatter" element={<RecipeFormatter />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/my-recipes" element={<MyRecipes />} />
+            <Route path="/about" element={<About />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
