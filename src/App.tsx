@@ -7,6 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import Index from "./pages/Index";
 import RecipeFormatter from "./pages/RecipeFormatter";
+import RecipeWorkspace from "./pages/RecipeWorkspace";
 import Auth from "./pages/Auth";
 import MyRecipes from "./pages/MyRecipes";
 import About from "./pages/About";
@@ -28,6 +29,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/recipe-formatter" element={<RecipeFormatter />} />
+            <Route path="/recipe-workspace" element={<RecipeWorkspace />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/my-recipes" element={<MyRecipes />} />
             <Route path="/about" element={<About />} />

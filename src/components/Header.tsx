@@ -29,8 +29,8 @@ const Header = () => {
               <Link to="/glossary" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Glossary
               </Link>
-              <Link to="/recipe-formatter" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Recipe Formatter
+              <Link to="/recipe-workspace" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Recipe Workspace
               </Link>
               <Link to="/blog" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Blog
@@ -79,8 +79,8 @@ const Header = () => {
               <Link to="/glossary" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Glossary
               </Link>
-              <Link to="/recipe-formatter" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
-                Recipe Formatter
+              <Link to="/recipe-workspace" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
+                Recipe Workspace
               </Link>
               <Link to="/blog" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Blog
