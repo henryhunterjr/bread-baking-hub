@@ -3,11 +3,11 @@ import { ArrowRight } from 'lucide-react';
 const ToolsResources = () => {
   const tools = [
     {
-      title: "Recipe Converter Quiz",
-      description: "Test your knowledge of metric conversions and baking ratios",
-      icon: "🧮",
-      link: "/quiz",
-      type: "interactive"
+      title: "Bread Baker's Glossary",
+      description: "Comprehensive guide to bread baking terminology and techniques",
+      icon: "📖",
+      link: "/glossary",
+      type: "reference"
     },
     {
       title: "Troubleshooting Guide",

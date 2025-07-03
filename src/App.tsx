@@ -11,6 +11,7 @@ import Auth from "./pages/Auth";
 import MyRecipes from "./pages/MyRecipes";
 import About from "./pages/About";
 import PublicRecipe from "./pages/PublicRecipe";
+import BreadGlossary from "./pages/BreadGlossary";
 import OfflineFallback from "./pages/OfflineFallback";
 import NotFound from "./pages/NotFound";
 
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/my-recipes" element={<MyRecipes />} />
             <Route path="/about" element={<About />} />
+            <Route path="/glossary" element={<BreadGlossary />} />
             <Route path="/r/:slug" element={<PublicRecipe />} />
             <Route path="/offline" element={<OfflineFallback />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
