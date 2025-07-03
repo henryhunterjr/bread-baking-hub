@@ -54,11 +54,13 @@ const BooksGrid = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
           {books.map((book, index) => (
             <div key={index} className="bg-card rounded-xl overflow-hidden shadow-stone hover:shadow-warm transition-shadow">
-              <img 
-                src={book.image} 
-                alt={book.title}
-                className="w-full h-80 object-contain bg-white"
-              />
+              <div className="aspect-[2/3] overflow-hidden">
+                <img 
+                  src={book.image} 
+                  alt={book.title}
+                  className="w-full h-full object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                />
+              </div>
               <div className="p-6 space-y-4">
                 <h3 className="text-lg font-bold text-card-foreground line-clamp-2">{book.title}</h3>
                 <p className="text-muted-foreground text-sm line-clamp-3">{book.description}</p>
