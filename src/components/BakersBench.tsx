@@ -116,12 +116,21 @@ const BakersBench = () => {
           ))}
         </div>
         
-        <div className="text-center mt-12">
+        <div className="text-center mt-12 space-y-4">
           <Button variant="warm" size="xl" asChild>
             <a href="https://www.youtube.com/@henryhunterjr" target="_blank" rel="noopener noreferrer">
               View All Videos
             </a>
           </Button>
+          
+          <div className="pt-4">
+            <Button variant="outline" size="lg" asChild className="gap-2">
+              <a href="/bread-calculator">
+                <i className="fas fa-calculator"></i>
+                Professional Bread Calculator
+              </a>
+            </Button>
+          </div>
         </div>
 
         {/* Monthly Challenges Section */}
