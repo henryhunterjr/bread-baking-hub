@@ -18,6 +18,11 @@ export default defineConfig(({ mode }) => ({
       registerType: 'autoUpdate',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,jpg,jpeg}'],
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB limit
+        globIgnores: [
+          '**/lovable-uploads/**', // Exclude large uploaded files from precaching
+          '**/node_modules/**',
+        ],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/ojyckskucneljvuqzrsw\.supabase\.co\/storage\/v1\/object\/public\/.*/i,
