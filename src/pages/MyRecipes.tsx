@@ -2,13 +2,12 @@ import { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import { AIAssistantSidebar } from '@/components/AIAssistantSidebar';
 import { useRecipes } from '@/hooks/useRecipes';
-import { RecipeCard } from '@/components/RecipeCard';
 import { RecipeFilters } from '@/components/RecipeFilters';
-import { Folder } from 'lucide-react';
+import { LoadingState } from '@/components/LoadingState';
+import { NoRecipes } from '@/components/NoRecipes';
+import { FolderGroup } from '@/components/FolderGroup';
 
 const MyRecipes = () => {
   const { user, loading } = useAuth();
@@ -99,19 +98,7 @@ const MyRecipes = () => {
   }, [filteredRecipes]);
 
   if (loading || loadingRecipes) {
-    return (
-      <div className="bg-background text-foreground min-h-screen">
-        <Header />
-        <main className="py-20 px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-xl text-muted-foreground">
-              {loadingRecipes ? 'Loading your recipes...' : 'Loading...'}
-            </p>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
+    return <LoadingState loadingRecipes={loadingRecipes} />;
   }
 
   if (!user) {
@@ -130,16 +117,12 @@ const MyRecipes = () => {
             </p>
           </div>
 
-          {recipes.length === 0 ? (
-            <div className="text-center space-y-4">
-              <p className="text-muted-foreground">
-                You don't have any saved recipes yet.
-              </p>
-              <Button variant="hero" size="lg" asChild>
-                <Link to="/recipe-formatter">Format Your First Recipe</Link>
-              </Button>
-            </div>
-          ) : (
+          <NoRecipes 
+            hasRecipes={recipes.length > 0} 
+            hasFilteredResults={filteredRecipes.length > 0} 
+          />
+          
+          {recipes.length > 0 && (
             <div className="space-y-8">
               <div className="text-center">
                 <p className="text-muted-foreground">
@@ -155,40 +138,24 @@ const MyRecipes = () => {
                 onFilter={setFilters}
               />
 
-              {filteredRecipes.length === 0 ? (
-                <div className="text-center text-muted-foreground">
-                  No recipes match your current filters.
-                </div>
-              ) : (
+              {filteredRecipes.length > 0 && (
                 <div className="space-y-8">
                   {Object.entries(groupedRecipes).map(([folder, folderRecipes]) => (
-                    <div key={folder} className="space-y-4">
-                      <h3 className="text-lg font-semibold text-primary flex items-center gap-2">
-                        <Folder className="h-5 w-5" />
-                        {folder}
-                        <span className="text-sm text-muted-foreground">
-                          ({folderRecipes.length} recipe{folderRecipes.length !== 1 ? 's' : ''})
-                        </span>
-                      </h3>
-                      <div className="grid gap-6">
-                        {folderRecipes.map((recipe) => (
-                          <RecipeCard
-                            key={recipe.id}
-                            recipe={recipe}
-                            isEditing={editingRecipe === recipe.id}
-                            isFullEditing={fullEditingRecipe === recipe.id}
-                            updating={updating}
-                            onEdit={() => handleEditClick(recipe)}
-                            onFullEdit={() => handleFullEditClick(recipe)}
-                            onCancelEdit={handleCancelEdit}
-                            onSave={handleUpdateRecipeTitle}
-                            onFullSave={handleUpdateFullRecipe}
-                            onAskAssistant={handleAskAssistant}
-                            allRecipes={recipes}
-                          />
-                        ))}
-                      </div>
-                    </div>
+                    <FolderGroup
+                      key={folder}
+                      folder={folder}
+                      recipes={folderRecipes}
+                      editingRecipe={editingRecipe}
+                      fullEditingRecipe={fullEditingRecipe}
+                      updating={updating}
+                      onEdit={handleEditClick}
+                      onFullEdit={handleFullEditClick}
+                      onCancelEdit={handleCancelEdit}
+                      onSave={handleUpdateRecipeTitle}
+                      onFullSave={handleUpdateFullRecipe}
+                      onAskAssistant={handleAskAssistant}
+                      allRecipes={recipes}
+                    />
                   ))}
                 </div>
               )}
