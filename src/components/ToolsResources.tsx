@@ -1,6 +1,12 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Info } from 'lucide-react';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 const ToolsResources = () => {
+  const [showInfoDialog, setShowInfoDialog] = useState(false);
+  const [selectedTool, setSelectedTool] = useState(null);
+
   const tools = [
     {
       title: "Bread Baker's Glossary",
@@ -8,6 +14,15 @@ const ToolsResources = () => {
       icon: "📖",
       link: "/glossary",
       type: "reference"
+    },
+    {
+      title: "Professional Bread Calculator",
+      description: "Scientific precision for perfect dough ratios and baker's percentages",
+      icon: "🧮",
+      link: "/bread-calculator",
+      type: "calculator",
+      hasInfo: true,
+      infoContent: "Perfect Your Dough with Scientific Precision. Stop guessing and start calculating. This professional-grade bread calculator takes the mystery out of bread formulation, giving you the tools to create consistent, delicious results every single time."
     },
     {
       title: "Troubleshooting Guide",
@@ -45,7 +60,22 @@ const ToolsResources = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {tools.map((tool, index) => (
             <div key={index} className="bg-stone-700 rounded-xl p-6 hover:bg-stone-600 transition-colors group">
-              <div className="text-4xl mb-4">{tool.icon}</div>
+              <div className="flex justify-between items-start mb-4">
+                <div className="text-4xl">{tool.icon}</div>
+                {tool.hasInfo && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="w-8 h-8 text-stone-400 hover:text-primary"
+                    onClick={() => {
+                      setSelectedTool(tool);
+                      setShowInfoDialog(true);
+                    }}
+                  >
+                    <Info className="w-4 h-4" />
+                  </Button>
+                )}
+              </div>
               <h3 className="text-lg font-bold text-foreground mb-3">{tool.title}</h3>
               <p className="text-stone-300 text-sm mb-4 line-clamp-3">{tool.description}</p>
               <a 
@@ -58,6 +88,28 @@ const ToolsResources = () => {
             </div>
           ))}
         </div>
+
+        {/* Info Dialog */}
+        <Dialog open={showInfoDialog} onOpenChange={setShowInfoDialog}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                {selectedTool?.icon} {selectedTool?.title}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <p className="text-muted-foreground leading-relaxed">
+                {selectedTool?.infoContent}
+              </p>
+              <Button asChild className="w-full">
+                <a href={selectedTool?.link}>
+                  Try the Calculator
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </a>
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </section>
   );

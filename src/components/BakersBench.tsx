@@ -123,14 +123,6 @@ const BakersBench = () => {
             </a>
           </Button>
           
-          <div className="pt-4">
-            <Button variant="outline" size="lg" asChild className="gap-2">
-              <a href="/bread-calculator">
-                <i className="fas fa-calculator"></i>
-                Professional Bread Calculator
-              </a>
-            </Button>
-          </div>
         </div>
 
         {/* Monthly Challenges Section */}

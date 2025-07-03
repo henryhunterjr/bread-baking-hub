@@ -203,21 +203,42 @@ const BreadCalculator = () => {
                   <Info className="w-5 h-5" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-2xl">
+              <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
-                  <DialogTitle>About the Bread Calculator</DialogTitle>
-                  <DialogDescription className="text-left space-y-4">
-                    <p>This professional bread calculator helps you perfect your dough with precise calculations for hydration, baker's percentages, and recipe scaling.</p>
-                    <p><strong>Features:</strong></p>
-                    <ul className="list-disc list-inside space-y-1">
-                      <li>Calculate perfect hydration ratios for different bread types</li>
-                      <li>Work with baker's percentages for consistent results</li>
-                      <li>Scale recipes up or down while maintaining proportions</li>
-                      <li>Save and export your favorite recipes</li>
-                      <li>Switch between grams and ounces</li>
-                      <li>Pre-loaded presets for common bread styles</li>
-                    </ul>
-                    <p>Created by Henry Hunter for the bread baking community.</p>
+                  <DialogTitle>Professional Bread Calculator</DialogTitle>
+                  <DialogDescription className="text-left space-y-6">
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Perfect Your Dough with Scientific Precision</h3>
+                      <p>Stop guessing and start calculating. This professional-grade bread calculator takes the mystery out of bread formulation, giving you the tools to create consistent, delicious results every single time. Whether you're scaling a favorite recipe or experimenting with new ratios, this calculator handles the math so you can focus on the craft.</p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Three Powerful Calculators in One</h3>
+                      <div className="space-y-3">
+                        <p><strong>Dough Calculator:</strong> The heart of the tool. Input your ingredients using either precise numbers or intuitive sliders, and instantly see your hydration percentage, baker's ratios, and total dough weight. The visual hydration bar shows you exactly what your percentages mean, while smart tips guide you toward better results.</p>
+                        <p><strong>Baker's Percentages:</strong> Work like a professional baker. Set your target flour weight and desired percentages, and the calculator automatically determines exact ingredient weights. This is how bakeries formulate recipes, and now you can too.</p>
+                        <p><strong>Recipe Scaling:</strong> Got a recipe that serves 4 but need to feed 12? Or want to scale down that 2-loaf recipe for a single boule? The scaling calculator maintains perfect ratios while adjusting quantities to your exact needs.</p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Interactive Features That Make Baking Easy</h3>
+                      <ul className="list-disc list-inside space-y-1">
+                        <li><strong>Smart Sliders:</strong> Drag to adjust ingredients and watch your ratios change in real-time</li>
+                        <li><strong>Recipe Presets:</strong> One-click access to proven formulas for Classic Sourdough, Pizza Dough, Focaccia, and Bagels</li>
+                        <li><strong>Unit Flexibility:</strong> Switch between grams and ounces instantly with automatic conversions</li>
+                        <li><strong>Visual Feedback:</strong> The hydration bar shows what percentages mean and provides handling tips</li>
+                        <li><strong>Contextual Tips:</strong> Get specific guidance based on your ingredient ratios</li>
+                        <li><strong>Recipe Saving:</strong> Save your perfect formulations for future use</li>
+                        <li><strong>Print-Ready Output:</strong> Generate clean, professional recipe cards</li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Built for Real Bakers</h3>
+                      <p>This isn't just another recipe calculator. It's a teaching tool that helps you understand the science behind great bread. The more you use it, the more intuitive bread formulation becomes. Soon you'll be creating your own recipes and understanding exactly why they work.</p>
+                      <p className="mt-3 font-medium">Whether you're making your first loaf or your thousandth, this calculator ensures every bake is your best bake. The math is perfect, the ratios are balanced, and the results are consistently delicious.</p>
+                    </div>
                   </DialogDescription>
                 </DialogHeader>
               </DialogContent>
