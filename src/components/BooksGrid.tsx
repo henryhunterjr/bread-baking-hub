@@ -57,7 +57,7 @@ const BooksGrid = () => {
               <img 
                 src={book.image} 
                 alt={book.title}
-                className="w-full h-64 object-cover"
+                className="w-full h-80 object-contain bg-white"
               />
               <div className="p-6 space-y-4">
                 <h3 className="text-lg font-bold text-card-foreground line-clamp-2">{book.title}</h3>
