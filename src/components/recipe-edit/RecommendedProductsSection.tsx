@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Badge } from '@/components/ui/badge';
 import { ChevronDown, ChevronUp, Plus, X, ShoppingCart } from 'lucide-react';
-import { useAffiliateProducts } from '@/hooks/useAffiliateProducts';
+import affiliateProducts from '@/data/affiliate-products.json';
 
 interface RecommendedProductsSectionProps {
   recommendedProducts: string[];
@@ -26,8 +26,8 @@ export const RecommendedProductsSection = ({
   onUpdate,
   onQuickAdd
 }: RecommendedProductsSectionProps) => {
-  const { products, loading } = useAffiliateProducts();
   const [searchTerm, setSearchTerm] = useState('');
+  const products = affiliateProducts.products;
 
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -120,7 +120,7 @@ export const RecommendedProductsSection = ({
               </div>
 
               {/* Product Search & Quick Add */}
-              {!loading && products.length > 0 && (
+              {products.length > 0 && (
                 <div className="space-y-3">
                   <Input
                     type="text"
@@ -157,12 +157,6 @@ export const RecommendedProductsSection = ({
                 </div>
               )}
             </div>
-
-            {loading && (
-              <div className="text-center py-4">
-                <p className="text-sm text-muted-foreground">Loading products...</p>
-              </div>
-            )}
           </CardContent>
         </CollapsibleContent>
       </Collapsible>

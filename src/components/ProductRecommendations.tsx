@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, ChevronUp, ExternalLink, ShoppingCart } from 'lucide-react';
 import affiliateProducts from '@/data/affiliate-products.json';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 
 interface Product {
   id: string;
@@ -33,6 +35,7 @@ export const ProductRecommendations = ({
   manualOverrides = []
 }: ProductRecommendationsProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
 
   const recommendedProducts = useMemo(() => {
     const products = affiliateProducts.products as Product[];
@@ -72,7 +75,21 @@ export const ProductRecommendations = ({
     return null;
   }
 
-  const handleProductClick = (product: Product) => {
+  const handleProductClick = async (product: Product) => {
+    // Log click for analytics
+    try {
+      await supabase.from('product_clicks').insert({
+        product_id: product.id,
+        product_name: product.name,
+        recipe_title: recipeTitle,
+        user_id: user?.id || null,
+        clicked_at: new Date().toISOString()
+      });
+    } catch (error) {
+      // Silently fail if logging doesn't work
+      console.warn('Failed to log product click:', error);
+    }
+
     const fullUrl = `${product.affiliate_link}${product.affiliate_link.includes('?') ? '&' : '?'}${product.utm_params}`;
     window.open(fullUrl, '_blank', 'noopener,noreferrer');
   };

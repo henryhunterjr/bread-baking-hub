@@ -39,6 +39,36 @@ export type Database = {
         }
         Relationships: []
       }
+      product_clicks: {
+        Row: {
+          clicked_at: string
+          created_at: string
+          id: string
+          product_id: string
+          product_name: string
+          recipe_title: string | null
+          user_id: string | null
+        }
+        Insert: {
+          clicked_at?: string
+          created_at?: string
+          id?: string
+          product_id: string
+          product_name: string
+          recipe_title?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          clicked_at?: string
+          created_at?: string
+          id?: string
+          product_id?: string
+          product_name?: string
+          recipe_title?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string

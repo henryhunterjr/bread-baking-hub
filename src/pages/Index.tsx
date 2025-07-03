@@ -4,7 +4,6 @@ import HeroSection from "../components/HeroSection";
 import AboutHenry from "../components/AboutHenry";
 import BooksGrid from "../components/BooksGrid";
 import ToolsResources from "../components/ToolsResources";
-import RecommendedProducts from "../components/RecommendedProducts";
 import BakersBench from "../components/BakersBench";
 import MonthlyChallenge from "../components/MonthlyChallenge";
 import LatestBlogPosts from "../components/LatestBlogPosts";
@@ -19,7 +18,6 @@ const Index = () => {
         <AboutHenry />
         <BooksGrid />
         <ToolsResources />
-        <RecommendedProducts />
         <BakersBench />
         <MonthlyChallenge />
         <LatestBlogPosts />
