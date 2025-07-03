@@ -128,3 +128,102 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Print styles for clean PDF/print output */
+@media print {
+  /* Hide unnecessary elements */
+  header, nav, footer, .print\\:hidden, [data-sidebar], button:not(.print-show) {
+    display: none !important;
+  }
+  
+  /* Reset colors for print */
+  * {
+    color: #000 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+  
+  /* Page setup */
+  @page {
+    margin: 0.75in;
+    size: letter;
+  }
+  
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  /* Recipe container */
+  .print-container {
+    background: #fff !important;
+    color: #000 !important;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    color: #000 !important;
+    page-break-after: avoid;
+    margin-top: 12pt;
+    margin-bottom: 6pt;
+  }
+  
+  h1 { font-size: 20pt; }
+  h2 { font-size: 18pt; }
+  h3 { font-size: 16pt; }
+  
+  /* Cards */
+  .card, [data-card] {
+    border: 1px solid #ddd !important;
+    background: #fff !important;
+    margin-bottom: 12pt;
+    padding: 8pt;
+    page-break-inside: avoid;
+  }
+  
+  /* Lists */
+  ul, ol {
+    margin: 6pt 0;
+    padding-left: 20pt;
+  }
+  
+  li {
+    margin-bottom: 3pt;
+    page-break-inside: avoid;
+  }
+  
+  /* Images */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+    page-break-inside: avoid;
+    margin: 12pt 0;
+  }
+  
+  /* Grid layout adjustments */
+  .grid {
+    display: block !important;
+  }
+  
+  .grid > * {
+    width: 100% !important;
+    margin-bottom: 12pt;
+  }
+  
+  /* Page breaks */
+  .page-break-before {
+    page-break-before: always;
+  }
+  
+  .page-break-after {
+    page-break-after: always;
+  }
+  
+  .page-break-inside-avoid {
+    page-break-inside: avoid;
+  }
+}

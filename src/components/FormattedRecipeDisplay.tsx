@@ -1,4 +1,8 @@
+import { useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Printer, Download } from 'lucide-react';
+import html2pdf from 'html2pdf.js';
 
 interface FormattedRecipe {
   title: string;
@@ -29,14 +33,59 @@ interface FormattedRecipeDisplayProps {
 }
 
 export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisplayProps) => {
+  const printRef = useRef<HTMLDivElement>(null);
+  
   // Check if ingredients is in new format (array of objects) or old format (object with metric/volume arrays)
   const isNewIngredientFormat = Array.isArray(recipe.ingredients);
   const isNewMethodFormat = Array.isArray(recipe.method) && recipe.method.length > 0 && typeof recipe.method[0] === 'object';
   const isNewTroubleshootingFormat = Array.isArray(recipe.troubleshooting) && recipe.troubleshooting.length > 0 && typeof recipe.troubleshooting[0] === 'object';
 
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleDownloadPDF = () => {
+    const element = printRef.current;
+    if (!element) return;
+
+    const opt = {
+      margin: 1,
+      filename: `${recipe.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  };
+
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold text-primary text-center">Formatted Recipe</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-3xl font-bold text-primary">Formatted Recipe</h2>
+        <div className="flex gap-2 print:hidden">
+          <Button
+            onClick={handlePrint}
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <Printer className="h-4 w-4" />
+            Print
+          </Button>
+          <Button
+            onClick={handleDownloadPDF}
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <Download className="h-4 w-4" />
+            Download PDF
+          </Button>
+        </div>
+      </div>
+      
+      <div ref={printRef} className="print-container">
       
       {imageUrl && (
         <div className="w-full">
@@ -184,6 +233,7 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
             </ul>
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   );
