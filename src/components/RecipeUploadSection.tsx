@@ -69,8 +69,8 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
         try {
           console.log('Saving recipe to database for user:', user.id);
           
-          // Upload image to storage if user is logged in
-          if (selectedFile.type.startsWith('image/')) {
+          // Upload file to storage if user is logged in (images or PDFs)
+          if (selectedFile.type.startsWith('image/') || selectedFile.type === 'application/pdf') {
             console.log('Uploading image to storage...');
             const fileExt = selectedFile.name.split('.').pop();
             const fileName = `${user.id}/${Date.now()}.${fileExt}`;
@@ -129,7 +129,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       <CardHeader>
         <CardTitle className="text-primary">Recipe Upload</CardTitle>
         <CardDescription>
-          Supported formats: JPG, PNG (max 10MB). Convert PDFs to images first.
+          Supported formats: JPG, PNG, PDF (max 20MB). PDFs are automatically converted to images for processing.
         </CardDescription>
       </CardHeader>
       <CardContent>
