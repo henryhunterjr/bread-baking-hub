@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 import { RealtimeChat } from '@/utils/RealtimeAudio';
 
 interface VoiceInterfaceProps {
@@ -12,6 +13,7 @@ interface VoiceInterfaceProps {
 
 export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: VoiceInterfaceProps) => {
   const { toast } = useToast();
+  const isOnline = useNetworkStatus();
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const chatRef = useRef<RealtimeChat | null>(null);
@@ -90,7 +92,7 @@ export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: V
       <div className="fixed right-4 top-1/2 -translate-y-1/2 z-50">
         <Button
           onClick={startConversation}
-          disabled={isLoading}
+          disabled={isLoading || !isOnline}
           variant="hero"
           size="lg"
           className="rounded-full shadow-warm h-16 w-16"
@@ -102,7 +104,7 @@ export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: V
           )}
         </Button>
         <div className="text-center mt-2 text-xs text-muted-foreground">
-          Talk to Baker's Buddy
+          {isOnline ? "Talk to Baker's Buddy" : "Voice disabled offline"}
         </div>
       </div>
     );

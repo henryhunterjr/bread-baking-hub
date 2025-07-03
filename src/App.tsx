@@ -4,12 +4,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
+import { OfflineBanner } from "@/components/OfflineBanner";
 import Index from "./pages/Index";
 import RecipeFormatter from "./pages/RecipeFormatter";
 import Auth from "./pages/Auth";
 import MyRecipes from "./pages/MyRecipes";
 import About from "./pages/About";
 import PublicRecipe from "./pages/PublicRecipe";
+import OfflineFallback from "./pages/OfflineFallback";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -20,6 +22,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <OfflineBanner />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
@@ -28,6 +31,7 @@ const App = () => (
             <Route path="/my-recipes" element={<MyRecipes />} />
             <Route path="/about" element={<About />} />
             <Route path="/r/:slug" element={<PublicRecipe />} />
+            <Route path="/offline" element={<OfflineFallback />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -95,6 +95,10 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 30 25% 90%;
     --sidebar-border: 20 14% 18%;
     --sidebar-ring: 45 85% 60%;
+    
+    /* Warning colors for offline state */
+    --warning: 34 89 73;
+    --warning-foreground: 0 0 100;
   }
 
   .dark {
@@ -141,6 +145,10 @@ All colors MUST be HSL.
     /* Section backgrounds for dark mode */
     --section-background: 240 5.9% 10%;
     --section-secondary: 240 3.7% 15.9%;
+    
+    /* Warning colors for dark mode */
+    --warning: 34 89 73;
+    --warning-foreground: 0 0 100;
   }
 }
 

@@ -7,6 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 import { useAIChat } from '@/hooks/useAIChat';
 import { VoiceControls } from './VoiceControls';
 import { ChatMessage } from './ChatMessage';
@@ -22,6 +23,7 @@ type AssistantMode = 'general' | 'tips' | 'substitutions' | 'scaling' | 'trouble
 
 export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssistantSidebarProps) => {
   const isMobile = useIsMobile();
+  const isOnline = useNetworkStatus();
   const [input, setInput] = useState('');
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   
@@ -39,7 +41,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
   }, [messages]);
 
   const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isLoading || !isOnline) return;
     
     await sendMessage(input);
     setInput('');
@@ -143,8 +145,8 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask about baking..."
-                disabled={isLoading}
+                placeholder={isOnline ? "Ask about baking..." : "Offline - AI disabled"}
+                disabled={isLoading || !isOnline}
                 className="pr-12"
               />
               <div className="absolute right-1 top-1/2 -translate-y-1/2">
@@ -153,7 +155,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
             </div>
             <Button 
               onClick={handleSend} 
-              disabled={!input.trim() || isLoading}
+              disabled={!input.trim() || isLoading || !isOnline}
               variant="hero"
               className="touch-manipulation"
             >
