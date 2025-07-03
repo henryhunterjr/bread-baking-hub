@@ -51,7 +51,7 @@ serve(async (req) => {
             session: {
               modalities: ['text', 'audio'],
               instructions: `You are Baker's Helper, an expert baking assistant created by Henry. You help users with baking questions, recipe advice, troubleshooting, and techniques. You are enthusiastic, knowledgeable, and friendly. Keep responses conversational and helpful. If you need to provide detailed instructions, break them into clear steps.`,
-              voice: 'sage',
+              voice: 'echo',
               input_audio_format: 'pcm16',
               output_audio_format: 'pcm16',
               input_audio_transcription: {
