@@ -34,6 +34,8 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       const formData = new FormData();
       formData.append('file', selectedFile);
 
+      console.log('Uploading file:', selectedFile.name, selectedFile.type, selectedFile.size);
+
       const response = await fetch('https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/format-recipe', {
         method: 'POST',
         headers: {
@@ -42,15 +44,22 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
         body: formData,
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+
       if (!response.ok) {
-        throw new Error('Failed to format recipe');
+        const errorText = await response.text();
+        console.error('Response error:', errorText);
+        throw new Error(`Failed to format recipe: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
+      console.log('Received recipe data:', data);
       
       // Save recipe to database if user is logged in
       if (user && data.recipe) {
         try {
+          console.log('Saving recipe to database for user:', user.id);
           const { error: saveError } = await supabase
             .from('recipes')
             .insert({
@@ -62,6 +71,8 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
           if (saveError) {
             console.error('Error saving recipe:', saveError);
             // Don't fail the whole operation if saving fails
+          } else {
+            console.log('Recipe saved successfully to database');
           }
         } catch (saveError) {
           console.error('Error saving recipe:', saveError);
