@@ -218,6 +218,7 @@ export class RealtimeChat {
             console.log('🎵 Playing audio chunk, bytes:', bytes.length);
             if (this.audioContext) {
               await playAudioData(this.audioContext, bytes);
+              console.log('🎵 Audio playback initiated successfully');
             }
             this.onSpeakingChange(true);
           } catch (error) {
@@ -236,6 +237,12 @@ export class RealtimeChat {
           console.log('🎤 Speech started detected');
         } else if (data.type === 'input_audio_buffer.speech_stopped') {
           console.log('🔇 Speech stopped detected');
+        } else if (data.type === 'session.created') {
+          console.log('✅ Session created successfully');
+        } else if (data.type === 'session.updated') {
+          console.log('✅ Session updated successfully');  
+        } else {
+          console.log('📨 Other message type:', data.type, data);
         }
       };
 
