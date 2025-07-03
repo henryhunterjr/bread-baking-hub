@@ -8,10 +8,11 @@ import { TipsSection } from './recipe-edit/TipsSection';
 import { TroubleshootingSection } from './recipe-edit/TroubleshootingSection';
 import { ImageSection } from './recipe-edit/ImageSection';
 import { OrganizationSection } from './recipe-edit/OrganizationSection';
+import { PublicSharingSection } from './recipe-edit/PublicSharingSection';
 
 interface FullRecipeEditFormProps {
   recipe: any;
-  onSave: (recipeId: string, updates: { data: any; image_url?: string; folder?: string; tags?: string[] }) => Promise<boolean>;
+  onSave: (recipeId: string, updates: { data: any; image_url?: string; folder?: string; tags?: string[]; is_public?: boolean; slug?: string }) => Promise<boolean>;
   onCancel: () => void;
   updating: boolean;
   allRecipes?: any[];
@@ -30,7 +31,9 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
     troubleshooting: recipe.data.troubleshooting || [{ issue: '', solution: '' }],
     image_url: recipe.image_url || '',
     folder: recipe.folder || '',
-    tags: recipe.tags || []
+    tags: recipe.tags || [],
+    is_public: recipe.is_public || false,
+    slug: recipe.slug || ''
   });
 
   const [openSections, setOpenSections] = useState({
@@ -40,7 +43,8 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
     tips: false,
     troubleshooting: false,
     image: false,
-    organization: false
+    organization: false,
+    sharing: false
   });
 
   const toggleSection = (section: string) => {
@@ -98,6 +102,12 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
     }
     if (JSON.stringify(formData.tags) !== JSON.stringify(recipe.tags)) {
       updates.tags = formData.tags.filter(tag => tag.trim() !== '');
+    }
+    if (formData.is_public !== recipe.is_public) {
+      updates.is_public = formData.is_public;
+    }
+    if (formData.slug !== recipe.slug) {
+      updates.slug = formData.slug.trim() || null;
     }
 
     const success = await onSave(recipe.id, updates);
@@ -183,6 +193,17 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
               updateField('tags', [...formData.tags, tag]);
             }
           }}
+        />
+
+        <PublicSharingSection
+          isPublic={formData.is_public}
+          slug={formData.slug}
+          recipeTitle={recipe.title}
+          userId={recipe.user_id}
+          isOpen={openSections.sharing}
+          onToggle={() => toggleSection('sharing')}
+          onUpdatePublic={(value) => updateField('is_public', value)}
+          onUpdateSlug={(value) => updateField('slug', value)}
         />
 
         {/* Action Buttons */}

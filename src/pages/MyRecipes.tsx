@@ -54,7 +54,7 @@ const MyRecipes = () => {
     return success;
   };
 
-  const handleUpdateFullRecipe = async (recipeId: string, updates: { data: any; image_url?: string; folder?: string; tags?: string[] }) => {
+  const handleUpdateFullRecipe = async (recipeId: string, updates: { data: any; image_url?: string; folder?: string; tags?: string[]; is_public?: boolean; slug?: string }) => {
     setUpdating(true);
     const success = await updateRecipe(recipeId, updates);
     setUpdating(false);

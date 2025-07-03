@@ -70,6 +70,8 @@ export type Database = {
           folder: string | null
           id: string
           image_url: string | null
+          is_public: boolean | null
+          slug: string | null
           tags: string[] | null
           title: string
           user_id: string
@@ -80,6 +82,8 @@ export type Database = {
           folder?: string | null
           id?: string
           image_url?: string | null
+          is_public?: boolean | null
+          slug?: string | null
           tags?: string[] | null
           title: string
           user_id: string
@@ -90,6 +94,8 @@ export type Database = {
           folder?: string | null
           id?: string
           image_url?: string | null
+          is_public?: boolean | null
+          slug?: string | null
           tags?: string[] | null
           title?: string
           user_id?: string
@@ -140,7 +146,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_recipe_slug: {
+        Args: { recipe_title: string; recipe_user_id: string }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

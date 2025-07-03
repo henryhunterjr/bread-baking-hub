@@ -12,7 +12,7 @@ interface RecipeCardProps {
   onFullEdit: () => void;
   onCancelEdit: () => void;
   onSave: (recipeId: string, title: string) => Promise<boolean>;
-  onFullSave: (recipeId: string, updates: { data: any; image_url?: string; folder?: string; tags?: string[] }) => Promise<boolean>;
+  onFullSave: (recipeId: string, updates: { data: any; image_url?: string; folder?: string; tags?: string[]; is_public?: boolean; slug?: string }) => Promise<boolean>;
   onAskAssistant: (recipe: any) => void;
   allRecipes?: any[];
 }

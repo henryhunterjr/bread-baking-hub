@@ -37,7 +37,7 @@ export const useRecipes = () => {
     fetchRecipes();
   }, [user]);
 
-  const updateRecipe = async (recipeId: string, updates: { title?: string; data?: any; image_url?: string; folder?: string; tags?: string[] }) => {
+  const updateRecipe = async (recipeId: string, updates: { title?: string; data?: any; image_url?: string; folder?: string; tags?: string[]; is_public?: boolean; slug?: string }) => {
     if (!user) return false;
 
     try {
@@ -64,6 +64,14 @@ export const useRecipes = () => {
       
       if (updates.tags !== undefined) {
         updatePayload.tags = updates.tags;
+      }
+      
+      if (updates.is_public !== undefined) {
+        updatePayload.is_public = updates.is_public;
+      }
+      
+      if (updates.slug !== undefined) {
+        updatePayload.slug = updates.slug;
       }
 
       const { error } = await supabase
