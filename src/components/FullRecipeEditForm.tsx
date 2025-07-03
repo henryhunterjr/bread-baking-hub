@@ -207,11 +207,12 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
         />
 
         {/* Action Buttons */}
-        <div className="flex gap-2 pt-4 border-t">
+        <div className="flex flex-col sm:flex-row gap-2 pt-4 border-t">
           <Button 
             variant="hero" 
             onClick={handleSave}
             disabled={updating}
+            className="w-full sm:w-auto touch-manipulation"
           >
             {updating ? 'Saving...' : 'Save All Changes'}
           </Button>
@@ -219,6 +220,7 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
             variant="outline" 
             onClick={onCancel}
             disabled={updating}
+            className="w-full sm:w-auto touch-manipulation"
           >
             Cancel
           </Button>

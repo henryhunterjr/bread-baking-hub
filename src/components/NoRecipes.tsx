@@ -13,7 +13,7 @@ export const NoRecipes = ({ hasRecipes, hasFilteredResults }: NoRecipesProps) =>
         <p className="text-muted-foreground">
           You don't have any saved recipes yet.
         </p>
-        <Button variant="hero" size="lg" asChild>
+        <Button variant="hero" size="lg" asChild className="w-full sm:w-auto touch-manipulation">
           <Link to="/recipe-formatter">Format Your First Recipe</Link>
         </Button>
       </div>

@@ -61,14 +61,14 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold text-primary">Formatted Recipe</h2>
-        <div className="flex gap-2 print:hidden">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+        <h2 className="text-2xl sm:text-3xl font-bold text-primary">Formatted Recipe</h2>
+        <div className="flex flex-col sm:flex-row gap-2 print:hidden">
           <Button
             onClick={handlePrint}
             variant="outline"
             size="sm"
-            className="flex items-center gap-2"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto touch-manipulation"
           >
             <Printer className="h-4 w-4" />
             Print
@@ -77,7 +77,7 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
             onClick={handleDownloadPDF}
             variant="outline"
             size="sm"
-            className="flex items-center gap-2"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto touch-manipulation"
           >
             <Download className="h-4 w-4" />
             Download PDF
@@ -106,7 +106,7 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
         </CardContent>
       </Card>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="shadow-warm">
           <CardHeader>
             <CardTitle className="text-primary">Ingredients (Metric)</CardTitle>
@@ -187,7 +187,7 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
         </CardContent>
       </Card>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="shadow-warm">
           <CardHeader>
             <CardTitle className="text-primary">Tips</CardTitle>

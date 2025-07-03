@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Progress } from '@/components/ui/progress';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface RecipeUploadSectionProps {
   onRecipeFormatted: (recipe: any, imageUrl?: string) => void;
@@ -13,6 +14,7 @@ interface RecipeUploadSectionProps {
 }
 
 export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUploadSectionProps) => {
+  const isMobile = useIsMobile();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
@@ -143,7 +145,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
               type="file"
               accept="image/*,.pdf"
               onChange={handleFileChange}
-              className="cursor-pointer"
+              className="cursor-pointer touch-manipulation"
               disabled={isLoading}
             />
             {selectedFile && (
@@ -158,7 +160,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
             variant="hero" 
             size="lg" 
             disabled={!selectedFile || isLoading}
-            className="w-full"
+            className="w-full touch-manipulation"
           >
             {isLoading ? 'Formatting Recipe...' : 'Format My Recipe'}
           </Button>

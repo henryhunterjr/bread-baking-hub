@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { useAIChat } from '@/hooks/useAIChat';
 import { VoiceControls } from './VoiceControls';
 import { ChatMessage } from './ChatMessage';
@@ -20,6 +21,7 @@ interface AIAssistantSidebarProps {
 type AssistantMode = 'general' | 'tips' | 'substitutions' | 'scaling' | 'troubleshooting';
 
 export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssistantSidebarProps) => {
+  const isMobile = useIsMobile();
   const [input, setInput] = useState('');
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   
@@ -52,12 +54,12 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
 
   if (!isOpen) {
     return (
-      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-50">
+      <div className={`fixed ${isMobile ? 'right-4 bottom-4' : 'right-4 top-1/2 -translate-y-1/2'} z-50`}>
         <Button
           onClick={onToggle}
           variant="hero"
           size="lg"
-          className="rounded-full shadow-warm"
+          className="rounded-full shadow-warm touch-manipulation"
         >
           <MessageCircle className="h-5 w-5" />
         </Button>
@@ -66,7 +68,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
   }
 
   return (
-    <div className="fixed right-0 top-0 h-full w-96 bg-background border-l border-border shadow-warm z-40">
+    <div className={`fixed ${isMobile ? 'inset-0' : 'right-0 top-0'} ${isMobile ? 'w-full h-full' : 'h-full w-96'} bg-background ${isMobile ? '' : 'border-l border-border'} shadow-warm z-40`}>
       <Card className="h-full rounded-none border-0">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
@@ -74,7 +76,12 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
               <MessageCircle className="h-5 w-5" />
               Baker's Helper
             </CardTitle>
-            <Button variant="ghost" size="sm" onClick={onToggle}>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={onToggle}
+              className="touch-manipulation"
+            >
               <X className="h-4 w-4" />
             </Button>
           </div>
@@ -148,6 +155,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
               onClick={handleSend} 
               disabled={!input.trim() || isLoading}
               variant="hero"
+              className="touch-manipulation"
             >
               <Send className="h-4 w-4" />
             </Button>

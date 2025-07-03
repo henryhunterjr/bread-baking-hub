@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { useIsMobile } from '@/hooks/use-mobile';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { AIAssistantSidebar } from '@/components/AIAssistantSidebar';
@@ -11,6 +12,7 @@ import { FolderGroup } from '@/components/FolderGroup';
 
 const MyRecipes = () => {
   const { user, loading } = useAuth();
+  const isMobile = useIsMobile();
   const { recipes, loading: loadingRecipes, updateRecipe, updateRecipeTitle } = useRecipes();
   const [editingRecipe, setEditingRecipe] = useState<string | null>(null);
   const [fullEditingRecipe, setFullEditingRecipe] = useState<string | null>(null);
@@ -22,6 +24,13 @@ const MyRecipes = () => {
     folder: '',
     selectedTags: [] as string[]
   });
+
+  // Auto-close sidebar on mobile when not needed
+  useEffect(() => {
+    if (isMobile && isSidebarOpen && !selectedRecipe) {
+      setIsSidebarOpen(false);
+    }
+  }, [isMobile, selectedRecipe]);
 
   // Redirect to auth if not logged in
   useEffect(() => {
@@ -108,11 +117,11 @@ const MyRecipes = () => {
   return (
     <div className="bg-background text-foreground min-h-screen relative">
       <Header />
-      <main className={`py-20 px-4 transition-all duration-300 ${isSidebarOpen ? 'mr-96' : ''}`}>
+      <main className={`py-20 px-4 transition-all duration-300 ${isSidebarOpen && !isMobile ? 'mr-96' : ''}`}>
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="text-center space-y-4">
-            <h1 className="text-4xl font-bold text-primary">My Recipes</h1>
-            <p className="text-xl text-muted-foreground">
+            <h1 className="text-3xl sm:text-4xl font-bold text-primary">My Recipes</h1>
+            <p className="text-lg sm:text-xl text-muted-foreground">
               Welcome back! Here are your saved recipes.
             </p>
           </div>

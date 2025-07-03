@@ -46,7 +46,7 @@ export const RecipeCard = ({
 
   return (
     <div className="border rounded-lg p-4">
-      <div className="flex justify-between items-start mb-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-4">
         <div className="flex-1">
           {isEditing ? (
             <RecipeEditForm
@@ -75,11 +75,12 @@ export const RecipeCard = ({
           )}
         </div>
         {!isEditing && (
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <Button 
               variant="outline" 
               size="sm"
               onClick={onEdit}
+              className="w-full sm:w-auto touch-manipulation"
             >
               Edit Title
             </Button>
@@ -87,6 +88,7 @@ export const RecipeCard = ({
               variant="hero" 
               size="sm"
               onClick={onFullEdit}
+              className="w-full sm:w-auto touch-manipulation"
             >
               Edit Recipe
             </Button>

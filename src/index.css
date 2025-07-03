@@ -81,6 +81,11 @@ All colors MUST be HSL.
     /* Content overlays */
     --overlay-dark: 0 0% 0% / 0.5;     /* Black with 50% opacity */
     --overlay-darker: 0 0% 0% / 0.7;   /* Black with 70% opacity */
+    
+    /* Mobile spacing tokens */
+    --spacing-mobile-touch: 44px;      /* Minimum touch target size */
+    --spacing-mobile-gap: 16px;        /* Standard mobile gap */
+    --spacing-mobile-padding: 16px;    /* Standard mobile padding */
 
     --sidebar-background: 20 14% 15%;
     --sidebar-foreground: 25 15% 65%;
@@ -245,5 +250,52 @@ All colors MUST be HSL.
   
   .page-break-inside-avoid {
     page-break-inside: avoid;
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 767px) {
+  /* Touch-friendly spacing */
+  .touch-manipulation {
+    touch-action: manipulation;
+    min-height: var(--spacing-mobile-touch);
+    min-width: var(--spacing-mobile-touch);
+  }
+  
+  /* Mobile-optimized containers */
+  .mobile-container {
+    padding: var(--spacing-mobile-padding);
+    gap: var(--spacing-mobile-gap);
+  }
+  
+  /* Prevent zoom on inputs on mobile */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  textarea,
+  select {
+    font-size: 16px;
+  }
+  
+  /* Better touch targets for buttons */
+  button, 
+  .btn,
+  [role="button"] {
+    min-height: var(--spacing-mobile-touch);
+    padding: 12px 16px;
+  }
+  
+  /* Larger text on mobile for readability */
+  body {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  /* Better mobile modal positioning */
+  .mobile-modal {
+    margin: 0;
+    max-height: 100vh;
+    border-radius: 0;
   }
 }

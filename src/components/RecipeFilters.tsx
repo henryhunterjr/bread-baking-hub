@@ -63,7 +63,7 @@ export const RecipeFilters = ({ recipes, onFilter }: RecipeFiltersProps) => {
       <CardContent className="pt-6">
         <div className="space-y-4">
           {/* Search */}
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
@@ -81,7 +81,11 @@ export const RecipeFilters = ({ recipes, onFilter }: RecipeFiltersProps) => {
                 className="pl-10"
               />
             </div>
-            <Button variant="outline" onClick={clearFilters}>
+            <Button 
+              variant="outline" 
+              onClick={clearFilters}
+              className="w-full sm:w-auto"
+            >
               Clear All
             </Button>
           </div>
@@ -123,7 +127,7 @@ export const RecipeFilters = ({ recipes, onFilter }: RecipeFiltersProps) => {
                 <Badge
                   key={tag}
                   variant={selectedTags.includes(tag) ? "default" : "secondary"}
-                  className="cursor-pointer hover:bg-primary/20"
+                  className="cursor-pointer hover:bg-primary/20 text-xs sm:text-sm px-2 py-1 touch-manipulation"
                   onClick={() => toggleTag(tag)}
                 >
                   {tag}
