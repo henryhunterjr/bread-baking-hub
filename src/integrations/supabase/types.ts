@@ -68,6 +68,7 @@ export type Database = {
           created_at: string
           data: Json
           id: string
+          image_url: string | null
           title: string
           user_id: string
         }
@@ -75,6 +76,7 @@ export type Database = {
           created_at?: string
           data: Json
           id?: string
+          image_url?: string | null
           title: string
           user_id: string
         }
@@ -82,6 +84,7 @@ export type Database = {
           created_at?: string
           data?: Json
           id?: string
+          image_url?: string | null
           title?: string
           user_id?: string
         }

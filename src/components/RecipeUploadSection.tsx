@@ -8,7 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 
 interface RecipeUploadSectionProps {
-  onRecipeFormatted: (recipe: any) => void;
+  onRecipeFormatted: (recipe: any, imageUrl?: string) => void;
   onError: (message: string) => void;
 }
 
@@ -56,16 +56,45 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       const data = await response.json();
       console.log('Received recipe data:', data);
       
+      let imageUrl = null;
+      
       // Save recipe to database if user is logged in
       if (user && data.recipe) {
         try {
           console.log('Saving recipe to database for user:', user.id);
+          
+          // Upload image to storage if user is logged in
+          if (selectedFile.type.startsWith('image/')) {
+            console.log('Uploading image to storage...');
+            const fileExt = selectedFile.name.split('.').pop();
+            const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+            
+            const { data: uploadData, error: uploadError } = await supabase.storage
+              .from('recipe-uploads')
+              .upload(fileName, selectedFile);
+            
+            if (uploadError) {
+              console.error('Error uploading image:', uploadError);
+            } else {
+              console.log('Image uploaded successfully:', uploadData.path);
+              
+              // Get public URL for the uploaded image
+              const { data: { publicUrl } } = supabase.storage
+                .from('recipe-uploads')
+                .getPublicUrl(uploadData.path);
+              
+              imageUrl = publicUrl;
+              console.log('Image public URL:', imageUrl);
+            }
+          }
+          
           const { error: saveError } = await supabase
             .from('recipes')
             .insert({
               user_id: user.id,
               title: data.recipe.title,
-              data: data.recipe
+              data: data.recipe,
+              image_url: imageUrl
             });
           
           if (saveError) {
@@ -80,7 +109,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
         }
       }
       
-      onRecipeFormatted(data.recipe);
+      onRecipeFormatted(data.recipe, imageUrl);
     } catch (error) {
       console.error('Error formatting recipe:', error);
       onError("Failed to format your recipe. Please try again or check if your image is clear and readable.");

@@ -25,9 +25,10 @@ interface FormattedRecipe {
 
 interface FormattedRecipeDisplayProps {
   recipe: FormattedRecipe;
+  imageUrl?: string;
 }
 
-export const FormattedRecipeDisplay = ({ recipe }: FormattedRecipeDisplayProps) => {
+export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisplayProps) => {
   // Check if ingredients is in new format (array of objects) or old format (object with metric/volume arrays)
   const isNewIngredientFormat = Array.isArray(recipe.ingredients);
   const isNewMethodFormat = Array.isArray(recipe.method) && recipe.method.length > 0 && typeof recipe.method[0] === 'object';
@@ -36,6 +37,16 @@ export const FormattedRecipeDisplay = ({ recipe }: FormattedRecipeDisplayProps) 
   return (
     <div className="space-y-6">
       <h2 className="text-3xl font-bold text-primary text-center">Formatted Recipe</h2>
+      
+      {imageUrl && (
+        <div className="w-full">
+          <img 
+            src={imageUrl} 
+            alt={recipe.title}
+            className="w-full h-64 object-cover rounded-lg shadow-warm"
+          />
+        </div>
+      )}
       
       <Card className="shadow-warm">
         <CardHeader>

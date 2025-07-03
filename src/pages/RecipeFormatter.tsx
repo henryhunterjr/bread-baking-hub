@@ -17,12 +17,17 @@ interface FormattedRecipe {
   troubleshooting: string[];
 }
 
+interface RecipeWithImage {
+  recipe: FormattedRecipe;
+  imageUrl?: string;
+}
+
 const RecipeFormatter = () => {
-  const [formattedRecipe, setFormattedRecipe] = useState<FormattedRecipe | null>(null);
+  const [formattedRecipe, setFormattedRecipe] = useState<RecipeWithImage | null>(null);
   const { toast } = useToast();
 
-  const handleRecipeFormatted = (recipe: FormattedRecipe) => {
-    setFormattedRecipe(recipe);
+  const handleRecipeFormatted = (recipe: FormattedRecipe, imageUrl?: string) => {
+    setFormattedRecipe({ recipe, imageUrl });
     toast({
       title: "Success!",
       description: "Your recipe has been formatted successfully.",
@@ -56,7 +61,10 @@ const RecipeFormatter = () => {
           />
 
           {formattedRecipe && (
-            <FormattedRecipeDisplay recipe={formattedRecipe} />
+            <FormattedRecipeDisplay 
+              recipe={formattedRecipe.recipe} 
+              imageUrl={formattedRecipe.imageUrl}
+            />
           )}
         </div>
       </main>

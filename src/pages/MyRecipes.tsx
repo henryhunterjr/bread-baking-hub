@@ -241,7 +241,10 @@ const MyRecipes = () => {
                       )}
                     </div>
                     {editingRecipe !== recipe.id && (
-                      <FormattedRecipeDisplay recipe={recipe.data} />
+                      <FormattedRecipeDisplay 
+                        recipe={recipe.data} 
+                        imageUrl={recipe.image_url}
+                      />
                     )}
                   </div>
                 ))}
