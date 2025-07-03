@@ -37,19 +37,30 @@ export const useRecipes = () => {
     fetchRecipes();
   }, [user]);
 
-  const updateRecipe = async (recipeId: string, title: string) => {
+  const updateRecipe = async (recipeId: string, updates: { title?: string; data?: any; image_url?: string }) => {
     if (!user) return false;
 
     try {
+      const recipe = recipes.find(r => r.id === recipeId);
+      if (!recipe) return false;
+
+      const updatePayload: any = {};
+      
+      if (updates.title !== undefined) {
+        updatePayload.title = updates.title.trim();
+      }
+      
+      if (updates.data !== undefined) {
+        updatePayload.data = updates.data;
+      }
+      
+      if (updates.image_url !== undefined) {
+        updatePayload.image_url = updates.image_url;
+      }
+
       const { error } = await supabase
         .from('recipes')
-        .update({ 
-          title: title.trim(),
-          data: { 
-            ...recipes.find(r => r.id === recipeId)?.data,
-            title: title.trim()
-          }
-        })
+        .update(updatePayload)
         .eq('id', recipeId)
         .eq('user_id', user.id);
 
@@ -64,17 +75,13 @@ export const useRecipes = () => {
       } else {
         // Update local state
         setRecipes(prevRecipes => 
-          prevRecipes.map(recipe => 
-            recipe.id === recipeId 
+          prevRecipes.map(r => 
+            r.id === recipeId 
               ? { 
-                  ...recipe, 
-                  title: title.trim(),
-                  data: { 
-                    ...recipe.data, 
-                    title: title.trim() 
-                  }
+                  ...r,
+                  ...updatePayload
                 }
-              : recipe
+              : r
           )
         );
         
@@ -95,9 +102,20 @@ export const useRecipes = () => {
     }
   };
 
+  const updateRecipeTitle = async (recipeId: string, title: string) => {
+    return updateRecipe(recipeId, { 
+      title: title.trim(),
+      data: { 
+        ...recipes.find(r => r.id === recipeId)?.data,
+        title: title.trim()
+      }
+    });
+  };
+
   return {
     recipes,
     loading,
-    updateRecipe
+    updateRecipe,
+    updateRecipeTitle
   };
 };

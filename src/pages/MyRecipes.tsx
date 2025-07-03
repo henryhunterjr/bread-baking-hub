@@ -10,8 +10,9 @@ import { RecipeCard } from '@/components/RecipeCard';
 
 const MyRecipes = () => {
   const { user, loading } = useAuth();
-  const { recipes, loading: loadingRecipes, updateRecipe } = useRecipes();
+  const { recipes, loading: loadingRecipes, updateRecipe, updateRecipeTitle } = useRecipes();
   const [editingRecipe, setEditingRecipe] = useState<string | null>(null);
+  const [fullEditingRecipe, setFullEditingRecipe] = useState<string | null>(null);
   const [updating, setUpdating] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState<any | null>(null);
@@ -27,16 +28,31 @@ const MyRecipes = () => {
     setEditingRecipe(recipe.id);
   };
 
-  const handleCancelEdit = () => {
-    setEditingRecipe(null);
+  const handleFullEditClick = (recipe: any) => {
+    setFullEditingRecipe(recipe.id);
   };
 
-  const handleUpdateRecipe = async (recipeId: string, title: string) => {
+  const handleCancelEdit = () => {
+    setEditingRecipe(null);
+    setFullEditingRecipe(null);
+  };
+
+  const handleUpdateRecipeTitle = async (recipeId: string, title: string) => {
     setUpdating(true);
-    const success = await updateRecipe(recipeId, title);
+    const success = await updateRecipeTitle(recipeId, title);
     setUpdating(false);
     if (success) {
       setEditingRecipe(null);
+    }
+    return success;
+  };
+
+  const handleUpdateFullRecipe = async (recipeId: string, updates: { data: any; image_url?: string }) => {
+    setUpdating(true);
+    const success = await updateRecipe(recipeId, updates);
+    setUpdating(false);
+    if (success) {
+      setFullEditingRecipe(null);
     }
     return success;
   };
@@ -100,10 +116,13 @@ const MyRecipes = () => {
                     key={recipe.id}
                     recipe={recipe}
                     isEditing={editingRecipe === recipe.id}
+                    isFullEditing={fullEditingRecipe === recipe.id}
                     updating={updating}
                     onEdit={() => handleEditClick(recipe)}
+                    onFullEdit={() => handleFullEditClick(recipe)}
                     onCancelEdit={handleCancelEdit}
-                    onSave={handleUpdateRecipe}
+                    onSave={handleUpdateRecipeTitle}
+                    onFullSave={handleUpdateFullRecipe}
                     onAskAssistant={handleAskAssistant}
                   />
                 ))}

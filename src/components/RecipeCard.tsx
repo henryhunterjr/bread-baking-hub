@@ -1,26 +1,46 @@
 import { Button } from '@/components/ui/button';
 import { FormattedRecipeDisplay } from '@/components/FormattedRecipeDisplay';
 import { RecipeEditForm } from './RecipeEditForm';
+import { FullRecipeEditForm } from './FullRecipeEditForm';
 
 interface RecipeCardProps {
   recipe: any;
   isEditing: boolean;
+  isFullEditing: boolean;
   updating: boolean;
   onEdit: () => void;
+  onFullEdit: () => void;
   onCancelEdit: () => void;
   onSave: (recipeId: string, title: string) => Promise<boolean>;
+  onFullSave: (recipeId: string, updates: { data: any; image_url?: string }) => Promise<boolean>;
   onAskAssistant: (recipe: any) => void;
 }
 
 export const RecipeCard = ({ 
   recipe, 
   isEditing, 
+  isFullEditing,
   updating, 
   onEdit, 
+  onFullEdit,
   onCancelEdit, 
   onSave, 
+  onFullSave,
   onAskAssistant 
 }: RecipeCardProps) => {
+  if (isFullEditing) {
+    return (
+      <div className="border rounded-lg p-4">
+        <FullRecipeEditForm
+          recipe={recipe}
+          onSave={onFullSave}
+          onCancel={onCancelEdit}
+          updating={updating}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="border rounded-lg p-4">
       <div className="flex justify-between items-start mb-4">
@@ -52,13 +72,22 @@ export const RecipeCard = ({
           )}
         </div>
         {!isEditing && (
-          <Button 
-            variant="outline" 
-            size="sm"
-            onClick={onEdit}
-          >
-            Edit
-          </Button>
+          <div className="flex gap-2">
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={onEdit}
+            >
+              Edit Title
+            </Button>
+            <Button 
+              variant="hero" 
+              size="sm"
+              onClick={onFullEdit}
+            >
+              Edit Recipe
+            </Button>
+          </div>
         )}
       </div>
       {!isEditing && (
