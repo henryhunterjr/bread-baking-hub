@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 
 interface RecipeUploadSectionProps {
   onRecipeFormatted: (recipe: any) => void;
@@ -13,6 +15,7 @@ interface RecipeUploadSectionProps {
 export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUploadSectionProps) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuth();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -44,6 +47,28 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       }
 
       const data = await response.json();
+      
+      // Save recipe to database if user is logged in
+      if (user && data.recipe) {
+        try {
+          const { error: saveError } = await supabase
+            .from('recipes')
+            .insert({
+              user_id: user.id,
+              title: data.recipe.title,
+              data: data.recipe
+            });
+          
+          if (saveError) {
+            console.error('Error saving recipe:', saveError);
+            // Don't fail the whole operation if saving fails
+          }
+        } catch (saveError) {
+          console.error('Error saving recipe:', saveError);
+          // Don't fail the whole operation if saving fails
+        }
+      }
+      
       onRecipeFormatted(data.recipe);
     } catch (error) {
       console.error('Error formatting recipe:', error);

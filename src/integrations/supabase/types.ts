@@ -63,6 +63,30 @@ export type Database = {
         }
         Relationships: []
       }
+      recipes: {
+        Row: {
+          created_at: string
+          data: Json
+          id: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          data: Json
+          id?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          id?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       submissions: {
         Row: {
           created_at: string
