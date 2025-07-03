@@ -80,6 +80,18 @@ export default {
 					'400': 'hsl(var(--amber-400))',
 					'300': 'hsl(var(--amber-300))',
 					'200': 'hsl(var(--amber-200))'
+				},
+				header: {
+					DEFAULT: 'hsl(var(--header-background))',
+					foreground: 'hsl(var(--header-foreground))'
+				},
+				section: {
+					DEFAULT: 'hsl(var(--section-background))',
+					secondary: 'hsl(var(--section-secondary))'
+				},
+				overlay: {
+					dark: 'hsl(var(--overlay-dark))',
+					darker: 'hsl(var(--overlay-darker))'
 				}
 			},
 			backgroundImage: {

@@ -70,6 +70,18 @@ All colors MUST be HSL.
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
+    /* Header specific tokens */
+    --header-background: 20 14% 15%;  /* Stone 800 equivalent */
+    --header-foreground: 25 15% 65%;  /* Stone 300 equivalent */
+    
+    /* Section backgrounds */
+    --section-background: 20 14% 15%;  /* Stone 800 equivalent */
+    --section-secondary: 20 14% 22%;   /* Stone 700 equivalent */
+    
+    /* Content overlays */
+    --overlay-dark: 0 0% 0% / 0.5;     /* Black with 50% opacity */
+    --overlay-darker: 0 0% 0% / 0.7;   /* Black with 70% opacity */
+
     --sidebar-background: 20 14% 15%;
     --sidebar-foreground: 25 15% 65%;
     --sidebar-primary: 45 85% 60%;
@@ -116,6 +128,14 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Header tokens for dark mode */
+    --header-background: 240 5.9% 10%;
+    --header-foreground: 240 4.8% 95.9%;
+    
+    /* Section backgrounds for dark mode */
+    --section-background: 240 5.9% 10%;
+    --section-secondary: 240 3.7% 15.9%;
   }
 }
 

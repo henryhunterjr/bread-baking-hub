@@ -36,23 +36,23 @@ export default function RecipeUploadForm({ onSuccess }: { onSuccess: (data: any)
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-stone-800 p-6 rounded-xl space-y-4 shadow-xl">
-      <h2 className="text-xl font-bold text-white">Upload Your Recipe</h2>
+    <form onSubmit={handleSubmit} className="bg-section-background p-6 rounded-xl space-y-4 shadow-xl">
+      <h2 className="text-xl font-bold text-foreground">Upload Your Recipe</h2>
       <input
         type="file"
         accept="image/*,application/pdf"
         onChange={(e) => setFile(e.target.files?.[0] || null)}
-        className="block w-full text-stone-300"
+        className="block w-full text-muted-foreground"
         required
       />
       <button
         type="submit"
-        className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-md font-semibold"
+        className="bg-amber-600 hover:bg-amber-500 text-primary-foreground px-4 py-2 rounded-md font-semibold"
         disabled={loading}
       >
         {loading ? 'Formatting...' : 'Format My Recipe'}
       </button>
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+      {error && <p className="text-destructive text-sm">{error}</p>}
     </form>
   );
 }
