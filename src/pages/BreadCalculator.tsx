@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Calculator, Download, Printer, Info, RotateCcw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 interface Recipe {
   name: string;
@@ -191,6 +193,7 @@ const BreadCalculator = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       {/* Header */}
       <div className="bg-gradient-to-r from-primary to-primary-foreground text-white py-16">
         <div className="container mx-auto px-4 text-center">
@@ -780,6 +783,8 @@ const BreadCalculator = () => {
           </TabsContent>
         </Tabs>
       </div>
+      
+      <Footer />
     </div>
   );
 };
