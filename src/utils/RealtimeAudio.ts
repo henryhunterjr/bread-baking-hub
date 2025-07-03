@@ -87,33 +87,48 @@ class AudioQueue {
   }
 
   async addToQueue(audioData: Uint8Array) {
+    console.log('🎵 Adding audio to queue, length:', audioData.length);
     this.queue.push(audioData);
     if (!this.isPlaying) {
+      console.log('🎵 Starting audio playback');
       await this.playNext();
+    } else {
+      console.log('🎵 Audio already playing, queued for later');
     }
   }
 
   private async playNext() {
     if (this.queue.length === 0) {
+      console.log('🎵 Audio queue empty, stopping playback');
       this.isPlaying = false;
       return;
     }
 
     this.isPlaying = true;
     const audioData = this.queue.shift()!;
+    console.log('🎵 Processing next audio chunk, size:', audioData.length);
 
     try {
+      console.log('🎵 Creating WAV from PCM data...');
       const wavData = this.createWavFromPCM(audioData);
+      console.log('🎵 WAV created, size:', wavData.length);
+      
+      console.log('🎵 Decoding audio data...');
       const audioBuffer = await this.audioContext.decodeAudioData(wavData.buffer);
+      console.log('🎵 Audio decoded successfully, duration:', audioBuffer.duration);
       
       const source = this.audioContext.createBufferSource();
       source.buffer = audioBuffer;
       source.connect(this.audioContext.destination);
       
-      source.onended = () => this.playNext();
+      console.log('🎵 Playing audio chunk...');
+      source.onended = () => {
+        console.log('🎵 Audio chunk finished playing');
+        this.playNext();
+      };
       source.start(0);
     } catch (error) {
-      console.error('Error playing audio:', error);
+      console.error('❌ Error playing audio chunk:', error);
       this.playNext(); // Continue with next segment even if current fails
     }
   }

@@ -33,6 +33,15 @@ export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: V
       // Create and start the realtime chat
       chatRef.current = new RealtimeChat(handleMessage, onSpeakingChange);
       await chatRef.current.init();
+      
+      // Force audio context resume with user interaction
+      const testAudio = new AudioContext();
+      if (testAudio.state === 'suspended') {
+        await testAudio.resume();
+        console.log('🔊 Audio context resumed after user interaction');
+      }
+      await testAudio.close();
+      
       setIsConnected(true);
       
       console.log('✅ Voice conversation ready');
