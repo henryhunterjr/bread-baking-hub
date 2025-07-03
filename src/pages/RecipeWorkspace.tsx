@@ -9,7 +9,7 @@ import { FormattedRecipeDisplay } from '../components/FormattedRecipeDisplay';
 import { FullRecipeEditForm } from '../components/FullRecipeEditForm';
 import { RecipeImageUploader } from '../components/RecipeImageUploader';
 import { RecipeActionsToolbar } from '../components/RecipeActionsToolbar';
-import { AIAssistantSidebar } from '../components/AIAssistantSidebar';
+
 import { RecipeQuickAccessDrawer } from '../components/RecipeQuickAccessDrawer';
 import { VoiceInterface } from '../components/VoiceInterface';
 import { Button } from '@/components/ui/button';
@@ -46,7 +46,7 @@ const RecipeWorkspace = () => {
   const [editedRecipe, setEditedRecipe] = useState<FormattedRecipe | null>(null);
   const [recipeImageUrl, setRecipeImageUrl] = useState<string>('');
   const [currentStep, setCurrentStep] = useState<WorkspaceStep>('upload');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const { toast } = useToast();
@@ -150,7 +150,7 @@ const RecipeWorkspace = () => {
   return (
     <div className="bg-background text-foreground min-h-screen relative">
       <Header />
-      <main className={`py-20 px-4 transition-all duration-300 ${isSidebarOpen && !isMobile ? 'mr-96' : ''} ${user ? 'pb-32' : ''}`}>
+      <main className={`py-20 px-4 ${user ? 'pb-32' : ''}`}>
         <div className="max-w-6xl mx-auto space-y-8">
           
           {/* Header Section */}
@@ -300,12 +300,6 @@ const RecipeWorkspace = () => {
       
       <Footer />
       
-      {/* AI Assistant Sidebar */}
-      <AIAssistantSidebar
-        recipeContext={editedRecipe || formattedRecipe?.recipe}
-        isOpen={isSidebarOpen}
-        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
-      />
       
       {/* Voice Interface */}
       <VoiceInterface

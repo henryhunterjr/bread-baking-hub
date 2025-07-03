@@ -89,7 +89,7 @@ export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: V
 
   if (!isConnected) {
     return (
-      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-50">
+      <div className="fixed right-4 bottom-4 z-50">
         <Button
           onClick={startConversation}
           disabled={isLoading || !isOnline}
@@ -111,7 +111,7 @@ export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: V
   }
 
   return (
-    <div className="fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-2">
+    <div className="fixed right-4 bottom-4 z-50 flex flex-col items-center gap-2">
       <div className="bg-primary text-primary-foreground p-3 rounded-full shadow-warm">
         <Volume2 className="h-6 w-6 animate-pulse" />
       </div>
