@@ -1,21 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
-import { Send, Mic, MicOff, Volume2, VolumeX, MessageCircle, X } from 'lucide-react';
+import { Send, MessageCircle, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
-import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
-
-interface Message {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: Date;
-}
+import { useAIChat } from '@/hooks/useAIChat';
+import { VoiceControls } from './VoiceControls';
+import { ChatMessage } from './ChatMessage';
 
 interface AIAssistantSidebarProps {
   recipeContext?: any;
@@ -26,26 +19,13 @@ interface AIAssistantSidebarProps {
 type AssistantMode = 'general' | 'tips' | 'substitutions' | 'scaling' | 'troubleshooting';
 
 export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssistantSidebarProps) => {
-  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [mode, setMode] = useState<AssistantMode>('general');
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const { toast } = useToast();
-
-  // Initialize speech recognition using custom hook
-  const speechRecognition = useSpeechRecognition({
-    onResult: ({ transcript }) => {
-      setInput(transcript);
-    },
-    onError: (error) => {
-      toast({
-        title: "Speech Recognition Error",
-        description: "Could not recognize speech. Please try again.",
-        variant: "destructive"
-      });
-    }
+  
+  const { messages, isLoading, mode, setMode, sendMessage } = useAIChat({ recipeContext });
+  const voiceControls = VoiceControls({ 
+    onTranscript: setInput,
+    disabled: isLoading 
   });
 
   // Auto-scroll to bottom when new messages arrive
@@ -55,115 +35,11 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
     }
   }, [messages]);
 
-  const getModeSystemMessage = (mode: AssistantMode) => {
-    const baseMessage = "You are Baker's Helper, an expert baking assistant. Provide helpful, practical advice about baking.";
-    
-    switch (mode) {
-      case 'tips':
-        return baseMessage + " Focus on providing useful tips and techniques to improve baking results.";
-      case 'substitutions':
-        return baseMessage + " Focus on ingredient substitutions and alternatives for baking recipes.";
-      case 'scaling':
-        return baseMessage + " Focus on helping scale recipes up or down and adjusting baking times/temperatures.";
-      case 'troubleshooting':
-        return baseMessage + " Focus on diagnosing and solving common baking problems and issues.";
-      default:
-        return baseMessage + " Answer any baking-related questions with expertise and enthusiasm.";
-    }
-  };
-
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
-
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      role: 'user',
-      content: input.trim(),
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, userMessage]);
+    
+    await sendMessage(input);
     setInput('');
-    setIsLoading(true);
-
-    try {
-      const { data, error } = await supabase.functions.invoke('bakers-helper', {
-        body: {
-          message: userMessage.content,
-          recipeContext,
-          mode,
-          systemMessage: getModeSystemMessage(mode)
-        }
-      });
-
-      if (error) throw error;
-
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: data.response,
-        timestamp: new Date()
-      };
-
-      setMessages(prev => [...prev, assistantMessage]);
-    } catch (error) {
-      console.error('Error calling AI assistant:', error);
-      toast({
-        title: "Error",
-        description: "Failed to get response from Baker's Helper. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleVoiceToggle = () => {
-    if (!speechRecognition.isSupported) {
-      const isSecureContext = window.location.protocol === 'https:' || 
-                             window.location.hostname === 'localhost' ||
-                             window.location.hostname === '127.0.0.1';
-      
-      let errorDescription = "Speech recognition is not available in your browser.";
-      
-      if (!isSecureContext) {
-        errorDescription = "Speech recognition requires HTTPS. Please use a secure connection.";
-      } else if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-        errorDescription = "Your browser doesn't support speech recognition. Try Chrome, Edge, or Safari.";
-      }
-      
-      toast({
-        title: "Voice Not Supported",
-        description: errorDescription,
-        variant: "destructive"
-      });
-      return;
-    }
-
-    speechRecognition.toggleListening();
-  };
-
-  const handleSpeak = (text: string) => {
-    if ('speechSynthesis' in window) {
-      if (isSpeaking) {
-        speechSynthesis.cancel();
-        setIsSpeaking(false);
-        return;
-      }
-
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.onstart = () => setIsSpeaking(true);
-      utterance.onend = () => setIsSpeaking(false);
-      utterance.onerror = () => setIsSpeaking(false);
-      
-      speechSynthesis.speak(utterance);
-    } else {
-      toast({
-        title: "Speech Not Supported",
-        description: "Text-to-speech is not available in your browser.",
-        variant: "destructive"
-      });
-    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -236,34 +112,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
               )}
               
               {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[80%] rounded-lg p-3 ${
-                      message.role === 'user'
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-muted'
-                    }`}
-                  >
-                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                    {message.role === 'assistant' && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="mt-2 h-6 p-1"
-                        onClick={() => handleSpeak(message.content)}
-                      >
-                        {isSpeaking ? (
-                          <VolumeX className="h-3 w-3" />
-                        ) : (
-                          <Volume2 className="h-3 w-3" />
-                        )}
-                      </Button>
-                    )}
-                  </div>
-                </div>
+                <ChatMessage key={message.id} message={message} />
               ))}
               
               {isLoading && (
@@ -290,17 +139,9 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
                 disabled={isLoading}
                 className="pr-12"
               />
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 ${
-                  speechRecognition.isListening ? 'text-red-500' : ''
-                }`}
-                onClick={handleVoiceToggle}
-                disabled={isLoading}
-              >
-                {speechRecognition.isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
-              </Button>
+              <div className="absolute right-1 top-1/2 -translate-y-1/2">
+                {voiceControls.MicButton}
+              </div>
             </div>
             <Button 
               onClick={handleSend} 
