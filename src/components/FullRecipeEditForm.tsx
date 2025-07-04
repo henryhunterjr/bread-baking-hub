@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BasicInfoSection } from './recipe-edit/BasicInfoSection';
@@ -10,6 +9,7 @@ import { ImageSection } from './recipe-edit/ImageSection';
 import { OrganizationSection } from './recipe-edit/OrganizationSection';
 import { PublicSharingSection } from './recipe-edit/PublicSharingSection';
 import { RecommendedProductsSection } from './recipe-edit/RecommendedProductsSection';
+import { useRecipeEditForm } from '@/hooks/useRecipeEditForm';
 
 interface FullRecipeEditFormProps {
   recipe: any;
@@ -20,117 +20,19 @@ interface FullRecipeEditFormProps {
 }
 
 export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allRecipes = [] }: FullRecipeEditFormProps) => {
-  const [formData, setFormData] = useState({
-    introduction: recipe.data.introduction || '',
-    prep_time: recipe.data.prep_time || '',
-    cook_time: recipe.data.cook_time || '',
-    total_time: recipe.data.total_time || '',
-    servings: recipe.data.servings || '',
-    ingredients: Array.isArray(recipe.data.ingredients) 
-      ? recipe.data.ingredients.map(ing => 
-          typeof ing === 'object' ? `${ing.amount_volume || ing.amount_metric || ''} ${ing.item || ''}`.trim() : String(ing || '')
-        )
-      : [''],
-    method: Array.isArray(recipe.data.method) 
-      ? recipe.data.method.map(step => 
-          typeof step === 'object' ? step.instruction || '' : String(step || '')
-        )
-      : [''],
-    tips: Array.isArray(recipe.data.tips) 
-      ? recipe.data.tips.map(tip => String(tip || ''))
-      : [''],
-    troubleshooting: Array.isArray(recipe.data.troubleshooting) 
-      ? recipe.data.troubleshooting.map(item => 
-          typeof item === 'object' ? item : { issue: String(item || ''), solution: '' }
-        )
-      : [{ issue: '', solution: '' }],
-    image_url: recipe.image_url || '',
-    folder: recipe.folder || '',
-    tags: recipe.tags || [],
-    is_public: recipe.is_public || false,
-    slug: recipe.slug || '',
-    recommended_products: Array.isArray(recipe.data.recommended_products) 
-      ? recipe.data.recommended_products.map(prod => String(prod || ''))
-      : []
-  });
-
-  const [openSections, setOpenSections] = useState({
-    basics: true,
-    ingredients: false,
-    method: false,
-    tips: false,
-    troubleshooting: false,
-    image: false,
-    organization: false,
-    sharing: false,
-    products: true
-  });
-
-  const toggleSection = (section: string) => {
-    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
-  };
-
-  const updateField = (field: string, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const addArrayItem = (field: string, item: any = '') => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: [...prev[field], item]
-    }));
-  };
-
-  const removeArrayItem = (field: string, index: number) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: prev[field].filter((_, i) => i !== index)
-    }));
-  };
-
-  const updateArrayItem = (field: string, index: number, value: any) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: prev[field].map((item, i) => i === index ? value : item)
-    }));
-  };
+  const {
+    formData,
+    openSections,
+    toggleSection,
+    updateField,
+    addArrayItem,
+    removeArrayItem,
+    updateArrayItem,
+    prepareFormDataForSave,
+  } = useRecipeEditForm({ recipe, allRecipes });
 
   const handleSave = async () => {
-    // Clean up data - remove empty strings and validate
-    const cleanedData = {
-      ...recipe.data,
-      introduction: formData.introduction.trim(),
-      prep_time: formData.prep_time.trim(),
-      cook_time: formData.cook_time.trim(),
-      total_time: formData.total_time.trim(),
-      servings: formData.servings.trim(),
-      ingredients: formData.ingredients.filter(item => String(item || '').trim() !== ''),
-      method: formData.method.filter(item => String(item || '').trim() !== ''),
-      tips: formData.tips.filter(item => String(item || '').trim() !== ''),
-      troubleshooting: formData.troubleshooting.filter(item => 
-        (typeof item === 'object' && (String(item.issue || '').trim() !== '' || String(item.solution || '').trim() !== '')) ||
-        (typeof item === 'string' && String(item).trim() !== '')
-      ),
-      recommended_products: formData.recommended_products.filter(id => String(id || '').trim() !== '')
-    };
-
-    const updates: any = { data: cleanedData };
-    if (formData.image_url !== recipe.image_url) {
-      updates.image_url = formData.image_url.trim() || null;
-    }
-    if (formData.folder !== recipe.folder) {
-      updates.folder = formData.folder.trim() || null;
-    }
-    if (JSON.stringify(formData.tags) !== JSON.stringify(recipe.tags)) {
-      updates.tags = formData.tags.filter(tag => tag.trim() !== '');
-    }
-    if (formData.is_public !== recipe.is_public) {
-      updates.is_public = formData.is_public;
-    }
-    if (formData.slug !== recipe.slug) {
-      updates.slug = formData.slug.trim() || null;
-    }
-
+    const updates = prepareFormDataForSave();
     const success = await onSave(recipe.id, updates);
     if (success) {
       onCancel();
