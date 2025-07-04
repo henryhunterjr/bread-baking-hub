@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, ExternalLink, Eye } from "lucide-react";
 import heroYeastWater from "/lovable-uploads/5e067aee-63d8-4d0b-80d3-075211fc0e3b.png";
 import heroBreadJourney from "/lovable-uploads/bc026f92-81e2-4d16-8328-a13f53dc666f.png";
-import heroSourdoughRest from "/lovable-uploads/901585f4-68ad-4944-ac87-dae24175df7d.png";
+import heroSourdoughRest from "/lovable-uploads/2a175afa-69e3-4c4f-b6b1-528bd0634eb9.png";
 import heroVitaleMastery from "@/assets/hero-vitale-mastery.jpg";
 import heroOvenMarket from "/lovable-uploads/bf859aa6-8525-4149-afdd-62597c742ef7.png";
 import heroWatchersDescent from "@/assets/hero-watchers-descent.jpg";
