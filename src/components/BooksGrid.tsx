@@ -3,6 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Eye } from "lucide-react";
 
+// Import the new book cover images
+import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
+import breadJourneyCover from "/lovable-uploads/171c5ec1-d38e-4257-a2e4-60b75d2e2909.png";
+
 interface Book {
   id: string;
   title: string;
@@ -12,6 +16,7 @@ interface Book {
   amazonUrl?: string;
   landingPageUrl?: string;
   coverGradient: string;
+  coverImage?: string;
   badge?: string;
   featured?: boolean;
   previewContent: string;
@@ -31,6 +36,7 @@ const books: Book[] = [
     ],
     amazonUrl: "https://read.amazon.com/sample/B0FGQPM4TG?clientId=share",
     coverGradient: "bg-primary",
+    coverImage: sourdoughCover,
     badge: "Now Available in Paperback",
     featured: true,
     previewContent: `
@@ -53,6 +59,7 @@ const books: Book[] = [
     ],
     amazonUrl: "https://www.amazon.com/dp/B0CH2D2GDB",
     coverGradient: "bg-secondary",
+    coverImage: breadJourneyCover,
     previewContent: `
       <h2>Bread: A Journey - Preview</h2>
       <h3>Introduction: The Universal Language of Bread</h3>
@@ -165,7 +172,14 @@ const BooksGrid = ({ onPreview }: BooksGridProps) => {
               }`}
             >
               {/* Book Cover */}
-              <div className={`relative h-64 ${book.coverGradient} rounded-t-lg overflow-hidden`}>
+              <div 
+                className={`relative h-64 ${book.coverGradient} rounded-t-lg overflow-hidden`}
+                style={book.coverImage ? { 
+                  backgroundImage: `url(${book.coverImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+                } : {}}
+              >
                 {book.badge && (
                   <Badge className="absolute top-4 right-4 bg-destructive text-destructive-foreground z-10">
                     {book.badge}
@@ -175,13 +189,15 @@ const BooksGrid = ({ onPreview }: BooksGridProps) => {
                 {/* Book spine effect */}
                 <div className="absolute left-4 top-4 bottom-4 w-2 bg-black/20 rounded-sm"></div>
                 
-                {/* Cover content */}
-                <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-6 text-center">
-                  <div className="bg-black/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                    <h3 className="text-xl font-bold mb-2">{book.title}</h3>
-                    <p className="text-sm opacity-90 italic">{book.subtitle}</p>
+                {/* Cover content - only show for books without cover images */}
+                {!book.coverImage && (
+                  <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-6 text-center">
+                    <div className="bg-black/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                      <h3 className="text-xl font-bold mb-2">{book.title}</h3>
+                      <p className="text-sm opacity-90 italic">{book.subtitle}</p>
+                    </div>
                   </div>
-                </div>
+                )}
                 
                 {/* Book pages effect */}
                 <div className="absolute right-0 top-6 bottom-6 w-1 bg-white/30"></div>
