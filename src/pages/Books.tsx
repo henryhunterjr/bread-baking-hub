@@ -61,6 +61,41 @@ const bookData: Record<string, BookData> = {
     `,
     audioUrl: "/audio/journey-excerpt.mp3" // Placeholder for future MP3
   },
+  vitale: {
+    id: "vitale",
+    title: "Vitale Sourdough Mastery",
+    subtitle: "Master the Art of Fermentation and Baking",
+    author: "Henry Hunter",
+    description: "Ready to transform your relationship with sourdough? 'Vitale Sourdough Mastery' shares the secrets behind Henry Hunter's 10+ year relationship with his treasured starter – the foundation of consistently exceptional bread. Written by the founder of the global 'Baking Great Bread at Home' community, this book goes beyond recipes to teach you the living culture mastery that separates good bakers from great ones.",
+    coverImage: "/lovable-uploads/47fc6d49-8e46-4eb3-a2df-2a1fc47ac10c.png",
+    previewContent: `
+      <h2>Vitale Sourdough Mastery - Preview</h2>
+      <h3>Master the Art of Fermentation and Baking – The Complete Guide to Sourdough Excellence</h3>
+      <p>Ready to transform your relationship with sourdough? "Vitale Sourdough Mastery" shares the secrets behind Henry Hunter's 10+ year relationship with his treasured starter – the foundation of consistently exceptional bread.</p>
+      <p>Written by the founder of the global "Baking Great Bread at Home" community, this book goes beyond recipes to teach you the living culture mastery that separates good bakers from great ones.</p>
+      
+      <h4>What You'll Master:</h4>
+      <ul>
+        <li>Reading your starter's signals for perfect timing and flavor</li>
+        <li>Henry's proven "fermentolyse" technique for superior texture</li>
+        <li>Visual monitoring, feeding schedules, and troubleshooting</li>
+        <li>Global sourdough variations adapted for home kitchens</li>
+        <li>The science behind fermentation made simple and practical</li>
+      </ul>
+
+      <h3>Chapter 2: "Understanding Vitale - Reading Your Starter's Language"</h3>
+      <p>After ten years with Vitale, I've learned that sourdough starters communicate if you know how to listen. The key to mastery isn't following rigid rules – it's learning to read your starter's signals.</p>
+      
+      <p><strong>The Morning Ritual</strong><br>Every morning, I observe Vitale before thinking about feeding schedules. I look, smell, and yes – listen. A healthy starter makes tiny pops as bubbles break the surface. It's the sound of life.</p>
+      
+      <p><strong>Visual Cues That Matter</strong><br>Vitale's surface tells me everything: bubbles and slight doming mean active fermentation – perfect for milder loaves. If she's fallen with liquid on top, she's past peak but ready for tangier, complex flavors.</p>
+      
+      <p><strong>Your Nose Knows Best</strong><br>Your nose is more reliable than any timer. Fresh after feeding, Vitale smells clean and yeasty. At peak activity, she's bright and appealing. Post-peak brings wine-like complexity. When she smells vinegary, she's hungry but perfectly fine.</p>
+      
+      <p><em>[Preview continues with purchasing full book...]</em></p>
+    `,
+    audioUrl: "/audio/vitale-excerpt.mp3" // Placeholder for future MP3
+  },
   market: {
     id: "market",
     title: "From Oven to Market", 

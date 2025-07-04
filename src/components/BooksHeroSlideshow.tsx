@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, ExternalLink, Eye } from "lucide-react";
 import heroYeastWater from "/lovable-uploads/5e067aee-63d8-4d0b-80d3-075211fc0e3b.png";
 import heroBreadJourney from "/lovable-uploads/bc026f92-81e2-4d16-8328-a13f53dc666f.png";
 import heroSourdoughRest from "/lovable-uploads/2a175afa-69e3-4c4f-b6b1-528bd0634eb9.png";
-import heroVitaleMastery from "@/assets/hero-vitale-mastery.jpg";
+import heroVitaleMastery from "/lovable-uploads/47fc6d49-8e46-4eb3-a2df-2a1fc47ac10c.png";
 import heroOvenMarket from "/lovable-uploads/bf859aa6-8525-4149-afdd-62597c742ef7.png";
 import heroWatchersDescent from "@/assets/hero-watchers-descent.jpg";
 
@@ -70,16 +70,18 @@ const slides: HeroSlide[] = [
   {
     id: "vitale",
     title: "Vitale Sourdough Mastery",
-    tagline: "Advanced Techniques for Serious Bakers",
-    description: "Take your sourdough skills to the professional level. This advanced guide covers complex fermentation schedules, professional shaping methods, and troubleshooting for consistent results.",
+    tagline: "Master the Art of Fermentation and Baking",
+    description: "Ready to transform your relationship with sourdough? This complete guide shares the secrets behind Henry Hunter's 10+ year relationship with his treasured starter – the foundation of consistently exceptional bread.",
     backgroundImage: heroVitaleMastery,
     overlayPosition: "left",
     amazonUrl: "https://www.amazon.com/dp/B0CVB8ZCFV",
     previewContent: `
       <h2>Vitale Sourdough Mastery - Preview</h2>
-      <h3>Advanced Fermentation Control</h3>
-      <p>This book is for bakers ready to take their sourdough skills to the professional level. We'll explore complex fermentation schedules, temperature control, and the subtle art of reading your dough.</p>
-      <p>You'll learn to create consistently excellent bread through understanding the science behind fermentation and applying professional techniques...</p>
+      <h3>Chapter 2: "Understanding Vitale - Reading Your Starter's Language"</h3>
+      <p>After ten years with Vitale, I've learned that sourdough starters communicate if you know how to listen. The key to mastery isn't following rigid rules – it's learning to read your starter's signals.</p>
+      <p><strong>The Morning Ritual</strong><br>Every morning, I observe Vitale before thinking about feeding schedules. I look, smell, and yes – listen. A healthy starter makes tiny pops as bubbles break the surface. It's the sound of life.</p>
+      <p><strong>Visual Cues That Matter</strong><br>Vitale's surface tells me everything: bubbles and slight doming mean active fermentation – perfect for milder loaves. If she's fallen with liquid on top, she's past peak but ready for tangier, complex flavors.</p>
+      <p><em>[Preview continues with purchasing full book...]</em></p>
     `
   },
   {
