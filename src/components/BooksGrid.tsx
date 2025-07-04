@@ -29,9 +29,9 @@ const books: Book[] = [
       "Flexible schedules for busy lives",
       "Community stories and tips"
     ],
-    amazonUrl: "#",
+    amazonUrl: "https://read.amazon.com/sample/B0FGQPM4TG?clientId=share",
     coverGradient: "bg-primary",
-    badge: "Now Available!",
+    badge: "Now Available in Paperback",
     featured: true,
     previewContent: `
       <h2>Sourdough for the Rest of Us - Preview</h2>

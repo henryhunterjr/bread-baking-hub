@@ -3,8 +3,8 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, ExternalLink, Eye } from "lucide-react";
 import heroYeastWater from "/lovable-uploads/5745a0fa-5ff0-4d05-b59a-8668b5ab8ca5.png";
-import heroBreadJourney from "/lovable-uploads/a7ffae49-a580-46de-a094-eb6237fd4a15.png";
-import heroSourdoughRest from "/lovable-uploads/901585f4-68ad-4944-ac87-dae24175df7d.png";
+import heroBreadJourney from "/lovable-uploads/171c5ec1-d38e-4257-a2e4-60b75d2e2909.png";
+import heroSourdoughRest from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
 import heroVitaleMastery from "@/assets/hero-vitale-mastery.jpg";
 import heroOvenMarket from "@/assets/hero-oven-market-new.jpg";
 import heroWatchersDescent from "@/assets/hero-watchers-descent.jpg";
@@ -59,7 +59,7 @@ const slides: HeroSlide[] = [
     description: "Finally, a sourdough guide that doesn't take itself too seriously. This book cuts through the mystique to deliver practical advice that works in real kitchens for real people.",
     backgroundImage: heroSourdoughRest,
     overlayPosition: "right",
-    amazonUrl: "#",
+    amazonUrl: "https://read.amazon.com/sample/B0FGQPM4TG?clientId=share",
     previewContent: `
       <h2>Sourdough for the Rest of Us - Preview</h2>
       <h3>Chapter 1: Your Sourdough Starter - The Drama Queen of the Kitchen</h3>
