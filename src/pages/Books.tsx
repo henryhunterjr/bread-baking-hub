@@ -33,7 +33,7 @@ const books: Book[] = [
       "Community stories and tips"
     ],
     amazonUrl: "#",
-    coverGradient: "from-amber-500 to-amber-600",
+    coverGradient: "bg-primary",
     badge: "Now Available!",
     featured: true,
     previewContent: `
@@ -55,7 +55,7 @@ const books: Book[] = [
       "Community building through bread"
     ],
     amazonUrl: "https://www.amazon.com/dp/B0CH2D2GDB",
-    coverGradient: "from-stone-700 to-stone-800",
+    coverGradient: "bg-secondary",
     previewContent: `
       <h2>Bread: A Journey - Preview</h2>
       <h3>Introduction: The Universal Language of Bread</h3>
@@ -75,7 +75,7 @@ const books: Book[] = [
       "Recipes for bread and beyond"
     ],
     amazonUrl: "https://www.amazon.com/dp/B0CGMF3NBS",
-    coverGradient: "from-blue-500 to-blue-600",
+    coverGradient: "bg-accent",
     previewContent: `
       <h2>The Yeast Water Handbook - Preview</h2>
       <h3>Chapter 1: What is Yeast Water?</h3>
@@ -95,7 +95,7 @@ const books: Book[] = [
       "Consistency and troubleshooting"
     ],
     amazonUrl: "https://www.amazon.com/dp/B0CVB8ZCFV",
-    coverGradient: "from-slate-700 to-slate-800",
+    coverGradient: "bg-muted",
     previewContent: `
       <h2>Vitale Sourdough Mastery - Preview</h2>
       <h3>Advanced Fermentation Control</h3>
@@ -115,7 +115,7 @@ const books: Book[] = [
       "Legal requirements and permits"
     ],
     amazonUrl: "https://www.amazon.com/dp/B0D8PNGC7Q",
-    coverGradient: "from-orange-500 to-orange-600",
+    coverGradient: "bg-primary",
     previewContent: `
       <h2>From Oven to Market - Preview</h2>
       <h3>Turning Passion into Profit</h3>
@@ -136,7 +136,7 @@ const books: Book[] = [
     ],
     amazonUrl: "https://www.amazon.com/dp/B0DR2LDDSD",
     landingPageUrl: "https://the-watchers-descent.lovable.app/",
-    coverGradient: "from-purple-600 to-purple-700",
+    coverGradient: "bg-secondary",
     previewContent: `
       <h2>The Watchers' Descent - Preview</h2>
       <h3>A Science Fiction Epic</h3>
@@ -164,7 +164,7 @@ const Books = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-subtle">
+      <section className="py-16 bg-section-background">
         <div className="max-w-4xl mx-auto text-center px-4">
           <h1 className="text-5xl font-bold text-primary mb-6">Books by Henry Hunter</h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
@@ -186,7 +186,7 @@ const Books = () => {
                 }`}
               >
                 {/* Book Cover */}
-                <div className={`relative h-80 bg-gradient-to-br ${book.coverGradient} rounded-t-lg overflow-hidden`}>
+                <div className={`relative h-80 ${book.coverGradient} rounded-t-lg overflow-hidden`}>
                   {book.badge && (
                     <Badge className="absolute top-4 right-4 bg-destructive text-destructive-foreground z-10">
                       {book.badge}
@@ -199,7 +199,7 @@ const Books = () => {
                   {/* Cover content */}
                   <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-6 text-center">
                     <div className="bg-black/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                      <h3 className="text-2xl font-bold mb-2 text-shadow">{book.title}</h3>
+                      <h3 className="text-2xl font-bold mb-2">{book.title}</h3>
                       <p className="text-sm opacity-90 italic">{book.subtitle}</p>
                     </div>
                   </div>
@@ -259,7 +259,7 @@ const Books = () => {
       {/* Newsletter CTA */}
       <section className="py-16 bg-section-background">
         <div className="max-w-4xl mx-auto text-center px-4">
-          <div className="bg-gradient-to-br from-stone-800 to-stone-900 rounded-2xl p-12 shadow-stone">
+          <div className="bg-card rounded-2xl p-12 shadow-stone">
             <h2 className="text-3xl font-bold text-primary mb-4">Stay Connected</h2>
             <p className="text-xl text-muted-foreground mb-8">
               Get notified when new books are released and receive exclusive baking tips and recipes.
