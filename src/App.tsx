@@ -11,6 +11,7 @@ import RecipeWorkspace from "./pages/RecipeWorkspace";
 import Auth from "./pages/Auth";
 import MyRecipes from "./pages/MyRecipes";
 import About from "./pages/About";
+import Books from "./pages/Books";
 import PublicRecipe from "./pages/PublicRecipe";
 import BreadGlossary from "./pages/BreadGlossary";
 import BreadCalculator from "./pages/BreadCalculator";
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/my-recipes" element={<MyRecipes />} />
             <Route path="/about" element={<About />} />
+            <Route path="/books" element={<Books />} />
             <Route path="/glossary" element={<BreadGlossary />} />
             <Route path="/bread-calculator" element={<BreadCalculator />} />
             <Route path="/r/:slug" element={<PublicRecipe />} />
