@@ -6,7 +6,8 @@ import { ExternalLink, Eye } from "lucide-react";
 // Import the new book cover images
 import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
 import breadJourneyCover from "/lovable-uploads/171c5ec1-d38e-4257-a2e4-60b75d2e2909.png";
-import yeastWaterCover from "/lovable-uploads/a61501cf-b5b7-4541-80ac-4fef55856e8e.png";
+import yeastWaterCover from "/lovable-uploads/1bca24b8-dbf6-440d-8240-4c714ec30891.png";
+import marketCover from "/lovable-uploads/a0d33e20-2a9e-46c9-a500-e9e01876a8df.png";
 
 interface Book {
   id: string;
@@ -123,6 +124,7 @@ const books: Book[] = [
     ],
     amazonUrl: "https://www.amazon.com/dp/B0D8PNGC7Q",
     coverGradient: "bg-primary",
+    coverImage: marketCover,
     previewContent: `
       <h2>From Oven to Market - Preview</h2>
       <h3>Turning Passion into Profit</h3>
