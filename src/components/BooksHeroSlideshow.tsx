@@ -156,7 +156,9 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
       {/* Background Image */}
       <div 
         key={`bg-${currentSlide}`}
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat animate-fade-in"
+        className={`absolute inset-0 bg-cover bg-no-repeat animate-fade-in ${
+          currentSlideData.id === 'yeast' ? 'bg-left' : 'bg-center'
+        }`}
         style={{ backgroundImage: `url(${currentSlideData.backgroundImage})` }}
       />
       
