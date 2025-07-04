@@ -2,21 +2,89 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Play, X } from "lucide-react";
 import BooksHeroSlideshow from "@/components/BooksHeroSlideshow";
 import BooksGrid from "@/components/BooksGrid";
 
+// Import book cover images
+import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
+import breadJourneyCover from "/lovable-uploads/171c5ec1-d38e-4257-a2e4-60b75d2e2909.png";
+
+interface BookData {
+  id: string;
+  title: string;
+  subtitle: string;
+  author: string;
+  description: string;
+  coverImage: string;
+  previewContent: string;
+  audioUrl?: string;
+}
+
+const bookData: Record<string, BookData> = {
+  sourdough: {
+    id: "sourdough",
+    title: "Sourdough for the Rest of Us",
+    subtitle: "No Perfection Required",
+    author: "Henry Hunter",
+    description: "Forget the sourdough snobbery—this book is for real bakers who want great bread without the stress. Whether you're just getting started or tired of conflicting advice, Sourdough for the Rest of Us breaks down the process in plain, no-nonsense terms so you can bake with confidence.",
+    coverImage: sourdoughCover,
+    previewContent: `
+      <h2>Sourdough for the Rest of Us - Preview</h2>
+      <h3>Chapter 1: Your Sourdough Starter - The Drama Queen of the Kitchen</h3>
+      <p>If you've ever felt personally attacked by a jar of bubbling flour and water, welcome to the world of sourdough. Your starter is a living, breathing diva—demanding, moody, and occasionally unpredictable. But once you learn how to handle its quirks, it'll reward you with the best bread you've ever tasted.</p>
+      <p>Think of your starter as a low-maintenance pet that lives in your kitchen. It doesn't need walks or belly rubs, but it does need food, warmth, and patience...</p>
+      <h4>✓ Troubleshooting made simple</h4>
+      <p>Sticky dough? Lifeless starter? Weird oven results? Get straight answers without the fluff. This book cuts through the mystique to deliver practical advice that works in real kitchens for real people.</p>
+    `,
+    audioUrl: "/audio/sourdough-excerpt.mp3" // Placeholder for future MP3
+  },
+  journey: {
+    id: "journey", 
+    title: "Bread: A Journey",
+    subtitle: "Through History, Science, Art, and Community",
+    author: "Henry Hunter",
+    description: "Bread is humanity's most fundamental food technology. From the first accidentally fermented grain paste to today's artisan sourdough, bread has been our constant companion through history, culture, and community. This book explores not just how to bake bread, but why bread matters—scientifically, culturally, and personally.",
+    coverImage: breadJourneyCover,
+    previewContent: `
+      <h2>Bread: A Journey - Preview</h2>
+      <h3>Introduction: The Universal Language of Bread</h3>
+      <p>Bread is humanity's most fundamental food technology. From the first accidentally fermented grain paste to today's artisan sourdough, bread has been our constant companion through history, culture, and community.</p>
+      <p>This book explores not just how to bake bread, but why bread matters—scientifically, culturally, and personally. You'll discover the fascinating history of bread-making, understand the science behind fermentation, and learn advanced techniques that will elevate your baking.</p>
+      <h4>What You'll Learn:</h4>
+      <ul>
+        <li>Historical context and cultural significance of bread</li>
+        <li>Scientific principles explained in simple terms</li>
+        <li>Advanced techniques and professional methods</li>
+        <li>Building community through the art of bread-making</li>
+      </ul>
+    `,
+    audioUrl: "/audio/journey-excerpt.mp3" // Placeholder for future MP3
+  }
+};
+
 const Books = () => {
   const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
-  const [previewContent, setPreviewContent] = useState<string>("");
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
-  const showPreview = (slideId: string, content: string) => {
+  const showPreview = (slideId: string) => {
     setSelectedPreview(slideId);
-    setPreviewContent(content);
   };
 
   const closePreview = () => {
     setSelectedPreview(null);
-    setPreviewContent("");
+    setIsPlayingAudio(false);
+  };
+
+  const selectedBook = selectedPreview ? bookData[selectedPreview] : null;
+
+  const playAudioExcerpt = () => {
+    if (selectedBook?.audioUrl) {
+      // Future implementation with actual audio file
+      setIsPlayingAudio(true);
+      // Placeholder - will implement actual audio playback
+      setTimeout(() => setIsPlayingAudio(false), 3000);
+    }
   };
 
   return (
@@ -24,10 +92,10 @@ const Books = () => {
       <Header />
       
       {/* Hero Slideshow */}
-      <BooksHeroSlideshow onPreview={showPreview} />
+      <BooksHeroSlideshow onPreview={(slideId) => showPreview(slideId)} />
 
       {/* Books Grid */}
-      <BooksGrid onPreview={showPreview} />
+      <BooksGrid onPreview={(slideId) => showPreview(slideId)} />
 
       {/* Newsletter CTA */}
       <section className="py-16 bg-section-background">
@@ -46,26 +114,90 @@ const Books = () => {
         </div>
       </section>
 
-      {/* Preview Modal */}
-      {selectedPreview && (
+      {/* Preview Modal - Amazon Style */}
+      {selectedPreview && selectedBook && (
         <div 
           className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
           onClick={closePreview}
         >
           <div 
-            className="bg-background rounded-2xl max-w-2xl max-h-[80vh] overflow-y-auto p-8 shadow-stone"
+            className="bg-background rounded-2xl max-w-4xl w-full max-h-[85vh] overflow-y-auto shadow-stone animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between items-start mb-6">
-              <h2 className="text-2xl font-bold text-primary">Book Preview</h2>
-              <Button variant="ghost" size="icon" onClick={closePreview}>
-                <span className="text-2xl">&times;</span>
-              </Button>
+            <div className="flex flex-col lg:flex-row">
+              {/* Left side - Book Cover */}
+              <div className="lg:w-1/3 p-8 flex flex-col items-center bg-gradient-to-br from-primary/5 to-secondary/5">
+                <img 
+                  src={selectedBook.coverImage} 
+                  alt={selectedBook.title}
+                  className="w-full max-w-[250px] rounded-lg shadow-stone mb-6"
+                />
+                <Button 
+                  onClick={playAudioExcerpt}
+                  disabled={isPlayingAudio}
+                  className="w-full max-w-[200px] mb-4"
+                  variant={isPlayingAudio ? "secondary" : "default"}
+                >
+                  <Play className="mr-2 h-4 w-4" />
+                  {isPlayingAudio ? "Playing..." : "Listen to Excerpt"}
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full max-w-[200px]"
+                  asChild
+                >
+                  <a href="https://read.amazon.com/sample/B0FGQPM4TG?clientId=share" target="_blank" rel="noopener noreferrer">
+                    Read Sample
+                  </a>
+                </Button>
+              </div>
+
+              {/* Right side - Book Details */}
+              <div className="lg:w-2/3 p-8">
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <h1 className="text-3xl font-bold text-foreground mb-2">
+                      {selectedBook.title}
+                    </h1>
+                    <p className="text-xl text-muted-foreground italic mb-2">
+                      {selectedBook.subtitle}
+                    </p>
+                    <p className="text-lg text-primary font-medium">
+                      By {selectedBook.author}
+                    </p>
+                  </div>
+                  <Button variant="ghost" size="icon" onClick={closePreview}>
+                    <X className="h-6 w-6" />
+                  </Button>
+                </div>
+
+                <div className="mb-6">
+                  <h2 className="text-xl font-semibold mb-3 text-foreground">Book Details</h2>
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    {selectedBook.description}
+                  </p>
+                  <div className="border-t pt-4">
+                    <p className="text-sm text-muted-foreground mb-2">
+                      <strong>Reading age:</strong> Adult
+                    </p>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      <strong>Language:</strong> English
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      <strong>Publication date:</strong> 2024
+                    </p>
+                  </div>
+                </div>
+
+                <div className="border-t pt-6">
+                  <h3 className="text-lg font-semibold mb-4 text-foreground">Book Preview</h3>
+                  <div 
+                    className="prose prose-stone dark:prose-invert max-w-none"
+                    dangerouslySetInnerHTML={{ __html: selectedBook.previewContent }}
+                  />
+                </div>
+              </div>
             </div>
-            <div 
-              className="prose prose-stone dark:prose-invert max-w-none"
-              dangerouslySetInnerHTML={{ __html: previewContent }}
-            />
           </div>
         </div>
       )}

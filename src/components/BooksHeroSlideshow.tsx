@@ -116,7 +116,7 @@ const slides: HeroSlide[] = [
 ];
 
 interface BooksHeroSlideshowProps {
-  onPreview: (slideId: string, previewContent: string) => void;
+  onPreview: (slideId: string) => void;
 }
 
 const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
@@ -155,7 +155,8 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
     >
       {/* Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out"
+        key={`bg-${currentSlide}`}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat animate-fade-in"
         style={{ backgroundImage: `url(${currentSlideData.backgroundImage})` }}
       />
       
@@ -166,7 +167,16 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
       <div className="relative h-full flex items-center">
         <div className="max-w-7xl mx-auto px-4 w-full">
           <div className={`max-w-lg ${currentSlideData.overlayPosition === 'right' ? 'ml-auto' : ''}`}>
-            <Card className="bg-black/60 backdrop-blur-md border-white/20 p-8 text-white">
+            <Card 
+              key={`content-${currentSlide}`}
+              className={`bg-black/60 backdrop-blur-md border-white/20 p-8 text-white animate-slide-in-right ${
+                currentSlideData.overlayPosition === 'left' ? 'animate-slide-in-left' : ''
+              }`}
+              style={{ 
+                animationDelay: '0.5s',
+                animationFillMode: 'both'
+              }}
+            >
               <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
                 {currentSlideData.title}
               </h1>
@@ -198,7 +208,7 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
                   <Button 
                     variant="heroOutline" 
                     size="lg"
-                    onClick={() => onPreview(currentSlideData.id, currentSlideData.previewContent)}
+                    onClick={() => onPreview(currentSlideData.id)}
                   >
                     <Eye className="mr-2 h-5 w-5" />
                     Preview Book

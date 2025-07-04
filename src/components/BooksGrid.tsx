@@ -151,7 +151,7 @@ const books: Book[] = [
 ];
 
 interface BooksGridProps {
-  onPreview: (bookId: string, previewContent: string) => void;
+  onPreview: (bookId: string) => void;
 }
 
 const BooksGrid = ({ onPreview }: BooksGridProps) => {
@@ -227,7 +227,7 @@ const BooksGrid = ({ onPreview }: BooksGridProps) => {
                   ) : (
                     <Button 
                       variant="outline" 
-                      onClick={() => onPreview(book.id, book.previewContent)}
+                      onClick={() => onPreview(book.id)}
                       size="sm"
                       className="flex-1"
                     >
