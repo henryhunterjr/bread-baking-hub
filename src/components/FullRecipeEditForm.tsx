@@ -26,16 +26,32 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
     cook_time: recipe.data.cook_time || '',
     total_time: recipe.data.total_time || '',
     servings: recipe.data.servings || '',
-    ingredients: recipe.data.ingredients || [''],
-    method: recipe.data.method || [''],
-    tips: recipe.data.tips || [''],
-    troubleshooting: recipe.data.troubleshooting || [{ issue: '', solution: '' }],
+    ingredients: Array.isArray(recipe.data.ingredients) 
+      ? recipe.data.ingredients.map(ing => 
+          typeof ing === 'object' ? `${ing.amount_volume || ing.amount_metric || ''} ${ing.item || ''}`.trim() : String(ing || '')
+        )
+      : [''],
+    method: Array.isArray(recipe.data.method) 
+      ? recipe.data.method.map(step => 
+          typeof step === 'object' ? step.instruction || '' : String(step || '')
+        )
+      : [''],
+    tips: Array.isArray(recipe.data.tips) 
+      ? recipe.data.tips.map(tip => String(tip || ''))
+      : [''],
+    troubleshooting: Array.isArray(recipe.data.troubleshooting) 
+      ? recipe.data.troubleshooting.map(item => 
+          typeof item === 'object' ? item : { issue: String(item || ''), solution: '' }
+        )
+      : [{ issue: '', solution: '' }],
     image_url: recipe.image_url || '',
     folder: recipe.folder || '',
     tags: recipe.tags || [],
     is_public: recipe.is_public || false,
     slug: recipe.slug || '',
-    recommended_products: recipe.data.recommended_products || []
+    recommended_products: Array.isArray(recipe.data.recommended_products) 
+      ? recipe.data.recommended_products.map(prod => String(prod || ''))
+      : []
   });
 
   const [openSections, setOpenSections] = useState({
@@ -47,7 +63,7 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
     image: false,
     organization: false,
     sharing: false,
-    products: false
+    products: true
   });
 
   const toggleSection = (section: string) => {
@@ -88,13 +104,14 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
       cook_time: formData.cook_time.trim(),
       total_time: formData.total_time.trim(),
       servings: formData.servings.trim(),
-      ingredients: formData.ingredients.filter(item => item.trim() !== ''),
-      method: formData.method.filter(item => item.trim() !== ''),
-      tips: formData.tips.filter(item => item.trim() !== ''),
+      ingredients: formData.ingredients.filter(item => String(item || '').trim() !== ''),
+      method: formData.method.filter(item => String(item || '').trim() !== ''),
+      tips: formData.tips.filter(item => String(item || '').trim() !== ''),
       troubleshooting: formData.troubleshooting.filter(item => 
-        item.issue?.trim() !== '' || item.solution?.trim() !== ''
+        (typeof item === 'object' && (String(item.issue || '').trim() !== '' || String(item.solution || '').trim() !== '')) ||
+        (typeof item === 'string' && String(item).trim() !== '')
       ),
-      recommended_products: formData.recommended_products.filter(id => id.trim() !== '')
+      recommended_products: formData.recommended_products.filter(id => String(id || '').trim() !== '')
     };
 
     const updates: any = { data: cleanedData };

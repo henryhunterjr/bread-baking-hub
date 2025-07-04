@@ -40,11 +40,28 @@ export const useRecipeWorkspace = () => {
   };
 
   const handleRecipeUpdate = async (recipeId: string, updates: any) => {
-    toast({
-      title: "Updated",
-      description: "Recipe changes applied locally. Save to persist changes.",
-    });
-    return true;
+    if (!editedRecipe) return false;
+    
+    try {
+      // Update the local state with the new data
+      setEditedRecipe(updates.data);
+      if (updates.image_url !== undefined) {
+        setRecipeImageUrl(updates.image_url);
+      }
+      
+      toast({
+        title: "Updated",
+        description: "Recipe changes applied successfully!",
+      });
+      return true;
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update recipe. Please try again.",
+        variant: "destructive",
+      });
+      return false;
+    }
   };
 
   const handleImageUploaded = (imageUrl: string) => {
