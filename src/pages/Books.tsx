@@ -67,7 +67,7 @@ const bookData: Record<string, BookData> = {
     subtitle: "Master the Art of Fermentation and Baking",
     author: "Henry Hunter",
     description: "Ready to transform your relationship with sourdough? 'Vitale Sourdough Mastery' shares the secrets behind Henry Hunter's 10+ year relationship with his treasured starter – the foundation of consistently exceptional bread. Written by the founder of the global 'Baking Great Bread at Home' community, this book goes beyond recipes to teach you the living culture mastery that separates good bakers from great ones.",
-    coverImage: "/lovable-uploads/47fc6d49-8e46-4eb3-a2df-2a1fc47ac10c.png",
+    coverImage: "/lovable-uploads/ed2db3c9-f60e-4085-ab44-a1df3ff34c0f.png",
     previewContent: `
       <h2>Vitale Sourdough Mastery - Preview</h2>
       <h3>Master the Art of Fermentation and Baking – The Complete Guide to Sourdough Excellence</h3>

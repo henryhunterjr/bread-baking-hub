@@ -102,6 +102,7 @@ const books: Book[] = [
     ],
     amazonUrl: "https://www.amazon.com/dp/B0CVB8ZCFV",
     coverGradient: "bg-muted",
+    coverImage: "/lovable-uploads/ed2db3c9-f60e-4085-ab44-a1df3ff34c0f.png",
     previewContent: `
       <h2>Vitale Sourdough Mastery - Preview</h2>
       <h3>Advanced Fermentation Control</h3>
