@@ -60,6 +60,37 @@ const bookData: Record<string, BookData> = {
       </ul>
     `,
     audioUrl: "/audio/journey-excerpt.mp3" // Placeholder for future MP3
+  },
+  market: {
+    id: "market",
+    title: "From Oven to Market", 
+    subtitle: "The Ultimate Guide to Selling Your Artisan Bread",
+    author: "Henry Hunter",
+    description: "Transform Your Passion Into Profit – The Complete Roadmap from Home Baker to Market Success. Are you a passionate home baker whose friends and family constantly rave about your bread? Do you dream of turning those weekend baking sessions into a thriving business? Written by Henry Hunter, a former television executive who successfully transformed his own baking passion into a profitable farmers market business, this book offers the rare combination of practical business advice and authentic personal experience.",
+    coverImage: "/lovable-uploads/bf859aa6-8525-4149-afdd-62597c742ef7.png",
+    previewContent: `
+      <h2>From Oven to Market - Preview</h2>
+      <h3>Transform Your Passion Into Profit</h3>
+      <p><strong>The Complete Roadmap from Home Baker to Market Success</strong></p>
+      <p>Are you a passionate home baker whose friends and family constantly rave about your bread? Do you dream of turning those weekend baking sessions into a thriving business? "From Oven to Market" is your comprehensive guide to making that dream a reality.</p>
+      <p>Written by Henry Hunter, a former television executive who successfully transformed his own baking passion into a profitable farmers market business, this book offers the rare combination of practical business advice and authentic personal experience.</p>
+      
+      <h4>What You'll Learn:</h4>
+      <ul>
+        <li>Pricing strategies that maximize profit (learn from the accidental pricing experiment that doubled sales overnight)</li>
+        <li>Market setup psychology and customer engagement techniques</li>
+        <li>Legal requirements, permits, and business foundations</li>
+        <li>Production scaling and time management for market quantities</li>
+        <li>Building customer loyalty and expanding beyond farmers markets</li>
+      </ul>
+
+      <h3>Chapter 3: "The $10 Lesson That Changed Everything"</h3>
+      <p>I still remember the Saturday morning that changed my entire approach to pricing—and it wasn't even my doing.</p>
+      <p>My daughter Sarah had volunteered to help at the market while I finished loading the van. "Just watch the booth for ten minutes," I told her, reviewing the price signs one more time. "Everything's clearly marked. Sourdough loaves are $5, baguettes are $3."</p>
+      <p>When I arrived at the market, I found Sarah cheerfully chatting with customers, making change with the confidence of someone who'd been doing this for years. It wasn't until our third customer of the day handed me a ten-dollar bill for a single sourdough loaf that I realized something was wrong...</p>
+      <p><em>[Preview continues with purchasing full book...]</em></p>
+    `,
+    audioUrl: "/audio/market-excerpt.mp3" // Placeholder for future MP3
   }
 };
 
