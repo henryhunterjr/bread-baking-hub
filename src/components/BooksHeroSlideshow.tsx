@@ -6,7 +6,7 @@ import heroYeastWater from "/lovable-uploads/5745a0fa-5ff0-4d05-b59a-8668b5ab8ca
 import heroBreadJourney from "/lovable-uploads/a7ffae49-a580-46de-a094-eb6237fd4a15.png";
 import heroSourdoughRest from "/lovable-uploads/901585f4-68ad-4944-ac87-dae24175df7d.png";
 import heroVitaleMastery from "@/assets/hero-vitale-mastery.jpg";
-import heroOvenMarket from "@/assets/hero-oven-market.jpg";
+import heroOvenMarket from "@/assets/hero-oven-market-new.jpg";
 import heroWatchersDescent from "@/assets/hero-watchers-descent.jpg";
 
 interface HeroSlide {
