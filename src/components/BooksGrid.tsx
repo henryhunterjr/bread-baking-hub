@@ -146,6 +146,7 @@ const books: Book[] = [
     amazonUrl: "https://www.amazon.com/dp/B0DR2LDDSD",
     landingPageUrl: "https://the-watchers-descent.lovable.app/",
     coverGradient: "bg-secondary",
+    coverImage: "/lovable-uploads/155ff3f2-dc17-4801-a5da-03c218b22cfd.png",
     previewContent: `
       <h2>The Watchers' Descent - Preview</h2>
       <h3>A Science Fiction Epic</h3>
