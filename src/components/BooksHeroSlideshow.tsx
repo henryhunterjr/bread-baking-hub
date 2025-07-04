@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, ExternalLink, Eye } from "lucide-react";
-import heroYeastWater from "/lovable-uploads/a7c9e439-f378-4ed0-b2b8-4758f9856daf.png";
+import heroYeastWater from "/lovable-uploads/5745a0fa-5ff0-4d05-b59a-8668b5ab8ca5.png";
 import heroBreadJourney from "/lovable-uploads/a7ffae49-a580-46de-a094-eb6237fd4a15.png";
 import heroSourdoughRest from "@/assets/hero-sourdough-rest.jpg";
 import heroVitaleMastery from "@/assets/hero-vitale-mastery.jpg";
