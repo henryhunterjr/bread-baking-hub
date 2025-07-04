@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
 import AboutHenry from "../components/AboutHenry";
-import BooksGrid from "../components/BooksGrid";
+import BooksPreview from "../components/BooksPreview";
 import ToolsResources from "../components/ToolsResources";
 import BakersBench from "../components/BakersBench";
 import MonthlyChallenge from "../components/MonthlyChallenge";
@@ -16,7 +16,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <AboutHenry />
-        <BooksGrid />
+        <BooksPreview />
         <ToolsResources />
         <BakersBench />
         <MonthlyChallenge />
