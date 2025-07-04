@@ -6,6 +6,7 @@ import { ExternalLink, Eye } from "lucide-react";
 // Import the new book cover images
 import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
 import breadJourneyCover from "/lovable-uploads/171c5ec1-d38e-4257-a2e4-60b75d2e2909.png";
+import yeastWaterCover from "/lovable-uploads/a61501cf-b5b7-4541-80ac-4fef55856e8e.png";
 
 interface Book {
   id: string;
@@ -80,6 +81,7 @@ const books: Book[] = [
     ],
     amazonUrl: "https://www.amazon.com/dp/B0CGMF3NBS",
     coverGradient: "bg-accent",
+    coverImage: yeastWaterCover,
     previewContent: `
       <h2>The Yeast Water Handbook - Preview</h2>
       <h3>Chapter 1: What is Yeast Water?</h3>
