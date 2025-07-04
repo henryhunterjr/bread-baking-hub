@@ -67,7 +67,7 @@ const bookData: Record<string, BookData> = {
     subtitle: "The Ultimate Guide to Selling Your Artisan Bread",
     author: "Henry Hunter",
     description: "Transform Your Passion Into Profit – The Complete Roadmap from Home Baker to Market Success. Are you a passionate home baker whose friends and family constantly rave about your bread? Do you dream of turning those weekend baking sessions into a thriving business? Written by Henry Hunter, a former television executive who successfully transformed his own baking passion into a profitable farmers market business, this book offers the rare combination of practical business advice and authentic personal experience.",
-    coverImage: "/lovable-uploads/bf859aa6-8525-4149-afdd-62597c742ef7.png",
+    coverImage: "/lovable-uploads/f8d77db8-e27f-43fa-ad7d-4d582b56881f.png",
     previewContent: `
       <h2>From Oven to Market - Preview</h2>
       <h3>Transform Your Passion Into Profit</h3>
