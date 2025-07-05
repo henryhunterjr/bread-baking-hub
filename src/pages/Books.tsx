@@ -195,6 +195,68 @@ const bookData: Record<string, BookData> = {
       <p><em>This is not just a book. It's a reckoning.</em></p>
     `,
     audioUrl: "/audio/loaflie-excerpt.mp3" // Placeholder for future MP3
+  },
+  yeast: {
+    id: "yeast",
+    title: "The Yeast Water Handbook",
+    subtitle: "Wild Fermentation Made Simple",
+    author: "Henry Hunter",
+    description: "Discover the ancient art of wild yeast cultivation through fruit fermentation. A complete guide to creating and using yeast water as an alternative to traditional sourdough starters.",
+    coverImage: "/lovable-uploads/04a1e339-f8be-41dd-b672-b74d8c70c1bd.png",
+    previewContent: `
+      <h2>The Yeast Water Handbook - Preview</h2>
+      <h3>Chapter 1: What is Yeast Water?</h3>
+      <p>Yeast water is one of the oldest forms of natural leavening, predating sourdough starters by thousands of years. It's created by fermenting fruit, herbs, or even vegetables in water to capture wild yeasts.</p>
+      <p>Unlike sourdough starters, yeast water doesn't require daily feeding or maintenance. It's perfect for bakers who want the benefits of wild yeast without the commitment...</p>
+      
+      <h4>What You'll Learn:</h4>
+      <ul>
+        <li>Creating and maintaining yeast water cultures</li>
+        <li>Fruit selection and fermentation techniques</li>
+        <li>Converting recipes from commercial yeast to yeast water</li>
+        <li>Troubleshooting common yeast water issues</li>
+        <li>Advanced techniques for flavor development</li>
+      </ul>
+
+      <h3>Chapter 2: "Your First Yeast Water Culture"</h3>
+      <p>Starting your first yeast water culture is simpler than you might think. All you need is fresh fruit, clean water, and patience. The wild yeasts living naturally on fruit skins will do the rest.</p>
+      
+      <p><strong>Choosing Your Fruit</strong><br>Organic apples are my favorite starting point - they're reliable, available year-round, and produce a clean, mild yeast water perfect for bread. But don't be afraid to experiment with grapes, pears, or even dried fruits.</p>
+      
+      <p><em>[Available now on Amazon]</em></p>
+    `,
+    audioUrl: "/audio/yeast-excerpt.mp3"
+  },
+  watchers: {
+    id: "watchers",
+    title: "The Watchers' Descent",
+    subtitle: "A Science Fiction Epic",
+    author: "Henry Hunter",
+    description: "A departure from bread baking into the realm of science fiction. An epic tale of humanity's encounter with otherworldly beings and the choices that define our future.",
+    coverImage: "/lovable-uploads/2b4a2ed0-1e01-4acf-9de5-2e2165f803b6.png",
+    previewContent: `
+      <h2>The Watchers' Descent - Preview</h2>
+      <h3>A Science Fiction Epic</h3>
+      <p>In a universe where humanity thought they were alone, the arrival of the Watchers changes everything. This epic tale explores first contact, the nature of consciousness, and the difficult choices that define our species.</p>
+      <p>Follow Dr. Sarah Chen as she leads humanity's first diplomatic mission to beings whose very existence challenges everything we thought we knew about the cosmos...</p>
+      
+      <h4>What Awaits:</h4>
+      <ul>
+        <li>First contact with an ancient alien civilization</li>
+        <li>Deep philosophical questions about consciousness and existence</li>
+        <li>Political intrigue and cosmic diplomacy</li>
+        <li>Action-packed sequences across multiple worlds</li>
+        <li>A story that will change how you see humanity's place in the universe</li>
+      </ul>
+
+      <h3>Chapter 1: "The Signal"</h3>
+      <p>Dr. Sarah Chen had been staring at the same data stream for three hours when she finally saw it—a pattern so subtle, so deliberately hidden within the cosmic background radiation, that it had taken the most sophisticated algorithms on Earth to detect it.</p>
+      
+      <p><strong>The Discovery</strong><br>It wasn't random. It couldn't be. The mathematical precision, the way it wove through frequencies like a signature written in starlight—this was artificial. This was a message.</p>
+      
+      <p><em>[Available now - Visit landing page for more details]</em></p>
+    `,
+    audioUrl: "/audio/watchers-excerpt.mp3"
   }
 };
 
