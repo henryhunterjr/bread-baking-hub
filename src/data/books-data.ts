@@ -63,7 +63,7 @@ export const bookData: Record<string, BookData> = {
       <h4>✓ Troubleshooting made simple</h4>
       <p>Sticky dough? Lifeless starter? Weird oven results? Get straight answers without the fluff. This book cuts through the mystique to deliver practical advice that works in real kitchens for real people.</p>
     `,
-    audioUrl: "https://drive.google.com/uc?export=download&id=1k5jfoPG8TOhxIwdqG7dDAOn2J75K4_ek"
+    audioUrl: undefined
   },
   journey: {
     id: "journey", 
@@ -185,7 +185,7 @@ export const bookData: Record<string, BookData> = {
       
       <p><em>This is not just a book. It's a reckoning.</em></p>
     `,
-    audioUrl: "https://drive.google.com/uc?export=download&id=1UkmQgTw_s6uM2wBcSl4Z4xkTOYi7kJpt"
+    audioUrl: undefined
   },
   yeast: {
     id: "yeast",
