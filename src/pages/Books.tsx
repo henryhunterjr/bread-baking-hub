@@ -6,6 +6,10 @@ import { Play, X } from "lucide-react";
 import BooksHeroSlideshow from "@/components/BooksHeroSlideshow";
 import BooksGrid from "@/components/BooksGrid";
 import BookshelfDisplay from "@/components/BookshelfDisplay";
+import AuthorReflectionBlock from "@/components/AuthorReflectionBlock";
+import ComingSoonBlock from "@/components/ComingSoonBlock";
+import PraiseSocialProof from "@/components/PraiseSocialProof";
+import LoafAndLieSpotlight from "@/components/LoafAndLieSpotlight";
 
 // Import book cover images
 import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
@@ -291,11 +295,32 @@ const Books = () => {
       {/* Hero Slideshow */}
       <BooksHeroSlideshow onPreview={(slideId) => showPreview(slideId)} />
 
+      {/* Author Reflection Block 1 */}
+      <AuthorReflectionBlock 
+        story="This book started on a flour-dusted table in Atlanta during lockdown, when I realized most sourdough books weren't written for us—the home bakers who just wanted great bread without the drama."
+        position="left"
+      />
+
       {/* Bookshelf Display */}
       <BookshelfDisplay onPreview={(slideId) => showPreview(slideId)} />
 
+      {/* Author Reflection Block 2 */}
+      <AuthorReflectionBlock 
+        story="After years of teaching bread-making, I discovered that the real magic isn't in perfect technique—it's in understanding the living culture that makes each loaf unique. That's when Vitale was born."
+        position="right"
+      />
+
       {/* Books Grid */}
       <BooksGrid onPreview={(slideId) => showPreview(slideId)} />
+
+      {/* The Loaf and the LIE Spotlight */}
+      <LoafAndLieSpotlight onPreview={() => showPreview('loaflie')} />
+
+      {/* Coming Soon Block */}
+      <ComingSoonBlock />
+
+      {/* Praise & Social Proof */}
+      <PraiseSocialProof />
 
       {/* Newsletter CTA */}
       <section className="py-16 bg-section-background">
