@@ -9,6 +9,7 @@ import AuthorReflectionBlock from "@/components/AuthorReflectionBlock";
 import ComingSoonBlock from "@/components/ComingSoonBlock";
 import PraiseSocialProof from "@/components/PraiseSocialProof";
 import LoafAndLieSpotlight from "@/components/LoafAndLieSpotlight";
+import LoafAndLieHeroSection from "@/components/LoafAndLieHeroSection";
 import BookPreviewModal from "@/components/BookPreviewModal";
 import AudioPlayerModal from "@/components/AudioPlayerModal";
 import { bookData } from "@/data/books-data";
@@ -63,6 +64,9 @@ const Books = () => {
         story="This book started on a flour-dusted table in Atlanta during lockdown, when I realized most sourdough books weren't written for us—the home bakers who just wanted great bread without the drama."
         position="left"
       />
+
+      {/* The Loaf and the LIE Hero Section */}
+      <LoafAndLieHeroSection onListen={() => showAudioPlayer('loaflie')} />
 
       {/* Bookshelf Display */}
       <BookshelfDisplay onPreview={(slideId) => showPreview(slideId)} />
