@@ -8,6 +8,7 @@ import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae8
 import breadJourneyCover from "/lovable-uploads/171c5ec1-d38e-4257-a2e4-60b75d2e2909.png";
 import yeastWaterCover from "/lovable-uploads/1bca24b8-dbf6-440d-8240-4c714ec30891.png";
 import marketCover from "/lovable-uploads/a0d33e20-2a9e-46c9-a500-e9e01876a8df.png";
+import seasonalBakingCover from "/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png";
 
 interface Book {
   id: string;
@@ -25,6 +26,37 @@ interface Book {
 }
 
 const books: Book[] = [
+  {
+    id: "seasonal",
+    title: "Baking Great Bread at Home",
+    subtitle: "A Journey Through the Seasons",
+    description: "This isn't just a cookbook. It's a year-long journey through time, temperature, and tradition. The culmination of Henry Hunter's decades of hands-in-the-dough experience, told through seasonal rhythms, family memories, and the deep, ancient craft of breadmaking.",
+    features: [
+      "Master-level techniques made accessible",
+      "Recipes that evolve with the seasons",
+      "Family memories and baking stories",
+      "Complete year-long baking journey"
+    ],
+    coverGradient: "bg-gradient-to-r from-blue-500 to-orange-500",
+    coverImage: seasonalBakingCover,
+    badge: "Coming December 2025",
+    featured: true,
+    previewContent: `
+      <h2>Baking Great Bread at Home - Preview</h2>
+      <h3>A Journey Through the Seasons</h3>
+      <p>This isn't just a cookbook. It's a year-long journey through time, temperature, and tradition.</p>
+      <p>Baking Great Bread at Home is the culmination of Henry Hunter's decades of hands-in-the-dough experience, told through seasonal rhythms, family memories, and the deep, ancient craft of breadmaking. Inside, you'll find master-level techniques made accessible, recipes that evolve with the weather and the baker, and stories that remind us why bread has always been at the heart of community.</p>
+      <p>From crisp winter loaves to sun-drenched summer crusts, this book is a love letter to the home baker's calendar. With every page, Henry invites you into the warmth of the oven and the soul of the seasons.</p>
+      <h4>What You'll Discover:</h4>
+      <ul>
+        <li>Seasonal baking techniques that work with nature's rhythm</li>
+        <li>Master-level methods explained for home bakers</li>
+        <li>Family stories and the tradition of breadmaking</li>
+        <li>Recipes that celebrate each season's unique ingredients</li>
+      </ul>
+      <p><strong>Available December 2025</strong><br>Sign up now to be the first to know when pre-orders open.</p>
+    `
+  },
   {
     id: "sourdough",
     title: "Sourdough for the Rest of Us",

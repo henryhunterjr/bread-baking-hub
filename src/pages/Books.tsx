@@ -23,6 +23,40 @@ interface BookData {
 }
 
 const bookData: Record<string, BookData> = {
+  seasonal: {
+    id: "seasonal",
+    title: "Baking Great Bread at Home",
+    subtitle: "A Journey Through the Seasons",
+    author: "Henry Hunter",
+    description: "This isn't just a cookbook. It's a year-long journey through time, temperature, and tradition. Baking Great Bread at Home is the culmination of Henry Hunter's decades of hands-in-the-dough experience, told through seasonal rhythms, family memories, and the deep, ancient craft of breadmaking. Inside, you'll find master-level techniques made accessible, recipes that evolve with the weather and the baker, and stories that remind us why bread has always been at the heart of community.",
+    coverImage: "/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png",
+    previewContent: `
+      <h2>Baking Great Bread at Home - Preview</h2>
+      <h3>A Journey Through the Seasons</h3>
+      <p>This isn't just a cookbook. It's a year-long journey through time, temperature, and tradition.</p>
+      <p>Baking Great Bread at Home is the culmination of Henry Hunter's decades of hands-in-the-dough experience, told through seasonal rhythms, family memories, and the deep, ancient craft of breadmaking. Inside, you'll find master-level techniques made accessible, recipes that evolve with the weather and the baker, and stories that remind us why bread has always been at the heart of community.</p>
+      <p>From crisp winter loaves to sun-drenched summer crusts, this book is a love letter to the home baker's calendar. With every page, Henry invites you into the warmth of the oven and the soul of the seasons.</p>
+      
+      <h4>What You'll Discover:</h4>
+      <ul>
+        <li>Seasonal baking techniques that work with nature's rhythm</li>
+        <li>Master-level methods explained for home bakers</li>
+        <li>Family stories and the tradition of breadmaking</li>
+        <li>Recipes that celebrate each season's unique ingredients</li>
+        <li>The deep connection between bread and community</li>
+      </ul>
+
+      <h3>Chapter 1: "Winter's Wisdom - The Foundation Loaves"</h3>
+      <p>Winter teaches patience. In the quiet months when the world slows down, we learn the foundational breads that have sustained families for generations. These are the loaves that fill kitchens with warmth when snow covers the ground.</p>
+      
+      <p><strong>The January Starter</strong><br>Every great bread journey begins with understanding fermentation in winter's gentle pace. When temperatures drop, our starters become contemplative, developing deeper flavors through slower fermentation.</p>
+      
+      <p><strong>February's Family Loaf</strong><br>This is the bread my grandmother made every Sunday, the one that brought three generations to the table. Simple ingredients, profound results – the alchemy of flour, water, salt, and time.</p>
+      
+      <p><em>Available December 2025 - Sign up now to be the first to know when pre-orders open.</em></p>
+    `,
+    audioUrl: "/audio/seasonal-excerpt.mp3"
+  },
   sourdough: {
     id: "sourdough",
     title: "Sourdough for the Rest of Us",

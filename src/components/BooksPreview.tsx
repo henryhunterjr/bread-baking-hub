@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 // Import book cover images
 import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
 import breadJourneyCover from "/lovable-uploads/bread-journey-cover-hd.png";
-import seasonalBakingCover from "/lovable-uploads/19261efd-b25b-47ab-a9e1-1375e144156a.png";
+import seasonalBakingCover from "/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png";
 
 interface Book {
   id: string;
@@ -27,10 +27,10 @@ const books: Book[] = [
     id: "seasonal",
     title: "Baking Great Bread at Home",
     subtitle: "A Journey Through the Seasons",
-    description: "Henry's seminal work on seasonal bread baking. Discover how to align your baking with nature's rhythm, using seasonal ingredients and techniques that celebrate each time of year.",
+    description: "This isn't just a cookbook. It's a year-long journey through time, temperature, and tradition. The culmination of Henry Hunter's decades of hands-in-the-dough experience, told through seasonal rhythms, family memories, and the deep, ancient craft of breadmaking.",
     coverGradient: "bg-gradient-to-r from-blue-500 to-orange-500",
     coverImage: seasonalBakingCover,
-    badge: "Coming December!",
+    badge: "Coming December 2025",
     featured: true
   },
   {
