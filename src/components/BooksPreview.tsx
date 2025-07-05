@@ -43,7 +43,7 @@ const books: Book[] = [
     description: "Discover the ancient art of wild yeast cultivation through fruit fermentation. A complete guide to creating and using yeast water as an alternative to traditional sourdough starters.",
     amazonUrl: "https://www.amazon.com/dp/B0CGMF3NBS",
     coverGradient: "bg-accent",
-    coverImage: "/lovable-uploads/2ad5dd8f-6a2d-47b2-8707-bddc15a8b9ae.png"
+    coverImage: "/lovable-uploads/yeast-water-cover-hd.png"
   }
 ];
 

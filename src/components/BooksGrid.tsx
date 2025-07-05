@@ -61,7 +61,7 @@ const books: Book[] = [
     ],
     amazonUrl: "https://www.amazon.com/dp/B0CH2D2GDB",
     coverGradient: "bg-secondary",
-    coverImage: breadJourneyCover,
+    coverImage: "/lovable-uploads/bread-journey-cover-hd.png",
     previewContent: `
       <h2>Bread: A Journey - Preview</h2>
       <h3>Introduction: The Universal Language of Bread</h3>
@@ -82,7 +82,7 @@ const books: Book[] = [
     ],
     amazonUrl: "https://www.amazon.com/dp/B0CGMF3NBS",
     coverGradient: "bg-accent",
-    coverImage: "/lovable-uploads/2ad5dd8f-6a2d-47b2-8707-bddc15a8b9ae.png",
+    coverImage: "/lovable-uploads/yeast-water-cover-hd.png",
     previewContent: `
       <h2>The Yeast Water Handbook - Preview</h2>
       <h3>Chapter 1: What is Yeast Water?</h3>

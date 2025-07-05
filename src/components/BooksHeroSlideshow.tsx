@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, ExternalLink, Eye } from "lucide-react";
 import heroYeastWater from "/lovable-uploads/5e067aee-63d8-4d0b-80d3-075211fc0e3b.png";
-import heroBreadJourney from "/lovable-uploads/bc026f92-81e2-4d16-8328-a13f53dc666f.png";
+import heroBreadJourney from "/lovable-uploads/bread-journey-cover-hd.png";
 import heroSourdoughRest from "/lovable-uploads/2a175afa-69e3-4c4f-b6b1-528bd0634eb9.png";
 import heroVitaleMastery from "/lovable-uploads/47fc6d49-8e46-4eb3-a2df-2a1fc47ac10c.png";
 import heroOvenMarket from "/lovable-uploads/bf859aa6-8525-4149-afdd-62597c742ef7.png";
