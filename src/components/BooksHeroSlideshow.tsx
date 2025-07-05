@@ -7,7 +7,7 @@ import heroBreadJourney from "/lovable-uploads/bc026f92-81e2-4d16-8328-a13f53dc6
 import heroSourdoughRest from "/lovable-uploads/2a175afa-69e3-4c4f-b6b1-528bd0634eb9.png";
 import heroVitaleMastery from "/lovable-uploads/47fc6d49-8e46-4eb3-a2df-2a1fc47ac10c.png";
 import heroOvenMarket from "/lovable-uploads/bf859aa6-8525-4149-afdd-62597c742ef7.png";
-import heroWatchersDescent from "@/assets/hero-watchers-descent.jpg";
+import heroWatchersDescent from "/lovable-uploads/ce4d6857-3d61-4696-af57-8a6d5ec4874d.png";
 
 interface HeroSlide {
   id: string;
