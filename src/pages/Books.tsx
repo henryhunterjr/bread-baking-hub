@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Play, X } from "lucide-react";
 import BooksHeroSlideshow from "@/components/BooksHeroSlideshow";
 import BooksGrid from "@/components/BooksGrid";
+import BookshelfDisplay from "@/components/BookshelfDisplay";
 
 // Import book cover images
 import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
@@ -159,6 +160,9 @@ const Books = () => {
       
       {/* Hero Slideshow */}
       <BooksHeroSlideshow onPreview={(slideId) => showPreview(slideId)} />
+
+      {/* Bookshelf Display */}
+      <BookshelfDisplay />
 
       {/* Books Grid */}
       <BooksGrid onPreview={(slideId) => showPreview(slideId)} />
