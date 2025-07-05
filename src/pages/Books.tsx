@@ -230,7 +230,7 @@ const Books = () => {
       <BooksHeroSlideshow onPreview={(slideId) => showPreview(slideId)} />
 
       {/* Bookshelf Display */}
-      <BookshelfDisplay />
+      <BookshelfDisplay onPreview={(slideId) => showPreview(slideId)} />
 
       {/* Books Grid */}
       <BooksGrid onPreview={(slideId) => showPreview(slideId)} />

@@ -21,7 +21,11 @@ const books = [
   { id: "watchers", cover: watchersCover, title: "The Watchers' Descent" }
 ];
 
-const BookshelfDisplay = () => {
+interface BookshelfDisplayProps {
+  onPreview: (bookId: string) => void;
+}
+
+const BookshelfDisplay = ({ onPreview }: BookshelfDisplayProps) => {
   // Split books into two shelves
   const topShelf = books.slice(0, 4);
   const bottomShelf = books.slice(4, 8);
@@ -56,6 +60,7 @@ const BookshelfDisplay = () => {
                       transform: `rotateY(${(index - 1) * 5}deg) rotateX(-2deg)`,
                       transformStyle: 'preserve-3d'
                     }}
+                    onClick={() => onPreview(book.id)}
                   >
                     <img
                       src={book.cover}
@@ -89,6 +94,7 @@ const BookshelfDisplay = () => {
                       transform: `rotateY(${(index - 1) * 5}deg) rotateX(-2deg)`,
                       transformStyle: 'preserve-3d'
                     }}
+                    onClick={() => onPreview(book.id)}
                   >
                     <img
                       src={book.cover}
