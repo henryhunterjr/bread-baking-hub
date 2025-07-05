@@ -9,6 +9,7 @@ import breadJourneyCover from "/lovable-uploads/171c5ec1-d38e-4257-a2e4-60b75d2e
 import yeastWaterCover from "/lovable-uploads/1bca24b8-dbf6-440d-8240-4c714ec30891.png";
 import marketCover from "/lovable-uploads/a0d33e20-2a9e-46c9-a500-e9e01876a8df.png";
 import seasonalBakingCover from "/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png";
+import loafLieCover from "/lovable-uploads/0aed0189-2f4d-4ff8-9492-52df60edb20f.png";
 
 interface Book {
   id: string;
@@ -162,6 +163,37 @@ const books: Book[] = [
       <h3>Turning Passion into Profit</h3>
       <p>Many home bakers dream of turning their passion into a business, but don't know where to start. This book provides a practical roadmap from your home kitchen to farmers' markets and beyond.</p>
       <p>You'll learn about scaling recipes, pricing products, marketing strategies, and the legal requirements for selling food...</p>
+    `
+  },
+  {
+    id: "loaflie",
+    title: "The Loaf and the LIE",
+    subtitle: "A History of What We Broke and How We're Taking It Back",
+    description: "What if the bread on your table was never meant to nourish you? Henry Hunter pulls back the curtain on the industrial food machine that replaced ancestral wisdom with shelf-stable profits. This exposé traces the moment bread became a product—and how we're reclaiming its soul.",
+    features: [
+      "Investigative exposé of industrial food system",
+      "Historical analysis of bread commercialization",
+      "Corporate collusion and marketing manipulation",
+      "How real bread is fighting back"
+    ],
+    amazonUrl: "#",
+    coverGradient: "bg-gradient-to-r from-amber-900 to-yellow-600",
+    coverImage: loafLieCover,
+    previewContent: `
+      <h2>The Loaf and the LIE - Preview</h2>
+      <h3>A History of What We Broke and How We're Taking It Back</h3>
+      <p>What if the bread on your table was never meant to nourish you?</p>
+      <p>In The Loaf and the LIE, Henry Hunter pulls back the curtain on the industrial food machine that replaced ancestral wisdom with shelf-stable profits. Told in gripping, investigative detail with the fire of someone who's spent a lifetime in both the kitchen and the archives, this exposé traces the moment bread became a product—and how we're reclaiming its soul.</p>
+      <p>With the depth of a historian and the bite of a journalist, Henry dissects corporate collusion, lost fermentation knowledge, and the marketing tricks that turned nourishing loaves into empty calories. This is the untold story of how food was weaponized—and how real bread is fighting back.</p>
+      <h4>What You'll Uncover:</h4>
+      <ul>
+        <li>The moment traditional bread became industrial product</li>
+        <li>Corporate strategies that prioritized profit over nutrition</li>
+        <li>Lost fermentation knowledge and ancestral wisdom</li>
+        <li>How marketing transformed bread into empty calories</li>
+        <li>The grassroots movement reclaiming real bread</li>
+      </ul>
+      <p><strong>This is not just a book. It's a reckoning.</strong></p>
     `
   },
   {

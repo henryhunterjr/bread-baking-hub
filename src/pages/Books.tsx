@@ -161,6 +161,40 @@ const bookData: Record<string, BookData> = {
       <p><em>[Preview continues with purchasing full book...]</em></p>
     `,
     audioUrl: "/audio/market-excerpt.mp3" // Placeholder for future MP3
+  },
+  loaflie: {
+    id: "loaflie",
+    title: "The Loaf and the LIE",
+    subtitle: "A History of What We Broke and How We're Taking It Back",
+    author: "Henry Hunter",
+    description: "What if the bread on your table was never meant to nourish you? In The Loaf and the LIE, Henry Hunter pulls back the curtain on the industrial food machine that replaced ancestral wisdom with shelf-stable profits. Told in gripping, investigative detail with the fire of someone who's spent a lifetime in both the kitchen and the archives, this exposé traces the moment bread became a product—and how we're reclaiming its soul.",
+    coverImage: "/lovable-uploads/0aed0189-2f4d-4ff8-9492-52df60edb20f.png",
+    previewContent: `
+      <h2>The Loaf and the LIE - Preview</h2>
+      <h3>A History of What We Broke and How We're Taking It Back</h3>
+      <p>What if the bread on your table was never meant to nourish you?</p>
+      <p>In The Loaf and the LIE, Henry Hunter pulls back the curtain on the industrial food machine that replaced ancestral wisdom with shelf-stable profits. Told in gripping, investigative detail with the fire of someone who's spent a lifetime in both the kitchen and the archives, this exposé traces the moment bread became a product—and how we're reclaiming its soul.</p>
+      <p>With the depth of a historian and the bite of a journalist, Henry dissects corporate collusion, lost fermentation knowledge, and the marketing tricks that turned nourishing loaves into empty calories. This is the untold story of how food was weaponized—and how real bread is fighting back.</p>
+      
+      <h4>What This Book Exposes:</h4>
+      <ul>
+        <li>The exact moment traditional bread became industrial product</li>
+        <li>Corporate strategies that prioritized shelf-life over nutrition</li>
+        <li>Lost fermentation knowledge and how it was systematically erased</li>
+        <li>Marketing manipulation that transformed bread into empty calories</li>
+        <li>The grassroots movement reclaiming real bread</li>
+      </ul>
+
+      <h3>Chapter 3: "The Great Deception - When Bread Became Product"</h3>
+      <p>It happened so gradually that most people never noticed. One day, bread was the staff of life, made fresh in neighborhood bakeries with flour, water, salt, and time. The next, it was a shelf-stable commodity, pumped full of preservatives and wrapped in plastic.</p>
+      
+      <p><strong>The Turning Point: 1961</strong><br>The year everything changed wasn't marked by fanfare or headlines. It was the year industrial baking finally cracked the code on extending shelf life while maintaining the appearance of "fresh bread."</p>
+      
+      <p><strong>What They Didn't Tell Us</strong><br>The trade-offs were staggering. Nutrition density plummeted by 40%. Digestibility became a problem for millions. But profits soared, and that's all that mattered to the boardrooms making these decisions.</p>
+      
+      <p><em>This is not just a book. It's a reckoning.</em></p>
+    `,
+    audioUrl: "/audio/loaflie-excerpt.mp3" // Placeholder for future MP3
   }
 };
 
