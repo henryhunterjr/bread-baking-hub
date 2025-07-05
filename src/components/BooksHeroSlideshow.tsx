@@ -106,7 +106,7 @@ const slides: HeroSlide[] = [
     tagline: "A History of What We Broke and How We're Taking It Back",
     description: "What if the bread on your table was never meant to nourish you? This investigative exposé traces the moment bread became a product—and how we're reclaiming its soul.",
     backgroundImage: heroLoafAndLie,
-    overlayPosition: "left",
+    overlayPosition: "right",
     amazonUrl: "https://www.amazon.com/dp/B0DR2LDDSD",
     previewContent: `
       <h2>The Loaf and the LIE - Preview</h2>
