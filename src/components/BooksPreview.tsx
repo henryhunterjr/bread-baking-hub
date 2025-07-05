@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 // Import book cover images
 import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
 import breadJourneyCover from "/lovable-uploads/bread-journey-cover-hd.png";
+import seasonalBakingCover from "/lovable-uploads/19261efd-b25b-47ab-a9e1-1375e144156a.png";
 
 interface Book {
   id: string;
@@ -23,6 +24,16 @@ interface Book {
 
 const books: Book[] = [
   {
+    id: "seasonal",
+    title: "Baking Great Bread at Home",
+    subtitle: "A Journey Through the Seasons",
+    description: "Henry's seminal work on seasonal bread baking. Discover how to align your baking with nature's rhythm, using seasonal ingredients and techniques that celebrate each time of year.",
+    coverGradient: "bg-gradient-to-r from-blue-500 to-orange-500",
+    coverImage: seasonalBakingCover,
+    badge: "Coming December!",
+    featured: true
+  },
+  {
     id: "sourdough",
     title: "Sourdough for the Rest of Us",
     subtitle: "Perfection Not Required",
@@ -30,8 +41,7 @@ const books: Book[] = [
     amazonUrl: "#",
     coverGradient: "bg-primary",
     coverImage: sourdoughCover,
-    badge: "Now Available!",
-    featured: true
+    badge: "Now Available!"
   },
   {
     id: "journey",

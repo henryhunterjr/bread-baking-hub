@@ -7,8 +7,10 @@ import yeastWaterCover from "/lovable-uploads/1bca24b8-dbf6-440d-8240-4c714ec308
 import marketCover from "/lovable-uploads/a0d33e20-2a9e-46c9-a500-e9e01876a8df.png";
 import vitaleCover from "/lovable-uploads/ed2db3c9-f60e-4085-ab44-a1df3ff34c0f.png";
 import watchersCover from "/lovable-uploads/2b4a2ed0-1e01-4acf-9de5-2e2165f803b6.png";
+import seasonalBakingCover from "/lovable-uploads/19261efd-b25b-47ab-a9e1-1375e144156a.png";
 
 const books = [
+  { id: "seasonal", cover: seasonalBakingCover, title: "Baking Great Bread at Home" },
   { id: "sourdough", cover: sourdoughCover, title: "Sourdough for the Rest of Us" },
   { id: "journey", cover: breadJourneyCover, title: "Bread: A Journey" },
   { id: "yeast", cover: yeastWaterCover, title: "The Yeast Water Handbook" },
@@ -19,8 +21,8 @@ const books = [
 
 const BookshelfDisplay = () => {
   // Split books into two shelves
-  const topShelf = books.slice(0, 3);
-  const bottomShelf = books.slice(3, 6);
+  const topShelf = books.slice(0, 4);
+  const bottomShelf = books.slice(4, 7);
 
   return (
     <section className="py-16 bg-gradient-to-b from-muted/30 to-muted/10 overflow-hidden">
