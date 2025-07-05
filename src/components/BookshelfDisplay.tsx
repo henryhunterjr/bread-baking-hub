@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 // Import all book covers
 import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
 import breadJourneyCover from "/lovable-uploads/171c5ec1-d38e-4257-a2e4-60b75d2e2909.png";
-import yeastWaterCover from "/lovable-uploads/04a1e339-f8be-41dd-b672-b74d8c70c1bd.png";
+import yeastWaterCover from "/lovable-uploads/6f937c37-592f-4516-8414-a82a3c9dc838.png";
 import marketCover from "/lovable-uploads/a0d33e20-2a9e-46c9-a500-e9e01876a8df.png";
 import vitaleCover from "/lovable-uploads/ed2db3c9-f60e-4085-ab44-a1df3ff34c0f.png";
 import watchersCover from "/lovable-uploads/2b4a2ed0-1e01-4acf-9de5-2e2165f803b6.png";

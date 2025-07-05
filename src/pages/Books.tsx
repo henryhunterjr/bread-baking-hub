@@ -202,7 +202,7 @@ const bookData: Record<string, BookData> = {
     subtitle: "Wild Fermentation Made Simple",
     author: "Henry Hunter",
     description: "Discover the ancient art of wild yeast cultivation through fruit fermentation. A complete guide to creating and using yeast water as an alternative to traditional sourdough starters.",
-    coverImage: "/lovable-uploads/04a1e339-f8be-41dd-b672-b74d8c70c1bd.png",
+    coverImage: "/lovable-uploads/6f937c37-592f-4516-8414-a82a3c9dc838.png",
     previewContent: `
       <h2>The Yeast Water Handbook - Preview</h2>
       <h3>Chapter 1: What is Yeast Water?</h3>
