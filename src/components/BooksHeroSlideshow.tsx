@@ -130,7 +130,7 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 8000);
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
