@@ -38,10 +38,10 @@ const BookPreviewModal = ({
               <Button 
                 onClick={onPlayAudio}
                 className="w-full max-w-[200px] mb-4"
-                variant={isPlayingAudio ? "secondary" : "default"}
+                variant="default"
               >
                 <Play className="mr-2 h-4 w-4" />
-                {isPlayingAudio ? "Stop Audio" : "Listen to Excerpt"}
+                Listen to Excerpt
               </Button>
             )}
             <Button 

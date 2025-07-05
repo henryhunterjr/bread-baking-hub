@@ -34,6 +34,12 @@ const Books = () => {
 
   const playAudioExcerpt = () => {
     if (selectedBook?.audioUrl) {
+      // For Google Drive links, open in new tab instead of trying to play inline
+      if (selectedBook.audioUrl.includes('googleapis.com') || selectedBook.audioUrl.includes('drive.google.com')) {
+        window.open("https://drive.google.com/file/d/1UkmQgTw_s6uM2wBcSl4Z4xkTOYi7kJpt/view", '_blank');
+        return;
+      }
+      
       if (audioElement && !audioElement.paused) {
         // If audio is already playing, pause it
         audioElement.pause();
