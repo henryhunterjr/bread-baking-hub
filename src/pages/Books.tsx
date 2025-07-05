@@ -15,6 +15,7 @@ import { bookData } from "@/data/books-data";
 const Books = () => {
   const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
 
   const showPreview = (slideId: string) => {
     setSelectedPreview(slideId);
@@ -22,6 +23,10 @@ const Books = () => {
 
   const closePreview = () => {
     setSelectedPreview(null);
+    if (audioElement) {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+    }
     setIsPlayingAudio(false);
   };
 
@@ -29,10 +34,35 @@ const Books = () => {
 
   const playAudioExcerpt = () => {
     if (selectedBook?.audioUrl) {
-      // Future implementation with actual audio file
-      setIsPlayingAudio(true);
-      // Placeholder - will implement actual audio playback
-      setTimeout(() => setIsPlayingAudio(false), 3000);
+      if (audioElement && !audioElement.paused) {
+        // If audio is already playing, pause it
+        audioElement.pause();
+        setIsPlayingAudio(false);
+      } else {
+        // Create new audio element if it doesn't exist
+        if (!audioElement) {
+          const audio = new Audio(selectedBook.audioUrl);
+          audio.addEventListener('loadstart', () => setIsPlayingAudio(true));
+          audio.addEventListener('ended', () => setIsPlayingAudio(false));
+          audio.addEventListener('error', () => {
+            setIsPlayingAudio(false);
+            alert('Unable to load audio. Please try again later.');
+          });
+          setAudioElement(audio);
+          audio.play().catch(() => {
+            setIsPlayingAudio(false);
+            alert('Unable to play audio. Please try again later.');
+          });
+        } else {
+          // Use existing audio element
+          audioElement.play().then(() => {
+            setIsPlayingAudio(true);
+          }).catch(() => {
+            setIsPlayingAudio(false);
+            alert('Unable to play audio. Please try again later.');
+          });
+        }
+      }
     }
   };
 

@@ -34,15 +34,16 @@ const BookPreviewModal = ({
               alt={selectedBook.title}
               className="w-full max-w-[250px] rounded-lg shadow-stone mb-6"
             />
-            <Button 
-              onClick={onPlayAudio}
-              disabled={isPlayingAudio}
-              className="w-full max-w-[200px] mb-4"
-              variant={isPlayingAudio ? "secondary" : "default"}
-            >
-              <Play className="mr-2 h-4 w-4" />
-              {isPlayingAudio ? "Playing..." : "Listen to Excerpt"}
-            </Button>
+            {selectedBook.audioUrl && (
+              <Button 
+                onClick={onPlayAudio}
+                className="w-full max-w-[200px] mb-4"
+                variant={isPlayingAudio ? "secondary" : "default"}
+              >
+                <Play className="mr-2 h-4 w-4" />
+                {isPlayingAudio ? "Stop Audio" : "Listen to Excerpt"}
+              </Button>
+            )}
             <Button 
               variant="outline" 
               className="w-full max-w-[200px]"
