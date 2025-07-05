@@ -82,7 +82,7 @@ const books: Book[] = [
     ],
     amazonUrl: "https://www.amazon.com/dp/B0CGMF3NBS",
     coverGradient: "bg-accent",
-    coverImage: yeastWaterCover,
+    coverImage: "/lovable-uploads/2ad5dd8f-6a2d-47b2-8707-bddc15a8b9ae.png",
     previewContent: `
       <h2>The Yeast Water Handbook - Preview</h2>
       <h3>Chapter 1: What is Yeast Water?</h3>

@@ -12,6 +12,7 @@ interface Book {
   amazonUrl?: string;
   landingPageUrl?: string;
   coverGradient: string;
+  coverImage?: string;
   badge?: string;
   featured?: boolean;
 }
@@ -41,7 +42,8 @@ const books: Book[] = [
     subtitle: "Wild Fermentation Made Simple",
     description: "Discover the ancient art of wild yeast cultivation through fruit fermentation. A complete guide to creating and using yeast water as an alternative to traditional sourdough starters.",
     amazonUrl: "https://www.amazon.com/dp/B0CGMF3NBS",
-    coverGradient: "bg-accent"
+    coverGradient: "bg-accent",
+    coverImage: "/lovable-uploads/2ad5dd8f-6a2d-47b2-8707-bddc15a8b9ae.png"
   }
 ];
 
@@ -65,27 +67,34 @@ const BooksPreview = () => {
               }`}
             >
               {/* Book Cover */}
-              <div className={`relative h-64 ${book.coverGradient} rounded-t-lg overflow-hidden`}>
+              <div className={`relative h-64 rounded-t-lg overflow-hidden bg-gradient-to-br from-muted/20 to-muted/40`}>
                 {book.badge && (
                   <Badge className="absolute top-4 right-4 bg-destructive text-destructive-foreground z-10">
                     {book.badge}
                   </Badge>
                 )}
                 
-                {/* Book spine effect */}
-                <div className="absolute left-4 top-4 bottom-4 w-2 bg-black/20 rounded-sm"></div>
-                
-                {/* Cover content */}
-                <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-6 text-center">
-                  <div className="bg-black/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                    <h3 className="text-xl font-bold mb-2">{book.title}</h3>
-                    <p className="text-sm opacity-90 italic">{book.subtitle}</p>
+                {book.coverImage ? (
+                  <img 
+                    src={book.coverImage} 
+                    alt={book.title}
+                    className="w-full h-full object-contain bg-gradient-to-br from-muted/10 to-muted/20"
+                  />
+                ) : (
+                  <div className={`${book.coverGradient} h-full flex flex-col justify-center items-center text-white p-6 text-center relative`}>
+                    {/* Book spine effect */}
+                    <div className="absolute left-4 top-4 bottom-4 w-2 bg-black/20 rounded-sm"></div>
+                    
+                    <div className="bg-black/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                      <h3 className="text-xl font-bold mb-2">{book.title}</h3>
+                      <p className="text-sm opacity-90 italic">{book.subtitle}</p>
+                    </div>
+                    
+                    {/* Book pages effect */}
+                    <div className="absolute right-0 top-6 bottom-6 w-1 bg-white/30"></div>
+                    <div className="absolute right-1 top-8 bottom-8 w-0.5 bg-white/20"></div>
                   </div>
-                </div>
-                
-                {/* Book pages effect */}
-                <div className="absolute right-0 top-6 bottom-6 w-1 bg-white/30"></div>
-                <div className="absolute right-1 top-8 bottom-8 w-0.5 bg-white/20"></div>
+                )}
               </div>
 
               <CardContent className="p-6">
