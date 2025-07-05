@@ -8,7 +8,7 @@ import marketCover from "/lovable-uploads/a0d33e20-2a9e-46c9-a500-e9e01876a8df.p
 import vitaleCover from "/lovable-uploads/ed2db3c9-f60e-4085-ab44-a1df3ff34c0f.png";
 import watchersCover from "/lovable-uploads/2b4a2ed0-1e01-4acf-9de5-2e2165f803b6.png";
 import seasonalBakingCover from "/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png";
-import loafLieCover from "/lovable-uploads/0aed0189-2f4d-4ff8-9492-52df60edb20f.png";
+import loafLieCover from "/lovable-uploads/83cde278-edfc-4a30-98f4-79f37c79346e.png";
 
 const books = [
   { id: "seasonal", cover: seasonalBakingCover, title: "Baking Great Bread at Home" },

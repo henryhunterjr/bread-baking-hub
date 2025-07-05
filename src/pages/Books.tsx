@@ -168,7 +168,7 @@ const bookData: Record<string, BookData> = {
     subtitle: "A History of What We Broke and How We're Taking It Back",
     author: "Henry Hunter",
     description: "What if the bread on your table was never meant to nourish you? In The Loaf and the LIE, Henry Hunter pulls back the curtain on the industrial food machine that replaced ancestral wisdom with shelf-stable profits. Told in gripping, investigative detail with the fire of someone who's spent a lifetime in both the kitchen and the archives, this exposé traces the moment bread became a product—and how we're reclaiming its soul.",
-    coverImage: "/lovable-uploads/0aed0189-2f4d-4ff8-9492-52df60edb20f.png",
+    coverImage: "/lovable-uploads/83cde278-edfc-4a30-98f4-79f37c79346e.png",
     previewContent: `
       <h2>The Loaf and the LIE - Preview</h2>
       <h3>A History of What We Broke and How We're Taking It Back</h3>

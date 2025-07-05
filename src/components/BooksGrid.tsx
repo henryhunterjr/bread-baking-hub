@@ -9,7 +9,7 @@ import breadJourneyCover from "/lovable-uploads/171c5ec1-d38e-4257-a2e4-60b75d2e
 import yeastWaterCover from "/lovable-uploads/1bca24b8-dbf6-440d-8240-4c714ec30891.png";
 import marketCover from "/lovable-uploads/a0d33e20-2a9e-46c9-a500-e9e01876a8df.png";
 import seasonalBakingCover from "/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png";
-import loafLieCover from "/lovable-uploads/0aed0189-2f4d-4ff8-9492-52df60edb20f.png";
+import loafLieCover from "/lovable-uploads/83cde278-edfc-4a30-98f4-79f37c79346e.png";
 
 interface Book {
   id: string;
