@@ -10,15 +10,21 @@ import ComingSoonBlock from "@/components/ComingSoonBlock";
 import PraiseSocialProof from "@/components/PraiseSocialProof";
 import LoafAndLieSpotlight from "@/components/LoafAndLieSpotlight";
 import BookPreviewModal from "@/components/BookPreviewModal";
+import AudioPlayerModal from "@/components/AudioPlayerModal";
 import { bookData } from "@/data/books-data";
 
 const Books = () => {
   const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
+  const [selectedAudio, setSelectedAudio] = useState<string | null>(null);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
 
   const showPreview = (slideId: string) => {
     setSelectedPreview(slideId);
+  };
+
+  const showAudioPlayer = (slideId: string) => {
+    setSelectedAudio(slideId);
   };
 
   const closePreview = () => {
@@ -30,45 +36,18 @@ const Books = () => {
     setIsPlayingAudio(false);
   };
 
+  const closeAudioPlayer = () => {
+    setSelectedAudio(null);
+  };
+
   const selectedBook = selectedPreview ? bookData[selectedPreview] : null;
+  const selectedAudioBook = selectedAudio ? bookData[selectedAudio] : null;
 
   const playAudioExcerpt = () => {
     if (selectedBook?.audioUrl) {
-      // For Google Drive links, open in new tab instead of trying to play inline
-      if (selectedBook.audioUrl.includes('googleapis.com') || selectedBook.audioUrl.includes('drive.google.com')) {
-        window.open("https://drive.google.com/file/d/1UkmQgTw_s6uM2wBcSl4Z4xkTOYi7kJpt/view", '_blank');
-        return;
-      }
-      
-      if (audioElement && !audioElement.paused) {
-        // If audio is already playing, pause it
-        audioElement.pause();
-        setIsPlayingAudio(false);
-      } else {
-        // Create new audio element if it doesn't exist
-        if (!audioElement) {
-          const audio = new Audio(selectedBook.audioUrl);
-          audio.addEventListener('loadstart', () => setIsPlayingAudio(true));
-          audio.addEventListener('ended', () => setIsPlayingAudio(false));
-          audio.addEventListener('error', () => {
-            setIsPlayingAudio(false);
-            alert('Unable to load audio. Please try again later.');
-          });
-          setAudioElement(audio);
-          audio.play().catch(() => {
-            setIsPlayingAudio(false);
-            alert('Unable to play audio. Please try again later.');
-          });
-        } else {
-          // Use existing audio element
-          audioElement.play().then(() => {
-            setIsPlayingAudio(true);
-          }).catch(() => {
-            setIsPlayingAudio(false);
-            alert('Unable to play audio. Please try again later.');
-          });
-        }
-      }
+      // Close preview modal and open audio player modal
+      setSelectedPreview(null);
+      setSelectedAudio(selectedBook.id);
     }
   };
 
@@ -98,7 +77,10 @@ const Books = () => {
       <BooksGrid onPreview={(slideId) => showPreview(slideId)} />
 
       {/* The Loaf and the LIE Spotlight */}
-      <LoafAndLieSpotlight onPreview={() => showPreview('loaflie')} />
+      <LoafAndLieSpotlight 
+        onPreview={() => showPreview('loaflie')} 
+        onAudio={() => showAudioPlayer('loaflie')}
+      />
 
       {/* Coming Soon Block */}
       <ComingSoonBlock />
@@ -128,6 +110,11 @@ const Books = () => {
         isPlayingAudio={isPlayingAudio}
         onClose={closePreview}
         onPlayAudio={playAudioExcerpt}
+      />
+
+      <AudioPlayerModal 
+        selectedBook={selectedAudioBook}
+        onClose={closeAudioPlayer}
       />
 
       <Footer />

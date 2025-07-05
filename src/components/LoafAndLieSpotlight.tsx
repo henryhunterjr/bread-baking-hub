@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Eye, ExternalLink } from "lucide-react";
+import { Eye, ExternalLink, Play } from "lucide-react";
 
 interface LoafAndLieSpotlightProps {
   onPreview: () => void;
+  onAudio?: () => void;
 }
 
-const LoafAndLieSpotlight = ({ onPreview }: LoafAndLieSpotlightProps) => {
+const LoafAndLieSpotlight = ({ onPreview, onAudio }: LoafAndLieSpotlightProps) => {
   return (
     <section className="py-20 bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 relative overflow-hidden">
       {/* Dramatic lighting effects */}
@@ -72,6 +73,17 @@ const LoafAndLieSpotlight = ({ onPreview }: LoafAndLieSpotlightProps) => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
+              {onAudio && (
+                <Button 
+                  onClick={onAudio}
+                  size="lg" 
+                  className="bg-amber-600 hover:bg-amber-700 text-white border-amber-500"
+                >
+                  <Play className="mr-2 h-5 w-5" />
+                  Listen to Excerpt
+                </Button>
+              )}
+              
               <Button 
                 onClick={onPreview}
                 size="lg" 

@@ -185,7 +185,7 @@ export const bookData: Record<string, BookData> = {
       
       <p><em>This is not just a book. It's a reckoning.</em></p>
     `,
-    audioUrl: "https://www.googleapis.com/drive/v3/files/1UkmQgTw_s6uM2wBcSl4Z4xkTOYi7kJpt?alt=media"
+    audioUrl: "https://drive.google.com/uc?export=download&id=1UkmQgTw_s6uM2wBcSl4Z4xkTOYi7kJpt"
   },
   yeast: {
     id: "yeast",
