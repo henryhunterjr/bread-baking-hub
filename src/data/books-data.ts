@@ -85,7 +85,7 @@ export const bookData: Record<string, BookData> = {
         <li>Building community through the art of bread-making</li>
       </ul>
     `,
-    audioUrl: "/audio/journey-excerpt.mp3"
+    audioUrl: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/audio-files/ElevenLabs_BREAD_A_Journey_Through_History,_Science,_Art,_and_Community.mp3"
   },
   vitale: {
     id: "vitale",

@@ -10,6 +10,7 @@ import ComingSoonBlock from "@/components/ComingSoonBlock";
 import PraiseSocialProof from "@/components/PraiseSocialProof";
 import LoafAndLieSpotlight from "@/components/LoafAndLieSpotlight";
 import LoafAndLieHeroSection from "@/components/LoafAndLieHeroSection";
+import BreadJourneyFeatured from "@/components/BreadJourneyFeatured";
 import BookPreviewModal from "@/components/BookPreviewModal";
 import AudioPlayerModal from "@/components/AudioPlayerModal";
 import { bookData } from "@/data/books-data";
@@ -76,6 +77,9 @@ const Books = () => {
         story="After years of teaching bread-making, I discovered that the real magic isn't in perfect technique—it's in understanding the living culture that makes each loaf unique. That's when Vitale was born."
         position="right"
       />
+
+      {/* Bread Journey Featured Section */}
+      <BreadJourneyFeatured onListen={() => showAudioPlayer('journey')} />
 
       {/* Books Grid */}
       <BooksGrid onPreview={(slideId) => showPreview(slideId)} />
