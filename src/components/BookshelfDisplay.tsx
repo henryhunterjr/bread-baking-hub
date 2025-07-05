@@ -69,7 +69,7 @@ const BookshelfDisplay = ({ onPreview }: BookshelfDisplayProps) => {
                 {topShelf.map((book, index) => (
                   <div
                     key={book.id}
-                    className="relative group cursor-pointer transition-all duration-700 hover:scale-125 hover:-translate-y-8 hover:rotate-0 hover:z-20 hover:drop-shadow-2xl"
+                    className="relative group cursor-pointer transition-all duration-500 hover:scale-150 hover:-translate-y-12 hover:rotate-0 hover:z-20 hover:drop-shadow-2xl"
                     style={{
                       transform: `rotateY(${(index - 1) * 5}deg) rotateX(-2deg)`,
                       transformStyle: 'preserve-3d'
@@ -103,7 +103,7 @@ const BookshelfDisplay = ({ onPreview }: BookshelfDisplayProps) => {
                 {bottomShelf.map((book, index) => (
                   <div
                     key={book.id}
-                    className="relative group cursor-pointer transition-all duration-700 hover:scale-125 hover:-translate-y-8 hover:rotate-0 hover:z-20 hover:drop-shadow-2xl"
+                    className="relative group cursor-pointer transition-all duration-500 hover:scale-150 hover:-translate-y-12 hover:rotate-0 hover:z-20 hover:drop-shadow-2xl"
                     style={{
                       transform: `rotateY(${(index - 1) * 5}deg) rotateX(-2deg)`,
                       transformStyle: 'preserve-3d'
