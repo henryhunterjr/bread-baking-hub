@@ -63,7 +63,7 @@ export const bookData: Record<string, BookData> = {
       <h4>✓ Troubleshooting made simple</h4>
       <p>Sticky dough? Lifeless starter? Weird oven results? Get straight answers without the fluff. This book cuts through the mystique to deliver practical advice that works in real kitchens for real people.</p>
     `,
-    audioUrl: "/audio/sourdough-excerpt.mp3"
+    audioUrl: "https://drive.google.com/uc?export=download&id=1k5jfoPG8TOhxIwdqG7dDAOn2J75K4_ek"
   },
   journey: {
     id: "journey", 
