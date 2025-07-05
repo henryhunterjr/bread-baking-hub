@@ -4,6 +4,10 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 
+// Import book cover images
+import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
+import breadJourneyCover from "/lovable-uploads/bread-journey-cover-hd.png";
+
 interface Book {
   id: string;
   title: string;
@@ -25,6 +29,7 @@ const books: Book[] = [
     description: "Finally, a sourdough guide that doesn't take itself too seriously. This book cuts through the mystique to deliver practical advice that works in real kitchens for real people.",
     amazonUrl: "#",
     coverGradient: "bg-primary",
+    coverImage: sourdoughCover,
     badge: "Now Available!",
     featured: true
   },
@@ -34,7 +39,8 @@ const books: Book[] = [
     subtitle: "Through History, Science, Art, and Community",
     description: "Explore bread's profound impact on human civilization. From ancient grains to modern artisan techniques, this comprehensive guide weaves together history, science, and practical baking wisdom.",
     amazonUrl: "https://www.amazon.com/dp/B0CH2D2GDB",
-    coverGradient: "bg-secondary"
+    coverGradient: "bg-secondary",
+    coverImage: breadJourneyCover
   },
   {
     id: "yeast",
