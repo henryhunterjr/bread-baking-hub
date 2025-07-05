@@ -164,8 +164,8 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
         style={{ backgroundImage: `url(${currentSlideData.backgroundImage})` }}
       />
       
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      {/* Overlay - Reduced opacity for clearer images */}
+      <div className="absolute inset-0 bg-black/20" />
 
       {/* Content Overlay */}
       <div className="relative h-full flex items-center">
