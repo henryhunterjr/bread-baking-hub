@@ -8,6 +8,7 @@ import heroSourdoughRest from "/lovable-uploads/2a175afa-69e3-4c4f-b6b1-528bd063
 import heroVitaleMastery from "/lovable-uploads/47fc6d49-8e46-4eb3-a2df-2a1fc47ac10c.png";
 import heroOvenMarket from "/lovable-uploads/bf859aa6-8525-4149-afdd-62597c742ef7.png";
 import heroWatchersDescent from "/lovable-uploads/ce4d6857-3d61-4696-af57-8a6d5ec4874d.png";
+import heroLoafAndLie from "/lovable-uploads/5d3d128b-c22e-4b4f-b5f4-8f26c1a357f7.png";
 
 interface HeroSlide {
   id: string;
@@ -97,6 +98,22 @@ const slides: HeroSlide[] = [
       <h3>Turning Passion into Profit</h3>
       <p>Many home bakers dream of turning their passion into a business, but don't know where to start. This book provides a practical roadmap from your home kitchen to farmers' markets and beyond.</p>
       <p>You'll learn about scaling recipes, pricing products, marketing strategies, and the legal requirements for selling food...</p>
+    `
+  },
+  {
+    id: "loaflie",
+    title: "The Loaf and the LIE",
+    tagline: "A History of What We Broke and How We're Taking It Back",
+    description: "What if the bread on your table was never meant to nourish you? This investigative exposé traces the moment bread became a product—and how we're reclaiming its soul.",
+    backgroundImage: heroLoafAndLie,
+    overlayPosition: "left",
+    amazonUrl: "https://www.amazon.com/dp/B0DR2LDDSD",
+    previewContent: `
+      <h2>The Loaf and the LIE - Preview</h2>
+      <h3>A History of What We Broke and How We're Taking It Back</h3>
+      <p>What if the bread on your table was never meant to nourish you?</p>
+      <p>In The Loaf and the LIE, Henry Hunter pulls back the curtain on the industrial food machine that replaced ancestral wisdom with shelf-stable profits. Told in gripping, investigative detail with the fire of someone who's spent a lifetime in both the kitchen and the archives, this exposé traces the moment bread became a product—and how we're reclaiming its soul.</p>
+      <p><em>This is not just a book. It's a reckoning.</em></p>
     `
   },
   {
