@@ -240,10 +240,11 @@ export default function TroubleshootingPage() {
 
             {/* Right Panel */}
             <div className="w-full lg:w-3/4" ref={resultsRef}>
-              {/* Proofing Problems Visual Guide */}
+              {/* Comprehensive Troubleshooting Visual Guide */}
               <div className="mb-8">
                 <Accordion type="single" collapsible>
-                  <AccordionItem value="proofing" className="border border-yellow-500/30 rounded-lg bg-yellow-50/50 dark:bg-yellow-900/10">
+                  {/* Proofing Problems */}
+                  <AccordionItem value="proofing" className="border border-yellow-500/30 rounded-lg bg-yellow-50/50 dark:bg-yellow-900/10 mb-4">
                     <AccordionTrigger className="px-6 py-4 text-lg font-semibold hover:bg-yellow-100/50 dark:hover:bg-yellow-900/20">
                       🕒 Proofing Problems - Visual Diagnosis Guide
                     </AccordionTrigger>
@@ -352,6 +353,211 @@ export default function TroubleshootingPage() {
                               className="w-full rounded-lg cursor-pointer hover:shadow-lg transition-shadow"
                               onClick={() => window.open('/lovable-uploads/2f9d94ed-1d8a-4e00-9ae0-45dfec7907ae.png', '_blank')}
                             />
+                          </div>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  {/* Dough Development & Handling */}
+                  <AccordionItem value="dough-development" className="border border-blue-500/30 rounded-lg bg-blue-50/50 dark:bg-blue-900/10 mb-4">
+                    <AccordionTrigger className="px-6 py-4 text-lg font-semibold hover:bg-blue-100/50 dark:hover:bg-blue-900/20">
+                      🤲 Dough Development & Handling Issues
+                    </AccordionTrigger>
+                    <AccordionContent className="px-6 pb-6">
+                      <p className="text-muted-foreground mb-6 text-sm">
+                        Master proper dough development and handling techniques for better bread.
+                      </p>
+                      
+                      <div className="space-y-6">
+                        {/* Windowpane Test */}
+                        <div>
+                          <h4 className="text-lg font-semibold text-primary mb-4">Proper Gluten Development</h4>
+                          <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/b6b75cef-23c6-42c2-891e-f88243f68293.png', '_blank')}>
+                            <CardContent className="p-4">
+                              <img 
+                                src="/lovable-uploads/b6b75cef-23c6-42c2-891e-f88243f68293.png" 
+                                alt="Windowpane test demonstration"
+                                className="w-full h-48 object-cover rounded-lg mb-3"
+                              />
+                              <h5 className="font-semibold text-sm mb-2">The Windowpane Test</h5>
+                              <p className="text-xs text-muted-foreground mb-2">Well-developed dough should stretch thin enough to see through without tearing.</p>
+                              <p className="text-xs text-green-600 dark:text-green-400">Test: Stretch a small piece of dough - it should form a translucent membrane.</p>
+                            </CardContent>
+                          </Card>
+                        </div>
+
+                        {/* Fermentation Guide */}
+                        <div>
+                          <h4 className="text-lg font-semibold text-primary mb-4">Fermentation Stages</h4>
+                          <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/1311c737-acb9-42d7-8ad1-1a493f5f06de.png', '_blank')}>
+                            <CardContent className="p-4">
+                              <img 
+                                src="/lovable-uploads/1311c737-acb9-42d7-8ad1-1a493f5f06de.png" 
+                                alt="Fermentation stages comparison"
+                                className="w-full h-48 object-cover rounded-lg mb-3"
+                              />
+                              <h5 className="font-semibold text-sm mb-2">Complete Fermentation Guide</h5>
+                              <p className="text-xs text-muted-foreground mb-2">Visual guide showing perfect vs problematic fermentation stages.</p>
+                              <p className="text-xs text-blue-600 dark:text-blue-400">Reference: Use this to identify temperature, timing, and steam issues.</p>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  {/* Quick Breads & Baking Issues */}
+                  <AccordionItem value="quick-breads" className="border border-purple-500/30 rounded-lg bg-purple-50/50 dark:bg-purple-900/10 mb-4">
+                    <AccordionTrigger className="px-6 py-4 text-lg font-semibold hover:bg-purple-100/50 dark:hover:bg-purple-900/20">
+                      🍞 Quick Breads & Baking Problems
+                    </AccordionTrigger>
+                    <AccordionContent className="px-6 pb-6">
+                      <p className="text-muted-foreground mb-6 text-sm">
+                        Fix common issues with banana bread, muffins, and other quick breads.
+                      </p>
+                      
+                      <div className="space-y-6">
+                        {/* Collapsed vs Perfect */}
+                        <div>
+                          <h4 className="text-lg font-semibold text-primary mb-4">Sunken Center Problems</h4>
+                          <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/ebf4f556-1844-41f4-9830-cef4720d68c3.png', '_blank')}>
+                            <CardContent className="p-4">
+                              <img 
+                                src="/lovable-uploads/ebf4f556-1844-41f4-9830-cef4720d68c3.png" 
+                                alt="Sunken vs perfect quick bread"
+                                className="w-full h-48 object-cover rounded-lg mb-3"
+                              />
+                              <h5 className="font-semibold text-sm mb-2">Quick Bread Collapse</h5>
+                              <p className="text-xs text-muted-foreground mb-2">Left: Sunken center from overmixing or underbaking. Right: Perfect dome from proper technique.</p>
+                              <p className="text-xs text-orange-600 dark:text-orange-400">Fix: Mix just until combined, don't overbake, check leavening freshness.</p>
+                            </CardContent>
+                          </Card>
+                        </div>
+
+                        {/* Dense Machine Bread */}
+                        <div>
+                          <h4 className="text-lg font-semibold text-primary mb-4">Dense & Collapsed Loaves</h4>
+                          <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/a3e88084-dbe5-4e9c-b53f-f65c6717ef37.png', '_blank')}>
+                            <CardContent className="p-4">
+                              <img 
+                                src="/lovable-uploads/a3e88084-dbe5-4e9c-b53f-f65c6717ef37.png" 
+                                alt="Dense collapsed bread"
+                                className="w-full h-48 object-cover rounded-lg mb-3"
+                              />
+                              <h5 className="font-semibold text-sm mb-2">Heavy, Dense Texture</h5>
+                              <p className="text-xs text-muted-foreground mb-2">Extremely dense crumb with poor rise - multiple issues at play.</p>
+                              <p className="text-xs text-red-600 dark:text-red-400">Fix: Check yeast activity, flour measurement, liquid ratios, and mixing time.</p>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  {/* Crust & Baking Issues */}
+                  <AccordionItem value="crust-baking" className="border border-red-500/30 rounded-lg bg-red-50/50 dark:bg-red-900/10 mb-4">
+                    <AccordionTrigger className="px-6 py-4 text-lg font-semibold hover:bg-red-100/50 dark:hover:bg-red-900/20">
+                      🔥 Crust & Baking Temperature Issues
+                    </AccordionTrigger>
+                    <AccordionContent className="px-6 pb-6">
+                      <p className="text-muted-foreground mb-6 text-sm">
+                        Solve problems with burnt bottoms, pale crusts, and temperature control.
+                      </p>
+                      
+                      <div className="space-y-6">
+                        {/* Burnt Bottom */}
+                        <div>
+                          <h4 className="text-lg font-semibold text-primary mb-4">Burnt Bottom Issues</h4>
+                          <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/63142592-06a7-4148-a952-38bb2b6f6090.png', '_blank')}>
+                            <CardContent className="p-4">
+                              <img 
+                                src="/lovable-uploads/63142592-06a7-4148-a952-38bb2b6f6090.png" 
+                                alt="Burnt bottom bread"
+                                className="w-full h-48 object-cover rounded-lg mb-3"
+                              />
+                              <h5 className="font-semibold text-sm mb-2">Severely Burnt Bottom</h5>
+                              <p className="text-xs text-muted-foreground mb-2">Dark, charred bottom crust while top looks normal.</p>
+                              <p className="text-xs text-red-600 dark:text-red-400">Fix: Move to higher oven rack, use baking stone, lower temperature by 25°F.</p>
+                            </CardContent>
+                          </Card>
+                        </div>
+
+                        {/* Perfect Artisan Loaves */}
+                        <div>
+                          <h4 className="text-lg font-semibold text-primary mb-4">Well-Baked Examples</h4>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/e87024c4-9b8d-4b03-b097-a63ed218970d.png', '_blank')}>
+                              <CardContent className="p-4">
+                                <img 
+                                  src="/lovable-uploads/e87024c4-9b8d-4b03-b097-a63ed218970d.png" 
+                                  alt="Perfect sourdough loaves"
+                                  className="w-full h-32 object-cover rounded-lg mb-3"
+                                />
+                                <h5 className="font-semibold text-sm mb-2">Perfect Artisan Loaves</h5>
+                                <p className="text-xs text-muted-foreground mb-2">Beautiful golden crust, excellent oven spring, proper scoring.</p>
+                                <p className="text-xs text-green-600 dark:text-green-400">Target: This is what well-baked sourdough should look like.</p>
+                              </CardContent>
+                            </Card>
+                            
+                            <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/9087fac4-9b4e-4823-928d-1d6231bbe8b7.png', '_blank')}>
+                              <CardContent className="p-4">
+                                <img 
+                                  src="/lovable-uploads/9087fac4-9b4e-4823-928d-1d6231bbe8b7.png" 
+                                  alt="Perfect sourdough crumb"
+                                  className="w-full h-32 object-cover rounded-lg mb-3"
+                                />
+                                <h5 className="font-semibold text-sm mb-2">Ideal Crumb Structure</h5>
+                                <p className="text-xs text-muted-foreground mb-2">Open, airy crumb with even hole distribution and great texture.</p>
+                                <p className="text-xs text-green-600 dark:text-green-400">Perfect: Even fermentation and proper baking achieved.</p>
+                              </CardContent>
+                            </Card>
+                          </div>
+                        </div>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  {/* Crumb Structure Issues */}
+                  <AccordionItem value="crumb-structure" className="border border-green-500/30 rounded-lg bg-green-50/50 dark:bg-green-900/10 mb-4">
+                    <AccordionTrigger className="px-6 py-4 text-lg font-semibold hover:bg-green-100/50 dark:hover:bg-green-900/20">
+                      🍞 Crumb Structure & Texture Problems
+                    </AccordionTrigger>
+                    <AccordionContent className="px-6 pb-6">
+                      <p className="text-muted-foreground mb-6 text-sm">
+                        Diagnose and fix issues with crumb texture, hole distribution, and interior problems.
+                      </p>
+                      
+                      <div className="space-y-6">
+                        {/* Perfect Crumb Examples */}
+                        <div>
+                          <h4 className="text-lg font-semibold text-primary mb-4">Target Crumb Structure</h4>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/df3b3be5-2c18-4db6-9ddc-b96a0f64584f.png', '_blank')}>
+                              <CardContent className="p-4">
+                                <img 
+                                  src="/lovable-uploads/df3b3be5-2c18-4db6-9ddc-b96a0f64584f.png" 
+                                  alt="Perfect sourdough crumb"
+                                  className="w-full h-32 object-cover rounded-lg mb-3"
+                                />
+                                <h5 className="font-semibold text-sm mb-2">Excellent Sourdough Crumb</h5>
+                                <p className="text-xs text-muted-foreground mb-2">Well-developed holes, good structure, proper fermentation.</p>
+                                <p className="text-xs text-green-600 dark:text-green-400">Target: Aim for this open, even crumb structure.</p>
+                              </CardContent>
+                            </Card>
+                            
+                            <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/544551ff-397f-4f33-bf2f-daff4ddffe46.png', '_blank')}>
+                              <CardContent className="p-4">
+                                <img 
+                                  src="/lovable-uploads/544551ff-397f-4f33-bf2f-daff4ddffe46.png" 
+                                  alt="Multiple bread loaves"
+                                  className="w-full h-32 object-cover rounded-lg mb-3"
+                                />
+                                <h5 className="font-semibold text-sm mb-2">Consistent Batch Results</h5>
+                                <p className="text-xs text-muted-foreground mb-2">Multiple loaves showing consistent shaping and baking.</p>
+                                <p className="text-xs text-blue-600 dark:text-blue-400">Goal: Achieve consistent results across multiple loaves.</p>
+                              </CardContent>
+                            </Card>
                           </div>
                         </div>
                       </div>
