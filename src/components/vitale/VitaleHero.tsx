@@ -18,7 +18,7 @@ export const VitaleHero = () => {
               <img 
                 src="/lovable-uploads/fff984e8-765a-4f2a-94dc-c79799d4b371.png"
                 alt="Vitale Logo"
-                className="h-30 md:h-36"
+                className="h-45 md:h-54"
                 loading="eager"
               />
             </div>
