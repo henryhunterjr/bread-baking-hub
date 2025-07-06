@@ -9,6 +9,7 @@ import BakersBench from "../components/BakersBench";
 import MonthlyChallenge from "../components/MonthlyChallenge";
 import LatestBlogPosts from "../components/LatestBlogPosts";
 import CallToAction from "../components/CallToAction";
+import PodcastSection from "../components/PodcastSection";
 
 const Index = () => {
   return (
@@ -17,6 +18,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <AboutHenry />
+        <PodcastSection />
         <BooksPreview />
         <ToolsResources />
         <FromOvenToMarketHero />
