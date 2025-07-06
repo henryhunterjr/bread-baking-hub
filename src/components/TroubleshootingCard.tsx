@@ -29,21 +29,20 @@ const TroubleshootingCard: React.FC<TroubleshootingCardProps> = ({ symptom, isHi
                 {symptom.id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
               </CardTitle>
               <div className="flex flex-wrap gap-2">
-                <Badge className="capitalize bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900 font-semibold px-3 py-1">
+                <Badge className="capitalize bg-gray-900 text-white dark:bg-white dark:text-gray-900 font-bold px-3 py-1 text-sm border-2 border-gray-900 dark:border-white">
                   {symptom.category}
                 </Badge>
                 {symptom.labels.map((label) => (
                   <Tooltip key={label}>
                     <TooltipTrigger asChild>
                       <Badge 
-                        variant="outline" 
-                        className="text-xs bg-white dark:bg-gray-800 border-2 border-gray-600 dark:border-gray-300 text-gray-800 dark:text-gray-200 hover:bg-yellow-100 dark:hover:bg-yellow-900/30 hover:border-yellow-600 cursor-help font-medium px-2 py-1"
+                        className="text-sm bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900 border-2 border-gray-800 dark:border-gray-200 hover:bg-yellow-600 hover:text-white dark:hover:bg-yellow-500 dark:hover:text-black cursor-help font-semibold px-3 py-1"
                       >
                         {label}
                       </Badge>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p className="max-w-xs text-sm">{symptom.quickFix}</p>
+                      <p className="max-w-xs text-sm font-medium">{symptom.quickFix}</p>
                     </TooltipContent>
                   </Tooltip>
                 ))}
@@ -56,7 +55,7 @@ const TroubleshootingCard: React.FC<TroubleshootingCardProps> = ({ symptom, isHi
           {/* Quick Fix Section */}
           <div>
             <h3 className="font-semibold text-lg mb-3 text-primary">Quick Fix</h3>
-            <p className="text-gray-900 dark:text-gray-100 bg-yellow-100 dark:bg-yellow-900/50 p-4 rounded-lg border-l-4 border-yellow-600 font-medium text-base">
+            <p className="text-black dark:text-white bg-yellow-200 dark:bg-yellow-800 p-4 rounded-lg border-l-4 border-yellow-700 font-bold text-base">
               {symptom.quickFix}
             </p>
           </div>
@@ -66,7 +65,7 @@ const TroubleshootingCard: React.FC<TroubleshootingCardProps> = ({ symptom, isHi
           {/* Deep Dive Section */}
           <div>
             <h3 className="font-semibold text-lg mb-3 text-primary">Deep Dive</h3>
-            <p className="text-gray-800 dark:text-gray-200 leading-relaxed text-base font-medium">
+            <p className="text-black dark:text-white leading-relaxed text-base font-semibold">
               {symptom.deepDive}
             </p>
           </div>
