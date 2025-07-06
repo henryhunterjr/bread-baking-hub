@@ -10,7 +10,7 @@ const BakersBench = () => {
       type: "podcast",
       thumbnail: "https://img.youtube.com/vi/FiQg8AaW7PE/maxresdefault.jpg",
       duration: "16:20",
-      link: "https://youtu.be/FiQg8AaW7PE?si=WgH2a9SkGEboCtgU",
+      link: "https://youtu.be/FiQg8AaW7PE?si=uHnH9WG7004E6gDy",
       date: "March 2025"
     },
     {
@@ -106,6 +106,8 @@ const BakersBench = () => {
                 <p className="text-stone-300 text-sm line-clamp-2">{item.description}</p>
                 <a 
                   href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
                 >
                   Watch Now
