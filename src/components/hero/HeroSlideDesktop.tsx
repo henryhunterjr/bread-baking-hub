@@ -18,8 +18,9 @@ const HeroSlideDesktop = ({ slide, slideIndex, onPreview }: HeroSlideDesktopProp
           slide.overlayPosition === 'left' ? 'animate-slide-in-left' : ''
         }`}
         style={{ 
-          animationDelay: '0.5s',
-          animationFillMode: 'both'
+          animationDelay: '3s', // Overlay appears 3 seconds after hero image
+          animationFillMode: 'both',
+          animationDuration: '0.8s' // Elegant slide-in
         }}
       >
         <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">

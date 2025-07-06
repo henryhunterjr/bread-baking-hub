@@ -15,7 +15,7 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 8000); // Increased from 6s to 8s to give more time to appreciate covers
+    }, 6000); // 6 seconds total per slide
 
     return () => clearInterval(interval);
   }, [isAutoPlaying]);

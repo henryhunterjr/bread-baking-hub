@@ -16,9 +16,9 @@ const HeroSlideMobile = ({ slide, slideIndex, onPreview }: HeroSlideMobileProps)
         key={`content-mobile-${slideIndex}`}
         className="bg-black/70 backdrop-blur-md border-white/20 p-4 text-white animate-fade-in absolute bottom-8 left-4 right-4 opacity-0"
         style={{ 
-          animationDelay: '5s', // Increased from 3s to 5s - book covers get 5 full seconds to shine
+          animationDelay: '3s', // Overlay appears 3 seconds after hero image
           animationFillMode: 'both',
-          animationDuration: '1s' // Slightly slower, more elegant fade-in
+          animationDuration: '0.8s' // Elegant fade-in
         }}
       >
         <h1 className="text-2xl font-bold mb-2 leading-tight">
