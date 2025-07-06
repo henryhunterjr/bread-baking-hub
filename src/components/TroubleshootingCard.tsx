@@ -29,7 +29,7 @@ const TroubleshootingCard: React.FC<TroubleshootingCardProps> = ({ symptom, isHi
                 {symptom.id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
               </CardTitle>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary" className="capitalize focus:ring-2 focus:ring-yellow-400">
+                <Badge className="capitalize bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-900 font-semibold px-3 py-1">
                   {symptom.category}
                 </Badge>
                 {symptom.labels.map((label) => (
@@ -37,7 +37,7 @@ const TroubleshootingCard: React.FC<TroubleshootingCardProps> = ({ symptom, isHi
                     <TooltipTrigger asChild>
                       <Badge 
                         variant="outline" 
-                        className="text-xs hover:bg-yellow-500/20 focus:ring-2 focus:ring-yellow-400 cursor-help"
+                        className="text-xs bg-white dark:bg-gray-800 border-2 border-gray-600 dark:border-gray-300 text-gray-800 dark:text-gray-200 hover:bg-yellow-100 dark:hover:bg-yellow-900/30 hover:border-yellow-600 cursor-help font-medium px-2 py-1"
                       >
                         {label}
                       </Badge>
@@ -56,7 +56,7 @@ const TroubleshootingCard: React.FC<TroubleshootingCardProps> = ({ symptom, isHi
           {/* Quick Fix Section */}
           <div>
             <h3 className="font-semibold text-lg mb-3 text-primary">Quick Fix</h3>
-            <p className="text-foreground bg-yellow-50 dark:bg-yellow-900/30 p-4 rounded-lg border-l-4 border-yellow-500">
+            <p className="text-gray-900 dark:text-gray-100 bg-yellow-100 dark:bg-yellow-900/50 p-4 rounded-lg border-l-4 border-yellow-600 font-medium text-base">
               {symptom.quickFix}
             </p>
           </div>
@@ -66,7 +66,7 @@ const TroubleshootingCard: React.FC<TroubleshootingCardProps> = ({ symptom, isHi
           {/* Deep Dive Section */}
           <div>
             <h3 className="font-semibold text-lg mb-3 text-primary">Deep Dive</h3>
-            <p className="text-muted-foreground leading-relaxed text-base">
+            <p className="text-gray-800 dark:text-gray-200 leading-relaxed text-base font-medium">
               {symptom.deepDive}
             </p>
           </div>
