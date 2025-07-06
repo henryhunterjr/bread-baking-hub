@@ -13,6 +13,8 @@ import Auth from "./pages/Auth";
 import MyRecipes from "./pages/MyRecipes";
 import About from "./pages/About";
 import Books from "./pages/Books";
+import Recipes from "./pages/Recipes";
+import VitaleStarter from "./pages/VitaleStarter";
 import PublicRecipe from "./pages/PublicRecipe";
 import HenrysFoolproofRecipe from "./pages/HenrysFoolproofRecipe";
 import BreadGlossary from "./pages/BreadGlossary";
@@ -40,6 +42,8 @@ const App = () => (
             <Route path="/my-recipes" element={<MyRecipes />} />
             <Route path="/about" element={<About />} />
             <Route path="/books" element={<Books />} />
+            <Route path="/recipes" element={<Recipes />} />
+            <Route path="/vitale-starter" element={<VitaleStarter />} />
             <Route path="/henrys-foolproof-recipe" element={<HenrysFoolproofRecipe />} />
             <Route path="/glossary" element={<BreadGlossary />} />
             <Route path="/bread-calculator" element={<BreadCalculator />} />

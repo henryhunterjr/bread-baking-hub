@@ -23,6 +23,9 @@ const Header = () => {
               <Link to="/recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Recipes
               </Link>
+              <Link to="/vitale-starter" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Vitale Starter
+              </Link>
               <Link to="/books" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Books
               </Link>
@@ -72,6 +75,9 @@ const Header = () => {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <Link to="/recipes" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Recipes
+              </Link>
+              <Link to="/vitale-starter" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
+                Vitale Starter
               </Link>
               <Link to="/books" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Books
