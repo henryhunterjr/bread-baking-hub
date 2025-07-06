@@ -48,7 +48,7 @@ export default function TroubleshootingContent({
               <Switch
                 checked={viewMode === 'table'}
                 onCheckedChange={(checked) => setViewMode(checked ? 'table' : 'grid')}
-                className="focus:ring-2 focus:ring-yellow-400"
+                className="focus:ring-2 focus:ring-primary"
               />
               <Table className="h-4 w-4" />
             </div>
@@ -66,7 +66,7 @@ export default function TroubleshootingContent({
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {symptoms.map(symptom => (
-                  <Card key={symptom.id} className="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 cursor-pointer py-4">
+                  <Card key={symptom.id} className="bg-card text-card-foreground hover:bg-muted/50 transition-all duration-300 cursor-pointer py-4">
                     <CardHeader className="pb-3">
                       <CardTitle className="text-lg font-bold text-primary">
                         {symptom.id.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
@@ -78,7 +78,7 @@ export default function TroubleshootingContent({
                         {symptom.labels.slice(0, 2).map((label) => (
                           <Tooltip key={label}>
                             <TooltipTrigger asChild>
-                              <Badge variant="outline" className="text-xs hover:bg-yellow-500/20">
+                              <Badge variant="outline" className="text-xs hover:bg-primary/20">
                                 {label}
                               </Badge>
                             </TooltipTrigger>
@@ -98,7 +98,7 @@ export default function TroubleshootingContent({
                           variant="outline"
                           size="sm"
                           onClick={() => toggleCardExpansion(symptom.id)}
-                          className="w-full hover:bg-yellow-500/20 focus:ring-2 focus:ring-yellow-400"
+                          className="w-full hover:bg-primary/20 focus:ring-2 focus:ring-primary"
                         >
                           {expandedCards.has(symptom.id) ? (
                             <>
@@ -133,7 +133,7 @@ export default function TroubleshootingContent({
               {results.map(id => {
                 const symptom = symptoms.find(s => s.id === id);
                 return symptom ? (
-                  <div key={id} className="ring-2 ring-yellow-500 rounded-lg p-4 bg-yellow-50 dark:bg-yellow-900/20 animate-fade-in">
+                  <div key={id} className="ring-2 ring-primary rounded-lg p-4 bg-primary/10 animate-fade-in">
                     <TroubleshootingCard symptom={symptom} />
                     <div className="mt-4">
                       <CommunityBridge symptomId={id} />
