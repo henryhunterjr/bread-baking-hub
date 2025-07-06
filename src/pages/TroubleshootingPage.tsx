@@ -18,9 +18,15 @@ const TroubleshootingPage: React.FC = () => {
   // Load symptoms data
   useEffect(() => {
     if (symptoms.length === 0) {
-      import('@/data/symptoms.json').then((data) => {
-        loadSymptoms(data.symptoms);
-      });
+      try {
+        import('@/data/symptoms.json').then((data) => {
+          loadSymptoms(data.symptoms);
+        }).catch((error) => {
+          console.warn('Failed to load symptoms data:', error);
+        });
+      } catch (error) {
+        console.warn('Error importing symptoms data:', error);
+      }
     }
   }, [symptoms.length, loadSymptoms]);
 

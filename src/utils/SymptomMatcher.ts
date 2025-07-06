@@ -64,12 +64,14 @@ export async function scanWithAI(text: string): Promise<ScanResult[]> {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: JSON.stringify({ text }),
     });
 
     if (!response.ok) {
-      throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+      console.warn(`AI scan API request failed: ${response.status} ${response.statusText}`);
+      return [];
     }
 
     const data = await response.json();
@@ -91,7 +93,7 @@ export async function scanWithAI(text: string): Promise<ScanResult[]> {
 
     return validResults as ScanResult[];
   } catch (error) {
-    console.error('Error in scanWithAI:', error);
+    console.warn('AI scan temporarily unavailable:', error instanceof Error ? error.message : 'Unknown error');
     return [];
   }
 }
