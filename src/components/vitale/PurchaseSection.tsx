@@ -12,8 +12,7 @@ export const PurchaseSection = () => {
   };
 
   const handlePurchase = () => {
-    // Placeholder for Stripe integration
-    alert(`Adding ${quantity} Vitale starter sachet(s) to cart - $${(14 * quantity).toFixed(2)}`);
+    window.open('https://vitalesourdoughco.etsy.com/listing/1647278386', '_blank');
   };
 
   return (

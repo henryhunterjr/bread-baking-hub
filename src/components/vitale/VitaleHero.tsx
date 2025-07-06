@@ -54,14 +54,14 @@ export const VitaleHero = () => {
             {/* Price and CTA */}
             <div className="space-y-4">
               <div className="text-3xl font-bold text-primary">$14 per sachet</div>
-              <Button 
-                size="xl" 
-                variant="hero" 
-                onClick={scrollToPurchase}
-                className="text-lg"
-              >
-                Get Your Vitale Starter
-              </Button>
+            <Button 
+              size="xl" 
+              variant="hero" 
+              onClick={() => window.open('https://vitalesourdoughco.etsy.com/listing/1647278386', '_blank')}
+              className="text-lg"
+            >
+              Get Your Vitale Starter
+            </Button>
             </div>
           </div>
 

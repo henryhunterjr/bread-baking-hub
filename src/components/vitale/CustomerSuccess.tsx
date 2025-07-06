@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Star } from 'lucide-react';
 
 export const CustomerSuccess = () => {
@@ -69,6 +70,18 @@ export const CustomerSuccess = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+        
+        {/* Purchase CTA */}
+        <div className="text-center mt-12">
+          <Button 
+            size="xl" 
+            variant="hero"
+            onClick={() => window.open('https://vitalesourdoughco.etsy.com/listing/1647278386', '_blank')}
+            className="text-lg"
+          >
+            Join These Success Stories - $14
+          </Button>
         </div>
       </div>
     </section>

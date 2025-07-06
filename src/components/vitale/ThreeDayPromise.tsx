@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 export const ThreeDayPromise = () => {
   const timeline = [
@@ -64,6 +65,18 @@ export const ThreeDayPromise = () => {
               </div>
             </Card>
           ))}
+        </div>
+        
+        {/* Purchase CTA */}
+        <div className="text-center mt-12">
+          <Button 
+            size="xl" 
+            variant="hero"
+            onClick={() => window.open('https://vitalesourdoughco.etsy.com/listing/1647278386', '_blank')}
+            className="text-lg"
+          >
+            Start Your 3-Day Journey - $14
+          </Button>
         </div>
       </div>
     </section>
