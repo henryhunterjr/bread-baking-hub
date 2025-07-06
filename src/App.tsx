@@ -20,6 +20,7 @@ import HenrysFoolproofRecipe from "./pages/HenrysFoolproofRecipe";
 import BreadGlossary from "./pages/BreadGlossary";
 import BreadCalculator from "./pages/BreadCalculator";
 import Community from "./pages/Community";
+import TroubleshootingPage from "./pages/TroubleshootingPage";
 import OfflineFallback from "./pages/OfflineFallback";
 import NotFound from "./pages/NotFound";
 
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/glossary" element={<BreadGlossary />} />
             <Route path="/bread-calculator" element={<BreadCalculator />} />
             <Route path="/community" element={<Community />} />
+            <Route path="/troubleshooting" element={<TroubleshootingPage />} />
             <Route path="/r/:slug" element={<PublicRecipe />} />
             <Route path="/offline" element={<OfflineFallback />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

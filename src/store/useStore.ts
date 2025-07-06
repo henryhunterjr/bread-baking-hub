@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface Symptom {
   id: string;
@@ -35,7 +36,9 @@ interface TroubleshootingStore {
   recordScan: (symptomIds: string[]) => void;
 }
 
-export const useStore = create<TroubleshootingStore>((set) => ({
+export const useStore = create<TroubleshootingStore>()(
+  persist(
+    (set) => ({
   // Initial state
   symptoms: [],
   filters: {
@@ -66,14 +69,20 @@ export const useStore = create<TroubleshootingStore>((set) => ({
       },
     })),
 
-  recordScan: (symptomIds) =>
-    set((state) => ({
-      history: [
-        ...state.history,
-        {
-          timestamp: Date.now(),
-          symptomIds,
-        },
-      ],
-    })),
-}));
+      recordScan: (symptomIds) =>
+        set((state) => ({
+          history: [
+            ...state.history,
+            {
+              timestamp: Date.now(),
+              symptomIds,
+            },
+          ],
+        })),
+    }),
+    {
+      name: 'troubleshooting-store', // name of the item in localStorage
+      partialize: (state) => ({ history: state.history }), // only persist history
+    }
+  )
+);

@@ -41,6 +41,9 @@ const Header = () => {
               <Link to="/community" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Community
               </Link>
+              <Link to="/troubleshooting" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Troubleshooting
+              </Link>
               {user ? (
                 <>
                   <Link to="/my-recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
@@ -93,6 +96,9 @@ const Header = () => {
               </Link>
               <Link to="/community" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Community
+              </Link>
+              <Link to="/troubleshooting" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
+                Troubleshooting
               </Link>
               {user && (
                 <Link to="/my-recipes" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
