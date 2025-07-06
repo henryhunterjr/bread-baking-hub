@@ -1,16 +1,16 @@
 import { Card } from '@/components/ui/card';
 import { Clock, Users, ChefHat, Thermometer } from 'lucide-react';
 
-interface RecipeStatsProps {
+interface RecipeMetaProps {
   totalTime: string;
   serves: string;
   difficulty: string;
   hydration: string;
 }
 
-export const RecipeStats = ({ totalTime, serves, difficulty, hydration }: RecipeStatsProps) => {
+export const RecipeMeta = ({ totalTime, serves, difficulty, hydration }: RecipeMetaProps) => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       <Card className="p-4 text-center">
         <Clock className="h-6 w-6 mx-auto mb-2 text-primary" />
         <div className="text-sm font-medium">Total Time</div>

@@ -6,13 +6,13 @@ interface TroubleshootingItem {
   solution: string;
 }
 
-interface RecipeTroubleshootingProps {
-  troubleshooting: TroubleshootingItem[];
+interface TroubleshootingProps {
+  items: TroubleshootingItem[];
 }
 
-export const RecipeTroubleshooting = ({ troubleshooting }: RecipeTroubleshootingProps) => {
+export const Troubleshooting = ({ items }: TroubleshootingProps) => {
   return (
-    <Card className="p-6 mb-8">
+    <Card className="p-6">
       <h2 className="text-2xl font-bold mb-4 text-primary">Troubleshooting & Common Mistakes</h2>
       <div className="overflow-x-auto">
         <table className="w-full">
@@ -24,7 +24,7 @@ export const RecipeTroubleshooting = ({ troubleshooting }: RecipeTroubleshooting
             </tr>
           </thead>
           <tbody>
-            {troubleshooting.map((item, index) => (
+            {items.map((item, index) => (
               <tr key={index} className="border-b">
                 <td className="py-3 px-2 font-medium">{item.issue}</td>
                 <td className="py-3 px-2">{item.cause}</td>
