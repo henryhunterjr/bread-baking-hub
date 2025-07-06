@@ -172,15 +172,15 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
-      {/* Background Image */}
+      {/* Background Image - Optimized for mobile book cover visibility */}
       <div 
         key={`bg-${currentSlide}`}
-        className="absolute inset-0 bg-cover bg-no-repeat animate-fade-in"
+        className={`absolute inset-0 bg-cover bg-no-repeat animate-fade-in ${
+          // Mobile positioning to show book covers better
+          currentSlideData.id === 'yeast' ? 'bg-left-center' : 'bg-center md:bg-center bg-[center_top_25%]'
+        }`}
         style={{ 
-          backgroundImage: `url(${currentSlideData.backgroundImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: currentSlideData.id === 'yeast' ? 'left center' : 'center',
-          backgroundRepeat: 'no-repeat'
+          backgroundImage: `url(${currentSlideData.backgroundImage})`
         }}
       />
       
@@ -190,14 +190,15 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
       {/* Content Overlay - Mobile and Desktop layouts */}
       <div className="relative h-full flex items-center">
         <div className="max-w-7xl mx-auto px-4 w-full">
-          {/* Mobile Layout - Compact text at bottom */}
+          {/* Mobile Layout - Delayed elegant text overlay at 3-second mark */}
           <div className="md:hidden">
             <Card 
               key={`content-mobile-${currentSlide}`}
-              className="bg-black/70 backdrop-blur-md border-white/20 p-4 text-white animate-slide-in-right absolute bottom-8 left-4 right-4"
+              className="bg-black/70 backdrop-blur-md border-white/20 p-4 text-white animate-fade-in absolute bottom-8 left-4 right-4 opacity-0"
               style={{ 
-                animationDelay: '0.5s',
-                animationFillMode: 'both'
+                animationDelay: '3s',
+                animationFillMode: 'both',
+                animationDuration: '0.8s'
               }}
             >
               <h1 className="text-2xl font-bold mb-2 leading-tight">
