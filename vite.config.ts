@@ -12,8 +12,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    mode === 'development' && componentTagger(),
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
@@ -60,9 +59,9 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       manifest: {
-        name: 'Bread Baking Hub',
-        short_name: 'BreadHub',
-        description: 'Your digital bread baking companion with AI-powered recipe formatting',
+        name: 'Bread Troubleshooting Pro',
+        short_name: 'BreadTroublePro',
+        description: 'Professional bread troubleshooting with AI-powered symptom detection',
         theme_color: '#8B4513',
         background_color: '#1A1A1A',
         display: 'standalone',
@@ -91,4 +90,26 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.ts',
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-card'],
+          utils: ['date-fns', 'clsx', 'tailwind-merge']
+        }
+      }
+    },
+    // Optimize for production
+    minify: 'esbuild',
+    sourcemap: false,
+    chunkSizeWarningLimit: 1000,
+  },
+  // Image optimization
+  assetsInclude: ['**/*.webp'],
 }));

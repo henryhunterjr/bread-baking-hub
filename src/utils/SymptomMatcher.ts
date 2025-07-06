@@ -1,4 +1,5 @@
 import symptomsData from '@/data/symptoms.json';
+import { trackSymptomDetection } from '@/utils/analytics';
 
 interface Symptom {
   id: string;
@@ -132,4 +133,21 @@ export async function analyzeSymptoms(text: string): Promise<{
     aiResults,
     combinedResults
   };
+}
+
+/**
+ * High-level function that performs symptom analysis with automatic tracking
+ * @param text - The text to analyze
+ * @returns Promise resolving to analysis results
+ */
+export async function performSymptomAnalysis(text: string) {
+  const results = await analyzeSymptoms(text);
+  
+  // Track the analysis
+  if (results.combinedResults.length > 0) {
+    const symptomIds = results.combinedResults.map(r => r.id);
+    trackSymptomDetection(symptomIds, 'combined');
+  }
+  
+  return results;
 }

@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ExternalLink, Play, X } from 'lucide-react';
+import { trackPodcastPlay, trackPodcastExternalLink } from '@/utils/analytics';
 
 const PodcastSection = () => {
   const [isPlayerOpen, setIsPlayerOpen] = useState(false);
@@ -10,10 +11,12 @@ const PodcastSection = () => {
   const embedUrl = 'https://www.youtube.com/embed/49XtxfMlBgo?autoplay=1&rel=0';
 
   const handlePlayClick = () => {
+    trackPodcastPlay();
     setIsPlayerOpen(true);
   };
 
   const handleExternalClick = () => {
+    trackPodcastExternalLink();
     window.open(podcastUrl, '_blank');
   };
 
