@@ -1,8 +1,34 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Play } from 'lucide-react';
 import challengeBreadImage from '@/assets/challenge-bread.jpg';
+import VideoPlayerModal from './VideoPlayerModal';
+import { useState } from 'react';
 
 const BakersBench = () => {
+  const [selectedVideo, setSelectedVideo] = useState<{
+    url: string;
+    title: string;
+    description: string;
+  } | null>(null);
+  
+  const handlePlayVideo = (item: {
+    title: string;
+    description: string;
+    link: string;
+    type: string;
+  }) => {
+    // Only open modal for YouTube videos, otherwise open externally
+    if (item.link.includes('youtu.be') || item.link.includes('youtube.com/watch')) {
+      setSelectedVideo({
+        url: item.link,
+        title: item.title,
+        description: item.description
+      });
+    } else {
+      window.open(item.link, '_blank', 'noopener,noreferrer');
+    }
+  };
+  
   const mediaItems = [
     {
       title: "Crumb & Culture: Sourdough for the Rest of Us Book Review",
@@ -104,15 +130,13 @@ const BakersBench = () => {
                   <span className="text-muted-foreground text-sm ml-4">{item.date}</span>
                 </div>
                 <p className="text-stone-300 text-sm line-clamp-2">{item.description}</p>
-                <a 
-                  href={item.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
+                <button 
+                  onClick={() => handlePlayVideo(item)}
+                  className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors bg-transparent border-none cursor-pointer"
                 >
                   Watch Now
                   <ArrowRight className="ml-1 w-4 h-4" />
-                </a>
+                </button>
               </div>
             </div>
           ))}
@@ -167,6 +191,15 @@ const BakersBench = () => {
           </div>
         </div>
       </div>
+      
+      {/* Video Player Modal */}
+      <VideoPlayerModal
+        isOpen={!!selectedVideo}
+        onClose={() => setSelectedVideo(null)}
+        videoUrl={selectedVideo?.url || ''}
+        title={selectedVideo?.title || ''}
+        description={selectedVideo?.description || ''}
+      />
     </section>
   );
 };
