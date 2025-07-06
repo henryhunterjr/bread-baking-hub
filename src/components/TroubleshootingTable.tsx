@@ -70,7 +70,7 @@ const TroubleshootingTable: React.FC = () => {
               value={filters.searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by ID or labels..."
-              className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all"
             />
           </div>
           
@@ -81,7 +81,7 @@ const TroubleshootingTable: React.FC = () => {
             </label>
             <Listbox value={filters.category} onChange={setCategory}>
               <div className="relative">
-                <Listbox.Button className="relative w-full cursor-default rounded-md border border-input bg-background py-2 pl-3 pr-10 text-left focus:outline-none focus:ring-2 focus:ring-primary">
+                <Listbox.Button className="relative w-full cursor-default rounded-md border border-input bg-background py-2 pl-3 pr-10 text-left focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all">
                   <span className="block truncate">
                     {filters.category || 'All Categories'}
                   </span>
@@ -101,7 +101,7 @@ const TroubleshootingTable: React.FC = () => {
                         value={category}
                         className={({ active }) =>
                           `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                            active ? 'bg-primary/10' : ''
+                            active ? 'bg-yellow-500/20' : ''
                           }`
                         }
                       >
@@ -132,9 +132,9 @@ const TroubleshootingTable: React.FC = () => {
       </div>
 
       {/* Table */}
-      <div className="border border-border rounded-lg overflow-hidden">
-        <div className="bg-muted/50 px-4 py-3 border-b border-border">
-          <div className="grid grid-cols-4 gap-4 font-medium">
+      <div className="border border-border rounded-lg overflow-hidden bg-background">
+        <div className="bg-gray-100 dark:bg-gray-800 px-4 py-4 border-b border-border">
+          <div className="grid grid-cols-4 gap-4 font-semibold text-foreground">
             <div>ID</div>
             <div>Category</div>
             <div className="col-span-2">Labels</div>
@@ -166,28 +166,28 @@ const TroubleshootingTable: React.FC = () => {
                       height: `${virtualItem.size}px`,
                       transform: `translateY(${virtualItem.start}px)`,
                     }}
-                    className="px-4 py-3 border-b border-border last:border-b-0"
+                    className="px-4 py-4 border-b border-border last:border-b-0 bg-gray-50 dark:bg-gray-800 hover:bg-yellow-500/10 transition-colors focus:ring-2 focus:ring-yellow-400"
                   >
-                    <div className="grid grid-cols-4 gap-4">
-                      <div className="font-mono text-sm text-primary">{symptom.id}</div>
-                      <div className="capitalize">
-                        <span className="inline-flex px-2 py-1 rounded-full text-xs bg-secondary text-secondary-foreground">
-                          {symptom.category}
+                <div className="grid grid-cols-4 gap-4 items-center">
+                  <div className="font-mono text-sm text-primary font-medium">{symptom.id}</div>
+                  <div className="capitalize">
+                    <span className="inline-flex px-3 py-1 rounded-full text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 font-medium">
+                      {symptom.category}
+                    </span>
+                  </div>
+                  <div className="col-span-2">
+                    <div className="flex flex-wrap gap-2">
+                      {symptom.labels.map((label) => (
+                        <span
+                          key={label}
+                          className="inline-flex px-2 py-1 rounded text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-yellow-500/20 transition-colors focus:ring-2 focus:ring-yellow-400"
+                        >
+                          {label}
                         </span>
-                      </div>
-                      <div className="col-span-2">
-                        <div className="flex flex-wrap gap-1">
-                          {symptom.labels.map((label) => (
-                            <span
-                              key={label}
-                              className="inline-flex px-2 py-1 rounded text-xs bg-muted text-muted-foreground"
-                            >
-                              {label}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
+                      ))}
                     </div>
+                  </div>
+                </div>
                   </div>
                 );
               })}
@@ -198,21 +198,21 @@ const TroubleshootingTable: React.FC = () => {
             {filteredSymptoms.map((symptom) => (
               <div
                 key={symptom.id}
-                className="px-4 py-3 border-b border-border last:border-b-0"
+                className="px-4 py-4 border-b border-border last:border-b-0 bg-gray-50 dark:bg-gray-800 hover:bg-yellow-500/10 transition-colors focus:ring-2 focus:ring-yellow-400"
               >
-                <div className="grid grid-cols-4 gap-4">
-                  <div className="font-mono text-sm text-primary">{symptom.id}</div>
+                <div className="grid grid-cols-4 gap-4 items-center">
+                  <div className="font-mono text-sm text-primary font-medium">{symptom.id}</div>
                   <div className="capitalize">
-                    <span className="inline-flex px-2 py-1 rounded-full text-xs bg-secondary text-secondary-foreground">
+                    <span className="inline-flex px-3 py-1 rounded-full text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 font-medium">
                       {symptom.category}
                     </span>
                   </div>
                   <div className="col-span-2">
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-2">
                       {symptom.labels.map((label) => (
                         <span
                           key={label}
-                          className="inline-flex px-2 py-1 rounded text-xs bg-muted text-muted-foreground"
+                          className="inline-flex px-2 py-1 rounded text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-yellow-500/20 transition-colors focus:ring-2 focus:ring-yellow-400"
                         >
                           {label}
                         </span>
@@ -226,8 +226,9 @@ const TroubleshootingTable: React.FC = () => {
         )}
         
         {filteredSymptoms.length === 0 && (
-          <div className="px-4 py-8 text-center text-muted-foreground">
-            No symptoms found matching your search criteria.
+          <div className="px-4 py-12 text-center text-muted-foreground bg-gray-50 dark:bg-gray-800">
+            <div className="text-lg font-medium mb-2">No symptoms found</div>
+            <p className="text-sm">Try adjusting your search criteria or category filter.</p>
           </div>
         )}
       </div>
