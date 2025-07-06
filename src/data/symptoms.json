@@ -5,7 +5,7 @@
       "labels": ["sunken", "collapsed", "dip", "caved"],
       "category": "collapse",
       "quickFix": "Reduce hydration slightly and ensure the loaf is fully baked.",
-      "deepDive": "A sunken middle often results from overproofing, excessive hydration, or underbaking. It indicates the loaf lacked structure to hold its shape during cooling.",
+      "deepDive": "A sunken middle often results from overproofing, excessive hydration, or underbaking. The dough's structure can't support its own weight during cooling, so it collapses inward.",
       "images": {
         "before": "/assets/troubleshooting/sunken_middle_before.jpg",
         "after": "/assets/troubleshooting/sunken_middle_after.jpg"
@@ -13,10 +13,10 @@
     },
     {
       "id": "gummy-crumb",
-      "labels": ["gummy", "wet", "dense", "sticky"],
+      "labels": ["gummy", "sticky", "undercooked", "wet", "dense"],
       "category": "crumb",
-      "quickFix": "Bake longer and let the loaf cool completely before slicing.",
-      "deepDive": "Gummy crumb often means the loaf was underbaked or cooled too quickly. High hydration and improper fermentation can also contribute.",
+      "quickFix": "Bake a few minutes longer and let cool completely before slicing.",
+      "deepDive": "Gummy crumb indicates underbaking, too-high hydration, or cooling too quickly. The interior hasn't set, leaving a wet, sticky texture.",
       "images": {
         "before": "/assets/troubleshooting/gummy_crumb_before.jpg",
         "after": "/assets/troubleshooting/gummy_crumb_after.jpg"
@@ -24,43 +24,76 @@
     },
     {
       "id": "burnt-bottom",
-      "labels": ["burnt", "dark", "scorched", "bottom crust"],
+      "labels": ["burnt", "bottom", "dark", "over-baked", "charred"],
       "category": "baking",
-      "quickFix": "Use a baking stone or lower oven rack and reduce temperature slightly.",
-      "deepDive": "Burnt bottoms typically result from baking too close to a heat source or using too much bottom heat. Pan insulation helps reduce scorching.",
+      "quickFix": "Move loaf to a higher rack or lower oven temperature by 10°F.",
+      "deepDive": "A scorched bottom is caused by excessive direct heat or too-low rack placement. Insulating the pan or using a baking stone evens out heat.",
       "images": {
         "before": "/assets/troubleshooting/burnt_bottom_before.jpg",
         "after": "/assets/troubleshooting/burnt_bottom_after.jpg"
       }
     },
     {
-      "id": "underproofed",
-      "labels": ["underproofed", "tight crumb", "dense", "small holes"],
-      "category": "proofing",
-      "quickFix": "Let the dough rise longer until it passes the poke test.",
-      "deepDive": "Underproofing results in tight, dense crumbs. Gluten hasn't fully relaxed, leading to poor gas retention during baking.",
+      "id": "no-oven-spring",
+      "labels": ["flat", "dense", "no-rise", "oven-spring", "tight"],
+      "category": "baking",
+      "quickFix": "Preheat oven fully with steam for the first 10 minutes.",
+      "deepDive": "Poor oven spring can arise from underproofed dough, cold dough, or a lack of steam. Heat shock in a steamy environment gives maximum lift before crust firms.",
       "images": {
-        "before": "/assets/troubleshooting/underproofed_before.jpg",
-        "after": "/assets/troubleshooting/underproofed_after.jpg"
+        "before": "/assets/troubleshooting/no_oven_spring_before.jpg",
+        "after": "/assets/troubleshooting/no_oven_spring_after.jpg"
       }
     },
     {
-      "id": "overproofed",
-      "labels": ["overproofed", "flat", "weak", "collapsed"],
-      "category": "proofing",
-      "quickFix": "Reduce final proof time or chill dough before baking.",
-      "deepDive": "Overproofed dough exhausts its gas-holding capacity, resulting in collapse or poor oven spring. Cold retardation can slow this down.",
+      "id": "poor-scoring",
+      "labels": ["scoring", "cuts", "opening", "ears", "bloom"],
+      "category": "shaping",
+      "quickFix": "Use a very sharp blade at a shallow 30° angle for clean cuts.",
+      "deepDive": "Improper scoring channels cause unpredictable tears. A razor-sharp blade and correct angle let the loaf expand where intended, creating petals (\"ears\") instead of random rips.",
       "images": {
-        "before": "/assets/troubleshooting/overproofed_before.jpg",
-        "after": "/assets/troubleshooting/overproofed_after.jpg"
+        "before": "/assets/troubleshooting/poor_scoring_before.jpg",
+        "after": "/assets/troubleshooting/poor_scoring_after.jpg"
+      }
+    },
+    {
+      "id": "overproofed-dough",
+      "labels": ["overproofed", "slack", "sticky", "flat", "weak"],
+      "category": "proofing",
+      "quickFix": "Shorten proof time or chill dough briefly before baking.",
+      "deepDive": "Overproofed dough runs out of gas-holding capacity and collapses. Chilling slows yeast and firms gluten, giving better structure in the oven.",
+      "images": {
+        "before": "/assets/troubleshooting/overproofed_dough_before.jpg",
+        "after": "/assets/troubleshooting/overproofed_dough_after.jpg"
+      }
+    },
+    {
+      "id": "underproofed-dough",
+      "labels": ["underproofed", "tight", "dense", "hard", "small holes"],
+      "category": "proofing",
+      "quickFix": "Let dough rise longer until it holds an indent from a gentle poke.",
+      "deepDive": "Underproofed dough hasn't developed enough gas; crumb is tight and chewy. Adequate bulk fermentation and final proof ensure even gas cell formation.",
+      "images": {
+        "before": "/assets/troubleshooting/underproofed_dough_before.jpg",
+        "after": "/assets/troubleshooting/underproofed_dough_after.jpg"
+      }
+    },
+    {
+      "id": "dense-tight-crumb",
+      "labels": ["dense", "tight", "heavy", "compact"],
+      "category": "crumb",
+      "quickFix": "Increase hydration slightly and knead until dough is smooth and elastic.",
+      "deepDive": "A tight, heavy crumb means underhydration or under-kneading. Proper gluten development traps gas, creating an open, elastic interior.",
+      "images": {
+        "before": "/assets/troubleshooting/dense_tight_crumb_before.jpg",
+        "after": "/assets/troubleshooting/dense_tight_crumb_after.jpg"
       }
     },
     {
       "id": "blowout-sides",
       "labels": ["blowout", "burst", "tears", "cracks"],
       "category": "shaping",
-      "quickFix": "Score the loaf properly and shape with good tension.",
-      "deepDive": "Side blowouts occur when internal pressure escapes through weak seams. Scoring channels that energy into controlled expansion.",
+      "quickFix": "Shape with firm surface tension and score deep enough to direct expansion.",
+      "deepDive": "Side blowouts occur when seams or weak areas give way. Tight shaping and strategically placed scores ensure controlled oven spring.",
       "images": {
         "before": "/assets/troubleshooting/blowout_sides_before.jpg",
         "after": "/assets/troubleshooting/blowout_sides_after.jpg"
@@ -70,8 +103,8 @@
       "id": "pale-crust",
       "labels": ["pale", "light", "no color", "soft crust"],
       "category": "baking",
-      "quickFix": "Extend baking time or increase oven temp slightly.",
-      "deepDive": "Pale crust can result from low sugar, underbaking, or insufficient heat. Steam also affects caramelization during the Maillard reaction.",
+      "quickFix": "Bake 5–10 °F hotter for the last 5 minutes or extend bake time.",
+      "deepDive": "Insufficient Maillard reaction or low oven humidity can leave crust pale. A hotter finish or less steam in the chamber deepens color.",
       "images": {
         "before": "/assets/troubleshooting/pale_crust_before.jpg",
         "after": "/assets/troubleshooting/pale_crust_after.jpg"
@@ -81,8 +114,8 @@
       "id": "uneven-open-crumb",
       "labels": ["uneven", "tunnels", "big holes", "mouse holes"],
       "category": "crumb",
-      "quickFix": "Degas gently before final shaping.",
-      "deepDive": "Excessive air pockets result from poor shaping or uneven fermentation. Dough needs tension without aggressive deflation.",
+      "quickFix": "Degas gently before final shaping to redistribute air pockets.",
+      "deepDive": "Large, uneven holes occur from uneven gas distribution or harsh shaping. Gentle degassing and uniform shaping yield a consistently open crumb.",
       "images": {
         "before": "/assets/troubleshooting/uneven_open_crumb_before.jpg",
         "after": "/assets/troubleshooting/uneven_open_crumb_after.jpg"
@@ -92,8 +125,8 @@
       "id": "dough-not-rising",
       "labels": ["no rise", "inactive", "flat", "stuck"],
       "category": "proofing",
-      "quickFix": "Use fresh yeast and warm environment (~75–80°F).",
-      "deepDive": "Cold temps, dead yeast, or salt inhibition can stall fermentation. Yeast activates best with warmth and hydration.",
+      "quickFix": "Proof in a warmer spot (75–80 °F) with fresh yeast.",
+      "deepDive": "Dough that won't rise points to inactive yeast or cold conditions. Proper temperature and live yeast cultures are key for consistent fermentation.",
       "images": {
         "before": "/assets/troubleshooting/dough_not_rising_before.jpg",
         "after": "/assets/troubleshooting/dough_not_rising_after.jpg"
@@ -103,30 +136,19 @@
       "id": "dry-dough",
       "labels": ["dry", "cracking", "hard", "low hydration"],
       "category": "mixing",
-      "quickFix": "Add water gradually until dough is supple.",
-      "deepDive": "Dry dough leads to tight crumb and weak gluten development. Proper hydration is critical for extensibility and fermentation.",
+      "quickFix": "Add small amounts of water during mixing until dough feels supple.",
+      "deepDive": "Dry, crackly dough lacks extensibility. Proper hydration and autolyse rest help flour fully absorb water for smooth handling.",
       "images": {
         "before": "/assets/troubleshooting/dry_dough_before.jpg",
         "after": "/assets/troubleshooting/dry_dough_after.jpg"
       }
     },
     {
-      "id": "dense-tight-crumb",
-      "labels": ["dense", "tight", "heavy", "compact"],
-      "category": "crumb",
-      "quickFix": "Increase hydration and knead until dough is smooth and elastic.",
-      "deepDive": "A dense, tight crumb indicates underhydration and/or insufficient gluten development during mixing and kneading. Achieving the right hydration level (around 65–70%) and using windowpane test ensures extensible, gas-retaining dough.",
-      "images": {
-        "before": "/assets/troubleshooting/dense_tight_crumb_before.jpg",
-        "after": "/assets/troubleshooting/dense_tight_crumb_after.jpg"
-      }
-    },
-    {
       "id": "split-loaf",
       "labels": ["split", "burst-top", "burst"],
       "category": "shaping",
-      "quickFix": "Score loaf deeply with a razor blade before baking.",
-      "deepDive": "Random splits on the loaf surface happen when steam can't escape through intentional scoring lines. Proper scoring guides expansion; weaker seams tear unpredictably. Use sharp blade and 30° angle cuts.",
+      "quickFix": "Score with a very sharp lame at a slight angle.",
+      "deepDive": "Random splits show steam finding the weakest point. Clean, angled scores give the dough a controlled path to expand without unsightly tears.",
       "images": {
         "before": "/assets/troubleshooting/split_loaf_before.jpg",
         "after": "/assets/troubleshooting/split_loaf_after.jpg"
@@ -136,8 +158,8 @@
       "id": "sour-off",
       "labels": ["sour", "tangy", "acidic"],
       "category": "flavor",
-      "quickFix": "Reduce bulk fermentation time and proof at cooler temps.",
-      "deepDive": "Overfermented dough produces excess acidity, leading to an overly sour flavor. Shorten fermentation or use cooler proofing temperatures to moderate the tang while retaining complexity.",
+      "quickFix": "Shorten fermentation or proof at cooler temperatures.",
+      "deepDive": "Excess acidity from long ferment produces an overpowering sour taste. Reducing time or proofing cooler balances tang and complexity.",
       "images": {
         "before": "/assets/troubleshooting/sour_off_before.jpg",
         "after": "/assets/troubleshooting/sour_off_after.jpg"
@@ -148,7 +170,7 @@
       "labels": ["bland", "tasteless"],
       "category": "flavor",
       "quickFix": "Increase salt by 0.2% of flour weight.",
-      "deepDive": "A lackluster flavor can stem from insufficient fermentation or salt levels. Salt enhances flavor and regulates yeast; small adjustments can bring out depth without overpowering.",
+      "deepDive": "Underdeveloped flavors stem from short fermentation or low salt. Salt enhances sweetness and strengthens gluten, elevating aroma and taste.",
       "images": {
         "before": "/assets/troubleshooting/bland_flavor_before.jpg",
         "after": "/assets/troubleshooting/bland_flavor_after.jpg"
@@ -158,8 +180,8 @@
       "id": "sticky-dough",
       "labels": ["sticky", "clinging", "wet"],
       "category": "mixing",
-      "quickFix": "Dust work surface lightly and rest dough briefly.",
-      "deepDive": "Sticky dough often indicates overhydration or underdeveloped gluten. Allowing the dough to rest (autolyse) before kneading can improve manageability without reducing hydration.",
+      "quickFix": "Dust hands and surface lightly, then rest dough for 10 minutes.",
+      "deepDive": "Sticky dough indicates high hydration or underdeveloped gluten. A short bench rest (autolyse) helps proteins align, reducing stickiness without lowering hydration.",
       "images": {
         "before": "/assets/troubleshooting/sticky_dough_before.jpg",
         "after": "/assets/troubleshooting/sticky_dough_after.jpg"
@@ -169,8 +191,8 @@
       "id": "poor-oven-spring",
       "labels": ["poor spring", "low spring"],
       "category": "baking",
-      "quickFix": "Preheat oven with baking stone and add steam for the first 10 minutes.",
-      "deepDive": "Poor oven spring can result from lack of oven heat retention or moisture. A hot baking surface and adequate steam help dough expand fully before crust sets.",
+      "quickFix": "Preheat a baking stone and add steam for the first 10 minutes.",
+      "deepDive": "Insufficient oven spring comes from cold dough or dry chambers. A hot, humid environment gives dough the lift it needs before crust sets.",
       "images": {
         "before": "/assets/troubleshooting/poor_oven_spring_before.jpg",
         "after": "/assets/troubleshooting/poor_oven_spring_after.jpg"
@@ -180,8 +202,8 @@
       "id": "tough-crust",
       "labels": ["tough", "hard", "thick"],
       "category": "crust",
-      "quickFix": "Brush off steam vent early and bake a little longer uncovered.",
-      "deepDive": "A tough crust can be caused by excess moisture during baking or high humidity. Proper venting of steam and finishing the bake without steam encourages a crisp, thin crust.",
+      "quickFix": "Reduce steam toward the end of bake and finish uncovered.",
+      "deepDive": "A thick, unyielding crust results from too much moisture or extended baking. Venting steam and a shorter final bake yields a thinner, crisp crust.",
       "images": {
         "before": "/assets/troubleshooting/tough_crust_before.jpg",
         "after": "/assets/troubleshooting/tough_crust_after.jpg"
@@ -191,8 +213,8 @@
       "id": "crumbly-crumb",
       "labels": ["crumbly", "dry crumb"],
       "category": "crumb",
-      "quickFix": "Reduce baking time slightly and increase hydration by 2–3%.",
-      "deepDive": "Crumbly interior often happens when the crumb is overbaked or the dough is too dry. Increasing hydration and slightly underbaking by a minute or two preserves moisture.",
+      "quickFix": "Increase hydration by 2–3% and reduce bake time by 1–2 minutes.",
+      "deepDive": "A crumb that falls apart is either overbaked or too dry. Slightly less bake time and a touch more water preserves moisture and cohesion.",
       "images": {
         "before": "/assets/troubleshooting/crumbly_crumb_before.jpg",
         "after": "/assets/troubleshooting/crumbly_crumb_after.jpg"
@@ -202,8 +224,8 @@
       "id": "weak-gluten",
       "labels": ["weak gluten", "no structure"],
       "category": "mixing",
-      "quickFix": "Knead dough until it passes the windowpane test.",
-      "deepDive": "Weak gluten structure results in poor gas retention and collapse. Proper mixing and kneading align gluten strands. Use unbleached flour with high protein for stronger gluten.",
+      "quickFix": "Knead until dough passes the windowpane test.",
+      "deepDive": "Weak gluten yields poor gas retention and collapse. Proper kneading aligns proteins into a strong network—using high-protein flour helps too.",
       "images": {
         "before": "/assets/troubleshooting/weak_gluten_before.jpg",
         "after": "/assets/troubleshooting/weak_gluten_after.jpg"
@@ -213,8 +235,8 @@
       "id": "slumped-loaf",
       "labels": ["slump", "slumped", "sloppy"],
       "category": "shaping",
-      "quickFix": "Shape tight boules and rest seam-side down before baking.",
-      "deepDive": "Loaves that slump lose their shape from weak surface tension during proof. Tight shaping and seam-side rest builds strength. Correct bench rest time prevents overrelaxation.",
+      "quickFix": "Shape tighter boules and proof seam-side down on a floured cloth.",
+      "deepDive": "Loaves that slump lack surface tension. Tight shaping and correct bench rest ensure the dough holds form until the crust sets in the oven.",
       "images": {
         "before": "/assets/troubleshooting/slumped_loaf_before.jpg",
         "after": "/assets/troubleshooting/slumped_loaf_after.jpg"
