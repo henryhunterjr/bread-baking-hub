@@ -189,12 +189,62 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
       {/* Overlay - Lighter on mobile for better image visibility */}
       <div className="absolute inset-0 bg-black/10 md:bg-black/20" />
 
-      {/* Content Overlay */}
+      {/* Content Overlay - Mobile and Desktop layouts */}
       <div className="relative h-full flex items-center">
         <div className="max-w-7xl mx-auto px-4 w-full">
-          <div className={`max-w-lg ${currentSlideData.overlayPosition === 'right' ? 'ml-auto' : ''}`}>
+          {/* Mobile Layout - Compact text at bottom */}
+          <div className="md:hidden">
             <Card 
-              key={`content-${currentSlide}`}
+              key={`content-mobile-${currentSlide}`}
+              className="bg-black/70 backdrop-blur-md border-white/20 p-4 text-white animate-slide-in-right absolute bottom-8 left-4 right-4"
+              style={{ 
+                animationDelay: '0.5s',
+                animationFillMode: 'both'
+              }}
+            >
+              <h1 className="text-2xl font-bold mb-2 leading-tight">
+                {currentSlideData.title}
+              </h1>
+              <p className="text-lg text-primary font-serif italic mb-3">
+                {currentSlideData.tagline}
+              </p>
+              
+              <div className="flex flex-col gap-3">
+                {currentSlideData.amazonUrl && (
+                  <Button asChild variant="hero" size="sm" className="w-full">
+                    <a href={currentSlideData.amazonUrl} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="mr-2 h-4 w-4" />
+                      Buy on Amazon
+                    </a>
+                  </Button>
+                )}
+                
+                {currentSlideData.landingPageUrl ? (
+                  <Button variant="heroOutline" size="sm" asChild className="w-full">
+                    <a href={currentSlideData.landingPageUrl} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="mr-2 h-4 w-4" />
+                      Landing Page
+                    </a>
+                  </Button>
+                ) : (
+                  <Button 
+                    variant="heroOutline" 
+                    size="sm"
+                    className="w-full"
+                    onClick={() => onPreview(currentSlideData.id)}
+                  >
+                    <Eye className="mr-2 h-4 w-4" />
+                    Preview Book
+                  </Button>
+                )}
+              </div>
+            </Card>
+          </div>
+
+          {/* Desktop Layout - Side positioned card */}
+          <div className={`hidden md:block max-w-lg ${currentSlideData.overlayPosition === 'right' ? 'ml-auto' : ''}`}>
+            <Card 
+              key={`content-desktop-${currentSlide}`}
               className={`bg-black/60 backdrop-blur-md border-white/20 p-8 text-white animate-slide-in-right ${
                 currentSlideData.overlayPosition === 'left' ? 'animate-slide-in-left' : ''
               }`}
