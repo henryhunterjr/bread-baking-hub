@@ -13,7 +13,7 @@ export const VitaleHero = () => {
         {/* Vitale Logo */}
         <div className="text-center pb-8">
           <img 
-            src="/lovable-uploads/0722874c-0d7c-4633-9b50-564aa870d4f0.png"
+            src="/lovable-uploads/fff984e8-765a-4f2a-94dc-c79799d4b371.png"
             alt="Vitale Logo"
             className="h-20 md:h-24 mx-auto"
             loading="eager"
