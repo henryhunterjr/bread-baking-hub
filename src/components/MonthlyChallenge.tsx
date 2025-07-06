@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import challengeBreadImage from '@/assets/challenge-bread.jpg';
+const challengeBreadImage = '/lovable-uploads/21d4d7bb-e47a-434d-b2c3-a7c787e13e07.png';
 
 const MonthlyChallenge = () => {
   return (
