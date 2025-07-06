@@ -9,7 +9,7 @@ interface RecipeAnalysisSectionProps {
 
 export default function RecipeAnalysisSection({ recipeText, setRecipeText, onAnalyze }: RecipeAnalysisSectionProps) {
   return (
-    <div className="mb-8 p-6 bg-muted/30 border border-border rounded-lg">
+    <div className="mb-8 p-6 bg-card border border-border rounded-lg">
       <label htmlFor="recipe-text" className="block text-lg font-semibold mb-3 text-primary">
         Analyze Your Recipe
       </label>

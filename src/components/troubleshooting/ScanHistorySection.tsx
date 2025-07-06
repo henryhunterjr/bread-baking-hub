@@ -29,7 +29,7 @@ interface ScanHistorySectionProps {
 
 export default function ScanHistorySection({ history, symptoms, onHistoryClick, onRerunScan }: ScanHistorySectionProps) {
   const renderHistoryCard = (entry: HistoryEntry, index: number, maxBadges: number) => (
-    <Card key={index} className="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    <Card key={index} className="bg-card hover:bg-muted/50 transition-colors">
       <CardContent className="p-4">
         <div className="flex items-center justify-between">
           <div 
@@ -92,7 +92,7 @@ export default function ScanHistorySection({ history, symptoms, onHistoryClick, 
 
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
-        <Card className="bg-gray-50 dark:bg-gray-800">
+        <Card className="bg-card border border-border">
           <CardHeader>
             <CardTitle className="text-lg">Scan History</CardTitle>
           </CardHeader>
@@ -102,7 +102,7 @@ export default function ScanHistorySection({ history, symptoms, onHistoryClick, 
             ) : (
               <div className="space-y-3">
                 {history.map((entry, index) => (
-                  <Card key={index} className="bg-background hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <Card key={index} className="bg-muted hover:bg-muted/80 transition-colors">
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between">
                         <div 
