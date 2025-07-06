@@ -51,15 +51,6 @@ const books: Book[] = [
     amazonUrl: "https://www.amazon.com/dp/B0CH2D2GDB",
     coverGradient: "bg-secondary",
     coverImage: breadJourneyCover
-  },
-  {
-    id: "yeast",
-    title: "The Yeast Water Handbook", 
-    subtitle: "Wild Fermentation Made Simple",
-    description: "Discover the ancient art of wild yeast cultivation through fruit fermentation. A complete guide to creating and using yeast water as an alternative to traditional sourdough starters.",
-    amazonUrl: "https://www.amazon.com/dp/B0CGMF3NBS",
-    coverGradient: "bg-accent",
-    coverImage: "/lovable-uploads/yeast-water-cover-hd.png"
   }
 ];
 
