@@ -5,8 +5,8 @@ import challengeBreadImage from '@/assets/challenge-bread.jpg';
 const BakersBench = () => {
   const mediaItems = [
     {
-      title: "Sourdough for the Rest of Us – Free Download",
-      description: "Sourdough belongs to everyone. Join Rachel Parker as we break bread and discuss making sourdough accessible to all home bakers.",
+      title: "Crumb & Culture: Sourdough for the Rest of Us Book Review",
+      description: "Mariah and Jules review Henry Hunter's heartfelt guide that demystifies sourdough while celebrating culture, care, and the stories behind every starter jar.",
       type: "podcast",
       thumbnail: "https://img.youtube.com/vi/FiQg8AaW7PE/maxresdefault.jpg",
       duration: "16:20",
