@@ -135,7 +135,7 @@ const BooksPreview = () => {
                     </Button>
                   ) : (
                     <Button variant="outline" asChild size="sm" className="flex-1">
-                      <Link to="/books">
+                      <Link to={`/books#${book.id}`}>
                         <Eye className="mr-2 h-4 w-4" />
                         Preview
                       </Link>

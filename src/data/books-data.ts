@@ -46,7 +46,7 @@ export const bookData: Record<string, BookData> = {
       
       <p><em>Available December 2025 - Sign up now to be the first to know when pre-orders open.</em></p>
     `,
-    audioUrl: "/audio/seasonal-excerpt.mp3"
+    audioUrl: undefined
   },
   sourdough: {
     id: "sourdough",
@@ -120,7 +120,7 @@ export const bookData: Record<string, BookData> = {
       
       <p><em>[Preview continues with purchasing full book...]</em></p>
     `,
-    audioUrl: "/audio/vitale-excerpt.mp3"
+    audioUrl: undefined
   },
   market: {
     id: "market",
@@ -151,7 +151,7 @@ export const bookData: Record<string, BookData> = {
       <p>When I arrived at the market, I found Sarah cheerfully chatting with customers, making change with the confidence of someone who'd been doing this for years. It wasn't until our third customer of the day handed me a ten-dollar bill for a single sourdough loaf that I realized something was wrong...</p>
       <p><em>[Preview continues with purchasing full book...]</em></p>
     `,
-    audioUrl: "/audio/market-excerpt.mp3"
+    audioUrl: undefined
   },
   loaflie: {
     id: "loaflie",
@@ -216,7 +216,7 @@ export const bookData: Record<string, BookData> = {
       
       <p><em>[Available now on Amazon]</em></p>
     `,
-    audioUrl: "/audio/yeast-excerpt.mp3"
+    audioUrl: undefined
   },
   watchers: {
     id: "watchers",
@@ -247,6 +247,6 @@ export const bookData: Record<string, BookData> = {
       
       <p><em>[Available now - Visit landing page for more details]</em></p>
     `,
-    audioUrl: "/audio/watchers-excerpt.mp3"
+    audioUrl: undefined
   }
 };
