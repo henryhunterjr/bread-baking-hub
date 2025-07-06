@@ -18,7 +18,7 @@ export const VitaleHero = () => {
               <img 
                 src="/lovable-uploads/fff984e8-765a-4f2a-94dc-c79799d4b371.png"
                 alt="Vitale Logo"
-                className="h-45 md:h-54"
+                className="h-30 md:h-36"
                 loading="eager"
               />
             </div>
@@ -87,10 +87,10 @@ export const VitaleHero = () => {
                 className="rounded-xl shadow-stone w-full"
                 loading="lazy"
               />
-              {/* International customer from Trinidad and Tobago */}
+              {/* Vitale starter package with beautiful presentation */}
               <img 
-                src="/lovable-uploads/f387ea3d-1e4a-4555-a1e1-efec8b9e30b3.png"
-                alt="Happy customer from Trinidad and Tobago with Vitale package - shipping worldwide"
+                src="/lovable-uploads/eff7994a-acf1-4b30-9e68-1d09a3b5b33f.png"
+                alt="Vitale sourdough starter package beautifully presented with flowers and bread slices"
                 className="rounded-xl shadow-stone w-full object-cover"
                 loading="lazy"
               />
