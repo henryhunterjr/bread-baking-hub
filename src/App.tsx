@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { OfflineBanner } from "@/components/OfflineBanner";
+import BackToTop from "@/components/BackToTop";
 import Index from "./pages/Index";
 import RecipeFormatter from "./pages/RecipeFormatter";
 import RecipeWorkspace from "./pages/RecipeWorkspace";
@@ -29,6 +30,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <OfflineBanner />
+        <BackToTop />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
