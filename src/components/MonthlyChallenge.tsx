@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
-const challengeBreadImage = '/lovable-uploads/21d4d7bb-e47a-434d-b2c3-a7c787e13e07.png';
+import { Link } from 'react-router-dom';
+const recipeImage = '/lovable-uploads/21d4d7bb-e47a-434d-b2c3-a7c787e13e07.png';
 
 const MonthlyChallenge = () => {
   return (
@@ -8,45 +9,38 @@ const MonthlyChallenge = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <div className="inline-block bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-semibold">
-              July 2025 Challenge
+              January 29, 2025
             </div>
             <h2 className="text-4xl font-bold text-primary-foreground">
-              Master Hydration & Timing
+              Henry's Foolproof Sourdough Loaf
             </h2>
             <p className="text-amber-100 text-lg leading-relaxed">
-              This month, we're focusing on the two most critical aspects of great bread: 
-              proper hydration levels and fermentation timing. Join thousands of bakers 
-              as we perfect these foundational skills together.
+              A beautifully sliced sourdough loaf with an open crumb structure, golden crust, 
+              and airy interior. This simple, reliable, and flavorful sourdough recipe delivers 
+              great results every time using proven techniques and 75% hydration.
             </p>
             
             <div className="space-y-4">
-              {[
-                { week: 1, title: "Understanding Hydration", desc: "Learn how flour type affects water absorption" },
-                { week: 2, title: "Perfect Timing", desc: "Master bulk fermentation and proofing schedules" },
-                { week: 3, title: "Troubleshooting", desc: "Fix common hydration and timing mistakes" },
-                { week: 4, title: "Your Best Loaf", desc: "Apply everything you've learned for perfect results" }
-              ].map((item) => (
-                <div key={item.week} className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-sm font-bold">{item.week}</span>
-                  </div>
-                  <div>
-                    <h4 className="text-primary-foreground font-semibold">Week {item.week}: {item.title}</h4>
-                    <p className="text-amber-200 text-sm">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
+              <div className="bg-primary-foreground/10 backdrop-blur-sm rounded-lg p-4 border border-primary-foreground/20">
+                <h3 className="text-primary-foreground font-semibold mb-2">Recipe Highlights:</h3>
+                <ul className="space-y-1 text-amber-200 text-sm">
+                  <li>• 75% hydration for perfect texture</li>
+                  <li>• Simplified fermentolyse method</li>
+                  <li>• Foolproof shaping techniques</li>
+                  <li>• Complete troubleshooting guide</li>
+                </ul>
+              </div>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="default" size="lg" asChild className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
-                <a href="https://scorebig-jp8784l.gamma.site/" target="_blank" rel="noopener noreferrer">
-                  Join This Challenge
-                </a>
+                <Link to="/henrys-foolproof-recipe">
+                  Go to Recipe
+                </Link>
               </Button>
               <Button variant="heroOutline" size="lg" asChild className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
                 <a href="https://bit.ly/3srdSYS" target="_blank" rel="noopener noreferrer">
-                  Community Group
+                  Join Community
                 </a>
               </Button>
             </div>
@@ -54,13 +48,13 @@ const MonthlyChallenge = () => {
           
           <div className="relative">
             <img 
-              src={challengeBreadImage} 
-              alt="Perfect artisan bread showcasing hydration mastery"
+              src={recipeImage} 
+              alt="Henry's Foolproof Sourdough Loaf with perfect crumb structure"
               className="rounded-2xl shadow-stone w-full h-auto"
             />
             <div className="absolute -top-4 -right-4 bg-primary-foreground text-primary p-4 rounded-lg shadow-warm">
-              <p className="font-bold text-2xl">2,847</p>
-              <p className="text-sm">Bakers Joined</p>
+              <p className="font-bold text-2xl">15K+</p>
+              <p className="text-sm">Bakers Love It</p>
             </div>
           </div>
         </div>

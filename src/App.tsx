@@ -13,6 +13,7 @@ import MyRecipes from "./pages/MyRecipes";
 import About from "./pages/About";
 import Books from "./pages/Books";
 import PublicRecipe from "./pages/PublicRecipe";
+import HenrysFoolproofRecipe from "./pages/HenrysFoolproofRecipe";
 import BreadGlossary from "./pages/BreadGlossary";
 import BreadCalculator from "./pages/BreadCalculator";
 import Community from "./pages/Community";
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/my-recipes" element={<MyRecipes />} />
             <Route path="/about" element={<About />} />
             <Route path="/books" element={<Books />} />
+            <Route path="/henrys-foolproof-recipe" element={<HenrysFoolproofRecipe />} />
             <Route path="/glossary" element={<BreadGlossary />} />
             <Route path="/bread-calculator" element={<BreadCalculator />} />
             <Route path="/community" element={<Community />} />
