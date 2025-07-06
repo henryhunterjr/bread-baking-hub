@@ -168,7 +168,7 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
 
   return (
     <section 
-      className="relative h-[80vh] min-h-[600px] w-full overflow-hidden"
+      className="relative h-[60vh] min-h-[500px] md:h-[80vh] md:min-h-[600px] w-full overflow-hidden"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
@@ -178,11 +178,16 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
         className={`absolute inset-0 bg-cover bg-no-repeat animate-fade-in ${
           currentSlideData.id === 'yeast' ? 'bg-left-center' : 'bg-center'
         }`}
-        style={{ backgroundImage: `url(${currentSlideData.backgroundImage})` }}
+        style={{ 
+          backgroundImage: `url(${currentSlideData.backgroundImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: currentSlideData.id === 'yeast' ? 'left center' : 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
       />
       
-      {/* Overlay - Reduced opacity for clearer images */}
-      <div className="absolute inset-0 bg-black/20" />
+      {/* Overlay - Lighter on mobile for better image visibility */}
+      <div className="absolute inset-0 bg-black/10 md:bg-black/20" />
 
       {/* Content Overlay */}
       <div className="relative h-full flex items-center">
