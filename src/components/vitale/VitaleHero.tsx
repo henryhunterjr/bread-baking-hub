@@ -10,6 +10,16 @@ export const VitaleHero = () => {
     <section className="relative min-h-[90vh] flex items-center">
       <div className="absolute inset-0 bg-gradient-hero"></div>
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20">
+        {/* Vitale Logo */}
+        <div className="text-center pb-8">
+          <img 
+            src="/lovable-uploads/0722874c-0d7c-4633-9b50-564aa870d4f0.png"
+            alt="Vitale Logo"
+            className="h-20 md:h-24 mx-auto"
+            loading="eager"
+          />
+        </div>
+        
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left side - Content */}
           <div className="space-y-8">
@@ -56,29 +66,40 @@ export const VitaleHero = () => {
             </div>
           </div>
 
-          {/* Right side - Product Images */}
+          {/* Right side - Success Images */}
           <div className="space-y-6">
+            {/* Beautiful bread cross-section */}
             <div className="relative">
               <img 
-                src="/lovable-uploads/154d14c0-76bd-47e3-b378-282823bda6fd.png"
-                alt="Vitale Sourdough Starter Package on wooden counter"
+                src="/lovable-uploads/24966444-25da-4770-ba7a-701e9c733a89.png"
+                alt="Beautiful sourdough bread made with Vitale starter - perfect crumb structure"
                 className="rounded-2xl shadow-warm w-full"
                 loading="eager"
               />
+              <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm">
+                Made with Vitale
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
+              {/* Two golden loaves */}
               <img 
-                src="/lovable-uploads/ad456380-83ab-4b4b-9dd6-e0fcdf10f398.png"
-                alt="Three Vitale starter packages"
+                src="/lovable-uploads/09251f62-4b32-40a7-bfb1-92fb1c4bd710.png"
+                alt="Two golden sourdough loaves baked with Vitale starter"
                 className="rounded-xl shadow-stone w-full"
                 loading="lazy"
               />
+              {/* International customer from Trinidad and Tobago */}
               <img 
-                src="/lovable-uploads/a374f667-4314-42da-9466-8627518d052d.png"
-                alt="Vitale starter package with flowers"
-                className="rounded-xl shadow-stone w-full"
+                src="/lovable-uploads/f387ea3d-1e4a-4555-a1e1-efec8b9e30b3.png"
+                alt="Happy customer from Trinidad and Tobago with Vitale package - shipping worldwide"
+                className="rounded-xl shadow-stone w-full object-cover"
                 loading="lazy"
               />
+            </div>
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground italic">
+                Bakers around the world are creating beautiful bread with Vitale
+              </p>
             </div>
           </div>
         </div>
