@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Badge } from '@/components/ui/badge';
@@ -35,6 +36,10 @@ const HenrysFoolproofRecipe = () => {
     { nutrient: 'Protein', value: '4g' },
     { nutrient: 'Fat', value: '0.5g' }
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="bg-background text-foreground min-h-screen">
