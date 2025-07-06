@@ -5,6 +5,15 @@ import challengeBreadImage from '@/assets/challenge-bread.jpg';
 const BakersBench = () => {
   const mediaItems = [
     {
+      title: "Sourdough for the Rest of Us – Free Download",
+      description: "Sourdough belongs to everyone. Join Rachel Parker as we break bread and discuss making sourdough accessible to all home bakers.",
+      type: "podcast",
+      thumbnail: "https://img.youtube.com/vi/FiQg8AaW7PE/maxresdefault.jpg",
+      duration: "16:20",
+      link: "https://youtu.be/FiQg8AaW7PE?si=WgH2a9SkGEboCtgU",
+      date: "March 2025"
+    },
+    {
       title: "Sourdough Troubleshooting: Dense Loaves",
       description: "Common mistakes that lead to dense bread and how to fix them",
       type: "video",
@@ -12,15 +21,6 @@ const BakersBench = () => {
       duration: "12:34",
       link: "https://www.youtube.com/@henryhunterjr",
       date: "June 2025"
-    },
-    {
-      title: "The Science of Gluten Development",
-      description: "Understanding how kneading and time affect your dough structure",
-      type: "podcast",
-      thumbnail: challengeBreadImage,
-      duration: "24:15",
-      link: "#",
-      date: "May 2025"
     }
   ];
 
@@ -75,7 +75,7 @@ const BakersBench = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-primary mb-4">The Baker's Bench</h2>
           <p className="text-xl text-stone-300 max-w-2xl mx-auto">
-            In-depth videos and discussions about bread baking techniques and troubleshooting
+            Podcasts, videos and in-depth discussions about bread baking techniques and troubleshooting
           </p>
         </div>
         
