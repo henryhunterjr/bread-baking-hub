@@ -40,13 +40,13 @@ const BakersBench = () => {
       date: "March 2025"
     },
     {
-      title: "Sourdough Troubleshooting: Dense Loaves",
-      description: "Common mistakes that lead to dense bread and how to fix them",
+      title: "A Fat Jewish German Baker Treated Me Like a Sourdough Starter",
+      description: "Breaking Bread Podcast: Exploring bread legends, baking tips & cultural stories from food history",
       type: "video",
-      thumbnail: challengeBreadImage,
-      duration: "12:34",
-      link: "https://www.youtube.com/@henryhunterjr",
-      date: "June 2025"
+      thumbnail: "https://img.youtube.com/vi/49XtxfMlBgo/maxresdefault.jpg",
+      duration: "7:33",
+      link: "https://youtu.be/49XtxfMlBgo?si=-8Jc7YixJJXDaLOI",
+      date: "April 2023"
     }
   ];
 
