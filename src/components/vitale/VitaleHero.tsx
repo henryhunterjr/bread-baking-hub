@@ -10,19 +10,18 @@ export const VitaleHero = () => {
     <section className="relative min-h-[90vh] flex items-center">
       <div className="absolute inset-0 bg-gradient-hero"></div>
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20">
-        {/* Vitale Logo */}
-        <div className="text-center pb-8">
-          <img 
-            src="/lovable-uploads/fff984e8-765a-4f2a-94dc-c79799d4b371.png"
-            alt="Vitale Logo"
-            className="h-20 md:h-24 mx-auto"
-            loading="eager"
-          />
-        </div>
-        
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left side - Content */}
           <div className="space-y-8">
+            {/* Vitale Logo */}
+            <div className="flex justify-center">
+              <img 
+                src="/lovable-uploads/fff984e8-765a-4f2a-94dc-c79799d4b371.png"
+                alt="Vitale Logo"
+                className="h-30 md:h-36"
+                loading="eager"
+              />
+            </div>
             <div className="space-y-4">
               <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">
                 Baking Bread in Just <span className="text-primary">3 Days</span> with Vitale
