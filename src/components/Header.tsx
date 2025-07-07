@@ -13,8 +13,12 @@ const Header = () => {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link to="/" className="text-xl font-bold text-primary">
-              Baking Great Bread at Home
+            <Link to="/" className="flex items-center">
+              <img 
+                src="/lovable-uploads/aff774b5-ec68-415b-b096-50a160fc1c53.png" 
+                alt="Baking Great Bread at Home" 
+                className="h-12 w-12 rounded-full bg-white p-1"
+              />
             </Link>
           </div>
           
