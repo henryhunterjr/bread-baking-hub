@@ -4,7 +4,6 @@ import { Card } from '@/components/ui/card';
 import { ExternalLink } from 'lucide-react';
 
 interface Product {
-  icon: string;
   name: string;
   description: string;
   coupon: string;
@@ -14,7 +13,6 @@ interface Product {
 
 const products: Product[] = [
   {
-    icon: '🥖',
     name: 'Vitale Sourdough Co. Dehydrated Sourdough Starter',
     description: "You'll be baking bread in 3 days with Vitale's easy-rehydrate starter.",
     coupon: 'none',
@@ -22,7 +20,6 @@ const products: Product[] = [
     image: '/lovable-uploads/2f2d5173-d3d4-47f6-990b-402e68e42818.png'
   },
   {
-    icon: '🧂',
     name: 'SourHouse Goldie Starter',
     description: 'A warm, safe home for your sourdough starter.',
     coupon: 'Code HBK23',
@@ -30,7 +27,6 @@ const products: Product[] = [
     image: '/lovable-uploads/6cda5f41-4056-43fc-951f-589a64de6f9f.png'
   },
   {
-    icon: '🍞',
     name: 'ModKitchn Bread Baking Kit',
     description: 'Essential tools to elevate your bread-baking game.',
     coupon: 'Code BAKINGGREATBREAD10',
@@ -38,7 +34,6 @@ const products: Product[] = [
     image: '/lovable-uploads/42fff4a1-254b-430a-a0aa-87933904ca43.png'
   },
   {
-    icon: '🔥',
     name: 'Challenger Breadware Cast-Iron Bread Pan',
     description: 'Perfectly bake artisan loaves with even heat.',
     coupon: 'none',
@@ -46,7 +41,6 @@ const products: Product[] = [
     image: '/lovable-uploads/43f2f3c6-9f65-4f67-919d-706560f7ddfc.png'
   },
   {
-    icon: '🔨',
     name: 'Wire Monkey Bread Lame',
     description: 'Precision scoring tool for beautiful ear-forming designs.',
     coupon: 'none',
@@ -54,7 +48,6 @@ const products: Product[] = [
     image: '/lovable-uploads/8d24dc9f-ff7c-4187-a585-dcef056c2317.png'
   },
   {
-    icon: '🪵',
     name: 'Holland Bowl Mill Wooden Mixing Bowls',
     description: 'Hand-carved bowls perfect for proofing and serving.',
     coupon: 'Code BREAD',
@@ -62,7 +55,6 @@ const products: Product[] = [
     image: '/lovable-uploads/d7d9aabf-6578-4161-8a58-e01cac43a3e2.png'
   },
   {
-    icon: '🛏️',
     name: 'SourHouse Dough Bed',
     description: 'Creates a warm, humid home for perfect dough proofs.',
     coupon: 'none',
@@ -70,7 +62,6 @@ const products: Product[] = [
     image: '/lovable-uploads/8c468b20-a99a-4585-ac57-5f00763c34be.png'
   },
   {
-    icon: '🌡️',
     name: 'Brød & Taylor Sourdough Home',
     description: 'Precise temperature & humidity control for reliable proofs.',
     coupon: 'none',
@@ -78,8 +69,7 @@ const products: Product[] = [
     image: '/lovable-uploads/d5f6cf60-2b45-421d-852b-81cfd14d5725.png'
   },
   {
-    icon: '🍲',
-    name: 'The Brød and Taylor Proofer and Slow Cook',
+    name: 'The Brød and Taylor Proofer and Slow Cooker',
     description: 'Versatile cooker—perfect for steam-proofing dough or one-pot meals.',
     coupon: 'none',
     url: 'https://example.com/slow-cooker',
@@ -122,9 +112,8 @@ const RecommendedTools = () => {
 
                 {/* Product Info */}
                 <div className="sm:w-1/2 bg-stone-800 text-stone-100 p-6 flex flex-col justify-between relative">
-                  {/* Top Row: Icon and Coupon */}
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="text-2xl">{product.icon}</span>
+                  {/* Top Row: Coupon Badge */}
+                  <div className="flex justify-end items-start mb-4">
                     {product.coupon !== 'none' && (
                       <Badge className="bg-amber-500 text-stone-900 font-semibold text-xs px-3 py-1 rounded-full">
                         {product.coupon}
