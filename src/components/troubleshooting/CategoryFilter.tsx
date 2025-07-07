@@ -9,7 +9,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   onCategoryChange 
 }) => {
   return (
-    <div className="sticky top-0 z-20 bg-stone-50/95 backdrop-blur-sm border-b border-stone-200 py-4 shadow-sm">
+    <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-sm border-b border-panthers-blue-300 py-4 shadow-panthers">
       <div className="container mx-auto px-4">
         <div className="flex gap-2 overflow-x-auto pb-2 md:grid md:grid-cols-4 lg:grid-cols-6 scrollbar-hide">
           <motion.div
@@ -20,7 +20,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
               variant={activeCategory === 'all' ? 'default' : 'outline'}
               size="sm"
               onClick={() => onCategoryChange('all')}
-              className="whitespace-nowrap flex-shrink-0 bg-amber-100 hover:bg-amber-200 text-stone-800 border-amber-300 touch-manipulation min-h-[44px]"
+              className="whitespace-nowrap flex-shrink-0 bg-panthers-blue-500 hover:bg-panthers-blue-600 text-white border-panthers-blue-400 data-[state=open]:bg-panthers-blue-600 touch-manipulation min-h-[44px]"
             >
               All Issues
             </Button>
@@ -35,7 +35,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
                 variant={activeCategory === category ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => onCategoryChange(category)}
-                className="whitespace-nowrap flex-shrink-0 bg-amber-100 hover:bg-amber-200 text-stone-800 border-amber-300 touch-manipulation min-h-[44px]"
+                className="whitespace-nowrap flex-shrink-0 bg-panthers-blue-500 hover:bg-panthers-blue-600 text-white border-panthers-blue-400 data-[state=open]:bg-panthers-blue-600 touch-manipulation min-h-[44px]"
               >
                 {category}
               </Button>

@@ -117,7 +117,7 @@ const CrustAndCrumb: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gradient-to-br from-stone-50 to-amber-50">
+      <div className="min-h-screen bg-gradient-to-br from-white via-panthers-blue-50 to-platinum-100">
         <CrustAndCrumbSEO />
         
         {/* Header */}
@@ -125,7 +125,7 @@ const CrustAndCrumb: React.FC = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-gradient-to-r from-amber-100 to-stone-100 border-b border-stone-200"
+          className="bg-gradient-to-r from-panthers-blue-900 to-platinum-900 border-b border-panthers-blue-700 shadow-electric"
         >
           <div className="container mx-auto px-4 py-8 text-center">
             <div className="mb-4">
@@ -135,14 +135,14 @@ const CrustAndCrumb: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 src="/lovable-uploads/3850aa1b-5d06-48a3-91c7-d9405d23ea7a.png"
                 alt="Crust & Crumb Logo"
-                className="w-24 h-24 mx-auto mb-4 rounded-full shadow-lg"
+                className="w-24 h-24 mx-auto mb-4 rounded-full shadow-electric border-2 border-panthers-blue-400"
               />
             </div>
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-3xl md:text-4xl font-serif font-bold text-stone-800 mb-2"
+              className="text-3xl md:text-4xl font-serif font-bold text-white mb-2"
             >
               Crust & Crumb
             </motion.h1>
@@ -150,17 +150,17 @@ const CrustAndCrumb: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-lg text-stone-600 font-medium"
+              className="text-lg text-panthers-blue-100 font-medium"
             >
-              Bread Troubleshooting Assistant
+              Professional Bread Troubleshooting
             </motion.p>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="text-sm text-stone-500 mt-2 max-w-2xl mx-auto safe-area-inset-x"
+              className="text-sm text-panthers-blue-200 mt-2 max-w-2xl mx-auto safe-area-inset-x"
             >
-              Diagnose and solve your bread baking challenges with expert guidance and proven solutions
+              Elite diagnostic solutions for the discerning baker
             </motion.p>
           </div>
         </motion.div>
@@ -196,7 +196,7 @@ const CrustAndCrumb: React.FC = () => {
               >
                 {Object.entries(groupedSymptoms).map(([category, categorySymptoms]) => (
                   <div key={category}>
-                    <h2 className="text-2xl font-serif font-bold text-stone-800 mb-4 border-b border-stone-300 pb-2">
+                    <h2 className="text-2xl font-serif font-bold text-panthers-blue-900 mb-4 border-b border-panthers-blue-300 pb-2">
                       {category} Issues ({categorySymptoms.length})
                     </h2>
                     <div className="grid gap-4">
@@ -221,7 +221,7 @@ const CrustAndCrumb: React.FC = () => {
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.3 }}
               >
-                <h2 className="text-2xl font-serif font-bold text-stone-800 mb-6">
+                <h2 className="text-2xl font-serif font-bold text-panthers-blue-900 mb-6">
                   {activeCategory} Issues ({filteredSymptoms.length})
                 </h2>
                 <div className="grid gap-4">
@@ -253,11 +253,11 @@ const CrustAndCrumb: React.FC = () => {
         </div>
 
         {/* Footer */}
-        <div className="bg-stone-100 border-t border-stone-200 mt-12 safe-area-inset-x">
-          <div className="container mx-auto px-4 py-6 text-center text-stone-600 text-sm">
-            <p>Part of the Crust & Crumb toolset for better bread baking</p>
-            <p className="mt-1 text-xs text-stone-500">
-              Version {CRUST_AND_CRUMB_CONSTANTS.VERSION} • Professional Bread Troubleshooting
+        <div className="bg-gradient-to-r from-panthers-blue-900 to-platinum-800 border-t border-panthers-blue-600 mt-12 safe-area-inset-x">
+          <div className="container mx-auto px-4 py-6 text-center text-panthers-blue-100 text-sm">
+            <p>Elite Bread Troubleshooting • Crust & Crumb Professional</p>
+            <p className="mt-1 text-xs text-panthers-blue-200">
+              Version {CRUST_AND_CRUMB_CONSTANTS.VERSION} • Premium Diagnostic Solutions
             </p>
           </div>
         </div>

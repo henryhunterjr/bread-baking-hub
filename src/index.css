@@ -8,147 +8,156 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Bread & baking theme - warm stone and amber palette */
-    --background: 20 14% 10%;  /* Deep stone */
-    --foreground: 30 25% 90%;  /* Warm white */
+    /* Carolina Panthers high-end theme - Electric blue, black, and platinum */
+    --background: 0 0% 100%;  /* Pure white */
+    --foreground: 220 15% 15%;  /* Rich dark blue-gray */
 
-    --card: 20 14% 12%;
-    --card-foreground: 30 25% 90%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
 
-    --popover: 20 14% 12%;
-    --popover-foreground: 30 25% 90%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
 
-    --primary: 45 85% 60%;  /* Warm amber */
-    --primary-foreground: 20 14% 10%;
+    --primary: 195 100% 45%;  /* Carolina Panthers Blue */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 20 14% 22%;  /* Medium stone */
-    --secondary-foreground: 30 25% 90%;
+    --secondary: 220 15% 15%;  /* Rich dark */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 20 14% 18%;
-    --muted-foreground: 25 15% 65%;
+    --muted: 210 15% 95%;
+    --muted-foreground: 220 15% 45%;
 
-    --accent: 45 85% 50%;  /* Deeper amber */
-    --accent-foreground: 20 14% 10%;
+    --accent: 195 100% 35%;  /* Deeper Panthers Blue */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 30 25% 90%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 20 14% 18%;
-    --input: 20 14% 18%;
-    --ring: 45 85% 60%;
+    --border: 210 15% 90%;
+    --input: 210 15% 95%;
+    --ring: 195 100% 45%;
 
     --radius: 0.75rem;
 
-    /* Stone color variations */
-    --stone-950: 20 14% 4%;
-    --stone-900: 20 14% 10%;
-    --stone-800: 20 14% 15%;
-    --stone-700: 20 14% 22%;
-    --stone-600: 20 14% 35%;
-    --stone-500: 20 14% 50%;
-    --stone-400: 20 15% 60%;
-    --stone-300: 20 20% 70%;
-    --stone-200: 25 30% 85%;
-    --stone-100: 30 40% 95%;
+    /* Panthers color variations */
+    --panthers-blue-950: 195 100% 15%;
+    --panthers-blue-900: 195 100% 20%;
+    --panthers-blue-800: 195 100% 25%;
+    --panthers-blue-700: 195 100% 30%;
+    --panthers-blue-600: 195 100% 35%;
+    --panthers-blue-500: 195 100% 45%;
+    --panthers-blue-400: 195 100% 55%;
+    --panthers-blue-300: 195 80% 70%;
+    --panthers-blue-200: 195 60% 85%;
+    --panthers-blue-100: 195 40% 95%;
 
-    /* Amber variations */
-    --amber-600: 45 85% 50%;
-    --amber-500: 45 85% 55%;
-    --amber-400: 45 85% 60%;
-    --amber-300: 45 85% 70%;
-    --amber-200: 45 85% 80%;
+    /* Platinum/Silver variations */
+    --platinum-900: 220 15% 15%;
+    --platinum-800: 220 12% 25%;
+    --platinum-700: 220 10% 35%;
+    --platinum-600: 220 8% 45%;
+    --platinum-500: 220 6% 55%;
+    --platinum-400: 220 5% 65%;
+    --platinum-300: 220 4% 75%;
+    --platinum-200: 220 3% 85%;
+    --platinum-100: 220 2% 95%;
 
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--stone-800)), hsl(var(--stone-900)));
-    --gradient-amber: linear-gradient(135deg, hsl(var(--amber-600)), hsl(var(--amber-500)));
-    --gradient-subtle: linear-gradient(180deg, hsl(var(--stone-800)), hsl(var(--stone-900)));
+    /* High-end gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--panthers-blue-800)), hsl(var(--panthers-blue-900)));
+    --gradient-panthers: linear-gradient(135deg, hsl(var(--panthers-blue-500)), hsl(var(--panthers-blue-600)));
+    --gradient-platinum: linear-gradient(180deg, hsl(var(--platinum-100)), hsl(var(--platinum-200)));
+    --gradient-electric: linear-gradient(45deg, hsl(var(--panthers-blue-400)), hsl(var(--panthers-blue-500)), hsl(var(--panthers-blue-600)));
 
-    /* Shadows */
-    --shadow-warm: 0 10px 30px -10px hsl(var(--amber-600) / 0.3);
-    --shadow-stone: 0 10px 30px -10px hsl(var(--stone-950) / 0.5);
+    /* Luxury shadows */
+    --shadow-panthers: 0 10px 30px -10px hsl(var(--panthers-blue-500) / 0.4);
+    --shadow-platinum: 0 10px 30px -10px hsl(var(--platinum-700) / 0.2);
+    --shadow-electric: 0 20px 40px -15px hsl(var(--panthers-blue-500) / 0.3);
 
-    /* Transitions */
+    /* Smooth premium transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-electric: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
     /* Header specific tokens */
-    --header-background: 20 14% 15%;  /* Stone 800 equivalent */
-    --header-foreground: 25 15% 65%;  /* Stone 300 equivalent */
+    --header-background: 220 15% 15%;  /* Rich dark */
+    --header-foreground: 0 0% 100%;    /* Pure white text */
     
     /* Section backgrounds */
-    --section-background: 20 14% 15%;  /* Stone 800 equivalent */
-    --section-secondary: 20 14% 22%;   /* Stone 700 equivalent */
+    --section-background: 0 0% 100%;        /* Pure white */
+    --section-secondary: 210 15% 98%;       /* Subtle off-white */
     
     /* Content overlays */
-    --overlay-dark: 0 0% 0% / 0.5;     /* Black with 50% opacity */
-    --overlay-darker: 0 0% 0% / 0.7;   /* Black with 70% opacity */
+    --overlay-dark: 220 15% 15% / 0.8;      /* Rich dark with opacity */
+    --overlay-electric: 195 100% 45% / 0.1;  /* Subtle blue tint */
     
     /* Mobile spacing tokens */
-    --spacing-mobile-touch: 44px;      /* Minimum touch target size */
-    --spacing-mobile-gap: 16px;        /* Standard mobile gap */
-    --spacing-mobile-padding: 16px;    /* Standard mobile padding */
+    --spacing-mobile-touch: 44px;      
+    --spacing-mobile-gap: 16px;        
+    --spacing-mobile-padding: 16px;    
 
-    --sidebar-background: 20 14% 15%;
-    --sidebar-foreground: 25 15% 65%;
-    --sidebar-primary: 45 85% 60%;
-    --sidebar-primary-foreground: 20 14% 10%;
-    --sidebar-accent: 20 14% 22%;
-    --sidebar-accent-foreground: 30 25% 90%;
-    --sidebar-border: 20 14% 18%;
-    --sidebar-ring: 45 85% 60%;
+    --sidebar-background: 220 15% 15%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 195 100% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 12% 25%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 10% 35%;
+    --sidebar-ring: 195 100% 45%;
     
-    /* Warning colors for offline state */
-    --warning: 34 89 73;
-    --warning-foreground: 0 0 100;
+    /* Warning colors */
+    --warning: 34 89% 73%;
+    --warning-foreground: 0 0% 0%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Dark mode with Panthers theme */
+    --background: 220 15% 8%;
+    --foreground: 0 0% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 15% 10%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 15% 10%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 195 100% 55%;
+    --primary-foreground: 220 15% 8%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 220 12% 15%;
+    --secondary-foreground: 0 0% 95%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 220 12% 15%;
+    --muted-foreground: 220 8% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 195 100% 45%;
+    --accent-foreground: 0 0% 95%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 95%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 220 12% 18%;
+    --input: 220 12% 18%;
+    --ring: 195 100% 55%;
+    
+    --sidebar-background: 220 15% 8%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 195 100% 55%;
+    --sidebar-primary-foreground: 220 15% 8%;
+    --sidebar-accent: 220 12% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 220 12% 18%;
+    --sidebar-ring: 195 100% 55%;
     
     /* Header tokens for dark mode */
-    --header-background: 240 5.9% 10%;
-    --header-foreground: 240 4.8% 95.9%;
+    --header-background: 220 15% 8%;
+    --header-foreground: 0 0% 95%;
     
     /* Section backgrounds for dark mode */
-    --section-background: 240 5.9% 10%;
-    --section-secondary: 240 3.7% 15.9%;
+    --section-background: 220 15% 8%;
+    --section-secondary: 220 12% 15%;
     
     /* Warning colors for dark mode */
-    --warning: 34 89 73;
-    --warning-foreground: 0 0 100;
+    --warning: 34 89% 73%;
+    --warning-foreground: 0 0% 0%;
   }
 }
 

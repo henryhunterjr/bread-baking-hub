@@ -66,17 +66,29 @@ export default {
 					DEFAULT: 'hsl(var(--warning))',
 					foreground: 'hsl(var(--warning-foreground))'
 				},
-				stone: {
-					'950': 'hsl(var(--stone-950))',
-					'900': 'hsl(var(--stone-900))',
-					'800': 'hsl(var(--stone-800))',
-					'700': 'hsl(var(--stone-700))',
-					'600': 'hsl(var(--stone-600))',
-					'500': 'hsl(var(--stone-500))',
-					'400': 'hsl(var(--stone-400))',
-					'300': 'hsl(var(--stone-300))',
-					'200': 'hsl(var(--stone-200))',
-					'100': 'hsl(var(--stone-100))'
+				'panthers-blue': {
+					'950': 'hsl(var(--panthers-blue-950))',
+					'900': 'hsl(var(--panthers-blue-900))',
+					'800': 'hsl(var(--panthers-blue-800))',
+					'700': 'hsl(var(--panthers-blue-700))',
+					'600': 'hsl(var(--panthers-blue-600))',
+					'500': 'hsl(var(--panthers-blue-500))',
+					'400': 'hsl(var(--panthers-blue-400))',
+					'300': 'hsl(var(--panthers-blue-300))',
+					'200': 'hsl(var(--panthers-blue-200))',
+					'100': 'hsl(var(--panthers-blue-100))',
+					'50': 'hsl(195 40% 98%)'
+				},
+				'platinum': {
+					'900': 'hsl(var(--platinum-900))',
+					'800': 'hsl(var(--platinum-800))',
+					'700': 'hsl(var(--platinum-700))',
+					'600': 'hsl(var(--platinum-600))',
+					'500': 'hsl(var(--platinum-500))',
+					'400': 'hsl(var(--platinum-400))',
+					'300': 'hsl(var(--platinum-300))',
+					'200': 'hsl(var(--platinum-200))',
+					'100': 'hsl(var(--platinum-100))'
 				},
 				amber: {
 					'600': 'hsl(var(--amber-600))',
@@ -100,12 +112,14 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-hero': 'var(--gradient-hero)',
-				'gradient-amber': 'var(--gradient-amber)',
-				'gradient-subtle': 'var(--gradient-subtle)'
+				'gradient-panthers': 'var(--gradient-panthers)',
+				'gradient-platinum': 'var(--gradient-platinum)',
+				'gradient-electric': 'var(--gradient-electric)'
 			},
 			boxShadow: {
-				'warm': 'var(--shadow-warm)',
-				'stone': 'var(--shadow-stone)'
+				'panthers': 'var(--shadow-panthers)',
+				'platinum': 'var(--shadow-platinum)',
+				'electric': 'var(--shadow-electric)'
 			},
 			transitionTimingFunction: {
 				'smooth': 'var(--transition-smooth)'
