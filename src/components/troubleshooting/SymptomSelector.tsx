@@ -1,27 +1,8 @@
 import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-
-interface Symptom {
-  id: string;
-  labels: string[];
-  category: string;
-  breadType?: string[];
-  stage?: string;
-  tags?: string[];
-}
-
-interface SymptomSelectorProps {
-  breadTypes: string[];
-  stages: string[];
-  symptoms: Symptom[];
-  selectedBreadType: string;
-  selectedStage: string;
-  selectedSymptom: string;
-  onBreadTypeChange: (value: string) => void;
-  onStageChange: (value: string) => void;
-  onSymptomChange: (value: string) => void;
-}
+import type { SymptomSelectorProps } from '@/types/crustAndCrumb';
+import { filterSymptomsByDiagnosis, formatSymptomTitle } from '@/utils/crustAndCrumbUtils';
 
 const SymptomSelector: React.FC<SymptomSelectorProps> = ({
   breadTypes,
@@ -34,15 +15,7 @@ const SymptomSelector: React.FC<SymptomSelectorProps> = ({
   onStageChange,
   onSymptomChange,
 }) => {
-  const filteredSymptoms = symptoms.filter(symptom => {
-    const matchesBreadType = !selectedBreadType || 
-      !symptom.breadType || 
-      symptom.breadType.includes(selectedBreadType);
-    const matchesStage = !selectedStage || 
-      !symptom.stage || 
-      symptom.stage === selectedStage;
-    return matchesBreadType && matchesStage;
-  });
+  const filteredSymptoms = filterSymptomsByDiagnosis(symptoms, selectedBreadType, selectedStage);
 
   return (
     <div className="grid gap-4 md:grid-cols-3">
@@ -51,12 +24,12 @@ const SymptomSelector: React.FC<SymptomSelectorProps> = ({
           1. Bread Type
         </Label>
         <Select value={selectedBreadType} onValueChange={onBreadTypeChange}>
-          <SelectTrigger className="bg-white border-stone-300">
+          <SelectTrigger className="bg-white border-stone-300 min-h-[44px] touch-manipulation">
             <SelectValue placeholder="Select bread type" />
           </SelectTrigger>
           <SelectContent className="bg-white border-stone-300 z-50">
             {breadTypes.map((type) => (
-              <SelectItem key={type} value={type} className="capitalize">
+              <SelectItem key={type} value={type} className="capitalize touch-manipulation min-h-[44px]">
                 {type.replace('-', ' ')}
               </SelectItem>
             ))}
@@ -69,12 +42,12 @@ const SymptomSelector: React.FC<SymptomSelectorProps> = ({
           2. Problem Stage
         </Label>
         <Select value={selectedStage} onValueChange={onStageChange}>
-          <SelectTrigger className="bg-white border-stone-300">
+          <SelectTrigger className="bg-white border-stone-300 min-h-[44px] touch-manipulation">
             <SelectValue placeholder="When did it happen?" />
           </SelectTrigger>
           <SelectContent className="bg-white border-stone-300 z-50">
             {stages.map((stage) => (
-              <SelectItem key={stage} value={stage} className="capitalize">
+              <SelectItem key={stage} value={stage} className="capitalize touch-manipulation min-h-[44px]">
                 {stage.replace('-', ' ')}
               </SelectItem>
             ))}
@@ -87,13 +60,13 @@ const SymptomSelector: React.FC<SymptomSelectorProps> = ({
           3. What You See
         </Label>
         <Select value={selectedSymptom} onValueChange={onSymptomChange}>
-          <SelectTrigger className="bg-white border-stone-300">
+          <SelectTrigger className="bg-white border-stone-300 min-h-[44px] touch-manipulation">
             <SelectValue placeholder="Describe the issue" />
           </SelectTrigger>
           <SelectContent className="bg-white border-stone-300 z-50">
             {filteredSymptoms.map((symptom) => (
-              <SelectItem key={symptom.id} value={symptom.id}>
-                {symptom.labels[0].charAt(0).toUpperCase() + symptom.labels[0].slice(1)}
+              <SelectItem key={symptom.id} value={symptom.id} className="touch-manipulation min-h-[44px]">
+                {formatSymptomTitle(symptom)}
               </SelectItem>
             ))}
           </SelectContent>
