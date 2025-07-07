@@ -8,34 +8,34 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Carolina Panthers high-end theme - Electric blue, black, and platinum */
-    --background: 0 0% 100%;  /* Pure white */
-    --foreground: 220 15% 15%;  /* Rich dark blue-gray */
+    /* Original warm bread theme */
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 15%;
+    --card-foreground: 20 14.3% 4.1%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
+    --popover-foreground: 20 14.3% 4.1%;
 
-    --primary: 195 100% 45%;  /* Carolina Panthers Blue */
-    --primary-foreground: 0 0% 100%;
+    --primary: 24 9.8% 10%;
+    --primary-foreground: 60 9.1% 97.8%;
 
-    --secondary: 220 15% 15%;  /* Rich dark */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
 
-    --muted: 210 15% 95%;
-    --muted-foreground: 220 15% 45%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
 
-    --accent: 195 100% 35%;  /* Deeper Panthers Blue */
-    --accent-foreground: 0 0% 100%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
 
-    --border: 210 15% 90%;
-    --input: 210 15% 95%;
-    --ring: 195 100% 45%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 24 9.8% 10%;
 
     --radius: 0.75rem;
 
@@ -78,30 +78,30 @@ All colors MUST be HSL.
     --transition-electric: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
     /* Header specific tokens */
-    --header-background: 220 15% 15%;  /* Rich dark */
-    --header-foreground: 0 0% 100%;    /* Pure white text */
+    --header-background: 24 9.8% 10%;   /* Original dark theme */
+    --header-foreground: 60 9.1% 97.8%; /* Original light text */
     
     /* Section backgrounds */
     --section-background: 0 0% 100%;        /* Pure white */
-    --section-secondary: 210 15% 98%;       /* Subtle off-white */
+    --section-secondary: 60 4.8% 95.9%;     /* Original muted background */
     
     /* Content overlays */
-    --overlay-dark: 220 15% 15% / 0.8;      /* Rich dark with opacity */
-    --overlay-electric: 195 100% 45% / 0.1;  /* Subtle blue tint */
-    
+    --overlay-dark: 20 14.3% 4.1% / 0.8;    /* Original dark with opacity */
+    --overlay-darker: 20 14.3% 4.1% / 0.9;  /* Darker overlay */
+
     /* Mobile spacing tokens */
     --spacing-mobile-touch: 44px;      
     --spacing-mobile-gap: 16px;        
-    --spacing-mobile-padding: 16px;    
+    --spacing-mobile-padding: 16px;
 
-    --sidebar-background: 220 15% 15%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 195 100% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 12% 25%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 10% 35%;
-    --sidebar-ring: 195 100% 45%;
+    --sidebar-background: 20 14.3% 4.1%;
+    --sidebar-foreground: 60 9.1% 97.8%;
+    --sidebar-primary: 24 9.8% 10%;
+    --sidebar-primary-foreground: 60 9.1% 97.8%;
+    --sidebar-accent: 12 6.5% 15.1%;
+    --sidebar-accent-foreground: 60 9.1% 97.8%;
+    --sidebar-border: 12 6.5% 15.1%;
+    --sidebar-ring: 24 9.8% 10%;
     
     /* Warning colors */
     --warning: 34 89% 73%;
@@ -109,51 +109,51 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Dark mode with Panthers theme */
-    --background: 220 15% 8%;
-    --foreground: 0 0% 95%;
+    /* Original dark mode */
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
 
-    --card: 220 15% 10%;
-    --card-foreground: 0 0% 95%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
 
-    --popover: 220 15% 10%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
 
-    --primary: 195 100% 55%;
-    --primary-foreground: 220 15% 8%;
+    --primary: 60 9.1% 97.8%;
+    --primary-foreground: 20 14.3% 4.1%;
 
-    --secondary: 220 12% 15%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
 
-    --muted: 220 12% 15%;
-    --muted-foreground: 220 8% 65%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
 
-    --accent: 195 100% 45%;
-    --accent-foreground: 0 0% 95%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 95%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
 
-    --border: 220 12% 18%;
-    --input: 220 12% 18%;
-    --ring: 195 100% 55%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 24 5.7% 82.9%;
     
-    --sidebar-background: 220 15% 8%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 195 100% 55%;
-    --sidebar-primary-foreground: 220 15% 8%;
-    --sidebar-accent: 220 12% 15%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 220 12% 18%;
-    --sidebar-ring: 195 100% 55%;
+    --sidebar-background: 20 14.3% 4.1%;
+    --sidebar-foreground: 60 9.1% 97.8%;
+    --sidebar-primary: 60 9.1% 97.8%;
+    --sidebar-primary-foreground: 20 14.3% 4.1%;
+    --sidebar-accent: 12 6.5% 15.1%;
+    --sidebar-accent-foreground: 60 9.1% 97.8%;
+    --sidebar-border: 12 6.5% 15.1%;
+    --sidebar-ring: 24 5.7% 82.9%;
     
     /* Header tokens for dark mode */
-    --header-background: 220 15% 8%;
-    --header-foreground: 0 0% 95%;
+    --header-background: 20 14.3% 4.1%;
+    --header-foreground: 60 9.1% 97.8%;
     
     /* Section backgrounds for dark mode */
-    --section-background: 220 15% 8%;
-    --section-secondary: 220 12% 15%;
+    --section-background: 20 14.3% 4.1%;
+    --section-secondary: 12 6.5% 15.1%;
     
     /* Warning colors for dark mode */
     --warning: 34 89% 73%;
