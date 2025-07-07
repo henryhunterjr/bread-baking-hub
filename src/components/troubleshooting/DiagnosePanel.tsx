@@ -3,9 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, Stethoscope } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { motion } from 'framer-motion';
 import SymptomSelector from './SymptomSelector';
 import DiagnosisResult from './DiagnosisResult';
+import PhotoDiagnosis from './PhotoDiagnosis';
 import type { DiagnosePanelProps, Symptom } from '@/types/crustAndCrumb';
 import { CRUST_AND_CRUMB_CONSTANTS } from '@/utils/crustAndCrumbUtils';
 
@@ -69,43 +71,56 @@ const DiagnosePanel: React.FC<DiagnosePanelProps> = ({ symptoms }) => {
             transition={{ duration: 0.3 }}
           >
             <CardContent className="space-y-6 safe-area-inset-x">
-              {!diagnosisResult ? (
-                <>
-                  <SymptomSelector
-                    breadTypes={CRUST_AND_CRUMB_CONSTANTS.BREAD_TYPES}
-                    stages={CRUST_AND_CRUMB_CONSTANTS.STAGES}
-                    symptoms={symptoms}
-                    selectedBreadType={selectedBreadType}
-                    selectedStage={selectedStage}
-                    selectedSymptom={selectedSymptom}
-                    onBreadTypeChange={setSelectedBreadType}
-                    onStageChange={setSelectedStage}
-                    onSymptomChange={setSelectedSymptom}
-                  />
-                  
-                  <div className="flex gap-3">
-                    <Button 
-                      onClick={handleDiagnose}
-                      disabled={!selectedSymptom}
-                      className="bg-amber-600 hover:bg-amber-700 text-white min-h-[44px] touch-manipulation"
-                    >
-                      Get Diagnosis
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      onClick={handleReset}
-                      className="border-stone-300 min-h-[44px] touch-manipulation"
-                    >
-                      Reset
-                    </Button>
-                  </div>
-                </>
-              ) : (
-                <DiagnosisResult 
-                  symptom={diagnosisResult}
-                  onReset={handleReset}
-                />
-              )}
+              <Tabs defaultValue="symptoms" className="w-full">
+                <TabsList className="grid w-full grid-cols-2 bg-stone-100">
+                  <TabsTrigger value="symptoms" className="text-sm">🧩 Step-by-Step</TabsTrigger>
+                  <TabsTrigger value="photo" className="text-sm">📷 Photo Analysis</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="symptoms" className="mt-6">
+                  {!diagnosisResult ? (
+                    <>
+                      <SymptomSelector
+                        breadTypes={CRUST_AND_CRUMB_CONSTANTS.BREAD_TYPES}
+                        stages={CRUST_AND_CRUMB_CONSTANTS.STAGES}
+                        symptoms={symptoms}
+                        selectedBreadType={selectedBreadType}
+                        selectedStage={selectedStage}
+                        selectedSymptom={selectedSymptom}
+                        onBreadTypeChange={setSelectedBreadType}
+                        onStageChange={setSelectedStage}
+                        onSymptomChange={setSelectedSymptom}
+                      />
+                      
+                      <div className="flex gap-3 pt-4">
+                        <Button 
+                          onClick={handleDiagnose}
+                          disabled={!selectedSymptom}
+                          className="bg-amber-600 hover:bg-amber-700 text-white min-h-[44px] touch-manipulation"
+                        >
+                          Get Diagnosis
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          onClick={handleReset}
+                          className="border-stone-300 min-h-[44px] touch-manipulation"
+                        >
+                          Reset
+                        </Button>
+                      </div>
+                    </>
+                  ) : (
+                    <DiagnosisResult 
+                      symptom={diagnosisResult}
+                      onReset={handleReset}
+                    />
+                  )}
+                </TabsContent>
+                
+                <TabsContent value="photo" className="mt-6">
+                  <PhotoDiagnosis symptoms={symptoms} />
+                </TabsContent>
+              </Tabs>
             </CardContent>
           </motion.div>
         </CollapsibleContent>

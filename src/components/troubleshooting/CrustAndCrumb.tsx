@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import CategoryFilter from './CategoryFilter';
 import SymptomCard from './SymptomCard';
 import DiagnosePanel from './DiagnosePanel';
@@ -127,41 +129,60 @@ const CrustAndCrumb: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="bg-gradient-to-r from-panthers-blue-900 to-platinum-900 border-b border-panthers-blue-700 shadow-electric"
         >
-          <div className="container mx-auto px-4 py-8 text-center">
-            <div className="mb-4">
-              <motion.img 
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                src="/lovable-uploads/3850aa1b-5d06-48a3-91c7-d9405d23ea7a.png"
-                alt="Crust & Crumb Logo"
-                className="w-24 h-24 mx-auto mb-4 rounded-full shadow-electric border-2 border-panthers-blue-400"
-              />
+          <div className="container mx-auto px-4 py-8">
+            {/* Navigation */}
+            <div className="flex items-center justify-between mb-6">
+              <Link to="/">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-panthers-blue-100 hover:text-white hover:bg-panthers-blue-800 transition-colors"
+                >
+                  ← Back to Home
+                </Button>
+              </Link>
+              <div className="text-xs text-panthers-blue-200">
+                Version {CRUST_AND_CRUMB_CONSTANTS.VERSION}
+              </div>
             </div>
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="text-3xl md:text-4xl font-serif font-bold text-white mb-2"
-            >
-              Crust & Crumb
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-lg text-panthers-blue-100 font-medium"
-            >
-              Professional Bread Troubleshooting
-            </motion.p>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="text-sm text-panthers-blue-200 mt-2 max-w-2xl mx-auto safe-area-inset-x"
-            >
-              Elite diagnostic solutions for the discerning baker
-            </motion.p>
+
+            {/* Title Section */}
+            <div className="text-center">
+              <div className="mb-4">
+                <motion.img 
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  src="/lovable-uploads/3850aa1b-5d06-48a3-91c7-d9405d23ea7a.png"
+                  alt="Crust & Crumb Logo"
+                  className="w-24 h-24 mx-auto mb-4 rounded-full shadow-electric border-2 border-panthers-blue-400"
+                />
+              </div>
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="text-3xl md:text-4xl font-serif font-bold text-white mb-2"
+              >
+                Crust & Crumb
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="text-lg text-panthers-blue-100 font-medium"
+              >
+                Professional Bread Troubleshooting
+              </motion.p>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="text-sm text-panthers-blue-200 mt-2 max-w-2xl mx-auto safe-area-inset-x"
+              >
+                Elite diagnostic solutions for the discerning baker
+              </motion.p>
+            </div>
           </div>
         </motion.div>
 

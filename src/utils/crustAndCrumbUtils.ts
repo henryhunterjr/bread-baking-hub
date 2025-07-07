@@ -100,3 +100,46 @@ export const CRUST_AND_CRUMB_CONSTANTS = {
   STAGES: ['mixing', 'bulk-ferment', 'proofing', 'baking', 'post-bake'],
   PLACEHOLDER_IMAGE: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop&crop=center',
 } as const;
+
+/**
+ * Mock photo diagnosis function - to be replaced with real AI later
+ */
+export const mockPhotoDiagnosis = (image: File, breadType?: string): Symptom[] => {
+  console.log('Mock photo diagnosis for:', image.name, 'bread type:', breadType);
+  
+  // Mock symptoms for demonstration - in real implementation, this would analyze the image
+  const mockSymptoms: Symptom[] = [
+    {
+      id: 'mock-dense-crumb',
+      labels: ['Dense, Heavy Crumb', 'Poor Rise'],
+      category: 'Crumb Issues',
+      quickFix: 'Check your starter activity and fermentation time. Dense bread often indicates under-fermentation or weak starter.',
+      deepDive: 'Dense bread typically results from insufficient fermentation time, weak or inactive starter, over-kneading, or incorrect hydration levels. Consider extending bulk fermentation time and ensuring your starter is at peak activity.',
+      stage: 'bulk-ferment',
+      breadType: breadType ? [breadType] : ['sourdough', 'yeasted']
+    },
+    {
+      id: 'mock-pale-crust',
+      labels: ['Pale Crust', 'Lack of Color'],
+      category: 'Crust Issues', 
+      quickFix: 'Increase oven temperature or baking time. Steam may be preventing browning - remove steam earlier.',
+      deepDive: 'Pale crusts often result from insufficient baking time, low oven temperature, or excessive steam during the browning phase. Ensure your oven is properly preheated and consider removing steam sources after the first 15-20 minutes.',
+      stage: 'baking',
+      breadType: breadType ? [breadType] : ['sourdough', 'yeasted']
+    }
+  ];
+  
+  // Filter by bread type if provided
+  let filteredSymptoms = mockSymptoms;
+  if (breadType && breadType !== '') {
+    filteredSymptoms = mockSymptoms.filter(symptom => 
+      !symptom.breadType || symptom.breadType.includes(breadType)
+    );
+  }
+  
+  // Randomly select 1-2 symptoms
+  const shuffled = [...filteredSymptoms].sort(() => 0.5 - Math.random());
+  const numResults = Math.random() > 0.5 ? 2 : 1;
+  
+  return shuffled.slice(0, numResults);
+};

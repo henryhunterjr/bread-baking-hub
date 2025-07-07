@@ -40,6 +40,10 @@ export interface DiagnosePanelProps {
   symptoms: Symptom[];
 }
 
+export interface PhotoDiagnosisProps {
+  symptoms: Symptom[];
+}
+
 export interface SymptomSelectorProps {
   breadTypes: readonly string[];
   stages: readonly string[];
