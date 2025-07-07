@@ -17,7 +17,7 @@ const Header = () => {
               <img 
                 src="/lovable-uploads/aff774b5-ec68-415b-b096-50a160fc1c53.png" 
                 alt="Baking Great Bread at Home" 
-                className="h-12 w-12 rounded-full bg-white p-1"
+                className="h-16 w-16 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
               />
             </Link>
           </div>
