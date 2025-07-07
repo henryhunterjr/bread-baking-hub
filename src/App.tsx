@@ -22,6 +22,7 @@ import BreadCalculator from "./pages/BreadCalculator";
 import Community from "./pages/Community";
 import TroubleshootingPage from "./pages/TroubleshootingPage";
 import OfflineFallback from "./pages/OfflineFallback";
+import CrustAndCrumb from "./pages/CrustAndCrumb";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ const App = () => (
             <Route path="/bread-calculator" element={<BreadCalculator />} />
             <Route path="/community" element={<Community />} />
             <Route path="/troubleshooting" element={<TroubleshootingPage />} />
+            <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
             <Route path="/r/:slug" element={<PublicRecipe />} />
             <Route path="/offline" element={<OfflineFallback />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
