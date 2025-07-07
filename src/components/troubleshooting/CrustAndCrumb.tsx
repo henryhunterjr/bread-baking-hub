@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import CategoryFilter from './CategoryFilter';
 import SymptomCard from './SymptomCard';
+import DiagnosePanel from './DiagnosePanel';
 import symptomsData from '@/data/symptoms.json';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -8,6 +9,9 @@ interface Symptom {
   id: string;
   labels: string[];
   category: string;
+  breadType?: string[];
+  stage?: string;
+  tags?: string[];
   quickFix: string;
   deepDive: string;
   images?: {
@@ -110,6 +114,9 @@ const CrustAndCrumb: React.FC = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-6">
+        {/* Diagnostic Panel */}
+        <DiagnosePanel symptoms={symptoms} />
+        
         {activeCategory === 'all' ? (
           // Show grouped by category
           <div className="space-y-8">

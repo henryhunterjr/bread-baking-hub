@@ -4,6 +4,9 @@
       "id": "sunken-middle",
       "labels": ["sunken", "collapsed", "dip", "caved"],
       "category": "collapse",
+      "breadType": ["sourdough", "yeasted"],
+      "stage": "post-bake",
+      "tags": ["structural", "cooling", "overproofed"],
       "quickFix": "Reduce hydration slightly and ensure the loaf is fully baked.",
       "deepDive": "A sunken middle often results from overproofing, excessive hydration, or underbaking. The dough's structure can't support its own weight during cooling, so it collapses inward.",
       "images": {

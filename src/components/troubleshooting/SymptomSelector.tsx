@@ -1,0 +1,106 @@
+import React from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
+
+interface Symptom {
+  id: string;
+  labels: string[];
+  category: string;
+  breadType?: string[];
+  stage?: string;
+  tags?: string[];
+}
+
+interface SymptomSelectorProps {
+  breadTypes: string[];
+  stages: string[];
+  symptoms: Symptom[];
+  selectedBreadType: string;
+  selectedStage: string;
+  selectedSymptom: string;
+  onBreadTypeChange: (value: string) => void;
+  onStageChange: (value: string) => void;
+  onSymptomChange: (value: string) => void;
+}
+
+const SymptomSelector: React.FC<SymptomSelectorProps> = ({
+  breadTypes,
+  stages,
+  symptoms,
+  selectedBreadType,
+  selectedStage,
+  selectedSymptom,
+  onBreadTypeChange,
+  onStageChange,
+  onSymptomChange,
+}) => {
+  const filteredSymptoms = symptoms.filter(symptom => {
+    const matchesBreadType = !selectedBreadType || 
+      !symptom.breadType || 
+      symptom.breadType.includes(selectedBreadType);
+    const matchesStage = !selectedStage || 
+      !symptom.stage || 
+      symptom.stage === selectedStage;
+    return matchesBreadType && matchesStage;
+  });
+
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      <div className="space-y-2">
+        <Label htmlFor="bread-type" className="text-stone-700 font-medium">
+          1. Bread Type
+        </Label>
+        <Select value={selectedBreadType} onValueChange={onBreadTypeChange}>
+          <SelectTrigger className="bg-white border-stone-300">
+            <SelectValue placeholder="Select bread type" />
+          </SelectTrigger>
+          <SelectContent className="bg-white border-stone-300 z-50">
+            {breadTypes.map((type) => (
+              <SelectItem key={type} value={type} className="capitalize">
+                {type.replace('-', ' ')}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="stage" className="text-stone-700 font-medium">
+          2. Problem Stage
+        </Label>
+        <Select value={selectedStage} onValueChange={onStageChange}>
+          <SelectTrigger className="bg-white border-stone-300">
+            <SelectValue placeholder="When did it happen?" />
+          </SelectTrigger>
+          <SelectContent className="bg-white border-stone-300 z-50">
+            {stages.map((stage) => (
+              <SelectItem key={stage} value={stage} className="capitalize">
+                {stage.replace('-', ' ')}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="symptom" className="text-stone-700 font-medium">
+          3. What You See
+        </Label>
+        <Select value={selectedSymptom} onValueChange={onSymptomChange}>
+          <SelectTrigger className="bg-white border-stone-300">
+            <SelectValue placeholder="Describe the issue" />
+          </SelectTrigger>
+          <SelectContent className="bg-white border-stone-300 z-50">
+            {filteredSymptoms.map((symptom) => (
+              <SelectItem key={symptom.id} value={symptom.id}>
+                {symptom.labels[0].charAt(0).toUpperCase() + symptom.labels[0].slice(1)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    </div>
+  );
+};
+
+export default SymptomSelector;
