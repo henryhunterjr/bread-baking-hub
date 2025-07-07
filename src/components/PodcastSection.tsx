@@ -37,7 +37,7 @@ const PodcastSection = () => {
             <Card className="overflow-hidden shadow-xl max-w-2xl w-full">
               <div className="relative group cursor-pointer" onClick={handlePlayClick}>
                 <img 
-                  src="/lovable-uploads/13eb9d90-3919-4aa9-aaa3-7d6da4df286d.png" 
+                  src="/lovable-uploads/2f64aae9-1c6a-410a-a324-31bdda9461e2.png" 
                   alt="The Jar Podcast with Henry Hunter - Wisdom on Bread, Beyond the Loaf"
                   className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
                 />
