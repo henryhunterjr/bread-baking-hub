@@ -85,11 +85,12 @@ const PhotoDiagnosis: React.FC<PhotoDiagnosisProps> = ({ symptoms }) => {
                 <label
                   htmlFor="photo-upload"
                   className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-panthers-blue-300 rounded-lg cursor-pointer bg-panthers-blue-50/30 hover:bg-panthers-blue-50/50 transition-colors touch-manipulation"
+                  aria-label="Upload bread photo for diagnosis"
                 >
                   {imagePreview ? (
                     <img
                       src={imagePreview}
-                      alt="Bread preview"
+                      alt="Preview of uploaded bread photo for diagnosis"
                       className="max-h-44 max-w-full object-contain rounded-lg"
                     />
                   ) : (
@@ -128,6 +129,7 @@ const PhotoDiagnosis: React.FC<PhotoDiagnosisProps> = ({ symptoms }) => {
                 onClick={handleAnalyze}
                 disabled={!selectedImage || isAnalyzing}
                 className="bg-panthers-blue-600 hover:bg-panthers-blue-700 text-white min-h-[44px] touch-manipulation flex-1"
+                aria-label={isAnalyzing ? "Analyzing uploaded bread photo" : "Start photo analysis of uploaded bread"}
               >
                 {isAnalyzing ? (
                   <>

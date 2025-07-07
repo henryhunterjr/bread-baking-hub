@@ -278,7 +278,7 @@ const CrustAndCrumb: React.FC = () => {
           <div className="container mx-auto px-4 py-6 text-center text-panthers-blue-100 text-sm">
             <p>Elite Bread Troubleshooting • Crust & Crumb Professional</p>
             <p className="mt-1 text-xs text-panthers-blue-200">
-              Version {CRUST_AND_CRUMB_CONSTANTS.VERSION} • Premium Diagnostic Solutions
+              Crust & Crumb v{CRUST_AND_CRUMB_CONSTANTS.VERSION} | Powered by Baking Great Bread at Home
             </p>
           </div>
         </div>

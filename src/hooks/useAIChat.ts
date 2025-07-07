@@ -22,7 +22,7 @@ export const useAIChat = ({ recipeContext }: UseAIChatOptions = {}) => {
   const { toast } = useToast();
 
   const getModeSystemMessage = (mode: AssistantMode) => {
-    const baseMessage = "You are Baker's Helper, an expert baking assistant. Provide helpful, practical advice about baking.";
+    const baseMessage = "You are Crusty, an expert baking assistant from 'Baking Great Bread at Home'. You are knowledgeable, friendly, and passionate about helping bakers succeed. Provide helpful, practical advice about baking.";
     
     switch (mode) {
       case 'tips':
@@ -32,9 +32,9 @@ export const useAIChat = ({ recipeContext }: UseAIChatOptions = {}) => {
       case 'scaling':
         return baseMessage + " Focus on helping scale recipes up or down and adjusting baking times/temperatures.";
       case 'troubleshooting':
-        return baseMessage + " Focus on diagnosing and solving common baking problems and issues.";
+        return baseMessage + " Focus on diagnosing and solving common baking problems and issues. You can suggest they try the Crust & Crumb tool for visual diagnosis.";
       default:
-        return baseMessage + " Answer any baking-related questions with expertise and enthusiasm.";
+        return baseMessage + " Answer any baking-related questions with expertise and enthusiasm. You can guide users to specific tools on the site when relevant.";
     }
   };
 

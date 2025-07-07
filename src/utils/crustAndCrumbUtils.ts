@@ -95,19 +95,32 @@ export const processSymptoms = (rawSymptoms: any[]): Symptom[] => {
  * Constants for the Crust & Crumb module
  */
 export const CRUST_AND_CRUMB_CONSTANTS = {
-  VERSION: '1.0.0',
+  VERSION: '1.1.0',
   BREAD_TYPES: ['sourdough', 'yeasted', 'quick', 'enriched'],
   STAGES: ['mixing', 'bulk-ferment', 'proofing', 'baking', 'post-bake'],
   PLACEHOLDER_IMAGE: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop&crop=center',
 } as const;
 
 /**
- * Mock photo diagnosis function - to be replaced with real AI later
+ * Photo diagnosis function - PLACEHOLDER FOR REAL AI INTEGRATION
+ * 
+ * TO IMPLEMENT REAL AI DIAGNOSIS:
+ * 1. Replace this mock function with actual image analysis
+ * 2. Options for implementation:
+ *    - Upload image to edge function with computer vision model
+ *    - Send to external AI service (OpenAI Vision, Google Vision, etc.)
+ *    - Use on-device ML models via TensorFlow.js
+ * 3. Expected workflow:
+ *    - Process uploaded image (resize, compress if needed)
+ *    - Send to AI service with breadType context
+ *    - Parse AI response to match against symptoms database
+ *    - Return most relevant symptoms with confidence scores
+ * 4. Fallback: If AI can't determine issue, return general troubleshooting tips
  */
 export const mockPhotoDiagnosis = (image: File, breadType?: string): Symptom[] => {
   console.log('Mock photo diagnosis for:', image.name, 'bread type:', breadType);
   
-  // Mock symptoms for demonstration - in real implementation, this would analyze the image
+  // MOCK DATA - Replace with actual AI analysis results
   const mockSymptoms: Symptom[] = [
     {
       id: 'mock-dense-crumb',
@@ -137,7 +150,7 @@ export const mockPhotoDiagnosis = (image: File, breadType?: string): Symptom[] =
     );
   }
   
-  // Randomly select 1-2 symptoms
+  // Randomly select 1-2 symptoms for demonstration
   const shuffled = [...filteredSymptoms].sort(() => 0.5 - Math.random());
   const numResults = Math.random() > 0.5 ? 2 : 1;
   

@@ -76,7 +76,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
           <div className="flex items-center justify-between">
             <CardTitle className="text-primary flex items-center gap-2">
               <MessageCircle className="h-5 w-5" />
-              Baker's Helper
+              Crusty - Baker's Helper
             </CardTitle>
             <Button 
               variant="ghost" 
@@ -114,7 +114,12 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
               {messages.length === 0 && (
                 <div className="text-center text-muted-foreground py-8">
                   <MessageCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>Hello! I'm Baker's Helper. Ask me anything about baking!</p>
+                  <p>Hello! I'm Crusty, your expert baking assistant. Ask me anything about baking!</p>
+                  <div className="text-xs text-muted-foreground mt-2 space-y-1">
+                    <p>• Need help diagnosing your loaf?</p>
+                    <p>• Looking for a recipe or tool?</p>
+                    <p>• Want to explore what this site can do?</p>
+                  </div>
                   {recipeContext && (
                     <p className="text-sm mt-2">I can see your current recipe and provide specific advice.</p>
                   )}
