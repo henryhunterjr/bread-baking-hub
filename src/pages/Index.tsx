@@ -10,6 +10,7 @@ import MonthlyChallenge from "../components/MonthlyChallenge";
 import LatestBlogPosts from "../components/LatestBlogPosts";
 import CallToAction from "../components/CallToAction";
 import PodcastSection from "../components/PodcastSection";
+import RecommendedTools from "../components/RecommendedTools";
 
 const Index = () => {
   return (
@@ -21,6 +22,7 @@ const Index = () => {
         <PodcastSection />
         <BooksPreview />
         <ToolsResources />
+        <RecommendedTools />
         <FromOvenToMarketHero />
         <BakersBench />
         <MonthlyChallenge />
