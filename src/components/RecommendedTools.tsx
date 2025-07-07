@@ -19,15 +19,15 @@ const products: Product[] = [
     description: "You'll be baking bread in 3 days with Vitale's easy-rehydrate starter.",
     coupon: 'none',
     url: 'https://example.com/vitale-starter',
-    image: '/lovable-uploads/544551ff-397f-4f33-bf2f-daff4ddffe46.png'
+    image: '/lovable-uploads/2f2d5173-d3d4-47f6-990b-402e68e42818.png'
   },
   {
     icon: '🧂',
-    name: 'SourHouse Goldie Starter Home',
+    name: 'SourHouse Goldie Starter',
     description: 'A warm, safe home for your sourdough starter.',
     coupon: 'Code HBK23',
     url: 'https://example.com/sourhouse-goldie',
-    image: '/lovable-uploads/5745a0fa-5ff0-4d05-b59a-8668b5ab8ca5.png'
+    image: '/lovable-uploads/6cda5f41-4056-43fc-951f-589a64de6f9f.png'
   },
   {
     icon: '🍞',
@@ -35,7 +35,7 @@ const products: Product[] = [
     description: 'Essential tools to elevate your bread-baking game.',
     coupon: 'Code BAKINGGREATBREAD10',
     url: 'https://example.com/modkitchn-kit',
-    image: '/lovable-uploads/6f937c37-592f-4516-8414-a82a3c9dc838.png'
+    image: '/lovable-uploads/42fff4a1-254b-430a-a0aa-87933904ca43.png'
   },
   {
     icon: '🔥',
@@ -43,7 +43,7 @@ const products: Product[] = [
     description: 'Perfectly bake artisan loaves with even heat.',
     coupon: 'none',
     url: 'https://example.com/challenger-pan',
-    image: '/lovable-uploads/720e215c-73f1-4bb7-891c-c2fa41588f09.png'
+    image: '/lovable-uploads/43f2f3c6-9f65-4f67-919d-706560f7ddfc.png'
   },
   {
     icon: '🔨',
@@ -51,7 +51,7 @@ const products: Product[] = [
     description: 'Precision scoring tool for beautiful ear-forming designs.',
     coupon: 'none',
     url: 'https://example.com/wire-monkey-lame',
-    image: '/lovable-uploads/76e9c007-a2f2-4cab-af0c-d85d24bc619d.png'
+    image: '/lovable-uploads/8d24dc9f-ff7c-4187-a585-dcef056c2317.png'
   },
   {
     icon: '🪵',
@@ -59,7 +59,7 @@ const products: Product[] = [
     description: 'Hand-carved bowls perfect for proofing and serving.',
     coupon: 'Code BREAD',
     url: 'https://example.com/holland-bowls',
-    image: '/lovable-uploads/83cde278-edfc-4a30-98f4-79f37c79346e.png'
+    image: '/lovable-uploads/d7d9aabf-6578-4161-8a58-e01cac43a3e2.png'
   },
   {
     icon: '🛏️',
@@ -67,23 +67,23 @@ const products: Product[] = [
     description: 'Creates a warm, humid home for perfect dough proofs.',
     coupon: 'none',
     url: 'https://example.com/sourhouse-dough-bed',
-    image: '/lovable-uploads/87e73552-babd-4f00-b0e5-cc0a7f23e155.png'
+    image: '/lovable-uploads/8c468b20-a99a-4585-ac57-5f00763c34be.png'
   },
   {
     icon: '🌡️',
-    name: 'Brod & Taylor Sourdough Home Proofer',
+    name: 'Brød & Taylor Sourdough Home',
     description: 'Precise temperature & humidity control for reliable proofs.',
     coupon: 'none',
     url: 'https://example.com/brodtaylor-proofer',
-    image: '/lovable-uploads/901585f4-68ad-4944-ac87-dae24175df7d.png'
+    image: '/lovable-uploads/d5f6cf60-2b45-421d-852b-81cfd14d5725.png'
   },
   {
     icon: '🍲',
-    name: 'Slow Cooker',
+    name: 'The Brød and Taylor Proofer and Slow Cook',
     description: 'Versatile cooker—perfect for steam-proofing dough or one-pot meals.',
     coupon: 'none',
     url: 'https://example.com/slow-cooker',
-    image: '/lovable-uploads/9087fac4-9b4e-4823-928d-1d6231bbe8b7.png'
+    image: '/lovable-uploads/f9b89cbe-2ee9-441d-afbc-85a25c35ea7e.png'
   }
 ];
 
