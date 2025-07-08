@@ -28,6 +28,12 @@ import OfflineFallback from "./pages/OfflineFallback";
 import CrustAndCrumb from "./pages/CrustAndCrumb";
 import NotFound from "./pages/NotFound";
 
+// Feed redirect component
+const FeedRedirect = () => {
+  window.location.href = 'https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/rss-feed';
+  return <div>Redirecting to RSS feed...</div>;
+};
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -60,6 +66,7 @@ const App = () => {
               <Route path="/troubleshooting" element={<TroubleshootingPage />} />
               <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
               <Route path="/r/:slug" element={<PublicRecipe />} />
+              <Route path="/feed.xml" element={<FeedRedirect />} />
               <Route path="/offline" element={<OfflineFallback />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import BlogPostSEO from './BlogPostSEO';
 import BlogPostMeta from './BlogPostMeta';
 import CommentsSystem from './CommentsSystem';
+import SocialShare from './SocialShare';
+import NewsletterSignup from '../NewsletterSignup';
 import { BlogPost } from '@/utils/blogFetcher';
 
 interface BlogPostViewProps {
@@ -16,6 +18,9 @@ interface BlogPostViewProps {
 export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostViewProps) => {
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState(true);
+  
+  // Generate canonical URL for the post
+  const canonicalUrl = post.link;
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -110,8 +115,15 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
             )}
           </div>
 
-          {/* Original Link */}
+          {/* Social Sharing */}
           <div className="border-t pt-6 mb-8">
+            <SocialShare
+              url={canonicalUrl || post.link}
+              title={post.title}
+              description={post.excerpt}
+              image={post.image}
+              className="mb-4"
+            />
             <a
               href={post.link}
               target="_blank"
@@ -139,6 +151,11 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
                 </p>
               </div>
             </div>
+          </div>
+
+          {/* Newsletter Signup */}
+          <div className="mb-8">
+            <NewsletterSignup />
           </div>
 
           {/* Comments */}

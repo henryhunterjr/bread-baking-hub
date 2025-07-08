@@ -10,6 +10,7 @@ import TagFilter from '../components/blog/TagFilter';
 import ErrorBoundary from '../components/ErrorBoundary';
 import OfflineBanner from '../components/OfflineBanner';
 import ProgressiveLoading from '../components/blog/ProgressiveLoading';
+import RSSFeedLink from '../components/blog/RSSFeedLink';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowRight, Search } from 'lucide-react';
@@ -132,6 +133,9 @@ const Blog = () => {
         {/* RSS Feed Link */}
         <link rel="alternate" type="application/rss+xml" title="Baking Great Bread RSS Feed" href="https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/rss-feed" />
         
+        {/* JSON Feed Link */}
+        <link rel="alternate" type="application/feed+json" title="Baking Great Bread JSON Feed" href="https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/rss-feed?format=json" />
+        
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -252,6 +256,11 @@ const Blog = () => {
             </ErrorBoundary>
             
             <div className="max-w-7xl mx-auto">
+              {/* RSS Feed Link */}
+              <div className="mb-8">
+                <RSSFeedLink className="max-w-sm mx-auto" />
+              </div>
+
               {/* Newsletter Signup */}
               <div className="mt-20">
                 <NewsletterSignup />

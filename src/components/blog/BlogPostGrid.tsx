@@ -4,6 +4,7 @@ import { trackBlogClick } from '@/utils/blogTracking';
 import BlogPostSkeleton from './BlogPostSkeleton';
 import BlogPostMeta from './BlogPostMeta';
 import BlogPostSEO from './BlogPostSEO';
+import SocialShare from './SocialShare';
 
 interface BlogPostGridProps {
   posts: BlogPost[];
@@ -87,16 +88,26 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, cat
               
               <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
               
-              <a 
-                href={post.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => handlePostClick(post)}
-                className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors group-hover:underline"
-              >
-                Read More
-                <ArrowRight className="ml-1 w-4 h-4" />
-              </a>
+              <div className="flex items-center justify-between">
+                <a 
+                  href={post.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => handlePostClick(post)}
+                  className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors group-hover:underline"
+                >
+                  Read More
+                  <ArrowRight className="ml-1 w-4 h-4" />
+                </a>
+                
+                <SocialShare
+                  url={post.link}
+                  title={post.title}
+                  description={post.excerpt}
+                  image={post.image}
+                  compact={true}
+                />
+              </div>
             </div>
           </article>
         ))
