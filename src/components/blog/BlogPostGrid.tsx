@@ -1,0 +1,79 @@
+import { ArrowRight } from 'lucide-react';
+import { BlogPost } from '@/utils/blogFetcher';
+import BlogPostSkeleton from './BlogPostSkeleton';
+
+interface BlogPostGridProps {
+  posts: BlogPost[];
+  loading: boolean;
+  skeletonCount?: number;
+  selectedCategory?: number;
+}
+
+const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory }: BlogPostGridProps) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {loading ? (
+        Array.from({ length: skeletonCount }).map((_, index) => (
+          <BlogPostSkeleton key={index} />
+        ))
+      ) : posts.length === 0 ? (
+        <div className="col-span-full text-center py-12">
+          <p className="text-muted-foreground text-lg">
+            No blog posts found{selectedCategory ? ' in this category' : ''}.
+          </p>
+        </div>
+      ) : (
+        posts.map((post) => (
+          <article key={post.id} className="bg-card rounded-xl overflow-hidden shadow-stone hover:shadow-warm transition-all duration-300 group">
+            <div className="relative overflow-hidden">
+              {post.image ? (
+                <img 
+                  src={post.image} 
+                  alt={post.imageAlt || `Featured image for ${post.title}`}
+                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                  width={400}
+                  height={192}
+                  loading="lazy"
+                  decoding="async"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    if (target.nextElementSibling) {
+                      (target.nextElementSibling as HTMLElement).style.display = 'flex';
+                    }
+                  }}
+                />
+              ) : null}
+              <div 
+                className={`w-full h-48 bg-muted flex items-center justify-center ${post.image ? 'hidden' : ''}`}
+              >
+                <span className="text-muted-foreground">No Image</span>
+              </div>
+              <div className="absolute top-4 right-4 bg-black/70 text-foreground px-2 py-1 rounded text-sm">
+                {post.readTime}
+              </div>
+            </div>
+            <div className="p-6 space-y-4">
+              <div className="text-primary text-sm font-medium">{post.date}</div>
+              <h3 className="text-xl font-bold text-card-foreground line-clamp-2 group-hover:text-primary transition-colors">
+                {post.title}
+              </h3>
+              <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
+              <a 
+                href={post.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors group-hover:underline"
+              >
+                Read More
+                <ArrowRight className="ml-1 w-4 h-4" />
+              </a>
+            </div>
+          </article>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default BlogPostGrid;
