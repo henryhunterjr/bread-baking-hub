@@ -45,7 +45,7 @@ interface FetchPostsResponse {
   currentPage: number;
 }
 
-const API_BASE = 'https://bakinggreatbread.blog/wp-json/wp/v2';
+const BLOG_PROXY_URL = 'https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/blog-proxy';
 
 // Strip HTML tags and limit to specified word count
 export const stripHtml = (html: string, wordLimit: number = 20): string => {
@@ -74,30 +74,30 @@ export const fetchBlogPosts = async (
   perPage: number = 6
 ): Promise<FetchPostsResponse> => {
   try {
-    let url = `${API_BASE}/posts?_embed&page=${page}&per_page=${perPage}`;
+    let url = `${BLOG_PROXY_URL}?endpoint=posts&page=${page}&per_page=${perPage}`;
     
     if (categoryId) {
       url += `&categories=${categoryId}`;
     }
     
-    console.log('Fetching blog posts from:', url);
+    console.log('Fetching blog posts via proxy:', url);
     
     const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-      },
-      mode: 'cors'
+      }
     });
     
     if (!response.ok) {
-      console.error('HTTP error:', response.status, response.statusText);
+      console.error('Proxy HTTP error:', response.status, response.statusText);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
-    const posts: WordPressPost[] = await response.json();
-    const totalPages = parseInt(response.headers.get('X-WP-TotalPages') || '1');
+    const result = await response.json();
+    const posts: WordPressPost[] = result.data;
+    const totalPages = result.totalPages;
     
     const transformedPosts: BlogPost[] = posts.map(post => ({
       id: post.id,
@@ -129,23 +129,24 @@ export const fetchBlogPosts = async (
 // Fetch categories
 export const fetchCategories = async (): Promise<WordPressCategory[]> => {
   try {
-    console.log('Fetching categories from:', `${API_BASE}/categories?per_page=100`);
+    const url = `${BLOG_PROXY_URL}?endpoint=categories`;
+    console.log('Fetching categories via proxy:', url);
     
-    const response = await fetch(`${API_BASE}/categories?per_page=100`, {
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-      },
-      mode: 'cors'
+      }
     });
     
     if (!response.ok) {
-      console.error('Categories HTTP error:', response.status, response.statusText);
+      console.error('Categories proxy HTTP error:', response.status, response.statusText);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
-    const categories: WordPressCategory[] = await response.json();
+    const result = await response.json();
+    const categories: WordPressCategory[] = result.data;
     return categories.filter(cat => cat.count > 0); // Only show categories with posts
   } catch (error) {
     console.error('Error fetching categories:', error);
