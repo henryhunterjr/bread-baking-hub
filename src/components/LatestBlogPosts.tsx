@@ -5,11 +5,14 @@ import NewsletterSignup from './NewsletterSignup';
 import CategoryFilter from './blog/CategoryFilter';
 import BlogPostGrid from './blog/BlogPostGrid';
 import BlogPagination from './blog/BlogPagination';
+import TagFilter from './blog/TagFilter';
 
 const LatestBlogPosts = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
   const [categories, setCategories] = useState<WordPressCategory[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -56,9 +59,26 @@ const LatestBlogPosts = () => {
     loadPosts();
   }, [currentPage, selectedCategory]);
 
+  // Filter posts by tags
+  useEffect(() => {
+    if (selectedTags.length === 0) {
+      setFilteredPosts(posts);
+    } else {
+      const filtered = posts.filter(post => 
+        selectedTags.every(tag => post.tags.includes(tag))
+      );
+      setFilteredPosts(filtered);
+    }
+  }, [posts, selectedTags]);
+
   const handleCategoryChange = (categoryId: number | undefined) => {
     setSelectedCategory(categoryId);
     setCurrentPage(1); // Reset to first page when filtering
+    setSelectedTags([]); // Clear tag filters when changing category
+  };
+
+  const handleTagChange = (tags: string[]) => {
+    setSelectedTags(tags);
   };
 
   const handlePageChange = (page: number) => {
@@ -86,6 +106,14 @@ const LatestBlogPosts = () => {
           onCategoryChange={handleCategoryChange}
         />
 
+        {/* Tag Filter */}
+        <TagFilter
+          posts={posts}
+          selectedTags={selectedTags}
+          onTagChange={handleTagChange}
+          className="mb-8"
+        />
+
         {/* Error State */}
         {error && (
           <div className="text-center py-8">
@@ -97,7 +125,7 @@ const LatestBlogPosts = () => {
         )}
 
         <BlogPostGrid
-          posts={posts}
+          posts={filteredPosts}
           loading={loading}
           skeletonCount={6}
           selectedCategory={selectedCategory}

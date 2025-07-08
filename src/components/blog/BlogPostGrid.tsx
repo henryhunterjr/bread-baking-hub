@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react';
 import { BlogPost } from '@/utils/blogFetcher';
 import { trackBlogClick } from '@/utils/blogTracking';
 import BlogPostSkeleton from './BlogPostSkeleton';
+import BlogPostMeta from './BlogPostMeta';
 
 interface BlogPostGridProps {
   posts: BlogPost[];
@@ -69,11 +70,20 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, cat
               </div>
             </div>
             <div className="p-6 space-y-4">
-              <div className="text-primary text-sm font-medium">{post.date}</div>
               <h3 className="text-xl font-bold text-card-foreground line-clamp-2 group-hover:text-primary transition-colors">
                 {post.title}
               </h3>
+              
+              <BlogPostMeta 
+                post={post} 
+                showTags={true}
+                showAuthor={true}
+                showFreshness={true}
+                compact={true}
+              />
+              
               <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
+              
               <a 
                 href={post.link}
                 target="_blank"
