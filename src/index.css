@@ -8,34 +8,34 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Warm bread theme with golden/amber accents */
+    /* Warm bread theme with muted earth tones from user palette */
     --background: 0 0% 100%;
-    --foreground: 20 14.3% 4.1%;
+    --foreground: 21 20% 14%;
 
     --card: 0 0% 100%;
-    --card-foreground: 20 14.3% 4.1%;
+    --card-foreground: 21 20% 14%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 20 14.3% 4.1%;
+    --popover-foreground: 21 20% 14%;
 
-    --primary: 33 89% 52%;
-    --primary-foreground: 60 9.1% 97.8%;
+    --primary: 25 28% 47%;
+    --primary-foreground: 32 42% 95%;
 
-    --secondary: 60 4.8% 95.9%;
-    --secondary-foreground: 24 9.8% 10%;
+    --secondary: 32 42% 81%;
+    --secondary-foreground: 21 20% 14%;
 
-    --muted: 60 4.8% 95.9%;
-    --muted-foreground: 25 5.3% 44.7%;
+    --muted: 32 42% 81%;
+    --muted-foreground: 25 28% 47%;
 
-    --accent: 36 77% 49%;
-    --accent-foreground: 24 9.8% 10%;
+    --accent: 42 100% 50%;
+    --accent-foreground: 21 20% 14%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;
 
-    --border: 20 5.9% 90%;
-    --input: 20 5.9% 90%;
-    --ring: 33 89% 52%;
+    --border: 32 42% 90%;
+    --input: 32 42% 90%;
+    --ring: 25 28% 47%;
 
     --radius: 0.75rem;
 
@@ -62,16 +62,16 @@ All colors MUST be HSL.
     --platinum-200: 220 3% 85%;
     --platinum-100: 220 2% 95%;
 
-    /* Amber colors for warm bread theme */
-    --amber-600: 33 89% 52%;
-    --amber-500: 36 77% 49%;
-    --amber-400: 38 70% 55%;
-    --amber-300: 40 65% 60%;
-    --amber-200: 43 60% 85%;
+    /* Muted earth tone colors matching user palette */
+    --amber-600: 25 28% 47%;
+    --amber-500: 32 42% 60%;
+    --amber-400: 32 42% 70%;
+    --amber-300: 32 42% 81%;
+    --amber-200: 32 42% 90%;
 
-    /* Warm bread gradients with golden/amber tones */
+    /* Warm bread gradients with muted earth tones */
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-    --gradient-amber: linear-gradient(135deg, hsl(var(--amber-600)), hsl(var(--amber-500)));
+    --gradient-amber: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
     --gradient-warm: linear-gradient(180deg, hsl(var(--secondary)), hsl(var(--muted)));
     
     /* Panthers colors for Crust & Crumb page only */
@@ -79,7 +79,7 @@ All colors MUST be HSL.
     --gradient-platinum: linear-gradient(180deg, hsl(var(--platinum-100)), hsl(var(--platinum-200)));
     --gradient-electric: linear-gradient(45deg, hsl(var(--panthers-blue-400)), hsl(var(--panthers-blue-500)), hsl(var(--panthers-blue-600)));
 
-    /* Warm shadows with golden tones */
+    /* Warm shadows with muted tones */
     --shadow-warm: 0 10px 30px -10px hsl(var(--primary) / 0.3);
     --shadow-stone: 0 10px 30px -10px hsl(var(--muted-foreground) / 0.2);
     
@@ -92,17 +92,17 @@ All colors MUST be HSL.
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-electric: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
-    /* Header specific tokens */
-    --header-background: 24 9.8% 10%;   /* Dark background */
-    --header-foreground: 60 9.1% 97.8%; /* Light text */
+    /* Header specific tokens using muted earth tones */
+    --header-background: 21 20% 14%;
+    --header-foreground: 32 42% 95%;
     
     /* Section backgrounds */
-    --section-background: 0 0% 100%;        /* Pure white */
-    --section-secondary: 60 4.8% 95.9%;     /* Original muted background */
+    --section-background: 0 0% 100%;
+    --section-secondary: 32 42% 81%;
     
     /* Content overlays */
-    --overlay-dark: 20 14.3% 4.1% / 0.8;    /* Original dark with opacity */
-    --overlay-darker: 20 14.3% 4.1% / 0.9;  /* Darker overlay */
+    --overlay-dark: 21 20% 14% / 0.8;
+    --overlay-darker: 21 20% 14% / 0.9;
 
     /* Mobile spacing tokens */
     --spacing-mobile-touch: 44px;      
@@ -124,51 +124,51 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Original dark mode */
-    --background: 20 14.3% 4.1%;
-    --foreground: 60 9.1% 97.8%;
+    /* Dark mode using muted earth tones */
+    --background: 21 20% 14%;
+    --foreground: 32 42% 95%;
 
-    --card: 20 14.3% 4.1%;
-    --card-foreground: 60 9.1% 97.8%;
+    --card: 21 20% 14%;
+    --card-foreground: 32 42% 95%;
 
-    --popover: 20 14.3% 4.1%;
-    --popover-foreground: 60 9.1% 97.8%;
+    --popover: 21 20% 14%;
+    --popover-foreground: 32 42% 95%;
 
-    --primary: 60 9.1% 97.8%;
-    --primary-foreground: 20 14.3% 4.1%;
+    --primary: 32 42% 95%;
+    --primary-foreground: 21 20% 14%;
 
-    --secondary: 12 6.5% 15.1%;
-    --secondary-foreground: 60 9.1% 97.8%;
+    --secondary: 25 28% 22%;
+    --secondary-foreground: 32 42% 95%;
 
-    --muted: 12 6.5% 15.1%;
-    --muted-foreground: 24 5.4% 63.9%;
+    --muted: 25 28% 22%;
+    --muted-foreground: 32 42% 70%;
 
-    --accent: 12 6.5% 15.1%;
-    --accent-foreground: 60 9.1% 97.8%;
+    --accent: 25 28% 22%;
+    --accent-foreground: 32 42% 95%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 60 9.1% 97.8%;
+    --destructive-foreground: 32 42% 95%;
 
-    --border: 12 6.5% 15.1%;
-    --input: 12 6.5% 15.1%;
-    --ring: 24 5.7% 82.9%;
+    --border: 25 28% 22%;
+    --input: 25 28% 22%;
+    --ring: 32 42% 70%;
     
-    --sidebar-background: 20 14.3% 4.1%;
-    --sidebar-foreground: 60 9.1% 97.8%;
-    --sidebar-primary: 60 9.1% 97.8%;
-    --sidebar-primary-foreground: 20 14.3% 4.1%;
-    --sidebar-accent: 12 6.5% 15.1%;
-    --sidebar-accent-foreground: 60 9.1% 97.8%;
-    --sidebar-border: 12 6.5% 15.1%;
-    --sidebar-ring: 24 5.7% 82.9%;
+    --sidebar-background: 21 20% 14%;
+    --sidebar-foreground: 32 42% 95%;
+    --sidebar-primary: 32 42% 95%;
+    --sidebar-primary-foreground: 21 20% 14%;
+    --sidebar-accent: 25 28% 22%;
+    --sidebar-accent-foreground: 32 42% 95%;
+    --sidebar-border: 25 28% 22%;
+    --sidebar-ring: 32 42% 70%;
     
     /* Header tokens for dark mode */
-    --header-background: 20 14.3% 4.1%;
-    --header-foreground: 60 9.1% 97.8%;
+    --header-background: 21 20% 14%;
+    --header-foreground: 32 42% 95%;
     
     /* Section backgrounds for dark mode */
-    --section-background: 20 14.3% 4.1%;
-    --section-secondary: 12 6.5% 15.1%;
+    --section-background: 21 20% 14%;
+    --section-secondary: 25 28% 22%;
     
     /* Warning colors for dark mode */
     --warning: 34 89% 73%;
