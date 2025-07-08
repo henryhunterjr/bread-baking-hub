@@ -8,27 +8,27 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Dark bread theme with golden accents - matching reference images */
-    --background: 21 20% 14%;
+    /* Dark charcoal theme with warm brown accents - matching reference image */
+    --background: 210 15% 15%;
     --foreground: 32 42% 95%;
 
-    --card: 21 20% 14%;
+    --card: 210 15% 15%;
     --card-foreground: 32 42% 95%;
 
-    --popover: 21 20% 14%;
+    --popover: 210 15% 15%;
     --popover-foreground: 32 42% 95%;
 
-    --primary: 42 100% 50%;
-    --primary-foreground: 21 20% 14%;
+    --primary: 25 35% 55%;
+    --primary-foreground: 32 42% 95%;
 
-    --secondary: 25 28% 22%;
+    --secondary: 25 25% 30%;
     --secondary-foreground: 32 42% 95%;
 
-    --muted: 25 28% 22%;
+    --muted: 25 25% 30%;
     --muted-foreground: 32 42% 70%;
 
-    --accent: 42 100% 50%;
-    --accent-foreground: 21 20% 14%;
+    --accent: 25 35% 55%;
+    --accent-foreground: 32 42% 95%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 32 42% 95%;
