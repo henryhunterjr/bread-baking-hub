@@ -38,7 +38,9 @@ const LatestBlogPosts = () => {
       try {
         setLoading(true);
         setError(null);
+        console.log('Loading blog posts for homepage...', { currentPage, selectedCategory });
         const response: FetchPostsResponse = await fetchBlogPosts(currentPage, selectedCategory, 6);
+        console.log('Blog posts loaded successfully:', response);
         setPosts(response.posts);
         setTotalPages(response.totalPages);
       } catch (err) {

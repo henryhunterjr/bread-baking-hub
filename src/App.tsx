@@ -14,6 +14,7 @@ import RecipeWorkspace from "./pages/RecipeWorkspace";
 import Auth from "./pages/Auth";
 import MyRecipes from "./pages/MyRecipes";
 import About from "./pages/About";
+import Blog from "./pages/Blog";
 import Books from "./pages/Books";
 import Recipes from "./pages/Recipes";
 import VitaleStarter from "./pages/VitaleStarter";
@@ -47,6 +48,7 @@ const App = () => {
               <Route path="/recipe-workspace" element={<RecipeWorkspace />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/my-recipes" element={<MyRecipes />} />
+              <Route path="/blog" element={<Blog />} />
               <Route path="/about" element={<About />} />
               <Route path="/books" element={<Books />} />
               <Route path="/recipes" element={<Recipes />} />
