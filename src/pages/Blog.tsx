@@ -3,12 +3,15 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import NewsletterSignup from '../components/NewsletterSignup';
+import CategoryFilter from '../components/blog/CategoryFilter';
+import BlogPostGrid from '../components/blog/BlogPostGrid';
+import BlogPagination from '../components/blog/BlogPagination';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowRight, ChevronLeft, ChevronRight, Filter, Search } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
 import { fetchBlogPosts, fetchCategories, BlogPost, WordPressCategory, FetchPostsResponse } from '@/utils/blogFetcher';
 import { useDebounce } from '@/hooks/useDebounce';
+import { generateBlogListingSchema } from '@/utils/structuredData';
 
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -76,17 +79,6 @@ const Blog = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const BlogPostSkeleton = () => (
-    <div className="bg-card rounded-xl overflow-hidden shadow-stone">
-      <Skeleton className="w-full h-48" />
-      <div className="p-6 space-y-4">
-        <Skeleton className="h-4 w-24" />
-        <Skeleton className="h-6 w-full" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-32" />
-      </div>
-    </div>
-  );
 
   return (
     <>
@@ -94,6 +86,30 @@ const Blog = () => {
         <title>Blog - Baking Great Bread</title>
         <meta name="description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog. Learn troubleshooting methods, seasonal adjustments, and the science behind perfect bread." />
         <meta name="keywords" content="bread baking blog, sourdough tips, bread troubleshooting, baking techniques, Henry's bread recipes" />
+        
+        {/* Open Graph meta tags */}
+        <meta property="og:title" content="Blog - Baking Great Bread" />
+        <meta property="og:description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog. Learn troubleshooting methods, seasonal adjustments, and the science behind perfect bread." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bakinggreatbread.blog" />
+        <meta property="og:image" content="https://bakinggreatbread.blog/wp-content/uploads/2023/blog-featured.jpg" />
+        <meta property="og:site_name" content="Baking Great Bread" />
+        
+        {/* Twitter Card meta tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Blog - Baking Great Bread" />
+        <meta name="twitter:description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog." />
+        <meta name="twitter:image" content="https://bakinggreatbread.blog/wp-content/uploads/2023/blog-featured.jpg" />
+        
+        {/* RSS Feed Link */}
+        <link rel="alternate" type="application/rss+xml" title="Baking Great Bread RSS Feed" href="https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/rss-feed" />
+        
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: generateBlogListingSchema()
+          }}
+        />
       </Helmet>
 
       <div className="bg-background text-foreground min-h-screen">
@@ -130,43 +146,14 @@ const Blog = () => {
 
               {/* Category Filter */}
               <div className="mb-12">
-                <div className="flex flex-wrap items-center gap-4 justify-center">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowFilters(!showFilters)}
-                    className="flex items-center gap-2"
-                  >
-                    <Filter className="w-4 h-4" />
-                    Filter by Category
-                  </Button>
-                  
-                  {showFilters && (
-                    <div className="flex flex-wrap gap-2">
-                      <Button
-                        variant={selectedCategory === undefined ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => handleCategoryChange(undefined)}
-                      >
-                        All Posts
-                      </Button>
-                      {categoriesLoading ? (
-                        <Skeleton className="h-8 w-24" />
-                      ) : (
-                        categories.map((category) => (
-                          <Button
-                            key={category.id}
-                            variant={selectedCategory === category.id ? "default" : "outline"}
-                            size="sm"
-                            onClick={() => handleCategoryChange(category.id)}
-                          >
-                            {category.name} ({category.count})
-                          </Button>
-                        ))
-                      )}
-                    </div>
-                  )}
-                </div>
+                <CategoryFilter
+                  categories={categories}
+                  selectedCategory={selectedCategory}
+                  showFilters={showFilters}
+                  categoriesLoading={categoriesLoading}
+                  onToggleFilters={() => setShowFilters(!showFilters)}
+                  onCategoryChange={handleCategoryChange}
+                />
               </div>
 
               {/* Error State */}
@@ -179,135 +166,20 @@ const Blog = () => {
                 </div>
               )}
 
-              {/* Posts Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {loading ? (
-                  Array.from({ length: 9 }).map((_, index) => (
-                    <BlogPostSkeleton key={index} />
-                  ))
-                ) : posts.length === 0 ? (
-                  <div className="col-span-full text-center py-12">
-                    <p className="text-muted-foreground text-lg">
-                      No blog posts found{searchQuery ? ' matching your search' : selectedCategory ? ' in this category' : ''}.
-                    </p>
-                    {searchQuery && (
-                      <Button 
-                        variant="outline" 
-                        onClick={() => handleSearchChange('')}
-                        className="mt-4"
-                      >
-                        Clear Search
-                      </Button>
-                    )}
-                  </div>
-                ) : (
-                  posts.map((post) => (
-                    <article key={post.id} className="bg-card rounded-xl overflow-hidden shadow-stone hover:shadow-warm transition-all duration-300 group">
-                      <div className="relative overflow-hidden">
-                        {post.image ? (
-                          <img 
-                            src={post.image} 
-                            alt={post.imageAlt || `Featured image for ${post.title}`}
-                            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                            width={400}
-                            height={192}
-                            loading="lazy"
-                            decoding="async"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.style.display = 'none';
-                              if (target.nextElementSibling) {
-                                (target.nextElementSibling as HTMLElement).style.display = 'flex';
-                              }
-                            }}
-                          />
-                        ) : null}
-                        <div 
-                          className={`w-full h-48 bg-muted flex items-center justify-center ${post.image ? 'hidden' : ''}`}
-                        >
-                          <span className="text-muted-foreground">No Image</span>
-                        </div>
-                        <div className="absolute top-4 right-4 bg-black/70 text-foreground px-2 py-1 rounded text-sm">
-                          {post.readTime}
-                        </div>
-                      </div>
-                      <div className="p-6 space-y-4">
-                        <div className="text-primary text-sm font-medium">{post.date}</div>
-                        <h3 className="text-xl font-bold text-card-foreground line-clamp-2 group-hover:text-primary transition-colors">
-                          {post.title}
-                        </h3>
-                        <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
-                        <a 
-                          href={post.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors group-hover:underline"
-                        >
-                          Read More
-                          <ArrowRight className="ml-1 w-4 h-4" />
-                        </a>
-                      </div>
-                    </article>
-                  ))
-                )}
-              </div>
+              <BlogPostGrid
+                posts={posts}
+                loading={loading}
+                skeletonCount={9}
+                selectedCategory={selectedCategory}
+                categories={categories}
+              />
 
-              {/* Pagination */}
-              {!loading && totalPages > 1 && (
-                <div className="flex justify-center items-center gap-4 mt-12">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="flex items-center gap-2"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                    Previous
-                  </Button>
-                  
-                  <div className="flex items-center gap-2">
-                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                      const page = i + 1;
-                      return (
-                        <Button
-                          key={page}
-                          variant={currentPage === page ? "default" : "outline"}
-                          size="sm"
-                          onClick={() => handlePageChange(page)}
-                          className="w-10"
-                        >
-                          {page}
-                        </Button>
-                      );
-                    })}
-                    {totalPages > 5 && (
-                      <>
-                        <span className="text-muted-foreground">...</span>
-                        <Button
-                          variant={currentPage === totalPages ? "default" : "outline"}
-                          size="sm"
-                          onClick={() => handlePageChange(totalPages)}
-                          className="w-10"
-                        >
-                          {totalPages}
-                        </Button>
-                      </>
-                    )}
-                  </div>
-
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="flex items-center gap-2"
-                  >
-                    Next
-                    <ChevronRight className="w-4 h-4" />
-                  </Button>
-                </div>
-              )}
+              <BlogPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                loading={loading}
+                onPageChange={handlePageChange}
+              />
               
               {/* Newsletter Signup */}
               <div className="mt-20">

@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_clicks: {
+        Row: {
+          category_names: string[] | null
+          clicked_at: string
+          created_at: string
+          id: string
+          post_id: string
+          post_title: string
+          post_url: string
+          referrer_page: string | null
+          user_id: string | null
+        }
+        Insert: {
+          category_names?: string[] | null
+          clicked_at?: string
+          created_at?: string
+          id?: string
+          post_id: string
+          post_title: string
+          post_url: string
+          referrer_page?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          category_names?: string[] | null
+          clicked_at?: string
+          created_at?: string
+          id?: string
+          post_id?: string
+          post_title?: string
+          post_url?: string
+          referrer_page?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       manuscripts: {
         Row: {
           content: string

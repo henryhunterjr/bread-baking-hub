@@ -101,6 +101,7 @@ const LatestBlogPosts = () => {
           loading={loading}
           skeletonCount={6}
           selectedCategory={selectedCategory}
+          categories={categories}
         />
 
         <BlogPagination

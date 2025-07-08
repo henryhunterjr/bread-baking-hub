@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { BlogPost } from '@/utils/blogFetcher';
+import { trackBlogClick } from '@/utils/blogTracking';
 import BlogPostSkeleton from './BlogPostSkeleton';
 
 interface BlogPostGridProps {
@@ -7,9 +8,23 @@ interface BlogPostGridProps {
   loading: boolean;
   skeletonCount?: number;
   selectedCategory?: number;
+  categories?: Array<{ id: number; name: string }>;
 }
 
-const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory }: BlogPostGridProps) => {
+const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, categories = [] }: BlogPostGridProps) => {
+  const handlePostClick = (post: BlogPost) => {
+    // Get category names for this post
+    const postCategoryNames = post.categories
+      .map(catId => categories.find(cat => cat.id === catId)?.name)
+      .filter(Boolean) as string[];
+
+    trackBlogClick({
+      post_id: post.id.toString(),
+      post_title: post.title,
+      post_url: post.link,
+      category_names: postCategoryNames
+    });
+  };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {loading ? (
@@ -63,6 +78,7 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory }: B
                 href={post.link}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => handlePostClick(post)}
                 className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors group-hover:underline"
               >
                 Read More
