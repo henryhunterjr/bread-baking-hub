@@ -18,7 +18,7 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
 
-    --primary: 25 95% 53%;
+    --primary: 33 89% 52%;
     --primary-foreground: 60 9.1% 97.8%;
 
     --secondary: 60 4.8% 95.9%;
@@ -27,7 +27,7 @@ All colors MUST be HSL.
     --muted: 60 4.8% 95.9%;
     --muted-foreground: 25 5.3% 44.7%;
 
-    --accent: 35 91% 65%;
+    --accent: 36 77% 49%;
     --accent-foreground: 24 9.8% 10%;
 
     --destructive: 0 84.2% 60.2%;
@@ -35,7 +35,7 @@ All colors MUST be HSL.
 
     --border: 20 5.9% 90%;
     --input: 20 5.9% 90%;
-    --ring: 25 95% 53%;
+    --ring: 33 89% 52%;
 
     --radius: 0.75rem;
 
@@ -63,11 +63,11 @@ All colors MUST be HSL.
     --platinum-100: 220 2% 95%;
 
     /* Amber colors for warm bread theme */
-    --amber-600: 25 95% 53%;
-    --amber-500: 35 91% 65%;
-    --amber-400: 38 92% 70%;
-    --amber-300: 40 96% 74%;
-    --amber-200: 43 96% 90%;
+    --amber-600: 33 89% 52%;
+    --amber-500: 36 77% 49%;
+    --amber-400: 38 70% 55%;
+    --amber-300: 40 65% 60%;
+    --amber-200: 43 60% 85%;
 
     /* Warm bread gradients with golden/amber tones */
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
