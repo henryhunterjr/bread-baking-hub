@@ -15,6 +15,7 @@ import Auth from "./pages/Auth";
 import MyRecipes from "./pages/MyRecipes";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import Books from "./pages/Books";
 import Recipes from "./pages/Recipes";
 import VitaleStarter from "./pages/VitaleStarter";
@@ -55,6 +56,7 @@ const App = () => {
               <Route path="/auth" element={<Auth />} />
               <Route path="/my-recipes" element={<MyRecipes />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/about" element={<About />} />
               <Route path="/books" element={<Books />} />
               <Route path="/recipes" element={<Recipes />} />

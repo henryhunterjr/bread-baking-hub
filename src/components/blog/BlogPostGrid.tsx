@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { BlogPost } from '@/utils/blogFetcher';
 import { trackBlogClick } from '@/utils/blogTracking';
 import BlogPostSkeleton from './BlogPostSkeleton';
@@ -29,6 +30,12 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, cat
       category_names: postCategoryNames
     });
   };
+
+  const getPostSlug = (post: BlogPost) => {
+    // Extract slug from WordPress URL
+    const urlParts = post.link.split('/');
+    return urlParts[urlParts.length - 2] || urlParts[urlParts.length - 1];
+  };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {loading ? (
@@ -45,38 +52,50 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, cat
         posts.map((post) => (
           <article key={post.id} className="bg-card rounded-xl overflow-hidden shadow-stone hover:shadow-warm transition-all duration-300 group">
             {enableSEO && <BlogPostSEO post={post} />}
-            <div className="relative overflow-hidden">
-              {post.image ? (
-                <img 
-                  src={post.image} 
-                  alt={post.imageAlt || `Featured image for ${post.title}`}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  width={400}
-                  height={192}
-                  loading="lazy"
-                  decoding="async"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    if (target.nextElementSibling) {
-                      (target.nextElementSibling as HTMLElement).style.display = 'flex';
-                    }
-                  }}
-                />
-              ) : null}
-              <div 
-                className={`w-full h-48 bg-muted flex items-center justify-center ${post.image ? 'hidden' : ''}`}
-              >
-                <span className="text-muted-foreground">No Image</span>
+            <Link 
+              to={`/blog/${getPostSlug(post)}`}
+              onClick={() => handlePostClick(post)}
+              className="block"
+            >
+              <div className="relative overflow-hidden">
+                {post.image ? (
+                  <img 
+                    src={post.image} 
+                    alt={post.imageAlt || `Featured image for ${post.title}`}
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    width={400}
+                    height={192}
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      if (target.nextElementSibling) {
+                        (target.nextElementSibling as HTMLElement).style.display = 'flex';
+                      }
+                    }}
+                  />
+                ) : null}
+                <div 
+                  className={`w-full h-48 bg-muted flex items-center justify-center ${post.image ? 'hidden' : ''}`}
+                >
+                  <span className="text-muted-foreground">No Image</span>
+                </div>
+                <div className="absolute top-4 right-4 bg-black/70 text-foreground px-2 py-1 rounded text-sm">
+                  {post.readTime}
+                </div>
               </div>
-              <div className="absolute top-4 right-4 bg-black/70 text-foreground px-2 py-1 rounded text-sm">
-                {post.readTime}
-              </div>
-            </div>
+            </Link>
             <div className="p-6 space-y-4">
-              <h3 className="text-xl font-bold text-card-foreground line-clamp-2 group-hover:text-primary transition-colors">
-                {post.title}
-              </h3>
+              <Link 
+                to={`/blog/${getPostSlug(post)}`}
+                onClick={() => handlePostClick(post)}
+                className="block"
+              >
+                <h3 className="text-xl font-bold text-card-foreground line-clamp-2 group-hover:text-primary transition-colors">
+                  {post.title}
+                </h3>
+              </Link>
               
               <BlogPostMeta 
                 post={post} 
@@ -89,16 +108,14 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, cat
               <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
               
               <div className="flex items-center justify-between">
-                <a 
-                  href={post.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link 
+                  to={`/blog/${getPostSlug(post)}`}
                   onClick={() => handlePostClick(post)}
                   className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors group-hover:underline"
                 >
                   Read More
                   <ArrowRight className="ml-1 w-4 h-4" />
-                </a>
+                </Link>
                 
                 <SocialShare
                   url={post.link}
