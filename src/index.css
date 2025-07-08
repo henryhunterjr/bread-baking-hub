@@ -8,34 +8,34 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Warm bread theme with muted earth tones from user palette */
-    --background: 0 0% 100%;
-    --foreground: 21 20% 14%;
+    /* Dark bread theme with golden accents - matching reference images */
+    --background: 21 20% 14%;
+    --foreground: 32 42% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 21 20% 14%;
+    --card: 21 20% 14%;
+    --card-foreground: 32 42% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 21 20% 14%;
+    --popover: 21 20% 14%;
+    --popover-foreground: 32 42% 95%;
 
-    --primary: 25 28% 47%;
-    --primary-foreground: 32 42% 95%;
+    --primary: 42 100% 50%;
+    --primary-foreground: 21 20% 14%;
 
-    --secondary: 32 42% 81%;
-    --secondary-foreground: 21 20% 14%;
+    --secondary: 25 28% 22%;
+    --secondary-foreground: 32 42% 95%;
 
-    --muted: 32 42% 81%;
-    --muted-foreground: 25 28% 47%;
+    --muted: 25 28% 22%;
+    --muted-foreground: 32 42% 70%;
 
     --accent: 42 100% 50%;
     --accent-foreground: 21 20% 14%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 60 9.1% 97.8%;
+    --destructive-foreground: 32 42% 95%;
 
-    --border: 32 42% 90%;
-    --input: 32 42% 90%;
-    --ring: 25 28% 47%;
+    --border: 25 28% 22%;
+    --input: 25 28% 22%;
+    --ring: 42 100% 50%;
 
     --radius: 0.75rem;
 
