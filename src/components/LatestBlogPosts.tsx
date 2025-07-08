@@ -157,15 +157,26 @@ const LatestBlogPosts = () => {
                   {post.image ? (
                     <img 
                       src={post.image} 
-                      alt={post.imageAlt}
+                      alt={post.imageAlt || `Featured image for ${post.title}`}
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      width={400}
+                      height={192}
                       loading="lazy"
+                      decoding="async"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        if (target.nextElementSibling) {
+                          (target.nextElementSibling as HTMLElement).style.display = 'flex';
+                        }
+                      }}
                     />
-                  ) : (
-                    <div className="w-full h-48 bg-muted flex items-center justify-center">
-                      <span className="text-muted-foreground">No Image</span>
-                    </div>
-                  )}
+                  ) : null}
+                  <div 
+                    className={`w-full h-48 bg-muted flex items-center justify-center ${post.image ? 'hidden' : ''}`}
+                  >
+                    <span className="text-muted-foreground">No Image</span>
+                  </div>
                   <div className="absolute top-4 right-4 bg-black/70 text-foreground px-2 py-1 rounded text-sm">
                     {post.readTime}
                   </div>
