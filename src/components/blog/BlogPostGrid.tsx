@@ -3,6 +3,7 @@ import { BlogPost } from '@/utils/blogFetcher';
 import { trackBlogClick } from '@/utils/blogTracking';
 import BlogPostSkeleton from './BlogPostSkeleton';
 import BlogPostMeta from './BlogPostMeta';
+import BlogPostSEO from './BlogPostSEO';
 
 interface BlogPostGridProps {
   posts: BlogPost[];
@@ -10,9 +11,10 @@ interface BlogPostGridProps {
   skeletonCount?: number;
   selectedCategory?: number;
   categories?: Array<{ id: number; name: string }>;
+  enableSEO?: boolean;
 }
 
-const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, categories = [] }: BlogPostGridProps) => {
+const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, categories = [], enableSEO = false }: BlogPostGridProps) => {
   const handlePostClick = (post: BlogPost) => {
     // Get category names for this post
     const postCategoryNames = post.categories
@@ -41,6 +43,7 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, cat
       ) : (
         posts.map((post) => (
           <article key={post.id} className="bg-card rounded-xl overflow-hidden shadow-stone hover:shadow-warm transition-all duration-300 group">
+            {enableSEO && <BlogPostSEO post={post} />}
             <div className="relative overflow-hidden">
               {post.image ? (
                 <img 
