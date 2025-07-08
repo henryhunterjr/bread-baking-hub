@@ -7,12 +7,16 @@ import CategoryFilter from '../components/blog/CategoryFilter';
 import BlogPostGrid from '../components/blog/BlogPostGrid';
 import BlogPagination from '../components/blog/BlogPagination';
 import TagFilter from '../components/blog/TagFilter';
+import ErrorBoundary from '../components/ErrorBoundary';
+import OfflineBanner from '../components/OfflineBanner';
+import ProgressiveLoading from '../components/blog/ProgressiveLoading';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowRight, Search } from 'lucide-react';
 import { fetchBlogPosts, fetchCategories, BlogPost, WordPressCategory, FetchPostsResponse } from '@/utils/blogFetcher';
 import { useDebounce } from '@/hooks/useDebounce';
 import { generateBlogListingSchema } from '@/utils/structuredData';
+import { useBlogCache } from '@/utils/blogCache';
 
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -27,7 +31,10 @@ const Blog = () => {
   const [error, setError] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [useProgressiveLoading] = useState(true);
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
+
+  const { cachePosts, getCachedPosts, isOnline } = useBlogCache();
 
   // Load categories on mount
   useEffect(() => {
@@ -150,7 +157,17 @@ const Blog = () => {
 
           {/* Blog Posts Section */}
           <section className="py-20 px-4">
-            <div className="max-w-7xl mx-auto">
+            {/* Offline Banner */}
+            <OfflineBanner 
+              onRetry={() => window.location.reload()}
+              cachedPosts={posts}
+            />
+
+            <ErrorBoundary
+              onError={(error, errorInfo) => {
+                console.error('Blog page error:', error, errorInfo);
+              }}
+            >
               {/* Search Bar */}
               <div className="mb-8 max-w-md mx-auto">
                 <div className="relative">
@@ -195,21 +212,46 @@ const Blog = () => {
                 </div>
               )}
 
-              <BlogPostGrid
-                posts={filteredPosts}
-                loading={loading}
-                skeletonCount={9}
-                selectedCategory={selectedCategory}
-                categories={categories}
-              />
+              {useProgressiveLoading ? (
+                <ProgressiveLoading
+                  initialPosts={posts}
+                  initialPage={currentPage}
+                  totalPages={totalPages}
+                  selectedCategory={selectedCategory}
+                  searchQuery={debouncedSearchQuery}
+                  selectedTags={selectedTags}
+                  onPostsUpdate={setFilteredPosts}
+                  renderPosts={(postsToRender) => (
+                    <BlogPostGrid
+                      posts={postsToRender}
+                      loading={loading}
+                      skeletonCount={9}
+                      selectedCategory={selectedCategory}
+                      categories={categories}
+                    />
+                  )}
+                />
+              ) : (
+                <>
+                  <BlogPostGrid
+                    posts={filteredPosts}
+                    loading={loading}
+                    skeletonCount={9}
+                    selectedCategory={selectedCategory}
+                    categories={categories}
+                  />
 
-              <BlogPagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                loading={loading}
-                onPageChange={handlePageChange}
-              />
-              
+                  <BlogPagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    loading={loading}
+                    onPageChange={handlePageChange}
+                  />
+                </>
+              )}
+            </ErrorBoundary>
+            
+            <div className="max-w-7xl mx-auto">
               {/* Newsletter Signup */}
               <div className="mt-20">
                 <NewsletterSignup />

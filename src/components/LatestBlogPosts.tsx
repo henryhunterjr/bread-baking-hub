@@ -6,6 +6,10 @@ import CategoryFilter from './blog/CategoryFilter';
 import BlogPostGrid from './blog/BlogPostGrid';
 import BlogPagination from './blog/BlogPagination';
 import TagFilter from './blog/TagFilter';
+import ErrorBoundary from './ErrorBoundary';
+import OfflineBanner from './OfflineBanner';
+import ProgressiveLoading from './blog/ProgressiveLoading';
+import { useBlogCache } from '@/utils/blogCache';
 
 const LatestBlogPosts = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -19,16 +23,35 @@ const LatestBlogPosts = () => {
   const [categoriesLoading, setCategoriesLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [useProgressiveLoading] = useState(true);
+
+  const { cachePosts, getCachedPosts, isOnline } = useBlogCache();
 
   // Load categories on mount
   useEffect(() => {
     const loadCategories = async () => {
       try {
         setCategoriesLoading(true);
+        
+        // Try to get cached data first if offline
+        if (!isOnline()) {
+          const cached = await getCachedPosts();
+          if (cached) {
+            setCategories(cached.categories);
+            setCategoriesLoading(false);
+            return;
+          }
+        }
+
         const categoriesData = await fetchCategories();
         setCategories(categoriesData);
       } catch (err) {
         console.error('Failed to load categories:', err);
+        // Try cache as fallback
+        const cached = await getCachedPosts();
+        if (cached) {
+          setCategories(cached.categories);
+        }
       } finally {
         setCategoriesLoading(false);
       }
@@ -43,14 +66,40 @@ const LatestBlogPosts = () => {
       try {
         setLoading(true);
         setError(null);
+        
+        // Try cached posts first if offline
+        if (!isOnline()) {
+          const cached = await getCachedPosts();
+          if (cached) {
+            setPosts(cached.posts);
+            setTotalPages(1); // No pagination for cached posts
+            console.log('Loaded cached blog posts');
+            return;
+          }
+        }
+
         console.log('Loading blog posts for homepage...', { currentPage, selectedCategory });
         const response: FetchPostsResponse = await fetchBlogPosts(currentPage, selectedCategory, 6);
         console.log('Blog posts loaded successfully:', response);
+        
         setPosts(response.posts);
         setTotalPages(response.totalPages);
+        
+        // Cache the posts for offline use
+        if (currentPage === 1) {
+          await cachePosts(response.posts, categories);
+        }
       } catch (err) {
         setError('Failed to load blog posts. Please try again later.');
         console.error('Failed to load posts:', err);
+        
+        // Try cache as fallback
+        const cached = await getCachedPosts();
+        if (cached) {
+          setPosts(cached.posts);
+          setTotalPages(1);
+          setError('Showing cached posts - you may be offline');
+        }
       } finally {
         setLoading(false);
       }
@@ -97,47 +146,81 @@ const LatestBlogPosts = () => {
           </p>
         </div>
 
-        <CategoryFilter
-          categories={categories}
-          selectedCategory={selectedCategory}
-          showFilters={showFilters}
-          categoriesLoading={categoriesLoading}
-          onToggleFilters={() => setShowFilters(!showFilters)}
-          onCategoryChange={handleCategoryChange}
+        {/* Offline Banner */}
+        <OfflineBanner 
+          onRetry={() => window.location.reload()}
+          cachedPosts={posts}
         />
 
-        {/* Tag Filter */}
-        <TagFilter
-          posts={posts}
-          selectedTags={selectedTags}
-          onTagChange={handleTagChange}
-          className="mb-8"
-        />
+        <ErrorBoundary
+          onError={(error, errorInfo) => {
+            console.error('Blog section error:', error, errorInfo);
+          }}
+        >
+          <CategoryFilter
+            categories={categories}
+            selectedCategory={selectedCategory}
+            showFilters={showFilters}
+            categoriesLoading={categoriesLoading}
+            onToggleFilters={() => setShowFilters(!showFilters)}
+            onCategoryChange={handleCategoryChange}
+          />
 
-        {/* Error State */}
-        {error && (
-          <div className="text-center py-8">
-            <p className="text-red-500 mb-4">{error}</p>
-            <Button onClick={() => window.location.reload()}>
-              Try Again
-            </Button>
-          </div>
-        )}
+          {/* Tag Filter */}
+          <TagFilter
+            posts={posts}
+            selectedTags={selectedTags}
+            onTagChange={handleTagChange}
+            className="mb-8"
+          />
 
-        <BlogPostGrid
-          posts={filteredPosts}
-          loading={loading}
-          skeletonCount={6}
-          selectedCategory={selectedCategory}
-          categories={categories}
-        />
+          {/* Error State */}
+          {error && (
+            <div className="text-center py-8">
+              <p className="text-red-500 mb-4">{error}</p>
+              <Button onClick={() => window.location.reload()}>
+                Try Again
+              </Button>
+            </div>
+          )}
 
-        <BlogPagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          loading={loading}
-          onPageChange={handlePageChange}
-        />
+          {useProgressiveLoading ? (
+            <ProgressiveLoading
+              initialPosts={posts}
+              initialPage={currentPage}
+              totalPages={totalPages}
+              selectedCategory={selectedCategory}
+              selectedTags={selectedTags}
+              onPostsUpdate={setFilteredPosts}
+              renderPosts={(postsToRender) => (
+                <BlogPostGrid
+                  posts={postsToRender}
+                  loading={loading}
+                  skeletonCount={6}
+                  selectedCategory={selectedCategory}
+                  categories={categories}
+                />
+              )}
+            />
+          ) : (
+            <>
+              <BlogPostGrid
+                posts={filteredPosts}
+                loading={loading}
+                skeletonCount={6}
+                selectedCategory={selectedCategory}
+                categories={categories}
+              />
+
+              <BlogPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                loading={loading}
+                onPageChange={handlePageChange}
+              />
+            </>
+          )}
+        </ErrorBoundary>
         
         <div className="text-center mt-12">
           <Button variant="warm" size="xl" asChild>

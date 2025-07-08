@@ -2,3 +2,9 @@ project_id = "ojyckskucneljvuqzrsw"
 
 [functions.realtime-chat]
 verify_jwt = false
+
+[functions.blog-proxy]
+verify_jwt = false
+
+[functions.rss-feed]
+verify_jwt = false

@@ -4,6 +4,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from 'react-helmet-async'
 import App from './App.tsx'
 import './index.css'
+import { registerServiceWorker } from './utils/blogCache';
+
+// Register service worker for offline support
+registerServiceWorker();
 
 const queryClient = new QueryClient();
 
