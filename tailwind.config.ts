@@ -112,11 +112,15 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-amber': 'var(--gradient-amber)',
+				'gradient-warm': 'var(--gradient-warm)',
 				'gradient-panthers': 'var(--gradient-panthers)',
 				'gradient-platinum': 'var(--gradient-platinum)',
 				'gradient-electric': 'var(--gradient-electric)'
 			},
 			boxShadow: {
+				'warm': 'var(--shadow-warm)',
+				'stone': 'var(--shadow-stone)',
 				'panthers': 'var(--shadow-panthers)',
 				'platinum': 'var(--shadow-platinum)',
 				'electric': 'var(--shadow-electric)'
