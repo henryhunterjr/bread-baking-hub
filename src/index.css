@@ -70,7 +70,7 @@ All colors MUST be HSL.
     --amber-200: 32 42% 90%;
 
     /* Warm bread gradients with muted earth tones */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--background)), hsl(var(--card)));
     --gradient-amber: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
     --gradient-warm: linear-gradient(180deg, hsl(var(--secondary)), hsl(var(--muted)));
     
