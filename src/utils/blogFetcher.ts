@@ -80,9 +80,19 @@ export const fetchBlogPosts = async (
       url += `&categories=${categoryId}`;
     }
     
-    const response = await fetch(url);
+    console.log('Fetching blog posts from:', url);
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors'
+    });
     
     if (!response.ok) {
+      console.error('HTTP error:', response.status, response.statusText);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
@@ -119,9 +129,19 @@ export const fetchBlogPosts = async (
 // Fetch categories
 export const fetchCategories = async (): Promise<WordPressCategory[]> => {
   try {
-    const response = await fetch(`${API_BASE}/categories?per_page=100`);
+    console.log('Fetching categories from:', `${API_BASE}/categories?per_page=100`);
+    
+    const response = await fetch(`${API_BASE}/categories?per_page=100`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors'
+    });
     
     if (!response.ok) {
+      console.error('Categories HTTP error:', response.status, response.statusText);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
