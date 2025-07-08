@@ -56,15 +56,29 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
 
   if (!isOpen) {
     return (
-      <div className={`fixed ${isMobile ? 'right-4 bottom-4' : 'right-4 top-1/2 -translate-y-1/2'} z-50`}>
-        <Button
+      <div className="fixed right-4 bottom-4 z-50">
+        <div 
           onClick={onToggle}
-          variant="hero"
-          size="lg"
-          className="rounded-full shadow-warm touch-manipulation"
+          className="relative w-16 h-16 cursor-pointer transform transition-transform duration-200 hover:scale-105 touch-manipulation"
         >
-          <MessageCircle className="h-5 w-5" />
-        </Button>
+          {/* Circular window frame */}
+          <div className="absolute inset-0 rounded-full border-4 border-primary bg-background shadow-warm"></div>
+          
+          {/* Avatar image */}
+          <img 
+            src="/lovable-uploads/6b5f1503-9015-4968-bc0e-f3cab80e6b7d.png"
+            alt="Crusty - Baker's Helper"
+            className="w-full h-full rounded-full object-cover"
+          />
+          
+          {/* Subtle glow effect */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-200"></div>
+        </div>
+        
+        {/* Tooltip */}
+        <div className="absolute -top-12 right-0 bg-primary text-primary-foreground px-3 py-1 rounded-lg text-sm whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+          Chat with Crusty!
+        </div>
       </div>
     );
   }
