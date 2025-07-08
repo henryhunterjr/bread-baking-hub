@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import NewsletterSignup from '../components/NewsletterSignup';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowRight, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, Filter, Search } from 'lucide-react';
 import { fetchBlogPosts, fetchCategories, BlogPost, WordPressCategory, FetchPostsResponse } from '@/utils/blogFetcher';
+import { useDebounce } from '@/hooks/useDebounce';
 
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -17,6 +20,8 @@ const Blog = () => {
   const [categoriesLoading, setCategoriesLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   // Load categories on mount
   useEffect(() => {
@@ -35,13 +40,13 @@ const Blog = () => {
     loadCategories();
   }, []);
 
-  // Load posts when page or category changes
+  // Load posts when page, category, or search changes
   useEffect(() => {
     const loadPosts = async () => {
       try {
         setLoading(true);
         setError(null);
-        const response: FetchPostsResponse = await fetchBlogPosts(currentPage, selectedCategory, 9);
+        const response: FetchPostsResponse = await fetchBlogPosts(currentPage, selectedCategory, 9, debouncedSearchQuery);
         setPosts(response.posts);
         setTotalPages(response.totalPages);
       } catch (err) {
@@ -53,11 +58,16 @@ const Blog = () => {
     };
 
     loadPosts();
-  }, [currentPage, selectedCategory]);
+  }, [currentPage, selectedCategory, debouncedSearchQuery]);
 
   const handleCategoryChange = (categoryId: number | undefined) => {
     setSelectedCategory(categoryId);
     setCurrentPage(1); // Reset to first page when filtering
+  };
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    setCurrentPage(1); // Reset to first page when searching
   };
 
   const handlePageChange = (page: number) => {
@@ -104,6 +114,20 @@ const Blog = () => {
           {/* Blog Posts Section */}
           <section className="py-20 px-4">
             <div className="max-w-7xl mx-auto">
+              {/* Search Bar */}
+              <div className="mb-8 max-w-md mx-auto">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                  <Input
+                    type="text"
+                    placeholder="Search blog posts..."
+                    value={searchQuery}
+                    onChange={(e) => handleSearchChange(e.target.value)}
+                    className="pl-10 bg-card border-primary/20 focus:border-primary"
+                  />
+                </div>
+              </div>
+
               {/* Category Filter */}
               <div className="mb-12">
                 <div className="flex flex-wrap items-center gap-4 justify-center">
@@ -164,8 +188,17 @@ const Blog = () => {
                 ) : posts.length === 0 ? (
                   <div className="col-span-full text-center py-12">
                     <p className="text-muted-foreground text-lg">
-                      No blog posts found{selectedCategory ? ' in this category' : ''}.
+                      No blog posts found{searchQuery ? ' matching your search' : selectedCategory ? ' in this category' : ''}.
                     </p>
+                    {searchQuery && (
+                      <Button 
+                        variant="outline" 
+                        onClick={() => handleSearchChange('')}
+                        className="mt-4"
+                      >
+                        Clear Search
+                      </Button>
+                    )}
                   </div>
                 ) : (
                   posts.map((post) => (
@@ -275,6 +308,11 @@ const Blog = () => {
                   </Button>
                 </div>
               )}
+              
+              {/* Newsletter Signup */}
+              <div className="mt-20">
+                <NewsletterSignup />
+              </div>
             </div>
           </section>
         </main>

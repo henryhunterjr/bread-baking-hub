@@ -71,13 +71,18 @@ const calculateReadTime = (content: string): string => {
 export const fetchBlogPosts = async (
   page: number = 1,
   categoryId?: number,
-  perPage: number = 6
+  perPage: number = 6,
+  searchQuery?: string
 ): Promise<FetchPostsResponse> => {
   try {
     let url = `${BLOG_PROXY_URL}?endpoint=posts&page=${page}&per_page=${perPage}`;
     
     if (categoryId) {
       url += `&categories=${categoryId}`;
+    }
+    
+    if (searchQuery) {
+      url += `&search=${encodeURIComponent(searchQuery)}`;
     }
     
     console.log('Fetching blog posts via proxy:', url);

@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ArrowRight, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { fetchBlogPosts, fetchCategories, BlogPost, WordPressCategory, FetchPostsResponse } from '@/utils/blogFetcher';
+import NewsletterSignup from './NewsletterSignup';
 
 const LatestBlogPosts = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -265,6 +266,11 @@ const LatestBlogPosts = () => {
               View All Posts
             </a>
           </Button>
+        </div>
+        
+        {/* Newsletter Signup */}
+        <div className="mt-20">
+          <NewsletterSignup />
         </div>
       </div>
     </section>

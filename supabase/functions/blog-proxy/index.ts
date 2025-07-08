@@ -15,11 +15,12 @@ interface CacheEntry {
 const cache = new Map<string, CacheEntry>();
 const CACHE_TTL = 15 * 60 * 1000; // 15 minutes in milliseconds
 
-const getCacheKey = (endpoint: string, page?: string, perPage?: string, categoryId?: string) => {
+const getCacheKey = (endpoint: string, page?: string, perPage?: string, categoryId?: string, search?: string) => {
   const params = new URLSearchParams();
   if (page) params.set('page', page);
   if (perPage) params.set('per_page', perPage);
   if (categoryId) params.set('categories', categoryId);
+  if (search) params.set('search', search);
   
   return `${endpoint}?${params.toString()}`;
 };
@@ -63,6 +64,7 @@ serve(async (req) => {
     const page = url.searchParams.get('page') || '1'
     const perPage = url.searchParams.get('per_page') || '6'
     const categoryId = url.searchParams.get('categories')
+    const search = url.searchParams.get('search')
 
     if (!endpoint) {
       return new Response(
@@ -72,7 +74,7 @@ serve(async (req) => {
     }
 
     // Generate cache key
-    const cacheKey = getCacheKey(endpoint, page, perPage, categoryId);
+    const cacheKey = getCacheKey(endpoint, page, perPage, categoryId, search);
     
     // Check cache first
     const cachedEntry = getCachedData(cacheKey);
@@ -100,6 +102,9 @@ serve(async (req) => {
       fetchUrl += `?_embed&page=${page}&per_page=${perPage}`
       if (categoryId) {
         fetchUrl += `&categories=${categoryId}`
+      }
+      if (search) {
+        fetchUrl += `&search=${encodeURIComponent(search)}`
       }
     } else if (endpoint === 'categories') {
       fetchUrl += `?per_page=100`
