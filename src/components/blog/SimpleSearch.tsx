@@ -9,8 +9,11 @@ interface SimpleSearchProps {
 const SimpleSearch = ({ searchQuery, onSearchChange, className }: SimpleSearchProps) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    console.log('SimpleSearch input changed:', value);
+    console.log('🔍 SimpleSearch input changed:', value);
+    console.log('🔍 Event timestamp:', new Date().toISOString());
+    console.log('🔍 Calling onSearchChange with:', value);
     onSearchChange(value);
+    console.log('🔍 onSearchChange called successfully');
   };
 
   return (

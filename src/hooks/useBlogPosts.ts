@@ -104,10 +104,11 @@ export const useBlogPosts = () => {
 
   // Filter posts by search query and tags
   useEffect(() => {
-    console.log('Search filter running:', { 
-      searchQuery: debouncedSearchQuery, 
+    console.log('🔍 SEARCH FILTER EFFECT RUNNING:', { 
+      debouncedSearchQuery, 
       postsCount: posts.length,
-      selectedTags 
+      selectedTags,
+      currentTime: new Date().toISOString()
     });
     
     let filtered = posts;
@@ -115,28 +116,43 @@ export const useBlogPosts = () => {
     // Apply search filter
     if (debouncedSearchQuery.trim()) {
       const searchLower = debouncedSearchQuery.toLowerCase();
-      console.log('Applying search filter for:', searchLower);
+      console.log('🔍 APPLYING SEARCH FILTER for:', searchLower);
+      console.log('🔍 Posts to filter:', posts.map(p => ({ title: p.title, tags: p.tags })));
       
+      const beforeFilter = filtered.length;
       filtered = filtered.filter(post => {
         const titleMatch = post.title.toLowerCase().includes(searchLower);
         const excerptMatch = post.excerpt.toLowerCase().includes(searchLower);
         const tagMatch = post.tags.some(tag => tag.toLowerCase().includes(searchLower));
         
-        console.log('Post:', post.title, 'Title match:', titleMatch, 'Excerpt match:', excerptMatch, 'Tag match:', tagMatch, 'Tags:', post.tags);
+        const matches = titleMatch || excerptMatch || tagMatch;
         
-        return titleMatch || excerptMatch || tagMatch;
+        if (matches) {
+          console.log('🔍 MATCH FOUND:', post.title, { titleMatch, excerptMatch, tagMatch });
+        }
+        
+        return matches;
       });
       
-      console.log('Filtered posts count:', filtered.length);
+      console.log('🔍 FILTER RESULTS:', {
+        beforeFilter,
+        afterFilter: filtered.length,
+        searchQuery: searchLower,
+        matchedTitles: filtered.map(p => p.title)
+      });
+    } else {
+      console.log('🔍 NO SEARCH QUERY - showing all posts');
     }
     
     // Apply tag filter
     if (selectedTags.length > 0) {
+      console.log('🔍 APPLYING TAG FILTER:', selectedTags);
       filtered = filtered.filter(post => 
         selectedTags.every(tag => post.tags.includes(tag))
       );
     }
     
+    console.log('🔍 FINAL FILTERED POSTS:', filtered.length);
     setFilteredPosts(filtered);
   }, [posts, selectedTags, debouncedSearchQuery]);
 
@@ -157,7 +173,9 @@ export const useBlogPosts = () => {
   };
 
   const handleSearchChange = (query: string) => {
-    console.log('SEARCH EVENT FIRED:', query);
+    console.log('🔍 SEARCH EVENT FIRED in useBlogPosts:', query);
+    console.log('🔍 Current posts count:', posts.length);
+    console.log('🔍 Current debouncedSearchQuery:', debouncedSearchQuery);
     setSearchQuery(query);
   };
 
