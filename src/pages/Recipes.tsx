@@ -41,6 +41,22 @@ const Recipes = () => {
       <Header />
       
       <main>
+        {/* Hero Image */}
+        <div className="relative h-96 overflow-hidden">
+          <img 
+            src="/lovable-uploads/348f0bf8-a53c-4f82-873f-51d111f5ece7.png"
+            alt="Baking Great Bread at Home: A Journey Through the Seasons"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center text-white">
+              <h1 className="text-4xl md:text-6xl font-bold mb-4">Seasonal Recipes</h1>
+              <p className="text-lg md:text-xl opacity-90">A Journey Through the Seasons</p>
+            </div>
+          </div>
+        </div>
+
         {/* Hero Section */}
         <SeasonalHero 
           selectedSeason={selectedSeason}
@@ -49,6 +65,43 @@ const Recipes = () => {
         />
 
         <div className="max-w-7xl mx-auto px-4 py-8">
+          {/* Introduction Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-12"
+          >
+            <div className="bg-card border rounded-2xl p-8 shadow-warm">
+              <div className="text-center mb-6">
+                <div className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
+                  COMING DECEMBER 2025
+                </div>
+                <h2 className="text-3xl font-bold mb-4">Baking Great Bread at Home: A Journey Through the Seasons</h2>
+              </div>
+              <div className="prose prose-lg max-w-4xl mx-auto text-muted-foreground">
+                <p className="text-lg mb-4">
+                  This recipe collection offers you a preview of what's to come in my upcoming cookbook—a year-long adventure through the art of breadmaking, with recipes that respond to the rhythms of nature and the celebrations that mark our days.
+                </p>
+                <p className="text-xl font-medium text-foreground mb-4">
+                  What if this year, you didn't just bake bread—you became a baker?
+                </p>
+                <p className="mb-4">
+                  Through winter's hearth breads, spring's delicate enriched doughs, summer's quick flatbreads, and fall's harvest loaves, you'll build a real relationship with flour, fermentation, and flavor. Each recipe here is tied to its season, teaching you not just what to bake, but when and why.
+                </p>
+                <p className="mb-4">
+                  This isn't just a cookbook preview. It's an invitation to join thousands of bakers worldwide who are discovering that bread is more than food—it's a language of care, a connection to history, and a reflection of the world around us.
+                </p>
+                <p className="text-lg font-medium text-foreground">
+                  Explore these seasonal recipes now, save your favorites, and get ready for the full journey coming December 2025.
+                </p>
+                <div className="mt-6 pt-6 border-t text-center">
+                  <p className="font-medium text-foreground">- Henry Hunter</p>
+                  <p className="text-sm">Founder, Baking Great Bread at Home</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
           {/* Featured Recipes Section */}
           {!loading && featuredRecipes.length > 0 && (
             <FeaturedRecipes 
