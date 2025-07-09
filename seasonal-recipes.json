@@ -1,572 +1,1127 @@
 [
   {
-    "title": "Seasonal Recipe 1",
-    "slug": "seasonal-recipe-1",
+    "title": "Classic White Sandwich Bread",
+    "slug": "classic-white-sandwich-bread",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["winter", "sandwich", "lean dough", "beginner", "everyday"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Winter",
+      "holidays": [],
+      "featuredDates": { "start": "01-01", "end": "03-31" },
+      "category": ["yeast bread"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 20 minutes",
+      "bakeTime": "0 hours 35 minutes",
+      "totalTime": "2 hours 50 minutes",
+      "difficulty": "beginner",
+      "yield": "1 loaf",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 600g (5 cups)",
+        "Warm Water: 375ml (1 1/2 cups)",
+        "Active Dry Yeast: 7g (2 1/4 tsp)",
+        "Sugar: 15g (1 tbsp)",
+        "Salt: 10g (2 tsp)",
+        "Butter: 45g (3 tbsp), softened"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 1."
+      "method": [
+        "Combine warm water (95–100°F), yeast and sugar; let froth 5–10 min.",
+        "Mix flour, salt, butter; add yeast mix into a shaggy dough.",
+        "Knead 8–10 min until smooth.",
+        "Let rise 1–2 hr (up to 3 hr in cold kitchen) until doubled.",
+        "Shape, proof 45–60 min until 1\" above pan rim.",
+        "Bake at 375°F for 30–35 min until golden.",
+        "Cool on wire rack before slicing."
+      ],
+      "notes": "In cold kitchens, use warmer water (100–105°F) and proof near warm appliance; add extra water if dough feels dry.",
+      "equipment": ["9×5-inch loaf pan", "mixing bowl", "oven thermometer"]
     }
   },
   {
-    "title": "Seasonal Recipe 2",
-    "slug": "seasonal-recipe-2",
+    "title": "Henry's Crusty White Bread",
+    "slug": "henrys-crusty-white-bread",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["crusty", "artisan", "winter", "intermediate", "everyday"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Winter",
+      "holidays": [],
+      "featuredDates": { "start": "01-01", "end": "03-31" },
+      "category": ["yeast bread"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 20 minutes",
+      "bakeTime": "0 hours 30 minutes",
+      "totalTime": "2 hours 30 minutes",
+      "difficulty": "intermediate",
+      "yield": "1 boule or batard",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Water: 375g",
+        "Salt: 10g",
+        "Active Dry Yeast: 7g"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 2."
+      "method": [
+        "Mix all ingredients; autolyse 30 min.",
+        "Knead 8–10 min until elastic.",
+        "Rise 1–2 hr (3–4 hr if cold) until doubled.",
+        "Shape into boule/batard; proof 30–60 min.",
+        "Bake in preheated Dutch oven at 450°F: covered 25 min, uncovered 5 min.",
+        "Cool 1 hr before slicing."
+      ],
+      "notes": "Use steam (boiling water pan or dutch-oven cover) for better crust; score deeply for expansion.",
+      "equipment": ["Dutch oven or baking stone", "bench scraper"]
     }
   },
   {
-    "title": "Seasonal Recipe 3",
-    "slug": "seasonal-recipe-3",
+    "title": "No-Knead White Bread",
+    "slug": "no-knead-white-bread",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["no-knead", "winter", "beginners", "slow fermentation", "everyday"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Winter",
+      "holidays": [],
+      "featuredDates": { "start": "01-01", "end": "03-31" },
+      "category": ["yeast bread"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 10 minutes",
+      "bakeTime": "0 hours 45 minutes",
+      "totalTime": "13 hours 55 minutes",
+      "difficulty": "beginner",
+      "yield": "1 boule",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Salt: 2 tsp",
+        "Instant Yeast: 1/4 tsp",
+        "Water: 375ml"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 3."
+      "method": [
+        "Mix flour, salt, yeast; add water—shaggy dough.",
+        "Cover; ferment 12–18 hr (up to 24 hr if cold).",
+        "Turn out; fold dough twice; shape into ball.",
+        "Proof 1–2 hr until puffy.",
+        "Bake in 475°F preheated Dutch oven: covered 30 min, uncovered 10–15 min.",
+        "Cool completely before slicing."
+      ],
+      "notes": "For crisp crust, cool in Dutch oven with lid ajar; extend fermentation in cold kitchens.",
+      "equipment": ["Dutch oven", "parchment paper"]
     }
   },
   {
-    "title": "Seasonal Recipe 4",
-    "slug": "seasonal-recipe-4",
+    "title": "Hanukkah Challah",
+    "slug": "hanukkah-challah",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["enriched", "braided", "holiday", "Challah", "Hanukkah"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Winter",
+      "holidays": ["Hanukkah"],
+      "featuredDates": { "start": "02-14", "end": "02-21" },
+      "category": ["enriched", "holiday bread"],
+      "occasion": ["holiday specific", "celebration"],
+      "prepTime": "0 hours 25 minutes",
+      "bakeTime": "0 hours 30 minutes",
+      "totalTime": "3 hours 40 minutes",
+      "difficulty": "intermediate",
+      "yield": "1 braided loaf",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 1kg",
+        "Water: 500ml",
+        "Active Dry Yeast: 14g",
+        "Honey: 100g",
+        "Salt: 1 tbsp",
+        "Eggs: 4",
+        "Vegetable Oil: 120ml",
+        "Sesame or Poppy Seeds: 2 tbsp"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 4."
+      "method": [
+        "Activate yeast in water+honey 5–10 min.",
+        "Mix flour, salt, eggs, oil; knead 8–10 min.",
+        "Rise 1.5 hr until doubled.",
+        "Divide, braid, tuck ends.",
+        "Proof 45 min until puffy.",
+        "Egg wash; sprinkle seeds; bake 375°F 25–30 min.",
+        "Cool 20 min before slicing."
+      ],
+      "notes": "For extra shine, re-egg-wash halfway; flavor variations with raisins or savory seasoning.",
+      "equipment": ["mixing bowl", "braiding surface"]
     }
   },
   {
-    "title": "Seasonal Recipe 5",
-    "slug": "seasonal-recipe-5",
+    "title": "Sourdough Cinnamon Rolls",
+    "slug": "sourdough-cinnamon-rolls",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["sourdough", "enriched", "winter", "breakfast"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Winter",
+      "holidays": [],
+      "featuredDates": { "start": "02-01", "end": "02-28" },
+      "category": ["enriched", "sourdough"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 30 minutes",
+      "bakeTime": "0 hours 25 minutes",
+      "totalTime": "6 hours 15 minutes",
+      "difficulty": "intermediate",
+      "yield": "9–12 rolls",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Active Sourdough Starter: 150g",
+        "Warm Milk: 240ml",
+        "Butter: 100g",
+        "Sugar: 75g",
+        "Salt: 1 tsp",
+        "Cinnamon: 2 tbsp",
+        "Brown Sugar: 100g",
+        "Egg (optional): 1"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 5."
+      "method": [
+        "Autolyse flour+mixer 30 min.",
+        "Add starter, enrichments; knead 8–10 min.",
+        "Rise 4–6 hr (or overnight).",
+        "Roll into rectangle; butter and cinnamon-sugar.",
+        "Cut rolls; proof 1–2 hr until puffy.",
+        "Bake 375°F 20–25 min.",
+        "Optional glaze/drizzle when warm."
+      ],
+      "notes": "Overnight fridge proof intensifies flavor; freeze unbaked for later baking.",
+      "equipment": ["9×13 pan", "rolling pin"]
     }
   },
   {
-    "title": "Seasonal Recipe 6",
-    "slug": "seasonal-recipe-6",
+    "title": "Henry's Foolproof Sourdough Recipe",
+    "slug": "henrys-foolproof-sourdough-recipe",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["sourdough", "open crumb", "winter", "intermediate"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Winter",
+      "holidays": [],
+      "featuredDates": { "start": "03-01", "end": "03-31" },
+      "category": ["sourdough"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 15 minutes",
+      "bakeTime": "0 hours 45 minutes",
+      "totalTime": "6 hours 30 minutes",
+      "difficulty": "intermediate",
+      "yield": "1 boule",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Water: 375g",
+        "Active Sourdough Starter: 100g",
+        "Salt: 10g"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 6."
+      "method": [
+        "Autolyse flour+water 30 min.",
+        "Mix in starter & salt; pinch & fold.",
+        "Bulk ferment 4–6 hr with 4 stretch-folds.",
+        "Pre-shape; bench rest 20 min.",
+        "Shape; cold proof 12–16 hr.",
+        "Bake in 475°F Dutch oven: covered 20 min, uncovered 20–25 min.",
+        "Cool 1 hr before slicing."
+      ],
+      "notes": "High hydration (75%) leads to open crumb; use windowpane test to gauge gluten; steam critical for crust.",
+      "equipment": ["Dutch oven", "banneton", "lame"]
     }
   },
   {
-    "title": "Seasonal Recipe 7",
-    "slug": "seasonal-recipe-7",
+    "title": "Rustic Italian Ciabatta",
+    "slug": "rustic-italian-ciabatta",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["high hydration", "Italian", "winter", "artisan"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Winter",
+      "holidays": [],
+      "featuredDates": { "start": "03-01", "end": "03-31" },
+      "category": ["quick bread", "yeast bread"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 15 minutes",
+      "bakeTime": "0 hours 25 minutes",
+      "totalTime": "5 hours",
+      "difficulty": "intermediate",
+      "yield": "2 loaves",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Poolish: Bread Flour 150g, Water 150ml, Yeast 1/8 tsp",
+        "Main Dough: Bread Flour 350g, Water 225ml, Salt 7g, Yeast 2.25g"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 7."
+      "method": [
+        "Make poolish; ferment 12–18 hr.",
+        "Mix main dough with poolish; autolyse 30 min.",
+        "3 stretch-folds every 30 min over 1.5 hr.",
+        "Bulk ferment 1–2 hr until 50% volume gain.",
+        "Divide, shape gently; proof 45–60 min.",
+        "Bake 475°F on stone: 20–25 min with steam.",
+        "Cool completely before slicing."
+      ],
+      "notes": "Handle wet dough gently to preserve air pockets; use steam for crust; minimal kneading builds structure via folds.",
+      "equipment": ["baking stone", "bench scraper", "steam source"]
     }
   },
   {
-    "title": "Seasonal Recipe 8",
-    "slug": "seasonal-recipe-8",
+    "title": "Spring Herb Focaccia",
+    "slug": "spring-herb-focaccia",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["spring", "focaccia", "herbs", "olive oil"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Spring",
+      "holidays": [],
+      "featuredDates": { "start": "04-01", "end": "05-31" },
+      "category": ["yeast bread"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 20 minutes",
+      "bakeTime": "0 hours 25 minutes",
+      "totalTime": "3 hours",
+      "difficulty": "intermediate",
+      "yield": "1 large sheet",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Water: 375ml",
+        "Instant Yeast: 7g",
+        "Salt: 10g",
+        "Olive Oil: 60ml + extra for drizzling",
+        "Fresh Rosemary: 2 tbsp, chopped",
+        "Fresh Thyme: 1 tbsp, leaves",
+        "Coarse Sea Salt: 1 tsp"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 8."
+      "method": [
+        "Mix flour, water, yeast, salt until shaggy; rest 20 min.",
+        "Knead 2–3 min; incorporate 60ml oil.",
+        "Rise 1 hr until doubled.",
+        "Press into oiled pan; dimple dough; drizzle oil.",
+        "Sprinkle herbs & sea salt; proof 30 min.",
+        "Bake 425°F 20–25 min until golden.",
+        "Cool slightly before cutting."
+      ],
+      "notes": "Use soft fingertips to avoid deflating; serve warm with olive oil dip.",
+      "equipment": ["quarter-sheet pan", "mixing bowl"]
     }
   },
   {
-    "title": "Seasonal Recipe 9",
-    "slug": "seasonal-recipe-9",
+    "title": "Hot Cross Buns",
+    "slug": "hot-cross-buns",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["Easter", "spring", "enriched", "spiced"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Spring",
+      "holidays": ["Easter"],
+      "featuredDates": { "start": "03-01", "end": "04-30" },
+      "category": ["enriched", "holiday bread"],
+      "occasion": ["holiday specific", "celebration"],
+      "prepTime": "0 hours 30 minutes",
+      "bakeTime": "0 hours 20 minutes",
+      "totalTime": "3 hours 30 minutes",
+      "difficulty": "intermediate",
+      "yield": "12 buns",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Milk: 250ml",
+        "Active Dry Yeast: 7g",
+        "Sugar: 75g",
+        "Butter: 50g, softened",
+        "Salt: 1 tsp",
+        "Egg: 1",
+        "Raisins or Currants: 100g",
+        "Mixed Spice: 1 tsp",
+        "Flour Paste (for cross): 50g flour + water"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 9."
+      "method": [
+        "Warm milk + yeast + 1 tsp sugar; froth 5 min.",
+        "Mix flour, sugar, salt, spice; add yeast mix, egg, butter.",
+        "Knead 8–10 min; add fruit in last 2 min.",
+        "Rise 1.5 hr until doubled.",
+        "Divide into 12; shape; proof 45 min.",
+        "Pipe cross paste; bake 375°F 18–20 min.",
+        "Glaze with warmed apricot jam."
+      ],
+      "notes": "Chill dough 30 min before shaping for neater buns; vary dried fruit.",
+      "equipment": ["12-cup muffin tin or baking sheet", "piping bag"]
     }
   },
   {
-    "title": "Seasonal Recipe 10",
-    "slug": "seasonal-recipe-10",
+    "title": "Passover Matzo Bread",
+    "slug": "passover-matzo-bread",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["Passover", "spring", "unleavened", "quick"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Spring",
+      "holidays": ["Passover"],
+      "featuredDates": { "start": "03-25", "end": "04-02" },
+      "category": ["quick bread", "holiday bread"],
+      "occasion": ["holiday specific"],
+      "prepTime": "0 hours 10 minutes",
+      "bakeTime": "0 hours 10 minutes",
+      "totalTime": "0 hours 20 minutes",
+      "difficulty": "beginner",
+      "yield": "6 sheets",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Unbleached Flour: 200g",
+        "Water: 100ml",
+        "Salt: 1/2 tsp"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 10."
+      "method": [
+        "Mix flour, salt, water into stiff dough; rest 2 min.",
+        "Divide into 6; roll papers-thin.",
+        "Dock with fork; bake 450°F 8–10 min until blistered.",
+        "Cool completely."
+      ],
+      "notes": "Work quickly to prevent gluten development; bake on preheated baking stone.",
+      "equipment": ["rolling pin", "baking stone or sheet"]
     }
   },
   {
-    "title": "Seasonal Recipe 11",
-    "slug": "seasonal-recipe-11",
+    "title": "Lemon Lavender Sourdough",
+    "slug": "lemon-lavender-sourdough",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["spring", "sourdough", "floral", "artisan"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Spring",
+      "holidays": [],
+      "featuredDates": { "start": "04-15", "end": "06-15" },
+      "category": ["sourdough", "enriched"],
+      "occasion": ["everyday", "celebration"],
+      "prepTime": "0 hours 20 minutes",
+      "bakeTime": "0 hours 40 minutes",
+      "totalTime": "7 hours",
+      "difficulty": "intermediate",
+      "yield": "1 boule",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Water: 350ml",
+        "Active Sourdough Starter: 100g",
+        "Salt: 10g",
+        "Dried Lavender: 1 tbsp",
+        "Lemon Zest: from 1 lemon",
+        "Honey: 1 tbsp"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 11."
+      "method": [
+        "Autolyse flour, water, starter 30 min.",
+        "Add salt, lavender, zest, honey; mix well.",
+        "Bulk ferment 4 hr with stretch-folds every 45 min.",
+        "Pre-shape; bench rest 20 min.",
+        "Shape; proof 2–3 hr until puffy.",
+        "Bake in 475°F Dutch oven: 20 min covered, 20 min uncovered.",
+        "Cool 1 hr before slicing."
+      ],
+      "notes": "Crush lavender between palms to release oils; pairing with honey butter enhances flavor.",
+      "equipment": ["Dutch oven", "banneton", "zester"]
     }
   },
   {
-    "title": "Seasonal Recipe 12",
-    "slug": "seasonal-recipe-12",
+    "title": "Potato Rosemary Rolls",
+    "slug": "potato-rosemary-rolls",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["spring", "rolls", "potato", "herbs"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Spring",
+      "holidays": [],
+      "featuredDates": { "start": "05-01", "end": "06-30" },
+      "category": ["enriched", "yeast bread"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 30 minutes",
+      "bakeTime": "0 hours 20 minutes",
+      "totalTime": "3 hours",
+      "difficulty": "intermediate",
+      "yield": "12 rolls",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 450g",
+        "Mashed Potato (cooled): 150g",
+        "Warm Water: 100ml",
+        "Active Dry Yeast: 7g",
+        "Salt: 1 tsp",
+        "Butter: 50g, melted",
+        "Fresh Rosemary: 1 tbsp, chopped"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 12."
+      "method": [
+        "Bloom yeast in water 5 min; add potato, butter.",
+        "Mix in flour, salt, rosemary; knead 8 min.",
+        "Rise 1 hr until doubled.",
+        "Divide into 12; shape; proof 45 min.",
+        "Brush with butter; bake 375°F 18–20 min.",
+        "Cool briefly before serving."
+      ],
+      "notes": "Use russet potatoes for fluffy crumb; brush with garlic-herb butter.",
+      "equipment": ["mixing bowl", "baking sheet"]
     }
   },
   {
-    "title": "Seasonal Recipe 13",
-    "slug": "seasonal-recipe-13",
+    "title": "Lemon Poppy Seed Quick Bread",
+    "slug": "lemon-poppy-seed-quick-bread",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["spring", "quick bread", "citrus", "beginner"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Spring",
+      "holidays": [],
+      "featuredDates": { "start": "05-01", "end": "06-30" },
+      "category": ["quick bread"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 15 minutes",
+      "bakeTime": "0 hours 50 minutes",
+      "totalTime": "1 hour 10 minutes",
+      "difficulty": "beginner",
+      "yield": "1 loaf",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "All-Purpose Flour: 300g",
+        "Sugar: 200g",
+        "Baking Powder: 2 tsp",
+        "Salt: 1/2 tsp",
+        "Milk: 120ml",
+        "Vegetable Oil: 80ml",
+        "Eggs: 2",
+        "Lemon Zest: 2 tsp",
+        "Lemon Juice: 2 tbsp",
+        "Poppy Seeds: 2 tbsp"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 13."
+      "method": [
+        "Preheat to 350°F; grease loaf pan.",
+        "Whisk flour, sugar, powder, salt.",
+        "Mix milk, oil, eggs, zest, juice; stir into dry until just combined.",
+        "Fold in poppy seeds.",
+        "Bake 50–55 min until tester clean.",
+        "Cool 10 min in pan, then on rack."
+      ],
+      "notes": "Avoid overmixing to keep tender crumb; glaze with lemon icing if desired.",
+      "equipment": ["9×5 loaf pan", "mixing bowls"]
     }
   },
   {
-    "title": "Seasonal Recipe 14",
-    "slug": "seasonal-recipe-14",
+    "title": "Campfire Irish Soda Bread",
+    "slug": "campfire-irish-soda-bread",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["summer", "campfire", "quick bread", "outdoors"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Summer",
+      "holidays": [],
+      "featuredDates": { "start": "06-01", "end": "08-31" },
+      "category": ["quick bread"],
+      "occasion": ["everyday", "celebration"],
+      "prepTime": "0 hours 10 minutes",
+      "bakeTime": "0 hours 20 minutes",
+      "totalTime": "0 hours 30 minutes",
+      "difficulty": "beginner",
+      "yield": "1 round loaf",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "All-Purpose Flour: 450g",
+        "Baking Soda: 1 tsp",
+        "Salt: 1 tsp",
+        "Buttermilk: 400ml"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 14."
+      "method": [
+        "Preheat Dutch oven or cast-iron pot over campfire coals.",
+        "Mix flour, baking soda, salt in bowl; stir in buttermilk to form a sticky dough.",
+        "Shape into round; place on oiled surface in pot.",
+        "Cover; bake 20 min covered, then uncover and bake 5–10 min until golden.",
+        "Cool slightly before slicing."
+      ],
+      "notes": "Use fresh coals for even heat; wrap base of pot in foil to prevent scorching; serve warm with jam.",
+      "equipment": ["Dutch oven or cast-iron pot", "wooden spoon"]
     }
   },
   {
-    "title": "Seasonal Recipe 15",
-    "slug": "seasonal-recipe-15",
+    "title": "Tomato Basil Summer Focaccia",
+    "slug": "tomato-basil-summer-focaccia",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["summer", "focaccia", "tomato", "herb"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Summer",
+      "holidays": [],
+      "featuredDates": { "start": "06-01", "end": "08-31" },
+      "category": ["yeast bread"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 25 minutes",
+      "bakeTime": "0 hours 25 minutes",
+      "totalTime": "3 hours",
+      "difficulty": "intermediate",
+      "yield": "1 large sheet",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Water: 375ml",
+        "Instant Yeast: 7g",
+        "Salt: 10g",
+        "Olive Oil: 60ml + extra",
+        "Cherry Tomatoes: 200g, halved",
+        "Fresh Basil Leaves: 2 tbsp"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 15."
+      "method": [
+        "Mix flour, water, yeast, salt; rest 20 min.",
+        "Knead briefly; fold in 60ml oil; rise 1 hr.",
+        "Press into oiled pan; dimple; top with tomatoes and basil; drizzle oil.",
+        "Proof 30 min; bake 425°F 20–25 min until golden.",
+        "Cool slightly; garnish with extra basil."
+      ],
+      "notes": "Pat tomatoes dry to avoid soggy dough; press into dimples gently to preserve air pockets.",
+      "equipment": ["sheet pan", "mixing bowl"]
     }
   },
   {
-    "title": "Seasonal Recipe 16",
-    "slug": "seasonal-recipe-16",
+    "title": "Summer Berry Sourdough",
+    "slug": "summer-berry-sourdough",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["summer", "sourdough", "berries", "artisan"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Summer",
+      "holidays": [],
+      "featuredDates": { "start": "06-15", "end": "08-15" },
+      "category": ["sourdough", "enriched"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 20 minutes",
+      "bakeTime": "0 hours 40 minutes",
+      "totalTime": "7 hours",
+      "difficulty": "intermediate",
+      "yield": "1 boule",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Water: 350ml",
+        "Active Sourdough Starter: 100g",
+        "Salt: 10g",
+        "Mixed Berries: 150g",
+        "Honey: 1 tbsp"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 16."
+      "method": [
+        "Autolyse flour, water, starter 30 min.",
+        "Add salt and honey; mix; bulk ferment 4 hr with stretch-folds.",
+        "Gently fold in berries after second fold.",
+        "Shape; cold proof 12 hr.",
+        "Bake in 475°F Dutch oven: 20 min covered, 20 min uncovered.",
+        "Cool completely before slicing."
+      ],
+      "notes": "Toss berries lightly in flour to minimize moisture; adjust bake time if loaf is very wet.",
+      "equipment": ["Dutch oven", "banneton"]
     }
   },
   {
-    "title": "Seasonal Recipe 17",
-    "slug": "seasonal-recipe-17",
+    "title": "July 4th Hamburger Buns",
+    "slug": "july-4th-hamburger-buns",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["summer", "holiday", "buns", "4th of July"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Summer",
+      "holidays": ["July Fourth"],
+      "featuredDates": { "start": "07-04", "end": "07-04" },
+      "category": ["yeast bread", "holiday bread"],
+      "occasion": ["holiday specific", "celebration"],
+      "prepTime": "0 hours 25 minutes",
+      "bakeTime": "0 hours 15 minutes",
+      "totalTime": "2 hours 45 minutes",
+      "difficulty": "intermediate",
+      "yield": "8 buns",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Warm Milk: 200ml",
+        "Active Dry Yeast: 7g",
+        "Sugar: 25g",
+        "Salt: 1 tsp",
+        "Butter: 30g, softened",
+        "Egg: 1",
+        "Sesame Seeds: for topping"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 17."
+      "method": [
+        "Activate yeast in milk+sugar 5 min.",
+        "Mix flour, salt, butter, egg; knead 8–10 min.",
+        "Rise 1.5 hr until doubled.",
+        "Divide into 8; shape; proof 45 min.",
+        "Egg wash; sprinkle seeds; bake 375°F 12–15 min.",
+        "Cool on rack."
+      ],
+      "notes": "Chill dough 10 min before shaping for uniform buns; brush with melted butter after baking for shine.",
+      "equipment": ["mixing bowl", "baking sheet"]
     }
   },
   {
-    "title": "Seasonal Recipe 18",
-    "slug": "seasonal-recipe-18",
+    "title": "July 4th Hot Dog Buns",
+    "slug": "july-4th-hot-dog-buns",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["summer", "holiday", "buns", "4th of July"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Summer",
+      "holidays": ["July Fourth"],
+      "featuredDates": { "start": "07-04", "end": "07-04" },
+      "category": ["yeast bread", "holiday bread"],
+      "occasion": ["holiday specific", "celebration"],
+      "prepTime": "0 hours 25 minutes",
+      "bakeTime": "0 hours 15 minutes",
+      "totalTime": "2 hours 45 minutes",
+      "difficulty": "intermediate",
+      "yield": "8 buns",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Warm Water: 200ml",
+        "Active Dry Yeast: 7g",
+        "Sugar: 25g",
+        "Salt: 1 tsp",
+        "Butter: 30g, softened"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 18."
+      "method": [
+        "Bloom yeast in water+sugar 5 min.",
+        "Mix flour, salt, butter; knead 8–10 min.",
+        "Rise 1.5 hr until doubled.",
+        "Divide into 8; shape hot dog buns; proof 45 min.",
+        "Bake 375°F 12–15 min until golden.",
+        "Cool before serving."
+      ],
+      "notes": "Use steam in oven for softer crust; score each bun lightly lengthwise before baking.",
+      "equipment": ["mixing bowl", "baking sheet"]
     }
   },
   {
-    "title": "Seasonal Recipe 19",
-    "slug": "seasonal-recipe-19",
+    "title": "Lemon Blueberry Quick Bread",
+    "slug": "lemon-blueberry-quick-bread",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["summer", "quick bread", "citrus", "berries"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Summer",
+      "holidays": [],
+      "featuredDates": { "start": "06-01", "end": "07-31" },
+      "category": ["quick bread"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 15 minutes",
+      "bakeTime": "0 hours 50 minutes",
+      "totalTime": "1 hour 10 minutes",
+      "difficulty": "beginner",
+      "yield": "1 loaf",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "All-Purpose Flour: 300g",
+        "Sugar: 200g",
+        "Baking Powder: 2 tsp",
+        "Salt: 1/2 tsp",
+        "Milk: 120ml",
+        "Vegetable Oil: 80ml",
+        "Eggs: 2",
+        "Lemon Zest: 2 tsp",
+        "Lemon Juice: 2 tbsp",
+        "Blueberries: 150g"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 19."
+      "method": [
+        "Preheat 350°F; grease pan.",
+        "Whisk flour, sugar, powder, salt.",
+        "Mix milk, oil, eggs, zest, juice; stir into dry until just combined.",
+        "Fold in blueberries.",
+        "Bake 50–55 min until tester clean.",
+        "Cool 10 min in pan, then on rack."
+      ],
+      "notes": "Toss berries in flour before folding to prevent sinking; serve with lemon glaze.",
+      "equipment": ["9×5 loaf pan", "mixing bowls"]
     }
   },
   {
-    "title": "Seasonal Recipe 20",
-    "slug": "seasonal-recipe-20",
+    "title": "Olive Oil & Lemon Summer Loaf",
+    "slug": "olive-oil-lemon-summer-loaf",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["summer", "olive oil", "citrus", "artisan"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Summer",
+      "holidays": [],
+      "featuredDates": { "start": "06-01", "end": "08-31" },
+      "category": ["yeast bread", "enriched"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 20 minutes",
+      "bakeTime": "0 hours 35 minutes",
+      "totalTime": "3 hours",
+      "difficulty": "intermediate",
+      "yield": "1 loaf",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Water: 300ml",
+        "Instant Yeast: 7g",
+        "Salt: 10g",
+        "Olive Oil: 60ml",
+        "Honey: 1 tbsp",
+        "Lemon Zest: from 1 lemon"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 20."
+      "method": [
+        "Mix flour, water, yeast, salt, oil, honey, zest; rest 20 min.",
+        "Knead 5 min; rise 1 hr until doubled.",
+        "Shape; proof 45 min.",
+        "Bake 375°F 30–35 min until golden.",
+        "Cool before slicing."
+      ],
+      "notes": "Brush with olive oil immediately after baking for sheen; fold in chopped olives for variation.",
+      "equipment": ["loaf pan", "mixing bowl"]
     }
   },
   {
-    "title": "Seasonal Recipe 21",
-    "slug": "seasonal-recipe-21",
+    "title": "Grilled Garlic-Herb Flatbread",
+    "slug": "grilled-garlic-herb-flatbread",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["summer", "grill", "flatbread", "herb"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Summer",
+      "holidays": [],
+      "featuredDates": { "start": "06-01", "end": "08-31" },
+      "category": ["quick bread", "yeast bread"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 20 minutes",
+      "bakeTime": "0 hours 5 minutes (per batch)",
+      "totalTime": "2 hours",
+      "difficulty": "intermediate",
+      "yield": "6 flatbreads",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 400g",
+        "Water: 250ml",
+        "Instant Yeast: 7g",
+        "Salt: 1 tsp",
+        "Olive Oil: 2 tbsp",
+        "Garlic: 2 cloves, minced",
+        "Mixed Herbs: 2 tbsp (rosemary, thyme, oregano)"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 21."
+      "method": [
+        "Mix flour, water, yeast, salt; knead 5 min; rest 15 min.",
+        "Divide into 6; roll thin.",
+        "Brush with oil-garlic-herb mixture.",
+        "Grill on hot grates 2–3 min per side until charred spots form.",
+        "Serve warm."
+      ],
+      "notes": "Keep dough covered to prevent drying; adjust grill heat to avoid burning.",
+      "equipment": ["grill or grill pan", "mixing bowl"]
     }
   },
   {
-    "title": "Seasonal Recipe 22",
-    "slug": "seasonal-recipe-22",
+    "title": "Harvest Whole Wheat Bread",
+    "slug": "harvest-whole-wheat-bread",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["fall", "whole grain", "everyday", "harvest"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Fall",
+      "holidays": [],
+      "featuredDates": { "start": "09-01", "end": "10-15" },
+      "category": ["yeast bread", "whole grain"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 25 minutes",
+      "bakeTime": "0 hours 35 minutes",
+      "totalTime": "3 hours",
+      "difficulty": "intermediate",
+      "yield": "1 loaf",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Whole Wheat Flour: 400g",
+        "Bread Flour: 200g",
+        "Water: 375ml",
+        "Active Dry Yeast: 7g",
+        "Salt: 10g",
+        "Honey: 30g",
+        "Olive Oil: 30ml"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 22."
+      "method": [
+        "Mix flours, yeast, honey, salt; add water and oil; stir to combine.",
+        "Knead 8–10 min until smooth.",
+        "Rise 1–1.5 hr until doubled.",
+        "Shape into loaf; proof 45 min.",
+        "Bake 375°F 30–35 min until hollow-sounding.",
+        "Cool on rack before slicing."
+      ],
+      "notes": "For extra nutty flavor, toast and grind flaxseed into dough; extend bulk ferment by 30 minutes for deeper taste.",
+      "equipment": ["9×5 loaf pan", "mixing bowl"]
     }
   },
   {
-    "title": "Seasonal Recipe 23",
-    "slug": "seasonal-recipe-23",
+    "title": "Beer & Cheddar Quick Bread",
+    "slug": "beer-cheddar-quick-bread",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["fall", "quick bread", "savory", "beer"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Fall",
+      "holidays": [],
+      "featuredDates": { "start": "09-15", "end": "11-15" },
+      "category": ["quick bread"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 15 minutes",
+      "bakeTime": "0 hours 50 minutes",
+      "totalTime": "1 hour 5 minutes",
+      "difficulty": "beginner",
+      "yield": "1 loaf",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "All-Purpose Flour: 300g",
+        "Baking Powder: 2 tsp",
+        "Salt: 1 tsp",
+        "Beer (amber): 350ml",
+        "Grated Cheddar: 150g",
+        "Chopped Chives: 2 tbsp"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 23."
+      "method": [
+        "Preheat oven to 350°F; grease pan.",
+        "Whisk flour, powder, salt in bowl.",
+        "Stir in beer until just mixed; fold in cheese and chives.",
+        "Pour into pan; bake 45–50 min until golden and tester clean.",
+        "Cool 10 min before removing."
+      ],
+      "notes": "Use a craft ale for richer flavor; swap beer for apple cider for nonalcoholic version.",
+      "equipment": ["9×5 loaf pan", "mixing bowl"]
     }
   },
   {
-    "title": "Seasonal Recipe 24",
-    "slug": "seasonal-recipe-24",
+    "title": "Pumpkin Yeast Bread with Maple Glaze",
+    "slug": "pumpkin-yeast-bread-with-maple-glaze",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["fall", "pumpkin", "Thanksgiving", "holiday"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Fall",
+      "holidays": ["Thanksgiving"],
+      "featuredDates": { "start": "10-01", "end": "11-30" },
+      "category": ["yeast bread", "holiday bread"],
+      "occasion": ["holiday specific", "celebration"],
+      "prepTime": "0 hours 30 minutes",
+      "bakeTime": "0 hours 30 minutes",
+      "totalTime": "4 hours",
+      "difficulty": "intermediate",
+      "yield": "1 loaf",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 600g",
+        "Pumpkin Puree: 200g",
+        "Warm Milk: 200ml",
+        "Active Dry Yeast: 10g",
+        "Sugar: 50g",
+        "Salt: 10g",
+        "Butter: 50g, softened",
+        "Maple Syrup: 60ml"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 24."
+      "method": [
+        "Activate yeast in milk + 1 tbsp sugar 5 min.",
+        "Mix flour, sugar, salt; add pumpkin, butter, yeast mix; knead 8–10 min.",
+        "Rise 1.5–2 hr until doubled.",
+        "Shape; proof 45–60 min.",
+        "Bake 375°F 25–30 min until golden.",
+        "Whisk maple syrup + 1 tbsp water; brush on warm loaf."
+      ],
+      "notes": "Add pumpkin pie spice (1 tsp) for extra warmth; drizzle more glaze if desired.",
+      "equipment": ["9×5 loaf pan", "mixing bowl"]
     }
   },
   {
-    "title": "Seasonal Recipe 25",
-    "slug": "seasonal-recipe-25",
+    "title": "Cranberry Orange Sourdough",
+    "slug": "cranberry-orange-sourdough",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["fall", "sourdough", "fruit", "artisan"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Fall",
+      "holidays": ["Thanksgiving"],
+      "featuredDates": { "start": "10-15", "end": "11-30" },
+      "category": ["sourdough"],
+      "occasion": ["everyday", "celebration"],
+      "prepTime": "0 hours 20 minutes",
+      "bakeTime": "0 hours 45 minutes",
+      "totalTime": "7 hours",
+      "difficulty": "intermediate",
+      "yield": "1 boule",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 500g",
+        "Water: 350ml",
+        "Active Sourdough Starter: 100g",
+        "Salt: 10g",
+        "Dried Cranberries: 100g",
+        "Orange Zest: 2 tbsp"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 25."
+      "method": [
+        "Autolyse flour+water 30 min.",
+        "Add starter, salt; mix until cohesive.",
+        "Fold in cranberries and zest.",
+        "Bulk ferment 4–6 hr with stretch-folds.",
+        "Shape; cold proof 12–16 hr.",
+        "Bake in heated Dutch oven at 475°F: 20 min covered, 20 min uncovered.",
+        "Cool fully before slicing."
+      ],
+      "notes": "Soak cranberries in warm water/orange juice 15 min for softer inclusions; score a leaf motif.",
+      "equipment": ["Dutch oven", "banneton"]
     }
   },
   {
-    "title": "Seasonal Recipe 26",
-    "slug": "seasonal-recipe-26",
+    "title": "Sweet Potato Dinner Rolls",
+    "slug": "sweet-potato-dinner-rolls",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["fall", "rolls", "sweet potato", "holiday"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Fall",
+      "holidays": ["Thanksgiving"],
+      "featuredDates": { "start": "11-01", "end": "11-30" },
+      "category": ["enriched", "yeast bread"],
+      "occasion": ["holiday specific", "everyday"],
+      "prepTime": "0 hours 30 minutes",
+      "bakeTime": "0 hours 20 minutes",
+      "totalTime": "3 hours",
+      "difficulty": "intermediate",
+      "yield": "12 rolls",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 450g",
+        "Mashed Sweet Potato: 150g",
+        "Warm Milk: 100ml",
+        "Active Dry Yeast: 7g",
+        "Sugar: 30g",
+        "Salt: 1 tsp",
+        "Butter: 50g, softened"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 26."
+      "method": [
+        "Bloom yeast in milk+1 tsp sugar 5 min; add sweet potato.",
+        "Mix in flour, salt, butter; knead 8 min.",
+        "Rise 1 hr until doubled.",
+        "Divide into 12; shape; proof 45 min.",
+        "Bake 375°F 18–20 min until golden.",
+        "Brush tops with melted butter."
+      ],
+      "notes": "Use orange-fleshed potatoes for color; add chopped rosemary for savory twist.",
+      "equipment": ["mixing bowl", "baking sheet"]
     }
   },
   {
-    "title": "Seasonal Recipe 27",
-    "slug": "seasonal-recipe-27",
+    "title": "Thanksgiving Cornbread",
+    "slug": "thanksgiving-cornbread",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["fall", "cornbread", "Thanksgiving", "quick bread"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Fall",
+      "holidays": ["Thanksgiving"],
+      "featuredDates": { "start": "11-15", "end": "11-30" },
+      "category": ["quick bread", "holiday bread"],
+      "occasion": ["holiday specific"],
+      "prepTime": "0 hours 15 minutes",
+      "bakeTime": "0 hours 25 minutes",
+      "totalTime": "0 hours 40 minutes",
+      "difficulty": "beginner",
+      "yield": "9×9 pan",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Cornmeal: 200g",
+        "All-Purpose Flour: 100g",
+        "Baking Powder: 2 tsp",
+        "Salt: 1 tsp",
+        "Sugar: 30g",
+        "Milk: 240ml",
+        "Egg: 1",
+        "Butter: 50g, melted"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 27."
+      "method": [
+        "Preheat to 400°F; grease pan.",
+        "Whisk cornmeal, flour, powder, salt, sugar.",
+        "Stir in milk, egg, butter until combined.",
+        "Pour into pan; bake 20–25 min.",
+        "Cool briefly; cut into squares."
+      ],
+      "notes": "Fold in corn kernels or jalapeños for variation; bake in cast-iron skillet for crisper crust.",
+      "equipment": ["9×9 baking pan", "mixing bowl"]
     }
   },
   {
-    "title": "Seasonal Recipe 28",
-    "slug": "seasonal-recipe-28",
+    "title": "Multigrain Seeded Batard",
+    "slug": "multigrain-seeded-batard",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["fall", "multigrain", "seeds", "artisan"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Fall",
+      "holidays": [],
+      "featuredDates": { "start": "09-01", "end": "10-31" },
+      "category": ["yeast bread", "whole grain"],
+      "occasion": ["everyday"],
+      "prepTime": "0 hours 25 minutes",
+      "bakeTime": "0 hours 30 minutes",
+      "totalTime": "3 hours 30 minutes",
+      "difficulty": "intermediate",
+      "yield": "2 batards",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "Bread Flour: 300g",
+        "Whole Wheat Flour: 200g",
+        "Rolled Oats: 50g",
+        "Mixed Seeds (sesame, sunflower, flax): 100g",
+        "Water: 375ml",
+        "Active Dry Yeast: 7g",
+        "Salt: 10g"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 28."
+      "method": [
+        "Combine flours, oats, seeds, yeast, salt; add water; mix.",
+        "Knead 8–10 min until elastic.",
+        "Rise 1 hr until doubled.",
+        "Divide; shape into batards; proof 45 min.",
+        "Bake 425°F 25–30 min with steam.",
+        "Cool completely before slicing."
+      ],
+      "notes": "Toast seeds lightly before adding for aroma; score deeply to showcase seed crust.",
+      "equipment": ["baking stone or sheet", "bench scraper"]
     }
   },
   {
-    "title": "Seasonal Recipe 29",
-    "slug": "seasonal-recipe-29",
+    "title": "Apple Cinnamon Quick Bread",
+    "slug": "apple-cinnamon-quick-bread",
     "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
+    "tags": ["fall", "quick bread", "apple", "cinnamon"],
     "is_public": true,
     "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
     "data": {
+      "season": "Fall",
+      "holidays": [],
+      "featuredDates": { "start": "09-15", "end": "11-30" },
+      "category": ["quick bread"],
+      "occasion": ["everyday", "celebration"],
+      "prepTime": "0 hours 15 minutes",
+      "bakeTime": "0 hours 50 minutes",
+      "totalTime": "1 hour 5 minutes",
+      "difficulty": "beginner",
+      "yield": "1 loaf",
       "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+        "All-Purpose Flour: 300g",
+        "Sugar: 150g",
+        "Baking Powder: 2 tsp",
+        "Ground Cinnamon: 2 tsp",
+        "Salt: ½ tsp",
+        "Milk: 120ml",
+        "Vegetable Oil: 80ml",
+        "Eggs: 2",
+        "Apple (peeled, diced): 150g"
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 29."
-    }
-  },
-  {
-    "title": "Seasonal Recipe 30",
-    "slug": "seasonal-recipe-30",
-    "folder": "Seasonal",
-    "tags": [
-      "seasonal",
-      "example"
-    ],
-    "is_public": true,
-    "user_id": "66d74ee0-b848-4b4d-b37c-6197d5d01d66",
-    "data": {
-      "ingredients": [
-        "1 cup flour",
-        "1/2 cup water"
+      "method": [
+        "Preheat oven to 350°F; grease a 9×5 loaf pan.",
+        "Whisk flour, sugar, baking powder, cinnamon, and salt in a bowl.",
+        "In another bowl, beat eggs, milk, and oil until combined.",
+        "Stir wet ingredients into dry just until moistened.",
+        "Fold in diced apple gently.",
+        "Pour batter into pan; bake 50–55 minutes until a tester comes out clean.",
+        "Cool 10 minutes in pan, then transfer to rack."
       ],
-      "instructions": "Mix ingredients and bake at 350°F for 30 minutes.",
-      "notes": "This is a sample placeholder for recipe 30."
+      "notes": "Use tart apples (e.g. Granny Smith) for balance; toast walnuts into the batter for extra crunch.",
+      "equipment": ["9×5 loaf pan", "mixing bowls"]
     }
   }
 ]
