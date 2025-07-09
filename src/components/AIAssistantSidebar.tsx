@@ -59,7 +59,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
       <div className="fixed right-4 bottom-4 z-50">
         <div 
           onClick={onToggle}
-          className="relative w-16 h-16 cursor-pointer transform transition-transform duration-200 hover:scale-105 touch-manipulation"
+          className="relative w-20 h-20 cursor-pointer transform transition-transform duration-200 hover:scale-105 touch-manipulation"
         >
           {/* Circular window frame */}
           <div className="absolute inset-0 rounded-full border-4 border-primary bg-background shadow-warm"></div>
@@ -68,15 +68,27 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
           <img 
             src="/lovable-uploads/6b5f1503-9015-4968-bc0e-f3cab80e6b7d.png"
             alt="Crusty - Baker's Helper"
-            className="w-full h-full rounded-full object-cover"
+            className="w-full h-full rounded-full object-cover relative z-10"
+            onError={(e) => {
+              console.log('Avatar image failed to load');
+              e.currentTarget.style.display = 'none';
+            }}
+            onLoad={() => {
+              console.log('Avatar image loaded successfully');
+            }}
           />
           
+          {/* Fallback content if image doesn't load */}
+          <div className="absolute inset-0 rounded-full bg-primary flex items-center justify-center z-5">
+            <MessageCircle className="h-8 w-8 text-primary-foreground" />
+          </div>
+          
           {/* Subtle glow effect */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-200"></div>
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-200 z-20"></div>
         </div>
         
         {/* Tooltip */}
-        <div className="absolute -top-12 right-0 bg-primary text-primary-foreground px-3 py-1 rounded-lg text-sm whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+        <div className="absolute -top-12 right-0 bg-primary text-primary-foreground px-3 py-1 rounded-lg text-sm whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity duration-200 pointer-events-none z-30">
           Chat with Crusty!
         </div>
       </div>
