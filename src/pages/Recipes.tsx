@@ -46,7 +46,7 @@ const Recipes = () => {
           <img 
             src="/lovable-uploads/fc6b2aed-f1bf-4707-8c25-728a6dffa9ad.png"
             alt="Baking Great Bread at Home: A Journey Through the Seasons"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-left"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
           
