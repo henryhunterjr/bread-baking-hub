@@ -29,6 +29,8 @@ import OfflineFallback from "./pages/OfflineFallback";
 import CrustAndCrumb from "./pages/CrustAndCrumb";
 import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
+import SearchTest from "./pages/SearchTest";
+import InlineSearchTestPage from "./pages/InlineSearchTest";
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -71,6 +73,8 @@ const App = () => {
               <Route path="/legal" element={<Legal />} />
               <Route path="/r/:slug" element={<PublicRecipe />} />
               <Route path="/feed.xml" element={<FeedRedirect />} />
+              <Route path="/search-test" element={<SearchTest />} />
+              <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
               <Route path="/offline" element={<OfflineFallback />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
