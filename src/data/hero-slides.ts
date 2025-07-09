@@ -45,7 +45,7 @@ export const heroSlides: HeroSlide[] = [
     description: "Finally, a sourdough guide that doesn't take itself too seriously. This book cuts through the mystique to deliver practical advice that works in real kitchens for real people.",
     backgroundImage: heroSourdoughRest,
     overlayPosition: "right",
-    amazonUrl: "https://read.amazon.com/sample/B0FGQPM4TG?clientId=share",
+    amazonUrl: "https://a.co/d/7Q86sEr",
     previewContent: `
       <h2>Sourdough for the Rest of Us - Preview</h2>
       <h3>Chapter 1: Your Sourdough Starter - The Drama Queen of the Kitchen</h3>

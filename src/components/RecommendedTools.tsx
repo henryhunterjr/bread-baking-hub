@@ -27,10 +27,10 @@ const products: Product[] = [
     image: '/lovable-uploads/6cda5f41-4056-43fc-951f-589a64de6f9f.png'
   },
   {
-    name: 'ModKitchen – Bread Baking Kit',
+    name: 'ModKitchn – Bread Baking Kit',
     description: 'Includes proofing basket, lame, flour sack towels, and more. A curated kit to elevate your home bread game.',
     coupon: 'BAKINGGREATBREAD10',
-    url: 'https://modkitchen.com/discount/BAKINGGREATBREAD10',
+    url: 'https://modkitchn.com/discount/BAKINGGREATBREAD10',
     image: '/lovable-uploads/42fff4a1-254b-430a-a0aa-87933904ca43.png'
   },
   {
