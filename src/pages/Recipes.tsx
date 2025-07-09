@@ -41,28 +41,35 @@ const Recipes = () => {
       <Header />
       
       <main>
-        {/* Hero Image */}
-        <div className="relative h-96 overflow-hidden">
+        {/* Hero Section with Book Card */}
+        <div className="relative h-[600px] overflow-hidden">
           <img 
-            src="/lovable-uploads/348f0bf8-a53c-4f82-873f-51d111f5ece7.png"
+            src="/lovable-uploads/fc6b2aed-f1bf-4707-8c25-728a6dffa9ad.png"
             alt="Baking Great Bread at Home: A Journey Through the Seasons"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center text-white">
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">Seasonal Recipes</h1>
-              <p className="text-lg md:text-xl opacity-90">A Journey Through the Seasons</p>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+          
+          {/* Book Description Card */}
+          <div className="absolute left-8 top-1/2 transform -translate-y-1/2 max-w-md">
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Baking Great Bread at Home
+              </h1>
+              <p className="text-xl text-gray-700 mb-4 italic">
+                A Journey through the Seasons
+              </p>
+              <p className="text-lg text-gray-600 mb-6">
+                By Henry Hunter
+              </p>
+              <div className="border-t pt-6">
+                <p className="text-xl font-medium text-gray-900 leading-relaxed">
+                  What if this year you didn't just bake bread - You became a Baker
+                </p>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Hero Section */}
-        <SeasonalHero 
-          selectedSeason={selectedSeason}
-          onSeasonChange={handleSeasonChange}
-          seasonCounts={seasonCounts}
-        />
 
         <div className="max-w-7xl mx-auto px-4 py-8">
           {/* Introduction Card */}
