@@ -205,7 +205,10 @@ const LatestBlogPosts = () => {
                 type="text"
                 placeholder="Search blog posts…"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  console.log('Search input changed:', e.target.value);
+                  setSearchQuery(e.target.value);
+                }}
                 className="pl-10 bg-card border-primary/20 focus:border-primary"
               />
             </div>
