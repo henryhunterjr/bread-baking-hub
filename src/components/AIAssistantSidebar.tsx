@@ -67,7 +67,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
           {/* Avatar image */}
           <img 
             src="/lovable-uploads/6b5f1503-9015-4968-bc0e-f3cab80e6b7d.png"
-            alt="Crusty - Baker's Helper"
+            alt="KRUSTY - Baker's Helper"
             className="w-full h-full rounded-full object-cover relative z-10"
             onError={(e) => {
               console.log('Avatar image failed to load');
@@ -89,7 +89,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
         
         {/* Tooltip */}
         <div className="absolute -top-12 right-0 bg-primary text-primary-foreground px-3 py-1 rounded-lg text-sm whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity duration-200 pointer-events-none z-30">
-          Chat with Crusty!
+          Chat with KRUSTY!
         </div>
       </div>
     );
@@ -102,7 +102,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
           <div className="flex items-center justify-between">
             <CardTitle className="text-primary flex items-center gap-2">
               <MessageCircle className="h-5 w-5" />
-              Crusty - Baker's Helper
+              KRUSTY - Baker's Helper
             </CardTitle>
             <Button 
               variant="ghost" 
@@ -140,7 +140,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
               {messages.length === 0 && (
                 <div className="text-center text-muted-foreground py-8">
                   <MessageCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>Hello! I'm Crusty, your expert baking assistant. Ask me anything about baking!</p>
+                  <p>Hello! I'm KRUSTY, your expert baking assistant. Ask me anything about baking!</p>
                   <div className="text-xs text-muted-foreground mt-2 space-y-1">
                     <p>• Need help diagnosing your loaf?</p>
                     <p>• Looking for a recipe or tool?</p>

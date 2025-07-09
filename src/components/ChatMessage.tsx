@@ -1,4 +1,6 @@
-import { VoiceControls } from './VoiceControls';
+import { useTextToSpeech } from '@/hooks/useTextToSpeech';
+import { Button } from '@/components/ui/button';
+import { Volume2, VolumeX } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -12,7 +14,15 @@ interface ChatMessageProps {
 }
 
 export const ChatMessage = ({ message }: ChatMessageProps) => {
-  const voiceControls = VoiceControls({ onTranscript: () => {} });
+  const { speak, stop, isPlaying } = useTextToSpeech();
+
+  const handleSpeak = () => {
+    if (isPlaying) {
+      stop();
+    } else {
+      speak(message.content);
+    }
+  };
 
   return (
     <div
@@ -27,7 +37,18 @@ export const ChatMessage = ({ message }: ChatMessageProps) => {
       >
         <p className="text-sm whitespace-pre-wrap">{message.content}</p>
         {message.role === 'assistant' && (
-          <voiceControls.SpeakButton text={message.content} />
+          <Button
+            variant="ghost"
+            size="sm"
+            className="mt-2 h-6 p-1"
+            onClick={handleSpeak}
+          >
+            {isPlaying ? (
+              <VolumeX className="h-3 w-3" />
+            ) : (
+              <Volume2 className="h-3 w-3" />
+            )}
+          </Button>
         )}
       </div>
     </div>
