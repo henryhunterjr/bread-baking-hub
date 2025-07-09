@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Send, MessageCircle, X, Mic } from 'lucide-react';
+import { Send, MessageCircle, X, Mic, MicOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,9 +9,11 @@ import { Badge } from '@/components/ui/badge';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 import { useAIChat } from '@/hooks/useAIChat';
-import { VoiceControls } from './VoiceControls';
+import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
+import { useTextToSpeech } from '@/hooks/useTextToSpeech';
+import { useToast } from '@/hooks/use-toast';
 import { ChatMessage } from './ChatMessage';
-import { VoiceInterface } from './VoiceInterface';
+import krustyAvatar from '@/assets/krusty-avatar-upscaled.png';
 
 interface AIAssistantSidebarProps {
   recipeContext?: any;
@@ -25,13 +27,50 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
   const isMobile = useIsMobile();
   const isOnline = useNetworkStatus();
   const [input, setInput] = useState('');
+  const [micEnabled, setMicEnabled] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [timeoutWarning, setTimeoutWarning] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const warningTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { toast } = useToast();
   
   const { messages, isLoading, mode, setMode, sendMessage } = useAIChat({ recipeContext });
-  const voiceControls = VoiceControls({ 
-    onTranscript: setInput,
-    disabled: isLoading 
+  const { speak, isPlaying } = useTextToSpeech();
+
+  const speechRecognition = useSpeechRecognition({
+    onResult: ({ transcript }) => {
+      if (micEnabled) {
+        setInput(transcript);
+        // Auto-send in voice mode
+        handleSend(transcript);
+      } else {
+        setInput(transcript);
+      }
+      clearTimeouts();
+    },
+    onError: (error) => {
+      setIsListening(false);
+      clearTimeouts();
+      toast({
+        title: "Speech Recognition Error",
+        description: "Could not recognize speech. Please try again.",
+        variant: "destructive"
+      });
+    }
   });
+
+  const clearTimeouts = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    if (warningTimeoutRef.current) {
+      clearTimeout(warningTimeoutRef.current);
+      warningTimeoutRef.current = null;
+    }
+    setTimeoutWarning(false);
+  };
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
@@ -40,11 +79,70 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
     }
   }, [messages]);
 
-  const handleSend = async () => {
-    if (!input.trim() || isLoading || !isOnline) return;
+  // Auto-play Krusty's responses
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage && lastMessage.role === 'assistant' && !isLoading) {
+      speak(lastMessage.content);
+    }
+  }, [messages, isLoading, speak]);
+
+  const handleSend = async (message?: string) => {
+    const textToSend = message || input;
+    if (!textToSend.trim() || isLoading || !isOnline) return;
     
-    await sendMessage(input);
+    await sendMessage(textToSend);
     setInput('');
+  };
+
+  const toggleMic = async () => {
+    if (!speechRecognition.isSupported) {
+      toast({
+        title: "Voice Not Supported",
+        description: "Speech recognition requires HTTPS and a supported browser.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      if (!micEnabled) {
+        // Request permission first
+        await navigator.mediaDevices.getUserMedia({ audio: true });
+        setMicEnabled(true);
+        setIsListening(true);
+        speechRecognition.startListening();
+        
+        // Set warning timeout (7 seconds)
+        warningTimeoutRef.current = setTimeout(() => {
+          setTimeoutWarning(true);
+        }, 7000);
+        
+        // Set full timeout (15 seconds)
+        timeoutRef.current = setTimeout(() => {
+          setIsListening(false);
+          setMicEnabled(false);
+          speechRecognition.stopListening();
+          clearTimeouts();
+          toast({
+            title: "Speech Timeout",
+            description: "Mic turned off after 15 seconds of silence.",
+          });
+        }, 15000);
+        
+      } else {
+        setMicEnabled(false);
+        setIsListening(false);
+        speechRecognition.stopListening();
+        clearTimeouts();
+      }
+    } catch (error) {
+      toast({
+        title: "Microphone Error",
+        description: "Could not access microphone. Please check permissions.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -57,53 +155,27 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
   if (!isOpen) {
     return (
       <div className="fixed right-4 bottom-4 z-50">
-        <div className="relative">
-          {/* Avatar with click handler */}
-          <div 
-            onClick={onToggle}
-            className="relative w-20 h-20 cursor-pointer transform transition-transform duration-200 hover:scale-105 touch-manipulation"
-          >
-            {/* Circular window frame */}
-            <div className="absolute inset-0 rounded-full border-4 border-primary bg-background shadow-warm"></div>
-            
-            {/* Avatar image */}
-            <img 
-              src="/lovable-uploads/6b5f1503-9015-4968-bc0e-f3cab80e6b7d.png"
-              alt="KRUSTY - Baker's Helper"
-              className="w-full h-full rounded-full object-cover relative z-10"
-              onError={(e) => {
-                console.log('Avatar image failed to load');
-                e.currentTarget.style.display = 'none';
-              }}
-              onLoad={() => {
-                console.log('Avatar image loaded successfully');
-              }}
-            />
-            
-            {/* Fallback content if image doesn't load */}
-            <div className="absolute inset-0 rounded-full bg-primary flex items-center justify-center z-5">
-              <MessageCircle className="h-8 w-8 text-primary-foreground" />
-            </div>
-            
-            {/* Subtle glow effect */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-200 z-20"></div>
+        <div 
+          onClick={onToggle}
+          className="relative w-20 h-20 cursor-pointer transform transition-transform duration-200 hover:scale-105 touch-manipulation"
+        >
+          {/* Circular window frame */}
+          <div className="absolute inset-0 rounded-full border-4 border-primary bg-background shadow-warm"></div>
+          
+          {/* Avatar image */}
+          <img 
+            src={krustyAvatar}
+            alt="👨🏽‍🍳 Krusty | Baking Guide"
+            className="w-full h-full rounded-full object-cover relative z-10"
+          />
+          
+          {/* Fallback content if image doesn't load */}
+          <div className="absolute inset-0 rounded-full bg-primary flex items-center justify-center z-5">
+            <MessageCircle className="h-8 w-8 text-primary-foreground" />
           </div>
           
-          {/* Animated thought bubble */}
-          <div className="absolute -top-16 -left-32 z-40 animate-bounce">
-            <div className="relative bg-white rounded-2xl p-3 shadow-lg border-2 border-primary/20 max-w-48">
-              <p className="text-xs text-gray-700 font-medium text-center">
-                Click the mic to talk with me!
-              </p>
-              {/* Speech bubble tail */}
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2">
-                <div className="w-0 h-0 border-l-[10px] border-r-[10px] border-t-[10px] border-l-transparent border-r-transparent border-t-white"></div>
-                <div className="absolute -top-[12px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[12px] border-l-transparent border-r-transparent border-t-primary/20"></div>
-              </div>
-              {/* Small microphone icon */}
-              <Mic className="h-3 w-3 text-primary absolute -bottom-1 -right-1 bg-white rounded-full p-0.5" />
-            </div>
-          </div>
+          {/* Subtle glow effect */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-200 z-20"></div>
         </div>
       </div>
     );
@@ -114,10 +186,28 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
       <Card className="h-full rounded-none border-0">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-primary flex items-center gap-2">
-              <MessageCircle className="h-5 w-5" />
-              KRUSTY - Baker's Helper
-            </CardTitle>
+            <div className="flex items-center gap-3">
+              {/* Avatar in top-left */}
+              <div className={`relative w-12 h-12 transition-all duration-300 ${(isListening || isPlaying) ? 'shadow-lg shadow-primary/30' : ''}`}>
+                <img 
+                  src={krustyAvatar}
+                  alt="👨🏽‍🍳 Krusty"
+                  className={`w-full h-full rounded-full object-cover border-2 border-primary/30 transition-all duration-300 ${
+                    (isListening || isPlaying) ? 'ring-2 ring-primary ring-opacity-50 animate-pulse' : ''
+                  }`}
+                />
+              </div>
+              <div>
+                <CardTitle className="text-primary text-lg">
+                  👨🏽‍🍳 Krusty | Baking Guide
+                </CardTitle>
+                {(isListening || isPlaying) && (
+                  <p className="text-xs text-muted-foreground">
+                    {isListening ? '🎙️ Listening...' : '🗣️ Speaking...'}
+                  </p>
+                )}
+              </div>
+            </div>
             <Button 
               variant="ghost" 
               size="sm" 
@@ -190,22 +280,46 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder={isOnline ? "Ask about baking..." : "Offline - AI disabled"}
+                placeholder={
+                  !isOnline ? "Offline - AI disabled" :
+                  micEnabled ? "Voice mode active - speak now!" :
+                  "Ask about baking..."
+                }
                 disabled={isLoading || !isOnline}
-                className="pr-12"
+                className="pr-24"
               />
-              <div className="absolute right-1 top-1/2 -translate-y-1/2">
-                {voiceControls.MicButton}
+              <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                {timeoutWarning && (
+                  <span className="text-xs text-amber-600 animate-pulse mr-1">
+                    Still listening...
+                  </span>
+                )}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={`h-8 w-8 transition-colors ${
+                    micEnabled ? 'text-red-500 hover:text-red-600' : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                  onClick={toggleMic}
+                  disabled={isLoading || !isOnline}
+                  title={
+                    micEnabled ? "Mic is live - click to turn off" : "Click to talk to Krusty"
+                  }
+                >
+                  {micEnabled ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+                </Button>
               </div>
             </div>
-            <Button 
-              onClick={handleSend} 
-              disabled={!input.trim() || isLoading || !isOnline}
-              variant="hero"
-              className="touch-manipulation"
-            >
-              <Send className="h-4 w-4" />
-            </Button>
+            {!micEnabled && (
+              <Button 
+                onClick={() => handleSend()} 
+                disabled={!input.trim() || isLoading || !isOnline}
+                variant="hero"
+                className="touch-manipulation"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
+            )}
           </div>
         </CardContent>
       </Card>
