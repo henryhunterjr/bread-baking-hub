@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
 import { fetchBlogPosts, fetchCategories, BlogPost, WordPressCategory, FetchPostsResponse } from '@/utils/blogFetcher';
 import NewsletterSignup from './NewsletterSignup';
 import CategoryFilter from './blog/CategoryFilter';
@@ -10,6 +12,7 @@ import ErrorBoundary from './ErrorBoundary';
 import OfflineBanner from './OfflineBanner';
 import ProgressiveLoading from './blog/ProgressiveLoading';
 import { useBlogCache } from '@/utils/blogCache';
+import { useDebounce } from '@/hooks/useDebounce';
 
 const LatestBlogPosts = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -23,7 +26,9 @@ const LatestBlogPosts = () => {
   const [categoriesLoading, setCategoriesLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [useProgressiveLoading] = useState(true);
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   const { cachePosts, getCachedPosts, isOnline } = useBlogCache();
 
@@ -108,17 +113,29 @@ const LatestBlogPosts = () => {
     loadPosts();
   }, [currentPage, selectedCategory]);
 
-  // Filter posts by tags
+  // Filter posts by search query and tags
   useEffect(() => {
-    if (selectedTags.length === 0) {
-      setFilteredPosts(posts);
-    } else {
-      const filtered = posts.filter(post => 
+    let filtered = posts;
+    
+    // Apply search filter
+    if (debouncedSearchQuery.trim()) {
+      const searchLower = debouncedSearchQuery.toLowerCase();
+      filtered = filtered.filter(post => 
+        post.title.toLowerCase().includes(searchLower) ||
+        post.excerpt.toLowerCase().includes(searchLower) ||
+        post.tags.some(tag => tag.toLowerCase().includes(searchLower))
+      );
+    }
+    
+    // Apply tag filter
+    if (selectedTags.length > 0) {
+      filtered = filtered.filter(post => 
         selectedTags.every(tag => post.tags.includes(tag))
       );
-      setFilteredPosts(filtered);
     }
-  }, [posts, selectedTags]);
+    
+    setFilteredPosts(filtered);
+  }, [posts, selectedTags, debouncedSearchQuery]);
 
   const handleCategoryChange = (categoryId: number | undefined) => {
     setSelectedCategory(categoryId);
@@ -165,6 +182,20 @@ const LatestBlogPosts = () => {
             onToggleFilters={() => setShowFilters(!showFilters)}
             onCategoryChange={handleCategoryChange}
           />
+
+          {/* Search Input */}
+          <div className="mb-8 max-w-md mx-auto">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+              <Input
+                type="text"
+                placeholder="Search blog posts…"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 bg-card border-primary/20 focus:border-primary"
+              />
+            </div>
+          </div>
 
           {/* Tag Filter */}
           <TagFilter
