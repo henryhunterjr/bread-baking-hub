@@ -54,7 +54,7 @@ export const useBlogPosts = () => {
     loadCategories();
   }, []);
 
-  // Load posts when page or category changes
+  // Load posts when page, category, or search changes
   useEffect(() => {
     const loadPosts = async () => {
       try {
@@ -72,15 +72,15 @@ export const useBlogPosts = () => {
           }
         }
 
-        console.log('Loading blog posts for homepage...', { currentPage, selectedCategory });
-        const response: FetchPostsResponse = await fetchBlogPosts(currentPage, selectedCategory, 6);
+        console.log('Loading blog posts for homepage...', { currentPage, selectedCategory, searchQuery: debouncedSearchQuery });
+        const response: FetchPostsResponse = await fetchBlogPosts(currentPage, selectedCategory, 6, debouncedSearchQuery);
         console.log('Blog posts loaded successfully:', response);
         
         setPosts(response.posts);
         setTotalPages(response.totalPages);
         
         // Cache the posts for offline use
-        if (currentPage === 1) {
+        if (currentPage === 1 && !debouncedSearchQuery) {
           await cachePosts(response.posts, categories);
         }
       } catch (err) {
@@ -100,61 +100,21 @@ export const useBlogPosts = () => {
     };
 
     loadPosts();
-  }, [currentPage, selectedCategory]);
+  }, [currentPage, selectedCategory, debouncedSearchQuery]);
 
-  // Filter posts by search query and tags
+  // Filter posts by tags only (search is now handled server-side)
   useEffect(() => {
-    console.log('🔍 SEARCH FILTER EFFECT RUNNING:', { 
-      debouncedSearchQuery, 
-      postsCount: posts.length,
-      selectedTags,
-      currentTime: new Date().toISOString()
-    });
-    
     let filtered = posts;
     
-    // Apply search filter
-    if (debouncedSearchQuery.trim()) {
-      const searchLower = debouncedSearchQuery.toLowerCase();
-      console.log('🔍 APPLYING SEARCH FILTER for:', searchLower);
-      console.log('🔍 Posts to filter:', posts.map(p => ({ title: p.title, tags: p.tags })));
-      
-      const beforeFilter = filtered.length;
-      filtered = filtered.filter(post => {
-        const titleMatch = post.title.toLowerCase().includes(searchLower);
-        const excerptMatch = post.excerpt.toLowerCase().includes(searchLower);
-        const tagMatch = post.tags.some(tag => tag.toLowerCase().includes(searchLower));
-        
-        const matches = titleMatch || excerptMatch || tagMatch;
-        
-        if (matches) {
-          console.log('🔍 MATCH FOUND:', post.title, { titleMatch, excerptMatch, tagMatch });
-        }
-        
-        return matches;
-      });
-      
-      console.log('🔍 FILTER RESULTS:', {
-        beforeFilter,
-        afterFilter: filtered.length,
-        searchQuery: searchLower,
-        matchedTitles: filtered.map(p => p.title)
-      });
-    } else {
-      console.log('🔍 NO SEARCH QUERY - showing all posts');
-    }
-    
-    // Apply tag filter
+    // Apply tag filter only
     if (selectedTags.length > 0) {
-      console.log('🔍 APPLYING TAG FILTER:', selectedTags);
       filtered = filtered.filter(post => 
         selectedTags.every(tag => post.tags.includes(tag))
       );
     }
     
-    console.log('🔍 FINAL FILTERED POSTS:', filtered.length);
     setFilteredPosts(filtered);
-  }, [posts, selectedTags, debouncedSearchQuery]);
+  }, [posts, selectedTags]);
 
   const handleCategoryChange = (categoryId: number | undefined) => {
     setSelectedCategory(categoryId);
@@ -173,10 +133,9 @@ export const useBlogPosts = () => {
   };
 
   const handleSearchChange = (query: string) => {
-    console.log('🔍 SEARCH EVENT FIRED in useBlogPosts:', query);
-    console.log('🔍 Current posts count:', posts.length);
-    console.log('🔍 Current debouncedSearchQuery:', debouncedSearchQuery);
     setSearchQuery(query);
+    setCurrentPage(1); // Reset to first page when searching
+    setSelectedTags([]); // Clear tag filters when searching
   };
 
   return {
