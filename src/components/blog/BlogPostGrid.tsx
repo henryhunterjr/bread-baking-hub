@@ -1,7 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { BlogPost } from '@/utils/blogFetcher';
-import { trackBlogClick } from '@/utils/blogTracking';
+import { trackBlogClick } from '@/utils/blogEvents';
 import BlogPostSkeleton from './BlogPostSkeleton';
 import BlogPostMeta from './BlogPostMeta';
 import BlogPostSEO from './BlogPostSEO';

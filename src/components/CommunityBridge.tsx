@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MessageCircle, Users, ExternalLink } from 'lucide-react';
-import { trackCommunityShare, trackCommunityDiscussion } from '@/utils/analytics';
+import { trackCommunityShare, trackCommunityDiscussion } from '@/utils/appEvents';
 
 interface CommunityBridgeProps {
   symptomId: string;

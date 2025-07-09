@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ExternalLink, Play, X } from 'lucide-react';
-import { trackPodcastPlay, trackPodcastExternalLink } from '@/utils/analytics';
+import { trackPodcastPlay, trackPodcastExternalLink } from '@/utils/appEvents';
 
 const PodcastSection = () => {
   const [isPlayerOpen, setIsPlayerOpen] = useState(false);

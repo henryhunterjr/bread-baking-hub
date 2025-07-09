@@ -1,5 +1,5 @@
 import symptomsData from '@/data/symptoms.json';
-import { trackSymptomDetection } from '@/utils/analytics';
+import { trackSymptomDetection } from '@/utils/appEvents';
 
 interface Symptom {
   id: string;

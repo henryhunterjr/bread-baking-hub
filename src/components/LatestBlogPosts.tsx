@@ -4,7 +4,7 @@ import CategoryFilter from './blog/CategoryFilter';
 import BlogPostGrid from './blog/BlogPostGrid';
 import BlogPagination from './blog/BlogPagination';
 import TagFilter from './blog/TagFilter';
-import BlogSearch from './blog/BlogSearch';
+import SimpleSearch from './blog/SimpleSearch';
 import ErrorBoundary from './ErrorBoundary';
 import OfflineBanner from './OfflineBanner';
 import ProgressiveLoading from './blog/ProgressiveLoading';
@@ -63,7 +63,7 @@ const LatestBlogPosts = () => {
             onCategoryChange={handleCategoryChange}
           />
 
-          <BlogSearch
+          <SimpleSearch
             searchQuery={searchQuery}
             onSearchChange={handleSearchChange}
             className="mb-8"
