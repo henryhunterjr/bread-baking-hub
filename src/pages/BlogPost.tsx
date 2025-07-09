@@ -24,15 +24,25 @@ const BlogPost = () => {
         setLoading(true);
         setError(null);
         
-        // Search for post by slug in the URL
-        const response = await fetchBlogPosts(1, undefined, 100, slug);
-        const foundPost = response.posts.find(p => 
-          p.link.includes(slug) || p.link.endsWith(`/${slug}/`)
-        );
+        console.log('Looking for blog post with slug:', slug);
+        
+        // Search for post by slug - fetch more posts to increase chances of finding it
+        const response = await fetchBlogPosts(1, undefined, 100);
+        console.log('Fetched posts:', response.posts.length);
+        
+        const foundPost = response.posts.find(p => {
+          // Extract slug from WordPress URL same way as BlogPostGrid
+          const urlParts = p.link.split('/');
+          const postSlug = urlParts[urlParts.length - 2] || urlParts[urlParts.length - 1];
+          console.log('Comparing post slug:', postSlug, 'with:', slug, 'for post:', p.title);
+          return postSlug === slug;
+        });
         
         if (foundPost) {
+          console.log('Found post:', foundPost.title);
           setPost(foundPost);
         } else {
+          console.log('No post found for slug:', slug);
           setError('Blog post not found');
         }
       } catch (err) {
