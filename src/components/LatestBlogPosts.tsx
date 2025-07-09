@@ -115,16 +115,30 @@ const LatestBlogPosts = () => {
 
   // Filter posts by search query and tags
   useEffect(() => {
+    console.log('Search filter running:', { 
+      searchQuery: debouncedSearchQuery, 
+      postsCount: posts.length,
+      selectedTags 
+    });
+    
     let filtered = posts;
     
     // Apply search filter
     if (debouncedSearchQuery.trim()) {
       const searchLower = debouncedSearchQuery.toLowerCase();
-      filtered = filtered.filter(post => 
-        post.title.toLowerCase().includes(searchLower) ||
-        post.excerpt.toLowerCase().includes(searchLower) ||
-        post.tags.some(tag => tag.toLowerCase().includes(searchLower))
-      );
+      console.log('Applying search filter for:', searchLower);
+      
+      filtered = filtered.filter(post => {
+        const titleMatch = post.title.toLowerCase().includes(searchLower);
+        const excerptMatch = post.excerpt.toLowerCase().includes(searchLower);
+        const tagMatch = post.tags.some(tag => tag.toLowerCase().includes(searchLower));
+        
+        console.log('Post:', post.title, 'Title match:', titleMatch, 'Excerpt match:', excerptMatch, 'Tag match:', tagMatch, 'Tags:', post.tags);
+        
+        return titleMatch || excerptMatch || tagMatch;
+      });
+      
+      console.log('Filtered posts count:', filtered.length);
     }
     
     // Apply tag filter
