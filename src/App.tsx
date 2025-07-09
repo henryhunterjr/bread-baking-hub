@@ -27,6 +27,7 @@ import Community from "./pages/Community";
 import TroubleshootingPage from "./pages/TroubleshootingPage";
 import OfflineFallback from "./pages/OfflineFallback";
 import CrustAndCrumb from "./pages/CrustAndCrumb";
+import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
 
 // Feed redirect component
@@ -67,6 +68,7 @@ const App = () => {
               <Route path="/community" element={<Community />} />
               <Route path="/troubleshooting" element={<TroubleshootingPage />} />
               <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
+              <Route path="/legal" element={<Legal />} />
               <Route path="/r/:slug" element={<PublicRecipe />} />
               <Route path="/feed.xml" element={<FeedRedirect />} />
               <Route path="/offline" element={<OfflineFallback />} />

@@ -90,10 +90,12 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-stone-700 mt-12 pt-8 text-center">
+          <p className="text-muted-foreground text-sm mb-4">
+            © 2025 Henry Hunter. All rights reserved. Powered by Vitale Sourdough Co. and the Baking Great Bread at Home Facebook Group.
+          </p>
           <p className="text-muted-foreground text-sm">
-            © 2024 Baking Great Bread at Home. All rights reserved. | 
-            <Link to="/privacy" className="hover:text-primary transition-colors ml-1">Privacy Policy</Link> | 
-            <Link to="/terms" className="hover:text-primary transition-colors ml-1">Terms of Service</Link>
+            <Link to="/legal" className="hover:text-primary transition-colors">Legal Information</Link> | 
+            Contact us at <a href="mailto:vitalesourdough@gmail.com" className="hover:text-primary transition-colors">vitalesourdough@gmail.com</a>
           </p>
         </div>
       </div>

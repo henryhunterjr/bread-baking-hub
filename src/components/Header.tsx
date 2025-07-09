@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Info } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
@@ -50,6 +50,13 @@ const Header = () => {
               </Link>
               <Link to="/crust-and-crumb" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Crust & Crumb
+              </Link>
+              <Link 
+                to="/legal" 
+                className="text-header-foreground hover:text-primary px-2 py-2 rounded-md transition-colors"
+                title="Legal Information"
+              >
+                <Info className="h-4 w-4" />
               </Link>
               {user ? (
                 <>
@@ -109,6 +116,9 @@ const Header = () => {
               </Link>
               <Link to="/crust-and-crumb" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Crust & Crumb
+              </Link>
+              <Link to="/legal" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
+                Legal Information
               </Link>
               {user && (
                 <Link to="/my-recipes" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
