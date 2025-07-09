@@ -1,0 +1,124 @@
+{
+  "blogPosts": [
+    {
+      "title": "The Science Behind Perfect Sourdough Starter",
+      "url": "/blog/sourdough-starter-science",
+      "summary": "Understanding the microbiology and chemistry that makes sourdough starters thrive for consistent, tangy bread.",
+      "tags": ["sourdough", "science", "starter", "fermentation"]
+    },
+    {
+      "title": "Troubleshooting Dense Bread: Common Causes and Solutions",
+      "url": "/blog/dense-bread-solutions",
+      "summary": "Identifying why your bread turns out heavy and dense, with step-by-step fixes for better texture.",
+      "tags": ["troubleshooting", "texture", "beginner", "tips"]
+    }
+  ],
+  "recipes": [
+    {
+      "title": "Henry's Foolproof Sourdough",
+      "hydration": 75,
+      "url": "/recipes/henrys-foolproof-sourdough",
+      "tags": ["sourdough", "beginner-friendly", "no-knead"],
+      "featured": true
+    },
+    {
+      "title": "Classic French Baguette",
+      "hydration": 70,
+      "url": "/recipes/french-baguette",
+      "tags": ["french", "advanced", "shaping"],
+      "featured": false
+    }
+  ],
+  "books": [
+    {
+      "title": "Baking Great Bread at Home",
+      "description": "The complete guide to artisan bread making with over 100 tested recipes and troubleshooting tips.",
+      "purchaseLink": "/books/baking-great-bread",
+      "tags": ["comprehensive", "beginner-to-advanced", "techniques"]
+    },
+    {
+      "title": "From Oven to Market",
+      "description": "Start your home bakery business with proven strategies for scaling recipes and building a customer base.",
+      "purchaseLink": "/books/oven-to-market",
+      "tags": ["business", "scaling", "commercial"]
+    }
+  ],
+  "affiliateProducts": [
+    {
+      "name": "Lodge Cast Iron Dutch Oven",
+      "description": "Essential for steam baking perfect crusty artisan breads at home.",
+      "url": "https://affiliate-link.com/lodge-dutch-oven",
+      "categories": ["baking-equipment", "essential-tools"]
+    },
+    {
+      "name": "King Arthur Bread Flour",
+      "description": "High-protein flour perfect for strong gluten development in artisan breads.",
+      "url": "https://affiliate-link.com/ka-bread-flour",
+      "categories": ["ingredients", "flour"]
+    }
+  ],
+  "tools": [
+    {
+      "name": "Bread Calculator",
+      "useCase": "Calculate baker's percentages and scale recipes up or down easily.",
+      "purchaseLink": "/tools/bread-calculator",
+      "tags": ["calculation", "scaling", "bakers-percentage"]
+    },
+    {
+      "name": "Crust & Crumb Troubleshooter", 
+      "useCase": "Diagnose bread problems by uploading photos of your finished loaves.",
+      "purchaseLink": "/tools/crust-and-crumb",
+      "tags": ["troubleshooting", "visual-diagnosis", "ai-powered"]
+    }
+  ],
+  "siteRoutes": [
+    {
+      "label": "Home",
+      "path": "/",
+      "purpose": "Main landing page with overview of Henry's expertise and featured content",
+      "visibleInNav": true
+    },
+    {
+      "label": "Recipes",
+      "path": "/recipes",
+      "purpose": "Browse and search Henry's tested bread recipes with difficulty levels",
+      "visibleInNav": true
+    },
+    {
+      "label": "Books", 
+      "path": "/books",
+      "purpose": "Henry's published books on bread making and bakery business",
+      "visibleInNav": true
+    },
+    {
+      "label": "Blog",
+      "path": "/blog", 
+      "purpose": "Educational articles on bread science, techniques, and troubleshooting",
+      "visibleInNav": true
+    },
+    {
+      "label": "Tools",
+      "path": "/tools",
+      "purpose": "Interactive calculators and diagnostic tools for bread makers",
+      "visibleInNav": true
+    },
+    {
+      "label": "About",
+      "path": "/about",
+      "purpose": "Henry's background and mission to help home bakers succeed",
+      "visibleInNav": true
+    },
+    {
+      "label": "Troubleshooting",
+      "path": "/troubleshooting",
+      "purpose": "Comprehensive guide to diagnosing and fixing bread problems",
+      "visibleInNav": false
+    },
+    {
+      "label": "Bread Glossary",
+      "path": "/glossary",
+      "purpose": "Definitions of bread making terms and techniques",
+      "visibleInNav": false
+    }
+  ]
+}
