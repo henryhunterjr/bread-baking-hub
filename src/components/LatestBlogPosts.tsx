@@ -201,7 +201,7 @@ const LatestBlogPosts = () => {
           <div className="mb-8 max-w-md mx-auto">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-              <Input
+              <input
                 type="text"
                 placeholder="Search blog posts…"
                 value={searchQuery}
@@ -209,7 +209,7 @@ const LatestBlogPosts = () => {
                   console.log('Search input changed:', e.target.value);
                   setSearchQuery(e.target.value);
                 }}
-                className="pl-10 bg-card border-primary/20 focus:border-primary"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10 bg-card border-primary/20 focus:border-primary"
               />
             </div>
           </div>
