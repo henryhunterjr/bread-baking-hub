@@ -117,19 +117,19 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
           <CardContent>
             <ul className="space-y-2">
               {isNewIngredientFormat ? (
-                (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>).map((ingredient, index) => (
+                (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>)?.map((ingredient, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <span className="text-primary font-semibold">•</span>
                     <span>{ingredient.amount_metric} {ingredient.item}</span>
                   </li>
-                ))
+                )) || []
               ) : (
-                (recipe.ingredients as {metric: string[]; volume: string[]}).metric.map((ingredient, index) => (
+                (recipe.ingredients as {metric: string[]; volume: string[]})?.metric?.map((ingredient, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <span className="text-primary font-semibold">•</span>
                     <span>{ingredient}</span>
                   </li>
-                ))
+                )) || []
               )}
             </ul>
           </CardContent>
@@ -142,19 +142,19 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
           <CardContent>
             <ul className="space-y-2">
               {isNewIngredientFormat ? (
-                (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>).map((ingredient, index) => (
+                (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>)?.map((ingredient, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <span className="text-primary font-semibold">•</span>
                     <span>{ingredient.amount_volume} {ingredient.item}</span>
                   </li>
-                ))
+                )) || []
               ) : (
-                (recipe.ingredients as {metric: string[]; volume: string[]}).volume.map((ingredient, index) => (
+                (recipe.ingredients as {metric: string[]; volume: string[]})?.volume?.map((ingredient, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <span className="text-primary font-semibold">•</span>
                     <span>{ingredient}</span>
                   </li>
-                ))
+                )) || []
               )}
             </ul>
           </CardContent>
@@ -168,23 +168,23 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
         <CardContent>
           <ol className="space-y-3">
             {isNewMethodFormat ? (
-              (recipe.method as Array<{step: number; instruction: string}>).map((methodStep, index) => (
+              (recipe.method as Array<{step: number; instruction: string}>)?.map((methodStep, index) => (
                 <li key={index} className="flex items-start space-x-3">
                   <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-semibold flex-shrink-0 mt-0.5">
                     {methodStep.step}
                   </span>
                   <span className="leading-relaxed">{methodStep.instruction}</span>
                 </li>
-              ))
+              )) || []
             ) : (
-              (recipe.method as string[]).map((step, index) => (
+              (recipe.method as string[])?.map((step, index) => (
                 <li key={index} className="flex items-start space-x-3">
                   <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-semibold flex-shrink-0 mt-0.5">
                     {index + 1}
                   </span>
                   <span className="leading-relaxed">{step}</span>
                 </li>
-              ))
+              )) || []
             )}
           </ol>
         </CardContent>
@@ -197,12 +197,12 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
-              {recipe.tips.map((tip, index) => (
+              {recipe.tips?.map((tip, index) => (
                 <li key={index} className="flex items-start space-x-2">
                   <span className="text-primary font-semibold">💡</span>
                   <span>{tip}</span>
                 </li>
-              ))}
+              )) || []}
             </ul>
           </CardContent>
         </Card>
@@ -214,7 +214,7 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
           <CardContent>
             <ul className="space-y-2">
               {isNewTroubleshootingFormat ? (
-                (recipe.troubleshooting as Array<{issue: string; solution: string}>).map((item, index) => (
+                (recipe.troubleshooting as Array<{issue: string; solution: string}>)?.map((item, index) => (
                   <li key={index} className="space-y-1">
                     <div className="flex items-start space-x-2">
                       <span className="text-primary font-semibold">🔧</span>
@@ -224,14 +224,14 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
                       </div>
                     </div>
                   </li>
-                ))
+                )) || []
               ) : (
-                (recipe.troubleshooting as string[]).map((item, index) => (
+                (recipe.troubleshooting as string[])?.map((item, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <span className="text-primary font-semibold">🔧</span>
                     <span>{item}</span>
                   </li>
-                ))
+                )) || []
               )}
             </ul>
           </CardContent>
@@ -242,17 +242,17 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
       <div className="print:hidden">
         <ProductRecommendations
           recipeTitle={recipe.title}
-          recipeContent={`${recipe.introduction} ${
+          recipeContent={`${recipe.introduction || ''} ${
             isNewIngredientFormat && Array.isArray(recipe.ingredients)
-              ? (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>).map((ing: any) => ing.item || ing).join(' ')
-              : !isNewIngredientFormat && (recipe.ingredients as {metric: string[]; volume: string[]}).metric
-                ? (recipe.ingredients as {metric: string[]; volume: string[]}).metric.join(' ')
+              ? (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>)?.map((ing: any) => ing.item || ing).join(' ') || ''
+              : !isNewIngredientFormat && (recipe.ingredients as {metric: string[]; volume: string[]})?.metric
+                ? (recipe.ingredients as {metric: string[]; volume: string[]}).metric?.join(' ') || ''
                 : ''
           } ${
             isNewMethodFormat && Array.isArray(recipe.method)
-              ? (recipe.method as Array<{step: number; instruction: string}>).map((step: any) => step.instruction).join(' ')
+              ? (recipe.method as Array<{step: number; instruction: string}>)?.map((step: any) => step.instruction).join(' ') || ''
               : Array.isArray(recipe.method) 
-                ? (recipe.method as string[]).join(' ')
+                ? (recipe.method as string[])?.join(' ') || ''
                 : ''
           }`}
           manualOverrides={recipe.recommended_products}
