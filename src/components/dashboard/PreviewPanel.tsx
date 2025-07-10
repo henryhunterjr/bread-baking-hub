@@ -94,7 +94,7 @@ const PreviewPanel = ({ postData, isNewsletter = false }: PreviewPanelProps) => 
                 <span className="text-primary-foreground font-semibold">H</span>
               </div>
               <div>
-                <div className="font-medium text-foreground">Henry Miller</div>
+                <div className="font-medium text-foreground">Henry Hunter</div>
                 <div className="text-sm text-muted-foreground">Master Baker</div>
               </div>
               <div className="ml-auto text-sm text-muted-foreground">
