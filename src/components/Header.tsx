@@ -63,6 +63,9 @@ const Header = () => {
                   <Link to="/my-recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     My Recipes
                   </Link>
+                  <Link to="/dashboard" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    Dashboard
+                  </Link>
                   <Button variant="warm" size="sm" onClick={signOut}>
                     Logout
                   </Button>
@@ -121,9 +124,14 @@ const Header = () => {
                 Legal Information
               </Link>
               {user && (
-                <Link to="/my-recipes" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
-                  My Recipes
-                </Link>
+                <>
+                  <Link to="/my-recipes" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
+                    My Recipes
+                  </Link>
+                  <Link to="/dashboard" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
+                    Dashboard
+                  </Link>
+                </>
               )}
             </div>
           </div>
