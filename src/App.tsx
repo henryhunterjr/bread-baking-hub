@@ -9,6 +9,7 @@ import BackToTop from "@/components/BackToTop";
 import { AIAssistantSidebar } from "@/components/AIAssistantSidebar";
 import { useState, Suspense, lazy } from "react";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
+import { AppErrorBoundary } from "./components/AppErrorBoundary";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -48,15 +49,16 @@ const App = () => {
   const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <OfflineBanner />
-          <BackToTop />
-          <BrowserRouter>
-            <Suspense fallback={<SimpleLoadingSpinner />}>
+    <AppErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <OfflineBanner />
+            <BackToTop />
+            <BrowserRouter>
+              <Suspense fallback={<SimpleLoadingSpinner />}>
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/recipe-formatter" element={<RecipeFormatter />} />
@@ -92,10 +94,11 @@ const App = () => {
               isOpen={isAIAssistantOpen}
               onToggle={() => setIsAIAssistantOpen(!isAIAssistantOpen)}
             />
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+            </BrowserRouter>
+          </TooltipProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </AppErrorBoundary>
   );
 };
 

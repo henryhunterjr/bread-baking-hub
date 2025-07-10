@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { FormattedRecipeDisplay } from '@/components/FormattedRecipeDisplay';
 import { RecipeEditForm } from './RecipeEditForm';
 import { FullRecipeEditForm } from './FullRecipeEditForm';
+import { RecipeVersionManager } from './RecipeVersionManager';
 import { memo } from 'react';
 
 interface RecipeCardProps {
@@ -77,6 +78,10 @@ export const RecipeCard = memo(({
         </div>
         {!isEditing && (
           <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <RecipeVersionManager 
+              recipeId={recipe.id}
+              onVersionRestored={() => window.location.reload()}
+            />
             <Button 
               variant="outline" 
               size="sm"

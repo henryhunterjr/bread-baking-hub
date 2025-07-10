@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import BlogPostView from '../components/blog/BlogPostView';
+import BlogPostSEO from '../components/blog/BlogPostSEO';
 import { LoadingState } from '../components/LoadingState';
 import { fetchBlogPosts, type BlogPost } from '@/utils/blogFetcher';
 import { Button } from '@/components/ui/button';
@@ -91,16 +92,10 @@ const BlogPost = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{post.title} - Baking Great Bread</title>
-        <meta name="description" content={post.excerpt} />
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.excerpt} />
-        {post.image && <meta property="og:image" content={post.image} />}
-        <meta property="og:type" content="article" />
-        <meta property="article:author" content={post.author.name} />
-        <meta property="article:published_time" content={post.date} />
-      </Helmet>
+      <BlogPostSEO 
+        post={post}
+        canonical={`${window.location.origin}/blog/${slug}`}
+      />
 
       <div className="min-h-screen bg-background">
         <Header />

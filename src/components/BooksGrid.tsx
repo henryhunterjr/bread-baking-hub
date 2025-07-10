@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Eye } from "lucide-react";
+import { memo } from "react";
 
 // Import the new book cover images
 import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
@@ -224,7 +225,7 @@ interface BooksGridProps {
   onPreview: (bookId: string) => void;
 }
 
-const BooksGrid = ({ onPreview }: BooksGridProps) => {
+const BooksGrid = memo(({ onPreview }: BooksGridProps) => {
   return (
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4">
@@ -312,6 +313,6 @@ const BooksGrid = ({ onPreview }: BooksGridProps) => {
       </div>
     </section>
   );
-};
+});
 
 export default BooksGrid;
