@@ -83,6 +83,54 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_images_metadata: {
+        Row: {
+          alt_text: string
+          created_at: string
+          dimensions: Json | null
+          file_path: string
+          file_size: number | null
+          filename: string
+          id: string
+          meta_description: string | null
+          post_title: string | null
+          public_url: string
+          updated_at: string
+          upload_date: string
+          user_id: string
+        }
+        Insert: {
+          alt_text: string
+          created_at?: string
+          dimensions?: Json | null
+          file_path: string
+          file_size?: number | null
+          filename: string
+          id?: string
+          meta_description?: string | null
+          post_title?: string | null
+          public_url: string
+          updated_at?: string
+          upload_date?: string
+          user_id: string
+        }
+        Update: {
+          alt_text?: string
+          created_at?: string
+          dimensions?: Json | null
+          file_path?: string
+          file_size?: number | null
+          filename?: string
+          id?: string
+          meta_description?: string | null
+          post_title?: string | null
+          public_url?: string
+          updated_at?: string
+          upload_date?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           content: string

@@ -17,13 +17,16 @@ import {
   Settings, 
   FileText,
   Mail,
-  Inbox
+  Inbox,
+  Image as ImageIcon
 } from 'lucide-react';
 import ContentEditor from '@/components/dashboard/ContentEditor';
 import PreviewPanel from '@/components/dashboard/PreviewPanel';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
 import InboxTab from '@/components/dashboard/InboxTab';
 import InboxBadge from '@/components/dashboard/InboxBadge';
+import { BlogImageUploader } from '@/components/BlogImageUploader';
+import { BlogImageGrid } from '@/components/BlogImageGrid';
 import { supabase } from '@/integrations/supabase/client';
 
 interface BlogPostData {
@@ -282,7 +285,7 @@ const Dashboard = () => {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full max-w-lg grid-cols-3">
+            <TabsList className="grid w-full max-w-2xl grid-cols-4">
               <TabsTrigger value="inbox" className="flex items-center gap-2">
                 <Inbox className="w-4 h-4" />
                 Inbox
@@ -295,6 +298,10 @@ const Dashboard = () => {
               <TabsTrigger value="newsletter" className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
                 Newsletter
+              </TabsTrigger>
+              <TabsTrigger value="images" className="flex items-center gap-2">
+                <ImageIcon className="w-4 h-4" />
+                Images
               </TabsTrigger>
             </TabsList>
 
@@ -324,6 +331,11 @@ const Dashboard = () => {
                 isSavingDraft={isSavingDraft}
                 isPublishing={isPublishing}
               />
+            </TabsContent>
+
+            <TabsContent value="images" className="space-y-6">
+              <BlogImageUploader />
+              <BlogImageGrid />
             </TabsContent>
           </Tabs>
         </div>
