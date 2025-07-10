@@ -50,6 +50,54 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_posts: {
+        Row: {
+          content: string
+          created_at: string | null
+          hero_image_url: string | null
+          id: string
+          is_draft: boolean | null
+          publish_as_newsletter: boolean | null
+          published_at: string | null
+          slug: string
+          subtitle: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          hero_image_url?: string | null
+          id?: string
+          is_draft?: boolean | null
+          publish_as_newsletter?: boolean | null
+          published_at?: string | null
+          slug: string
+          subtitle?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          hero_image_url?: string | null
+          id?: string
+          is_draft?: boolean | null
+          publish_as_newsletter?: boolean | null
+          published_at?: string | null
+          slug?: string
+          subtitle?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       manuscripts: {
         Row: {
           content: string
@@ -77,6 +125,36 @@ export type Database = {
           title?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      newsletter_subscribers: {
+        Row: {
+          active: boolean | null
+          created_at: string | null
+          email: string
+          id: string
+          name: string | null
+          subscribed_at: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string | null
+          email: string
+          id?: string
+          name?: string | null
+          subscribed_at?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          name?: string | null
+          subscribed_at?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }
