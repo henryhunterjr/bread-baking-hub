@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_drafts: {
+        Row: {
+          created_at: string
+          discarded: boolean
+          id: string
+          imported: boolean
+          payload: Json
+          run_date: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          discarded?: boolean
+          id?: string
+          imported?: boolean
+          payload: Json
+          run_date?: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          discarded?: boolean
+          id?: string
+          imported?: boolean
+          payload?: Json
+          run_date?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       blog_clicks: {
         Row: {
           category_names: string[] | null

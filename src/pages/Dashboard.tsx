@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import { 
   PenTool, 
   Save, 
@@ -16,11 +16,13 @@ import {
   Eye, 
   Settings, 
   FileText,
-  Mail
+  Mail,
+  Inbox
 } from 'lucide-react';
 import ContentEditor from '@/components/dashboard/ContentEditor';
 import PreviewPanel from '@/components/dashboard/PreviewPanel';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
+import InboxTab from '@/components/dashboard/InboxTab';
 import { supabase } from '@/integrations/supabase/client';
 
 interface BlogPostData {
@@ -36,7 +38,10 @@ interface BlogPostData {
 
 const Dashboard = () => {
   const { user, loading } = useAuth();
-  const [activeTab, setActiveTab] = useState('blog');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState(() => {
+    return searchParams.get('tab') || 'blog';
+  });
   const [isPublishing, setIsPublishing] = useState(false);
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [postData, setPostData] = useState<BlogPostData>({
@@ -48,6 +53,63 @@ const Dashboard = () => {
     publishAsNewsletter: false,
     isDraft: true
   });
+
+  // Handle draft import from URL parameter
+  useEffect(() => {
+    const draftId = searchParams.get('draftId');
+    if (draftId) {
+      const loadDraft = async () => {
+        try {
+          const { data, error } = await supabase.functions.invoke(`ai-drafts/${draftId}`);
+          if (error) throw error;
+          
+          const draft = data;
+          const payload = draft.payload;
+          const draftContent = payload.blogDraft || payload.newsletterDraft || payload;
+          
+          setPostData({
+            title: draftContent.title || '',
+            subtitle: draftContent.excerpt || draftContent.subtitle || '',
+            content: draftContent.body || draftContent.content || '',
+            heroImageUrl: draftContent.imageUrl || (draftContent.imageUrls && draftContent.imageUrls[0]) || '',
+            tags: draftContent.tags || [],
+            publishAsNewsletter: draft.type === 'newsletter',
+            isDraft: true
+          });
+          
+          // Set appropriate tab based on draft type
+          setActiveTab(draft.type === 'newsletter' ? 'newsletter' : 'blog');
+          
+          // Clear the draftId from URL
+          const newSearchParams = new URLSearchParams(searchParams);
+          newSearchParams.delete('draftId');
+          setSearchParams(newSearchParams);
+        } catch (error) {
+          console.error('Error loading draft:', error);
+          toast({
+            title: "Error",
+            description: "Failed to load AI draft.",
+            variant: "destructive"
+          });
+        }
+      };
+      
+      loadDraft();
+    }
+  }, [searchParams, setSearchParams]);
+
+  const handleImportDraft = (importData: any) => {
+    const { postData: importedData } = importData;
+    if (importedData) {
+      setPostData(importedData);
+      setActiveTab(importedData.publishAsNewsletter ? 'newsletter' : 'blog');
+      
+      toast({
+        title: "Draft imported",
+        description: "AI draft has been imported to the editor."
+      });
+    }
+  };
 
   // Redirect if not authenticated
   if (!loading && !user) {
@@ -206,7 +268,11 @@ const Dashboard = () => {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full max-w-md grid-cols-2">
+            <TabsList className="grid w-full max-w-lg grid-cols-3">
+              <TabsTrigger value="inbox" className="flex items-center gap-2">
+                <Inbox className="w-4 h-4" />
+                Inbox
+              </TabsTrigger>
               <TabsTrigger value="blog" className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
                 Blog Post
@@ -216,6 +282,10 @@ const Dashboard = () => {
                 Newsletter
               </TabsTrigger>
             </TabsList>
+
+            <TabsContent value="inbox" className="space-y-6">
+              <InboxTab onImportDraft={handleImportDraft} />
+            </TabsContent>
 
             <TabsContent value="blog" className="space-y-6">
               <BlogPostTab 

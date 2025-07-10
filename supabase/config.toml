@@ -14,3 +14,12 @@ verify_jwt = true
 
 [functions.send-newsletter]
 verify_jwt = true
+
+[functions.submit-content]
+verify_jwt = false
+
+[functions.ai-drafts]
+verify_jwt = true
+
+[functions.import-draft]
+verify_jwt = true
