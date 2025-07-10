@@ -17,12 +17,17 @@ const Auth = () => {
   const { signUp, signIn, user } = useAuth();
   const { toast } = useToast();
 
-  // Redirect if already logged in
+  // Redirect if already logged in - but avoid infinite loops
   useEffect(() => {
-    if (user) {
-      window.location.href = '/my-recipes';
+    console.log('Auth page - checking user state:', !!user);
+    if (user && !loading) {
+      console.log('User detected, redirecting to my-recipes');
+      // Use a timeout to avoid immediate redirect loops
+      setTimeout(() => {
+        window.location.href = '/my-recipes';
+      }, 100);
     }
-  }, [user]);
+  }, [user, loading]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,6 +71,7 @@ const Auth = () => {
     setLoading(true);
     
     try {
+      console.log('Form submitted for sign in');
       const { error } = await signIn(email, password);
       if (error) {
         if (error.message.includes('Invalid login credentials')) {
@@ -81,8 +87,19 @@ const Auth = () => {
             variant: "destructive",
           });
         }
+      } else {
+        console.log('Sign in successful');
+        toast({
+          title: "Success!",
+          description: "Redirecting...",
+        });
+        // Wait a moment for auth state to update, then redirect
+        setTimeout(() => {
+          window.location.href = '/my-recipes';
+        }, 500);
       }
     } catch (error) {
+      console.error('Sign in exception:', error);
       toast({
         title: "Error",
         description: "An unexpected error occurred. Please try again.",
