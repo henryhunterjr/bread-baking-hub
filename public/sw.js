@@ -3,7 +3,7 @@ const CACHE_NAME = 'blog-posts-cache-v1';
 
 self.addEventListener('install', (event) => {
   console.log('Service Worker: Install');
-  self.skipWaiting();
+  // Don't skip waiting in development to prevent excessive refreshes
 });
 
 self.addEventListener('activate', (event) => {
