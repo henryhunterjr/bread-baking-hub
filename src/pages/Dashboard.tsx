@@ -23,6 +23,7 @@ import ContentEditor from '@/components/dashboard/ContentEditor';
 import PreviewPanel from '@/components/dashboard/PreviewPanel';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
 import InboxTab from '@/components/dashboard/InboxTab';
+import InboxBadge from '@/components/dashboard/InboxBadge';
 import { supabase } from '@/integrations/supabase/client';
 
 interface BlogPostData {
@@ -272,6 +273,7 @@ const Dashboard = () => {
               <TabsTrigger value="inbox" className="flex items-center gap-2">
                 <Inbox className="w-4 h-4" />
                 Inbox
+                <InboxBadge />
               </TabsTrigger>
               <TabsTrigger value="blog" className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
