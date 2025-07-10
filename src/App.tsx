@@ -31,6 +31,7 @@ import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
 import SearchTest from "./pages/SearchTest";
 import InlineSearchTestPage from "./pages/InlineSearchTest";
+import Dashboard from "./pages/Dashboard";
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -73,6 +74,7 @@ const App = () => {
               <Route path="/legal" element={<Legal />} />
               <Route path="/r/:slug" element={<PublicRecipe />} />
               <Route path="/feed.xml" element={<FeedRedirect />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/search-test" element={<SearchTest />} />
               <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
               <Route path="/offline" element={<OfflineFallback />} />

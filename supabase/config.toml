@@ -8,3 +8,9 @@ verify_jwt = false
 
 [functions.rss-feed]
 verify_jwt = false
+
+[functions.upsert-post]
+verify_jwt = true
+
+[functions.send-newsletter]
+verify_jwt = true
