@@ -48,6 +48,7 @@ serve(async (req) => {
     }
 
     // Insert draft into ai_drafts table
+    console.log('Inserting draft with data:', { type, payload, runDate });
     const { data: draft, error: insertError } = await supabaseClient
       .from('ai_drafts')
       .insert({
@@ -57,6 +58,8 @@ serve(async (req) => {
       })
       .select()
       .single();
+    
+    console.log('Insert result:', { draft, insertError });
 
     if (insertError) {
       console.error('Error inserting draft:', insertError);

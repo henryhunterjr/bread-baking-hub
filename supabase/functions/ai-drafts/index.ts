@@ -13,30 +13,38 @@ serve(async (req) => {
   }
 
   try {
+    console.log('ai-drafts function called, method:', req.method);
+    const authHeader = req.headers.get('Authorization');
+    console.log('Auth header present:', !!authHeader);
+    
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       {
         global: {
-          headers: { Authorization: req.headers.get('Authorization')! },
+          headers: authHeader ? { Authorization: authHeader } : {},
         },
       }
     );
 
-    // Get the current user
-    const {
-      data: { user },
-      error: userError,
-    } = await supabaseClient.auth.getUser();
+    // Only check user authentication if we have an auth header
+    if (authHeader) {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabaseClient.auth.getUser();
 
-    if (userError || !user) {
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        {
-          status: 401,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
+      if (userError || !user) {
+        console.error('User authentication failed:', userError);
+        return new Response(
+          JSON.stringify({ error: 'Unauthorized' }),
+          {
+            status: 401,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
+      console.log('User authenticated:', user.email);
     }
 
     const url = new URL(req.url);
@@ -82,8 +90,10 @@ serve(async (req) => {
         }
 
         const { data: drafts, error } = await query;
+        console.log('Database query result:', { drafts, error, count: drafts?.length });
 
         if (error) {
+          console.error('Database error:', error);
           return new Response(
             JSON.stringify({ error: 'Failed to fetch drafts' }),
             {
