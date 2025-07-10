@@ -242,29 +242,35 @@ export type Database = {
       product_clicks: {
         Row: {
           clicked_at: string
+          conversion_flag: boolean | null
           created_at: string
           id: string
           product_id: string
           product_name: string
           recipe_title: string | null
+          referrer_slug: string | null
           user_id: string | null
         }
         Insert: {
           clicked_at?: string
+          conversion_flag?: boolean | null
           created_at?: string
           id?: string
           product_id: string
           product_name: string
           recipe_title?: string | null
+          referrer_slug?: string | null
           user_id?: string | null
         }
         Update: {
           clicked_at?: string
+          conversion_flag?: boolean | null
           created_at?: string
           id?: string
           product_id?: string
           product_name?: string
           recipe_title?: string | null
+          referrer_slug?: string | null
           user_id?: string | null
         }
         Relationships: []
