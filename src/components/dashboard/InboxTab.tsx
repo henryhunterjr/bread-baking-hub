@@ -9,11 +9,13 @@ import { format } from 'date-fns';
 
 interface AIDraft {
   id: string;
-  type: 'blog' | 'newsletter';
+  type: string;
   payload: any;
   run_date: string;
   created_at: string;
   imported: boolean;
+  discarded: boolean;
+  updated_at: string;
 }
 
 interface InboxTabProps {
@@ -29,9 +31,14 @@ const InboxTab = ({ onImportDraft }: InboxTabProps) => {
   const fetchDrafts = async () => {
     try {
       console.log('Fetching AI drafts...');
-      const { data, error } = await supabase.functions.invoke('ai-drafts', {
-        method: 'GET'
-      });
+      
+      // Use direct database query instead of edge function for now
+      const { data, error } = await supabase
+        .from('ai_drafts')
+        .select('*')
+        .eq('imported', false)
+        .eq('discarded', false)
+        .order('created_at', { ascending: false });
 
       console.log('AI drafts response:', { data, error });
       if (error) throw error;
@@ -55,12 +62,17 @@ const InboxTab = ({ onImportDraft }: InboxTabProps) => {
   const handleImport = async (draft: AIDraft) => {
     setImporting(draft.id);
     try {
+      console.log('Importing draft:', draft.id);
       const { data, error } = await supabase.functions.invoke('import-draft', {
         body: { draftId: draft.id }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Import error:', error);
+        throw error;
+      }
 
+      console.log('Import successful:', data);
       toast({
         title: "Draft imported",
         description: "AI draft has been imported successfully."
