@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Eye, Share2, BookOpen, Mail } from 'lucide-react';
+import { AffiliateAdvertisement } from '@/components/AffiliateAdvertisement';
 
 interface BlogPostData {
   title: string;
@@ -90,8 +91,12 @@ const PreviewPanel = ({ postData, isNewsletter = false }: PreviewPanelProps) => 
 
             {/* Author Block */}
             <div className="flex items-center gap-4 py-4 border-y border-border">
-              <div className="w-12 h-12 bg-gradient-amber rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground font-semibold">H</span>
+              <div className="w-12 h-12 rounded-full overflow-hidden">
+                <img 
+                  src="/lovable-uploads/817f9119-54ab-4a7e-8906-143e981eac8a.png" 
+                  alt="Henry Hunter - Master Baker"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
                 <div className="font-medium text-foreground">Henry Hunter</div>
@@ -138,6 +143,18 @@ const PreviewPanel = ({ postData, isNewsletter = false }: PreviewPanelProps) => 
                 </Button>
               </CardContent>
             </Card>
+
+            {/* Affiliate Advertisement */}
+            {postData.content.toLowerCase().includes('sourdough') && (
+              <AffiliateAdvertisement
+                title="Vitale Dehydrated Sourdough Starter"
+                description="Can't revive your starter? Don't worry! Vitale's dehydrated sourdough starter is like you never missed a beat. Just add water and you're back to baking beautiful sourdough bread in no time."
+                productImage="/lovable-uploads/99a7eb7a-a09d-4215-a771-2f6858b0d6ab.png"
+                ctaText="Get Your Vitale Starter"
+                affiliateLink="https://example.com/vitale-starter"
+                context="Struggling to revive your starter after neglecting it? You're not alone."
+              />
+            )}
 
             {/* Share Bar (Desktop) */}
             <div className="hidden md:flex items-center justify-between pt-6 border-t border-border">
