@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
+import ManualDraftSubmission from '@/components/dashboard/ManualDraftSubmission';
 import { supabase } from '@/integrations/supabase/client';
-import { Inbox, Calendar, Mail, FileText, Import, Trash2 } from 'lucide-react';
+import { Inbox, Calendar, Mail, FileText, Import, Trash2, Plus } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface AIDraft {
@@ -172,13 +174,23 @@ const InboxTab = ({ onImportDraft }: InboxTabProps) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-foreground">AI Drafts Inbox</h2>
+        <h2 className="text-2xl font-bold text-foreground">Content Inbox</h2>
         <Button variant="outline" onClick={fetchDrafts} size="sm">
           Refresh
         </Button>
       </div>
 
-      <div className="grid gap-4">
+      <Tabs defaultValue="drafts" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="drafts">AI Drafts</TabsTrigger>
+          <TabsTrigger value="manual">
+            <Plus className="w-4 h-4 mr-1" />
+            Add Manual Draft
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="drafts" className="space-y-4">
+          <div className="grid gap-4">
         {drafts.map((draft) => {
           const imageUrls = getImageUrls(draft.payload);
           const title = getTitle(draft.payload);
@@ -272,7 +284,13 @@ const InboxTab = ({ onImportDraft }: InboxTabProps) => {
             </Card>
           );
         })}
-      </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="manual">
+          <ManualDraftSubmission onDraftSubmitted={fetchDrafts} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

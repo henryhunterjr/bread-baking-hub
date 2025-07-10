@@ -99,16 +99,29 @@ const Dashboard = () => {
     }
   }, [searchParams, setSearchParams]);
 
-  const handleImportDraft = (importData: any) => {
+  const handleImportDraft = async (importData: any) => {
     const { postData: importedData } = importData;
     if (importedData) {
       setPostData(importedData);
       setActiveTab(importedData.publishAsNewsletter ? 'newsletter' : 'blog');
       
-      toast({
-        title: "Draft imported",
-        description: "AI draft has been imported to the editor."
-      });
+      // Auto-save the imported draft to prevent loss on refresh
+      try {
+        await supabase.functions.invoke('upsert-post', {
+          body: { ...importedData, isDraft: true }
+        });
+        
+        toast({
+          title: "Draft imported & saved",
+          description: "AI draft has been imported and automatically saved."
+        });
+      } catch (error) {
+        console.error('Error auto-saving imported draft:', error);
+        toast({
+          title: "Draft imported",
+          description: "AI draft imported but couldn't auto-save. Please save manually."
+        });
+      }
     }
   };
 
