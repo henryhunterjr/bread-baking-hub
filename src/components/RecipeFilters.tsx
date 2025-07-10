@@ -16,14 +16,14 @@ interface RecipeFiltersProps {
   }) => void;
 }
 
-export const RecipeFilters = ({ recipes, onFilter }: RecipeFiltersProps) => {
+export const RecipeFilters = ({ recipes = [], onFilter }: RecipeFiltersProps) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFolder, setSelectedFolder] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  // Get unique folders and tags
-  const folders = [...new Set(recipes.map(r => r.folder).filter(Boolean))];
-  const allTags = [...new Set(recipes.flatMap(r => r.tags || []))].filter(Boolean);
+  // Get unique folders and tags with null safety
+  const folders = [...new Set((recipes || []).map(r => r?.folder).filter(Boolean))];
+  const allTags = [...new Set((recipes || []).flatMap(r => r?.tags || []))].filter(Boolean);
 
   const handleFilterChange = () => {
     onFilter({
@@ -109,9 +109,9 @@ export const RecipeFilters = ({ recipes, onFilter }: RecipeFiltersProps) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="">All folders</SelectItem>
-                {folders.map((folder) => (
-                  <SelectItem key={folder} value={folder}>{folder}</SelectItem>
-                ))}
+                {folders?.map((folder) => (
+                  <SelectItem key={folder} value={folder || ''}>{folder}</SelectItem>
+                )) || []}
               </SelectContent>
             </Select>
           </div>
@@ -123,7 +123,7 @@ export const RecipeFilters = ({ recipes, onFilter }: RecipeFiltersProps) => {
               Tags
             </Label>
             <div className="flex flex-wrap gap-2">
-              {allTags.map((tag) => (
+              {(allTags || []).map((tag) => (
                 <Badge
                   key={tag}
                   variant={selectedTags.includes(tag) ? "default" : "secondary"}

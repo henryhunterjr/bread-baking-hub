@@ -142,10 +142,12 @@ const MyRecipes = () => {
                 </p>
               </div>
 
-              <RecipeFilters 
-                recipes={recipes} 
-                onFilter={setFilters}
-              />
+              {recipes && (
+                <RecipeFilters 
+                  recipes={recipes} 
+                  onFilter={setFilters}
+                />
+              )}
 
               {filteredRecipes.length > 0 && (
                 <div className="space-y-8">
