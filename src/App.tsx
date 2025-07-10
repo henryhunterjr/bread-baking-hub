@@ -7,31 +7,34 @@ import { AuthProvider } from "@/hooks/useAuth";
 import OfflineBanner from "@/components/OfflineBanner";
 import BackToTop from "@/components/BackToTop";
 import { AIAssistantSidebar } from "@/components/AIAssistantSidebar";
-import { useState } from "react";
-import Index from "./pages/Index";
-import RecipeFormatter from "./pages/RecipeFormatter";
-import RecipeWorkspace from "./pages/RecipeWorkspace";
-import Auth from "./pages/Auth";
-import MyRecipes from "./pages/MyRecipes";
-import About from "./pages/About";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import Books from "./pages/Books";
-import Recipes from "./pages/Recipes";
-import VitaleStarter from "./pages/VitaleStarter";
-import PublicRecipe from "./pages/PublicRecipe";
-import HenrysFoolproofRecipe from "./pages/HenrysFoolproofRecipe";
-import BreadGlossary from "./pages/BreadGlossary";
-import BreadCalculator from "./pages/BreadCalculator";
-import Community from "./pages/Community";
-import TroubleshootingPage from "./pages/TroubleshootingPage";
-import OfflineFallback from "./pages/OfflineFallback";
-import CrustAndCrumb from "./pages/CrustAndCrumb";
-import Legal from "./pages/Legal";
-import NotFound from "./pages/NotFound";
-import SearchTest from "./pages/SearchTest";
-import InlineSearchTestPage from "./pages/InlineSearchTest";
-import Dashboard from "./pages/Dashboard";
+import { useState, Suspense, lazy } from "react";
+import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
+
+// Lazy load pages for better performance
+const Index = lazy(() => import("./pages/Index"));
+const RecipeFormatter = lazy(() => import("./pages/RecipeFormatter"));
+const RecipeWorkspace = lazy(() => import("./pages/RecipeWorkspace"));
+const Auth = lazy(() => import("./pages/Auth"));
+const MyRecipes = lazy(() => import("./pages/MyRecipes"));
+const About = lazy(() => import("./pages/About"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const Books = lazy(() => import("./pages/Books"));
+const Recipes = lazy(() => import("./pages/Recipes"));
+const VitaleStarter = lazy(() => import("./pages/VitaleStarter"));
+const PublicRecipe = lazy(() => import("./pages/PublicRecipe"));
+const HenrysFoolproofRecipe = lazy(() => import("./pages/HenrysFoolproofRecipe"));
+const BreadGlossary = lazy(() => import("./pages/BreadGlossary"));
+const BreadCalculator = lazy(() => import("./pages/BreadCalculator"));
+const Community = lazy(() => import("./pages/Community"));
+const TroubleshootingPage = lazy(() => import("./pages/TroubleshootingPage"));
+const OfflineFallback = lazy(() => import("./pages/OfflineFallback"));
+const CrustAndCrumb = lazy(() => import("./pages/CrustAndCrumb"));
+const Legal = lazy(() => import("./pages/Legal"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const SearchTest = lazy(() => import("./pages/SearchTest"));
+const InlineSearchTestPage = lazy(() => import("./pages/InlineSearchTest"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -53,34 +56,36 @@ const App = () => {
           <OfflineBanner />
           <BackToTop />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/recipe-formatter" element={<RecipeFormatter />} />
-              <Route path="/recipe-workspace" element={<RecipeWorkspace />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/my-recipes" element={<MyRecipes />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/books" element={<Books />} />
-              <Route path="/recipes" element={<Recipes />} />
-              <Route path="/vitale-starter" element={<VitaleStarter />} />
-              <Route path="/henrys-foolproof-recipe" element={<HenrysFoolproofRecipe />} />
-              <Route path="/glossary" element={<BreadGlossary />} />
-              <Route path="/bread-calculator" element={<BreadCalculator />} />
-              <Route path="/community" element={<Community />} />
-              <Route path="/troubleshooting" element={<TroubleshootingPage />} />
-              <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
-              <Route path="/legal" element={<Legal />} />
-              <Route path="/r/:slug" element={<PublicRecipe />} />
-              <Route path="/feed.xml" element={<FeedRedirect />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/search-test" element={<SearchTest />} />
-              <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
-              <Route path="/offline" element={<OfflineFallback />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={<SimpleLoadingSpinner />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/recipe-formatter" element={<RecipeFormatter />} />
+                <Route path="/recipe-workspace" element={<RecipeWorkspace />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/my-recipes" element={<MyRecipes />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/books" element={<Books />} />
+                <Route path="/recipes" element={<Recipes />} />
+                <Route path="/vitale-starter" element={<VitaleStarter />} />
+                <Route path="/henrys-foolproof-recipe" element={<HenrysFoolproofRecipe />} />
+                <Route path="/glossary" element={<BreadGlossary />} />
+                <Route path="/bread-calculator" element={<BreadCalculator />} />
+                <Route path="/community" element={<Community />} />
+                <Route path="/troubleshooting" element={<TroubleshootingPage />} />
+                <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
+                <Route path="/legal" element={<Legal />} />
+                <Route path="/r/:slug" element={<PublicRecipe />} />
+                <Route path="/feed.xml" element={<FeedRedirect />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/search-test" element={<SearchTest />} />
+                <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
+                <Route path="/offline" element={<OfflineFallback />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
             
             {/* Site-wide AI Assistant - Crusty */}
             <AIAssistantSidebar 

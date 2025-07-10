@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { FormattedRecipeDisplay } from '@/components/FormattedRecipeDisplay';
 import { RecipeEditForm } from './RecipeEditForm';
 import { FullRecipeEditForm } from './FullRecipeEditForm';
+import { memo } from 'react';
 
 interface RecipeCardProps {
   recipe: any;
@@ -17,7 +18,7 @@ interface RecipeCardProps {
   allRecipes?: any[];
 }
 
-export const RecipeCard = ({ 
+export const RecipeCard = memo(({ 
   recipe, 
   isEditing, 
   isFullEditing,
@@ -103,4 +104,4 @@ export const RecipeCard = ({
       )}
     </div>
   );
-};
+});
