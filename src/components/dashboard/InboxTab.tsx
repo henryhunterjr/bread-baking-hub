@@ -30,7 +30,7 @@ const InboxTab = ({ onImportDraft }: InboxTabProps) => {
     try {
       console.log('Fetching AI drafts...');
       const { data, error } = await supabase.functions.invoke('ai-drafts', {
-        body: JSON.stringify({ imported: 'false' })
+        method: 'GET'
       });
 
       console.log('AI drafts response:', { data, error });
