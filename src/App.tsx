@@ -11,8 +11,8 @@ import { useState, Suspense, lazy } from "react";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 
-// Lazy load pages for better performance
-const Index = lazy(() => import("./pages/Index"));
+// Import Index directly to avoid lazy loading issues on main page
+import Index from "./pages/Index";
 const RecipeFormatter = lazy(() => import("./pages/RecipeFormatter"));
 const RecipeWorkspace = lazy(() => import("./pages/RecipeWorkspace"));
 const Auth = lazy(() => import("./pages/Auth"));
