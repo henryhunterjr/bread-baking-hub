@@ -9,7 +9,7 @@ const Header = () => {
   const { user, signOut } = useAuth();
 
   return (
-    <header className="bg-header shadow-stone">
+    <header className="bg-header shadow-stone relative z-50 border-b border-border/20">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
