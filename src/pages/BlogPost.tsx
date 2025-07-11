@@ -17,7 +17,7 @@ import NewsletterSignup from '../components/NewsletterSignup';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-// Component for rendering Supabase blog posts with direct content
+// Component for rendering Supabase blog posts with professional typography
 const SupabasePostView = ({ 
   post, 
   supabasePost, 
@@ -28,9 +28,9 @@ const SupabasePostView = ({
   onBack: () => void; 
 }) => {
   return (
-    <article className="max-w-4xl mx-auto px-4 py-20">
-      {/* Header */}
-      <header className="mb-8">
+    <div className="min-h-screen bg-background">
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        {/* Back Button */}
         <Button 
           variant="ghost" 
           onClick={onBack}
@@ -39,109 +39,123 @@ const SupabasePostView = ({
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Blog
         </Button>
-        
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
-          {supabasePost.title}
-        </h1>
-        
-        {supabasePost.subtitle && (
-          <p className="text-xl text-muted-foreground mb-6 leading-relaxed">
-            {supabasePost.subtitle}
-          </p>
-        )}
-        
-        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4">
-          <div className="flex items-center gap-3">
-            <img
-              src="/placeholder-avatar.png"
-              alt="Henry Hunter"
-              className="w-8 h-8 rounded-full"
-            />
-            <span className="font-medium text-foreground">Henry Hunter</span>
-          </div>
-          <span>•</span>
-          <div className="flex items-center gap-1">
-            <Clock className="w-4 h-4" />
-            {post.readTime}
-          </div>
-          <span>•</span>
-          <span>{post.date}</span>
+
+        {/* Professional Blog Content */}
+        <div className="blog-content">
+          {/* Blog Title */}
+          <h1>{supabasePost.title}</h1>
           
-          {supabasePost.tags && supabasePost.tags.length > 0 && (
-            <>
-              <span>•</span>
-              <div className="flex items-center gap-2">
-                <Tag className="w-4 h-4" />
-                <div className="flex gap-1">
-                  {supabasePost.tags.slice(0, 3).map((tag) => (
-                    <Badge key={tag} variant="secondary" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
-        </div>
-      </header>
-
-      {/* Featured Image */}
-      {supabasePost.hero_image_url && (
-        <div className="mb-8">
-          <img
-            src={supabasePost.hero_image_url}
-            alt={supabasePost.title}
-            className="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-lg"
-          />
-        </div>
-      )}
-
-      {/* Content */}
-      <div className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-a:text-primary prose-blockquote:text-muted-foreground prose-code:text-foreground prose-img:rounded-lg prose-img:shadow-lg">
-        <ReactMarkdown 
-          remarkPlugins={[remarkGfm]}
-          components={{
-            img: ({ src, alt, ...props }) => (
-              <img 
-                src={src} 
-                alt={alt} 
-                className="w-full h-auto rounded-lg shadow-lg my-6"
-                loading="lazy"
-                {...props}
+          {/* Author and Meta Information */}
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8 justify-center">
+            <div className="flex items-center gap-3">
+              <img
+                src="/placeholder-avatar.png"
+                alt="Henry Hunter"
+                className="w-10 h-10 rounded-full"
               />
-            ),
-            a: ({ href, children, ...props }) => (
-              <a 
-                href={href} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-primary hover:text-primary/80 underline"
-                {...props}
-              >
-                {children}
-              </a>
-            )
-          }}
-        >
-          {supabasePost.content}
-        </ReactMarkdown>
-      </div>
+              <div className="flex flex-col">
+                <span className="font-semibold text-foreground text-base">Henry Hunter</span>
+                <span className="text-xs">Master Baker & Author</span>
+              </div>
+            </div>
+            <span>•</span>
+            <div className="flex items-center gap-1">
+              <Clock className="w-4 h-4" />
+              <span>{post.readTime}</span>
+            </div>
+            <span>•</span>
+            <span>{post.date}</span>
+            
+            {supabasePost.tags && supabasePost.tags.length > 0 && (
+              <>
+                <span>•</span>
+                <div className="flex items-center gap-2">
+                  <Tag className="w-4 h-4" />
+                  <div className="flex gap-1">
+                    {supabasePost.tags.slice(0, 3).map((tag) => (
+                      <Badge key={tag} variant="secondary" className="text-xs">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
 
-      {/* Social Sharing */}
-      <div className="mt-8 pt-8 border-t border-border">
-        <SocialShare
-          url={`${window.location.origin}/blog/${supabasePost.slug}`}
-          title={supabasePost.title}
-          description={supabasePost.subtitle || ''}
-          image={supabasePost.hero_image_url || ''}
-        />
-      </div>
+          {/* Subtitle as Lead Paragraph */}
+          {supabasePost.subtitle && (
+            <div className="lead-paragraph">
+              {supabasePost.subtitle}
+            </div>
+          )}
 
-      {/* Newsletter Signup */}
-      <div className="mt-12">
-        <NewsletterSignup />
+          {/* Featured Image */}
+          {supabasePost.hero_image_url && (
+            <img
+              src={supabasePost.hero_image_url}
+              alt={supabasePost.title}
+              className="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-lg mb-8"
+            />
+          )}
+
+          {/* Main Content */}
+          <ReactMarkdown 
+            remarkPlugins={[remarkGfm]}
+            components={{
+              img: ({ src, alt, ...props }) => (
+                <img 
+                  src={src} 
+                  alt={alt} 
+                  loading="lazy"
+                  {...props}
+                />
+              ),
+              a: ({ href, children, ...props }) => (
+                <a 
+                  href={href} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  {...props}
+                >
+                  {children}
+                </a>
+              ),
+              h1: ({ children, ...props }) => (
+                <h2 {...props}>{children}</h2>
+              ),
+              h2: ({ children, ...props }) => (
+                <h2 {...props}>{children}</h2>
+              ),
+              h3: ({ children, ...props }) => (
+                <h3 {...props}>{children}</h3>
+              ),
+              h4: ({ children, ...props }) => (
+                <h4 {...props}>{children}</h4>
+              )
+            }}
+          >
+            {supabasePost.content}
+          </ReactMarkdown>
+
+          {/* Social Sharing */}
+          <div className="mt-12 pt-8 border-t border-border text-center">
+            <h3 className="text-lg font-semibold mb-4">Share This Post</h3>
+            <SocialShare
+              url={`${window.location.origin}/blog/${supabasePost.slug}`}
+              title={supabasePost.title}
+              description={supabasePost.subtitle || ''}
+              image={supabasePost.hero_image_url || ''}
+            />
+          </div>
+
+          {/* Newsletter Signup */}
+          <div className="mt-12">
+            <NewsletterSignup />
+          </div>
+        </div>
       </div>
-    </article>
+    </div>
   );
 };
 

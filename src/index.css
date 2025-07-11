@@ -285,49 +285,286 @@ All colors MUST be HSL.
   }
 }
 
-/* Mobile-specific optimizations */
-@media (max-width: 767px) {
-  /* Touch-friendly spacing */
-  .touch-manipulation {
-    touch-action: manipulation;
-    min-height: var(--spacing-mobile-touch);
-    min-width: var(--spacing-mobile-touch);
+/* Professional Blog Typography System */
+.blog-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.7;
+  color: hsl(var(--foreground));
+}
+
+/* Blog Title (H1) */
+.blog-content h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: hsl(var(--foreground));
+  text-align: center;
+  border-bottom: 3px solid hsl(var(--primary));
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* Major Sections (H2) */
+.blog-content h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: hsl(var(--foreground));
+  border-left: 4px solid hsl(var(--primary));
+  padding-left: 1rem;
+  margin: 2.5rem 0 1rem 0;
+  line-height: 1.3;
+}
+
+/* Subsections (H3) */
+.blog-content h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: hsl(var(--foreground));
+  margin: 2rem 0 0.8rem 0;
+  line-height: 1.4;
+}
+
+/* Minor Sections (H4) */
+.blog-content h4 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: hsl(var(--muted-foreground));
+  margin: 1.5rem 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+/* Lead Paragraph (first after title) */
+.blog-content .lead-paragraph {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: hsl(var(--muted-foreground));
+  background: hsl(var(--muted) / 0.3);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border-left: 4px solid hsl(var(--primary));
+}
+
+/* Regular Paragraphs */
+.blog-content p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+  color: hsl(var(--foreground));
+}
+
+/* Lists */
+.blog-content ul,
+.blog-content ol {
+  margin: 1rem 0 1.5rem 2rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.blog-content li {
+  margin-bottom: 0.5rem;
+  color: hsl(var(--foreground));
+}
+
+/* Special Content Blocks */
+.pattern-section {
+  background-color: hsl(var(--card));
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px hsl(var(--border) / 0.1);
+  border-left: 4px solid hsl(var(--primary));
+}
+
+.troubleshoot {
+  background-color: hsl(var(--warning) / 0.1);
+  border: 1px solid hsl(var(--warning) / 0.3);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+}
+
+.conclusion {
+  background-color: hsl(var(--card));
+  padding: 2rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+  border: 2px solid hsl(var(--primary));
+}
+
+/* Product Recommendation System */
+.product-recommendation {
+  background: var(--gradient-amber);
+  color: hsl(var(--primary-foreground));
+  padding: 2rem;
+  margin: 3rem 0;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: var(--shadow-warm);
+}
+
+.product-recommendation h3 {
+  color: hsl(var(--primary-foreground));
+  margin-bottom: 1rem;
+}
+
+.product-recommendation p {
+  color: hsl(var(--primary-foreground));
+  margin-bottom: 1rem;
+}
+
+.product-recommendation a {
+  display: inline-block;
+  background: hsl(var(--card));
+  color: hsl(var(--primary));
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 1rem;
+  transition: var(--transition-smooth);
+}
+
+.product-recommendation a:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-warm);
+}
+
+/* Blog Images */
+.blog-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  box-shadow: 0 4px 8px hsl(var(--border) / 0.1);
+}
+
+/* Blog Links */
+.blog-content a {
+  color: hsl(var(--primary));
+  text-decoration: underline;
+  transition: var(--transition-smooth);
+}
+
+.blog-content a:hover {
+  color: hsl(var(--primary) / 0.8);
+}
+
+/* Blockquotes */
+.blog-content blockquote {
+  border-left: 4px solid hsl(var(--primary));
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: hsl(var(--muted-foreground));
+}
+
+/* Code blocks */
+.blog-content code {
+  background: hsl(var(--muted));
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.blog-content pre {
+  background: hsl(var(--muted));
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .blog-content {
+    padding: 15px;
   }
   
-  /* Mobile-optimized containers */
-  .mobile-container {
-    padding: var(--spacing-mobile-padding);
-    gap: var(--spacing-mobile-gap);
+  .blog-content h1 {
+    font-size: 2rem;
   }
   
-  /* Prevent zoom on inputs on mobile */
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="search"],
-  textarea,
-  select {
-    font-size: 16px;
+  .blog-content h2 {
+    font-size: 1.5rem;
   }
   
-  /* Better touch targets for buttons */
-  button, 
-  .btn,
-  [role="button"] {
-    min-height: var(--spacing-mobile-touch);
-    padding: 12px 16px;
+  .blog-content h3 {
+    font-size: 1.2rem;
   }
   
-  /* Larger text on mobile for readability */
-  body {
-    font-size: 16px;
+  .blog-content h4 {
+    font-size: 1rem;
+  }
+  
+  .blog-content p,
+  .blog-content li {
+    font-size: 1rem;
+  }
+  
+  .lead-paragraph {
+    font-size: 1.1rem;
+  }
+  
+  .product-recommendation {
+    padding: 1.5rem;
+  }
+  
+  .blog-content ul,
+  .blog-content ol {
+    margin-left: 1rem;
+  }
+}
+
+/* Print Optimization */
+@media print {
+  .blog-content {
+    background-color: white;
+    color: black;
+    max-width: none;
+    margin: 0;
+    padding: 1cm;
+    font-size: 12pt;
     line-height: 1.5;
   }
   
-  /* Better mobile modal positioning */
-  .mobile-modal {
-    margin: 0;
-    max-height: 100vh;
-    border-radius: 0;
+  .blog-content h1 {
+    color: black;
+    border-bottom: 2px solid #333;
+    font-size: 18pt;
+  }
+  
+  .blog-content h2 {
+    color: black;
+    border-left: 3px solid #333;
+    font-size: 16pt;
+    page-break-after: avoid;
+  }
+  
+  .blog-content h3,
+  .blog-content h4 {
+    color: black;
+    page-break-after: avoid;
+  }
+  
+  .product-recommendation {
+    background: white;
+    color: black;
+    border: 2px solid #ccc;
+  }
+  
+  .blog-content img {
+    max-width: 100%;
+    page-break-inside: avoid;
+  }
+  
+  .pattern-section,
+  .troubleshoot,
+  .conclusion {
+    background: white;
+    border: 1px solid #ccc;
+    page-break-inside: avoid;
   }
 }
