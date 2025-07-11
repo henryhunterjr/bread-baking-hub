@@ -52,7 +52,9 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
       <BlogPostSEO post={post} fullContent={content} />
       
       {/* Hero Banner at the very top */}
-      <BlogHeroBanner />
+      <div className="w-full mb-8">
+        <BlogHeroBanner />
+      </div>
       
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Back Button */}
