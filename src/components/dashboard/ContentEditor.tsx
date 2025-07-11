@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import MDEditor, { commands } from '@uiw/react-md-editor';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,9 +17,19 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
   const [buttonText, setButtonText] = useState('');
   const [buttonUrl, setButtonUrl] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const dialogTriggerRef = useRef<HTMLButtonElement>(null);
 
-  // Debug the dialog state
-  console.log('Dialog state:', isDialogOpen);
+  // Force dialog open function
+  const forceOpenDialog = () => {
+    console.log('Force opening dialog...');
+    setIsDialogOpen(true);
+    // Also manually trigger the dialog if the state doesn't work
+    setTimeout(() => {
+      if (dialogTriggerRef.current) {
+        dialogTriggerRef.current.click();
+      }
+    }, 100);
+  };
 
   const insertButton = () => {
     if (buttonText && buttonUrl) {
@@ -44,8 +54,8 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
       <MousePointer style={{ width: 12, height: 12 }} />
     ),
     execute: () => {
-      console.log('Opening button dialog...'); // Debug log
-      setIsDialogOpen(true);
+      console.log('Button command triggered, opening dialog...');
+      forceOpenDialog();
     }
   };
 
@@ -103,7 +113,11 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
         </CardContent>
       </Card>
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} modal={true}>
+      {/* Hidden trigger button for the dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogTrigger asChild>
+          <button ref={dialogTriggerRef} className="hidden" />
+        </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]" onPointerDownOutside={(e) => e.preventDefault()}>
           <DialogHeader>
             <DialogTitle>Insert Button</DialogTitle>
