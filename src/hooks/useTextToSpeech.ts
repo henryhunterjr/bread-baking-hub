@@ -1,15 +1,54 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
 export const useTextToSpeech = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+  const [showPlayButton, setShowPlayButton] = useState(false);
+  const [pendingText, setPendingText] = useState<string | null>(null);
   const currentAudioUrlRef = useRef<string | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
   const { toast } = useToast();
+
+  // Initialize AudioContext on first user interaction
+  const initAudioContext = useCallback(() => {
+    if (!audioContextRef.current && typeof window !== 'undefined') {
+      try {
+        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      } catch (error) {
+        console.warn('AudioContext not supported:', error);
+      }
+    }
+  }, []);
+
+  // Resume AudioContext for mobile
+  const resumeAudioContext = useCallback(async () => {
+    if (audioContextRef.current && audioContextRef.current.state === 'suspended') {
+      try {
+        await audioContextRef.current.resume();
+      } catch (error) {
+        console.warn('Failed to resume AudioContext:', error);
+      }
+    }
+  }, []);
+
+  // Cleanup effect
+  useEffect(() => {
+    return () => {
+      if (currentAudioUrlRef.current) {
+        URL.revokeObjectURL(currentAudioUrlRef.current);
+      }
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+      }
+    };
+  }, []);
 
   const speak = useCallback(async (text: string) => {
     if (!text.trim()) return;
+
+    initAudioContext();
 
     try {
       // Stop any currently playing audio
@@ -19,6 +58,8 @@ export const useTextToSpeech = () => {
       }
 
       setIsPlaying(true);
+      setShowPlayButton(false);
+      setPendingText(null);
 
       // Call our ElevenLabs edge function
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
@@ -69,16 +110,15 @@ export const useTextToSpeech = () => {
         setCurrentAudio(audio);
         
         try {
+          await resumeAudioContext();
           await audio.play();
         } catch (playError: any) {
           // Handle mobile autoplay restrictions
           if (playError.name === 'NotAllowedError') {
             setIsPlaying(false);
-            toast({
-              title: "Tap to play voice",
-              description: "Your device blocked audio. Tap the voice button to enable.",
-              variant: "default"
-            });
+            setShowPlayButton(true);
+            setPendingText(text);
+            // Don't show toast immediately, show the play button instead
           } else {
             throw playError;
           }
@@ -93,7 +133,24 @@ export const useTextToSpeech = () => {
         variant: "destructive"
       });
     }
-  }, [currentAudio, toast]);
+  }, [currentAudio, toast, initAudioContext, resumeAudioContext]);
+
+  const playPending = useCallback(async () => {
+    if (pendingText && currentAudio) {
+      try {
+        await resumeAudioContext();
+        await currentAudio.play();
+        setShowPlayButton(false);
+        setIsPlaying(true);
+      } catch (error) {
+        toast({
+          title: "Audio Error",
+          description: "Could not play audio. Please try again.",
+          variant: "destructive"
+        });
+      }
+    }
+  }, [pendingText, currentAudio, resumeAudioContext, toast]);
 
   const stop = () => {
     if (currentAudio) {
@@ -102,11 +159,15 @@ export const useTextToSpeech = () => {
       setCurrentAudio(null);
     }
     setIsPlaying(false);
+    setShowPlayButton(false);
+    setPendingText(null);
   };
 
   return {
     speak,
     stop,
-    isPlaying
+    playPending,
+    isPlaying,
+    showPlayButton
   };
 };

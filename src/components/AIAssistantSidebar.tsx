@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Send, MessageCircle, X, Mic, MicOff } from 'lucide-react';
+import { Send, MessageCircle, X, Mic, MicOff, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -37,7 +37,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
   const { toast } = useToast();
   
   const { messages, isLoading, mode, setMode, sendMessage } = useAIChat({ recipeContext });
-  const { speak, isPlaying } = useTextToSpeech();
+  const { speak, isPlaying, showPlayButton, playPending } = useTextToSpeech();
 
   const speechRecognition = useSpeechRecognition({
     continuous: true,
@@ -173,7 +173,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
 
   if (!isOpen) {
     return (
-      <div className="fixed right-4 bottom-4 z-50">
+      <div className="fixed right-4 bottom-4 z-50" style={{ paddingBottom: 'env(safe-area-inset-bottom)', paddingRight: 'env(safe-area-inset-right)' }}>
         <div 
           onClick={onToggle}
           className="relative w-20 h-20 cursor-pointer transform transition-transform duration-200 hover:scale-105 touch-manipulation"
@@ -254,6 +254,18 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
             <Badge variant="secondary" className="text-xs">
               Using current recipe context
             </Badge>
+          )}
+
+          {showPlayButton && (
+            <Button 
+              onClick={playPending}
+              variant="outline" 
+              size="sm" 
+              className="w-full text-xs bg-amber-50 border-amber-200 hover:bg-amber-100 dark:bg-amber-950 dark:border-amber-800 dark:hover:bg-amber-900"
+            >
+              <Play className="h-3 w-3 mr-1" />
+              Tap to play Krusty's voice
+            </Button>
           )}
         </CardHeader>
 
