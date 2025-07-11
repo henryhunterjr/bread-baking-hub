@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Clock, Tag, Share } from 'lucide-react';
 import SocialShare from '../components/blog/SocialShare';
 import NewsletterSignup from '../components/NewsletterSignup';
+import BlogHeroBanner from '../components/BlogHeroBanner';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -36,6 +37,9 @@ const SupabasePostView = ({
 }) => {
   return (
     <div className="min-h-screen bg-background">
+      {/* Hero Banner at the very top */}
+      <BlogHeroBanner />
+      
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Back Button */}
         <Button 
