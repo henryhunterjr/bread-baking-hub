@@ -6,6 +6,8 @@ import NewsletterSignup from '../NewsletterSignup';
 import BlogHeroBanner from '../BlogHeroBanner';
 import { Tables } from '@/integrations/supabase/types';
 import { BlogPost } from '@/utils/blogFetcher';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface SupabasePostViewProps {
   post: BlogPost;
@@ -80,10 +82,11 @@ const SupabasePostView = ({ post, supabasePost, onBack }: SupabasePostViewProps)
           )}
 
           {/* Main Content */}
-          <div 
-            className="prose prose-lg max-w-none"
-            dangerouslySetInnerHTML={{ __html: supabasePost.content }}
-          />
+          <div className="prose prose-lg max-w-none">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {supabasePost.content}
+            </ReactMarkdown>
+          </div>
 
           {/* Social Sharing */}
           <div className="mt-12 pt-8 border-t border-border text-center">
