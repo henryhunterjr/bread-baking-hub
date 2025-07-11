@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
 export const useTextToSpeech = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+  const currentAudioUrlRef = useRef<string | null>(null);
   const { toast } = useToast();
 
-  const speak = async (text: string) => {
+  const speak = useCallback(async (text: string) => {
     if (!text.trim()) return;
 
     try {
@@ -27,6 +28,11 @@ export const useTextToSpeech = () => {
       if (error) throw error;
 
       if (data.audioContent) {
+        // Revoke old audio URL to prevent memory leaks
+        if (currentAudioUrlRef.current) {
+          URL.revokeObjectURL(currentAudioUrlRef.current);
+        }
+
         // Convert base64 to audio blob
         const audioBlob = new Blob(
           [Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))],
@@ -34,18 +40,25 @@ export const useTextToSpeech = () => {
         );
         
         const audioUrl = URL.createObjectURL(audioBlob);
+        currentAudioUrlRef.current = audioUrl;
         const audio = new Audio(audioUrl);
         
         audio.onended = () => {
           setIsPlaying(false);
           setCurrentAudio(null);
-          URL.revokeObjectURL(audioUrl);
+          if (currentAudioUrlRef.current) {
+            URL.revokeObjectURL(currentAudioUrlRef.current);
+            currentAudioUrlRef.current = null;
+          }
         };
 
         audio.onerror = () => {
           setIsPlaying(false);
           setCurrentAudio(null);
-          URL.revokeObjectURL(audioUrl);
+          if (currentAudioUrlRef.current) {
+            URL.revokeObjectURL(currentAudioUrlRef.current);
+            currentAudioUrlRef.current = null;
+          }
           toast({
             title: "Audio Error",
             description: "Failed to play audio response",
@@ -54,7 +67,22 @@ export const useTextToSpeech = () => {
         };
 
         setCurrentAudio(audio);
-        await audio.play();
+        
+        try {
+          await audio.play();
+        } catch (playError: any) {
+          // Handle mobile autoplay restrictions
+          if (playError.name === 'NotAllowedError') {
+            setIsPlaying(false);
+            toast({
+              title: "Tap to play voice",
+              description: "Your device blocked audio. Tap the voice button to enable.",
+              variant: "default"
+            });
+          } else {
+            throw playError;
+          }
+        }
       }
     } catch (error) {
       console.error('Text-to-speech error:', error);
@@ -65,7 +93,7 @@ export const useTextToSpeech = () => {
         variant: "destructive"
       });
     }
-  };
+  }, [currentAudio, toast]);
 
   const stop = () => {
     if (currentAudio) {

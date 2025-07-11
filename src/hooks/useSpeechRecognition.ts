@@ -87,7 +87,7 @@ export const useSpeechRecognition = (options: UseSpeechRecognitionOptions = {}) 
     
     try {
       const recognition = new SpeechRecognition();
-      recognition.continuous = options.continuous ?? false;
+      recognition.continuous = options.continuous ?? true;
       recognition.interimResults = options.interimResults ?? false;
       recognition.lang = options.lang ?? 'en-US';
 
@@ -107,6 +107,7 @@ export const useSpeechRecognition = (options: UseSpeechRecognitionOptions = {}) 
 
       recognition.onend = () => {
         setIsListening(false);
+        // Additional cleanup can be handled by the component using this hook
       };
 
       recognitionRef.current = recognition;

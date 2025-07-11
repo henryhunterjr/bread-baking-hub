@@ -33,12 +33,14 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const warningTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastSpokenMessageRef = useRef<string | null>(null);
   const { toast } = useToast();
   
   const { messages, isLoading, mode, setMode, sendMessage } = useAIChat({ recipeContext });
   const { speak, isPlaying } = useTextToSpeech();
 
   const speechRecognition = useSpeechRecognition({
+    continuous: true,
     onResult: ({ transcript }) => {
       if (micEnabled) {
         setInput(transcript);
@@ -51,6 +53,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
     },
     onError: (error) => {
       setIsListening(false);
+      setMicEnabled(false); // Fix mic state desync
       clearTimeouts();
       toast({
         title: "Speech Recognition Error",
@@ -79,13 +82,29 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
     }
   }, [messages]);
 
-  // Auto-play Krusty's responses
+  // Auto-play Krusty's responses (only when sidebar is open and message is new)
   useEffect(() => {
+    if (!isOpen) return;
+    
     const lastMessage = messages[messages.length - 1];
-    if (lastMessage && lastMessage.role === 'assistant' && !isLoading) {
+    if (lastMessage && 
+        lastMessage.role === 'assistant' && 
+        !isLoading && 
+        lastMessage.id !== lastSpokenMessageRef.current) {
+      lastSpokenMessageRef.current = lastMessage.id;
       speak(lastMessage.content);
     }
-  }, [messages, isLoading, speak]);
+  }, [messages, isLoading, isOpen, speak]);
+
+  // Monitor speech recognition state and cleanup when it stops
+  useEffect(() => {
+    if (!speechRecognition.isListening && micEnabled) {
+      // Speech recognition ended, cleanup mic state
+      setMicEnabled(false);
+      setIsListening(false);
+      clearTimeouts();
+    }
+  }, [speechRecognition.isListening, micEnabled]);
 
   const handleSend = async (message?: string) => {
     const textToSend = message || input;
