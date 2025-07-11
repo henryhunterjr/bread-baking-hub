@@ -103,8 +103,8 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
         </CardContent>
       </Card>
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} modal={true}>
+        <DialogContent className="sm:max-w-[425px]" onPointerDownOutside={(e) => e.preventDefault()}>
           <DialogHeader>
             <DialogTitle>Insert Button</DialogTitle>
           </DialogHeader>
@@ -120,6 +120,7 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
                 onChange={(e) => setButtonText(e.target.value)}
                 placeholder="Shop Wire Monkey Tools"
                 onKeyDown={(e) => e.key === 'Enter' && buttonUrl && insertButton()}
+                autoFocus
               />
             </div>
             <div className="grid gap-2">
