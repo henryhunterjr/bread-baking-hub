@@ -51,8 +51,8 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
     <div className="min-h-screen bg-background">
       <BlogPostSEO post={post} fullContent={content} />
       
-      {/* Hero Banner */}
-      <BlogHeroBanner className="mb-8" />
+      {/* Hero Banner at the very top */}
+      <BlogHeroBanner />
       
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Back Button */}
