@@ -126,6 +126,8 @@ const BlogPost = () => {
         setError(null);
         
         console.log('Looking for blog post with slug:', slug);
+        console.log('Full URL pathname:', window.location.pathname);
+        console.log('URL params:', useParams());
         
         // First, try to find the post in Supabase (for dashboard-created posts)
         const { data: supabasePost, error: supabaseError } = await supabase
@@ -170,6 +172,9 @@ const BlogPost = () => {
           setPost(convertedPost);
           setSupabasePost(supabasePost);
           return;
+        } else {
+          console.log('Supabase query error:', supabaseError);
+          console.log('No Supabase post found with slug:', slug);
         }
         
         // If not found in Supabase, try WordPress posts
