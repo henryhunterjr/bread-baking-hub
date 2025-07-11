@@ -60,6 +60,11 @@ const About = () => {
             
             <div className="bg-stone-100 dark:bg-stone-800 p-6 rounded-lg mt-8">
               <p className="text-primary font-semibold text-xl mb-2">— Henry M. Hunter</p>
+              <img 
+                src="/lovable-uploads/2d4c0625-d16c-44e8-8ec7-2287d1bc2a0c.png" 
+                alt="Henry M. Hunter signature" 
+                className="opacity-80 h-6 mb-2"
+              />
               <p className="text-muted-foreground">Founder, Baking Great Bread at Home</p>
             </div>
           </div>

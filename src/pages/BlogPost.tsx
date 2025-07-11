@@ -49,9 +49,9 @@ const SupabasePostView = ({
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8 justify-center">
             <div className="flex items-center gap-3">
               <img
-                src="/placeholder-avatar.png"
+                src="/lovable-uploads/5b45678e-81cd-4bff-8b8f-0208bbf2322a.png"
                 alt="Henry Hunter"
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full object-cover"
               />
               <div className="flex flex-col">
                 <span className="font-semibold text-foreground text-base">Henry Hunter</span>

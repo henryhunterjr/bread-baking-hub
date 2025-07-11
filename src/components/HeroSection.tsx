@@ -32,7 +32,7 @@ const HeroSection = () => {
               className="rounded-2xl shadow-stone w-full h-auto"
             />
             <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground p-4 rounded-lg shadow-warm">
-              <p className="font-semibold">Join 15,000+ Bakers</p>
+              <p className="font-semibold">Join 38,000+ Bakers</p>
               <p className="text-sm">Learning Together</p>
             </div>
           </div>

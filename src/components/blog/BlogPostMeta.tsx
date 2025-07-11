@@ -23,9 +23,9 @@ const BlogPostMeta = ({
       {showAuthor && (
         <div className="flex items-center gap-2">
           <img 
-            src={post.author.avatar} 
+            src="/lovable-uploads/5b45678e-81cd-4bff-8b8f-0208bbf2322a.png"
             alt={`${post.author.name} avatar`}
-            className="w-6 h-6 rounded-full"
+            className="w-6 h-6 rounded-full object-cover"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = '/placeholder-avatar.png';
