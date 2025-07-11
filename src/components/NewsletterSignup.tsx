@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Mail, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import BlogHeroBanner from './BlogHeroBanner';
 
 interface NewsletterSignupProps {
   className?: string;
@@ -54,9 +55,13 @@ const NewsletterSignup = ({ className }: NewsletterSignupProps) => {
   }
 
   return (
-    <Card className={`bg-gradient-subtle border-primary/20 ${className}`}>
-      <CardContent className="p-8">
-        <div className="text-center mb-6">
+    <div className={className}>
+      {/* Hero Banner for Newsletter */}
+      <BlogHeroBanner className="mb-8" />
+      
+      <Card className="bg-gradient-subtle border-primary/20">
+        <CardContent className="p-8">
+          <div className="text-center mb-6">
           <Mail className="h-12 w-12 text-primary mx-auto mb-4" />
           <h3 className="text-2xl font-bold text-primary mb-2">Stay Updated</h3>
           <p className="text-muted-foreground">
@@ -87,8 +92,9 @@ const NewsletterSignup = ({ className }: NewsletterSignupProps) => {
             We respect your privacy. Unsubscribe at any time.
           </p>
         </form>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 

@@ -8,6 +8,7 @@ import SimpleSearch from './blog/SimpleSearch';
 import ErrorBoundary from './ErrorBoundary';
 import OfflineBanner from './OfflineBanner';
 import ProgressiveLoading from './blog/ProgressiveLoading';
+import BlogHeroBanner from './BlogHeroBanner';
 import { useBlogPosts } from '@/hooks/useBlogPosts';
 
 const LatestBlogPosts = () => {
@@ -36,6 +37,9 @@ const LatestBlogPosts = () => {
   return (
     <section id="blog-section" className="py-20 px-4 bg-background">
       <div className="max-w-7xl mx-auto">
+        {/* Hero Banner */}
+        <BlogHeroBanner className="mb-16" />
+        
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-primary mb-4">Latest from the Blog</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
