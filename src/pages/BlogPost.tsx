@@ -109,6 +109,23 @@ const SupabasePostView = ({
                 />
               ),
               a: ({ href, children, ...props }) => {
+                // Handle button syntax: [button:text](url)
+                if (typeof children === 'string' && children.startsWith('button:')) {
+                  const buttonText = children.replace('button:', '');
+                  return (
+                    <div className="my-6">
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 no-underline"
+                      >
+                        {buttonText}
+                      </a>
+                    </div>
+                  );
+                }
+                
                 // Auto-embed YouTube links
                 const youtubeId = extractYouTubeId(href || '');
                 if (youtubeId && typeof children === 'string' && (children === href || children.includes('youtube.com') || children.includes('youtu.be'))) {
