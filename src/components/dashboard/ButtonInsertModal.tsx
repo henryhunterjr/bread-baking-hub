@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -27,6 +27,13 @@ const ButtonInsertModal = ({ isOpen, onClose, onInsert }: ButtonInsertModalProps
   }, [isOpen]);
 
   const handleInsert = () => {
+    console.log('Button Text:', buttonText, 'Button URL:', buttonUrl);
+    console.log('Validation:', { 
+      textValid: !!buttonText.trim(), 
+      urlValid: !!buttonUrl.trim(),
+      canInsert: !!(buttonText.trim() && buttonUrl.trim())
+    });
+    
     if (buttonText.trim() && buttonUrl.trim()) {
       onInsert(buttonText.trim(), buttonUrl.trim(), openInNewTab);
       onClose();
@@ -49,6 +56,9 @@ const ButtonInsertModal = ({ isOpen, onClose, onInsert }: ButtonInsertModalProps
             <MousePointer className="w-5 h-5" />
             Insert CTA Button
           </DialogTitle>
+          <DialogDescription>
+            Create a call-to-action button that will be inserted into your content at the cursor position.
+          </DialogDescription>
         </DialogHeader>
         
         <div className="grid gap-4 py-4">
@@ -94,6 +104,7 @@ const ButtonInsertModal = ({ isOpen, onClose, onInsert }: ButtonInsertModalProps
             <Button 
               onClick={handleInsert} 
               disabled={!buttonText.trim() || !buttonUrl.trim()}
+              className="bg-primary hover:bg-primary/90"
             >
               Insert Button
             </Button>
