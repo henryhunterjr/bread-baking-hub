@@ -100,14 +100,55 @@ const SupabasePostView = ({
           <ReactMarkdown 
             remarkPlugins={[remarkGfm]}
             components={{
-              img: ({ src, alt, ...props }) => (
-                <img 
-                  src={src} 
-                  alt={alt} 
-                  loading="lazy"
-                  {...props}
-                />
-              ),
+              img: ({ src, alt, ...props }) => {
+                // Check if this image is followed by a URL (making it clickable)
+                // This handles the pattern: ![alt](image.jpg) followed by a URL
+                const nextSibling = (props as any).node?.parent?.children?.find(
+                  (child: any, index: number) => {
+                    const imgIndex = (props as any).node?.parent?.children?.indexOf((props as any).node);
+                    return index === imgIndex + 1 && child.type === 'text' && child.value?.trim().startsWith('http');
+                  }
+                );
+
+                if (nextSibling) {
+                  const url = nextSibling.value.trim();
+                  return (
+                    <div className="my-6">
+                      <a 
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block hover-scale cursor-pointer group"
+                        title="Click to visit link"
+                      >
+                        <img 
+                          src={src} 
+                          alt={alt} 
+                          loading="lazy"
+                          className="w-full h-auto rounded-lg shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:shadow-primary/20"
+                          {...props}
+                        />
+                        <div className="text-center mt-2 text-sm text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                          Click to visit → {url}
+                        </div>
+                      </a>
+                    </div>
+                  );
+                }
+
+                // Regular image without link
+                return (
+                  <div className="my-6">
+                    <img 
+                      src={src} 
+                      alt={alt} 
+                      loading="lazy"
+                      className="w-full h-auto rounded-lg shadow-lg"
+                      {...props}
+                    />
+                  </div>
+                );
+              },
               a: ({ href, children, ...props }) => {
                 // Handle button syntax: [button:text](url)
                 if (typeof children === 'string' && children.startsWith('button:')) {

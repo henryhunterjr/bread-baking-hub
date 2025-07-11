@@ -103,6 +103,9 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Insert Button</DialogTitle>
+            <p className="text-sm text-muted-foreground mt-2">
+              Position your cursor where you want the button to appear, then fill out the form below.
+            </p>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
@@ -111,7 +114,7 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
                 id="button-text"
                 value={buttonText}
                 onChange={(e) => setButtonText(e.target.value)}
-                placeholder="Learn More"
+                placeholder="Shop Wire Monkey Tools"
                 onKeyDown={(e) => e.key === 'Enter' && buttonUrl && insertButton()}
               />
             </div>
@@ -121,7 +124,7 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
                 id="button-url"
                 value={buttonUrl}
                 onChange={(e) => setButtonUrl(e.target.value)}
-                placeholder="https://example.com"
+                placeholder="https://wiremonkeyshop.com/?ref=bakinggreatbread"
                 onKeyDown={(e) => e.key === 'Enter' && buttonText && insertButton()}
               />
             </div>
