@@ -101,35 +101,35 @@ const SupabasePostView = ({
             remarkPlugins={[remarkGfm]}
             components={{
               img: ({ src, alt, ...props }) => {
-                // Check if this image is followed by a URL (making it clickable)
-                // This handles the pattern: ![alt](image.jpg) followed by a URL
-                const nextSibling = (props as any).node?.parent?.children?.find(
-                  (child: any, index: number) => {
-                    const imgIndex = (props as any).node?.parent?.children?.indexOf((props as any).node);
-                    return index === imgIndex + 1 && child.type === 'text' && child.value?.trim().startsWith('http');
-                  }
-                );
-
-                if (nextSibling) {
-                  const url = nextSibling.value.trim();
+                // Simple clickable image implementation
+                // We'll use a simpler approach and check the alt text for URL
+                // If alt contains a URL, make the image clickable
+                const urlMatch = alt?.match(/(https?:\/\/[^\s]+)/);
+                
+                if (urlMatch) {
+                  const url = urlMatch[0];
+                  // Remove the URL from alt text for display
+                  const cleanAlt = alt?.replace(urlMatch[0], '').trim();
+                  
                   return (
                     <div className="my-6">
                       <a 
                         href={url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block hover-scale cursor-pointer group"
+                        className="block cursor-pointer group relative overflow-hidden rounded-lg"
                         title="Click to visit link"
                       >
                         <img 
                           src={src} 
-                          alt={alt} 
+                          alt={cleanAlt} 
                           loading="lazy"
-                          className="w-full h-auto rounded-lg shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:shadow-primary/20"
+                          className="w-full h-auto rounded-lg shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-primary/20"
                           {...props}
                         />
-                        <div className="text-center mt-2 text-sm text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                          Click to visit → {url}
+                        <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+                        <div className="absolute bottom-4 left-4 right-4 text-center bg-background/90 backdrop-blur-sm rounded px-3 py-2 text-sm text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          Click to visit →
                         </div>
                       </a>
                     </div>

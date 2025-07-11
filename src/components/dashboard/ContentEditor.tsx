@@ -18,6 +18,9 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
   const [buttonUrl, setButtonUrl] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  // Debug the dialog state
+  console.log('Dialog state:', isDialogOpen);
+
   const insertButton = () => {
     if (buttonText && buttonUrl) {
       const buttonSyntax = `[button:${buttonText}](${buttonUrl})`;
@@ -40,8 +43,8 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
     icon: (
       <MousePointer style={{ width: 12, height: 12 }} />
     ),
-    execute: (state: any, api: any) => {
-      console.log('Button command executed!'); // Debug log
+    execute: () => {
+      console.log('Opening button dialog...'); // Debug log
       setIsDialogOpen(true);
     }
   };
@@ -101,13 +104,13 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
       </Card>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Insert Button</DialogTitle>
-            <p className="text-sm text-muted-foreground mt-2">
-              Position your cursor where you want the button to appear, then fill out the form below.
-            </p>
           </DialogHeader>
+          <p className="text-sm text-muted-foreground mb-4">
+            Position your cursor where you want the button to appear, then fill out the form below.
+          </p>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
               <Label htmlFor="button-text">Button Text</Label>
