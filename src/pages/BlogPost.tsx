@@ -17,6 +17,13 @@ import NewsletterSignup from '../components/NewsletterSignup';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
+// Extract YouTube video ID from URL
+const extractYouTubeId = (url: string) => {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+};
+
 // Component for rendering Supabase blog posts with professional typography
 const SupabasePostView = ({ 
   post, 
@@ -101,16 +108,54 @@ const SupabasePostView = ({
                   {...props}
                 />
               ),
-              a: ({ href, children, ...props }) => (
-                <a 
-                  href={href} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  {...props}
-                >
-                  {children}
-                </a>
-              ),
+              a: ({ href, children, ...props }) => {
+                // Auto-embed YouTube links
+                const youtubeId = extractYouTubeId(href || '');
+                if (youtubeId && typeof children === 'string' && (children === href || children.includes('youtube.com') || children.includes('youtu.be'))) {
+                  return (
+                    <div className="relative w-full h-0 pb-[56.25%] rounded-lg overflow-hidden my-6 bg-muted">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${youtubeId}`}
+                        title="YouTube video"
+                        className="absolute top-0 left-0 w-full h-full"
+                        allowFullScreen
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      />
+                    </div>
+                  );
+                }
+                
+                return (
+                  <a 
+                    href={href} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    {...props}
+                  >
+                    {children}
+                  </a>
+                );
+              },
+              p: ({ children }) => {
+                // Handle standalone YouTube URLs in paragraphs
+                if (typeof children === 'string') {
+                  const youtubeId = extractYouTubeId(children);
+                  if (youtubeId && (children.includes('youtube.com') || children.includes('youtu.be'))) {
+                    return (
+                      <div className="relative w-full h-0 pb-[56.25%] rounded-lg overflow-hidden my-6 bg-muted">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${youtubeId}`}
+                          title="YouTube video"
+                          className="absolute top-0 left-0 w-full h-full"
+                          allowFullScreen
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        />
+                      </div>
+                    );
+                  }
+                }
+                return <p>{children}</p>;
+              },
               h1: ({ children, ...props }) => (
                 <h2 {...props}>{children}</h2>
               ),
