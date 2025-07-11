@@ -52,8 +52,10 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
       <BlogPostSEO post={post} fullContent={content} />
       
       {/* Hero Banner at the very top */}
-      <div className="w-full mb-8">
+      <div className="w-full mb-8 bg-blue-500 p-2">
+        <p>Debug: About to render BlogHeroBanner</p>
         <BlogHeroBanner />
+        <p>Debug: BlogHeroBanner rendered</p>
       </div>
       
       <div className="max-w-4xl mx-auto px-4 py-8">

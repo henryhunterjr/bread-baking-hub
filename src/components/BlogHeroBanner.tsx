@@ -5,13 +5,17 @@ interface BlogHeroBannerProps {
 }
 
 const BlogHeroBanner = ({ className = "" }: BlogHeroBannerProps) => {
+  console.log('BlogHeroBanner rendering...');
+  
   return (
-    <div className={`w-full ${className}`}>
+    <div className={`w-full bg-red-500 p-4 ${className}`} style={{ minHeight: '200px' }}>
       <div className="relative w-full">
         <img
           src="/lovable-uploads/e12fcac9-ef30-4481-9992-e89c6b39233d.png"
           alt="Baking Great Bread at Home Blog - Artisan bread on wooden cutting board in a warm kitchen setting"
           className="w-full h-48 md:h-64 lg:h-72 object-cover shadow-lg"
+          onLoad={() => console.log('Hero banner image loaded')}
+          onError={(e) => console.error('Hero banner image failed to load:', e)}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent" />
       </div>
