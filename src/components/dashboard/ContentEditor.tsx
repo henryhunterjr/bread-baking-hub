@@ -2,9 +2,10 @@ import { useState, useRef } from 'react';
 import MDEditor, { commands } from '@uiw/react-md-editor';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Eye, Edit3 } from 'lucide-react';
+import { Eye, Edit3, ExternalLink } from 'lucide-react';
 import KrustyAssistant from './KrustyAssistant';
 import FloatingCTAPanel from './FloatingCTAPanel';
+import ReactMarkdown from 'react-markdown';
 
 interface ContentEditorProps {
   content: string;
@@ -47,6 +48,64 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
     onChange(newContent);
   };
 
+  // Custom renderer for buttons in markdown
+  const renderButtonMarkdown = (markdown: string) => {
+    // Replace button syntax with actual buttons
+    const buttonRegex = /\[button:([^\]]+)\]\(([^)]+)\)(\{target="_blank"\})?/g;
+    
+    const parts = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = buttonRegex.exec(markdown)) !== null) {
+      // Add text before the button
+      if (match.index > lastIndex) {
+        parts.push(
+          <ReactMarkdown key={`text-${lastIndex}`}>
+            {markdown.substring(lastIndex, match.index)}
+          </ReactMarkdown>
+        );
+      }
+
+      // Add the button
+      const buttonText = match[1];
+      const buttonUrl = match[2];
+      const isNewTab = !!match[3];
+
+      parts.push(
+        <Button
+          key={`button-${match.index}`}
+          variant="warm"
+          size="lg"
+          asChild
+          className="my-4 mx-2"
+        >
+          <a
+            href={buttonUrl}
+            target={isNewTab ? "_blank" : "_self"}
+            rel={isNewTab ? "noopener noreferrer" : undefined}
+            className="inline-flex items-center gap-2"
+          >
+            {buttonText}
+            {isNewTab && <ExternalLink className="w-4 h-4" />}
+          </a>
+        </Button>
+      );
+
+      lastIndex = buttonRegex.lastIndex;
+    }
+
+    // Add remaining text after the last button
+    if (lastIndex < markdown.length) {
+      parts.push(
+        <ReactMarkdown key={`text-${lastIndex}`}>
+          {markdown.substring(lastIndex)}
+        </ReactMarkdown>
+      );
+    }
+
+    return parts.length > 0 ? <div>{parts}</div> : <ReactMarkdown>{markdown}</ReactMarkdown>;
+  };
 
   return (
     <div className="relative">
@@ -86,15 +145,21 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
             </CardHeader>
             <CardContent>
               <div className="min-h-[400px]" ref={editorRef}>
-                <MDEditor
-                  value={content}
-                  onChange={(val) => onChange(val || '')}
-                  preview={viewMode === 'edit' ? 'edit' : viewMode === 'preview' ? 'preview' : 'live'}
-                  hideToolbar={viewMode === 'preview'}
-                  visibleDragbar={false}
-                  data-color-mode="dark"
-                  height={400}
-                />
+                {viewMode === 'preview' ? (
+                  <div className="prose prose-lg max-w-none p-4 bg-background rounded border min-h-[400px]">
+                    {renderButtonMarkdown(content)}
+                  </div>
+                ) : (
+                  <MDEditor
+                    value={content}
+                    onChange={(val) => onChange(val || '')}
+                    preview={viewMode === 'live' ? 'live' : 'edit'}
+                    hideToolbar={false}
+                    visibleDragbar={false}
+                    data-color-mode="dark"
+                    height={400}
+                  />
+                )}
               </div>
             </CardContent>
           </Card>
