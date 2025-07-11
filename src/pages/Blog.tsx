@@ -104,8 +104,8 @@ const Blog = () => {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    // Smooth scroll to top of blog section
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to top of blog section instead of window top
+    document.getElementById('blog-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 
 

@@ -5,9 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const About = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // Remove auto-scroll to top to prevent unwanted scrolling behavior
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   return (
     <div className="bg-background text-foreground">
