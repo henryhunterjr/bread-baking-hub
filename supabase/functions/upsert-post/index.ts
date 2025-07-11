@@ -51,13 +51,53 @@ serve(async (req) => {
       isDraft
     } = postData;
 
-    // Generate slug from title
-    const slug = title
+    // Generate base slug from title
+    let baseSlug = title
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
       .trim('-');
+
+    // Ensure we have a valid slug
+    if (!baseSlug) {
+      baseSlug = 'blog-post';
+    }
+
+    // Check for existing slug and append number if needed
+    let slug = baseSlug;
+    let counter = 1;
+    
+    // Only check for conflicts when creating a new post (no id)
+    if (!id) {
+      while (true) {
+        const { data: existingPost } = await supabaseClient
+          .from('blog_posts')
+          .select('id')
+          .eq('user_id', user.id)
+          .eq('slug', slug)
+          .single();
+
+        if (!existingPost) {
+          break; // Slug is unique
+        }
+        
+        counter++;
+        slug = `${baseSlug}-${counter}`;
+      }
+    } else {
+      // For updates, keep existing slug
+      const { data: currentPost } = await supabaseClient
+        .from('blog_posts')
+        .select('slug')
+        .eq('id', id)
+        .eq('user_id', user.id)
+        .single();
+      
+      if (currentPost) {
+        slug = currentPost.slug;
+      }
+    }
 
     // Create the post data object
     const postRecord = {
