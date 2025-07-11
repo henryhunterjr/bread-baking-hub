@@ -40,7 +40,8 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
     icon: (
       <MousePointer style={{ width: 12, height: 12 }} />
     ),
-    execute: () => {
+    execute: (state: any, api: any) => {
+      console.log('Button command executed!'); // Debug log
       setIsDialogOpen(true);
     }
   };
