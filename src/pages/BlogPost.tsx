@@ -127,7 +127,6 @@ const BlogPost = () => {
         
         console.log('Looking for blog post with slug:', slug);
         console.log('Full URL pathname:', window.location.pathname);
-        console.log('URL params:', useParams());
         
         // First, try to find the post in Supabase (for dashboard-created posts)
         const { data: supabasePost, error: supabaseError } = await supabase
