@@ -121,14 +121,14 @@ const Blog = () => {
         <meta property="og:description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog. Learn troubleshooting methods, seasonal adjustments, and the science behind perfect bread." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://bakinggreatbread.blog" />
-        <meta property="og:image" content="/lovable-uploads/d08cf856-37b1-4a96-8ce8-10700ad219d5.png" />
+        <meta property="og:image" content="/lovable-uploads/264f3f96-5544-43f3-aa5f-c03314d39d7a.png" />
         <meta property="og:site_name" content="Baking Great Bread" />
         
         {/* Twitter Card meta tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Blog - Baking Great Bread" />
         <meta name="twitter:description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog." />
-        <meta name="twitter:image" content="/lovable-uploads/d08cf856-37b1-4a96-8ce8-10700ad219d5.png" />
+        <meta name="twitter:image" content="/lovable-uploads/264f3f96-5544-43f3-aa5f-c03314d39d7a.png" />
         
         {/* RSS Feed Link */}
         <link rel="alternate" type="application/rss+xml" title="Baking Great Bread RSS Feed" href="https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/rss-feed" />
