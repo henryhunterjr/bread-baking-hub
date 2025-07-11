@@ -14,6 +14,8 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Clock, Tag, Share } from 'lucide-react';
 import SocialShare from '../components/blog/SocialShare';
 import NewsletterSignup from '../components/NewsletterSignup';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 // Component for rendering Supabase blog posts with direct content
 const SupabasePostView = ({ 
@@ -48,7 +50,16 @@ const SupabasePostView = ({
           </p>
         )}
         
-        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4">
+          <div className="flex items-center gap-3">
+            <img
+              src="/placeholder-avatar.png"
+              alt="Henry Hunter"
+              className="w-8 h-8 rounded-full"
+            />
+            <span className="font-medium text-foreground">Henry Hunter</span>
+          </div>
+          <span>•</span>
           <div className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
             {post.readTime}
@@ -86,10 +97,35 @@ const SupabasePostView = ({
       )}
 
       {/* Content */}
-      <div 
-        className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-a:text-primary prose-blockquote:text-muted-foreground prose-code:text-foreground"
-        dangerouslySetInnerHTML={{ __html: supabasePost.content }}
-      />
+      <div className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-a:text-primary prose-blockquote:text-muted-foreground prose-code:text-foreground prose-img:rounded-lg prose-img:shadow-lg">
+        <ReactMarkdown 
+          remarkPlugins={[remarkGfm]}
+          components={{
+            img: ({ src, alt, ...props }) => (
+              <img 
+                src={src} 
+                alt={alt} 
+                className="w-full h-auto rounded-lg shadow-lg my-6"
+                loading="lazy"
+                {...props}
+              />
+            ),
+            a: ({ href, children, ...props }) => (
+              <a 
+                href={href} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80 underline"
+                {...props}
+              >
+                {children}
+              </a>
+            )
+          }}
+        >
+          {supabasePost.content}
+        </ReactMarkdown>
+      </div>
 
       {/* Social Sharing */}
       <div className="mt-8 pt-8 border-t border-border">
