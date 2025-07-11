@@ -154,12 +154,16 @@ const SupabasePostView = ({
                 if (typeof children === 'string' && children.startsWith('button:')) {
                   const buttonText = children.replace('button:', '');
                   return (
-                    <div className="my-6">
+                    <div className="my-6 text-center">
                       <a
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 no-underline"
+                        className="inline-flex items-center justify-center rounded-[10px] bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-warm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 no-underline border-0"
+                        style={{
+                          padding: '0.75rem 1.5rem',
+                          boxShadow: 'var(--shadow-warm)',
+                        }}
                       >
                         {buttonText}
                       </a>
