@@ -53,58 +53,53 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
     // Replace button syntax with actual buttons
     const buttonRegex = /\[button:([^\]]+)\]\(([^)]+)\)(\{target="_blank"\})?/g;
     
-    const parts = [];
-    let lastIndex = 0;
-    let match;
-
-    while ((match = buttonRegex.exec(markdown)) !== null) {
-      // Add text before the button
-      if (match.index > lastIndex) {
-        parts.push(
-          <ReactMarkdown key={`text-${lastIndex}`}>
-            {markdown.substring(lastIndex, match.index)}
-          </ReactMarkdown>
-        );
+    // Split content by button occurrences
+    const parts = markdown.split(buttonRegex);
+    const renderedParts = [];
+    
+    for (let i = 0; i < parts.length; i++) {
+      if (i % 4 === 0) {
+        // Regular markdown content
+        if (parts[i]) {
+          renderedParts.push(
+            <div key={`content-${i}`} className="markdown-content">
+              <ReactMarkdown>{parts[i]}</ReactMarkdown>
+            </div>
+          );
+        }
+      } else if (i % 4 === 1) {
+        // Button text (parts[i]), URL (parts[i+1]), target (parts[i+2])
+        const buttonText = parts[i];
+        const buttonUrl = parts[i + 1];
+        const isNewTab = parts[i + 2] === '{target="_blank"}';
+        
+        if (buttonText && buttonUrl) {
+          renderedParts.push(
+            <div key={`button-${i}`} className="my-6 text-center">
+              <Button
+                variant="warm"
+                size="lg"
+                asChild
+                className="inline-flex items-center gap-2 px-8 py-3 text-lg font-semibold"
+              >
+                <a
+                  href={buttonUrl}
+                  target={isNewTab ? "_blank" : "_self"}
+                  rel={isNewTab ? "noopener noreferrer" : undefined}
+                >
+                  {buttonText}
+                  {isNewTab && <ExternalLink className="w-5 h-5" />}
+                </a>
+              </Button>
+            </div>
+          );
+        }
+        // Skip the next two parts (URL and target) as they're handled above
+        i += 2;
       }
-
-      // Add the button
-      const buttonText = match[1];
-      const buttonUrl = match[2];
-      const isNewTab = !!match[3];
-
-      parts.push(
-        <Button
-          key={`button-${match.index}`}
-          variant="warm"
-          size="lg"
-          asChild
-          className="my-4 mx-2"
-        >
-          <a
-            href={buttonUrl}
-            target={isNewTab ? "_blank" : "_self"}
-            rel={isNewTab ? "noopener noreferrer" : undefined}
-            className="inline-flex items-center gap-2"
-          >
-            {buttonText}
-            {isNewTab && <ExternalLink className="w-4 h-4" />}
-          </a>
-        </Button>
-      );
-
-      lastIndex = buttonRegex.lastIndex;
     }
 
-    // Add remaining text after the last button
-    if (lastIndex < markdown.length) {
-      parts.push(
-        <ReactMarkdown key={`text-${lastIndex}`}>
-          {markdown.substring(lastIndex)}
-        </ReactMarkdown>
-      );
-    }
-
-    return parts.length > 0 ? <div>{parts}</div> : <ReactMarkdown>{markdown}</ReactMarkdown>;
+    return <div className="space-y-4">{renderedParts}</div>;
   };
 
   return (
