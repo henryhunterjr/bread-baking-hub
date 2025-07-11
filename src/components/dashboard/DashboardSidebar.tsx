@@ -8,15 +8,21 @@ const DashboardSidebar = () => {
   const navItems = [
     {
       title: 'All Posts',
-      href: '/dashboard',
+      href: '/dashboard?tab=posts',
       icon: FileText,
-      active: location.pathname === '/dashboard'
+      active: location.search.includes('tab=posts') || (!location.search.includes('tab=') && !location.search.includes('new='))
     },
     {
       title: 'Create New',
-      href: '/dashboard?new=true',
+      href: '/dashboard?tab=blog',
       icon: Plus,
-      active: location.search.includes('new=true')
+      active: location.search.includes('tab=blog')
+    },
+    {
+      title: 'Inbox',
+      href: '/dashboard?tab=inbox',
+      icon: FileText,
+      active: location.search.includes('tab=inbox')
     },
     {
       title: 'Settings',

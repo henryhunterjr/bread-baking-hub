@@ -25,9 +25,11 @@ import PreviewPanel from '@/components/dashboard/PreviewPanel';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
 import InboxTab from '@/components/dashboard/InboxTab';
 import InboxBadge from '@/components/dashboard/InboxBadge';
+import PostsList from '@/components/dashboard/PostsList';
 import { BlogImageUploader } from '@/components/BlogImageUploader';
 import { BlogImageGrid } from '@/components/BlogImageGrid';
 import { supabase } from '@/integrations/supabase/client';
+import { Tables } from '@/integrations/supabase/types';
 
 interface BlogPostData {
   id?: string;
@@ -44,7 +46,9 @@ const Dashboard = () => {
   const { user, loading } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(() => {
-    return searchParams.get('tab') || 'blog';
+    const newParam = searchParams.get('new');
+    if (newParam === 'true') return 'blog';
+    return searchParams.get('tab') || 'posts';
   });
   const [isPublishing, setIsPublishing] = useState(false);
   const [isSavingDraft, setIsSavingDraft] = useState(false);
@@ -211,12 +215,28 @@ const Dashboard = () => {
           });
         }
       } else {
+        const postUrl = `${window.location.origin}/blog/${data.slug}`;
         toast({
           title: "Blog post live",
-          description: "Your blog post has been published successfully."
+          description: (
+            <div className="space-y-2">
+              <p>Your blog post has been published successfully!</p>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => navigator.clipboard.writeText(postUrl)}
+                className="w-full"
+              >
+                Copy Share Link
+              </Button>
+            </div>
+          ),
         });
       }
 
+      // Switch to posts tab to show the new post
+      setActiveTab('posts');
+      
       // Reset form
       setPostData({
         title: '',
@@ -285,15 +305,19 @@ const Dashboard = () => {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full max-w-2xl grid-cols-4">
+            <TabsList className="grid w-full max-w-3xl grid-cols-5">
+              <TabsTrigger value="posts" className="flex items-center gap-2">
+                <FileText className="w-4 h-4" />
+                All Posts
+              </TabsTrigger>
               <TabsTrigger value="inbox" className="flex items-center gap-2">
                 <Inbox className="w-4 h-4" />
                 Inbox
                 <InboxBadge />
               </TabsTrigger>
               <TabsTrigger value="blog" className="flex items-center gap-2">
-                <FileText className="w-4 h-4" />
-                Blog Post
+                <PenTool className="w-4 h-4" />
+                Create
               </TabsTrigger>
               <TabsTrigger value="newsletter" className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
@@ -304,6 +328,25 @@ const Dashboard = () => {
                 Images
               </TabsTrigger>
             </TabsList>
+
+            <TabsContent value="posts" className="space-y-6">
+              <PostsList 
+                filter="all"
+                onEditPost={(post) => {
+                  setPostData({
+                    id: post.id,
+                    title: post.title,
+                    subtitle: post.subtitle || '',
+                    content: post.content,
+                    heroImageUrl: post.hero_image_url || '',
+                    tags: post.tags || [],
+                    publishAsNewsletter: post.publish_as_newsletter || false,
+                    isDraft: post.is_draft || false
+                  });
+                  setActiveTab('blog');
+                }}
+              />
+            </TabsContent>
 
             <TabsContent value="inbox" className="space-y-6">
               <InboxTab onImportDraft={handleImportDraft} />
