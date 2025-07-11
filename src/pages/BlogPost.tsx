@@ -128,20 +128,39 @@ const BlogPost = () => {
         console.log('Looking for blog post with slug:', slug);
         console.log('Full URL pathname:', window.location.pathname);
         
-        // First, try to find the post in Supabase (for dashboard-created posts)
-        const { data: supabasePost, error: supabaseError } = await supabase
+        // Find the post in Supabase (dashboard-created posts only)
+        console.log('Searching for Supabase post with slug:', slug);
+        
+        // First try with is_draft = false (published posts)
+        let { data: supabasePost, error: supabaseError } = await supabase
           .from('blog_posts')
           .select('*')
           .eq('slug', slug)
           .eq('is_draft', false)
           .single();
 
+        // If not found, try with any draft status (in case it's still marked as draft)
+        if (!supabasePost && supabaseError) {
+          console.log('Post not found with is_draft=false, trying any draft status...');
+          const { data: draftPost, error: draftError } = await supabase
+            .from('blog_posts')
+            .select('*')
+            .eq('slug', slug)
+            .single();
+          
+          if (draftPost) {
+            console.log('Found post with draft status:', draftPost.is_draft);
+            supabasePost = draftPost;
+            supabaseError = draftError;
+          }
+        }
+
         if (supabasePost && !supabaseError) {
-          console.log('Found Supabase post:', supabasePost.title);
+          console.log('Found Supabase post:', supabasePost.title, 'Draft status:', supabasePost.is_draft);
           
           // Convert Supabase post to BlogPost format
           const convertedPost: BlogPost = {
-            id: parseInt(supabasePost.id.slice(0, 8), 16), // Convert UUID to number for compatibility
+            id: parseInt(supabasePost.id.slice(0, 8), 16),
             title: supabasePost.title,
             excerpt: supabasePost.subtitle || '',
             author: {
@@ -174,26 +193,6 @@ const BlogPost = () => {
         } else {
           console.log('Supabase query error:', supabaseError);
           console.log('No Supabase post found with slug:', slug);
-        }
-        
-        // If not found in Supabase, try WordPress posts
-        console.log('Not found in Supabase, checking WordPress posts...');
-        const response = await fetchBlogPosts(1, undefined, 100);
-        console.log('Fetched WordPress posts:', response.posts.length);
-        
-        const foundPost = response.posts.find(p => {
-          // Extract slug from WordPress URL same way as BlogPostGrid
-          const urlParts = p.link.split('/');
-          const postSlug = urlParts[urlParts.length - 2] || urlParts[urlParts.length - 1];
-          console.log('Comparing WordPress post slug:', postSlug, 'with:', slug, 'for post:', p.title);
-          return postSlug === slug;
-        });
-        
-        if (foundPost) {
-          console.log('Found WordPress post:', foundPost.title);
-          setPost(foundPost);
-        } else {
-          console.log('No post found for slug:', slug);
           setError('Blog post not found');
         }
       } catch (err) {
