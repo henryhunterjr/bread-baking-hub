@@ -47,18 +47,7 @@ const SupabasePostView = ({
           
           {/* Author and Meta Information */}
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8 justify-center">
-            <div className="flex items-center gap-3">
-              <img
-                src="/lovable-uploads/075e9974-b456-4062-b427-d167d61a6e70.png"
-                alt="Henry Hunter"
-                className="w-8 h-8 rounded-full object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = '/placeholder-avatar.png';
-                }}
-              />
-              <span className="font-semibold text-foreground text-base">Henry Hunter</span>
-            </div>
+            <span className="font-semibold text-foreground text-base">Henry Hunter</span>
             <span>•</span>
             <div className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
