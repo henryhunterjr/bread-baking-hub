@@ -47,17 +47,7 @@ const SupabasePostView = ({
           
           {/* Author and Meta Information */}
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8 justify-center">
-            <div className="flex items-center gap-3">
-              <img
-                src="/lovable-uploads/2684d6d8-b462-457a-b9c0-98603f87a17e.png"
-                alt="Henry Hunter"
-                className="w-8 h-8 rounded-full object-cover"
-              />
-              <div className="flex flex-col">
-                <span className="font-semibold text-foreground text-base">Henry Hunter</span>
-                <span className="text-xs">Master Baker & Author</span>
-              </div>
-            </div>
+            <span className="font-semibold text-foreground text-base">Henry Hunter</span>
             <span>•</span>
             <div className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
