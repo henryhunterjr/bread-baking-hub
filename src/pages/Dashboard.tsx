@@ -517,7 +517,12 @@ const PostForm = ({ postData, setPostData, onImageUpload, showNewsletterToggle }
       </div>
 
       <div>
-        <Label htmlFor="hero-image">Hero Image</Label>
+        <Label htmlFor="hero-image" className="text-sm font-medium">
+          Social Media Thumbnail
+        </Label>
+        <p className="text-xs text-muted-foreground mb-2">
+          This image appears when your blog post is shared on social media platforms
+        </p>
         <div className="mt-1 flex items-center gap-4">
           <Button
             variant="outline"
@@ -527,7 +532,7 @@ const PostForm = ({ postData, setPostData, onImageUpload, showNewsletterToggle }
           >
             <label htmlFor="image-upload">
               <Upload className="w-4 h-4 mr-2" />
-              Upload Image
+              Upload Thumbnail
               <input
                 id="image-upload"
                 type="file"
@@ -541,13 +546,30 @@ const PostForm = ({ postData, setPostData, onImageUpload, showNewsletterToggle }
             </label>
           </Button>
           {postData.heroImageUrl && (
-            <img
-              src={postData.heroImageUrl}
-              alt="Hero preview"
-              className="w-16 h-16 object-cover rounded border"
-            />
+            <div className="flex items-center gap-2">
+              <img
+                src={postData.heroImageUrl}
+                alt="Social media thumbnail preview"
+                className="w-20 h-20 object-cover rounded border"
+              />
+              <div className="text-xs text-muted-foreground">
+                <p>✓ Thumbnail set</p>
+                <p>Optimized for sharing</p>
+              </div>
+            </div>
           )}
         </div>
+        {!postData.heroImageUrl && (
+          <div className="mt-2 p-3 bg-muted/50 rounded-lg border-2 border-dashed border-muted-foreground/25">
+            <div className="text-center">
+              <ImageIcon className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+              <p className="text-sm text-muted-foreground">No thumbnail uploaded</p>
+              <p className="text-xs text-muted-foreground">
+                Upload an image to control how your post looks when shared
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       <div>
