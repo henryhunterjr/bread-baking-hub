@@ -28,7 +28,7 @@ import InboxBadge from '@/components/dashboard/InboxBadge';
 import PostsList from '@/components/dashboard/PostsList';
 import { BlogImageUploader } from '@/components/BlogImageUploader';
 import { BlogImageGrid } from '@/components/BlogImageGrid';
-import { UpdateKaiserThumbnails } from '@/components/dashboard/UpdateKaiserThumbnails';
+import { UpdateThumbnail } from '@/components/dashboard/UpdateThumbnail';
 import { supabase } from '@/integrations/supabase/client';
 import { Tables } from '@/integrations/supabase/types';
 
@@ -378,7 +378,10 @@ const Dashboard = () => {
             </TabsContent>
 
             <TabsContent value="images" className="space-y-6">
-              <UpdateKaiserThumbnails />
+              <UpdateThumbnail 
+                selectedPostId={postData.id}
+                selectedPostTitle={postData.title}
+              />
               <BlogImageUploader />
               <BlogImageGrid />
             </TabsContent>
