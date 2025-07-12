@@ -51,42 +51,58 @@ serve(async (req) => {
       isDraft
     } = postData;
 
-    // Generate base slug from title
-    let baseSlug = title
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .trim('-');
-
-    // Ensure we have a valid slug
-    if (!baseSlug) {
-      baseSlug = 'blog-post';
-    }
-
-    // Check for existing slug and append number if needed
-    let slug = baseSlug;
-    let counter = 1;
+    // Generate base slug from title (only if title is provided)
+    let slug;
     
-    // Only check for conflicts when creating a new post (no id)
-    if (!id) {
-      while (true) {
-        const { data: existingPost } = await supabaseClient
-          .from('blog_posts')
-          .select('id')
-          .eq('user_id', user.id)
-          .eq('slug', slug)
-          .single();
+    if (title) {
+      let baseSlug = title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim('-');
 
-        if (!existingPost) {
-          break; // Slug is unique
-        }
-        
-        counter++;
-        slug = `${baseSlug}-${counter}`;
+      // Ensure we have a valid slug
+      if (!baseSlug) {
+        baseSlug = 'blog-post';
       }
-    } else {
-      // For updates, keep existing slug
+
+      // Check for existing slug and append number if needed
+      slug = baseSlug;
+      let counter = 1;
+      
+      // Only check for conflicts when creating a new post (no id)
+      if (!id) {
+        while (true) {
+          const { data: existingPost } = await supabaseClient
+            .from('blog_posts')
+            .select('id')
+            .eq('user_id', user.id)
+            .eq('slug', slug)
+            .single();
+
+          if (!existingPost) {
+            break; // Slug is unique
+          }
+          
+          counter++;
+          slug = `${baseSlug}-${counter}`;
+        }
+      } else {
+        // For updates, keep existing slug
+        const { data: currentPost } = await supabaseClient
+          .from('blog_posts')
+          .select('slug')
+          .eq('id', id)
+          .eq('user_id', user.id)
+          .single();
+        
+        if (currentPost) {
+          slug = currentPost.slug;
+        }
+      }
+    } else if (id) {
+      // For updates without title, keep existing slug
       const { data: currentPost } = await supabaseClient
         .from('blog_posts')
         .select('slug')
@@ -99,19 +115,25 @@ serve(async (req) => {
       }
     }
 
-    // Create the post data object
-    const postRecord = {
-      title,
-      subtitle,
-      content,
-      hero_image_url: heroImageUrl,
-      tags: tags || [],
-      publish_as_newsletter: publishAsNewsletter,
-      is_draft: isDraft,
-      slug,
+    // Create the post data object - only include fields that are provided
+    const postRecord: any = {
       user_id: user.id,
-      published_at: isDraft ? null : new Date().toISOString(),
     };
+
+    // Only include fields that are provided in the request
+    if (title !== undefined) postRecord.title = title;
+    if (subtitle !== undefined) postRecord.subtitle = subtitle;
+    if (content !== undefined) postRecord.content = content;
+    if (heroImageUrl !== undefined) postRecord.hero_image_url = heroImageUrl;
+    if (tags !== undefined) postRecord.tags = tags || [];
+    if (publishAsNewsletter !== undefined) postRecord.publish_as_newsletter = publishAsNewsletter;
+    if (isDraft !== undefined) postRecord.is_draft = isDraft;
+    if (slug !== undefined) postRecord.slug = slug;
+    
+    // Set published_at for new posts or when changing draft status
+    if (isDraft !== undefined) {
+      postRecord.published_at = isDraft ? null : new Date().toISOString();
+    }
 
     let result;
     if (id) {
