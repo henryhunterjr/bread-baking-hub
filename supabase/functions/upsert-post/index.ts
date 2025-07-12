@@ -53,6 +53,31 @@ serve(async (req) => {
       isDraft
     } = postData;
 
+    // Validate alt-text for images
+    if (inlineImageUrl || socialImageUrl) {
+      const imagesToCheck = [];
+      if (inlineImageUrl) imagesToCheck.push(inlineImageUrl);
+      if (socialImageUrl) imagesToCheck.push(socialImageUrl);
+
+      for (const imageUrl of imagesToCheck) {
+        const { data: imageMetadata } = await supabaseClient
+          .from('blog_images_metadata')
+          .select('alt_text')
+          .eq('public_url', imageUrl)
+          .single();
+
+        if (!imageMetadata?.alt_text) {
+          return new Response(
+            JSON.stringify({ error: 'Alt text is required for all images.' }),
+            {
+              status: 400,
+              headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            }
+          );
+        }
+      }
+    }
+
     // Generate base slug from title (only if title is provided)
     let slug;
     

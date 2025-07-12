@@ -68,6 +68,15 @@ export const BlogImageUploader = () => {
 
   const handleFileUpload = async (file: File) => {
     if (!user) return;
+    
+    if (!metadata.altText.trim()) {
+      toast({
+        title: "Alt text required",
+        description: "Please provide alt text for accessibility before uploading.",
+        variant: "destructive"
+      });
+      return;
+    }
 
     setUploading(true);
     try {
@@ -208,12 +217,13 @@ export const BlogImageUploader = () => {
         {/* Metadata Form */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <Label htmlFor="alt-text">Alt Text</Label>
+            <Label htmlFor="alt-text">Alt Text (required for accessibility)</Label>
             <Input
               id="alt-text"
               value={metadata.altText}
               onChange={(e) => setMetadata(prev => ({ ...prev, altText: e.target.value }))}
-              placeholder="Description for accessibility"
+              placeholder="Required - describe the image"
+              required
             />
           </div>
           <div>
@@ -278,7 +288,11 @@ export const BlogImageUploader = () => {
                 <p className="text-lg font-medium">Drop image here or click to upload</p>
                 <p className="text-sm text-muted-foreground">Supports JPG, PNG, WebP, GIF</p>
               </div>
-              <Button variant="outline" onClick={() => fileInputRef.current?.click()}>
+              <Button 
+                variant="outline" 
+                onClick={() => fileInputRef.current?.click()}
+                disabled={!metadata.altText.trim()}
+              >
                 Choose File
               </Button>
               <input

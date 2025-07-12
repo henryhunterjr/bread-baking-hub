@@ -16,7 +16,8 @@ import {
   Twitter,
   Mail,
   MoreHorizontal,
-  Trash2
+  Trash2,
+  Eye
 } from 'lucide-react';
 import { 
   DropdownMenu, 
@@ -47,6 +48,7 @@ interface PostsListProps {
 export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [revalidating, setRevalidating] = useState<string | null>(null);
 
   useEffect(() => {
     fetchPosts();
@@ -83,6 +85,47 @@ export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
 
   const getPostUrl = (post: BlogPost) => {
     return `${window.location.origin}/blog/${post.slug}`;
+  };
+
+  const getProdUrl = (post: BlogPost) => {
+    const prodBaseUrl = 'https://bread-baking-hub.lovable.app';
+    return `${prodBaseUrl}/blog/${post.slug}`;
+  };
+
+  const handleViewLive = async (post: BlogPost) => {
+    setRevalidating(post.id);
+    
+    try {
+      // Dual revalidation calls
+      const revalidateSecret = 'REVALIDATE_SECRET_TOKEN'; // This should be from environment
+      
+      const [blogResponse, sitemapResponse] = await Promise.all([
+        fetch(`/api/revalidate?path=/blog&secret=${revalidateSecret}`),
+        fetch(`/api/revalidate?path=/sitemap.xml&secret=${revalidateSecret}`)
+      ]);
+
+      if (blogResponse.ok && sitemapResponse.ok) {
+        toast({
+          title: "✓ Site updated",
+          description: "Blog and sitemap have been revalidated"
+        });
+        
+        // Open production URL
+        window.open(getProdUrl(post), '_blank');
+      } else {
+        throw new Error('Revalidation failed');
+      }
+    } catch (error) {
+      toast({
+        title: "Revalidation failed",
+        description: "Failed to update site. Opening current version.",
+        variant: "destructive"
+      });
+      // Still open the URL even if revalidation fails
+      window.open(getProdUrl(post), '_blank');
+    } finally {
+      setRevalidating(null);
+    }
   };
 
   const copyPostUrl = async (post: BlogPost) => {
@@ -263,8 +306,24 @@ export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
                         <Button
                           variant="ghost"
                           size="sm"
+                          onClick={() => handleViewLive(post)}
+                          disabled={revalidating === post.id}
+                          className="opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="View Live (Revalidates & Opens Production)"
+                        >
+                          {revalidating === post.id ? (
+                            <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                          ) : (
+                            <Eye className="w-4 h-4" />
+                          )}
+                        </Button>
+                        
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           onClick={() => window.open(getPostUrl(post), '_blank')}
                           className="opacity-0 group-hover:opacity-100 transition-opacity"
+                          title="Preview (Local)"
                         >
                           <ExternalLink className="w-4 h-4" />
                         </Button>
