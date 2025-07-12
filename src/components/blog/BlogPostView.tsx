@@ -61,6 +61,15 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
           Back to Blog
         </Button>
 
+        {/* Brand Hero Banner */}
+        <div className="mb-8">
+          <img
+            src="/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png"
+            alt="Baking Great At Home Blog"
+            className="w-full h-32 md:h-48 object-cover rounded-lg"
+          />
+        </div>
+
         <article className="prose prose-lg max-w-none">
           {/* Featured Image */}
           {post.image && (

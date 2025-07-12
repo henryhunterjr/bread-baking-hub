@@ -47,6 +47,15 @@ const SupabasePostView = ({
           Back to Blog
         </Button>
 
+        {/* Brand Hero Banner */}
+        <div className="mb-8">
+          <img
+            src="/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png"
+            alt="Baking Great At Home Blog"
+            className="w-full h-32 md:h-48 object-cover rounded-lg"
+          />
+        </div>
+
         {/* Professional Blog Content */}
         <div className="blog-content">
           {/* Blog Title */}
