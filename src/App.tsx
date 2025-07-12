@@ -23,6 +23,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Books = lazy(() => import("./pages/Books"));
 const Recipes = lazy(() => import("./pages/Recipes"));
 const VitaleStarter = lazy(() => import("./pages/VitaleStarter"));
+const KaiserRolls = lazy(() => import("./pages/KaiserRolls"));
 const PublicRecipe = lazy(() => import("./pages/PublicRecipe"));
 const HenrysFoolproofRecipe = lazy(() => import("./pages/HenrysFoolproofRecipe"));
 const BreadGlossary = lazy(() => import("./pages/BreadGlossary"));
@@ -71,6 +72,7 @@ const App = () => {
                 <Route path="/books" element={<Books />} />
                 <Route path="/recipes" element={<Recipes />} />
                 <Route path="/vitale-starter" element={<VitaleStarter />} />
+                <Route path="/kaiser-rolls" element={<KaiserRolls />} />
                 <Route path="/henrys-foolproof-recipe" element={<HenrysFoolproofRecipe />} />
                 <Route path="/glossary" element={<BreadGlossary />} />
                 <Route path="/bread-calculator" element={<BreadCalculator />} />
