@@ -137,10 +137,12 @@ export type Database = {
           created_at: string | null
           hero_image_url: string | null
           id: string
+          inline_image_url: string | null
           is_draft: boolean | null
           publish_as_newsletter: boolean | null
           published_at: string | null
           slug: string
+          social_image_url: string | null
           subtitle: string | null
           tags: string[] | null
           title: string
@@ -152,10 +154,12 @@ export type Database = {
           created_at?: string | null
           hero_image_url?: string | null
           id?: string
+          inline_image_url?: string | null
           is_draft?: boolean | null
           publish_as_newsletter?: boolean | null
           published_at?: string | null
           slug: string
+          social_image_url?: string | null
           subtitle?: string | null
           tags?: string[] | null
           title: string
@@ -167,10 +171,12 @@ export type Database = {
           created_at?: string | null
           hero_image_url?: string | null
           id?: string
+          inline_image_url?: string | null
           is_draft?: boolean | null
           publish_as_newsletter?: boolean | null
           published_at?: string | null
           slug?: string
+          social_image_url?: string | null
           subtitle?: string | null
           tags?: string[] | null
           title?: string
@@ -391,6 +397,30 @@ export type Database = {
           tags?: string[] | null
           title?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          created_at: string
+          id: string
+          setting_key: string
+          setting_value: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          setting_key: string
+          setting_value?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          setting_key?: string
+          setting_value?: string | null
+          updated_at?: string
         }
         Relationships: []
       }

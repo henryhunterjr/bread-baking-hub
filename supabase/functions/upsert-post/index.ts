@@ -46,6 +46,8 @@ serve(async (req) => {
       subtitle,
       content,
       heroImageUrl,
+      inlineImageUrl,
+      socialImageUrl,
       tags,
       publishAsNewsletter,
       isDraft
@@ -125,6 +127,8 @@ serve(async (req) => {
     if (subtitle !== undefined) postRecord.subtitle = subtitle;
     if (content !== undefined) postRecord.content = content;
     if (heroImageUrl !== undefined) postRecord.hero_image_url = heroImageUrl;
+    if (inlineImageUrl !== undefined) postRecord.inline_image_url = inlineImageUrl;
+    if (socialImageUrl !== undefined) postRecord.social_image_url = socialImageUrl;
     if (tags !== undefined) postRecord.tags = tags || [];
     if (publishAsNewsletter !== undefined) postRecord.publish_as_newsletter = publishAsNewsletter;
     if (isDraft !== undefined) postRecord.is_draft = isDraft;

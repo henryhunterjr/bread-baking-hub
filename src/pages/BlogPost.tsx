@@ -16,6 +16,7 @@ import SocialShare from '../components/blog/SocialShare';
 import NewsletterSignup from '../components/NewsletterSignup';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { getHeroBannerUrl, getSocialImageUrl } from '@/utils/imageUtils';
 
 // Extract YouTube video ID from URL
 const extractYouTubeId = (url: string) => {
@@ -28,11 +29,13 @@ const extractYouTubeId = (url: string) => {
 const SupabasePostView = ({ 
   post, 
   supabasePost, 
-  onBack 
+  onBack,
+  heroBannerUrl
 }: { 
   post: BlogPost; 
   supabasePost: Tables<'blog_posts'>; 
-  onBack: () => void; 
+  onBack: () => void;
+  heroBannerUrl: string;
 }) => {
   return (
     <div className="min-h-screen bg-background">
@@ -47,21 +50,13 @@ const SupabasePostView = ({
           Back to Blog
         </Button>
 
-        {/* Post-Specific Hero Banner */}
+        {/* Global Hero Banner */}
         <div className="mb-8">
-          {supabasePost.title.toLowerCase().includes('kaiser roll') ? (
-            <img
-              src="/lovable-uploads/a9ec437e-b37d-4689-8e28-e4e3d5347bdf.png"
-              alt="Baking Great Bread At Home Blog"
-              className="w-full h-32 md:h-48 object-cover rounded-lg"
-            />
-          ) : (
-            <img
-              src="/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png"
-              alt="Baking Great At Home Blog"
-              className="w-full h-32 md:h-48 object-cover rounded-lg"
-            />
-          )}
+          <img
+            src={heroBannerUrl}
+            alt="Baking Great Bread At Home Blog"
+            className="w-full h-32 md:h-48 object-cover rounded-lg"
+          />
         </div>
 
         {/* Professional Blog Content */}
@@ -104,10 +99,10 @@ const SupabasePostView = ({
             </div>
           )}
 
-          {/* Featured Image */}
-          {supabasePost.hero_image_url && (
+          {/* Inline Thumbnail */}
+          {(supabasePost as any).inline_image_url && (
             <img
-              src={supabasePost.hero_image_url}
+              src={(supabasePost as any).inline_image_url}
               alt={supabasePost.title}
               className="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-lg mb-8"
             />
@@ -255,7 +250,11 @@ const SupabasePostView = ({
               url={`${window.location.origin}/blog/${supabasePost.slug}`}
               title={supabasePost.title}
               description={supabasePost.subtitle || ''}
-              image={supabasePost.hero_image_url || ''}
+              image={getSocialImageUrl(
+                (supabasePost as any).social_image_url,
+                (supabasePost as any).inline_image_url,
+                heroBannerUrl
+              )}
             />
           </div>
 
@@ -274,6 +273,7 @@ const BlogPost = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [supabasePost, setSupabasePost] = useState<Tables<'blog_posts'> | null>(null);
+  const [heroBannerUrl, setHeroBannerUrl] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -284,6 +284,10 @@ const BlogPost = () => {
       try {
         setLoading(true);
         setError(null);
+        
+        // Load hero banner URL
+        const heroBanner = await getHeroBannerUrl();
+        setHeroBannerUrl(heroBanner);
         
         console.log('Looking for blog post with slug:', slug);
         console.log('Full URL pathname:', window.location.pathname);
@@ -404,12 +408,22 @@ const BlogPost = () => {
       <BlogPostSEO 
         post={post}
         canonical={`${window.location.origin}/blog/${slug}`}
+        socialImageUrl={supabasePost ? getSocialImageUrl(
+          (supabasePost as any).social_image_url,
+          (supabasePost as any).inline_image_url,
+          heroBannerUrl
+        ) : undefined}
       />
 
       <div className="min-h-screen bg-background">
         <Header />
         {supabasePost ? (
-          <SupabasePostView post={post} supabasePost={supabasePost} onBack={handleBack} />
+          <SupabasePostView 
+            post={post} 
+            supabasePost={supabasePost} 
+            onBack={handleBack} 
+            heroBannerUrl={heroBannerUrl}
+          />
         ) : (
           <BlogPostView post={post} onBack={handleBack} showComments={false} />
         )}

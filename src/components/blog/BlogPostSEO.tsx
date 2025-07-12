@@ -6,9 +6,10 @@ interface BlogPostSEOProps {
   post: BlogPost;
   fullContent?: string;
   canonical?: string;
+  socialImageUrl?: string;
 }
 
-export const BlogPostSEO = ({ post, fullContent, canonical }: BlogPostSEOProps) => {
+export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl }: BlogPostSEOProps) => {
   // Create clean description from excerpt, removing any remaining HTML
   const cleanDescription = post.excerpt.replace(/&[^;]+;/g, '').trim();
   
@@ -19,11 +20,14 @@ export const BlogPostSEO = ({ post, fullContent, canonical }: BlogPostSEOProps) 
   const publishedDate = new Date(post.date).toISOString();
   const modifiedDate = new Date(post.modified).toISOString();
   
+  // Use socialImageUrl if provided, otherwise fallback to post image
+  const finalImageUrl = socialImageUrl || post.image;
+
   // Generate JSON-LD structured data
   const structuredData = generateBlogPostingSchema({
     title: post.title,
     description: cleanDescription,
-    image: post.image,
+    image: finalImageUrl,
     url: canonicalUrl,
     datePublished: publishedDate,
     dateModified: modifiedDate,
@@ -49,8 +53,8 @@ export const BlogPostSEO = ({ post, fullContent, canonical }: BlogPostSEOProps) 
       <meta property="og:description" content={cleanDescription} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content="Baking Great Bread" />
-      {post.image && <meta property="og:image" content={post.image} />}
-      {post.image && <meta property="og:image:alt" content={post.imageAlt} />}
+      {finalImageUrl && <meta property="og:image" content={finalImageUrl} />}
+      {finalImageUrl && <meta property="og:image:alt" content={post.imageAlt} />}
       <meta property="article:published_time" content={publishedDate} />
       <meta property="article:modified_time" content={modifiedDate} />
       <meta property="article:author" content={post.author.name} />
@@ -63,8 +67,8 @@ export const BlogPostSEO = ({ post, fullContent, canonical }: BlogPostSEOProps) 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={post.title} />
       <meta name="twitter:description" content={cleanDescription} />
-      {post.image && <meta name="twitter:image" content={post.image} />}
-      {post.image && <meta name="twitter:image:alt" content={post.imageAlt} />}
+      {finalImageUrl && <meta name="twitter:image" content={finalImageUrl} />}
+      {finalImageUrl && <meta name="twitter:image:alt" content={post.imageAlt} />}
       
       {/* Additional meta tags */}
       <meta name="author" content={post.author.name} />

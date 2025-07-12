@@ -29,6 +29,7 @@ import PostsList from '@/components/dashboard/PostsList';
 import { BlogImageUploader } from '@/components/BlogImageUploader';
 import { BlogImageGrid } from '@/components/BlogImageGrid';
 import { UpdateThumbnail } from '@/components/dashboard/UpdateThumbnail';
+import { SiteSettings } from '@/components/dashboard/SiteSettings';
 import { supabase } from '@/integrations/supabase/client';
 import { Tables } from '@/integrations/supabase/types';
 
@@ -37,7 +38,9 @@ interface BlogPostData {
   title: string;
   subtitle: string;
   content: string;
-  heroImageUrl: string;
+  heroImageUrl: string; // Keep for backward compatibility
+  inlineImageUrl?: string;
+  socialImageUrl?: string;
   tags: string[];
   publishAsNewsletter: boolean;
   isDraft: boolean;
@@ -57,7 +60,9 @@ const Dashboard = () => {
     title: '',
     subtitle: '',
     content: '',
-    heroImageUrl: '',
+    heroImageUrl: '', // Keep for backward compatibility
+    inlineImageUrl: '',
+    socialImageUrl: '',
     tags: [],
     publishAsNewsletter: false,
     isDraft: true
@@ -244,6 +249,8 @@ const Dashboard = () => {
         subtitle: '',
         content: '',
         heroImageUrl: '',
+        inlineImageUrl: '',
+        socialImageUrl: '',
         tags: [],
         publishAsNewsletter: false,
         isDraft: true
@@ -260,7 +267,7 @@ const Dashboard = () => {
     }
   };
 
-  const handleImageUpload = async (file: File) => {
+  const handleImageUpload = async (file: File, imageType: 'hero' | 'inline' | 'social' = 'hero') => {
     try {
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
@@ -276,11 +283,22 @@ const Dashboard = () => {
         .from('hero-images')
         .getPublicUrl(filePath);
 
-      setPostData(prev => ({ ...prev, heroImageUrl: data.publicUrl }));
+      // Update the appropriate field based on image type
+      setPostData(prev => {
+        switch (imageType) {
+          case 'inline':
+            return { ...prev, inlineImageUrl: data.publicUrl };
+          case 'social':
+            return { ...prev, socialImageUrl: data.publicUrl };
+          case 'hero':
+          default:
+            return { ...prev, heroImageUrl: data.publicUrl };
+        }
+      });
       
       toast({
         title: "Image uploaded",
-        description: "Hero image has been uploaded successfully."
+        description: `Your ${imageType} image has been uploaded successfully.`
       });
     } catch (error) {
       console.error('Error uploading image:', error);
@@ -306,7 +324,7 @@ const Dashboard = () => {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full max-w-3xl grid-cols-5">
+            <TabsList className="grid w-full max-w-4xl grid-cols-6">
               <TabsTrigger value="posts" className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
                 All Posts
@@ -328,6 +346,10 @@ const Dashboard = () => {
                 <ImageIcon className="w-4 h-4" />
                 Images
               </TabsTrigger>
+              <TabsTrigger value="settings" className="flex items-center gap-2">
+                <Settings className="w-4 h-4" />
+                Settings
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="posts" className="space-y-6">
@@ -340,6 +362,8 @@ const Dashboard = () => {
                     subtitle: post.subtitle || '',
                     content: post.content,
                     heroImageUrl: post.hero_image_url || '',
+                    inlineImageUrl: (post as any).inline_image_url || '',
+                    socialImageUrl: (post as any).social_image_url || '',
                     tags: post.tags || [],
                     publishAsNewsletter: post.publish_as_newsletter || false,
                     isDraft: post.is_draft || false
@@ -384,6 +408,10 @@ const Dashboard = () => {
               />
               <BlogImageUploader />
               <BlogImageGrid />
+            </TabsContent>
+
+            <TabsContent value="settings">
+              <SiteSettings />
             </TabsContent>
           </Tabs>
         </div>
@@ -484,7 +512,7 @@ const NewsletterTab = ({
 interface PostFormProps {
   postData: BlogPostData;
   setPostData: (data: BlogPostData | ((prev: BlogPostData) => BlogPostData)) => void;
-  onImageUpload: (file: File) => Promise<void>;
+  onImageUpload: (file: File, imageType?: 'hero' | 'inline' | 'social') => Promise<void>;
   showNewsletterToggle: boolean;
 }
 
@@ -519,12 +547,13 @@ const PostForm = ({ postData, setPostData, onImageUpload, showNewsletterToggle }
         />
       </div>
 
+      {/* Inline Thumbnail - First image in post body */}
       <div>
-        <Label htmlFor="hero-image" className="text-sm font-medium">
-          Social Media Thumbnail
+        <Label htmlFor="inline-image" className="text-sm font-medium">
+          Inline Thumbnail
         </Label>
         <p className="text-xs text-muted-foreground mb-2">
-          This image appears when your blog post is shared on social media platforms
+          The main image that appears in the post content (optional)
         </p>
         <div className="mt-1 flex items-center gap-4">
           <Button
@@ -533,42 +562,99 @@ const PostForm = ({ postData, setPostData, onImageUpload, showNewsletterToggle }
             asChild
             className="cursor-pointer"
           >
-            <label htmlFor="image-upload">
+            <label htmlFor="inline-image-upload">
               <Upload className="w-4 h-4 mr-2" />
-              Upload Thumbnail
+              Upload Image
               <input
-                id="image-upload"
+                id="inline-image-upload"
                 type="file"
                 accept="image/*"
                 className="hidden"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
-                  if (file) onImageUpload(file);
+                  if (file) onImageUpload(file, 'inline');
                 }}
               />
             </label>
           </Button>
-          {postData.heroImageUrl && (
+          {postData.inlineImageUrl && (
             <div className="flex items-center gap-2">
               <img
-                src={postData.heroImageUrl}
-                alt="Social media thumbnail preview"
+                src={postData.inlineImageUrl}
+                alt="Inline content preview"
                 className="w-20 h-20 object-cover rounded border"
               />
               <div className="text-xs text-muted-foreground">
-                <p>✓ Thumbnail set</p>
+                <p>✓ Inline image set</p>
+                <p>Appears in post body</p>
+              </div>
+            </div>
+          )}
+        </div>
+        {!postData.inlineImageUrl && (
+          <div className="mt-2 p-3 bg-muted/50 rounded-lg border-2 border-dashed border-muted-foreground/25">
+            <div className="text-center">
+              <ImageIcon className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+              <p className="text-sm text-muted-foreground">No inline image</p>
+              <p className="text-xs text-muted-foreground">
+                Upload an image to display in your post content
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Social Preview - For social media sharing */}
+      <div>
+        <Label htmlFor="social-image" className="text-sm font-medium">
+          Social Preview
+        </Label>
+        <p className="text-xs text-muted-foreground mb-2">
+          Image shown when sharing on social media platforms (Facebook, Twitter, etc.)
+        </p>
+        <div className="mt-1 flex items-center gap-4">
+          <Button
+            variant="outline"
+            size="sm"
+            asChild
+            className="cursor-pointer"
+          >
+            <label htmlFor="social-image-upload">
+              <Upload className="w-4 h-4 mr-2" />
+              Upload Preview
+              <input
+                id="social-image-upload"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) onImageUpload(file, 'social');
+                }}
+              />
+            </label>
+          </Button>
+          {postData.socialImageUrl && (
+            <div className="flex items-center gap-2">
+              <img
+                src={postData.socialImageUrl}
+                alt="Social media preview"
+                className="w-20 h-20 object-cover rounded border"
+              />
+              <div className="text-xs text-muted-foreground">
+                <p>✓ Social preview set</p>
                 <p>Optimized for sharing</p>
               </div>
             </div>
           )}
         </div>
-        {!postData.heroImageUrl && (
+        {!postData.socialImageUrl && (
           <div className="mt-2 p-3 bg-muted/50 rounded-lg border-2 border-dashed border-muted-foreground/25">
             <div className="text-center">
               <ImageIcon className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
-              <p className="text-sm text-muted-foreground">No thumbnail uploaded</p>
+              <p className="text-sm text-muted-foreground">No social preview</p>
               <p className="text-xs text-muted-foreground">
-                Upload an image to control how your post looks when shared
+                Upload an image for social media previews
               </p>
             </div>
           </div>
