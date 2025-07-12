@@ -15,7 +15,8 @@ import {
   Facebook,
   Twitter,
   Mail,
-  MoreHorizontal
+  MoreHorizontal,
+  Trash2
 } from 'lucide-react';
 import { 
   DropdownMenu, 
@@ -23,6 +24,17 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { SocialShare } from '@/components/blog/SocialShare';
 
 type BlogPost = Tables<'blog_posts'>;
@@ -111,6 +123,32 @@ export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
     
     if (shareUrl) {
       window.open(shareUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  const deletePost = async (post: BlogPost) => {
+    try {
+      const { error } = await supabase
+        .from('blog_posts')
+        .delete()
+        .eq('id', post.id);
+
+      if (error) throw error;
+
+      // Remove the post from local state
+      setPosts(currentPosts => currentPosts.filter(p => p.id !== post.id));
+
+      toast({
+        title: "Post deleted",
+        description: `"${post.title}" has been permanently deleted.`
+      });
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      toast({
+        title: "Delete failed",
+        description: "Failed to delete the post. Please try again.",
+        variant: "destructive"
+      });
     }
   };
 
@@ -257,6 +295,35 @@ export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
                       <Edit className="w-4 h-4" />
                     </Button>
                   )}
+
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Delete Blog Post</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Are you sure you want to delete "{post.title}"? This action cannot be undone and will permanently remove the blog post from your dashboard.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => deletePost(post)}
+                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                        >
+                          Delete Post
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             </CardContent>
