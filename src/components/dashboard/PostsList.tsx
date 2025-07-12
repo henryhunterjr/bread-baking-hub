@@ -203,127 +203,144 @@ export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
         {posts.map((post) => (
           <Card key={post.id} className="group hover:shadow-md transition-shadow">
             <CardContent className="p-6">
-              <div className="flex items-start justify-between">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-lg font-semibold text-foreground truncate">
-                      {post.title}
-                    </h3>
-                    <Badge variant={post.is_draft ? "secondary" : "default"} className="shrink-0">
-                      {post.is_draft ? 'Draft' : 'Published'}
-                    </Badge>
-                  </div>
-                  
-                  {post.subtitle && (
-                    <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
-                      {post.subtitle}
-                    </p>
-                  )}
-                  
-                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                    <div className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3" />
-                      {post.is_draft ? 'Saved' : 'Published'} {new Date(post.created_at || '').toLocaleDateString()}
+              <div className="flex items-start gap-4">
+                {/* Thumbnail */}
+                <div className="flex-shrink-0">
+                  {post.hero_image_url ? (
+                    <img
+                      src={post.hero_image_url}
+                      alt={post.title}
+                      className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-muted rounded-lg flex items-center justify-center">
+                      <FileText className="w-6 h-6 text-muted-foreground" />
                     </div>
-                    
-                    {post.tags && post.tags.length > 0 && (
-                      <div className="flex gap-1">
-                        {post.tags.slice(0, 3).map((tag) => (
-                          <Badge key={tag} variant="outline" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                        {post.tags.length > 3 && (
-                          <span className="text-muted-foreground">+{post.tags.length - 3} more</span>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                  )}
                 </div>
 
-                <div className="flex items-center gap-2 ml-4">
-                  {!post.is_draft && (
-                    <>
+                <div className="flex items-start justify-between flex-1 min-w-0">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="text-lg font-semibold text-foreground truncate">
+                        {post.title}
+                      </h3>
+                      <Badge variant={post.is_draft ? "secondary" : "default"} className="shrink-0">
+                        {post.is_draft ? 'Draft' : 'Published'}
+                      </Badge>
+                    </div>
+                    
+                    {post.subtitle && (
+                      <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
+                        {post.subtitle}
+                      </p>
+                    )}
+                    
+                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        {post.is_draft ? 'Saved' : 'Published'} {new Date(post.created_at || '').toLocaleDateString()}
+                      </div>
+                      
+                      {post.tags && post.tags.length > 0 && (
+                        <div className="flex gap-1">
+                          {post.tags.slice(0, 3).map((tag) => (
+                            <Badge key={tag} variant="outline" className="text-xs">
+                              {tag}
+                            </Badge>
+                          ))}
+                          {post.tags.length > 3 && (
+                            <span className="text-muted-foreground">+{post.tags.length - 3} more</span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {!post.is_draft && (
+                      <>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => window.open(getPostUrl(post), '_blank')}
+                          className="opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </Button>
+                        
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              className="opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                              <Share className="w-4 h-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem onClick={() => copyPostUrl(post)}>
+                              <Copy className="w-4 h-4 mr-2" />
+                              Copy Link
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => shareOnSocial('facebook', post)}>
+                              <Facebook className="w-4 h-4 mr-2" />
+                              Share on Facebook
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => shareOnSocial('twitter', post)}>
+                              <Twitter className="w-4 h-4 mr-2" />
+                              Share on Twitter
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => shareOnSocial('email', post)}>
+                              <Mail className="w-4 h-4 mr-2" />
+                              Share via Email
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </>
+                    )}
+                    
+                    {onEditPost && (
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => window.open(getPostUrl(post), '_blank')}
+                        onClick={() => onEditPost(post)}
                         className="opacity-0 group-hover:opacity-100 transition-opacity"
                       >
-                        <ExternalLink className="w-4 h-4" />
+                        <Edit className="w-4 h-4" />
                       </Button>
-                      
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button 
-                            variant="ghost" 
-                            size="sm"
-                            className="opacity-0 group-hover:opacity-100 transition-opacity"
-                          >
-                            <Share className="w-4 h-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => copyPostUrl(post)}>
-                            <Copy className="w-4 h-4 mr-2" />
-                            Copy Link
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => shareOnSocial('facebook', post)}>
-                            <Facebook className="w-4 h-4 mr-2" />
-                            Share on Facebook
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => shareOnSocial('twitter', post)}>
-                            <Twitter className="w-4 h-4 mr-2" />
-                            Share on Twitter
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => shareOnSocial('email', post)}>
-                            <Mail className="w-4 h-4 mr-2" />
-                            Share via Email
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </>
-                  )}
-                  
-                  {onEditPost && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => onEditPost(post)}
-                      className="opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                  )}
+                    )}
 
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Delete Blog Post</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          Are you sure you want to delete "{post.title}"? This action cannot be undone and will permanently remove the blog post from your dashboard.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => deletePost(post)}
-                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive hover:text-destructive hover:bg-destructive/10"
                         >
-                          Delete Post
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete Blog Post</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Are you sure you want to delete "{post.title}"? This action cannot be undone and will permanently remove the blog post from your dashboard.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => deletePost(post)}
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                          >
+                            Delete Post
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
                 </div>
               </div>
             </CardContent>
