@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Send, MessageCircle, X, Mic, MicOff, Play } from 'lucide-react';
+import { Send, MessageCircle, X, Mic, MicOff, Play, Volume2, VolumeX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,6 +30,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
   const [micEnabled, setMicEnabled] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [timeoutWarning, setTimeoutWarning] = useState(false);
+  const [speechEnabled, setSpeechEnabled] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const warningTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -82,9 +83,9 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
     }
   }, [messages]);
 
-  // Auto-play Krusty's responses (only when sidebar is open and message is new)
+  // Auto-play Krusty's responses (only when sidebar is open, message is new, and speech is enabled)
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !speechEnabled) return;
     
     const lastMessage = messages[messages.length - 1];
     if (lastMessage && 
@@ -94,7 +95,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
       lastSpokenMessageRef.current = lastMessage.id;
       speak(lastMessage.content);
     }
-  }, [messages, isLoading, isOpen, speak]);
+  }, [messages, isLoading, isOpen, speechEnabled, speak]);
 
   // Monitor speech recognition state and cleanup when it stops
   useEffect(() => {
@@ -227,14 +228,25 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
                 )}
               </div>
             </div>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={onToggle}
-              className="touch-manipulation"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSpeechEnabled(!speechEnabled)}
+                className={`touch-manipulation ${speechEnabled ? 'text-primary' : 'text-muted-foreground'}`}
+                title={speechEnabled ? "Turn off voice responses" : "Turn on voice responses"}
+              >
+                {speechEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={onToggle}
+                className="touch-manipulation"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
           
           <Select value={mode} onValueChange={(value: AssistantMode) => setMode(value)}>
