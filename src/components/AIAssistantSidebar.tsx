@@ -82,19 +82,19 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
     }
   }, [messages]);
 
-  // Auto-play Krusty's responses disabled by default - users must manually enable voice
-  // useEffect(() => {
-  //   if (!isOpen) return;
-  //   
-  //   const lastMessage = messages[messages.length - 1];
-  //   if (lastMessage && 
-  //       lastMessage.role === 'assistant' && 
-  //       !isLoading && 
-  //       lastMessage.id !== lastSpokenMessageRef.current) {
-  //     lastSpokenMessageRef.current = lastMessage.id;
-  //     speak(lastMessage.content);
-  //   }
-  // }, [messages, isLoading, isOpen, speak]);
+  // Auto-play Krusty's responses (only when sidebar is open and message is new)
+  useEffect(() => {
+    if (!isOpen) return;
+    
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage && 
+        lastMessage.role === 'assistant' && 
+        !isLoading && 
+        lastMessage.id !== lastSpokenMessageRef.current) {
+      lastSpokenMessageRef.current = lastMessage.id;
+      speak(lastMessage.content);
+    }
+  }, [messages, isLoading, isOpen, speak]);
 
   // Monitor speech recognition state and cleanup when it stops
   useEffect(() => {

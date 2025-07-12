@@ -7,7 +7,6 @@ import BlogPostMeta from './BlogPostMeta';
 import CommentsSystem from './CommentsSystem';
 import SocialShare from './SocialShare';
 import NewsletterSignup from '../NewsletterSignup';
-import BlogHeroBanner from '../BlogHeroBanner';
 import { BlogPost } from '@/utils/blogFetcher';
 
 interface BlogPostViewProps {
@@ -50,11 +49,6 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
   return (
     <div className="min-h-screen bg-background">
       <BlogPostSEO post={post} fullContent={content} />
-      
-      {/* Hero Banner at the very top */}
-      <div className="w-full">
-        <BlogHeroBanner />
-      </div>
       
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Back Button */}
