@@ -121,7 +121,10 @@ const Dashboard = () => {
       // Auto-save the imported draft to prevent loss on refresh
       try {
         await supabase.functions.invoke('upsert-post', {
-          body: { ...importedData, isDraft: true }
+          body: { 
+            postData: { ...importedData, isDraft: true },
+            userId: user.id
+          }
         });
         
         toast({
@@ -158,7 +161,10 @@ const Dashboard = () => {
     setIsSavingDraft(true);
     try {
       const { data, error } = await supabase.functions.invoke('upsert-post', {
-        body: { ...postData, isDraft: true }
+        body: { 
+          postData: { ...postData, isDraft: true },
+          userId: user.id
+        }
       });
 
       if (error) throw error;
@@ -194,7 +200,10 @@ const Dashboard = () => {
       console.log('Publishing post with data:', { ...postData, isDraft: false });
       
       const response = await supabase.functions.invoke('upsert-post', {
-        body: { ...postData, isDraft: false }
+        body: { 
+          postData: { ...postData, isDraft: false },
+          userId: user.id
+        }
       });
       
       console.log('Supabase function response:', response);
