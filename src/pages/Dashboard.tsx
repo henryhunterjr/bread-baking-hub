@@ -257,9 +257,29 @@ const Dashboard = () => {
       });
     } catch (error) {
       console.error('Error publishing:', error);
+      
+      // Extract meaningful error message from Supabase function response
+      let errorMessage = "Failed to publish post. Please try again.";
+      
+      // Check if it's a FunctionsHttpError with a response body
+      if (error && typeof error === 'object' && 'name' in error && error.name === 'FunctionsHttpError') {
+        try {
+          // For Supabase function errors, the actual error message is usually in the response body
+          // We need to check the data property which contains the parsed response
+          if ((error as any).context && (error as any).context.data) {
+            const responseData = (error as any).context.data;
+            if (responseData.error) {
+              errorMessage = responseData.error;
+            }
+          }
+        } catch (parseError) {
+          console.error('Error parsing function error:', parseError);
+        }
+      }
+      
       toast({
         title: "Error",
-        description: "Failed to publish post. Please try again.",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
