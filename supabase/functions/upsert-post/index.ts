@@ -1,4 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { generateSlug } from './slug.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -44,18 +46,65 @@ serve(async (req) => {
       );
     }
 
-    // Simple test response for now
-    console.log('Returning test success response');
+    // Parse request body
+    const body = await req.json();
+    console.log('Request body:', JSON.stringify(body, null, 2));
+
+    const { postData, userId } = body;
+    
+    if (!postData || !userId) {
+      console.error('Missing required fields:', { hasPostData: !!postData, hasUserId: !!userId });
+      return new Response(
+        JSON.stringify({ error: "Missing postData or userId" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Create Supabase client
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Generate slug
+    console.log('Generating slug for title:', postData.title);
+    const slug = await generateSlug(supabaseClient, userId, postData.title, postData.id);
+    console.log('Generated slug:', slug);
+    
+    if (!slug) {
+      console.error('Failed to generate slug');
+      return new Response(
+        JSON.stringify({ error: "Failed to generate slug" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Prepare post data with slug
+    const postWithSlug = {
+      ...postData,
+      slug,
+      user_id: userId,
+      updated_at: new Date().toISOString()
+    };
+
+    console.log('Upserting post with data:', JSON.stringify(postWithSlug, null, 2));
+
+    // Upsert the post
+    const { data, error } = await supabaseClient
+      .from('blog_posts')
+      .upsert(postWithSlug, { onConflict: 'id' })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Database error:', error);
+      return new Response(
+        JSON.stringify({ error: error.message }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    console.log('Post upserted successfully:', data);
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: "Function is working - environment variables found",
-        timestamp: new Date().toISOString()
-      }),
-      { 
-        status: 200, 
-        headers: { ...corsHeaders, "Content-Type": "application/json" } 
-      }
+      JSON.stringify({ success: true, data, slug }),
+      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
 
   } catch (error) {
