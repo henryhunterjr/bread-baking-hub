@@ -216,6 +216,21 @@ const Dashboard = () => {
       
       const actualSlug = publishedPost?.slug || data.slug;
       
+      // Debug logging
+      console.log('Published post slug:', publishedPost?.slug);
+      console.log('Data slug:', data.slug);
+      console.log('Actual slug used:', actualSlug);
+      
+      if (!actualSlug) {
+        console.error('No slug found for published post');
+        toast({
+          title: "Published with warning",
+          description: "Post is live but slug generation failed. Check your posts list.",
+          variant: "destructive"
+        });
+        return;
+      }
+      
       if (postData.publishAsNewsletter) {
         // Queue newsletter
         const { error: newsletterError } = await supabase.functions.invoke('send-newsletter', {
