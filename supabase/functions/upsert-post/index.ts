@@ -14,15 +14,17 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     SUPABASE_URL,
     SUPABASE_ANON_KEY,
   });
+}
 
-  serve(async () => {
+serve(async (req) => {
+  // Early environment check
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     return new Response(
       JSON.stringify({ error: "Server misconfigured. Contact support." }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
-  });
-} else {
-  serve(async (req) => {
+  }
+
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return handleCorsPreflightRequest();
@@ -32,8 +34,8 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     console.log('Upsert-post function started');
     
     const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY,
       {
         global: {
           headers: { Authorization: req.headers.get('Authorization')! },
@@ -117,4 +119,3 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     );
   }
 });
-}
