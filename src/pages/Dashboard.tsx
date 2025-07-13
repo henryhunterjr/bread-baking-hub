@@ -207,6 +207,15 @@ const Dashboard = () => {
       const { data, error } = response;
       if (error) throw error;
 
+      // Fetch the actual post data to get the correct slug
+      const { data: publishedPost } = await supabase
+        .from('blog_posts')
+        .select('slug')
+        .eq('id', data.id)
+        .single();
+      
+      const actualSlug = publishedPost?.slug || data.slug;
+      
       if (postData.publishAsNewsletter) {
         // Queue newsletter
         const { error: newsletterError } = await supabase.functions.invoke('send-newsletter', {
@@ -214,7 +223,7 @@ const Dashboard = () => {
             title: postData.title,
             excerpt: postData.subtitle,
             content: postData.content,
-            postUrl: `${window.location.origin}/blog/${data.slug}`
+            postUrl: `${window.location.origin}/blog/${actualSlug}`
           }
         });
 
@@ -231,7 +240,7 @@ const Dashboard = () => {
           });
         }
       } else {
-        const postUrl = `${window.location.origin}/blog/${data.slug}`;
+        const postUrl = `${window.location.origin}/blog/${actualSlug}`;
         toast({
           title: "Blog post live",
           description: (
