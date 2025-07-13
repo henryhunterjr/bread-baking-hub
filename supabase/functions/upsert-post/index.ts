@@ -1,121 +1,75 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import { handleCorsPreflightRequest, createErrorResponse, createSuccessResponse } from './cors.ts';
-import { validateImageAltText } from './validation.ts';
-import { generateSlug } from './slug.ts';
-import { preparePostRecord } from './data.ts';
-import { PostData } from './types.ts';
 
-const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
-const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY");
-
-if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  console.error("Missing environment variables:", {
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY,
-  });
-}
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
 
 serve(async (req) => {
-  // Early environment check
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    return new Response(
-      JSON.stringify({ error: "Server misconfigured. Contact support." }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
-  }
+  console.log('=== UPSERT POST FUNCTION STARTED ===');
+  console.log('Method:', req.method);
+  console.log('URL:', req.url);
 
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return handleCorsPreflightRequest();
+    console.log('Handling CORS preflight');
+    return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    console.log('Upsert-post function started');
+    // Check environment variables first
+    const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+    const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY");
     
-    const supabaseClient = createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY,
-      {
-        global: {
-          headers: { Authorization: req.headers.get('Authorization')! },
-        },
+    console.log('Environment check:', {
+      hasUrl: !!SUPABASE_URL,
+      hasKey: !!SUPABASE_ANON_KEY,
+      urlPreview: SUPABASE_URL ? SUPABASE_URL.substring(0, 20) + '...' : 'null'
+    });
+
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+      console.error("Missing environment variables");
+      return new Response(
+        JSON.stringify({ 
+          error: "Server misconfigured - missing environment variables",
+          details: {
+            hasUrl: !!SUPABASE_URL,
+            hasKey: !!SUPABASE_ANON_KEY
+          }
+        }),
+        { 
+          status: 500, 
+          headers: { ...corsHeaders, "Content-Type": "application/json" } 
+        }
+      );
+    }
+
+    // Simple test response for now
+    console.log('Returning test success response');
+    return new Response(
+      JSON.stringify({ 
+        success: true, 
+        message: "Function is working - environment variables found",
+        timestamp: new Date().toISOString()
+      }),
+      { 
+        status: 200, 
+        headers: { ...corsHeaders, "Content-Type": "application/json" } 
       }
     );
 
-    // Get the current user
-    const {
-      data: { user },
-      error: userError,
-    } = await supabaseClient.auth.getUser();
-
-    if (userError || !user) {
-      return createErrorResponse('Unauthorized', 401);
-    }
-
-    const postData: PostData = await req.json();
-    const {
-      id,
-      title,
-      inlineImageUrl,
-      socialImageUrl,
-    } = postData;
-
-    // Validate alt-text for images
-    const validationError = await validateImageAltText(
-      supabaseClient,
-      inlineImageUrl,
-      socialImageUrl
-    );
-
-    if (validationError) {
-      return createErrorResponse(validationError, 400);
-    }
-
-    // Generate slug
-    const slug = await generateSlug(supabaseClient, user.id, title, id);
-
-    // Prepare post record
-    const postRecord = preparePostRecord(postData, user.id, slug);
-
-    let result;
-    if (id) {
-      // Update existing post
-      const { data, error } = await supabaseClient
-        .from('blog_posts')
-        .update(postRecord)
-        .eq('id', id)
-        .eq('user_id', user.id)
-        .select()
-        .single();
-
-      if (error) throw error;
-      result = data;
-    } else {
-      // Create new post
-      const { data, error } = await supabaseClient
-        .from('blog_posts')
-        .insert(postRecord)
-        .select()
-        .single();
-
-      if (error) throw error;
-      result = data;
-    }
-
-    console.log('Post upserted successfully:', result.id);
-
-    return createSuccessResponse({ 
-      success: true, 
-      post: result,
-      slug: result.slug 
-    });
-
   } catch (error) {
-    console.error('Error in upsert-post function:', error);
-    return createErrorResponse(
-      error.message || 'Internal server error',
-      500
+    console.error('Critical error in function:', error);
+    return new Response(
+      JSON.stringify({ 
+        error: "Critical function error", 
+        message: error.message,
+        stack: error.stack
+      }),
+      { 
+        status: 500, 
+        headers: { ...corsHeaders, "Content-Type": "application/json" } 
+      }
     );
   }
 });
