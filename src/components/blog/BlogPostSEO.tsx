@@ -20,7 +20,7 @@ export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl }: Bl
   const publishedDate = new Date(post.date).toISOString();
   const modifiedDate = new Date(post.modified).toISOString();
   
-  // Use socialImageUrl if provided, otherwise fallback to post image
+  // Use socialImageUrl prop (which contains the social_image_url logic) or fallback to post image
   const finalImageUrl = socialImageUrl || post.image;
 
   // Generate JSON-LD structured data
