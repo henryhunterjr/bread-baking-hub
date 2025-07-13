@@ -6,7 +6,23 @@ import { generateSlug } from './slug.ts';
 import { preparePostRecord } from './data.ts';
 import { PostData } from './types.ts';
 
-serve(async (req) => {
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY");
+
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  console.error("Missing environment variables:", {
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY,
+  });
+
+  serve(async () => {
+    return new Response(
+      JSON.stringify({ error: "Server misconfigured. Contact support." }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
+  });
+} else {
+  serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return handleCorsPreflightRequest();
@@ -101,3 +117,4 @@ serve(async (req) => {
     );
   }
 });
+}
