@@ -13,6 +13,8 @@ serve(async (req) => {
   }
 
   try {
+    console.log('Upsert-post function started');
+    
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',

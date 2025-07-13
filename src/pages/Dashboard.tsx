@@ -191,10 +191,20 @@ const Dashboard = () => {
 
     setIsPublishing(true);
     try {
-      const { data, error } = await supabase.functions.invoke('upsert-post', {
+      console.log('Publishing post with data:', { ...postData, isDraft: false });
+      
+      const response = await supabase.functions.invoke('upsert-post', {
         body: { ...postData, isDraft: false }
       });
-
+      
+      console.log('Supabase function response:', response);
+      
+      if (response.error) {
+        console.error('Function invocation error:', response.error);
+        throw response.error;
+      }
+      
+      const { data, error } = response;
       if (error) throw error;
 
       if (postData.publishAsNewsletter) {
