@@ -232,13 +232,13 @@ const Dashboard = () => {
       }
 
       // Use direct fetch call as specified
-      const response = await fetch(`https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/upsert-post`, {
+      const response = await fetch('/functions/v1/upsert-post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
+          Authorization: `Bearer ${session.access_token}`,
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ postData: payload.postData, userId: payload.userId }),
       });
 
       const result = await response.json();
@@ -249,16 +249,8 @@ const Dashboard = () => {
         const errorMessage = result.error || `HTTP ${response.status}: ${response.statusText}`;
         console.error('Publishing failed:', errorMessage);
         
-        // Display specific error messages
-        if (errorMessage.includes('Missing SUPABASE_URL')) {
-          throw new Error('Server configuration error: Missing database URL');
-        } else if (errorMessage.includes('Authorization header missing')) {
-          throw new Error('Authentication failed: Please log in again');
-        } else if (errorMessage.includes('Missing postData or userId')) {
-          throw new Error('Invalid request: Missing required data');
-        } else {
-          throw new Error(errorMessage);
-        }
+        // Display the actual error message from backend
+        throw new Error(errorMessage);
       }
 
       // Success! Extract the slug and hero_image_url

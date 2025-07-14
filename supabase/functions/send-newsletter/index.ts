@@ -13,9 +13,27 @@ serve(async (req) => {
   }
 
   try {
+    // Environment validation
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')
+    const supabaseKey = Deno.env.get('SUPABASE_ANON_KEY')
+    
+    if (!supabaseUrl) {
+      return new Response(
+        JSON.stringify({ error: 'Missing SUPABASE_URL' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+    
+    if (!supabaseKey) {
+      return new Response(
+        JSON.stringify({ error: 'Missing SUPABASE_ANON_KEY' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+    
     const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      supabaseUrl,
+      supabaseKey,
       {
         global: {
           headers: { Authorization: req.headers.get('Authorization')! },

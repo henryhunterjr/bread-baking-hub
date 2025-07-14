@@ -14,9 +14,42 @@ serve(async (req) => {
   }
 
   try {
+    // Environment validation
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+    const expectedToken = Deno.env.get('AUTO_DRAFT_TOKEN')
+    const resendKey = Deno.env.get('RESEND_API_KEY')
+    
+    if (!supabaseUrl) {
+      return new Response(
+        JSON.stringify({ error: 'Missing SUPABASE_URL' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+    
+    if (!supabaseKey) {
+      return new Response(
+        JSON.stringify({ error: 'Missing SUPABASE_SERVICE_ROLE_KEY' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+    
+    if (!expectedToken) {
+      return new Response(
+        JSON.stringify({ error: 'Missing AUTO_DRAFT_TOKEN' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+    
+    if (!resendKey) {
+      return new Response(
+        JSON.stringify({ error: 'Missing RESEND_API_KEY' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+    
     // Check for authorization header
     const authHeader = req.headers.get('Authorization');
-    const expectedToken = Deno.env.get('AUTO_DRAFT_TOKEN');
     
     if (!authHeader || !authHeader.startsWith('Bearer ') || authHeader.slice(7) !== expectedToken) {
       return new Response(
@@ -28,10 +61,7 @@ serve(async (req) => {
       );
     }
 
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    );
+    const supabaseClient = createClient(supabaseUrl, supabaseKey);
 
     const requestData = await req.json();
     const { type, payload, runDate } = requestData;
@@ -73,7 +103,7 @@ serve(async (req) => {
     }
 
     // Send notification email
-    const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+    const resend = new Resend(resendKey);
     const title = payload.blogDraft?.title || payload.title || 'Untitled Draft';
     
     try {
