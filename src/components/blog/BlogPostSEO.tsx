@@ -22,6 +22,11 @@ export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl }: Bl
   
   // Use socialImageUrl prop (which contains the social_image_url logic) or fallback to post image
   const finalImageUrl = socialImageUrl || post.image;
+  
+  // Debug logging
+  console.log('BlogPostSEO - socialImageUrl:', socialImageUrl);
+  console.log('BlogPostSEO - post.image:', post.image);
+  console.log('BlogPostSEO - finalImageUrl:', finalImageUrl);
 
   // Generate JSON-LD structured data
   const structuredData = generateBlogPostingSchema({

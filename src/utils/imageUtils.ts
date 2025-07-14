@@ -43,8 +43,13 @@ export const getSocialImageUrl = (
   inlineImageUrl?: string,
   heroBannerUrl?: string
 ): string => {
-  return socialImageUrl || 
-         inlineImageUrl || 
-         heroBannerUrl || 
-         '/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png';
+  console.log('getSocialImageUrl called with:', { socialImageUrl, inlineImageUrl, heroBannerUrl });
+  
+  const result = socialImageUrl || 
+                 inlineImageUrl || 
+                 heroBannerUrl || 
+                 '/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png';
+  
+  console.log('getSocialImageUrl returning:', result);
+  return result;
 };
