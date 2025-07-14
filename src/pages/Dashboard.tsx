@@ -231,8 +231,8 @@ const Dashboard = () => {
         throw new Error('No valid session found. Please log in again.');
       }
 
-      // Use direct fetch call as specified
-      const response = await fetch('/functions/v1/upsert-post', {
+      // Use direct fetch call with full Supabase function URL
+      const response = await fetch(`https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/upsert-post`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
