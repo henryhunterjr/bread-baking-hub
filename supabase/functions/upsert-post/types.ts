@@ -12,6 +12,7 @@ export interface PostData {
 }
 
 export interface PostRecord {
+  id?: string;
   user_id: string;
   title?: string;
   subtitle?: string;

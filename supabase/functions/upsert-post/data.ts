@@ -2,6 +2,7 @@ import { PostData, PostRecord } from './types.ts';
 
 export function preparePostRecord(postData: PostData, userId: string, slug?: string): PostRecord {
   const {
+    id,
     title,
     subtitle,
     content,
@@ -18,6 +19,9 @@ export function preparePostRecord(postData: PostData, userId: string, slug?: str
     user_id: userId,
   };
 
+  // Include id for updates (if provided)
+  if (id !== undefined) postRecord.id = id;
+  
   // Only include fields that are provided in the request
   if (title !== undefined) postRecord.title = title;
   if (subtitle !== undefined) postRecord.subtitle = subtitle;

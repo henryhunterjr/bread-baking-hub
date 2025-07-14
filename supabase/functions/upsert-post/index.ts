@@ -68,10 +68,20 @@ serve(async (req) => {
     const slug = await generateSlug(supabaseClient, userId, postData.title, postData.id);
     console.log('Generated slug:', slug);
     
-    if (!slug) {
-      console.error('Failed to generate slug');
+    // Ensure slug is never empty (fallback protection)
+    if (!slug || slug.trim() === '') {
+      console.error('Failed to generate slug or slug is empty, using fallback');
+      const fallbackSlug = postData.title
+        ?.toLowerCase()
+        ?.replace(/[^a-z0-9]+/g, '-')
+        ?.replace(/^-+|-+$/g, '')
+        ?.substring(0, 100) || 'untitled-post';
+      
+      const finalSlug = fallbackSlug || 'untitled-post';
+      console.log('Using fallback slug:', finalSlug);
+      
       return new Response(
-        JSON.stringify({ error: "Failed to generate slug" }),
+        JSON.stringify({ error: "Failed to generate unique slug", fallbackUsed: finalSlug }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
