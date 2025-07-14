@@ -76,13 +76,10 @@ serve(async (req) => {
       );
     }
 
-    // Prepare post data with slug
-    const postWithSlug = {
-      ...postData,
-      slug,
-      user_id: userId,
-      updated_at: new Date().toISOString()
-    };
+    // Use the data preparation function to properly map fields
+    const { preparePostRecord } = await import('./data.ts');
+    const postWithSlug = preparePostRecord(postData, userId, slug);
+    postWithSlug.updated_at = new Date().toISOString();
 
     console.log('Upserting post with data:', JSON.stringify(postWithSlug, null, 2));
 
