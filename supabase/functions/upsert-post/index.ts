@@ -21,22 +21,22 @@ serve(async (req) => {
   try {
     // Check environment variables first
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
-    const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY");
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
     
     console.log('Environment check:', {
       hasUrl: !!SUPABASE_URL,
-      hasKey: !!SUPABASE_ANON_KEY,
+      hasServiceKey: !!SUPABASE_SERVICE_ROLE_KEY,
       urlPreview: SUPABASE_URL ? SUPABASE_URL.substring(0, 20) + '...' : 'null'
     });
 
-    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
       console.error("Missing environment variables");
       return new Response(
         JSON.stringify({ 
           error: "Server misconfigured - missing environment variables",
           details: {
             hasUrl: !!SUPABASE_URL,
-            hasKey: !!SUPABASE_ANON_KEY
+            hasServiceKey: !!SUPABASE_SERVICE_ROLE_KEY
           }
         }),
         { 
@@ -60,8 +60,8 @@ serve(async (req) => {
       );
     }
 
-    // Create Supabase client
-    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Create Supabase client with service role key to bypass RLS
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
     // Generate slug
     console.log('Generating slug for title:', postData.title);
