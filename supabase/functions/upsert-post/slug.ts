@@ -45,7 +45,7 @@ export async function generateSlug(
         slug = `${baseSlug}-${counter}`;
       }
     } else {
-      // For updates, keep existing slug
+      // For updates, always keep existing slug unless we need to generate a new one
       const { data: currentPost } = await supabaseClient
         .from('blog_posts')
         .select('slug')
@@ -53,8 +53,11 @@ export async function generateSlug(
         .eq('user_id', userId)
         .single();
       
-      if (currentPost) {
+      if (currentPost && currentPost.slug) {
         slug = currentPost.slug;
+      } else {
+        // Fallback: use generated slug if no existing slug found
+        slug = baseSlug;
       }
     }
 

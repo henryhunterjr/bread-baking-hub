@@ -64,7 +64,7 @@ serve(async (req) => {
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
     // Generate slug
-    console.log('Generating slug for title:', postData.title);
+    console.log('Generating slug for title:', postData.title, 'existing ID:', postData.id);
     const slug = await generateSlug(supabaseClient, userId, postData.title, postData.id);
     console.log('Generated slug:', slug);
     
