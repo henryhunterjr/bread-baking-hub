@@ -159,6 +159,15 @@ const Dashboard = () => {
   }
 
   const handleSaveDraft = async () => {
+    // Ensure slug is not empty before submitting
+    if (!postData.slug || postData.slug.trim() === '') {
+      postData.slug = postData.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .substring(0, 100) || 'untitled-post';
+    }
+
     setIsSavingDraft(true);
     try {
       const { data, error } = await supabase.functions.invoke('upsert-post', {
