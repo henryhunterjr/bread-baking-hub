@@ -219,6 +219,14 @@ export const heroImageMapping: Record<string, string> = {
   "utah-scones-aka-indian-fry-bread": "/hero-images/utah-scones-aka-indian-fry-bread.jpg",
   // Note: Multiple entries (205-208, 210) have no images (empty values)
   "sourdough-baking-workshop-itinerary": "/hero-images/sourdough-baking-workshop-itinerary.jpg",
+  
+  // Batch 7 - Featured Images (Entries 211-245)
+  "sourdough-chronicles": "/hero-images/sourdough-chronicles.jpg",
+  // Note: Most entries in this batch (212-245) have no images (empty values)
+  "seasonal-dough-tips": "/hero-images/seasonal-dough-tips.jpg",
+  "babka-recipe-with-nutella-and-chopped-nuts": "/hero-images/babka-recipe-with-nutella-and-chopped-nuts.jpg",
+  "cream-cheese-banana-bread-recipe": "/hero-images/cream-cheese-banana-bread-recipe.jpg",
+  "revive-dead-sourdough-starter": "/hero-images/revive-dead-sourdough-starter.jpg",
 };
 
 // Function to get hero image URL by slug
