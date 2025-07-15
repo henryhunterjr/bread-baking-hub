@@ -242,11 +242,28 @@ export const getHeroImageBySlug = (slug: string): string | null => {
     return heroImageMapping[slug];
   }
   
-  // Fallback mappings for current Summer seasonal recipes
+  // Fallback mappings for seasonal recipes using appropriate images from the collection
   const fallbackMappings: Record<string, string> = {
-    'sun-dried-tomato-feta-bread': heroImageMapping['herb-infused-focaccia'],
-    'apricot-almond-sourdough': heroImageMapping['artisan-sourdough-bread'],
-    'cherry-vanilla-sourdough': heroImageMapping['priscilla-jolly-chocolate-cherry-sourdough-recipe'],
+    // Summer recipes currently showing in "Baking Now"
+    'sun-dried-tomato-feta-bread': heroImageMapping['herb-infused-focaccia'] || '/hero-images/herb-infused-focaccia.webp',
+    'apricot-almond-sourdough': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
+    'cherry-vanilla-sourdough': heroImageMapping['priscilla-jolly-chocolate-cherry-sourdough-recipe'] || '/hero-images/priscilla-jolly-chocolate-cherry-sourdough-recipe.jpg',
+    'olive-rosemary-focaccia': heroImageMapping['herb-infused-focaccia'] || '/hero-images/herb-infused-focaccia.webp',
+    'sourdough-pizza-dough': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
+    'jalapeno-cheddar-cornbread': heroImageMapping['southern-cornbread-dressing'] || '/hero-images/southern-cornbread-dressing.webp',
+    
+    // Other seasonal recipes
+    'brioche-hamburger-buns': heroImageMapping['brioche-bread-recipe'] || '/hero-images/brioche-bread-recipe.jpg',
+    'hot-dog-buns': heroImageMapping['brioche-bread-recipe'] || '/hero-images/brioche-bread-recipe.jpg',
+    'grilled-flatbread-with-toppings': heroImageMapping['herb-infused-focaccia'] || '/hero-images/herb-infused-focaccia.webp',
+    'zucchini-bread': heroImageMapping['summer-fruit-quick-bread'] || '/hero-images/summer-fruit-quick-bread.jpg',
+    'spring-herb-rolls': heroImageMapping['herb-infused-focaccia'] || '/hero-images/herb-infused-focaccia.webp',
+    'cranberry-walnut-loaf': heroImageMapping['holiday-cranberry-walnut-sourdough-recipe'] || '/hero-images/holiday-cranberry-walnut-sourdough-recipe.jpg',
+    'pumpkin-sourdough': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
+    'apple-cider-bread': heroImageMapping['summer-fruit-quick-bread'] || '/hero-images/summer-fruit-quick-bread.jpg',
+    'spiced-holiday-bread': heroImageMapping['brioche-bread-recipe'] || '/hero-images/brioche-bread-recipe.jpg',
+    'nutty-whole-grain-sourdough': heroImageMapping['spelt-sourdough-bread'] || '/hero-images/spelt-sourdough-bread.jpg',
+    'roasted-garlic-rosemary-sourdough': heroImageMapping['rosemary-garlic-parmesan-bread'] || '/hero-images/rosemary-garlic-parmesan-bread.png',
   };
   
   return fallbackMappings[slug] || null;
