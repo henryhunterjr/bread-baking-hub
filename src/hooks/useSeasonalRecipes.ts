@@ -102,11 +102,11 @@ export const useSeasonalRecipes = () => {
         if (error) {
           console.error('Error fetching seasonal recipes:', error);
         } else {
-          // Type-safe conversion of the data with hero image mapping
+          // Type-safe conversion of the data with proper hero image mapping
           const typedRecipes = (data || []).map(recipe => {
             const heroImageUrl = getHeroImageBySlugOrTitle(recipe.slug, recipe.title);
-            // Use placeholder for seasonal recipes if no hero image is found
-            const finalImageUrl = heroImageUrl || 'https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80';
+            // Ensure all recipes have an image - use a default bread image if none found
+            const finalImageUrl = heroImageUrl || 'https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80';
             
             return {
               ...recipe,
