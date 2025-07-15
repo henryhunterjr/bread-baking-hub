@@ -112,6 +112,43 @@ export const heroImageMapping: Record<string, string> = {
   "sourdough-discard-bread": "/hero-images/sourdough-discard-bread.jpeg",
   "exploring-the-world-of-flour": "/hero-images/exploring-the-world-of-flour.jpeg",
   "homemade-multigrain-bread": "/hero-images/homemade-multigrain-bread.jpg",
+  
+  // Batch 4 - Featured Images (Entries 106-140)
+  "traditional-hot-cross-buns-easter-recipe": "/hero-images/traditional-hot-cross-buns-easter-recipe.jpg",
+  "starting-a-sourdough-starter-interview-henry": "/hero-images/starting-a-sourdough-starter-interview-henry.jpg",
+  "sourdough-discard-challah-bread-2": "/hero-images/sourdough-discard-challah-bread-2.jpg",
+  "sourdough-discard-challah-bread": "/hero-images/sourdough-discard-challah-bread.jpg",
+  "sourdough-discard-coffee-cake": "/hero-images/sourdough-discard-coffee-cake.jpeg",
+  "dehydrating-your-sourdough-starter": "/hero-images/dehydrating-your-sourdough-starter.jpg",
+  "mastering-flour-varieties-unlocking-baking-perfection%f0%9f%8c%be": "/hero-images/mastering-flour-varieties-unlocking-baking-perfection%f0%9f%8c%be.jpg",
+  // Note: "hydration-calculator" has no image (empty values)
+  "discovering-sourdough": "/hero-images/discovering-sourdough.webp",
+  "knead-to-know-sourdough-basics": "/hero-images/knead-to-know-sourdough-basics.jpg",
+  "the-science-behind-perfect-crust": "/hero-images/the-science-behind-perfect-crust.webp",
+  "henrys-foolproof-sourdough-loaf": "/hero-images/henrys-foolproof-sourdough-loaf.jpg",
+  "the-ultimate-dinner-rolls": "/hero-images/the-ultimate-dinner-rolls.jpg",
+  "heavy-cream-cinnamon-rolls": "/hero-images/heavy-cream-cinnamon-rolls.jpeg",
+  "in-bethlehems-depths-where-old-tales-echo": "/hero-images/in-bethlehems-depths-where-old-tales-echo.jpg",
+  "the-bread-revolution": "/hero-images/the-bread-revolution.jpg",
+  "enhancing-sourdough-with-cinnamon-a-bakers-guide": "/hero-images/enhancing-sourdough-with-cinnamon-a-bakers-guide.jpg",
+  "cardamom-infused-cinnamon-rolls-with-yudane-method": "/hero-images/cardamom-infused-cinnamon-rolls-with-yudane-method.jpg",
+  "homemade-white-sandwich-bread": "/hero-images/homemade-white-sandwich-bread.jpeg",
+  "bread-science": "/hero-images/bread-science.webp",
+  "congratulations-to-amy-orwick-wheatley": "/hero-images/congratulations-to-amy-orwick-wheatley.jpg",
+  "henrys-crusty-white-bread-recipe": "/hero-images/henrys-crusty-white-bread-recipe.webp",
+  "homemade-hoagie-rolls-recipe": "/hero-images/homemade-hoagie-rolls-recipe.jpg",
+  // Note: "icebox-butterhorns" has no image (empty values)
+  // Note: "rolling-in-dough" has no image (empty values)
+  "holiday-pumpkin-bread-pudding-with-spiced-apple-cider-butter-sauce-and-candied-pecans": "/hero-images/holiday-pumpkin-bread-pudding-with-spiced-apple-cider-butter-sauce-and-candied-pecans.jpeg",
+  "festive-christmas-banana-bread": "/hero-images/festive-christmas-banana-bread.jpg",
+  "traditional-british-christmas-pudding": "/hero-images/traditional-british-christmas-pudding.jpeg",
+  "bread-pudding-recipe-a-cozy-thanksgiving-treat-%f0%9f%a6%83%f0%9f%8d%82": "/hero-images/bread-pudding-recipe-a-cozy-thanksgiving-treat-%f0%9f%a6%83%f0%9f%8d%82.jpeg",
+  "sourdough-artisan-bread-stuffing-a-thanksgiving-classic-%f0%9f%a6%83%f0%9f%8c%bf": "/hero-images/sourdough-artisan-bread-stuffing-a-thanksgiving-classic-%f0%9f%a6%83%f0%9f%8c%bf.jpeg",
+  "sunflower-bloom-bread": "/hero-images/sunflower-bloom-bread.jpg",
+  "banana-bread": "/hero-images/banana-bread.jpg",
+  "blueberry-cinnamon-rolls": "/hero-images/blueberry-cinnamon-rolls.jpg",
+  "your-first-classic-sourdough-loaf": "/hero-images/your-first-classic-sourdough-loaf.jpg",
+  "vegan-apple-bread": "/hero-images/vegan-apple-bread.jpg",
 };
 
 // Function to get hero image URL by slug
