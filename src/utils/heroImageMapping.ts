@@ -254,7 +254,7 @@ export const getHeroImageBySlug = (slug: string): string | null => {
   
   // Fallback mappings for seasonal recipes using appropriate images from the collection
   const fallbackMappings: Record<string, string> = {
-    // Summer recipes currently showing in "Baking Now"
+    // Current seasonal recipes showing in "Baking Now"
     'sun-dried-tomato-feta-bread': heroImageMapping['herb-infused-focaccia'] || '/hero-images/herb-infused-focaccia.webp',
     'apricot-almond-sourdough': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
     'cherry-vanilla-sourdough': heroImageMapping['priscilla-jolly-chocolate-cherry-sourdough-recipe'] || '/hero-images/priscilla-jolly-chocolate-cherry-sourdough-recipe.jpg',
@@ -262,6 +262,27 @@ export const getHeroImageBySlug = (slug: string): string | null => {
     'olive-and-rosemary-focaccia': heroImageMapping['herb-infused-focaccia'] || '/hero-images/herb-infused-focaccia.webp',
     'sourdough-pizza-dough': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
     'jalapeno-cheddar-cornbread': heroImageMapping['southern-cornbread-dressing'] || '/hero-images/southern-cornbread-dressing.webp',
+    
+    // Additional seasonal recipes needing images
+    'pumpernickel-bread': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
+    'light-sourdough-batard': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
+    'rustic-italian-ciabatta': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
+    'easter-paska': heroImageMapping['brioche-bread-recipe'] || '/hero-images/brioche-bread-recipe.jpg',
+    'sourdough-bagels': heroImageMapping['homemade-bagel-recipe'] || '/hero-images/homemade-bagel-recipe.jpg',
+    'cheddar-chive-biscuits': heroImageMapping['blueberry-white-chocolate-chip-scones'] || '/hero-images/blueberry-white-chocolate-chip-scones.jpg',
+    'sourdough-english-muffins': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
+    'honey-oatmeal-bread': heroImageMapping['henrys-whole-wheat-sandwich-bread-2'] || '/hero-images/henrys-whole-wheat-sandwich-bread-2.jpg',
+    'rosemary-garlic-focaccia': heroImageMapping['rosemary-garlic-parmesan-bread'] || '/hero-images/rosemary-garlic-parmesan-bread.png',
+    'blueberry-lemon-scones': heroImageMapping['blueberry-white-chocolate-chip-scones'] || '/hero-images/blueberry-white-chocolate-chip-scones.jpg',
+    'fig-walnut-sourdough': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
+    'multigrain-sandwich-loaf': heroImageMapping['henrys-whole-wheat-sandwich-bread-2'] || '/hero-images/henrys-whole-wheat-sandwich-bread-2.jpg',
+    'caramelized-onion-gruyere-fougasse': heroImageMapping['herb-infused-focaccia'] || '/hero-images/herb-infused-focaccia.webp',
+    'spiced-pear-bread': heroImageMapping['blueberry-peach-apple-bread'] || '/hero-images/blueberry-peach-apple-bread.jpeg',
+    'sourdough-pretzels': heroImageMapping['homemade-bagel-recipe'] || '/hero-images/homemade-bagel-recipe.jpg',
+    'buttermilk-potato-rolls': heroImageMapping['north-dakota-caramel-rolls'] || '/hero-images/north-dakota-caramel-rolls.jpg',
+    'millet-flaxseed-bread': heroImageMapping['spelt-sourdough-bread'] || '/hero-images/spelt-sourdough-bread.jpg',
+    'stollen': heroImageMapping['brioche-bread-recipe'] || '/hero-images/brioche-bread-recipe.jpg',
+    'rye-sourdough-caraway': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
     
     // Other seasonal recipes
     'brioche-hamburger-buns': heroImageMapping['brioche-bread-recipe'] || '/hero-images/brioche-bread-recipe.jpg',
