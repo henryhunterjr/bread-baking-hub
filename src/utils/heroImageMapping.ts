@@ -237,7 +237,19 @@ export const heroImageMapping: Record<string, string> = {
 
 // Function to get hero image URL by slug
 export const getHeroImageBySlug = (slug: string): string | null => {
-  return heroImageMapping[slug] || null;
+  // First try exact match
+  if (heroImageMapping[slug]) {
+    return heroImageMapping[slug];
+  }
+  
+  // Fallback mappings for current Summer seasonal recipes
+  const fallbackMappings: Record<string, string> = {
+    'sun-dried-tomato-feta-bread': heroImageMapping['herb-infused-focaccia'],
+    'apricot-almond-sourdough': heroImageMapping['artisan-sourdough-bread'],
+    'cherry-vanilla-sourdough': heroImageMapping['priscilla-jolly-chocolate-cherry-sourdough-recipe'],
+  };
+  
+  return fallbackMappings[slug] || null;
 };
 
 // Function to get hero image URL with fallback
