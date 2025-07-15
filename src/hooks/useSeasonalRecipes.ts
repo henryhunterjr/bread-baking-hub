@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { getHeroImageBySlug } from '@/utils/heroImageMapping';
 
 export type Season = 'Winter' | 'Spring' | 'Summer' | 'Fall';
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
@@ -101,11 +102,15 @@ export const useSeasonalRecipes = () => {
         if (error) {
           console.error('Error fetching seasonal recipes:', error);
         } else {
-          // Type-safe conversion of the data
-          const typedRecipes = (data || []).map(recipe => ({
-            ...recipe,
-            data: recipe.data as unknown as SeasonalRecipeData
-          })) as SeasonalRecipe[];
+          // Type-safe conversion of the data with hero image mapping
+          const typedRecipes = (data || []).map(recipe => {
+            const heroImageUrl = recipe.slug ? getHeroImageBySlug(recipe.slug) : null;
+            return {
+              ...recipe,
+              data: recipe.data as unknown as SeasonalRecipeData,
+              image_url: heroImageUrl || recipe.image_url || null
+            };
+          }) as SeasonalRecipe[];
           setRecipes(typedRecipes);
         }
       } catch (error) {
