@@ -186,6 +186,39 @@ export const heroImageMapping: Record<string, string> = {
   "my-bread-journey-to-panettone-a-tale-of-triumph-and-ingenuity": "/hero-images/my-bread-journey-to-panettone-a-tale-of-triumph-and-ingenuity.jpg",
   "journey-through-the-world-of-bread-with-us": "/hero-images/journey-through-the-world-of-bread-with-us.jpg",
   "understanding-gluten-gluten-sensitivity-and-celiac-disease-a-bakers-guide": "/hero-images/understanding-gluten-gluten-sensitivity-and-celiac-disease-a-bakers-guide.webp",
+  
+  // Batch 6 - Featured Images (Entries 176-210)
+  "the-science-of-sourdough-how-flour-choices-affect-your-bread": "/hero-images/the-science-of-sourdough-how-flour-choices-affect-your-bread.jpg",
+  "recipe-sourdough-pumpkin-bread": "/hero-images/recipe-sourdough-pumpkin-bread.jpg",
+  "recipe-yeasted-pumpkin-shaped-bread": "/hero-images/recipe-yeasted-pumpkin-shaped-bread.jpg",
+  "the-essential-role-of-knife-sharpening-in-your-bread-baking-journey": "/hero-images/the-essential-role-of-knife-sharpening-in-your-bread-baking-journey.jpg",
+  "yeast-water-magic": "/hero-images/yeast-water-magic.jpg",
+  "bread-baking-glossary": "/hero-images/bread-baking-glossary.png",
+  "expand-your-bread-creativity-dehydrated-fruits-and-more": "/hero-images/expand-your-bread-creativity-dehydrated-fruits-and-more.jpg",
+  "navigating-a-rye-bread": "/hero-images/navigating-a-rye-bread.jpg",
+  "in-the-interplay-of-science-and-faith-the-quantum-nature-of-creation": "/hero-images/in-the-interplay-of-science-and-faith-the-quantum-nature-of-creation.jpg",
+  "mastering-the-art-of-challah": "/hero-images/mastering-the-art-of-challah.jpg",
+  "baking-in-hot-weather": "/hero-images/baking-in-hot-weather.jpg",
+  "baking-with-fresh-fruits-elevate-your-bread-with-seasonal-delights": "/hero-images/baking-with-fresh-fruits-elevate-your-bread-with-seasonal-delights.jpg",
+  "vitales-sourdough-summer": "/hero-images/vitales-sourdough-summer.jpg",
+  "starter-guide-for-beginners%f0%9f%8d%9e": "/hero-images/starter-guide-for-beginners%f0%9f%8d%9e.jpg",
+  "the-art-of-dough-scoring": "/hero-images/the-art-of-dough-scoring.jpg",
+  "vitales-tale": "/hero-images/vitales-tale.jpg",
+  "%f0%9f%8d%9e-to-salt-or-not-to-salt": "/hero-images/%f0%9f%8d%9e-to-salt-or-not-to-salt.jpg",
+  "%f0%9f%93%a3%f0%9f%8d%9e-understanding-the-bakers-percentage": "/hero-images/%f0%9f%93%a3%f0%9f%8d%9e-understanding-the-bakers-percentage.jpg",
+  // Note: "%f0%9f%8d%9e-henrys-crusty-white-bread-recipe" has no image (empty values)
+  "henrys-whole-wheat-sandwich-bread": "/hero-images/henrys-whole-wheat-sandwich-bread.jpg",
+  "unveiling-the-sacred-tradition-of-challah": "/hero-images/unveiling-the-sacred-tradition-of-challah.jpg",
+  "pre-ferment": "/hero-images/pre-ferment.jpg",
+  "navigating-the-sourdough-journey-hooch-hydration-and-more": "/hero-images/navigating-the-sourdough-journey-hooch-hydration-and-more.jpeg",
+  "%f0%9f%8d%9e-sourdough-starter-guide-for-beginners-%f0%9f%8d%9e": "/hero-images/%f0%9f%8d%9e-sourdough-starter-guide-for-beginners-%f0%9f%8d%9e.jpg",
+  "title-%f0%9f%8d%9e-mastering-dough-rise-a-foolproof-guide-%f0%9f%93%88": "/hero-images/title-%f0%9f%8d%9e-mastering-dough-rise-a-foolproof-guide-%f0%9f%93%88.jpg",
+  // Note: "subject-apologies-for-the-broken-homepage-great-content-inside" has no image (empty values)
+  "the-great-hooch-debate-2-0-a-deeper-dive-into-sourdough-science-%f0%9f%8d%9e%f0%9f%a7%aa": "/hero-images/the-great-hooch-debate-2-0-a-deeper-dive-into-sourdough-science-%f0%9f%8d%9e%f0%9f%a7%aa.jpg",
+  "the-great-hooch-debate": "/hero-images/the-great-hooch-debate.jpg",
+  "utah-scones-aka-indian-fry-bread": "/hero-images/utah-scones-aka-indian-fry-bread.jpg",
+  // Note: Multiple entries (205-208, 210) have no images (empty values)
+  "sourdough-baking-workshop-itinerary": "/hero-images/sourdough-baking-workshop-itinerary.jpg",
 };
 
 // Function to get hero image URL by slug
