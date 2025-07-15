@@ -227,6 +227,12 @@ export const heroImageMapping: Record<string, string> = {
   "babka-recipe-with-nutella-and-chopped-nuts": "/hero-images/babka-recipe-with-nutella-and-chopped-nuts.jpg",
   "cream-cheese-banana-bread-recipe": "/hero-images/cream-cheese-banana-bread-recipe.jpg",
   "revive-dead-sourdough-starter": "/hero-images/revive-dead-sourdough-starter.jpg",
+  
+  // Batch 8 - Featured Images (Entries 246-265) - FINAL BATCH
+  "jim-lahey-one-of-the-worlds-most-renowned-bakers-give-a-lecture-on-elasticity-and-bread-science": "/hero-images/jim-lahey-one-of-the-worlds-most-renowned-bakers-give-a-lecture-on-elasticity-and-bread-science.jpg",
+  "58": "/hero-images/58.jpeg",
+  "the-rise-and-fall-of-sourdough-6000-years-of-bread": "/hero-images/the-rise-and-fall-of-sourdough-6000-years-of-bread.jpg",
+  // Note: Most entries in this final batch (246-265) have no images (empty values)
 };
 
 // Function to get hero image URL by slug
