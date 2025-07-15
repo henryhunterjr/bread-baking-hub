@@ -236,6 +236,16 @@ export const heroImageMapping: Record<string, string> = {
 };
 
 // Function to get hero image URL by slug
+// Helper function to generate slug from title
+const generateSlugFromTitle = (title: string): string => {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+    .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
+};
+
 export const getHeroImageBySlug = (slug: string): string | null => {
   // First try exact match
   if (heroImageMapping[slug]) {
@@ -249,6 +259,7 @@ export const getHeroImageBySlug = (slug: string): string | null => {
     'apricot-almond-sourdough': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
     'cherry-vanilla-sourdough': heroImageMapping['priscilla-jolly-chocolate-cherry-sourdough-recipe'] || '/hero-images/priscilla-jolly-chocolate-cherry-sourdough-recipe.jpg',
     'olive-rosemary-focaccia': heroImageMapping['herb-infused-focaccia'] || '/hero-images/herb-infused-focaccia.webp',
+    'olive-and-rosemary-focaccia': heroImageMapping['herb-infused-focaccia'] || '/hero-images/herb-infused-focaccia.webp',
     'sourdough-pizza-dough': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
     'jalapeno-cheddar-cornbread': heroImageMapping['southern-cornbread-dressing'] || '/hero-images/southern-cornbread-dressing.webp',
     
@@ -267,6 +278,30 @@ export const getHeroImageBySlug = (slug: string): string | null => {
   };
   
   return fallbackMappings[slug] || null;
+};
+
+// Enhanced function that also tries to match by title
+export const getHeroImageBySlugOrTitle = (slug: string | undefined, title: string): string | null => {
+  // First try with the provided slug
+  if (slug) {
+    const result = getHeroImageBySlug(slug);
+    if (result) return result;
+  }
+  
+  // Generate slug from title and try again
+  const generatedSlug = generateSlugFromTitle(title);
+  const result = getHeroImageBySlug(generatedSlug);
+  if (result) return result;
+  
+  // Title-based fallback mappings
+  const titleMappings: Record<string, string> = {
+    'olive and rosemary focaccia': heroImageMapping['herb-infused-focaccia'] || '/hero-images/herb-infused-focaccia.webp',
+    'sourdough pizza dough': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
+    'jalapeño cheddar cornbread': heroImageMapping['southern-cornbread-dressing'] || '/hero-images/southern-cornbread-dressing.webp',
+    'jalapeno cheddar cornbread': heroImageMapping['southern-cornbread-dressing'] || '/hero-images/southern-cornbread-dressing.webp',
+  };
+  
+  return titleMappings[title.toLowerCase()] || null;
 };
 
 // Function to get hero image URL with fallback
