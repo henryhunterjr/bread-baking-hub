@@ -149,6 +149,43 @@ export const heroImageMapping: Record<string, string> = {
   "blueberry-cinnamon-rolls": "/hero-images/blueberry-cinnamon-rolls.jpg",
   "your-first-classic-sourdough-loaf": "/hero-images/your-first-classic-sourdough-loaf.jpg",
   "vegan-apple-bread": "/hero-images/vegan-apple-bread.jpg",
+  
+  // Batch 5 - Featured Images (Entries 141-175)
+  "%f0%9f%8d%9e-the-secret-life-of-bread": "/hero-images/%f0%9f%8d%9e-the-secret-life-of-bread.jpg",
+  "homemade-brown-and-serve-rolls": "/hero-images/homemade-brown-and-serve-rolls.jpeg",
+  "baking-bread": "/hero-images/baking-bread.jpg",
+  "baking-beyond-borders-a-conversation-with-yoshie-horie": "/hero-images/baking-beyond-borders-a-conversation-with-yoshie-horie.jpg",
+  "the-harvest-loaf-3": "/hero-images/the-harvest-loaf-3.jpg",
+  "coffee-scrolls": "/hero-images/coffee-scrolls.jpg",
+  "fruit-and-nut-holiday-bread": "/hero-images/fruit-and-nut-holiday-bread.jpg",
+  "the-harvest-loaf": "/hero-images/the-harvest-loaf.jpg",
+  "orange-cinnamon-sweet-rolls": "/hero-images/orange-cinnamon-sweet-rolls.jpg",
+  "julekaka": "/hero-images/julekaka.jpg",
+  "sourdough-festive-fruit-bun-with-vanilla-frosting": "/hero-images/sourdough-festive-fruit-bun-with-vanilla-frosting.jpg",
+  "christmas-stollen-2": "/hero-images/christmas-stollen-2.jpg",
+  "holiday-monkey-bread": "/hero-images/holiday-monkey-bread.jpg",
+  "cranberry-walnut-sourdough-loaf": "/hero-images/cranberry-walnut-sourdough-loaf.jpg",
+  "cranberry-vanilla-cinnamon-swirl-bread": "/hero-images/cranberry-vanilla-cinnamon-swirl-bread.jpg",
+  "baked-brie-and-bread-wreath": "/hero-images/baked-brie-and-bread-wreath.jpg",
+  "yeasted-dinner-rolls": "/hero-images/yeasted-dinner-rolls.jpg",
+  "pan-de-muerto": "/hero-images/pan-de-muerto.jpg",
+  "sourdough-dinner-rolls": "/hero-images/sourdough-dinner-rolls.png",
+  // Note: "our-groups-stance-on-sourdough-bread-and-commercial-yeast" has no image (empty values)
+  "classic-white-ssandwich-breads": "/hero-images/classic-white-ssandwich-breads.webp",
+  "chocolate-babka-recipe-2": "/hero-images/chocolate-babka-recipe-2.jpg",
+  "eggnog-bread": "/hero-images/eggnog-bread.jpg",
+  "rustic-apple-focaccia-2": "/hero-images/rustic-apple-focaccia-2.jpg",
+  "holiday-star-cinnamon-roll-bread": "/hero-images/holiday-star-cinnamon-roll-bread.jpg",
+  "%f0%9f%8d%8f-baking-great-bread-with-dehydrated-apples-tips-and-recipes-%f0%9f%8d%9e": "/hero-images/%f0%9f%8d%8f-baking-great-bread-with-dehydrated-apples-tips-and-recipes-%f0%9f%8d%9e.jpg",
+  // Note: "the-great-hooch-debate-2-0" has no image (empty values)
+  "gingerbread": "/hero-images/gingerbread.jpg",
+  "2172": "/hero-images/2172.jpg",
+  "christmas-stollen": "/hero-images/christmas-stollen.jpg",
+  "a-fall-slowdown-for-vitale": "/hero-images/a-fall-slowdown-for-vitale.jpg",
+  "mastering-sourdough-in-chilly-weather-tips-for-homemakers-%e2%9d%84%ef%b8%8f": "/hero-images/mastering-sourdough-in-chilly-weather-tips-for-homemakers-%e2%9d%84%ef%b8%8f.jpg",
+  "my-bread-journey-to-panettone-a-tale-of-triumph-and-ingenuity": "/hero-images/my-bread-journey-to-panettone-a-tale-of-triumph-and-ingenuity.jpg",
+  "journey-through-the-world-of-bread-with-us": "/hero-images/journey-through-the-world-of-bread-with-us.jpg",
+  "understanding-gluten-gluten-sensitivity-and-celiac-disease-a-bakers-guide": "/hero-images/understanding-gluten-gluten-sensitivity-and-celiac-disease-a-bakers-guide.webp",
 };
 
 // Function to get hero image URL by slug
