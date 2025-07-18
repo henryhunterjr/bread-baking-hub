@@ -10,6 +10,7 @@ import { VitaleFAQ } from "../components/vitale/VitaleFAQ";
 import { ProcessVideo } from "../components/vitale/ProcessVideo";
 import { PurchaseSection } from "../components/vitale/PurchaseSection";
 import { VitaleSEO } from "../components/vitale/VitaleSEO";
+import FoolproofRecipeBlock from "../components/vitale/FoolproofRecipeBlock";
 
 const VitaleStarter = () => {
   return (
@@ -18,6 +19,7 @@ const VitaleStarter = () => {
       <Header />
       <main>
         <VitaleHero />
+        <FoolproofRecipeBlock />
         <StarterTruthSection />
         <VitaleAdvantage />
         <ThreeDayPromise />
