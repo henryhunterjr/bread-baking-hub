@@ -9,7 +9,7 @@ export const submitContentDraft = async (type: 'blog' | 'newsletter', payload: a
         runDate: runDate || new Date().toISOString().split('T')[0]
       },
       headers: {
-        'Authorization': `Bearer ${import.meta.env.VITE_AUTO_DRAFT_TOKEN || 'auto-draft-secret-token'}`
+        'Authorization': `Bearer auto-draft-secret-token`
       }
     });
 
