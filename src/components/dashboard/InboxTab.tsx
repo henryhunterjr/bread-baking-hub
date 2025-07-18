@@ -8,6 +8,7 @@ import ManualDraftSubmission from '@/components/dashboard/ManualDraftSubmission'
 import { supabase } from '@/integrations/supabase/client';
 import { Inbox, Calendar, Mail, FileText, Import, Trash2, Plus } from 'lucide-react';
 import { format } from 'date-fns';
+import { submitYourNewsletterContent } from '@/utils/submitContent';
 
 interface AIDraft {
   id: string;
@@ -131,6 +132,24 @@ const InboxTab = ({ onImportDraft }: InboxTabProps) => {
     }
   };
 
+  const handleAddNewsletterContent = async () => {
+    try {
+      await submitYourNewsletterContent();
+      toast({
+        title: "Success",
+        description: "Newsletter content added to inbox successfully!",
+      });
+      fetchDrafts(); // Refresh the drafts
+    } catch (error) {
+      console.error('Error adding newsletter content:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add newsletter content. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   const getImageUrls = (payload: any): string[] => {
     const blogDraft = payload.blogDraft || payload;
     if (blogDraft.imageUrls && Array.isArray(blogDraft.imageUrls)) {
@@ -181,9 +200,15 @@ const InboxTab = ({ onImportDraft }: InboxTabProps) => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-foreground">Content Inbox</h2>
-        <Button variant="outline" onClick={fetchDrafts} size="sm">
-          Refresh
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={handleAddNewsletterContent} variant="outline" size="sm">
+            <Plus className="w-4 h-4 mr-2" />
+            Add Newsletter Content
+          </Button>
+          <Button variant="outline" onClick={fetchDrafts} size="sm">
+            Refresh
+          </Button>
+        </div>
       </div>
 
       <Tabs defaultValue="drafts" className="space-y-6">
