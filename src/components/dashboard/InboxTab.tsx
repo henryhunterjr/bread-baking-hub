@@ -34,6 +34,10 @@ const InboxTab = ({ onImportDraft }: InboxTabProps) => {
     try {
       console.log('Fetching AI drafts...');
       
+      // Check authentication first
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      console.log('Current user:', user?.id, 'Auth error:', authError);
+      
       // Use direct database query instead of edge function for now
       const { data, error } = await supabase
         .from('ai_drafts')
@@ -43,6 +47,8 @@ const InboxTab = ({ onImportDraft }: InboxTabProps) => {
         .order('created_at', { ascending: false });
 
       console.log('AI drafts response:', { data, error });
+      console.log('Number of drafts found:', data?.length || 0);
+      
       if (error) throw error;
       setDrafts(data || []);
     } catch (error) {
