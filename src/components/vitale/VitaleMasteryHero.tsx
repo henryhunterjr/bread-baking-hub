@@ -7,7 +7,7 @@ const VitaleMasteryHero = () => {
     title: "Vitale Sourdough Mastery",
     tagline: "Master the Art of Fermentation and Baking",
     description: "Ready to transform your relationship with sourdough? This complete guide shares the secrets behind Henry Hunter's 10+ year relationship with his treasured starter – the foundation of consistently exceptional bread.",
-    backgroundImage: "/lovable-uploads/a82b57fb-d056-4ea8-9a60-482a6578b27b.png",
+    backgroundImage: "/lovable-uploads/e7320a6f-7363-46a3-a5a5-c30644bac35a.png",
     amazonUrl: "https://www.amazon.com/dp/B0CVB8ZCFV"
   };
 
