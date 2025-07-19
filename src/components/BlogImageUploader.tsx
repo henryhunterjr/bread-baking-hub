@@ -291,7 +291,6 @@ export const BlogImageUploader = () => {
               <Button 
                 variant="outline" 
                 onClick={() => fileInputRef.current?.click()}
-                disabled={!metadata.altText.trim()}
               >
                 Choose File
               </Button>
