@@ -274,6 +274,7 @@ const BlogPost = () => {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [supabasePost, setSupabasePost] = useState<Tables<'blog_posts'> | null>(null);
   const [heroBannerUrl, setHeroBannerUrl] = useState<string>('');
+  const [socialImageUrl, setSocialImageUrl] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -353,6 +354,16 @@ const BlogPost = () => {
           
           setPost(convertedPost);
           setSupabasePost(supabasePost);
+          
+          // Calculate social image URL after heroBannerUrl is loaded
+          const finalSocialImageUrl = getSocialImageUrl(
+            (supabasePost as any).social_image_url,
+            (supabasePost as any).inline_image_url,
+            heroBanner
+          );
+          setSocialImageUrl(finalSocialImageUrl);
+          console.log('Final social image URL calculated:', finalSocialImageUrl);
+          
           return;
         } else {
           console.log('Supabase query error:', supabaseError);
@@ -408,11 +419,7 @@ const BlogPost = () => {
       <BlogPostSEO 
         post={post}
         canonical={`${window.location.origin}/blog/${slug}`}
-        socialImageUrl={supabasePost ? getSocialImageUrl(
-          (supabasePost as any).social_image_url,
-          (supabasePost as any).inline_image_url,
-          heroBannerUrl
-        ) : undefined}
+        socialImageUrl={socialImageUrl || undefined}
       />
 
       <div className="min-h-screen bg-background">
