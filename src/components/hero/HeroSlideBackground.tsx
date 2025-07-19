@@ -30,10 +30,10 @@ const HeroSlideBackground = ({ slide, slideIndex }: HeroSlideBackgroundProps) =>
 
   return (
     <>
-      {/* Background Image - Individually positioned for each book cover */}
+      {/* Background Image - Contain to show full image, positioned for each book cover */}
       <div 
         key={`bg-${slideIndex}`}
-        className={`absolute inset-0 bg-cover bg-no-repeat animate-fade-in ${getBackgroundPosition()}`}
+        className={`absolute inset-0 bg-contain bg-no-repeat animate-fade-in ${getBackgroundPosition()}`}
         style={{ 
           backgroundImage: `url(${slide.backgroundImage})`
         }}

@@ -9,16 +9,33 @@ import HeroSlideNavigation from "@/components/hero/HeroSlideNavigation";
 const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [showCard, setShowCard] = useState(false);
 
   useEffect(() => {
     if (!isAutoPlaying) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6000); // 6 seconds total per slide
+      // Hide card first
+      setShowCard(false);
+      
+      // Wait for card to disappear, then change slide
+      setTimeout(() => {
+        setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+      }, 500);
+    }, 9000); // 9 seconds total per slide (3s image + 6s with card)
 
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
+
+  // Show card after image loads
+  useEffect(() => {
+    setShowCard(false);
+    const cardTimer = setTimeout(() => {
+      setShowCard(true);
+    }, 2500); // Show card after 2.5 seconds
+
+    return () => clearTimeout(cardTimer);
+  }, [currentSlide]);
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
@@ -48,13 +65,15 @@ const BooksHeroSlideshow = ({ onPreview }: BooksHeroSlideshowProps) => {
           <HeroSlideMobile 
             slide={currentSlideData} 
             slideIndex={currentSlide} 
-            onPreview={onPreview} 
+            onPreview={onPreview}
+            showCard={showCard}
           />
           
           <HeroSlideDesktop 
             slide={currentSlideData} 
             slideIndex={currentSlide} 
-            onPreview={onPreview} 
+            onPreview={onPreview}
+            showCard={showCard}
           />
         </div>
       </div>

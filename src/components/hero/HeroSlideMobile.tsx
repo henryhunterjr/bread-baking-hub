@@ -7,19 +7,17 @@ interface HeroSlideMobileProps {
   slide: HeroSlide;
   slideIndex: number;
   onPreview: (slideId: string) => void;
+  showCard: boolean;
 }
 
-const HeroSlideMobile = ({ slide, slideIndex, onPreview }: HeroSlideMobileProps) => {
+const HeroSlideMobile = ({ slide, slideIndex, onPreview, showCard }: HeroSlideMobileProps) => {
   return (
     <div className="md:hidden">
       <Card 
         key={`content-mobile-${slideIndex}`}
-        className="bg-black/70 backdrop-blur-md border-white/20 p-4 text-white animate-fade-in absolute bottom-8 left-4 right-4 opacity-0"
-        style={{ 
-          animationDelay: '3s', // Overlay appears 3 seconds after hero image
-          animationFillMode: 'both',
-          animationDuration: '0.8s' // Elegant fade-in
-        }}
+        className={`bg-black/70 backdrop-blur-md border-white/20 p-4 text-white absolute bottom-8 left-4 right-4 transition-all duration-500 ${
+          showCard ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}
       >
         <h1 className="text-2xl font-bold mb-2 leading-tight">
           {slide.title}

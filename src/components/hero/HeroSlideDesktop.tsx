@@ -7,21 +7,19 @@ interface HeroSlideDesktopProps {
   slide: HeroSlide;
   slideIndex: number;
   onPreview: (slideId: string) => void;
+  showCard: boolean;
 }
 
-const HeroSlideDesktop = ({ slide, slideIndex, onPreview }: HeroSlideDesktopProps) => {
+const HeroSlideDesktop = ({ slide, slideIndex, onPreview, showCard }: HeroSlideDesktopProps) => {
   return (
     <div className={`hidden md:block max-w-lg ${slide.overlayPosition === 'right' ? 'ml-auto' : ''}`}>
       <Card 
         key={`content-desktop-${slideIndex}`}
-        className={`bg-black/60 backdrop-blur-md border-white/20 p-8 text-white animate-slide-in-right ${
-          slide.overlayPosition === 'left' ? 'animate-slide-in-left' : ''
+        className={`bg-black/60 backdrop-blur-md border-white/20 p-8 text-white transition-all duration-500 ${
+          showCard 
+            ? `opacity-100 ${slide.overlayPosition === 'left' ? 'translate-x-0' : 'translate-x-0'}` 
+            : `opacity-0 ${slide.overlayPosition === 'left' ? '-translate-x-8' : 'translate-x-8'}`
         }`}
-        style={{ 
-          animationDelay: '3s', // Overlay appears 3 seconds after hero image
-          animationFillMode: 'both',
-          animationDuration: '0.8s' // Elegant slide-in
-        }}
       >
         <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
           {slide.title}
