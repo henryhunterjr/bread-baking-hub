@@ -19,16 +19,16 @@ export const getHeroBannerUrl = async (): Promise<string> => {
     if (error && error.code !== 'PGRST116') { // PGRST116 is "not found" error
       console.error('Error loading hero banner:', error);
       // Fallback to default
-      heroBannerCache = '/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png';
+    heroBannerCache = '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
       return heroBannerCache;
     }
 
-    heroBannerCache = data?.setting_value || '/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png';
+    heroBannerCache = data?.setting_value || '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
     return heroBannerCache;
   } catch (error) {
     console.error('Failed to load hero banner:', error);
     // Fallback to default
-    heroBannerCache = '/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png';
+    heroBannerCache = '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
     return heroBannerCache;
   }
 };
@@ -56,7 +56,7 @@ export const getBlogPostHeroImage = (
                  socialImageUrl || 
                  inlineImageUrl || 
                  heroBannerUrl || 
-                 '/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png';
+                 '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
   
   console.log('getBlogPostHeroImage returning:', result);
   return result;
@@ -73,7 +73,7 @@ export const getSocialImageUrl = (
   const result = socialImageUrl || 
                  inlineImageUrl || 
                  heroBannerUrl || 
-                 '/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png';
+                 '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
   
   console.log('getSocialImageUrl returning:', result);
   return result;
