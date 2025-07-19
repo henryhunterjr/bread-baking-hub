@@ -14,6 +14,8 @@ export const SiteSettings = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Clear cache first to ensure fresh data
+    clearHeroBannerCache();
     loadSiteSettings();
   }, []);
 
