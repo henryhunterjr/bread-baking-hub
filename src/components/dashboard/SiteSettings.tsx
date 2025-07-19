@@ -66,6 +66,9 @@ export const SiteSettings = () => {
       // Clear the cache so new banner loads immediately
       clearHeroBannerCache();
       
+      // Also clear cache after successful update to ensure immediate loading
+      setTimeout(() => clearHeroBannerCache(), 100);
+      
       toast({
         title: 'Success',
         description: 'Hero banner updated successfully!'
