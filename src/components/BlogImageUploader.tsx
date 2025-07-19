@@ -310,7 +310,17 @@ export const BlogImageUploader = () => {
               </div>
               <Button 
                 variant="outline" 
-                onClick={() => fileInputRef.current?.click()}
+                onClick={() => {
+                  if (!metadata.altText.trim()) {
+                    toast({
+                      title: "Alt text required",
+                      description: "Please provide alt text before selecting a file.",
+                      variant: "destructive"
+                    });
+                    return;
+                  }
+                  fileInputRef.current?.click();
+                }}
               >
                 Choose File
               </Button>
