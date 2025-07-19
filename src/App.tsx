@@ -44,6 +44,12 @@ const FeedRedirect = () => {
   return <div>Redirecting to RSS feed...</div>;
 };
 
+// Sitemap redirect component
+const SitemapRedirect = () => {
+  window.location.href = 'https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/sitemap';
+  return <div>Redirecting to sitemap...</div>;
+};
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -82,6 +88,7 @@ const App = () => {
                 <Route path="/legal" element={<Legal />} />
                 <Route path="/r/:slug" element={<PublicRecipe />} />
                 <Route path="/feed.xml" element={<FeedRedirect />} />
+                <Route path="/sitemap.xml" element={<SitemapRedirect />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/search-test" element={<SearchTest />} />
                 <Route path="/inline-search-test" element={<InlineSearchTestPage />} />

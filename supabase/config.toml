@@ -9,6 +9,9 @@ verify_jwt = false
 [functions.rss-feed]
 verify_jwt = false
 
+[functions.sitemap]
+verify_jwt = false
+
 [functions.upsert-post]
 verify_jwt = true
 
@@ -22,4 +25,19 @@ verify_jwt = false
 verify_jwt = true
 
 [functions.import-draft]
+verify_jwt = true
+
+[functions.track-blog-click]
+verify_jwt = false
+
+[functions.text-to-speech]
+verify_jwt = true
+
+[functions.bakers-helper]
+verify_jwt = true
+
+[functions.format-recipe]
+verify_jwt = true
+
+[functions.scan-symptoms]
 verify_jwt = true
