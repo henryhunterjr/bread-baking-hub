@@ -8,7 +8,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { SymptomCardProps } from '@/types/crustAndCrumb';
 import { formatSymptomTitle, CRUST_AND_CRUMB_CONSTANTS } from '@/utils/crustAndCrumbUtils';
 
+// Import troubleshooting images
+import sunkenMiddleBefore from '@/assets/troubleshooting/sunken_middle_before.jpg';
+import sunkenMiddleAfter from '@/assets/troubleshooting/sunken_middle_after.jpg';
+import gummyCrumbBefore from '@/assets/troubleshooting/gummy_crumb_before.jpg';
+import gummyCrumbAfter from '@/assets/troubleshooting/gummy_crumb_after.jpg';
+import burntBottomBefore from '@/assets/troubleshooting/burnt_bottom_before.jpg';
+import burntBottomAfter from '@/assets/troubleshooting/burnt_bottom_after.jpg';
+import paleCrustBefore from '@/assets/troubleshooting/pale_crust_before.jpg';
+import paleCrustAfter from '@/assets/troubleshooting/pale_crust_after.jpg';
+
 const SymptomCard: React.FC<SymptomCardProps> = ({ symptom, isOpen, onToggle }) => {
+  // Map symptom IDs to imported images
+  const imageMap: Record<string, { before?: string; after?: string }> = {
+    'sunken-middle': { before: sunkenMiddleBefore, after: sunkenMiddleAfter },
+    'gummy-crumb': { before: gummyCrumbBefore, after: gummyCrumbAfter },
+    'burnt-bottom': { before: burntBottomBefore, after: burntBottomAfter },
+    'pale-crust': { before: paleCrustBefore, after: paleCrustAfter },
+  };
+
+  const getImageSrc = (type: 'before' | 'after'): string | undefined => {
+    return imageMap[symptom.id]?.[type];
+  };
+
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     console.warn('Image failed to load:', e.currentTarget.src);
     e.currentTarget.src = CRUST_AND_CRUMB_CONSTANTS.PLACEHOLDER_IMAGE;
@@ -88,27 +110,27 @@ const SymptomCard: React.FC<SymptomCardProps> = ({ symptom, isOpen, onToggle }) 
                   </div>
 
                   {/* Images */}
-                  {symptom.images && (symptom.images.before || symptom.images.after) && (
+                  {(getImageSrc('before') || getImageSrc('after')) && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {symptom.images.before && (
+                      {getImageSrc('before') && (
                         <div>
-                          <h5 className="text-sm font-medium text-stone-700 mb-2">Problem Example</h5>
+                          <h5 className="text-sm font-medium text-red-700 mb-2">Problem Example</h5>
                           <img 
-                            src={symptom.images.before}
+                            src={getImageSrc('before')}
                             alt={`Problem example: ${formatSymptomTitle(symptom)}`}
-                            className="w-full h-32 object-cover rounded border border-stone-200"
+                            className="w-full h-32 object-cover rounded border border-red-200"
                             loading="lazy"
                             onError={handleImageError}
                           />
                         </div>
                       )}
-                      {symptom.images.after && (
+                      {getImageSrc('after') && (
                         <div>
-                          <h5 className="text-sm font-medium text-stone-700 mb-2">Corrected Result</h5>
+                          <h5 className="text-sm font-medium text-green-700 mb-2">Solution Example</h5>
                           <img 
-                            src={symptom.images.after}
-                            alt={`Corrected result: ${formatSymptomTitle(symptom)}`}
-                            className="w-full h-32 object-cover rounded border border-stone-200"
+                            src={getImageSrc('after')}
+                            alt={`Solution example: ${formatSymptomTitle(symptom)}`}
+                            className="w-full h-32 object-cover rounded border border-green-200"
                             loading="lazy"
                             onError={handleImageError}
                           />

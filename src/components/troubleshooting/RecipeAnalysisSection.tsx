@@ -18,7 +18,7 @@ export default function RecipeAnalysisSection({ recipeText, setRecipeText, onAna
         value={recipeText}
         onChange={e => setRecipeText(e.target.value)}
         placeholder="Paste your recipe here or describe the problem you're experiencing..."
-        className="w-full p-4 border border-input rounded-lg h-32 resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+        className="w-full p-4 border border-input rounded-lg h-32 resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all bg-background text-foreground placeholder:text-muted-foreground"
       />
       <Button 
         onClick={onAnalyze}
