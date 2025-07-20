@@ -30,9 +30,9 @@ const Header = () => {
               <Link to="/vitale-starter" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Vitale Starter
               </Link>
-              <Link to="/books" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Books
-              </Link>
+               <Link to="/books" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                 Library
+               </Link>
               <Link to="/glossary" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Glossary
               </Link>
@@ -99,9 +99,9 @@ const Header = () => {
               <Link to="/vitale-starter" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Vitale Starter
               </Link>
-              <Link to="/books" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
-                Books
-              </Link>
+               <Link to="/books" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
+                 Library
+               </Link>
               <Link to="/glossary" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Glossary
               </Link>
