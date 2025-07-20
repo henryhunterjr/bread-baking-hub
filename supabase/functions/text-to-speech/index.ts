@@ -23,8 +23,8 @@ serve(async (req) => {
       throw new Error('ElevenLabs API key not configured')
     }
 
-    // Use the specific voice ID provided by the user: VQWIG7jHNSEv826utbm8
-    const voiceId = 'VQWIG7jHNSEv826utbm8'
+    // Use a standard ElevenLabs voice that should work with most API keys
+    const voiceId = '9BWtsMINqrJLrRacOk9x' // Aria voice
 
     // Generate speech using ElevenLabs
     const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
@@ -47,6 +47,7 @@ serve(async (req) => {
 
     if (!response.ok) {
       const error = await response.text()
+      console.error(`ElevenLabs API error (${response.status}):`, error)
       throw new Error(`ElevenLabs API error: ${error}`)
     }
 
