@@ -31,7 +31,7 @@ const LoafAndLieHeroSection = ({ onListen }: LoafAndLieHeroSectionProps) => {
           className="bg-white/90 hover:bg-white text-gray-900 border-0 shadow-lg"
           asChild
         >
-          <a href="#" download>
+          <a href="https://hunter53.gumroad.com/l/ixsjex" target="_blank" rel="noopener noreferrer">
             <Download className="mr-2 h-5 w-5" />
             Download PDF
           </a>
