@@ -62,16 +62,7 @@ serve(async (req) => {
         
         const pdfBytes = await newPdf.save();
         
-        // Convert PDF page to canvas and then to image
-        const canvas = createCanvas(800, 1000);
-        const ctx = canvas.getContext('2d');
-        
-        // Fill with white background
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, 800, 1000);
-        
-        // For now, we'll convert the PDF bytes to base64 and let OpenAI handle it
-        // This is a simplified approach - in production you'd want proper PDF rendering
+        // Send the PDF directly to OpenAI as it can handle PDFs natively
         let binary = '';
         const chunkSize = 8192;
         const uint8Array = new Uint8Array(pdfBytes);
@@ -80,10 +71,8 @@ serve(async (req) => {
           binary += String.fromCharCode.apply(null, Array.from(chunk));
         }
         
-        // Actually, let's use a different approach - convert to PNG
-        const imageData = canvas.toBuffer('image/png');
-        base64 = btoa(String.fromCharCode(...new Uint8Array(imageData)));
-        mimeType = 'image/png';
+        base64 = btoa(binary);
+        mimeType = 'application/pdf';
         
         console.log('Successfully converted PDF to image');
       } catch (pdfError) {
