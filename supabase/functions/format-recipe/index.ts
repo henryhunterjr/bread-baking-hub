@@ -44,51 +44,29 @@ serve(async (req) => {
     let base64 = '';
     let mimeType = file.type || 'image/jpeg';
 
-    // Handle PDF files by converting first page to image
+    // Handle both PDF and image files
     if (file.type === 'application/pdf') {
       try {
-        console.log('Converting PDF to image...');
+        console.log('Processing PDF file...');
         const arrayBuffer = await file.arrayBuffer();
-        const pdfDoc = await PDFDocument.load(arrayBuffer);
         
-        if (pdfDoc.getPageCount() === 0) {
-          throw new Error('PDF appears to be empty');
-        }
-
-        // Create a canvas to render the PDF page
-        const canvas = createCanvas(800, 1000);
-        const ctx = canvas.getContext('2d');
-        
-        // Fill with white background
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, 800, 1000);
-        
-        // Add some basic text to indicate this is a PDF page
-        // Note: For proper PDF rendering, you'd need a more sophisticated approach
-        ctx.fillStyle = 'black';
-        ctx.font = '16px Arial';
-        ctx.fillText('PDF Recipe Page - Processing...', 50, 50);
-        
-        // Convert canvas to PNG
-        const imageBuffer = canvas.toBuffer('image/png');
-        
-        // Convert to base64
+        // For PDFs, we'll send them directly to OpenAI as GPT-4o can handle PDFs
         let binary = '';
         const chunkSize = 8192;
-        const uint8Array = new Uint8Array(imageBuffer);
+        const uint8Array = new Uint8Array(arrayBuffer);
         for (let i = 0; i < uint8Array.length; i += chunkSize) {
           const chunk = uint8Array.slice(i, i + chunkSize);
           binary += String.fromCharCode.apply(null, Array.from(chunk));
         }
         
         base64 = btoa(binary);
-        mimeType = 'image/png';
+        mimeType = 'application/pdf';
         
-        console.log('Successfully converted PDF to image');
+        console.log('Successfully processed PDF file');
       } catch (pdfError) {
-        console.error('PDF conversion error:', pdfError);
+        console.error('PDF processing error:', pdfError);
         return new Response(
-          JSON.stringify({ error: 'Unable to process PDF. Please upload a clean first page or contact support.' }),
+          JSON.stringify({ error: 'Unable to process PDF. Please try again or upload an image instead.' }),
           { 
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
             status: 400 
@@ -97,6 +75,7 @@ serve(async (req) => {
       }
     } else {
       // Handle regular image files
+      console.log('Processing image file...');
       const arrayBuffer = await file.arrayBuffer();
       const uint8Array = new Uint8Array(arrayBuffer);
       
@@ -108,6 +87,7 @@ serve(async (req) => {
         binary += String.fromCharCode.apply(null, Array.from(chunk));
       }
       base64 = btoa(binary);
+      console.log('Successfully processed image file');
     }
 
     console.log('Processing recipe image with OpenAI Vision...', { fileType: mimeType, fileSize: file.size });
