@@ -55,9 +55,9 @@ serve(async (req) => {
           throw new Error('PDF appears to be empty');
         }
 
-        // Get first page
-        const [firstPage] = await pdfDoc.copyPages(pdfDoc, [0]);
+        // Create new PDF with just the first page
         const newPdf = await PDFDocument.create();
+        const [firstPage] = await newPdf.copyPages(pdfDoc, [0]);
         newPdf.addPage(firstPage);
         
         const pdfBytes = await newPdf.save();
