@@ -65,7 +65,7 @@ const Index = () => {
         <meta property="og:description" content="Learn bread baking from master baker Henry Hunter. Expert tutorials, troubleshooting guides, and community support." />
         <meta property="og:url" content="https://bakinggreatbread.com" />
         <meta property="og:site_name" content="Baking Great Bread" />
-        <meta property="og:image" content="https://bakinggreatbread.com/assets/hero-bread.jpg" />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         
@@ -73,7 +73,7 @@ const Index = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Baking Great Bread - Master Baker Henry Hunter's Expert Guidance" />
         <meta name="twitter:description" content="Learn bread baking from master baker Henry Hunter. Expert tutorials, troubleshooting guides, and community support." />
-        <meta name="twitter:image" content="https://bakinggreatbread.com/assets/hero-bread.jpg" />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
         
         {/* Additional SEO */}
         <meta name="author" content="Henry Hunter" />
