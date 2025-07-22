@@ -15,9 +15,9 @@ const Header = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
               <img 
-                src="/lovable-uploads/aff774b5-ec68-415b-b096-50a160fc1c53.png" 
+                src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" 
                 alt="Baking Great Bread at Home - Go to Homepage" 
-                className="h-16 w-16 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                className="h-12 w-12 object-cover rounded-full border-2 border-primary/20 drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
               />
             </Link>
           </div>
