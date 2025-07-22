@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Info } from 'lucide-react';
+import { Menu, X, Info, Wheat } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import logo from '@/assets/logo.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,11 +14,9 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
-              <img 
-                src={logo} 
-                alt="Baking Great Bread at Home Logo" 
-                className="h-12 w-12 object-contain"
-              />
+              <div className="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center shadow-lg">
+                <Wheat className="w-6 h-6 text-white" />
+              </div>
             </Link>
           </div>
           
