@@ -14,11 +14,14 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
-              <img 
-                src="/lovable-uploads/221dafc5-3bee-4f09-a315-7dc0654a9e7a.png" 
-                alt="Baking Great Bread at Home - Go to Homepage" 
-                className="h-12 w-12 object-contain"
-              />
+              <div className="flex items-center space-x-2">
+                <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-lg">
+                  <span className="text-white font-bold text-lg">🌾</span>
+                </div>
+                <span className="text-header-foreground font-semibold text-sm hidden sm:block">
+                  BGB
+                </span>
+              </div>
             </Link>
           </div>
           
