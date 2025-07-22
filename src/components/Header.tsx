@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Info } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import logo from '@/assets/logo.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,13 +16,9 @@ const Header = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
               <img 
-                src="/lovable-uploads/221dafc5-3bee-4f09-a315-7dc0654a9e7a.png" 
+                src={logo} 
                 alt="Baking Great Bread at Home Logo" 
-                className="h-10 w-10 object-contain"
-                onError={(e) => {
-                  console.log('Logo failed to load');
-                  e.currentTarget.style.display = 'none';
-                }}
+                className="h-12 w-12 object-contain"
               />
             </Link>
           </div>
