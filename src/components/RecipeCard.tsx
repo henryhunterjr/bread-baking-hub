@@ -105,6 +105,7 @@ export const RecipeCard = memo(({
         <FormattedRecipeDisplay 
           recipe={recipe.data} 
           imageUrl={recipe.image_url}
+          recipeData={recipe}
         />
       )}
     </div>

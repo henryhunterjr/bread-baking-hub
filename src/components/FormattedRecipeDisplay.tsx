@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Printer, Download } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import { ProductRecommendations } from './ProductRecommendations';
+import { getRecipeImageUrl } from '@/utils/recipeImageMapping';
 
 interface FormattedRecipe {
   title: string;
@@ -33,9 +34,10 @@ interface FormattedRecipeDisplayProps {
     recommended_products?: string[];
   };
   imageUrl?: string;
+  recipeData?: { image_url?: string; slug?: string };
 }
 
-export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisplayProps) => {
+export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: FormattedRecipeDisplayProps) => {
   const printRef = useRef<HTMLDivElement>(null);
   
   // Check if ingredients is in new format (array of objects) or old format (object with metric/volume arrays)
@@ -90,10 +92,10 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl }: FormattedRecipeDisp
       
       <div ref={printRef} className="print-container">
       
-      {imageUrl && (
+      {(imageUrl || (recipeData && getRecipeImageUrl(recipeData) !== '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png')) && (
         <div className="w-full">
           <img 
-            src={imageUrl} 
+            src={imageUrl || (recipeData ? getRecipeImageUrl(recipeData) : '')} 
             alt={recipe.title}
             className="w-full h-64 object-cover rounded-lg shadow-warm"
           />

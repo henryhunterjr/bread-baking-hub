@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Clock, ChevronUp, ChevronDown, FolderOpen } from 'lucide-react';
 import { useRecipes } from '@/hooks/useRecipes';
 import { useAuth } from '@/hooks/useAuth';
+import { getRecipeImageUrl } from '@/utils/recipeImageMapping';
 
 interface RecipeQuickAccessDrawerProps {
   onRecipeSelect?: (recipe: any) => void;
@@ -93,9 +94,9 @@ export const RecipeQuickAccessDrawer = ({ onRecipeSelect }: RecipeQuickAccessDra
                             )}
                           </div>
                         </div>
-                        {recipe.image_url && (
+                        {getRecipeImageUrl(recipe) !== '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png' && (
                           <img 
-                            src={recipe.image_url} 
+                            src={getRecipeImageUrl(recipe)} 
                             alt={recipe.title}
                             className="w-16 h-16 object-cover rounded-lg ml-4"
                           />
