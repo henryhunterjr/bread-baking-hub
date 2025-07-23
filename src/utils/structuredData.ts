@@ -47,7 +47,7 @@ export const generateBlogPostingSchema = ({
       "name": publisher,
       "logo": {
         "@type": "ImageObject",
-        "url": "https://bakinggreatbread.blog/wp-content/uploads/2023/logo.png"
+        "url": "https://bread-baking-hub.vercel.app/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png"
       }
     },
     "mainEntityOfPage": {
@@ -68,7 +68,7 @@ export const generateBlogListingSchema = () => {
     "@type": "Blog",
     "name": "Baking Great Bread Blog",
     "description": "Expert bread baking tips, troubleshooting guides, and recipes from Henry",
-    "url": "https://bakinggreatbread.blog",
+    "url": "https://bread-baking-hub.vercel.app/blog",
     "author": {
       "@type": "Person",
       "name": "Henry"

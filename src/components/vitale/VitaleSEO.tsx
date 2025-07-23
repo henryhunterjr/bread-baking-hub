@@ -31,7 +31,7 @@ export const VitaleSEO = () => {
 
   return (
     <Helmet>
-      <title>Vitale Sourdough Starter - Baking Bread in 3 Days | BakingGreatBread.blog</title>
+      <title>Vitale Sourdough Starter - Baking Bread in 3 Days | Baking Great Bread</title>
       <meta name="description" content="Get Vitale starter - baking bread in just 3 days. $14 sachet builds two starters. Professionally dehydrated, monthly tested, guaranteed to work." />
       <meta name="keywords" content="sourdough starter, vitale, dehydrated starter, bread baking, Henry Hunter, 3 day bread" />
       
@@ -39,7 +39,7 @@ export const VitaleSEO = () => {
       <meta property="og:title" content="Vitale Sourdough Starter - Baking Bread in 3 Days" />
       <meta property="og:description" content="Professional dehydrated sourdough starter. $14 sachet builds two starters. Start baking in just 3 days!" />
       <meta property="og:image" content="/lovable-uploads/154d14c0-76bd-47e3-b378-282823bda6fd.png" />
-      <meta property="og:url" content="https://bakinggreatbread.blog/vitale-starter" />
+      <meta property="og:url" content="https://bread-baking-hub.vercel.app/vitale-starter" />
       <meta property="og:type" content="product" />
       <meta property="og:site_name" content="Baking Great Bread at Home" />
       

@@ -75,7 +75,7 @@ export const submitYourNewsletterContent = async () => {
         footer_links: [
           {
             text: "Visit the Blog", 
-            url: "https://www.bakinggreatbread.blog"
+            url: "https://bread-baking-hub.vercel.app/blog"
           },
           {
             text: "Join Our Facebook Group",

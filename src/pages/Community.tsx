@@ -183,7 +183,7 @@ const Community = () => {
                 <p className="text-xl font-medium text-foreground">— Henry Hunter</p>
                 <p className="text-muted-foreground">Baker | Teacher | Founder</p>
                 <Link to="/" className="text-primary hover:text-primary/80 transition-colors">
-                  BakingGreatBread.blog
+                  Bread Baking Hub
                 </Link>
               </div>
             </div>

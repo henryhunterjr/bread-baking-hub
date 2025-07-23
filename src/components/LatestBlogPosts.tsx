@@ -126,7 +126,7 @@ const LatestBlogPosts = () => {
         
         <div className="text-center mt-12">
           <Button variant="warm" size="xl" asChild>
-            <a href="https://bakinggreatbread.blog" target="_blank" rel="noopener noreferrer">
+            <a href="/blog">
               View All Posts
             </a>
           </Button>
