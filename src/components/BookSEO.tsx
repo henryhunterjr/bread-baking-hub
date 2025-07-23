@@ -23,7 +23,7 @@ interface BookSEOProps {
 }
 
 export const BookSEO = ({ book, canonical }: BookSEOProps) => {
-  const canonicalUrl = canonical || `https://bakinggreatbread.com/books/${book.id}`;
+  const canonicalUrl = canonical || `https://bread-baking-hub.vercel.app/books/${book.id}`;
   
   // Generate structured data for book
   const bookSchema = {
@@ -64,10 +64,10 @@ export const BookSEO = ({ book, canonical }: BookSEOProps) => {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://bakinggreatbread.com/#organization",
+    "@id": "https://bread-baking-hub.vercel.app/#organization",
     "name": "Baking Great Bread",
-    "url": "https://bakinggreatbread.com",
-    "logo": "https://bakinggreatbread.com/assets/logo.png",
+    "url": "https://bread-baking-hub.vercel.app",
+    "logo": "https://bread-baking-hub.vercel.app/assets/logo.png",
     "sameAs": [
       "https://www.youtube.com/@bakinggreatbread",
       "https://www.instagram.com/bakinggreatbread"

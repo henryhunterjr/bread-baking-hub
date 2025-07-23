@@ -8,7 +8,7 @@ interface SitemapEntry {
 }
 
 export const generateSitemap = async (): Promise<string> => {
-  const baseUrl = 'https://bakinggreatbread.com';
+  const baseUrl = 'https://bread-baking-hub.vercel.app';
   
   const entries: SitemapEntry[] = [
     // Static pages
@@ -68,7 +68,7 @@ ${entries.map(entry => `  <url>
 };
 
 export const generateRobotsTxt = (): string => {
-  const baseUrl = 'https://bakinggreatbread.com';
+  const baseUrl = 'https://bread-baking-hub.vercel.app';
   
   return `User-agent: *
 Allow: /

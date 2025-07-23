@@ -13,7 +13,7 @@ const CrustAndCrumbSEO: React.FC = () => {
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://bakinggreatbread.at/crust-and-crumb" />
+      <meta property="og:url" content="https://bread-baking-hub.vercel.app/crust-and-crumb" />
       <meta property="og:title" content="Crust & Crumb | Troubleshooting Bread Baking Made Simple" />
       <meta 
         property="og:description" 
@@ -23,7 +23,7 @@ const CrustAndCrumbSEO: React.FC = () => {
 
       {/* Twitter */}
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content="https://bakinggreatbread.at/crust-and-crumb" />
+      <meta property="twitter:url" content="https://bread-baking-hub.vercel.app/crust-and-crumb" />
       <meta property="twitter:title" content="Crust & Crumb | Troubleshooting Bread Baking Made Simple" />
       <meta 
         property="twitter:description" 

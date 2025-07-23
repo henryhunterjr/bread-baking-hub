@@ -14,7 +14,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   // Only handle blog-related requests
   if (event.request.url.includes('blog-proxy') || 
-      event.request.url.includes('bakinggreatbread.blog') ||
+      event.request.url.includes('bread-baking-hub.vercel.app') ||
       event.request.url.includes('placeholder-avatar.png')) {
     
     event.respondWith(

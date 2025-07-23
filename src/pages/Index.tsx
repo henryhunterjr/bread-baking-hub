@@ -25,12 +25,12 @@ const Index = () => {
     "@type": "Organization",
     "name": "Baking Great Bread",
     "description": "Expert bread baking guidance, recipes, and community from master baker Henry Hunter",
-    "url": "https://bakinggreatbread.com",
-    "logo": "https://bakinggreatbread.com/assets/logo.png",
-    "founder": {
-      "@type": "Person",
-      "name": "Henry Hunter",
-      "jobTitle": "Master Baker & Author"
+    "url": "https://bread-baking-hub.vercel.app",
+    "logo": "https://bread-baking-hub.vercel.app/assets/logo.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "hello@bakinggreatbread.com"
     },
     "sameAs": [
       "https://www.youtube.com/@bakinggreatbread",
@@ -43,10 +43,10 @@ const Index = () => {
     "@type": "WebSite",
     "name": "Baking Great Bread",
     "description": "Master the art of bread baking with expert tutorials, troubleshooting guides, and community support",
-    "url": "https://bakinggreatbread.com",
+    "url": "https://bread-baking-hub.vercel.app",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://bakinggreatbread.com/blog?search={search_term_string}",
+      "target": "https://bread-baking-hub.vercel.app/blog?search={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };
@@ -57,13 +57,13 @@ const Index = () => {
         <title>Baking Great Bread - Master Baker Henry Hunter's Expert Guidance</title>
         <meta name="description" content="Learn bread baking from master baker Henry Hunter. Expert tutorials, troubleshooting guides, sourdough tips, and a supportive community of passionate bakers." />
         <meta name="keywords" content="bread baking, sourdough, Henry Hunter, baking tutorials, bread recipes, troubleshooting, artisan bread, home baking" />
-        <link rel="canonical" href="https://bakinggreatbread.com" />
+        <link rel="canonical" href="https://bread-baking-hub.vercel.app" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Baking Great Bread - Master Baker Henry Hunter's Expert Guidance" />
         <meta property="og:description" content="Learn bread baking from master baker Henry Hunter. Expert tutorials, troubleshooting guides, and community support." />
-        <meta property="og:url" content="https://bakinggreatbread.com" />
+        <meta property="og:url" content="https://bread-baking-hub.vercel.app" />
         <meta property="og:site_name" content="Baking Great Bread" />
         <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
         <meta property="og:image:width" content="1200" />

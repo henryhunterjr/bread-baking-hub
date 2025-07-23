@@ -18,7 +18,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseKey)
 
-    const baseUrl = 'https://bakinggreatbread.com'
+    const baseUrl = 'https://bread-baking-hub.vercel.app'
     
     // Static pages with priorities
     const staticPages = [
