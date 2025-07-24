@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Printer, Download } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import { ProductRecommendations } from './ProductRecommendations';
-import { getRecipeImageUrl } from '@/utils/recipeImageMapping';
+import { getImageForRecipe } from '@/utils/heroImageMapping';
 
 interface FormattedRecipe {
   title: string;
@@ -92,10 +92,10 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
       
       <div ref={printRef} className="print-container">
       
-      {(imageUrl || (recipeData && getRecipeImageUrl(recipeData) !== '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png')) && (
+      {(imageUrl || (recipeData && getImageForRecipe(recipeData) !== '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png')) && (
         <div className="w-full">
           <img 
-            src={imageUrl || (recipeData ? getRecipeImageUrl(recipeData) : '')} 
+            src={imageUrl || (recipeData ? getImageForRecipe(recipeData) : '')}
             alt={recipe.title}
             className="w-full h-64 object-cover rounded-lg shadow-warm"
           />

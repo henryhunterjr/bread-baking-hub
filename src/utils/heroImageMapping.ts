@@ -1,5 +1,5 @@
-// Hero image mapping for blog posts
-// Maps blog post slugs to their hero image URLs
+// Unified image mapping for blog posts and recipes
+// Maps slugs to their image URLs
 
 export const heroImageMapping: Record<string, string> = {
   // Batch 1 - Featured Images (Entries 1-35)
@@ -366,4 +366,20 @@ export const getHeroImageBySlugOrTitle = (slug: string | undefined, title: strin
 // Function to get hero image URL with fallback
 export const getHeroImageWithFallback = (slug: string, fallback?: string): string => {
   return heroImageMapping[slug] || fallback || '/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png';
+};
+
+// Unified helper function for getting images (recipes and blogs)
+export const getImageForRecipe = (item: { image_url?: string; slug?: string }): string => {
+  // 1. Direct image_url takes priority
+  if (item.image_url) {
+    return item.image_url;
+  }
+  
+  // 2. Check mapping by slug
+  if (item.slug && heroImageMapping[item.slug]) {
+    return heroImageMapping[item.slug];
+  }
+  
+  // 3. Default fallback
+  return '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
 };

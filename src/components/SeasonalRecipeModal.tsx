@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Badge } from '@/components/ui/badge';
 import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf } from 'lucide-react';
 import { SeasonalRecipe, Season, getSeasonalColors } from '@/hooks/useSeasonalRecipes';
-import { getRecipeImageUrl } from '@/utils/recipeImageMapping';
+import { getImageForRecipe } from '@/utils/heroImageMapping';
 
 interface SeasonalRecipeModalProps {
   recipe: SeasonalRecipe | null;
@@ -40,10 +40,10 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
         
         <div className="space-y-6">
           {/* Recipe Image */}
-          {getRecipeImageUrl(recipe) !== '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png' && (
+          {getImageForRecipe(recipe) !== '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png' && (
             <div className="relative h-64 rounded-lg overflow-hidden">
               <img 
-                src={getRecipeImageUrl(recipe)} 
+                src={getImageForRecipe(recipe)}
                 alt={recipe.title}
                 className="w-full h-full object-cover"
               />

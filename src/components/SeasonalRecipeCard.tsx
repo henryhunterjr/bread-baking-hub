@@ -3,7 +3,7 @@ import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf } from 'lucide-reac
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { SeasonalRecipe, Season, getSeasonalColors } from '@/hooks/useSeasonalRecipes';
-import { getRecipeImageUrl } from '@/utils/recipeImageMapping';
+import { getImageForRecipe } from '@/utils/heroImageMapping';
 
 interface SeasonalRecipeCardProps {
   recipe: SeasonalRecipe;
@@ -51,9 +51,9 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
       >
         {/* Hero Image */}
         <div className="relative h-48 overflow-hidden">
-          {getRecipeImageUrl(recipe) !== '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png' ? (
-            <img 
-              src={getRecipeImageUrl(recipe)} 
+          {getImageForRecipe(recipe) !== '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png' ? (
+            <img
+              src={getImageForRecipe(recipe)}
               alt={recipe.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />

@@ -41,3 +41,6 @@ verify_jwt = true
 
 [functions.scan-symptoms]
 verify_jwt = true
+
+[functions.backfill-recipe-images]
+verify_jwt = false
