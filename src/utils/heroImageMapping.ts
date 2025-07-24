@@ -233,6 +233,25 @@ export const heroImageMapping: Record<string, string> = {
   "58": "/hero-images/58.jpeg",
   "the-rise-and-fall-of-sourdough-6000-years-of-bread": "/hero-images/the-rise-and-fall-of-sourdough-6000-years-of-bread.jpg",
   // Note: Most entries in this final batch (246-265) have no images (empty values)
+  
+  // Additional recipe mappings (from database recipes not yet mapped)
+  'classic-white-sandwich-bread': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
+  'henrys-crusty-white-bread': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
+  'no-knead-white-bread': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
+  'hanukkah-challah': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
+  'spring-herb-focaccia': '/lovable-uploads/1e1cfe9e-b38d-428f-8b31-e859c70af35c.png',
+  'hot-cross-buns': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
+  'japanese-milk-bread': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+  'lemon-thyme-focaccia': '/lovable-uploads/1e1cfe9e-b38d-428f-8b31-e859c70af35c.png',
+  'maple-walnut-sticky-buns': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+  'millet-flaxseed-bread': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
+  'pumpkin-sourdough': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
+  'rye-sourdough-caraway': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
+  'sourdough-discard-crackers': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+  'sourdough-discard-pancakes': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+  'stollen': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+  'super-seeded-sourdough-loaf': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
+  'wildflower-honey-wheat-bread': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
 };
 
 // Function to get hero image URL by slug
