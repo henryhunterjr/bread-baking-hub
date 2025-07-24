@@ -8,11 +8,7 @@ const corsHeaders = {
 
 // Recipe slug to image URL mapping
 const recipeImageMapping: Record<string, string> = {
-  'why-summer-changes-your-dough': 'https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/why-summer-changes-your-dough.png',
-  'proofing-yeasted-dough-guide': 'https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/proofing-yeasted-dough-guide.png',
-  'blueberry-white-chocolate-chip-scones': 'https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/blueberry-white-chocolate-chip-scones.jpg',
-  'bulk-fermentation': 'https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/bulk-fermentation.png',
-  'this-keeps-it-simple-readable-and-keyword-friendly': 'https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/this-keeps-it-simple-readable-and-keyword-friendly.jpg',
+  'blueberry-lemon-scones': 'https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/blueberry-white-chocolate-chip-scones.jpg',
 };
 
 const USER_ID = '66d74ee0-b848-4b4d-b37c-6197d5d01d66';

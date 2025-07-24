@@ -1,5 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
-import { recipeImageMapping } from '../src/utils/recipeImageMapping';
+// Import mapping directly to avoid build issues
+const recipeImageMapping: Record<string, string> = {
+  'blueberry-lemon-scones': 'https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/blueberry-white-chocolate-chip-scones.jpg',
+};
 
 // Initialize Supabase client with service role key for admin operations
 const SUPABASE_URL = 'https://ojyckskucneljvuqzrsw.supabase.co';
