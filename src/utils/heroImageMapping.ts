@@ -252,56 +252,88 @@ export const getHeroImageBySlug = (slug: string): string | null => {
     return heroImageMapping[slug];
   }
   
-  // Fallback mappings for seasonal recipes using working Unsplash URLs
+  // Fallback mappings for seasonal recipes using your uploaded images
   const fallbackMappings: Record<string, string> = {
     // Sourdough breads
-    'light-sourdough-batard': 'https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80',
-    'rustic-italian-ciabatta': 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    'apricot-almond-sourdough': 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=2065&q=80',
-    'cherry-vanilla-sourdough': 'https://images.unsplash.com/photo-1586444248902-2f64eddc13df?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    'fig-walnut-sourdough': 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80',
-    'rye-sourdough-caraway': 'https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80',
-    'sourdough-english-muffins': 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    'sourdough-pizza-dough': 'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    'sourdough-pretzels': 'https://images.unsplash.com/photo-1555945633-43b13ad84d2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    'sourdough-bagels': 'https://images.unsplash.com/photo-1571167635307-b3ef8e1be73d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+    'light-sourdough-batard': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
+    'rustic-italian-ciabatta': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
+    'apricot-almond-sourdough': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
+    'cherry-vanilla-sourdough': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
+    'fig-walnut-sourdough': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
+    'rye-sourdough-caraway': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+    'sourdough-english-muffins': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
+    'sourdough-pizza-dough': '/lovable-uploads/1e1cfe9e-b38d-428f-8b31-e859c70af35c.png',
+    'sourdough-pretzels': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
+    'sourdough-bagels': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
+    'basic-sourdough-loaf': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+    'super-seeded-sourdough-loaf': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+    'roasted-garlic-rosemary-sourdough': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+    'nutty-whole-grain-sourdough': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+    'pumpkin-sourdough': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
     
     // Yeast breads
-    'pumpernickel-bread': 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=2065&q=80',
-    'honey-oatmeal-bread': 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80',
-    'multigrain-sandwich-loaf': 'https://images.unsplash.com/photo-1586444248902-2f64eddc13df?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    'millet-flaxseed-bread': 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    'buttermilk-potato-rolls': 'https://images.unsplash.com/photo-1571167635307-b3ef8e1be73d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+    'pumpernickel-bread': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
+    'honey-oatmeal-bread': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
+    'multigrain-sandwich-loaf': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
+    'millet-flaxseed-bread': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
+    'buttermilk-potato-rolls': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
+    'wildflower-honey-wheat-bread': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
+    'classic-white-sandwich-bread': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
+    'henrys-crusty-white-bread': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
+    'no-knead-white-bread': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
+    'japanese-milk-bread': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
     
     // Focaccia and flatbreads
-    'rosemary-garlic-focaccia': 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2081&q=80',
-    'olive-rosemary-focaccia': 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2081&q=80',
-    'olive-and-rosemary-focaccia': 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2081&q=80',
-    'sun-dried-tomato-feta-bread': 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2081&q=80',
-    'caramelized-onion-gruyere-fougasse': 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2081&q=80',
+    'rosemary-garlic-focaccia': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
+    'olive-rosemary-focaccia': '/lovable-uploads/1e1cfe9e-b38d-428f-8b31-e859c70af35c.png',
+    'olive-and-rosemary-focaccia': '/lovable-uploads/1e1cfe9e-b38d-428f-8b31-e859c70af35c.png',
+    'sun-dried-tomato-feta-bread': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
+    'caramelized-onion-gruyere-fougasse': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
+    'spring-herb-focaccia': '/lovable-uploads/1e1cfe9e-b38d-428f-8b31-e859c70af35c.png',
+    'lemon-thyme-focaccia': '/lovable-uploads/1e1cfe9e-b38d-428f-8b31-e859c70af35c.png',
+    'grilled-flatbread-with-toppings': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
     
     // Enriched breads and pastries
-    'easter-paska': 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-4.0.3&auto=format&fit=crop&w=2065&q=80',
-    'stollen': 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-4.0.3&auto=format&fit=crop&w=2065&q=80',
+    'easter-paska': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
+    'stollen': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
+    'hanukkah-challah': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
+    'maple-walnut-sticky-buns': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
     
     // Quick breads and baked goods
-    'blueberry-lemon-scones': 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    'cheddar-chive-biscuits': 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    'jalapeno-cheddar-cornbread': 'https://images.unsplash.com/photo-1585932794311-7dd2be2d3c83?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    'spiced-pear-bread': 'https://images.unsplash.com/photo-1571167635307-b3ef8e1be73d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+    'blueberry-lemon-scones': 'https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/blueberry-white-chocolate-chip-scones.jpg',
+    'cheddar-chive-biscuits': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
+    'jalapeno-cheddar-cornbread': '/lovable-uploads/1e1cfe9e-b38d-428f-8b31-e859c70af35c.png',
+    'spiced-pear-bread': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
+    'apple-cider-bread': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+    'zucchini-bread': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+    'cranberry-walnut-loaf': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
     
-    // Other seasonal recipes
-    'brioche-hamburger-buns': heroImageMapping['brioche-bread-recipe'] || '/hero-images/brioche-bread-recipe.jpg',
-    'hot-dog-buns': heroImageMapping['brioche-bread-recipe'] || '/hero-images/brioche-bread-recipe.jpg',
-    'grilled-flatbread-with-toppings': heroImageMapping['herb-infused-focaccia'] || '/hero-images/herb-infused-focaccia.webp',
-    'zucchini-bread': heroImageMapping['summer-fruit-quick-bread'] || '/hero-images/summer-fruit-quick-bread.jpg',
-    'spring-herb-rolls': heroImageMapping['herb-infused-focaccia'] || '/hero-images/herb-infused-focaccia.webp',
-    'cranberry-walnut-loaf': heroImageMapping['holiday-cranberry-walnut-sourdough-recipe'] || '/hero-images/holiday-cranberry-walnut-sourdough-recipe.jpg',
-    'pumpkin-sourdough': heroImageMapping['artisan-sourdough-bread'] || '/hero-images/artisan-sourdough-bread.jpg',
-    'apple-cider-bread': heroImageMapping['summer-fruit-quick-bread'] || '/hero-images/summer-fruit-quick-bread.jpg',
-    'spiced-holiday-bread': heroImageMapping['brioche-bread-recipe'] || '/hero-images/brioche-bread-recipe.jpg',
-    'nutty-whole-grain-sourdough': heroImageMapping['spelt-sourdough-bread'] || '/hero-images/spelt-sourdough-bread.jpg',
-    'roasted-garlic-rosemary-sourdough': heroImageMapping['rosemary-garlic-parmesan-bread'] || '/hero-images/rosemary-garlic-parmesan-bread.png',
+    // Buns and rolls
+    'brioche-hamburger-buns': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+    'hot-dog-buns': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+    'spring-herb-rolls': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+    'hot-cross-buns': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
+    
+    // Holiday and specialty breads
+    'spiced-chocolate-bread': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+    'spiced-holiday-bread': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+    
+    // Sourdough discard recipes
+    'sourdough-discard-pancakes': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
+    'sourdough-discard-crackers': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
+    
+    // Legacy compatibility fallbacks
+    'brioche-hamburger-buns-legacy': heroImageMapping['brioche-bread-recipe'] || '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+    'hot-dog-buns-legacy': heroImageMapping['brioche-bread-recipe'] || '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+    'grilled-flatbread-with-toppings-legacy': heroImageMapping['herb-infused-focaccia'] || '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+    'zucchini-bread-legacy': heroImageMapping['summer-fruit-quick-bread'] || '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+    'spring-herb-rolls-legacy': heroImageMapping['herb-infused-focaccia'] || '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+    'cranberry-walnut-loaf-legacy': heroImageMapping['holiday-cranberry-walnut-sourdough-recipe'] || '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+    'pumpkin-sourdough-legacy': heroImageMapping['artisan-sourdough-bread'] || '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+    'apple-cider-bread-legacy': heroImageMapping['summer-fruit-quick-bread'] || '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+    'spiced-holiday-bread-legacy': heroImageMapping['brioche-bread-recipe'] || '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+    'nutty-whole-grain-sourdough-legacy': heroImageMapping['spelt-sourdough-bread'] || '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
+    'roasted-garlic-rosemary-sourdough-legacy': heroImageMapping['rosemary-garlic-parmesan-bread'] || '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
   };
   
   return fallbackMappings[slug] || null;
