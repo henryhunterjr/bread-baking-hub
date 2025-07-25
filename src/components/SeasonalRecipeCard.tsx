@@ -31,6 +31,7 @@ const getDifficultyDots = (difficulty: string) => {
 };
 
 export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: SeasonalRecipeCardProps) => {
+  debugger; // REMOVE after test
   const season = recipe.data.season;
   const colors = getSeasonalColors(season);
   const SeasonIcon = seasonIcons[season];
