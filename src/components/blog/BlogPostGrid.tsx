@@ -1,5 +1,4 @@
 import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { BlogPost } from '@/utils/blogFetcher';
 import { trackBlogClick } from '@/utils/blogEvents';
 import BlogPostSkeleton from './BlogPostSkeleton';
@@ -31,11 +30,6 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, cat
     });
   };
 
-  const getPostSlug = (post: BlogPost) => {
-    // Extract slug from WordPress URL
-    const urlParts = post.link.split('/');
-    return urlParts[urlParts.length - 2] || urlParts[urlParts.length - 1];
-  };
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {loading ? (
@@ -52,10 +46,12 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, cat
         posts.map((post) => (
           <article key={post.id} className="bg-card rounded-xl overflow-hidden shadow-stone hover:shadow-warm transition-all duration-300 group">
             {enableSEO && <BlogPostSEO post={post} />}
-            <Link 
-              to={`/blog/${getPostSlug(post)}`}
+            <a 
+              href={post.link}
               onClick={() => handlePostClick(post)}
               className="block"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <div className="relative overflow-hidden">
                 {post.image ? (
@@ -85,17 +81,19 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, cat
                   {post.readTime}
                 </div>
               </div>
-            </Link>
+            </a>
             <div className="p-6 space-y-4">
-              <Link 
-                to={`/blog/${getPostSlug(post)}`}
+              <a 
+                href={post.link}
                 onClick={() => handlePostClick(post)}
                 className="block"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <h3 className="text-xl font-bold text-card-foreground line-clamp-2 group-hover:text-primary transition-colors">
                   {post.title}
                 </h3>
-              </Link>
+              </a>
               
               <BlogPostMeta 
                 post={post} 
@@ -108,14 +106,16 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, cat
               <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
               
               <div className="flex items-center justify-between">
-                <Link 
-                  to={`/blog/${getPostSlug(post)}`}
+                <a 
+                  href={post.link}
                   onClick={() => handlePostClick(post)}
                   className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors group-hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Read More
                   <ArrowRight className="ml-1 w-4 h-4" />
-                </Link>
+                </a>
                 
                 <SocialShare
                   url={post.link}
