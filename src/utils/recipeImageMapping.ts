@@ -1,51 +1,72 @@
-// Recipe slug to image URL mapping
+// Recipe Image Mapping - Generated from featured_images.csv
+// This replaces the heroImageMapping for recipes
+
 export const recipeImageMapping: Record<string, string> = {
-  'blueberry-lemon-scones': 'https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/blueberry-white-chocolate-chip-scones.jpg',
-  'pumpernickel-bread': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
-  'light-sourdough-batard': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
-  'rustic-italian-ciabatta': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
-  'easter-paska': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
-  'sourdough-bagels': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
-  'cheddar-chive-biscuits': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
-  'olive-rosemary-focaccia': '/lovable-uploads/1e1cfe9e-b38d-428f-8b31-e859c70af35c.png',
-  'sourdough-pizza-dough': '/lovable-uploads/1e1cfe9e-b38d-428f-8b31-e859c70af35c.png',
-  'jalapeno-cheddar-cornbread': '/lovable-uploads/1e1cfe9e-b38d-428f-8b31-e859c70af35c.png',
-  'sourdough-english-muffins': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
-  'honey-oatmeal-bread': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
-  'rosemary-garlic-focaccia': '/lovable-uploads/2ebc1150-eed1-4535-aa19-282e47c68bb1.png',
-  'sun-dried-tomato-feta-bread': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
-  'apricot-almond-sourdough': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
-  'cherry-vanilla-sourdough': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
-  'fig-walnut-sourdough': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
-  'multigrain-sandwich-loaf': '/lovable-uploads/e3feea0f-3490-46d6-8908-d7266d64d39a.png',
-  'caramelized-onion-gruyere-fougasse': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
-  'spiced-pear-bread': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
-  'sourdough-pretzels': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
-  'buttermilk-potato-rolls': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
-  'apple-cider-bread': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
-  'spiced-holiday-bread': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
-  'nutty-whole-grain-sourdough': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
-  'roasted-garlic-rosemary-sourdough': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
-  'spiced-chocolate-bread': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
-  'basic-sourdough-loaf': '/lovable-uploads/7529d53a-2efe-482b-b5df-be4bf3fb21d9.png',
-  'brioche-hamburger-buns': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
-  'hot-dog-buns': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
-  'grilled-flatbread-with-toppings': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
-  'zucchini-bread': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
-  'spring-herb-rolls': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
-  'cranberry-walnut-loaf': '/lovable-uploads/553d716d-ca1f-4d6d-9eba-398960554293.png',
+  "apple-cider-bread": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/11/th-8.jpeg",
+  "apricot-almond-sourdough": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2025/05/Untitvvled-design.png",
+  "basic-sourdough-loaf": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/01/Knead-to-Know-Logo-with-script-scaled.jpg",
+  "blueberry-lemon-scones": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2025/05/495571415_10235709364576315_7915392766389904392_n.jpg",
+  "brioche-hamburger-buns": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/09/IMG_2959-scaled.jpg",
+  "cheddar-chive-biscuits": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/05/img_0143-1-scaled.jpg",
+  "cherry-vanilla-sourdough": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/11/IMG_7860.jpg",
+  "classic-white-sandwich-bread": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/10/20200930_132842-scaled.jpg",
+  "cranberry-walnut-loaf": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/10/img_8035-edited.jpg",
+  "easter-paska": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/03/IMG_6302-2-scaled.jpg",
+  "fig-walnut-sourdough": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/10/img_8035-edited.jpg",
+  "grilled-flatbread-with-toppings": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/IMG_8945-2-scaled.jpg",
+  "hanukkah-challah": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/11/IMG_7632-scaled.jpg",
+  "henrys-crusty-white-bread": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/11/IMG_1158_Original-scaled.jpg",
+  "honey-oatmeal-bread": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2025/02/IMG_1284.jpg",
+  "hot-cross-buns": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/03/IMG_6302-2-scaled.jpg",
+  "jalapeno-cheddar-cornbread": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/10/img_8136-1.jpg",
+  "japanese-milk-bread": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/05/img_0039-scaled-1.jpg",
+  "lemon-thyme-focaccia": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/img_8831-1-scaled.jpg",
+  "light-sourdough-batard": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/11/img_5928-scaled.jpg",
+  "maple-walnut-sticky-buns": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/10/img_8035-edited.jpg",
+  "multigrain-sandwich-loaf": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/10/IMG_9436.jpeg",
+  "no-knead-white-bread": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/11/IMG_7999_Original-1-scaled.jpg",
+  "nutty-whole-grain-sourdough": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/10/IMG_9436.jpeg",
+  "olive-rosemary-focaccia": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/06/img_8649-1-scaled.jpg",
+  "pumpkin-sourdough": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/10/IMG_4644-scaled.jpg",
+  "roasted-garlic-rosemary-sourdough": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/06/img_8649-1-scaled.jpg",
+  "rosemary-garlic-focaccia": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/06/img_8649-1-scaled.jpg",
+  "rustic-italian-ciabatta": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/05/img_9838-scaled.jpg",
+  "rye-sourdough-caraway": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2025/05/Untitvvled-design.png",
+  "sourdough-bagels": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2025/05/Untitvvled-design.png",
+  "sourdough-discard-crackers": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/img_9134-1-scaled.jpg",
+  "sourdough-discard-pancakes": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/img_9134-1-scaled.jpg",
+  "sourdough-english-muffins": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2025/05/Untitvvled-design.png",
+  "sourdough-pizza-dough": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2025/05/Untitvvled-design.png",
+  "sourdough-pretzels": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/img_9134-1-scaled.jpg",
+  "spiced-chocolate-bread": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/05/img_9983-1-1-scaled.jpg",
+  "spiced-holiday-bread": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/11/th-8.jpeg",
+  "spiced-pear-bread": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/11/th-8.jpeg",
+  "spring-herb-focaccia": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/img_8831-1-scaled.jpg",
+  "stollen": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/11/IMG_7584-1-scaled.jpg",
+  "super-seeded-sourdough-loaf": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/01/henry-s-foolproof-sourdough-loaf.png",
+  "wildflower-honey-wheat-bread": "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2025/02/IMG_1284.jpg"
 };
 
-// Get recipe image with fallback logic
-export const getRecipeImageUrl = (recipe: { image_url?: string; slug?: string }): string => {
-  if (recipe.image_url) {
-    return recipe.image_url;
+// Fallback images for recipes without matches
+const fallbackImages = [
+  "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/01/henry-s-foolproof-sourdough-loaf.png",
+  "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2023/11/IMG_7999_Original-1-scaled.jpg",
+  "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/05/img_9838-scaled.jpg",
+  "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/10/IMG_9436.jpeg"
+];
+
+export function getRecipeImage(slug: string, imageUrl?: string | null): string {
+  // First check if recipe has a direct image_url
+  if (imageUrl && imageUrl.trim() !== "") {
+    return imageUrl;
   }
   
-  if (recipe.slug && recipeImageMapping[recipe.slug]) {
-    return recipeImageMapping[recipe.slug];
+  // Then check our mapping
+  if (recipeImageMapping[slug]) {
+    return recipeImageMapping[slug];
   }
   
-  // Fallback to a default recipe image
-  return '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
-};
+  // Finally use a fallback image
+  const fallbackIndex = Math.abs(slug.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % fallbackImages.length;
+  return fallbackImages[fallbackIndex];
+}

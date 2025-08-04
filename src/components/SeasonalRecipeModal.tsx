@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Badge } from '@/components/ui/badge';
 import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf } from 'lucide-react';
 import { SeasonalRecipe, Season, getSeasonalColors } from '@/hooks/useSeasonalRecipes';
-import { getImageForRecipe } from '@/utils/heroImageMapping';
+import { getRecipeImage } from '@/utils/recipeImageMapping';
 
 interface SeasonalRecipeModalProps {
   recipe: SeasonalRecipe | null;
@@ -40,16 +40,17 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
         
         <div className="space-y-6">
           {/* Recipe Image */}
-          {getImageForRecipe(recipe) !== '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png' && (
-            <div className="relative h-64 rounded-lg overflow-hidden">
-              <img 
-                src={getImageForRecipe(recipe)}
-                alt={recipe.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-            </div>
-          )}
+          <div className="relative h-64 rounded-lg overflow-hidden">
+            <img 
+              src={getRecipeImage(recipe.slug, recipe.image_url)}
+              alt={recipe.title}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.src = "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/01/henry-s-foolproof-sourdough-loaf.png";
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+          </div>
 
           {/* Recipe Meta */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

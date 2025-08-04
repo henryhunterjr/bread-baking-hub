@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Printer, Download } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import { ProductRecommendations } from './ProductRecommendations';
-import { getImageForRecipe } from '@/utils/heroImageMapping';
+import { getRecipeImage } from '@/utils/recipeImageMapping';
 
 interface FormattedRecipe {
   title: string;
@@ -92,12 +92,15 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
       
       <div ref={printRef} className="print-container">
       
-      {(imageUrl || (recipeData && getImageForRecipe(recipeData) !== '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png')) && (
+      {(imageUrl || recipeData) && (
         <div className="w-full">
           <img 
-            src={imageUrl || (recipeData ? getImageForRecipe(recipeData) : '')}
+            src={imageUrl || (recipeData ? getRecipeImage(recipeData.slug || '', recipeData.image_url) : '')}
             alt={recipe.title}
             className="w-full h-64 object-cover rounded-lg shadow-warm"
+            onError={(e) => {
+              e.currentTarget.src = "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/01/henry-s-foolproof-sourdough-loaf.png";
+            }}
           />
         </div>
       )}

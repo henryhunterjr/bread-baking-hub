@@ -3,7 +3,7 @@ import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf } from 'lucide-reac
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { SeasonalRecipe, Season, getSeasonalColors } from '@/hooks/useSeasonalRecipes';
-import { getImageForRecipe } from '@/utils/heroImageMapping';
+import { getRecipeImage } from '@/utils/recipeImageMapping';
 
 interface SeasonalRecipeCardProps {
   recipe: SeasonalRecipe;
@@ -31,7 +31,6 @@ const getDifficultyDots = (difficulty: string) => {
 };
 
 export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: SeasonalRecipeCardProps) => {
-  debugger; // REMOVE after test
   const season = recipe.data.season;
   const colors = getSeasonalColors(season);
   const SeasonIcon = seasonIcons[season];
@@ -52,20 +51,14 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
       >
         {/* Hero Image */}
         <div className="relative h-48 overflow-hidden">
-          {getImageForRecipe(recipe) !== '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png' ? (
-            <img
-              src={getImageForRecipe(recipe)}
-              alt={recipe.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-          ) : (
-            <div 
-              className="w-full h-full flex items-center justify-center"
-              style={{ background: colors.background }}
-            >
-              <SeasonIcon className="w-16 h-16 opacity-30" style={{ color: colors.secondary }} />
-            </div>
-          )}
+          <img
+            src={getRecipeImage(recipe.slug, recipe.image_url)}
+            alt={recipe.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            onError={(e) => {
+              e.currentTarget.src = "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/01/henry-s-foolproof-sourdough-loaf.png";
+            }}
+          />
           
           {/* Season Badge */}
           <div className="absolute top-3 right-3">
