@@ -52,7 +52,15 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
         {/* Hero Image */}
         <div className="relative h-48 overflow-hidden">
           <img
-            src={getRecipeImage(recipe.slug, recipe.image_url)}
+            src={(() => {
+              const recipeImageUrl = getRecipeImage(recipe.slug, recipe.image_url);
+              console.log("RECIPE IMAGE DEBUG:", {
+                slug: recipe.slug,
+                image_url: recipe.image_url,
+                getRecipeImage_result: recipeImageUrl
+              });
+              return recipeImageUrl;
+            })()}
             alt={recipe.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             onError={(e) => {

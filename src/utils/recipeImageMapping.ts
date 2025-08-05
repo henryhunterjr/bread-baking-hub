@@ -63,17 +63,28 @@ const fallbackImages = [
 ];
 
 export function getRecipeImage(slug: string, imageUrl?: string | null): string {
-  // First check if recipe has a direct image_url
-  if (imageUrl && imageUrl.trim() !== "") {
-    return imageUrl;
+  console.log('🔍 getRecipeImage DEBUG:', { slug, imageUrl });
+  
+  // Skip staging URLs - prioritize mapping over broken staging links
+  const isStagingUrl = imageUrl && imageUrl.includes('wpcomstaging.com');
+  
+  // Check our mapping first (for staging URLs) or if no imageUrl
+  if (isStagingUrl || !imageUrl || imageUrl.trim() === "") {
+    if (recipeImageMapping[slug]) {
+      console.log('✅ Using mapping URL for', slug, ':', recipeImageMapping[slug]);
+      return recipeImageMapping[slug];
+    }
   }
   
-  // Then check our mapping
-  if (recipeImageMapping[slug]) {
-    return recipeImageMapping[slug];
+  // Use direct image_url only if it's not a staging URL
+  if (imageUrl && imageUrl.trim() !== "" && !isStagingUrl) {
+    console.log('✅ Using direct URL for', slug, ':', imageUrl);
+    return imageUrl;
   }
   
   // Finally use a fallback image
   const fallbackIndex = Math.abs(slug.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % fallbackImages.length;
-  return fallbackImages[fallbackIndex];
+  const fallbackUrl = fallbackImages[fallbackIndex];
+  console.log('⚠️ Using fallback URL for', slug, ':', fallbackUrl);
+  return fallbackUrl;
 }
