@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { getHeroImageBySlugOrTitle } from '@/utils/heroImageMapping';
+import { getRecipeImage } from '@/utils/recipeImageMapping';
 
 export type Season = 'Winter' | 'Spring' | 'Summer' | 'Fall';
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
@@ -102,11 +102,9 @@ export const useSeasonalRecipes = () => {
         if (error) {
           console.error('Error fetching seasonal recipes:', error);
         } else {
-          // Type-safe conversion of the data with proper hero image mapping
+          // Type-safe conversion of the data with proper recipe image mapping
           const typedRecipes = (data || []).map(recipe => {
-            const heroImageUrl = getHeroImageBySlugOrTitle(recipe.slug, recipe.title);
-            // Ensure all recipes have an image - use a default bread image if none found
-            const finalImageUrl = heroImageUrl || 'https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80';
+            const finalImageUrl = getRecipeImage(recipe.slug, recipe.image_url);
             
             return {
               ...recipe,

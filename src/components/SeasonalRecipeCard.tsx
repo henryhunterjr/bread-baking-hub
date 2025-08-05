@@ -31,6 +31,12 @@ const getDifficultyDots = (difficulty: string) => {
 };
 
 export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: SeasonalRecipeCardProps) => {
+  console.log("RECIPE IMAGE DEBUG:", {
+    slug: recipe.slug,
+    image_url: recipe.image_url,
+    getRecipeImage_result: getRecipeImage(recipe.slug, recipe.image_url)
+  });
+  
   const season = recipe.data.season;
   const colors = getSeasonalColors(season);
   const SeasonIcon = seasonIcons[season];
