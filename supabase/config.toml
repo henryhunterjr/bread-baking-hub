@@ -1,5 +1,11 @@
 project_id = "ojyckskucneljvuqzrsw"
 
+[functions.upload-recipe-image]
+verify_jwt = false
+
+[functions.update-recipe-mapping]
+verify_jwt = false
+
 [functions.realtime-chat]
 verify_jwt = false
 
