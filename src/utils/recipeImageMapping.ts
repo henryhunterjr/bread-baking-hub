@@ -2,8 +2,8 @@
 export const recipeImageMapping: Record<string, string> = {
   // FOCACCIA RECIPES - Use focaccia images
   "lemon-thyme-focaccia": "https://bakinggreatbread.blog/wp-content/uploads/2023/08/img_5045.jpg",
-  "olive-rosemary-focaccia": "https://bakinggreatbread.blog/wp-content/uploads/2024/10/img_8036-1.jpg",
-  "rosemary-garlic-focaccia": "https://bakinggreatbread.blog/wp-content/uploads/2024/10/img_8036-1.jpg",
+  "olive-rosemary-focaccia": "/lovable-uploads/cf118c0c-51d5-44b8-a355-8e2bcb89da47.png",
+  "rosemary-garlic-focaccia": "/lovable-uploads/1b1a84b9-ba95-4edc-8e1d-e27d3506d425.png",
   "spring-herb-focaccia": "https://bakinggreatbread.blog/wp-content/uploads/2023/08/img_5045.jpg",
   
   // FLATBREAD/GRILLED - Use appropriate bread images  
@@ -32,7 +32,7 @@ export const recipeImageMapping: Record<string, string> = {
   "sourdough-discard-crackers": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/th-10-1.jpeg",
   "sourdough-discard-pancakes": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/th-10-1.jpeg",
   "sourdough-english-muffins": "/lovable-uploads/5ea300ed-c0be-4247-bba1-b8969f51db23.png",
-  "sourdough-pizza-dough": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
+  "sourdough-pizza-dough": "/lovable-uploads/e8ee634e-98ff-49ea-8716-6eb44d89fd24.png",
   
   // WHITE/SANDWICH BREADS
   "classic-white-sandwich-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/20200930_191335_compress18.webp",
@@ -72,7 +72,7 @@ export const recipeImageMapping: Record<string, string> = {
   
   // SPECIALTY/SAVORY
   "cheddar-chive-biscuits": "/lovable-uploads/3b52b71d-ce38-4980-9964-91a64f30e26d.png",
-  "jalapeno-cheddar-cornbread": "https://bakinggreatbread.blog/wp-content/uploads/2024/11/cornbread3.webp",
+  "jalapeno-cheddar-cornbread": "/lovable-uploads/92bf5337-70cc-4019-a7a1-4556c35ba5f8.png",
   "caramelized-onion-gruyere-fougasse": "https://bakinggreatbread.blog/wp-content/uploads/2025/02/475992172_1777767306347357_602858855922001730_n.jpg",
   "sun-dried-tomato-feta-bread": "/lovable-uploads/938a48a4-da57-4b7f-a31f-716a0493f585.png",
   
