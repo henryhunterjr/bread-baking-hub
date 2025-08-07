@@ -1,0 +1,77 @@
+-- Add the cardamom cinnamon rolls recipe
+INSERT INTO public.recipes (
+  title,
+  slug,
+  image_url,
+  user_id,
+  folder,
+  data,
+  is_public
+) VALUES (
+  'Cardamom-Infused Cinnamon Rolls with Yudane Method',
+  'cardamom-cinnamon-rolls-yudane',
+  '/lovable-uploads/bca1f5ec-c093-48fd-a358-8fb28129daf5.png',
+  (SELECT id FROM auth.users LIMIT 1),
+  'Seasonal',
+  '{
+    "season": "Winter",
+    "holidays": ["Christmas", "New Year"],
+    "featuredDates": {"start": "12-01", "end": "01-31"},
+    "category": ["enriched", "holiday bread"],
+    "occasion": ["Brunch", "Holiday Breakfast", "Special Occasion"],
+    "prepTime": "2 hours 20 minutes",
+    "bakeTime": "23 minutes", 
+    "totalTime": "2 hours 43 minutes",
+    "difficulty": "intermediate",
+    "yield": "6 rolls",
+    "introduction": "This cardamom-infused cinnamon rolls recipe showcases the Yudane method for irresistibly soft, flavorful rolls. These aromatic, fluffy rolls blend the warmth of cardamom with the comfort of cinnamon for a bakery-quality result that stays fresh for days. Perfect for elevating any brunch or special occasion with a unique, handcrafted touch.",
+    "course": "Dessert",
+    "cuisine": "Fusion",
+    "calories": "428 kcal",
+    "equipment": [
+      "Mixing bowls",
+      "Measuring cups and spoons", 
+      "Baking tray with non-stick paper",
+      "Rolling Pin",
+      "Pastry brush",
+      "Oven"
+    ],
+    "ingredients": [
+      "100 g white bread flour (for Yudane)",
+      "100 ml boiling water (for Yudane)",
+      "200 g white bread flour",
+      "60 ml cold water",
+      "30 g sugar",
+      "4 g instant dry yeast / 4.8g active dry yeast / 12g fresh yeast",
+      "5 g salt",
+      "60 g softened butter",
+      "1 egg yolk",
+      "70 g sugar (for filling)",
+      "6 g cinnamon",
+      "4 g ground cardamom",
+      "40 g softened butter (for filling)",
+      "160 g icing sugar (for frosting)",
+      "50 g full-fat cream cheese",
+      "20 g softened butter (for frosting)",
+      "6 g vanilla paste",
+      "2 ml water (optional)"
+    ],
+    "method": [
+      "Mix flour and boiling water for Yudane. Cover and cool.",
+      "Combine cold water, yeast, salt, sugar, and egg yolk in a bowl.",
+      "Add flour, mix into dough. Knead for 3 minutes.",
+      "Incorporate butter, knead for 3 minutes.",
+      "Add yudane, knead for 3 minutes.",
+      "Rest covered dough for 30 minutes.",
+      "Roll dough, brush with butter, sprinkle sugar, cinnamon, and cardamom.",
+      "Roll up, cut into 6 pieces.",
+      "Place on tray, proof for 2 hours.",
+      "Preheat oven to 160°C (320°F) in final fermentation hour.",
+      "Brush rolls with egg white, bake for 23 minutes.",
+      "Cool before adding frosting."
+    ],
+    "notes": "Use high-quality cardamom for the best flavor impact. The Yudane method creates an exceptionally soft texture—don''t skip it. Brush with egg wash for a golden-brown finish. These cinnamon rolls freeze beautifully for up to 2 months. Experiment with other spices like nutmeg or star anise for a twist.",
+    "keywords": ["Cardamom", "Cinnamon", "Yudane", "Fusion Baking", "Rolls"]
+  }'::jsonb,
+  true
+);
