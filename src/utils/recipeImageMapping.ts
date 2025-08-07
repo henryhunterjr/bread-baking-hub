@@ -59,6 +59,7 @@ export const recipeImageMapping: Record<string, string> = {
   "zucchini-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
   "stollen": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/stollen-1500-58a70c393df78c345b67af14.jpg",
   "mocha-angel-pie": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/d42ac36a6091c134254580b5fdc6fbdb.jpg",
+  "cardamom-cinnamon-rolls-yudane": "/lovable-uploads/7baba166-3864-4e61-aacb-d26d3b0db10b.png",
   
   // SCONES
   "blueberry-lemon-scones": "https://bakinggreatbread.blog/wp-content/uploads/2025/05/495571415_10235709364576315_7915392766389904392_n.jpg",
