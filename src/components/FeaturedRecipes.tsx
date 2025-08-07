@@ -35,7 +35,7 @@ export const FeaturedRecipes = ({ featuredRecipes, onRecipeClick }: FeaturedReci
       </div>
 
       {/* Holiday Countdown Banner */}
-      {featuredRecipes.some(recipe => recipe.data.holidays.length > 0) && (
+      {featuredRecipes.some(recipe => recipe.data.holidays && recipe.data.holidays.length > 0) && (
         <motion.div 
           className="mb-8 p-4 bg-primary/10 rounded-lg border-l-4 border-primary"
           initial={{ opacity: 0, x: -20 }}

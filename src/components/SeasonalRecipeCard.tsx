@@ -31,9 +31,9 @@ const getDifficultyDots = (difficulty: string) => {
 };
 
 export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: SeasonalRecipeCardProps) => {
-  const season = recipe.data.season;
-  const colors = getSeasonalColors(season);
-  const SeasonIcon = seasonIcons[season];
+  const season = recipe.data.season as Season;
+  const colors = getSeasonalColors(season) || getSeasonalColors('Winter'); // fallback to Winter
+  const SeasonIcon = seasonIcons[season] || seasonIcons.Winter; // fallback to Winter icon
 
   return (
     <motion.div
@@ -133,7 +133,7 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
           </div>
 
           {/* Holiday indicator */}
-          {recipe.data.holidays.length > 0 && (
+          {recipe.data.holidays && recipe.data.holidays.length > 0 && (
             <div className="pt-2 border-t">
               <div className="text-xs text-muted-foreground">
                 Perfect for: {recipe.data.holidays.join(', ')}
