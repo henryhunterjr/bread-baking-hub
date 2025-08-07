@@ -55,7 +55,7 @@ export const recipeImageMapping: Record<string, string> = {
   "apple-cider-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
   "spiced-chocolate-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
   "spiced-holiday-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
-  "spiced-pear-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
+  "spiced-pear-bread": "/lovable-uploads/63e9053f-5c3c-4ee7-9f9e-61e590b4cfac.png",
   "zucchini-bread": "/lovable-uploads/a11398e3-4f1b-4dc6-b30e-c9aa076af2cb.png",
   "stollen": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/stollen-1500-58a70c393df78c345b67af14.jpg",
   "mocha-angel-pie": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/d42ac36a6091c134254580b5fdc6fbdb.jpg",
