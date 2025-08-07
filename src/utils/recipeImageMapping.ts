@@ -22,7 +22,7 @@ export const recipeImageMapping: Record<string, string> = {
   "light-sourdough-batard": "/lovable-uploads/fd01d2cb-fc25-444f-b935-8125023ad76e.png",
   "nutty-whole-grain-sourdough": "/lovable-uploads/876d257b-9b3a-48fe-a953-c45fc81a8485.png",
   "pumpkin-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/09/img_6460-1.jpg",
-  "roasted-garlic-rosemary-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
+  "roasted-garlic-rosemary-sourdough": "/lovable-uploads/2c4b7075-6963-4ba1-bc31-e2129773be19.png",
   "rye-sourdough-caraway": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
   "super-seeded-sourdough-loaf": "/lovable-uploads/06971d11-8ec2-417f-8518-8e179926a6f8.png",
   
