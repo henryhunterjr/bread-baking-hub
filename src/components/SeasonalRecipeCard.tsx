@@ -59,11 +59,16 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
                 image_url: recipe.image_url,
                 getRecipeImage_result: recipeImageUrl
               });
-              return recipeImageUrl;
+              // Add cache busting for problematic recipes
+              const cacheBreaker = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf'].includes(recipe.slug) 
+                ? `?v=${Date.now()}` 
+                : '';
+              return recipeImageUrl + cacheBreaker;
             })()}
             alt={recipe.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             onError={(e) => {
+              console.error("Image failed to load for:", recipe.slug, "URL:", e.currentTarget.src);
               e.currentTarget.src = "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/01/henry-s-foolproof-sourdough-loaf.png";
             }}
           />
