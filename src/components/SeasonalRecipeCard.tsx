@@ -53,14 +53,16 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
         <div className="relative h-48 overflow-hidden">
           <img
             src={(() => {
-              // NUCLEAR FIX: For problematic recipes, use database URL directly
+              // CRITICAL FIX: Always prioritize database URLs for these recipes
               const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread'];
               
+              // If it's a problematic recipe and has a database URL, use it directly
               if (problematicRecipes.includes(recipe.slug) && recipe.image_url) {
-                console.log(`🚀 DIRECT DB URL for ${recipe.slug}:`, recipe.image_url);
-                return recipe.image_url + `?v=${Date.now()}`;
+                console.log(`✅ USING DB URL for ${recipe.slug}:`, recipe.image_url);
+                return recipe.image_url + `?cb=${Date.now()}`;
               }
               
+              // For all other recipes, use the mapping function
               const recipeImageUrl = getRecipeImage(recipe.slug, recipe.image_url);
               console.log("RECIPE IMAGE DEBUG:", {
                 slug: recipe.slug,
