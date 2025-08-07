@@ -53,7 +53,7 @@ export const recipeImageMapping: Record<string, string> = {
   
   // SWEET BREADS/DESSERTS  
   "apple-cider-bread": "/lovable-uploads/6de11594-576e-4cc5-8201-41a91473061c.png",
-  "spiced-chocolate-bread": "/lovable-uploads/59e14538-d9b2-48c2-90c9-9d86dbc4b77e.png",
+  "spiced-chocolate-bread": "/lovable-uploads/aa77f34a-2501-4498-889f-ef88dc734116.png",
   "spiced-holiday-bread": "/lovable-uploads/934143dc-44cd-4bd7-99d2-87faee82e21d.png",
   "spiced-pear-bread": "/lovable-uploads/63e9053f-5c3c-4ee7-9f9e-61e590b4cfac.png",
   "zucchini-bread": "/lovable-uploads/a11398e3-4f1b-4dc6-b30e-c9aa076af2cb.png",
@@ -94,6 +94,14 @@ const fallbackImages = [
 
 export function getRecipeImage(slug: string, imageUrl?: string | null): string {
   console.log('🔍 getRecipeImage DEBUG:', { slug, imageUrl });
+  
+  // CRITICAL: For problematic recipes, ALWAYS use mapping first
+  const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread'];
+  
+  if (problematicRecipes.includes(slug) && recipeImageMapping[slug]) {
+    console.log('✅ FORCING mapping URL for problematic recipe', slug, ':', recipeImageMapping[slug]);
+    return recipeImageMapping[slug];
+  }
   
   // Skip staging URLs - prioritize mapping over broken staging links
   const isStagingUrl = imageUrl && imageUrl.includes('wpcomstaging.com');
