@@ -98,6 +98,12 @@ export const useSeasonalRecipes = () => {
           .eq('is_public', true)
           .eq('folder', 'Seasonal')
           .order('created_at', { ascending: false });
+
+        console.log('🔍 SEASONAL RECIPES FETCH DEBUG:', {
+          total_count: data?.length || 0,
+          error: error,
+          sample_recipes: data?.slice(0, 3).map(r => ({ slug: r.slug, title: r.title, image_url: r.image_url }))
+        });
         
         if (error) {
           console.error('Error fetching seasonal recipes:', error);
