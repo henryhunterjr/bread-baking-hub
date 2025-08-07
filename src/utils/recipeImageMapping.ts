@@ -74,7 +74,7 @@ export const recipeImageMapping: Record<string, string> = {
   "cheddar-chive-biscuits": "https://bakinggreatbread.blog/wp-content/uploads/2024/08/IMG_0369.jpg",
   "jalapeno-cheddar-cornbread": "https://bakinggreatbread.blog/wp-content/uploads/2024/11/cornbread3.webp",
   "caramelized-onion-gruyere-fougasse": "https://bakinggreatbread.blog/wp-content/uploads/2025/02/475992172_1777767306347357_602858855922001730_n.jpg",
-  "sun-dried-tomato-feta-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
+  "sun-dried-tomato-feta-bread": "/lovable-uploads/938a48a4-da57-4b7f-a31f-716a0493f585.png",
   
   // HOLIDAY BREADS
   "hanukkah-challah": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg",
