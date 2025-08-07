@@ -16,7 +16,7 @@ export const recipeImageMapping: Record<string, string> = {
   "japanese-milk-bread": "https://bakinggreatbread.blog/wp-content/uploads/2024/11/IMG_8582.webp",
   
   // SOURDOUGH BREADS - Use sourdough images
-  "basic-sourdough-loaf": "/lovable-uploads/929a6575-50ac-46c0-978f-c4c460199bfb.png",
+  "basic-sourdough-loaf": "/lovable-uploads/3cab5e17-c744-43cc-8db7-b229b06d7b04.png",
   "apricot-almond-sourdough": "/lovable-uploads/bb7c5e63-3ec6-4f3e-9fda-52740b5db7e7.png",
   "cherry-vanilla-sourdough": "/lovable-uploads/8c576450-cbf8-47f0-a751-48a4efc4d7d3.png",
   "light-sourdough-batard": "/lovable-uploads/fd01d2cb-fc25-444f-b935-8125023ad76e.png",
