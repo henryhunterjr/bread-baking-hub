@@ -27,11 +27,11 @@ export const recipeImageMapping: Record<string, string> = {
   "super-seeded-sourdough-loaf": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_4433_Original-1.jpg",
   
   // SOURDOUGH ITEMS - Bagels, pretzels, etc.
-  "sourdough-bagels": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
+  "sourdough-bagels": "/lovable-uploads/b1f81606-ae96-4033-b3ad-33d3b9cebdd3.png",
   "sourdough-pretzels": "https://bakinggreatbread.blog/wp-content/uploads/2024/02/th-14.jpeg",
   "sourdough-discard-crackers": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/th-10-1.jpeg",
   "sourdough-discard-pancakes": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/th-10-1.jpeg",
-  "sourdough-english-muffins": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
+  "sourdough-english-muffins": "/lovable-uploads/5ea300ed-c0be-4247-bba1-b8969f51db23.png",
   "sourdough-pizza-dough": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
   
   // WHITE/SANDWICH BREADS
@@ -42,7 +42,7 @@ export const recipeImageMapping: Record<string, string> = {
   // SPECIALTY BREADS
   "multigrain-sandwich-loaf": "https://bakinggreatbread.blog/wp-content/uploads/2024/02/multigrain-flaxseed-bread-1-1.jpg",
   "wildflower-honey-wheat-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3608-1.jpg",
-  "honey-oatmeal-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3608-1.jpg",
+  "honey-oatmeal-bread": "/lovable-uploads/d918db3e-65b1-427a-85e4-4d14a0789195.png",
   "millet-flaxseed-bread": "https://bakinggreatbread.blog/wp-content/uploads/2024/02/multigrain-flaxseed-bread-1-1.jpg",
   "pumpernickel-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
   
@@ -71,7 +71,7 @@ export const recipeImageMapping: Record<string, string> = {
   "spring-herb-rolls": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/IMG_7806.png",
   
   // SPECIALTY/SAVORY
-  "cheddar-chive-biscuits": "https://bakinggreatbread.blog/wp-content/uploads/2024/08/IMG_0369.jpg",
+  "cheddar-chive-biscuits": "/lovable-uploads/3b52b71d-ce38-4980-9964-91a64f30e26d.png",
   "jalapeno-cheddar-cornbread": "https://bakinggreatbread.blog/wp-content/uploads/2024/11/cornbread3.webp",
   "caramelized-onion-gruyere-fougasse": "https://bakinggreatbread.blog/wp-content/uploads/2025/02/475992172_1777767306347357_602858855922001730_n.jpg",
   "sun-dried-tomato-feta-bread": "/lovable-uploads/938a48a4-da57-4b7f-a31f-716a0493f585.png",
