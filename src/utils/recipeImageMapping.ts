@@ -7,7 +7,7 @@ export const recipeImageMapping: Record<string, string> = {
   "spring-herb-focaccia": "https://bakinggreatbread.blog/wp-content/uploads/2023/08/img_5045.jpg",
   
   // FLATBREAD/GRILLED - Use appropriate bread images  
-  "grilled-flatbread-with-toppings": "https://bakinggreatbread.blog/wp-content/uploads/2023/08/img_5045.jpg",
+  "grilled-flatbread-with-toppings": "/lovable-uploads/fa994734-07ee-4234-aa90-3e73a78f6cdd.png",
   
   // CIABATTA - Use ciabatta image
   "rustic-italian-ciabatta": "https://bakinggreatbread.blog/wp-content/uploads/2025/01/OIP-4-1.webp",
