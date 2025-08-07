@@ -17,9 +17,9 @@ export const recipeImageMapping: Record<string, string> = {
   
   // SOURDOUGH BREADS - Use sourdough images
   "basic-sourdough-loaf": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/Knead-to-Know-Sourdough-Basics.jpg",
-  "apricot-almond-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
+  "apricot-almond-sourdough": "/lovable-uploads/bb7c5e63-3ec6-4f3e-9fda-52740b5db7e7.png",
   "cherry-vanilla-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_7860.jpg",
-  "light-sourdough-batard": "https://bakinggreatbread.blog/wp-content/uploads/2025/04/IMG_1447.jpeg",
+  "light-sourdough-batard": "/lovable-uploads/fd01d2cb-fc25-444f-b935-8125023ad76e.png",
   "nutty-whole-grain-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_4433_Original-1.jpg",
   "pumpkin-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/09/img_6460-1.jpg",
   "roasted-garlic-rosemary-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
@@ -78,7 +78,7 @@ export const recipeImageMapping: Record<string, string> = {
   
   // HOLIDAY BREADS
   "hanukkah-challah": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg",
-  "easter-paska": "https://bakinggreatbread.blog/wp-content/uploads/2025/04/IMG_6856.jpg"
+  "easter-paska": "/lovable-uploads/6eded5fa-0dd5-4b7b-b7fc-108afbc3f96e.png"
 };
 
 // Fallback images:
