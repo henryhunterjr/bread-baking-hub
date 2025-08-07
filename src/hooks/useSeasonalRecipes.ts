@@ -145,9 +145,13 @@ export const useSeasonalRecipes = () => {
         // Current season recipes
         if (recipe.data.season === currentSeason) return true;
         
-        // Upcoming holiday recipes
-        const { start, end } = recipe.data.featuredDates;
-        return currentDate >= start && currentDate <= end;
+        // Upcoming holiday recipes - add safety check for featuredDates
+        if (recipe.data.featuredDates) {
+          const { start, end } = recipe.data.featuredDates;
+          return currentDate >= start && currentDate <= end;
+        }
+        
+        return false;
       })
       .slice(0, 3);
   };
