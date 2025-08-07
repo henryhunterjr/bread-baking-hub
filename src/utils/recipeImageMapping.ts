@@ -30,7 +30,7 @@ export const recipeImageMapping: Record<string, string> = {
   "sourdough-bagels": "/lovable-uploads/b1f81606-ae96-4033-b3ad-33d3b9cebdd3.png",
   "sourdough-pretzels": "https://bakinggreatbread.blog/wp-content/uploads/2024/02/th-14.jpeg",
   "sourdough-discard-crackers": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/th-10-1.jpeg",
-  "sourdough-discard-pancakes": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/th-10-1.jpeg",
+  "sourdough-discard-pancakes": "/lovable-uploads/fbe1cde7-a245-4bdf-a3a8-41b97e70baa1.png",
   "sourdough-english-muffins": "/lovable-uploads/5ea300ed-c0be-4247-bba1-b8969f51db23.png",
   "sourdough-pizza-dough": "/lovable-uploads/e8ee634e-98ff-49ea-8716-6eb44d89fd24.png",
   
