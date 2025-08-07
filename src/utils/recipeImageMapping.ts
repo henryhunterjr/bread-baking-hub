@@ -16,11 +16,11 @@ export const recipeImageMapping: Record<string, string> = {
   "japanese-milk-bread": "https://bakinggreatbread.blog/wp-content/uploads/2024/11/IMG_8582.webp",
   
   // SOURDOUGH BREADS - Use sourdough images
-  "basic-sourdough-loaf": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/Knead-to-Know-Sourdough-Basics.jpg",
+  "basic-sourdough-loaf": "/lovable-uploads/929a6575-50ac-46c0-978f-c4c460199bfb.png",
   "apricot-almond-sourdough": "/lovable-uploads/bb7c5e63-3ec6-4f3e-9fda-52740b5db7e7.png",
   "cherry-vanilla-sourdough": "/lovable-uploads/8c576450-cbf8-47f0-a751-48a4efc4d7d3.png",
   "light-sourdough-batard": "/lovable-uploads/fd01d2cb-fc25-444f-b935-8125023ad76e.png",
-  "nutty-whole-grain-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_4433_Original-1.jpg",
+  "nutty-whole-grain-sourdough": "/lovable-uploads/600d96a5-ed3c-4e4f-a75c-c24d0c6d1636.png",
   "pumpkin-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/09/img_6460-1.jpg",
   "roasted-garlic-rosemary-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
   "rye-sourdough-caraway": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
@@ -52,9 +52,9 @@ export const recipeImageMapping: Record<string, string> = {
   "maple-walnut-sticky-buns": "/lovable-uploads/bcc3e53d-83a5-4975-b0a2-e75370e9e9c7.png",
   
   // SWEET BREADS/DESSERTS  
-  "apple-cider-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
-  "spiced-chocolate-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
-  "spiced-holiday-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
+  "apple-cider-bread": "/lovable-uploads/6de11594-576e-4cc5-8201-41a91473061c.png",
+  "spiced-chocolate-bread": "/lovable-uploads/59e14538-d9b2-48c2-90c9-9d86dbc4b77e.png",
+  "spiced-holiday-bread": "/lovable-uploads/934143dc-44cd-4bd7-99d2-87faee82e21d.png",
   "spiced-pear-bread": "/lovable-uploads/63e9053f-5c3c-4ee7-9f9e-61e590b4cfac.png",
   "zucchini-bread": "/lovable-uploads/a11398e3-4f1b-4dc6-b30e-c9aa076af2cb.png",
   "stollen": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/stollen-1500-58a70c393df78c345b67af14.jpg",
