@@ -4,7 +4,7 @@ export const recipeImageMapping: Record<string, string> = {
   "lemon-thyme-focaccia": "https://bakinggreatbread.blog/wp-content/uploads/2023/08/img_5045.jpg",
   "olive-rosemary-focaccia": "/lovable-uploads/cf118c0c-51d5-44b8-a355-8e2bcb89da47.png",
   "rosemary-garlic-focaccia": "/lovable-uploads/1b1a84b9-ba95-4edc-8e1d-e27d3506d425.png",
-  "spring-herb-focaccia": "https://bakinggreatbread.blog/wp-content/uploads/2023/08/img_5045.jpg",
+  "spring-herb-focaccia": "/lovable-uploads/76ed96bc-9d9f-4bf6-9a42-103bd5378240.png",
   
   // FLATBREAD/GRILLED - Use appropriate bread images  
   "grilled-flatbread-with-toppings": "/lovable-uploads/fa994734-07ee-4234-aa90-3e73a78f6cdd.png",
