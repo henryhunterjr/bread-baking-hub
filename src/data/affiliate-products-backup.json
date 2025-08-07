@@ -1,0 +1,21 @@
+{
+  "products": [
+    {
+      "id": "sourdough-home",
+      "name": "Sourdough Home",
+      "description": "Specialized temperature-controlled container that maintains optimal sourdough starter conditions with precise temperature management for consistent fermentation.",
+      "image": "/lovable-uploads/default-product.png",
+      "price": "From $189",
+      "affiliate_link": "https://collabs.shop/bnlqi7",
+      "utm_params": "utm_source=recipe_workspace&utm_medium=product_recommendation&utm_campaign=bread_tools",
+      "category": "proofing",
+      "keywords": ["sourdough starter", "fermentation", "temperature control", "starter proofer", "bread", "baking", "home baking", "starter maintenance", "ferment", "bread making"],
+      "regions": ["US", "EU"],
+      "featured": false,
+      "brand": "Brød & Taylor",
+      "seasonal_tags": []
+    }
+  ],
+  "backup_date": "2025-08-07T00:00:00Z",
+  "note": "Backup created before master affiliate product list upload"
+}
