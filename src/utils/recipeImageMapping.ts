@@ -18,7 +18,7 @@ export const recipeImageMapping: Record<string, string> = {
   // SOURDOUGH BREADS - Use sourdough images
   "basic-sourdough-loaf": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/Knead-to-Know-Sourdough-Basics.jpg",
   "apricot-almond-sourdough": "/lovable-uploads/bb7c5e63-3ec6-4f3e-9fda-52740b5db7e7.png",
-  "cherry-vanilla-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_7860.jpg",
+  "cherry-vanilla-sourdough": "/lovable-uploads/8c576450-cbf8-47f0-a751-48a4efc4d7d3.png",
   "light-sourdough-batard": "/lovable-uploads/fd01d2cb-fc25-444f-b935-8125023ad76e.png",
   "nutty-whole-grain-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_4433_Original-1.jpg",
   "pumpkin-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/09/img_6460-1.jpg",
@@ -40,16 +40,16 @@ export const recipeImageMapping: Record<string, string> = {
   "no-knead-white-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/20200930_191335_compress18.webp",
   
   // SPECIALTY BREADS
-  "multigrain-sandwich-loaf": "https://bakinggreatbread.blog/wp-content/uploads/2024/02/multigrain-flaxseed-bread-1-1.jpg",
+  "multigrain-sandwich-loaf": "/lovable-uploads/6d60ec6e-fa92-4e9e-a544-81b4960cc757.png",
   "wildflower-honey-wheat-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3608-1.jpg",
   "honey-oatmeal-bread": "/lovable-uploads/d918db3e-65b1-427a-85e4-4d14a0789195.png",
-  "millet-flaxseed-bread": "https://bakinggreatbread.blog/wp-content/uploads/2024/02/multigrain-flaxseed-bread-1-1.jpg",
-  "pumpernickel-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
+  "millet-flaxseed-bread": "/lovable-uploads/dc540058-4ef3-4110-88e5-71c432332f13.png",
+  "pumpernickel-bread": "/lovable-uploads/4bee7f23-8c3c-41a2-91aa-a39b05379ff7.png",
   
   // WALNUT/NUT BREADS
   "cranberry-walnut-loaf": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_4433_Original-1.jpg",
-  "fig-walnut-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_4433_Original-1.jpg",
-  "maple-walnut-sticky-buns": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_4433_Original-1.jpg",
+  "fig-walnut-sourdough": "/lovable-uploads/62cdefc6-8b59-4f26-8f61-c7466fdf4fbe.png",
+  "maple-walnut-sticky-buns": "/lovable-uploads/bcc3e53d-83a5-4975-b0a2-e75370e9e9c7.png",
   
   // SWEET BREADS/DESSERTS  
   "apple-cider-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
