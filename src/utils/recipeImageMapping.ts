@@ -52,7 +52,7 @@ export const recipeImageMapping: Record<string, string> = {
   "maple-walnut-sticky-buns": "/lovable-uploads/bcc3e53d-83a5-4975-b0a2-e75370e9e9c7.png",
   
   // SWEET BREADS/DESSERTS  
-  "apple-cider-bread": "/lovable-uploads/6de11594-576e-4cc5-8201-41a91473061c.png",
+  "apple-cider-bread": "/lovable-uploads/1e7a656f-cd0f-4366-bd61-40b7705681a7.png",
   "spiced-chocolate-bread": "/lovable-uploads/aa77f34a-2501-4498-889f-ef88dc734116.png",
   "spiced-holiday-bread": "/lovable-uploads/934143dc-44cd-4bd7-99d2-87faee82e21d.png",
   "spiced-pear-bread": "/lovable-uploads/63e9053f-5c3c-4ee7-9f9e-61e590b4cfac.png",
