@@ -53,17 +53,21 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
         <div className="relative h-48 overflow-hidden">
           <img
             src={(() => {
+              // NUCLEAR FIX: For problematic recipes, use database URL directly
+              const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread'];
+              
+              if (problematicRecipes.includes(recipe.slug) && recipe.image_url) {
+                console.log(`🚀 DIRECT DB URL for ${recipe.slug}:`, recipe.image_url);
+                return recipe.image_url + `?v=${Date.now()}`;
+              }
+              
               const recipeImageUrl = getRecipeImage(recipe.slug, recipe.image_url);
               console.log("RECIPE IMAGE DEBUG:", {
                 slug: recipe.slug,
                 image_url: recipe.image_url,
                 getRecipeImage_result: recipeImageUrl
               });
-              // Add cache busting for problematic recipes
-              const cacheBreaker = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf'].includes(recipe.slug) 
-                ? `?v=${Date.now()}` 
-                : '';
-              return recipeImageUrl + cacheBreaker;
+              return recipeImageUrl;
             })()}
             alt={recipe.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
