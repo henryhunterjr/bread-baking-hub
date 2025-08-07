@@ -76,7 +76,7 @@ export const recipeImageMapping: Record<string, string> = {
   "jalapeno-cheddar-cornbread": "/lovable-uploads/92bf5337-70cc-4019-a7a1-4556c35ba5f8.png",
   "caramelized-onion-gruyere-fougasse": "https://bakinggreatbread.blog/wp-content/uploads/2025/02/475992172_1777767306347357_602858855922001730_n.jpg",
   "sun-dried-tomato-feta-bread": "/lovable-uploads/938a48a4-da57-4b7f-a31f-716a0493f585.png",
-  "rosemary-garlic-parmesan-loaf": "/lovable-uploads/7fb06384-5233-4a91-a959-daceaa0a7857.png",
+  "rosemary-garlic-parmesan-loaf": "/lovable-uploads/9b1f8351-f0df-4573-8fe1-fea3a1568962.png",
   
   // HOLIDAY BREADS
   "hanukkah-challah": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg",
