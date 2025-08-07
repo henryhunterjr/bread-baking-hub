@@ -37,7 +37,7 @@ export const recipeImageMapping: Record<string, string> = {
   // WHITE/SANDWICH BREADS
   "classic-white-sandwich-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/20200930_191335_compress18.webp",
   "henrys-crusty-white-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_1158_Original-1200x1200-1.webp",
-  "no-knead-white-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/20200930_191335_compress18.webp",
+  "no-knead-white-bread": "/lovable-uploads/d59937f5-fe00-49e8-8bf2-603d0d3e366e.png",
   
   // SPECIALTY BREADS
   "multigrain-sandwich-loaf": "/lovable-uploads/6d60ec6e-fa92-4e9e-a544-81b4960cc757.png",
