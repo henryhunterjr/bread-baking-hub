@@ -24,7 +24,7 @@ export const recipeImageMapping: Record<string, string> = {
   "pumpkin-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/09/img_6460-1.jpg",
   "roasted-garlic-rosemary-sourdough": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
   "rye-sourdough-caraway": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
-  "super-seeded-sourdough-loaf": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_4433_Original-1.jpg",
+  "super-seeded-sourdough-loaf": "/lovable-uploads/06971d11-8ec2-417f-8518-8e179926a6f8.png",
   
   // SOURDOUGH ITEMS - Bagels, pretzels, etc.
   "sourdough-bagels": "/lovable-uploads/b1f81606-ae96-4033-b3ad-33d3b9cebdd3.png",
@@ -41,7 +41,7 @@ export const recipeImageMapping: Record<string, string> = {
   
   // SPECIALTY BREADS
   "multigrain-sandwich-loaf": "/lovable-uploads/6d60ec6e-fa92-4e9e-a544-81b4960cc757.png",
-  "wildflower-honey-wheat-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3608-1.jpg",
+  "wildflower-honey-wheat-bread": "/lovable-uploads/416ed08f-f6a2-455a-a3fd-44e161a2a282.png",
   "honey-oatmeal-bread": "/lovable-uploads/d918db3e-65b1-427a-85e4-4d14a0789195.png",
   "millet-flaxseed-bread": "/lovable-uploads/dc540058-4ef3-4110-88e5-71c432332f13.png",
   "pumpernickel-bread": "/lovable-uploads/4bee7f23-8c3c-41a2-91aa-a39b05379ff7.png",
@@ -56,7 +56,7 @@ export const recipeImageMapping: Record<string, string> = {
   "spiced-chocolate-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
   "spiced-holiday-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
   "spiced-pear-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
-  "zucchini-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/11/th-8.jpeg",
+  "zucchini-bread": "/lovable-uploads/a11398e3-4f1b-4dc6-b30e-c9aa076af2cb.png",
   "stollen": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/stollen-1500-58a70c393df78c345b67af14.jpg",
   "mocha-angel-pie": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/d42ac36a6091c134254580b5fdc6fbdb.jpg",
   "cardamom-cinnamon-rolls-yudane": "/lovable-uploads/7baba166-3864-4e61-aacb-d26d3b0db10b.png",
@@ -65,11 +65,11 @@ export const recipeImageMapping: Record<string, string> = {
   "blueberry-lemon-scones": "https://bakinggreatbread.blog/wp-content/uploads/2025/05/495571415_10235709364576315_7915392766389904392_n.jpg",
   
   // ROLLS/BUNS
-  "brioche-hamburger-buns": "https://bakinggreatbread.blog/wp-content/uploads/2024/08/DSC07597.webp",
+  "brioche-hamburger-buns": "/lovable-uploads/1a0c34fd-69be-42d0-8dc6-1e4cecc5f1ae.png",
   "buttermilk-potato-rolls": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/IMG_7806.png",
   "hot-cross-buns": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/2A65D6F2-40DC-4045-83B6-B4C0A1F82697_Original.jpg",
-  "hot-dog-buns": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/2A65D6F2-40DC-4045-83B6-B4C0A1F82697_Original.jpg",
-  "spring-herb-rolls": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/IMG_7806.png",
+  "hot-dog-buns": "/lovable-uploads/d20be4b4-50d3-4390-aa14-133b1aa80872.png",
+  "spring-herb-rolls": "/lovable-uploads/6300d418-e64d-4a40-a868-b8bdf5c5c522.png",
   
   // SPECIALTY/SAVORY
   "cheddar-chive-biscuits": "/lovable-uploads/3b52b71d-ce38-4980-9964-91a64f30e26d.png",
