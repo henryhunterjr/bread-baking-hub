@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 interface ResponsiveImageProps {
   src: string;
-  alt: string;
+  alt: string; // Required for accessibility
   className?: string;
   sizes?: string;
   priority?: boolean;
@@ -92,14 +92,21 @@ export const ResponsiveImage = ({
     <div className={`relative overflow-hidden ${className}`}>
       {/* Loading placeholder */}
       {!imageLoaded && !imageError && (
-        <div className="absolute inset-0 bg-muted animate-pulse flex items-center justify-center">
-          <div className="text-muted-foreground text-sm">Loading...</div>
+        <div 
+          className="absolute inset-0 bg-muted animate-pulse flex items-center justify-center"
+          aria-hidden="true"
+        >
+          <div className="text-muted-foreground text-sm">Loading image...</div>
         </div>
       )}
       
       {/* Error fallback */}
       {imageError && (
-        <div className="absolute inset-0 bg-muted flex items-center justify-center">
+        <div 
+          className="absolute inset-0 bg-muted flex items-center justify-center"
+          role="img"
+          aria-label={`Image failed to load: ${alt}`}
+        >
           <div className="text-muted-foreground text-sm">Image unavailable</div>
         </div>
       )}
@@ -125,6 +132,7 @@ export const ResponsiveImage = ({
           onLoad={handleLoad}
           onError={handleError}
           fetchPriority={priority ? 'high' : 'auto'}
+          role="img"
         />
       </picture>
     </div>

@@ -100,7 +100,7 @@ const Index = () => {
       
     <div className="bg-background text-foreground">
       <Header />
-      <main>
+      <main id="main-content" role="main" tabIndex={-1}>
         <HeroSection />
         <SocialProofBanner />
         <AboutHenry />

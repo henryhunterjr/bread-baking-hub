@@ -27,11 +27,11 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
   const SeasonIcon = seasonIcons[season];
 
   return (
-    <Dialog open={!!recipe} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+    <Dialog open={!!recipe} onOpenChange={onClose} aria-labelledby="recipe-modal-title">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" role="dialog" aria-modal="true">
         <DialogHeader>
           <div className="flex items-center gap-3">
-            <DialogTitle className="text-2xl flex-1">
+            <DialogTitle id="recipe-modal-title" className="text-2xl flex-1">
               {recipe.title}
             </DialogTitle>
             <Badge variant="secondary" className="flex items-center gap-1">
@@ -128,10 +128,10 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
           </div>
 
           {/* Ingredients */}
-          <div>
-            <h3 className="text-lg font-semibold mb-3">Ingredients</h3>
+          <section aria-labelledby="ingredients-heading">
+            <h3 id="ingredients-heading" className="text-lg font-semibold mb-3">Ingredients</h3>
             <p className="text-sm text-muted-foreground mb-4">(Yields {recipe.data.yield})</p>
-            <div className="space-y-3">
+            <div className="space-y-3" role="list" aria-label="Recipe ingredients">
               {recipe.data.ingredients.map((ingredient, index) => {
                 // Parse ingredient string to extract name, metric, and volume measurements
                 const parts = ingredient.split(':');
@@ -144,7 +144,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                 const volume = measurementParts[1]?.replace(')', '').trim() || '';
                 
                 return (
-                  <div key={index} className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg">
+                  <div key={index} className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg" role="listitem">
                     <span className="font-medium">{ingredientName}</span>
                     <div className="text-right">
                       {metric && <div className="font-semibold">{metric}</div>}
@@ -157,17 +157,17 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                 );
               })}
             </div>
-          </div>
+          </section>
 
           {/* Instructions */}
-          <div>
-            <h3 className="text-lg font-semibold mb-3">Instructions</h3>
+          <section aria-labelledby="instructions-heading">
+            <h3 id="instructions-heading" className="text-lg font-semibold mb-3">Instructions</h3>
             <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border-l-4 border-blue-500">
               <p className="text-sm text-blue-700 dark:text-blue-300">
                 <strong>For Young Bakers:</strong> Take your time with each step. Read through the entire recipe before starting, and ask an adult for help with hot ovens or sharp tools.
               </p>
             </div>
-            <ol className="space-y-4">
+            <ol className="space-y-4" role="list" aria-label="Recipe instructions">
               {recipe.data.method.map((step, index) => {
                 // Enhanced step descriptions for better guidance
                 const enhancedStep = step
@@ -178,8 +178,11 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                   .replace(/(\d+)°F/g, '$1°F (ask an adult to help with the oven)');
                 
                 return (
-                  <li key={index} className="flex gap-4">
-                    <span className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">
+                  <li key={index} className="flex gap-4" role="listitem">
+                    <span 
+                      className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold"
+                      aria-label={`Step ${index + 1}`}
+                    >
                       {index + 1}
                     </span>
                     <div className="flex-1 pt-1">
@@ -204,7 +207,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                 );
               })}
             </ol>
-          </div>
+          </section>
 
           {/* Equipment */}
           {recipe.data.equipment && recipe.data.equipment.length > 0 && (

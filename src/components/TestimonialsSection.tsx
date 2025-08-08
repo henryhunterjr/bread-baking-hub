@@ -105,14 +105,14 @@ export const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-20 bg-section-background">
+    <section className="py-20 bg-section-background" aria-labelledby="testimonials-heading">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <Badge variant="outline" className="mb-4">
+          <Badge variant="outline" className="mb-4" aria-hidden="true">
             Verified Reviews
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+          <h2 id="testimonials-heading" className="text-3xl md:text-4xl font-bold text-primary mb-4">
             What Our Bakers Are Saying
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -120,7 +120,7 @@ export const TestimonialsSection = () => {
           </p>
           
           {/* Social Proof Numbers */}
-          <div className="flex justify-center gap-8 mt-8">
+          <div className="flex justify-center gap-8 mt-8" role="group" aria-label="Community statistics">
             <div className="text-center">
               <div className="text-2xl font-bold text-primary">38,000+</div>
               <div className="text-sm text-muted-foreground">Community Members</div>
@@ -137,24 +137,25 @@ export const TestimonialsSection = () => {
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label="Customer testimonials">
           {testimonials.map((testimonial) => {
             const SourceIcon = sourceIcons[testimonial.source];
             
             return (
-              <Card key={testimonial.id} className="h-full shadow-warm">
+              <Card key={testimonial.id} className="h-full shadow-warm" role="listitem">
                 <CardContent className="p-6 space-y-4">
                   {/* Quote */}
                   <div className="relative">
-                    <Quote className="h-8 w-8 text-primary/20 absolute -top-2 -left-2" />
-                    <p className="text-muted-foreground italic leading-relaxed pl-6">
-                      "{testimonial.text}"
-                    </p>
+                    <Quote className="h-8 w-8 text-primary/20 absolute -top-2 -left-2" aria-hidden="true" />
+                    <blockquote className="text-muted-foreground italic leading-relaxed pl-6">
+                      {testimonial.text}
+                    </blockquote>
                   </div>
 
                   {/* Rating */}
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1" role="group" aria-label={`Rating: ${testimonial.rating} out of 5 stars`}>
                     {renderStars(testimonial.rating)}
+                    <span className="sr-only">{testimonial.rating} out of 5 stars</span>
                   </div>
 
                   {/* Recipe Used */}

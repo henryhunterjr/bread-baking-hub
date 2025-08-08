@@ -5,11 +5,11 @@ import heroBreadImage from '@/assets/hero-bread.jpg';
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-gradient-hero py-20 px-4">
+    <section className="relative bg-gradient-hero py-20 px-4" aria-labelledby="hero-heading">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+            <h1 id="hero-heading" className="text-4xl md:text-6xl font-bold leading-tight">
               Master the Art of 
               <span className="text-primary"> Baking Great Bread</span> at Home
             </h1>
@@ -34,7 +34,7 @@ const HeroSection = () => {
               priority={true}
               sizes="(max-width: 768px) 100vw, 50vw"
             />
-            <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground p-4 rounded-lg shadow-warm">
+            <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground p-4 rounded-lg shadow-warm" aria-label="Community stats">
               <p className="font-semibold">Join 38,000+ Bakers</p>
               <p className="text-sm">Learning Together</p>
             </div>
