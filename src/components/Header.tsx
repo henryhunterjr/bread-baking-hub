@@ -46,9 +46,14 @@ const Header = () => {
               <Link to="/troubleshooting" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Troubleshooting
               </Link>
-              <Link to="/crust-and-crumb" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Crust & Crumb
-              </Link>
+               <a 
+                 href="https://websim.ai/c/0F908fPvBQKz0z2wj" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
+               >
+                 Crust & Crumb
+               </a>
               <Link 
                 to="/legal" 
                 className="text-header-foreground hover:text-primary px-2 py-2 rounded-md transition-colors"
@@ -115,9 +120,14 @@ const Header = () => {
               <Link to="/troubleshooting" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Troubleshooting
               </Link>
-              <Link to="/crust-and-crumb" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
-                Crust & Crumb
-              </Link>
+               <a 
+                 href="https://websim.ai/c/0F908fPvBQKz0z2wj" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors"
+               >
+                 Crust & Crumb
+               </a>
               <Link to="/legal" className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Legal Information
               </Link>
