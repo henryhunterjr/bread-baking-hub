@@ -14,6 +14,9 @@ import LatestBlogPosts from "../components/LatestBlogPosts";
 import CallToAction from "../components/CallToAction";
 import PodcastSection from "../components/PodcastSection";
 import RecommendedTools from "../components/RecommendedTools";
+import { TestimonialsSection } from "../components/TestimonialsSection";
+import { AuthorBioSection } from "../components/AuthorBioSection";
+import { SocialProofBanner } from "../components/SocialProofBanner";
 import { AIAssistantSidebar } from "../components/AIAssistantSidebar";
 
 const Index = () => {
@@ -99,11 +102,14 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
+        <SocialProofBanner />
         <AboutHenry />
         <PodcastSection />
         <BooksPreview />
         <ToolsResources />
         <RecommendedTools />
+        <TestimonialsSection />
+        <AuthorBioSection />
         <FromOvenToMarketHero />
         <BakersBench />
         <MonthlyChallenge />

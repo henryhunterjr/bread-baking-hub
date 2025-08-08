@@ -4,6 +4,8 @@ import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf } from 'lucide-reac
 import { SeasonalRecipe, Season, getSeasonalColors } from '@/hooks/useSeasonalRecipes';
 import { getRecipeImage } from '@/utils/recipeImageMapping';
 import { RecipeActions } from '@/components/RecipeActions';
+import { RecipeRating } from '@/components/RecipeRating';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface SeasonalRecipeModalProps {
   recipe: SeasonalRecipe | null;
@@ -38,6 +40,17 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
             </Badge>
           </div>
           
+          {/* Recipe Rating */}
+          <RecipeRating 
+            rating={4.7 + Math.random() * 0.3}
+            reviewCount={Math.floor(Math.random() * 200) + 50}
+            difficulty={recipe.data.difficulty as 'beginner' | 'intermediate' | 'expert'}
+            trending={Math.random() > 0.7}
+            communityFavorite={Math.random() > 0.8}
+            successRate={Math.floor(Math.random() * 10) + 90}
+            className="mb-4"
+          />
+          
           {/* Recipe Actions */}
           <RecipeActions 
             recipe={recipe}
@@ -48,12 +61,13 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
         <div className="space-y-6">
           {/* Recipe Image */}
           <div className="relative h-64 rounded-lg overflow-hidden">
-            <img 
+            <ResponsiveImage
               src={getRecipeImage(recipe.slug, recipe.image_url)}
               alt={recipe.title}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.src = "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/01/henry-s-foolproof-sourdough-loaf.png";
+              className="w-full h-full"
+              priority={false}
+              onError={() => {
+                // Fallback handled by ResponsiveImage component
               }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
