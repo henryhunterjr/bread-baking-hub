@@ -61,7 +61,7 @@ export const VitaleAdvantage = () => {
           <Button 
             size="xl" 
             variant="hero"
-            onClick={() => window.open('https://vitalesourdoughco.etsy.com/listing/1647278386', '_blank')}
+            onClick={() => window.open('https://vitalesourdoughco.etsy.com', '_blank')}
             className="text-lg"
           >
             Get Your Vitale Starter - $14

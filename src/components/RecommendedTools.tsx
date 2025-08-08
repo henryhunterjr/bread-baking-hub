@@ -17,7 +17,7 @@ const products: Product[] = [
     name: 'Vitale Sourdough Co. – Dehydrated Sourdough Starter',
     description: "You'll be baking bread in just 3 days with this dependable dry starter. Includes clear instructions and active cultures.",
     coupon: 'BAKINGGREATBREAD',
-    url: 'https://vitalesourdough.com/discount/BAKINGGREATBREAD',
+    url: 'https://vitalesourdoughco.etsy.com',
     image: '/lovable-uploads/2f2d5173-d3d4-47f6-990b-402e68e42818.png'
   },
   {

@@ -213,7 +213,7 @@ export const TestimonialsSection = () => {
               Join Our Community
             </a>
             <a
-              href="https://vitalesourdoughco.etsy.com/listing/1647278386"
+              href="https://vitalesourdoughco.etsy.com"
               target="_blank"
               rel="noopener noreferrer"
               className="border border-primary text-primary px-6 py-3 rounded-lg hover:bg-primary/10 transition-colors inline-flex items-center justify-center"

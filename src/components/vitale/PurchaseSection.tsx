@@ -13,7 +13,7 @@ export const PurchaseSection = () => {
   };
 
   const handlePurchase = () => {
-    window.open('https://vitalesourdoughco.etsy.com/listing/1647278386', '_blank');
+    window.open('https://vitalesourdoughco.etsy.com', '_blank');
   };
 
   return (
