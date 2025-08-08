@@ -130,6 +130,106 @@ export const useSeasonalRecipes = () => {
     fetchSeasonalRecipes();
   }, []);
 
+  // One-time ensure Henry's Whole Wheat Sourdough is present
+  useEffect(() => {
+    const ensureHenryRecipe = async () => {
+      if (loading) return;
+      const targetSlug = 'henrys-whole-wheat-sourdough-recipe';
+      if (recipes.some(r => r.slug === targetSlug)) return;
+
+      try {
+        const season = getCurrentSeason();
+        const featuredDatesBySeason: Record<Season, { start: string; end: string }> = {
+          Winter: { start: '12-01', end: '02-28' },
+          Spring: { start: '03-01', end: '05-31' },
+          Summer: { start: '06-01', end: '08-31' },
+          Fall: { start: '09-01', end: '11-30' },
+        };
+
+        const ingredients = [
+          'Bread flour — 400g (3¼ cups)',
+          'King Arthur White Whole Wheat flour — 100g (¾ cup)',
+          'Warm water — 385g (1⅝ cups)',
+          'Active sourdough starter — 100g (½ cup)',
+          'Salt — 10g (2 tsp)',
+        ];
+
+        const method = [
+          'Mix flours, water, and starter until combined; rest 45 minutes.',
+          'Add salt and mix using Rubaud method for ~10 minutes until smooth.',
+          'Perform 3 sets of coil folds every 45 minutes to build strength.',
+          'Rest 30 minutes, then shape gently to preserve gas.',
+          'Place seam-side up in floured banneton; rest 1 hour, then refrigerate 8–24 hours.',
+          'Preheat oven and vessel to 475°F (245°C). Optionally chill dough 15 minutes for cleaner scoring.',
+          'Score and bake: 22 minutes covered, then 12–17 minutes uncovered until deep golden or 205°F internal.',
+          'Cool completely before slicing.',
+        ];
+
+        const data: SeasonalRecipeData = {
+          season,
+          holidays: [],
+          featuredDates: featuredDatesBySeason[season],
+          category: ['sourdough', 'whole grain'],
+          occasion: ['healthy baking'],
+          prepTime: '10 min active + 45 min rest + folds',
+          bakeTime: '22 min covered + 12–17 min uncovered',
+          totalTime: 'Approximately 4–6 hours including folds and rest',
+          difficulty: 'intermediate',
+          yield: '1 loaf',
+          ingredients,
+          method,
+          notes: '20% King Arthur White Whole Wheat maintains an open crumb with added nutrition; use gentle coil folds.',
+          equipment: [
+            'Mixing bowl',
+            'Bench scraper',
+            'Proofing basket (banneton)',
+            'Dutch oven or Brød & Taylor Baking Shell',
+            'Digital scale',
+            'Lame or sharp knife',
+          ],
+        };
+
+        const imageUrl = getRecipeImage(targetSlug, undefined);
+
+        const { data: res, error } = await supabase.functions.invoke('upsert-recipe', {
+          body: {
+            title: "Henry's Whole Wheat Sourdough Recipe - Healthy & Delicious",
+            slug: targetSlug,
+            data,
+            imageUrl,
+            tags: ['sourdough', 'whole wheat', 'healthy bread', 'bread recipe', 'home baking'],
+            folder: 'Seasonal',
+            isPublic: true,
+          },
+        });
+
+        if (error) {
+          console.error('Failed to upsert recipe via edge function:', error);
+          return;
+        }
+
+        // Optimistically add to UI
+        const created = res?.data;
+        const newRecipe: SeasonalRecipe = {
+          id: created?.id || crypto.randomUUID(),
+          title: "Henry's Whole Wheat Sourdough Recipe - Healthy & Delicious",
+          slug: targetSlug,
+          folder: 'Seasonal',
+          tags: ['sourdough', 'whole wheat', 'healthy bread', 'bread recipe', 'home baking'],
+          is_public: true,
+          image_url: imageUrl,
+          created_at: created?.created_at || new Date().toISOString(),
+          data,
+        };
+        setRecipes(prev => [newRecipe, ...prev]);
+      } catch (e) {
+        console.error('ensureHenryRecipe error', e);
+      }
+    };
+
+    ensureHenryRecipe();
+  }, [loading, recipes]);
+
   // Filter recipes based on current filters
   const filteredRecipes = recipes.filter(recipe => {
     if (selectedSeason !== 'All' && recipe.data.season !== selectedSeason) return false;
