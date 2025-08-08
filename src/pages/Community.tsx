@@ -39,7 +39,7 @@ const Community = () => {
 
                 <Button asChild size="lg" className="mt-6">
                   <a 
-                    href="https://facebook.com/groups/bakinggreatbread" 
+                    href="https://bit.ly/3srdSYS" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2"
@@ -157,13 +157,13 @@ const Community = () => {
                 <div className="pt-4">
                   <Button asChild variant="outline" size="lg">
                     <a 
-                      href="https://facebook.com/groups/bakinggreatbread" 
+                      href="https://bit.ly/3srdSYS" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2"
                     >
                       <ExternalLink className="h-4 w-4" />
-                      facebook.com/groups/bakinggreatbread
+                      Join Facebook Group
                     </a>
                   </Button>
                 </div>
@@ -191,7 +191,7 @@ const Community = () => {
             <div className="mt-12">
               <Button asChild size="lg">
                 <a 
-                  href="https://facebook.com/groups/bakinggreatbread" 
+                  href="https://bit.ly/3srdSYS" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2"

@@ -151,7 +151,7 @@ const PreviewPanel = ({ postData, isNewsletter = false }: PreviewPanelProps) => 
                 description="Can't revive your starter? Don't worry! Vitale's dehydrated sourdough starter is like you never missed a beat. Just add water and you're back to baking beautiful sourdough bread in no time."
                 productImage="/lovable-uploads/99a7eb7a-a09d-4215-a771-2f6858b0d6ab.png"
                 ctaText="Get Your Vitale Starter"
-                affiliateLink="https://example.com/vitale-starter"
+                affiliateLink="https://vitalesourdoughco.etsy.com/listing/1647278386"
                 context="Struggling to revive your starter after neglecting it? You're not alone."
               />
             )}

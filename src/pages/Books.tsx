@@ -105,7 +105,7 @@ const Books = () => {
               Get notified when new books are released and receive exclusive baking tips and recipes.
             </p>
             <Button size="lg" asChild>
-              <a href="https://www.facebook.com/groups/BakingGreatBreadAtHome" target="_blank" rel="noopener noreferrer">
+              <a href="https://bit.ly/3srdSYS" target="_blank" rel="noopener noreferrer">
                 Join the Community
               </a>
             </Button>
