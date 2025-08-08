@@ -11,6 +11,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from '@/hooks/use-toast';
 import { Upload, FileText, Image, AlertCircle, CheckCircle2 } from 'lucide-react';
 import type { FormattedRecipe } from '@/types/recipe-workspace';
+import imageCompression from 'browser-image-compression';
+import { useNavigate } from 'react-router-dom';
 
 interface RecipeUploadSectionProps {
   onRecipeFormatted: (recipe: FormattedRecipe, imageUrl?: string) => void;
@@ -26,6 +28,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
   const [uploadProgress, setUploadProgress] = useState(0);
   const [validationError, setValidationError] = useState<string | null>(null);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   // File validation constants
   const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
@@ -118,44 +121,26 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       });
 
       setUploadProgress(40);
-      const response = await fetch('https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/format-recipe', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeWNrc2t1Y25lbGp2dXF6cnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NDI0MTUsImV4cCI6MjA1MjMxODQxNX0.-Bx7Y0d_aMcHakE27Z5QKriY6KPpG1m8n0uuLaamFfY`,
-        },
+      const { data: formatData, error: formatError } = await supabase.functions.invoke('format-recipe', {
         body: formData,
       });
 
       setUploadProgress(60);
 
-      console.log('Response status:', response.status);
-      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Response error:', errorText);
-        
-        let errorMessage = `Failed to format recipe: ${response.status} ${response.statusText}`;
-        
-        try {
-          const errorData = JSON.parse(errorText);
-          errorMessage = errorData.error || errorMessage;
-        } catch (parseError) {
-          errorMessage = errorText || errorMessage;
-        }
-        
+      if (formatError) {
+        console.error('Format function error:', formatError);
+        const errorMessage = formatError.message || 'Failed to format recipe';
         toast({
-          title: "Upload Failed",
+          title: 'Upload Failed',
           description: errorMessage,
-          variant: "destructive",
+          variant: 'destructive',
         });
-        
         throw new Error(errorMessage);
       }
 
       setUploadProgress(80);
 
-      const data = await response.json();
+      const data = formatData as any;
       console.log('Received recipe data:', data);
       
       let imageUrl = null;
@@ -165,38 +150,67 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
         try {
           console.log('Saving recipe to database for user:', user.id);
           
-          // Upload file to storage if user is logged in (images or PDFs)
+          // Compute a slug from the recipe title
+          const slugFromTitle = data.recipe.title
+            ?.toLowerCase()
+            ?.replace(/[^a-z0-9\s-]/g, '')
+            ?.trim()
+            ?.replace(/\s+/g, '-');
+
+          // Upload image via Edge Function (uses service role) so we don't depend on Storage RLS
           if (selectedFile.type.startsWith('image/') || selectedFile.type === 'application/pdf') {
-            console.log('Uploading image to storage...');
-            const fileExt = selectedFile.name.split('.').pop();
-            const fileName = `${user.id}/${Date.now()}.${fileExt}`;
-            
-            const { data: uploadData, error: uploadError } = await supabase.storage
-              .from('recipe-uploads')
-              .upload(fileName, selectedFile);
-            
-            if (uploadError) {
-              console.error('Error uploading image:', uploadError);
-            } else {
-              console.log('Image uploaded successfully:', uploadData.path);
-              
-              // Get public URL for the uploaded image
-              const { data: { publicUrl } } = supabase.storage
-                .from('recipe-uploads')
-                .getPublicUrl(uploadData.path);
-              
-              imageUrl = publicUrl;
-              console.log('Image public URL:', imageUrl);
+            console.log('Uploading image via edge function...');
+
+            // Compress images client-side for performance (keep original for AI processing)
+            let fileToSend: File = selectedFile;
+            if (selectedFile.type.startsWith('image/')) {
+              try {
+                const compressedBlob = await imageCompression(selectedFile, {
+                  maxWidthOrHeight: 1600,
+                  initialQuality: 0.8,
+                  fileType: 'image/webp',
+                  maxSizeMB: 1.2,
+                  useWebWorker: true,
+                });
+                fileToSend = new File([compressedBlob], selectedFile.name.replace(/\.[^.]+$/, '.webp'), {
+                  type: 'image/webp',
+                });
+                console.log('Compressed image from', selectedFile.size, 'to', fileToSend.size, 'bytes');
+              } catch (compressErr) {
+                console.warn('Image compression failed, sending original file', compressErr);
+              }
+            }
+
+            const uploadForm = new FormData();
+            uploadForm.append('file', fileToSend);
+            uploadForm.append('recipeSlug', slugFromTitle || `recipe-${Date.now()}`);
+
+            const { data: imgData, error: imgError } = await supabase.functions.invoke('upload-recipe-image', {
+              body: uploadForm,
+            });
+
+            if (imgError) {
+              console.error('Image upload error:', imgError);
+              toast({ title: 'Image upload failed', description: imgError.message, variant: 'destructive' });
+            } else if (imgData?.success) {
+              imageUrl = imgData.imageUrl;
+              console.log('Edge function image URL:', imageUrl);
             }
           }
           
+          const tags: string[] = [];
+          if (data.recipe.course) tags.push(String(data.recipe.course));
+          if (data.recipe.cuisine) tags.push(String(data.recipe.cuisine));
+
           const { error: saveError } = await supabase
             .from('recipes')
             .insert({
               user_id: user.id,
               title: data.recipe.title,
               data: data.recipe,
-              image_url: imageUrl
+              image_url: imageUrl,
+              tags,
+              slug: slugFromTitle || null,
             });
           
           if (saveError) {
@@ -204,6 +218,8 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
             // Don't fail the whole operation if saving fails
           } else {
             console.log('Recipe saved successfully to database');
+            toast({ title: 'Recipe saved!', description: 'Redirecting to your recipes...', variant: 'default' });
+            navigate('/recipes');
           }
         } catch (saveError) {
           console.error('Error saving recipe:', saveError);
