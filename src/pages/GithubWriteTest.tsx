@@ -1,35 +1,51 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+
 import { Helmet } from "react-helmet-async";
 
 const owner = "henryhunterjr";
 const repo = "bread-baking-hub";
 
 export default function GithubWriteTest() {
-  const [result, setResult] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [debug, setDebug] = useState<{ status?: number; bodyText?: string; bodyJson?: any; requestPayload?: any; error?: string } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const run = async () => {
+      const requestPayload = {
+        action: "branch_and_commit",
+        params: {
+          owner,
+          repo,
+          new_branch: "lovable-access-test",
+          path: "lovable-test.txt",
+          content: "GitHub proxy write test successful",
+          message: "Add lovable-test.txt via github-proxy",
+        },
+      };
+
+      const functionsUrl = "https://ojyckskucneljvuqzrsw.functions.supabase.co/github-proxy";
+
       try {
-        const { data, error } = await supabase.functions.invoke("github-proxy", {
-          body: {
-            action: "branch_and_commit",
-            params: {
-              owner,
-              repo,
-              new_branch: "lovable-access-test",
-              path: "lovable-test.txt",
-              content: "GitHub proxy write test successful",
-              message: "Add lovable-test.txt via github-proxy",
-            },
-          },
+        const res = await fetch(functionsUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(requestPayload),
         });
-        if (error) throw new Error(error.message);
-        setResult(data);
+
+        const status = res.status;
+        const text = await res.text();
+        let json: any = null;
+        try {
+          json = JSON.parse(text);
+        } catch (_) {}
+
+        const debugInfo = { status, bodyText: text, bodyJson: json, requestPayload };
+        console.log("github-proxy branch_and_commit result:", debugInfo);
+        setDebug(debugInfo);
       } catch (e: any) {
-        setError(e?.message || "Failed to write to repository");
+        const debugInfo = { error: e?.message || String(e), requestPayload };
+        console.error("github-proxy branch_and_commit error:", debugInfo);
+        setDebug(debugInfo);
       } finally {
         setLoading(false);
       }
@@ -47,9 +63,23 @@ export default function GithubWriteTest() {
       <h1 className="text-2xl font-semibold mb-4">GitHub Write Test</h1>
       <p className="mb-2"><strong>Repo:</strong> {owner}/{repo}</p>
       {loading && <p>Executing…</p>}
-      {error && <p>Error: {error}</p>}
-      {!loading && !error && (
-        <pre className="whitespace-pre-wrap rounded-md p-4 bg-muted/30 text-sm">{JSON.stringify(result, null, 2)}</pre>
+      {!loading && debug && (
+        <section className="space-y-4">
+          <p><strong>Status:</strong> {debug.status ?? "N/A"}</p>
+          <div>
+            <h2 className="text-lg font-medium mb-2">Request Payload</h2>
+            <pre className="whitespace-pre-wrap rounded-md p-4 bg-muted/30 text-sm">{JSON.stringify(debug.requestPayload, null, 2)}</pre>
+          </div>
+          <div>
+            <h2 className="text-lg font-medium mb-2">Response Body (text)</h2>
+            <pre className="whitespace-pre-wrap rounded-md p-4 bg-muted/30 text-sm">{debug.bodyText || ""}</pre>
+          </div>
+          <div>
+            <h2 className="text-lg font-medium mb-2">Response Body (JSON)</h2>
+            <pre className="whitespace-pre-wrap rounded-md p-4 bg-muted/30 text-sm">{JSON.stringify(debug.bodyJson, null, 2)}</pre>
+          </div>
+          {debug.error && <p>Error: {debug.error}</p>}
+        </section>
       )}
     </main>
   );
