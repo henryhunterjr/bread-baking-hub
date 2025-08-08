@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { sanitizeStructuredData } from '@/utils/sanitize';
 
 interface Book {
   id: string;
@@ -116,13 +117,13 @@ export const BookSEO = ({ book, canonical }: BookSEOProps) => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(bookSchema)
+          __html: sanitizeStructuredData(bookSchema)
         }}
       />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationSchema)
+          __html: sanitizeStructuredData(organizationSchema)
         }}
       />
     </Helmet>

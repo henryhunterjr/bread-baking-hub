@@ -18,6 +18,7 @@ import { TestimonialsSection } from "../components/TestimonialsSection";
 import { AuthorBioSection } from "../components/AuthorBioSection";
 import { SocialProofBanner } from "../components/SocialProofBanner";
 import { AIAssistantSidebar } from "../components/AIAssistantSidebar";
+import { sanitizeStructuredData } from '@/utils/sanitize';
 
 const Index = () => {
   const [isAIOpen, setIsAIOpen] = useState(false);
@@ -87,13 +88,13 @@ const Index = () => {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema)
+            __html: sanitizeStructuredData(organizationSchema)
           }}
         />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(websiteSchema)
+            __html: sanitizeStructuredData(websiteSchema)
           }}
         />
       </Helmet>

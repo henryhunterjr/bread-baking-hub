@@ -18,6 +18,7 @@ import { fetchBlogPosts, fetchCategories, BlogPost, WordPressCategory, FetchPost
 import { useDebounce } from '@/hooks/useDebounce';
 import { generateBlogListingSchema } from '@/utils/structuredData';
 import { useBlogCache } from '@/utils/blogCache';
+import { sanitizeStructuredData } from '@/utils/sanitize';
 
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -139,7 +140,7 @@ const Blog = () => {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: generateBlogListingSchema()
+            __html: sanitizeStructuredData(JSON.parse(generateBlogListingSchema()))
           }}
         />
       </Helmet>
