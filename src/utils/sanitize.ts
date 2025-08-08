@@ -1,20 +1,26 @@
 import createDOMPurify from 'dompurify';
-import { JSDOM } from 'jsdom';
 
-// Create a DOMPurify instance that works in both browser and server (SSR)
-let purifier: any;
-(() => {
+// Create a DOMPurify instance only in the browser to avoid bundling server-only libs
+let purifier: any = null;
+const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
+
+if (isBrowser) {
   try {
-    const win = typeof window !== 'undefined'
-      ? (window as unknown as Window)
-      : (new JSDOM('').window as unknown as Window);
-    purifier = createDOMPurify(win as any);
+    purifier = createDOMPurify(window as any);
   } catch {
-    // Fallback: create a minimal JSDOM window if anything goes wrong
-    const { window: jsdomWindow } = new JSDOM('');
-    purifier = createDOMPurify(jsdomWindow as any);
+    purifier = null;
   }
-})();
+}
+
+// Very safe fallback for non-browser contexts (SSR): escape special chars
+function basicEscape(input: string): string {
+  return String(input ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 export type SanitizeHtmlOptions = any;
 
@@ -28,7 +34,11 @@ export const sanitizeHtml = (html: string, options?: SanitizeHtmlOptions): strin
     ALLOWED_ATTR: ['href', 'src', 'alt', 'title'],
     ALLOW_DATA_ATTR: false,
   };
-  return purifier.sanitize(html ?? '', { ...defaultConfig, ...(options || {}) });
+  if (purifier) {
+    return purifier.sanitize(html ?? '', { ...defaultConfig, ...(options || {}) });
+  }
+  // SSR fallback: escape everything (no HTML allowed)
+  return basicEscape(html ?? '');
 };
 
 /**
@@ -38,7 +48,9 @@ export const sanitizeStructuredData = (data: unknown): string => {
   const cleaned = JSON.parse(
     JSON.stringify(data, (_key, value) => {
       if (typeof value === 'string') {
-        return purifier.sanitize(value, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+        return purifier
+          ? purifier.sanitize(value, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] })
+          : basicEscape(value);
       }
       return value;
     })
