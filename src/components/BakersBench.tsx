@@ -3,6 +3,7 @@ import { ArrowRight, Play } from 'lucide-react';
 import challengeBreadImage from '@/assets/challenge-bread.jpg';
 import VideoPlayerModal from './VideoPlayerModal';
 import { useState } from 'react';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 const BakersBench = () => {
   const [selectedVideo, setSelectedVideo] = useState<{
@@ -109,10 +110,11 @@ const BakersBench = () => {
           {mediaItems.map((item, index) => (
             <div key={index} className="bg-stone-700 rounded-xl overflow-hidden shadow-stone hover:shadow-warm transition-shadow">
               <div className="relative">
-                <img 
+                <ResponsiveImage 
                   src={item.thumbnail} 
                   alt={item.title}
                   className="w-full h-48 object-cover"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                   <Play className="w-16 h-16 text-foreground" />
@@ -164,10 +166,11 @@ const BakersBench = () => {
             {challenges.map((challenge, index) => (
               <div key={index} className="bg-stone-700 rounded-xl overflow-hidden shadow-stone hover:shadow-warm transition-all duration-300 hover:scale-105">
                 <div className="relative">
-                  <img 
+                  <ResponsiveImage 
                     src={challenge.thumbnail} 
                     alt={challenge.title}
                     className="w-full h-40 object-cover"
+                    loading="lazy"
                   />
                   <div className="absolute top-3 left-3 bg-primary text-primary-foreground px-2 py-1 rounded-full text-xs font-semibold capitalize">
                     {challenge.type}

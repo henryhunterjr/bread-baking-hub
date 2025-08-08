@@ -2,6 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink } from 'lucide-react';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface AffiliateAdvertisementProps {
   title: string;
@@ -37,10 +38,11 @@ export const AffiliateAdvertisement = ({
         <div className="grid md:grid-cols-2 gap-6 items-center">
           {/* Product Image */}
           <div className="relative">
-            <img 
+            <ResponsiveImage 
               src={productImage}
               alt={title}
               className="w-full h-48 md:h-56 object-cover rounded-lg shadow-md"
+              loading="lazy"
             />
           </div>
 

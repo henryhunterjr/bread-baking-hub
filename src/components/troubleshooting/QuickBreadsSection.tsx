@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 export default function QuickBreadsSection() {
   return (
@@ -19,10 +20,11 @@ export default function QuickBreadsSection() {
             <h4 className="text-lg font-semibold text-primary mb-4">Sunken Center Problems</h4>
             <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/ebf4f556-1844-41f4-9830-cef4720d68c3.png', '_blank')}>
               <CardContent className="p-4">
-                <img 
+                <ResponsiveImage 
                   src="/lovable-uploads/ebf4f556-1844-41f4-9830-cef4720d68c3.png" 
                   alt="Sunken vs perfect quick bread"
                   className="w-full h-48 object-cover rounded-lg mb-3"
+                  loading="lazy"
                 />
                 <h5 className="font-semibold text-sm mb-2">Quick Bread Collapse</h5>
                 <p className="text-xs text-muted-foreground mb-2">Left: Sunken center from overmixing or underbaking. Right: Perfect dome from proper technique.</p>
@@ -36,10 +38,11 @@ export default function QuickBreadsSection() {
             <h4 className="text-lg font-semibold text-primary mb-4">Dense & Collapsed Loaves</h4>
             <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/a3e88084-dbe5-4e9c-b53f-f65c6717ef37.png', '_blank')}>
               <CardContent className="p-4">
-                <img 
+                <ResponsiveImage 
                   src="/lovable-uploads/a3e88084-dbe5-4e9c-b53f-f65c6717ef37.png" 
                   alt="Dense collapsed bread"
                   className="w-full h-48 object-cover rounded-lg mb-3"
+                  loading="lazy"
                 />
                 <h5 className="font-semibold text-sm mb-2">Heavy, Dense Texture</h5>
                 <p className="text-xs text-muted-foreground mb-2">Extremely dense crumb with poor rise - multiple issues at play.</p>

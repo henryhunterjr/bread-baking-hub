@@ -9,6 +9,7 @@ import { History, RotateCcw, Eye, Save } from 'lucide-react';
 import { useRecipeVersions } from '@/hooks/useRecipeVersions';
 import { formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface RecipeVersionManagerProps {
   recipeId: string;
@@ -151,10 +152,11 @@ export const RecipeVersionManager = ({ recipeId, onVersionRestored }: RecipeVers
                   </CardHeader>
                   <CardContent>
                     {selectedVersion.image_url && (
-                      <img 
+                      <ResponsiveImage 
                         src={selectedVersion.image_url} 
                         alt={selectedVersion.title}
                         className="w-full h-32 object-cover rounded mb-4"
+                        loading="lazy"
                       />
                     )}
                     

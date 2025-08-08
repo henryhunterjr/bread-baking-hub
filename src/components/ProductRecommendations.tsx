@@ -7,6 +7,7 @@ import { ChevronDown, ChevronUp, ExternalLink, ShoppingCart } from 'lucide-react
 import affiliateProducts from '@/data/affiliate-products.json';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface Product {
   id: string;
@@ -133,10 +134,11 @@ export const ProductRecommendations = ({
                   onClick={() => handleProductClick(product)}
                 >
                   <div className="relative overflow-hidden">
-                    <img 
+                    <ResponsiveImage 
                       src={product.image_url} 
                       alt={product.name}
                       className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
                     />
                     <Badge 
                       variant="secondary" 

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Eye, Share2, BookOpen, Mail } from 'lucide-react';
 import { AffiliateAdvertisement } from '@/components/AffiliateAdvertisement';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface BlogPostData {
   title: string;
@@ -65,10 +66,11 @@ const PreviewPanel = ({ postData, isNewsletter = false }: PreviewPanelProps) => 
           {/* Hero Image */}
           {postData.heroImageUrl && (
             <div className="aspect-video relative overflow-hidden">
-              <img
+              <ResponsiveImage
                 src={postData.heroImageUrl}
                 alt={postData.title}
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </div>
           )}
@@ -92,10 +94,11 @@ const PreviewPanel = ({ postData, isNewsletter = false }: PreviewPanelProps) => 
             {/* Author Block */}
             <div className="flex items-center gap-4 py-4 border-y border-border">
               <div className="w-12 h-12 rounded-full overflow-hidden">
-                <img 
+                <ResponsiveImage 
                   src="/lovable-uploads/817f9119-54ab-4a7e-8906-143e981eac8a.png" 
                   alt="Henry Hunter - Master Baker"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
               <div>

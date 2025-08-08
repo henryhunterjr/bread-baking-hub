@@ -8,6 +8,7 @@ import { Image, Upload, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface RecipeImageUploaderProps {
   recipeId?: string;
@@ -111,10 +112,11 @@ export const RecipeImageUploader = ({
       <CardContent className="space-y-4">
         {currentImageUrl && (
           <div className="relative">
-            <img 
+            <ResponsiveImage 
               src={currentImageUrl} 
               alt="Recipe" 
               className="w-full h-48 object-cover rounded-lg"
+              loading="lazy"
             />
             <Button
               variant="destructive"

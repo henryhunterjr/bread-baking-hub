@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface ImageSectionProps {
   imageUrl: string;
@@ -114,13 +115,11 @@ export const ImageSection = ({ imageUrl, isOpen, onToggle, onUpdate }: ImageSect
         {/* Current Image */}
         {imageUrl && (
           <div className="relative">
-            <img 
+            <ResponsiveImage 
               src={imageUrl} 
               alt="Recipe preview" 
               className="w-full h-48 object-cover rounded border"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-              }}
+              loading="lazy"
             />
             <Button
               variant="destructive"

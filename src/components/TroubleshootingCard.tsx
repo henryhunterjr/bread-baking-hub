@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface Symptom {
   id: string;
@@ -79,17 +80,11 @@ const TroubleshootingCard: React.FC<TroubleshootingCardProps> = ({ symptom, isHi
               <div className="space-y-3">
                 <h4 className="font-medium text-sm text-destructive">Problem</h4>
                  <div className="aspect-video bg-muted rounded-lg flex items-center justify-center border focus:ring-2 focus:ring-primary">
-                  <img 
+                  <ResponsiveImage 
                     src={symptom.images.before} 
                     alt={`${symptom.id} - problem example`}
                     className="w-full h-full object-cover rounded-lg"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      if (target.nextElementSibling) {
-                        (target.nextElementSibling as HTMLElement).style.display = 'flex';
-                      }
-                    }}
+                    loading="lazy"
                   />
                   <div className="hidden items-center justify-center text-muted-foreground text-sm">
                     Problem Example
@@ -100,17 +95,11 @@ const TroubleshootingCard: React.FC<TroubleshootingCardProps> = ({ symptom, isHi
               <div className="space-y-3">
                 <h4 className="font-medium text-sm text-green-600 dark:text-green-400">Solution</h4>
                 <div className="aspect-video bg-muted rounded-lg flex items-center justify-center border focus:ring-2 focus:ring-primary">
-                  <img 
+                  <ResponsiveImage 
                     src={symptom.images.after} 
                     alt={`${symptom.id} - solution example`}
                     className="w-full h-full object-cover rounded-lg"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      if (target.nextElementSibling) {
-                        (target.nextElementSibling as HTMLElement).style.display = 'flex';
-                      }
-                    }}
+                    loading="lazy"
                   />
                   <div className="hidden items-center justify-center text-muted-foreground text-sm">
                     Solution Example

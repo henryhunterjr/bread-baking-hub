@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ExternalLink } from 'lucide-react';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface Product {
   name: string;
@@ -104,10 +105,11 @@ const RecommendedTools = () => {
               <div className="flex flex-col sm:flex-row h-full">
                 {/* Product Image */}
                 <div className="sm:w-1/2 relative">
-                  <img 
+                  <ResponsiveImage 
                     src={product.image}
                     alt={`Photo of ${product.name}`}
                     className="w-full h-48 sm:h-full object-cover"
+                    loading="lazy"
                   />
                 </div>
 

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Eye, ExternalLink, Play } from "lucide-react";
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface LoafAndLieSpotlightProps {
   onPreview: () => void;
@@ -28,10 +29,11 @@ const LoafAndLieSpotlight = ({ onPreview, onAudio }: LoafAndLieSpotlightProps) =
               {/* Glow effect behind book */}
               <div className="absolute -inset-4 bg-gradient-to-r from-red-500/20 via-orange-500/20 to-red-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
               
-              <img 
+              <ResponsiveImage 
                 src="/lovable-uploads/83cde278-edfc-4a30-98f4-79f37c79346e.png"
                 alt="The Loaf and the LIE cover"
                 className="relative w-full max-w-md mx-auto rounded-lg shadow-2xl transform group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
               />
               
               {/* Spotlight effect */}

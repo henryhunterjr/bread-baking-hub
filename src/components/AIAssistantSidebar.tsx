@@ -14,6 +14,7 @@ import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 import { useToast } from '@/hooks/use-toast';
 import { ChatMessage } from './ChatMessage';
 import krustyAvatar from '@/assets/krusty-avatar-upscaled.png';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface AIAssistantSidebarProps {
   recipeContext?: any;
@@ -183,10 +184,11 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
           <div className="absolute inset-0 rounded-full border-4 border-primary bg-background shadow-warm"></div>
           
           {/* Avatar image */}
-          <img 
+          <ResponsiveImage 
             src="/lovable-uploads/8cb72eaf-5058-4063-8999-6b31c041d83b.png"
             alt="👨🏽‍🍳 Krusty | Baking Guide"
             className="w-full h-full rounded-full object-cover relative z-10"
+            loading="lazy"
           />
           
           {/* Fallback content if image doesn't load */}
@@ -209,12 +211,13 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
             <div className="flex items-center gap-3">
               {/* Avatar in top-left */}
               <div className={`relative w-12 h-12 transition-all duration-300 ${(isListening || isPlaying) ? 'shadow-lg shadow-primary/30' : ''}`}>
-                <img 
+                <ResponsiveImage 
                   src="/lovable-uploads/8cb72eaf-5058-4063-8999-6b31c041d83b.png"
                   alt="👨🏽‍🍳 Krusty"
                   className={`w-full h-full rounded-full object-cover border-2 border-primary/30 transition-all duration-300 ${
                     (isListening || isPlaying) ? 'ring-2 ring-primary ring-opacity-50 animate-pulse' : ''
                   }`}
+                  loading="lazy"
                 />
               </div>
               <div>

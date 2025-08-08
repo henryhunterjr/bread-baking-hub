@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { X, Play, Pause, Volume2 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { BookData } from "@/data/books-data";
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface AudioPlayerModalProps {
   selectedBook: BookData | null;
@@ -126,10 +127,11 @@ const AudioPlayerModal = ({ selectedBook, onClose }: AudioPlayerModalProps) => {
             <div className="flex flex-col lg:flex-row gap-6 items-center">
               {/* Book Cover */}
               <div className="flex-shrink-0">
-                <img 
+                <ResponsiveImage 
                   src={selectedBook.coverImage} 
                   alt={selectedBook.title}
                   className="w-48 h-auto rounded-lg shadow-stone"
+                  loading="lazy"
                 />
               </div>
 
