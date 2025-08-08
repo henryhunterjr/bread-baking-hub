@@ -98,8 +98,8 @@ const RelatedPosts = ({ currentPostId, categories, className }: RelatedPostsProp
               </h4>
               <p className="text-sm text-muted-foreground line-clamp-2">{post.excerpt}</p>
               <a 
-                href={post.link}
-                target="_blank"
+                href={`/go?u=${encodeURIComponent(post.link)}`}
+                target="_self"
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors text-sm group-hover:underline"
               >

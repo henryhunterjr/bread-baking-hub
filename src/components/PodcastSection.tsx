@@ -18,7 +18,7 @@ const PodcastSection = () => {
 
   const handleExternalClick = () => {
     trackPodcastExternalLink();
-    window.open(podcastUrl, '_blank');
+    window.location.href = `/go?u=${encodeURIComponent(podcastUrl)}`;
   };
 
   return (

@@ -78,7 +78,7 @@ export const CustomerSuccess = () => {
           <Button 
             size="xl" 
             variant="hero"
-            onClick={() => window.open('https://vitalesourdoughco.etsy.com', '_blank')}
+            onClick={() => (window.location.href = '/go?s=vitale')}}
             className="text-lg"
           >
             Join These Success Stories - $14

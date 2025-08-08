@@ -98,10 +98,10 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, cat
               
               <div className="flex items-center justify-between">
                 <a 
-                  href={post.link}
+                  href={`/go?u=${encodeURIComponent(post.link)}`}
                   onClick={() => handlePostClick(post)}
                   className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors group-hover:underline"
-                  target="_blank"
+                  target="_self"
                   rel="noopener noreferrer"
                 >
                   Read More

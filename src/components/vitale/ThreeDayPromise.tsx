@@ -72,7 +72,7 @@ export const ThreeDayPromise = () => {
           <Button 
             size="xl" 
             variant="hero"
-            onClick={() => window.open('https://vitalesourdoughco.etsy.com', '_blank')}
+            onClick={() => (window.location.href = '/go?s=vitale')}}
             className="text-lg"
           >
             Start Your 3-Day Journey - $14

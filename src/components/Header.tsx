@@ -61,8 +61,8 @@ const Header = () => {
                 Troubleshooting
               </Link>
                <a 
-                 href="https://websim.ai/c/0F908fPvBQKz0z2wj" 
-                 target="_blank" 
+                 href="/go?u=https%3A%2F%2Fwebsim.ai%2Fc%2F0F908fPvBQKz0z2wj" 
+                 target="_self" 
                  rel="noopener noreferrer"
                  className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
                >
@@ -100,7 +100,7 @@ const Header = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-header-foreground hover:text-primary"
+              className="text-header-foreground hover:text-primary h-11 w-11"
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
@@ -141,8 +141,8 @@ const Header = () => {
                 Troubleshooting
               </Link>
                <a 
-                 href="https://websim.ai/c/0F908fPvBQKz0z2wj" 
-                 target="_blank" 
+                 href="/go?u=https%3A%2F%2Fwebsim.ai%2Fc%2F0F908fPvBQKz0z2wj" 
+                 target="_self" 
                  rel="noopener noreferrer"
                  className="text-header-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors"
                >
