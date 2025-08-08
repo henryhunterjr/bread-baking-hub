@@ -88,7 +88,12 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // Prevent accidental bundling of server-only libs in the browser
+      jsdom: path.resolve(__dirname, "./src/shims/empty-module.ts"),
     },
+  },
+  optimizeDeps: {
+    exclude: ['jsdom', 'canvas', 'iconv-lite', 'whatwg-encoding', 'html-encoding-sniffer'],
   },
   test: {
     globals: true,
