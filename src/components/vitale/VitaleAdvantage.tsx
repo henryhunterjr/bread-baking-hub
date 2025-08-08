@@ -61,7 +61,7 @@ export const VitaleAdvantage = () => {
           <Button 
             size="xl" 
             variant="hero"
-            onClick={() => (window.location.href = '/go?s=vitale')}}
+            onClick={() => (window.location.href = '/go?s=vitale')}
             className="text-lg"
           >
             Get Your Vitale Starter - $14
