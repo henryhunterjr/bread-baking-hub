@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf } from 'lucide-react';
 import { SeasonalRecipe, Season, getSeasonalColors } from '@/hooks/useSeasonalRecipes';
 import { getRecipeImage } from '@/utils/recipeImageMapping';
+import { RecipeActions } from '@/components/RecipeActions';
 
 interface SeasonalRecipeModalProps {
   recipe: SeasonalRecipe | null;
@@ -36,6 +37,12 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
               {season}
             </Badge>
           </div>
+          
+          {/* Recipe Actions */}
+          <RecipeActions 
+            recipe={recipe}
+            className="border-t pt-4"
+          />
         </DialogHeader>
         
         <div className="space-y-6">
