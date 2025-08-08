@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { RecipeUploadSection } from '../components/RecipeUploadSection';
 import { FormattedRecipeDisplay } from '../components/FormattedRecipeDisplay';
-import { AIAssistantSidebar } from '../components/AIAssistantSidebar';
+const LazyAIAssistantSidebar = lazy(() => import('../components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 import { VoiceInterface } from '../components/VoiceInterface';
 
 interface FormattedRecipe {
@@ -76,11 +76,13 @@ const RecipeFormatter = () => {
       </main>
       <Footer />
       
-      <AIAssistantSidebar
-        recipeContext={formattedRecipe?.recipe}
-        isOpen={isSidebarOpen}
-        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
-      />
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          recipeContext={formattedRecipe?.recipe}
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
       
       <VoiceInterface
         onSpeakingChange={setIsSpeaking}

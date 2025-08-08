@@ -1,9 +1,9 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, Suspense, lazy } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useIsMobile } from '@/hooks/use-mobile';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { AIAssistantSidebar } from '@/components/AIAssistantSidebar';
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 import { useRecipes } from '@/hooks/useRecipes';
 import { RecipeFilters } from '@/components/RecipeFilters';
 import { LoadingState } from '@/components/LoadingState';
@@ -176,11 +176,13 @@ const MyRecipes = () => {
       </main>
       <Footer />
       
-      <AIAssistantSidebar
-        recipeContext={selectedRecipe}
-        isOpen={isSidebarOpen}
-        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
-      />
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          recipeContext={selectedRecipe}
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
     </div>
   );
 };

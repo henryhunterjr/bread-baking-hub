@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -17,7 +17,7 @@ import RecommendedTools from "../components/RecommendedTools";
 import { TestimonialsSection } from "../components/TestimonialsSection";
 import { AuthorBioSection } from "../components/AuthorBioSection";
 import { SocialProofBanner } from "../components/SocialProofBanner";
-import { AIAssistantSidebar } from "../components/AIAssistantSidebar";
+const LazyAIAssistantSidebar = lazy(() => import("../components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
 import { sanitizeStructuredData } from '@/utils/sanitize';
 
 const Index = () => {
@@ -119,10 +119,12 @@ const Index = () => {
         <CallToAction />
       </main>
       <Footer />
-      <AIAssistantSidebar 
-        isOpen={isAIOpen}
-        onToggle={() => setIsAIOpen(!isAIOpen)}
-      />
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar 
+          isOpen={isAIOpen}
+          onToggle={() => setIsAIOpen(!isAIOpen)}
+        />
+      </Suspense>
     </div>
     </>
   );
