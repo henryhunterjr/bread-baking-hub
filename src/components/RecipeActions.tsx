@@ -4,14 +4,28 @@ import { useToast } from '@/hooks/use-toast';
 import { Printer, Download, Mail, Share } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 
+type PrintableRecipeData = {
+  ingredients: string[];
+  method: string[];
+  prepTime?: string;
+  bakeTime?: string;
+  yield?: string;
+  difficulty?: string;
+  equipment?: string[];
+  notes?: string;
+};
+
+type PrintableRecipe = {
+  title: string;
+  data: PrintableRecipeData;
+  slug?: string;
+};
+
 interface RecipeActionsProps {
-  recipe: {
-    title: string;
-    data: any;
-    slug?: string;
-  };
+  recipe: PrintableRecipe;
   className?: string;
 }
+
 
 export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) => {
   const { toast } = useToast();
@@ -170,7 +184,7 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
   );
 };
 
-const generatePrintableHTML = (recipe: any) => {
+const generatePrintableHTML = (recipe: PrintableRecipe) => {
   const ingredients = recipe.data.ingredients.map((ing: string) => {
     const parts = ing.split(':');
     const name = parts[0]?.trim() || ing;
@@ -271,7 +285,7 @@ const generatePrintableHTML = (recipe: any) => {
   `;
 };
 
-const generateEmailBody = (recipe: any) => {
+const generateEmailBody = (recipe: PrintableRecipe) => {
   const ingredients = recipe.data.ingredients.map((ing: string) => {
     const parts = ing.split(':');
     const name = parts[0]?.trim() || ing;

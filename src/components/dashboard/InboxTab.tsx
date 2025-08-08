@@ -9,21 +9,13 @@ import { supabase } from '@/integrations/supabase/client';
 import { Inbox, Calendar, Mail, FileText, Import, Trash2, Plus } from 'lucide-react';
 import { format } from 'date-fns';
 import { submitYourNewsletterContent } from '@/utils/submitContent';
+import type { AIDraft, DraftImportHandler } from '@/types';
 
-interface AIDraft {
-  id: string;
-  type: string;
-  payload: any;
-  run_date: string;
-  created_at: string;
-  imported: boolean;
-  discarded: boolean;
-  updated_at: string;
-}
 
 interface InboxTabProps {
-  onImportDraft: (draftData: any) => void;
+  onImportDraft: DraftImportHandler;
 }
+
 
 const InboxTab = ({ onImportDraft }: InboxTabProps) => {
   const [drafts, setDrafts] = useState<AIDraft[]>([]);

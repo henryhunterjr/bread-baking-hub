@@ -9,12 +9,14 @@ import { Save, Share2, Tag, FolderOpen, Globe, Lock } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import type { FormattedRecipe } from '@/types/recipe-workspace';
 
 interface RecipeActionsToolbarProps {
-  recipe: any;
+  recipe: FormattedRecipe;
   imageUrl?: string;
   onSaved?: (recipeId: string) => void;
 }
+
 
 export const RecipeActionsToolbar = ({ recipe, imageUrl, onSaved }: RecipeActionsToolbarProps) => {
   const [isPublic, setIsPublic] = useState(false);

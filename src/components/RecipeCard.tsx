@@ -4,9 +4,11 @@ import { RecipeEditForm } from './RecipeEditForm';
 import { FullRecipeEditForm } from './FullRecipeEditForm';
 import { RecipeVersionManager } from './RecipeVersionManager';
 import { memo } from 'react';
+import { Recipe, RecipeData, RecipeUpdateData } from '@/types';
+
 
 interface RecipeCardProps {
-  recipe: any;
+  recipe: Recipe;
   isEditing: boolean;
   isFullEditing: boolean;
   updating: boolean;
@@ -14,10 +16,11 @@ interface RecipeCardProps {
   onFullEdit: () => void;
   onCancelEdit: () => void;
   onSave: (recipeId: string, title: string) => Promise<boolean>;
-  onFullSave: (recipeId: string, updates: { data: any; image_url?: string; folder?: string; tags?: string[]; is_public?: boolean; slug?: string }) => Promise<boolean>;
-  onAskAssistant: (recipe: any) => void;
-  allRecipes?: any[];
+  onFullSave: (recipeId: string, updates: RecipeUpdateData) => Promise<boolean>;
+  onAskAssistant: (recipe: RecipeData) => void;
+  allRecipes?: Recipe[];
 }
+
 
 export const RecipeCard = memo(({ 
   recipe, 

@@ -1,20 +1,22 @@
 import { Folder } from 'lucide-react';
 import { RecipeList } from '@/components/RecipeList';
+import { Recipe, RecipeUpdateData, RecipeData } from '@/types';
 
 interface FolderGroupProps {
   folder: string;
-  recipes: any[];
+  recipes: Recipe[];
   editingRecipe: string | null;
   fullEditingRecipe: string | null;
   updating: boolean;
-  onEdit: (recipe: any) => void;
-  onFullEdit: (recipe: any) => void;
+  onEdit: (recipe: Recipe) => void;
+  onFullEdit: (recipe: Recipe) => void;
   onCancelEdit: () => void;
   onSave: (recipeId: string, title: string) => Promise<boolean>;
-  onFullSave: (recipeId: string, updates: { data: any; image_url?: string; folder?: string; tags?: string[]; is_public?: boolean; slug?: string }) => Promise<boolean>;
-  onAskAssistant: (recipeData: any) => void;
-  allRecipes: any[];
+  onFullSave: (recipeId: string, updates: RecipeUpdateData) => Promise<boolean>;
+  onAskAssistant: (recipeData: RecipeData) => void;
+  allRecipes: Recipe[];
 }
+
 
 export const FolderGroup = ({
   folder,

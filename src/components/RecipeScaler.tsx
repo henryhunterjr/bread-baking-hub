@@ -7,11 +7,13 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Calculator, Users, ChefHat } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { Recipe } from '@/types';
 
 interface RecipeScalerProps {
-  recipe: any;
-  onScaledRecipe: (scaledRecipe: any) => void;
+  recipe: Recipe;
+  onScaledRecipe: (scaledRecipe: Recipe) => void;
 }
+
 
 export const RecipeScaler = ({ recipe, onScaledRecipe }: RecipeScalerProps) => {
   const [servings, setServings] = useState(4);

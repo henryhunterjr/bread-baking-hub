@@ -4,12 +4,15 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 import { RealtimeChat } from '@/utils/RealtimeAudio';
+import type { VoiceMessage } from '@/types';
+import type { FormattedRecipe } from '@/types/recipe-workspace';
 
 interface VoiceInterfaceProps {
   onSpeakingChange: (speaking: boolean) => void;
-  onMessage?: (message: any) => void;
-  recipeContext?: any;
+  onMessage?: (message: VoiceMessage | string) => void;
+  recipeContext?: FormattedRecipe;
 }
+
 
 export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: VoiceInterfaceProps) => {
   const { toast } = useToast();
@@ -18,7 +21,7 @@ export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: V
   const [isLoading, setIsLoading] = useState(false);
   const chatRef = useRef<RealtimeChat | null>(null);
 
-  const handleMessage = (message: any) => {
+  const handleMessage = (message: VoiceMessage | string) => {
     console.log('Voice interface received message:', message);
     onMessage?.(message);
   };

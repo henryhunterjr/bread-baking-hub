@@ -10,11 +10,13 @@ import { useAuth } from '@/hooks/useAuth';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from '@/hooks/use-toast';
 import { Upload, FileText, Image, AlertCircle, CheckCircle2 } from 'lucide-react';
+import type { FormattedRecipe } from '@/types/recipe-workspace';
 
 interface RecipeUploadSectionProps {
-  onRecipeFormatted: (recipe: any, imageUrl?: string) => void;
+  onRecipeFormatted: (recipe: FormattedRecipe, imageUrl?: string) => void;
   onError: (message: string) => void;
 }
+
 
 export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUploadSectionProps) => {
   const isMobile = useIsMobile();

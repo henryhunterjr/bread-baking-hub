@@ -1,13 +1,14 @@
 
 'use client';
 import { useState } from 'react';
+import { UploadResult } from '@/types';
 
-export default function RecipeUploadForm({ onSuccess }: { onSuccess: (data: any) => void }) {
+export default function RecipeUploadForm({ onSuccess }: { onSuccess: (data: UploadResult) => void }) {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) return;
     setLoading(true);

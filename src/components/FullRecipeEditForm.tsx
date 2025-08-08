@@ -10,14 +10,16 @@ import { OrganizationSection } from './recipe-edit/OrganizationSection';
 import { PublicSharingSection } from './recipe-edit/PublicSharingSection';
 import { RecommendedProductsSection } from './recipe-edit/RecommendedProductsSection';
 import { useRecipeEditForm } from '@/hooks/useRecipeEditForm';
+import { Recipe, RecipeUpdateData } from '@/types';
 
 interface FullRecipeEditFormProps {
-  recipe: any;
-  onSave: (recipeId: string, updates: { data: any; image_url?: string; folder?: string; tags?: string[]; is_public?: boolean; slug?: string }) => Promise<boolean>;
+  recipe: Recipe;
+  onSave: (recipeId: string, updates: RecipeUpdateData) => Promise<boolean>;
   onCancel: () => void;
   updating: boolean;
-  allRecipes?: any[];
+  allRecipes?: Recipe[];
 }
+
 
 export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allRecipes = [] }: FullRecipeEditFormProps) => {
   const {
