@@ -162,17 +162,17 @@ export const BookRecommendations = ({
         
         {/* Algorithm Selection */}
         <div className="flex flex-wrap gap-2">
-          {[
+          {([
             { key: 'similar', label: 'Similar Books', icon: <Target className="w-3 h-3" /> },
             { key: 'skill', label: 'Your Level', icon: <Award className="w-3 h-3" /> },
             { key: 'trending', label: 'Trending', icon: <TrendingUp className="w-3 h-3" /> },
             { key: 'featured', label: 'Featured', icon: <Star className="w-3 h-3" /> }
-          ].map(({ key, label, icon }) => (
+          ] as Array<{ key: 'similar' | 'skill' | 'trending' | 'featured'; label: string; icon: JSX.Element }>).map(({ key, label, icon }) => (
             <Button
               key={key}
               variant={selectedAlgorithm === key ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setSelectedAlgorithm(key as any)}
+              onClick={() => setSelectedAlgorithm(key)}
               className="text-xs"
             >
               {icon}

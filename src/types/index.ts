@@ -163,3 +163,30 @@ export interface UseAIChatProps {
 export type RecipeSelectHandler = (recipe: Recipe) => void;
 export type RecipeUpdateHandler = (recipeId: string, updates: RecipeUpdateData) => Promise<boolean>;
 export type DraftImportHandler = (draftData: AIDraft) => void;
+
+// Core user/product/book data
+export interface UserProfile {
+  id: string;
+  email: string;
+  name: string;
+  avatar?: string;
+  createdAt: string | Date;
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  description?: string;
+  price: number;
+  imageUrl?: string;
+  affiliateUrl?: string;
+}
+
+export interface BookData {
+  id: string;
+  title: string;
+  description?: string;
+  author: string;
+  imageUrl?: string;
+  downloadUrl?: string;
+}

@@ -39,7 +39,7 @@ export const useRecipeWorkspace = () => {
     }
   };
 
-  const handleRecipeUpdate = async (recipeId: string, updates: any) => {
+  const handleRecipeUpdate = async (recipeId: string, updates: { data: FormattedRecipe; image_url?: string }) => {
     if (!editedRecipe) return false;
     
     try {
@@ -88,7 +88,7 @@ export const useRecipeWorkspace = () => {
     });
   };
 
-  const handleRecipeSelect = (recipe: any) => {
+  const handleRecipeSelect = (recipe: { data: FormattedRecipe; image_url?: string }) => {
     setFormattedRecipe({ recipe: recipe.data, imageUrl: recipe.image_url });
     setEditedRecipe(recipe.data);
     setRecipeImageUrl(recipe.image_url || '');
