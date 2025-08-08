@@ -70,6 +70,68 @@ serve(async (req: Request) => {
         });
       }
 
+      case "get_repo_file": {
+        const owner = String(params?.owner || "").trim();
+        const repo = String(params?.repo || "").trim();
+        const path = String(params?.path || "README.md").replace(/^\/+/, "");
+        let ref = params?.ref ? String(params.ref) : undefined;
+
+        if (!owner || !repo) {
+          return new Response(JSON.stringify({ error: "owner and repo are required" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        // If no ref provided, fetch default branch
+        if (!ref) {
+          const repoRes = await fetch(`${GITHUB_API}/repos/${owner}/${repo}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: "application/vnd.github+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+            },
+          });
+          const repoData = await repoRes.json();
+          if (repoRes.ok) {
+            ref = repoData.default_branch || "main";
+          } else {
+            ref = "main";
+          }
+        }
+
+        const url = new URL(`${GITHUB_API}/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`);
+        if (ref) url.searchParams.set("ref", ref);
+        const ghRes = await fetch(url.toString(), {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+        });
+        const fileData = await ghRes.json();
+        if (!ghRes.ok) {
+          return new Response(JSON.stringify({ error: fileData?.message || "GitHub error", status: ghRes.status }), {
+            status: ghRes.status,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        let text = "";
+        if (fileData && fileData.content) {
+          const b64 = String(fileData.content).replace(/\n/g, "");
+          try {
+            text = atob(b64);
+          } catch (e) {
+            text = "";
+          }
+        }
+
+        return new Response(JSON.stringify({ ref, path, name: fileData?.name, text }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
       case "list_contents": {
         const owner = String(params?.owner || "").trim();
         const repo = String(params?.repo || "").trim();
@@ -201,6 +263,7 @@ serve(async (req: Request) => {
         return new Response(
           JSON.stringify({ error: `Unsupported action: ${action}`, allowed: [
             "get_file",
+            "get_repo_file",
             "list_contents",
             "get_repo",
             "get_branches",
