@@ -259,6 +259,129 @@ serve(async (req: Request) => {
         });
       }
 
+      case "branch_and_commit": {
+        const owner = String(params?.owner || "").trim();
+        const repo = String(params?.repo || "").trim();
+        const newBranch = String(params?.new_branch || "").trim();
+        const baseBranchParam = params?.base_branch ? String(params.base_branch) : undefined;
+        const path = String(params?.path || "").replace(/^\/+/, "");
+        const content = String(params?.content || "");
+        const message = String(params?.message || "Add file via github-proxy");
+
+        if (!owner || !repo || !newBranch || !path || !content) {
+          return new Response(JSON.stringify({ error: "owner, repo, new_branch, path, content are required" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        // Resolve base branch (default if not provided)
+        let baseBranch = baseBranchParam;
+        if (!baseBranch) {
+          const repoRes = await fetch(`${GITHUB_API}/repos/${owner}/${repo}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: "application/vnd.github+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+            },
+          });
+          const repoData = await repoRes.json();
+          if (!repoRes.ok) {
+            return new Response(JSON.stringify({ error: repoData?.message || "Failed to read repo" }), {
+              status: repoRes.status,
+              headers: { ...corsHeaders, "Content-Type": "application/json" },
+            });
+          }
+          baseBranch = repoData.default_branch || "main";
+        }
+
+        // Get base branch SHA
+        const refRes = await fetch(`${GITHUB_API}/repos/${owner}/${repo}/git/ref/heads/${baseBranch}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+        });
+        const refData = await refRes.json();
+        if (!refRes.ok) {
+          return new Response(JSON.stringify({ error: refData?.message || "Failed to read base ref" }), {
+            status: refRes.status,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+        const baseSha = refData?.object?.sha;
+        if (!baseSha) {
+          return new Response(JSON.stringify({ error: "Base branch SHA not found" }), {
+            status: 500,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        // Create branch if missing
+        let createdBranch = false;
+        const checkNewRef = await fetch(`${GITHUB_API}/repos/${owner}/${repo}/git/ref/heads/${newBranch}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+        });
+        if (checkNewRef.status === 404) {
+          const createRefRes = await fetch(`${GITHUB_API}/repos/${owner}/${repo}/git/refs`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: "application/vnd.github+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ref: `refs/heads/${newBranch}`, sha: baseSha }),
+          });
+          const createRefData = await createRefRes.json();
+          if (!createRefRes.ok) {
+            return new Response(JSON.stringify({ error: createRefData?.message || "Failed to create branch" }), {
+              status: createRefRes.status,
+              headers: { ...corsHeaders, "Content-Type": "application/json" },
+            });
+          }
+          createdBranch = true;
+        }
+
+        // Create or update file on the new branch
+        const contentB64 = btoa(content);
+        const putUrl = `${GITHUB_API}/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`;
+        const putRes = await fetch(putUrl, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message, content: contentB64, branch: newBranch }),
+        });
+        const putData = await putRes.json();
+        if (!putRes.ok) {
+          return new Response(JSON.stringify({ error: putData?.message || "Failed to commit file" }), {
+            status: putRes.status,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        return new Response(
+          JSON.stringify({
+            base_branch: baseBranch,
+            new_branch: newBranch,
+            created_branch: createdBranch,
+            path,
+            commit_sha: putData?.commit?.sha,
+            content_sha: putData?.content?.sha,
+          }),
+          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
       default:
         return new Response(
           JSON.stringify({ error: `Unsupported action: ${action}`, allowed: [
@@ -268,6 +391,7 @@ serve(async (req: Request) => {
             "get_repo",
             "get_branches",
             "create_issue",
+            "branch_and_commit",
           ] }),
           { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );

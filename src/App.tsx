@@ -44,6 +44,7 @@ const Coaching = lazy(() => import("./pages/Coaching"));
 const Contact = lazy(() => import("./pages/Contact"));
 const GithubRoot = lazy(() => import("./pages/GithubRoot"));
 const GithubReadme = lazy(() => import("./pages/GithubReadme"));
+const GithubWriteTest = lazy(() => import("./pages/GithubWriteTest"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -106,6 +107,7 @@ const App = () => {
                 <Route path="/offline" element={<OfflineFallback />} />
                 <Route path="/github-root" element={<GithubRoot />} />
                 <Route path="/github-readme" element={<GithubReadme />} />
+                <Route path="/github-write-test" element={<GithubWriteTest />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
