@@ -1,7 +1,6 @@
+import { memo } from 'react';
 import { RecipeCard } from '@/components/RecipeCard';
 import { Recipe, RecipeUpdateData, RecipeData } from '@/types';
-
-
 interface RecipeListProps {
   recipes: Recipe[];
   editingRecipe: string | null;
@@ -17,7 +16,7 @@ interface RecipeListProps {
 }
 
 
-export const RecipeList = ({
+export const RecipeList = memo(function RecipeList({
   recipes,
   editingRecipe,
   fullEditingRecipe,
@@ -29,7 +28,7 @@ export const RecipeList = ({
   onFullSave,
   onAskAssistant,
   allRecipes
-}: RecipeListProps) => {
+}: RecipeListProps) {
   return (
     <div className="grid gap-6">
       {recipes.map((recipe) => (
@@ -50,4 +49,4 @@ export const RecipeList = ({
       ))}
     </div>
   );
-};
+});

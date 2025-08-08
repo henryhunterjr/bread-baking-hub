@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import MDEditor, { commands } from '@uiw/react-md-editor';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Eye, Edit3, MousePointer } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface ContentEditorProps {
   content: string;
@@ -18,8 +18,16 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
   const [buttonUrl, setButtonUrl] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  // Debug the dialog state
-  console.log('Dialog state:', isDialogOpen);
+  type MDEModule = typeof import('@uiw/react-md-editor');
+  const [mdModule, setMdModule] = useState<MDEModule | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    import('@uiw/react-md-editor').then((mod) => {
+      if (mounted) setMdModule(mod);
+    });
+    return () => { mounted = false; };
+  }, []);
 
   const insertButton = () => {
     if (buttonText && buttonUrl) {
@@ -44,11 +52,9 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
       <MousePointer style={{ width: 12, height: 12 }} />
     ),
     execute: () => {
-      console.log('Opening button dialog...'); // Debug log
       setIsDialogOpen(true);
     }
   };
-
   return (
     <>
       <Card className="w-full">

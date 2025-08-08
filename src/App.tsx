@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import OfflineBanner from "@/components/OfflineBanner";
 import BackToTop from "@/components/BackToTop";
-import { AIAssistantSidebar } from "@/components/AIAssistantSidebar";
+// AIAssistantSidebar is lazy-loaded below
 import { useState, Suspense, lazy } from "react";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
@@ -45,6 +45,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 const GithubRoot = lazy(() => import("./pages/GithubRoot"));
 const GithubReadme = lazy(() => import("./pages/GithubReadme"));
 const GithubWriteTest = lazy(() => import("./pages/GithubWriteTest"));
+const AIAssistantSidebar = lazy(() => import("./components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -114,10 +115,12 @@ const App = () => {
             </Suspense>
             
             {/* Site-wide AI Assistant - Crusty */}
-            <AIAssistantSidebar 
-              isOpen={isAIAssistantOpen}
-              onToggle={() => setIsAIAssistantOpen(!isAIAssistantOpen)}
-            />
+            <Suspense fallback={null}>
+              <AIAssistantSidebar 
+                isOpen={isAIAssistantOpen}
+                onToggle={() => setIsAIAssistantOpen(!isAIAssistantOpen)}
+              />
+            </Suspense>
             </BrowserRouter>
           </TooltipProvider>
         </AuthProvider>

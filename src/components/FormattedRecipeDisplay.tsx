@@ -1,11 +1,11 @@
-import { useRef } from 'react';
+import { useRef, useMemo, memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Printer, Download } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import { ProductRecommendations } from './ProductRecommendations';
 import { getRecipeImage } from '@/utils/recipeImageMapping';
-
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 interface FormattedRecipe {
   title: string;
   introduction: string;
@@ -92,18 +92,16 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
       
       <div ref={printRef} className="print-container">
       
-      {(imageUrl || recipeData) && (
-        <div className="w-full">
-          <img 
-            src={imageUrl || (recipeData ? getRecipeImage(recipeData.slug || '', recipeData.image_url) : '')}
-            alt={recipe.title}
-            className="w-full h-64 object-cover rounded-lg shadow-warm"
-            onError={(e) => {
-              e.currentTarget.src = "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/01/henry-s-foolproof-sourdough-loaf.png";
-            }}
-          />
-        </div>
-      )}
+        {(imageUrl || recipeData) && (
+          <div className="w-full">
+            <ResponsiveImage
+              src={imageUrl || (recipeData ? getRecipeImage(recipeData.slug || '', recipeData.image_url) : '')}
+              alt={recipe.title}
+              className="w-full h-64 rounded-lg shadow-warm"
+              loading="lazy"
+            />
+          </div>
+        )}
       
       <Card className="shadow-warm">
         <CardHeader>
@@ -247,19 +245,26 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
       <div className="print:hidden">
         <ProductRecommendations
           recipeTitle={recipe.title}
-          recipeContent={`${recipe.introduction || ''} ${
-            isNewIngredientFormat && Array.isArray(recipe.ingredients)
-              ? (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>)?.map((ing: any) => ing.item || ing).join(' ') || ''
+          recipeContent={useMemo(() => {
+            const isNewIngredientFormat = Array.isArray(recipe.ingredients);
+            const isNewMethodFormat = Array.isArray(recipe.method) && recipe.method.length > 0 && typeof recipe.method[0] === 'object';
+            const intro = recipe.introduction || '';
+            const ingredientsText = isNewIngredientFormat && Array.isArray(recipe.ingredients)
+              ? (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>)
+                  .map((ing) => ing.item || (ing as any))
+                  .join(' ')
               : !isNewIngredientFormat && (recipe.ingredients as {metric: string[]; volume: string[]})?.metric
-                ? (recipe.ingredients as {metric: string[]; volume: string[]}).metric?.join(' ') || ''
-                : ''
-          } ${
-            isNewMethodFormat && Array.isArray(recipe.method)
-              ? (recipe.method as Array<{step: number; instruction: string}>)?.map((step: any) => step.instruction).join(' ') || ''
-              : Array.isArray(recipe.method) 
-                ? (recipe.method as string[])?.join(' ') || ''
-                : ''
-          }`}
+                ? (recipe.ingredients as {metric: string[]; volume: string[]}).metric?.join(' ')
+                : '';
+            const methodText = isNewMethodFormat && Array.isArray(recipe.method)
+              ? (recipe.method as Array<{step: number; instruction: string}>)
+                  .map((step) => step.instruction)
+                  .join(' ')
+              : Array.isArray(recipe.method)
+                ? (recipe.method as string[])?.join(' ')
+                : '';
+            return `${intro} ${ingredientsText} ${methodText}`.trim();
+          }, [recipe])}
           manualOverrides={recipe.recommended_products}
         />
       </div>
