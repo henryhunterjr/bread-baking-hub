@@ -60,10 +60,10 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
             
             <div className="space-y-2">
               <h3 className="text-lg font-semibold text-red-700 dark:text-red-400">
-                Something went wrong
+                We couldn't load this section
               </h3>
               <p className="text-red-600 dark:text-red-300">
-                We encountered an error while loading this content.
+                Please try again. If the problem persists, refresh the page.
               </p>
             </div>
 

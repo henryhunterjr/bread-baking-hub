@@ -1,4 +1,4 @@
-import { useRef, useMemo, memo } from 'react';
+import { useRef, useMemo, memo, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Printer, Download } from 'lucide-react';
@@ -39,6 +39,46 @@ interface FormattedRecipeDisplayProps {
 
 export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: FormattedRecipeDisplayProps) => {
   const printRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState<number>(1);
+
+  // Helpers for recipe scaling
+  const normalizeFractions = (str: string) =>
+    str
+      .replace(/½/g, '1/2')
+      .replace(/¼/g, '1/4')
+      .replace(/¾/g, '3/4');
+
+  const parseQuantity = (input: string): { qty: number | null; rest: string } => {
+    const str = normalizeFractions(input.trim());
+    const match = str.match(/^((\d+\s+\d+\/\d+)|(\d+\/\d+)|(\d+(?:\.\d+)?))/);
+    if (!match) return { qty: null, rest: input };
+    const raw = match[1];
+    let qty = 0;
+    if (raw.includes(' ')) {
+      const [whole, frac] = raw.split(' ');
+      const [n, d] = frac.split('/').map(Number);
+      qty = Number(whole) + (n / d);
+    } else if (raw.includes('/')) {
+      const [n, d] = raw.split('/').map(Number);
+      qty = n / d;
+    } else {
+      qty = Number(raw);
+    }
+    const rest = input.slice(match[0].length);
+    return { qty, rest };
+  };
+
+  const formatQty = (qty: number): string => {
+    const rounded = Math.round(qty * 100) / 100;
+    return rounded % 1 === 0 ? String(rounded) : String(rounded);
+  };
+
+  const scaleAmount = (text: string, factor: number): string => {
+    const { qty, rest } = parseQuantity(text);
+    if (qty === null) return text;
+    const scaled = qty * factor;
+    return `${formatQty(scaled)}${rest}`;
+  };
   
   // Check if ingredients is in new format (array of objects) or old format (object with metric/volume arrays)
   const isNewIngredientFormat = Array.isArray(recipe.ingredients);
@@ -90,6 +130,25 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
         </div>
       </div>
       
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+        <span className="text-sm text-muted-foreground">Adjust servings:</span>
+        <div className="flex gap-2">
+          {[0.5, 1, 2, 3].map((f) => (
+            <Button
+              key={f}
+              variant={scale === f ? 'hero' : 'outline'}
+              size="sm"
+              className="h-11"
+              onClick={() => setScale(f)}
+              aria-pressed={scale === f}
+              aria-label={`Scale recipe to ${f}x`}
+            >
+              {f}x
+            </Button>
+          ))}
+        </div>
+      </div>
+
       <div ref={printRef} className="print-container">
       
         {(imageUrl || recipeData) && (
@@ -123,14 +182,14 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
                 (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>)?.map((ingredient, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <span className="text-primary font-semibold">•</span>
-                    <span>{ingredient.amount_metric} {ingredient.item}</span>
+                    <span>{scaleAmount(ingredient.amount_metric, scale)} {ingredient.item}</span>
                   </li>
                 )) || []
               ) : (
                 (recipe.ingredients as {metric: string[]; volume: string[]})?.metric?.map((ingredient, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <span className="text-primary font-semibold">•</span>
-                    <span>{ingredient}</span>
+                    <span>{scaleAmount(ingredient, scale)}</span>
                   </li>
                 )) || []
               )}
@@ -148,14 +207,14 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
                 (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>)?.map((ingredient, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <span className="text-primary font-semibold">•</span>
-                    <span>{ingredient.amount_volume} {ingredient.item}</span>
+                    <span>{scaleAmount(ingredient.amount_volume, scale)} {ingredient.item}</span>
                   </li>
                 )) || []
               ) : (
                 (recipe.ingredients as {metric: string[]; volume: string[]})?.volume?.map((ingredient, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <span className="text-primary font-semibold">•</span>
-                    <span>{ingredient}</span>
+                    <span>{scaleAmount(ingredient, scale)}</span>
                   </li>
                 )) || []
               )}
