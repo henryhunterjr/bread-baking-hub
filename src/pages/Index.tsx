@@ -55,6 +55,18 @@ const Index = () => {
     }
   };
 
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Henry Hunter",
+    "url": "https://bread-baking-hub.vercel.app/about",
+    "image": "https://bread-baking-hub.vercel.app/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png",
+    "jobTitle": "Master Baker & Author",
+    "sameAs": [
+      "https://www.youtube.com/@bakinggreatbread",
+      "https://www.instagram.com/bakinggreatbread"
+    ]
+  };
   return (
     <>
       <Helmet>
@@ -95,6 +107,12 @@ const Index = () => {
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: sanitizeStructuredData(websiteSchema)
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: sanitizeStructuredData(personSchema)
           }}
         />
       </Helmet>

@@ -67,6 +67,7 @@ export const RecipeSEO = ({
       <title>{title} | Henry Hunter's Baking</title>
       <meta name="description" content={description} />
       <meta name="keywords" content="sourdough, bread recipe, baking, Henry Hunter, foolproof recipe" />
+      <link rel="canonical" href={url} />
       
       {/* Open Graph */}
       <meta property="og:title" content={title} />

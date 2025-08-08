@@ -10,6 +10,7 @@ const CrustAndCrumbSEO: React.FC = () => {
         content="Professional bread troubleshooting tool with step-by-step diagnosis. Solve sourdough, yeasted, and quick bread problems with expert guidance and visual examples." 
       />
       <meta name="keywords" content="bread troubleshooting, sourdough problems, bread baking help, crust and crumb, bread diagnosis" />
+      <link rel="canonical" href="https://bread-baking-hub.vercel.app/crust-and-crumb" />
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />

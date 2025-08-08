@@ -34,6 +34,7 @@ export const VitaleSEO = () => {
       <title>Vitale Sourdough Starter - Baking Bread in 3 Days | Baking Great Bread</title>
       <meta name="description" content="Get Vitale starter - baking bread in just 3 days. $14 sachet builds two starters. Professionally dehydrated, monthly tested, guaranteed to work." />
       <meta name="keywords" content="sourdough starter, vitale, dehydrated starter, bread baking, Henry Hunter, 3 day bread" />
+      <link rel="canonical" href="https://bread-baking-hub.vercel.app/vitale-starter" />
       
       {/* Open Graph */}
       <meta property="og:title" content="Vitale Sourdough Starter - Baking Bread in 3 Days" />
