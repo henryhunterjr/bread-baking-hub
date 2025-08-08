@@ -105,6 +105,34 @@ serve(async (req: Request) => {
         });
       }
 
+      case "get_repo": {
+        const owner = String(params?.owner || "").trim();
+        const repo = String(params?.repo || "").trim();
+        if (!owner || !repo) {
+          return new Response(JSON.stringify({ error: "owner and repo are required" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+        const ghRes = await fetch(`${GITHUB_API}/repos/${owner}/${repo}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+          },
+        });
+        const data = await ghRes.json();
+        if (!ghRes.ok) {
+          return new Response(JSON.stringify({ error: data?.message || "GitHub error", status: ghRes.status }), {
+            status: ghRes.status,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+        return new Response(JSON.stringify(data), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
       case "get_branches": {
         const owner = String(params?.owner || "").trim();
         const repo = String(params?.repo || "").trim();
@@ -174,6 +202,7 @@ serve(async (req: Request) => {
           JSON.stringify({ error: `Unsupported action: ${action}`, allowed: [
             "get_file",
             "list_contents",
+            "get_repo",
             "get_branches",
             "create_issue",
           ] }),
