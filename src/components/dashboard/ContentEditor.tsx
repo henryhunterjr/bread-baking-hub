@@ -91,20 +91,27 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
         </CardHeader>
         <CardContent>
           <div className="min-h-[400px]">
-            <MDEditor
-              value={content}
-              onChange={(val) => onChange(val || '')}
-              preview={viewMode === 'edit' ? 'edit' : viewMode === 'preview' ? 'preview' : 'live'}
-              hideToolbar={viewMode === 'preview'}
-              visibleDragbar={false}
-              data-color-mode="dark"
-              height={400}
-              commands={[
-                ...commands.getCommands(),
-                commands.divider,
-                buttonCommand
-              ]}
-            />
+            {mdModule ? (
+              <mdModule.default
+                value={content}
+                onChange={(val) => onChange(val || '')}
+                preview={viewMode === 'edit' ? 'edit' : viewMode === 'preview' ? 'preview' : 'live'}
+                hideToolbar={viewMode === 'preview'}
+                visibleDragbar={false}
+                data-color-mode="dark"
+                height={400}
+                commands={[
+                  ...mdModule.commands.getCommands(),
+                  mdModule.commands.divider,
+                  buttonCommand
+                ]}
+              />
+            ) : (
+              <div className="space-y-4">
+                <Skeleton className="h-10 w-48" />
+                <Skeleton className="h-96 w-full" />
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

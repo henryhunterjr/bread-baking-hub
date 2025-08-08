@@ -45,7 +45,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 const GithubRoot = lazy(() => import("./pages/GithubRoot"));
 const GithubReadme = lazy(() => import("./pages/GithubReadme"));
 const GithubWriteTest = lazy(() => import("./pages/GithubWriteTest"));
-const AIAssistantSidebar = lazy(() => import("./components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
+const LazyAIAssistantSidebar = lazy(() => import("./components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -116,7 +116,7 @@ const App = () => {
             
             {/* Site-wide AI Assistant - Crusty */}
             <Suspense fallback={null}>
-              <AIAssistantSidebar 
+              <LazyAIAssistantSidebar 
                 isOpen={isAIAssistantOpen}
                 onToggle={() => setIsAIAssistantOpen(!isAIAssistantOpen)}
               />
