@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { sanitizeStructuredData } from '@/utils/sanitize';
 import { generateBlogPostingSchema } from '@/utils/structuredData';
 import { BlogPost } from '@/utils/blogFetcher';
 
@@ -23,10 +24,6 @@ export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl }: Bl
   // Use socialImageUrl prop (which contains the social_image_url logic) or fallback to post image
   const finalImageUrl = socialImageUrl || post.image;
   
-  // Debug logging
-  console.log('BlogPostSEO - socialImageUrl:', socialImageUrl);
-  console.log('BlogPostSEO - post.image:', post.image);
-  console.log('BlogPostSEO - finalImageUrl:', finalImageUrl);
 
   // Generate JSON-LD structured data
   const structuredData = generateBlogPostingSchema({
@@ -84,7 +81,7 @@ export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl }: Bl
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: structuredData
+          __html: sanitizeStructuredData(JSON.parse(structuredData))
         }}
       />
     </Helmet>

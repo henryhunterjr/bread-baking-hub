@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Play, X } from "lucide-react";
 import { BookData } from "@/data/books-data";
+import { sanitizeHtml } from "@/utils/sanitize";
 
 interface BookPreviewModalProps {
   selectedBook: BookData | null;
@@ -96,7 +97,7 @@ const BookPreviewModal = ({
               <h3 className="text-lg font-semibold mb-4 text-foreground">Book Preview</h3>
               <div 
                 className="prose prose-stone dark:prose-invert max-w-none"
-                dangerouslySetInnerHTML={{ __html: selectedBook.previewContent }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(selectedBook.previewContent) }}
               />
             </div>
           </div>

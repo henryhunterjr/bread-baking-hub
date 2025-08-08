@@ -8,6 +8,7 @@ import CommentsSystem from './CommentsSystem';
 import SocialShare from './SocialShare';
 import NewsletterSignup from '../NewsletterSignup';
 import { BlogPost } from '@/utils/blogFetcher';
+import { sanitizeHtml } from '@/utils/sanitize';
 
 interface BlogPostViewProps {
   post: BlogPost;
@@ -36,7 +37,7 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
         const contentElement = doc.querySelector('.entry-content, .post-content, main article');
         setContent(contentElement?.innerHTML || post.excerpt);
       } catch (error) {
-        console.error('Failed to fetch post content:', error);
+        
         setContent(post.excerpt);
       } finally {
         setLoading(false);
@@ -127,7 +128,7 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
             ) : (
               <div 
                 className="prose-content"
-                dangerouslySetInnerHTML={{ __html: content }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }}
               />
             )}
           </div>
