@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Play, X } from "lucide-react";
 import { BookData } from "@/data/books-data";
 import { sanitizeHtml } from "@/utils/sanitize";
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface BookPreviewModalProps {
   selectedBook: BookData | null;
@@ -30,10 +31,11 @@ const BookPreviewModal = ({
         <div className="flex flex-col lg:flex-row">
           {/* Left side - Book Cover */}
           <div className="lg:w-1/3 p-8 flex flex-col items-center bg-gradient-to-br from-primary/5 to-secondary/5">
-            <img 
+            <ResponsiveImage 
               src={selectedBook.coverImage} 
               alt={selectedBook.title}
               className="w-full max-w-[250px] rounded-lg shadow-stone mb-6"
+              loading="lazy"
             />
             {selectedBook.audioUrl && (
               <Button 

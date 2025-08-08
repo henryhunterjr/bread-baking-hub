@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { BlogPost, fetchBlogPosts } from '@/utils/blogFetcher';
 import { ArrowRight } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface RelatedPostsProps {
   currentPostId: number;
@@ -79,14 +80,11 @@ const RelatedPosts = ({ currentPostId, categories, className }: RelatedPostsProp
           <article key={post.id} className="bg-card rounded-xl overflow-hidden shadow-stone hover:shadow-warm transition-all duration-300 group">
             <div className="relative overflow-hidden">
               {post.image ? (
-                <img 
+                <ResponsiveImage 
                   src={post.image} 
                   alt={post.imageAlt || `Featured image for ${post.title}`}
                   className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
-                  width={300}
-                  height={128}
                   loading="lazy"
-                  decoding="async"
                 />
               ) : (
                 <div className="w-full h-32 bg-muted flex items-center justify-center">

@@ -9,6 +9,7 @@ import { SeasonalRecipeCard } from '@/components/SeasonalRecipeCard';
 import { useSeasonalRecipes, Season, Category, Difficulty, SeasonalRecipe } from '@/hooks/useSeasonalRecipes';
 import { SeasonalRecipeModal } from '@/components/SeasonalRecipeModal';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 const Recipes = () => {
   const {
@@ -43,10 +44,11 @@ const Recipes = () => {
       <main>
         {/* Hero Section with Book Card */}
         <div className="relative h-[600px] overflow-hidden">
-          <img 
+          <ResponsiveImage 
             src="/lovable-uploads/fc6b2aed-f1bf-4707-8c25-728a6dffa9ad.png"
             alt="Baking Great Bread at Home: A Journey Through the Seasons"
             className="w-full h-full object-cover object-right"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
           

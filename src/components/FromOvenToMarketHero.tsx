@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, BookOpen, ShoppingCart } from 'lucide-react';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 export const FromOvenToMarketHero = () => {
   return (
@@ -9,7 +10,7 @@ export const FromOvenToMarketHero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left side - Book image */}
           <div className="relative">
-            <img 
+            <ResponsiveImage 
               src="/lovable-uploads/95d3ead0-8c78-4ab5-9710-a0d28e1cb0e7.png"
               alt="From Oven to Market - The Ultimate Guide to Selling Your Artisan Bread by Henry Hunter"
               className="rounded-2xl shadow-warm w-full animate-fade-in"

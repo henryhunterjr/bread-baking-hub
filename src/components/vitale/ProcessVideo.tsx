@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Play, ExternalLink } from 'lucide-react';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 export const ProcessVideo = () => {
   return (
@@ -25,7 +26,7 @@ export const ProcessVideo = () => {
             </CardHeader>
             <CardContent className="p-0">
               <div className="relative aspect-video bg-stone-800 flex items-center justify-center">
-                <img 
+                <ResponsiveImage 
                   src="/lovable-uploads/87e73552-babd-4f00-b0e5-cc0a7f23e155.png"
                   alt="Brød & Taylor Sahara dehydrator in action"
                   className="w-full h-full object-cover"

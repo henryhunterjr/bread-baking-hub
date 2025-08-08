@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { ExternalLink, Users, Heart, BookOpen, MessageCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 const Community = () => {
   return (
@@ -52,10 +53,11 @@ const Community = () => {
               </div>
 
               <div className="relative">
-                <img 
+                <ResponsiveImage 
                   src="/lovable-uploads/d3aae90f-fcef-49fb-9ca0-5593bdfac3d1.png"
                   alt="Baking Great Bread at Home - Kitchen scene with wooden bowl, whisk, and fresh bread"
                   className="rounded-lg shadow-warm w-full"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -124,10 +126,11 @@ const Community = () => {
           <div className="max-w-6xl mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="relative">
-                <img 
+                <ResponsiveImage 
                   src="/lovable-uploads/19566fef-b4d5-4c88-97e9-c27eb0b2ad01.png"
                   alt="Made by Members. Learned Together. - Community showcase of various breads and baking achievements"
                   className="rounded-lg shadow-warm w-full"
+                  loading="lazy"
                 />
                 <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
                   Our Community

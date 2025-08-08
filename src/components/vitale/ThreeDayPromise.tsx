@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 export const ThreeDayPromise = () => {
   const timeline = [
     {
@@ -55,12 +55,12 @@ export const ThreeDayPromise = () => {
                   </CardContent>
                 </div>
                 <div className="relative h-64 md:h-auto">
-                  <img 
-                    src={day.image}
-                    alt={`${day.title} - ${day.day}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                <ResponsiveImage 
+                  src={day.image}
+                  alt={`${day.title} - ${day.day}`}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
                 </div>
               </div>
             </Card>

@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Package, Book, Users, Mail } from 'lucide-react';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 export const ProductDetails = () => {
   const included = [
@@ -70,7 +71,7 @@ export const ProductDetails = () => {
         {/* Product image showcase */}
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <img 
+            <ResponsiveImage 
               src="/lovable-uploads/828b37ec-9c03-472c-a48d-25cafa2981ad.png"
               alt="Complete Vitale starter package contents"
               className="rounded-xl shadow-stone w-full"

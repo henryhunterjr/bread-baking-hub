@@ -17,6 +17,7 @@ import NewsletterSignup from '../components/NewsletterSignup';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getHeroBannerUrl, getSocialImageUrl } from '@/utils/imageUtils';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 // Extract YouTube video ID from URL
 const extractYouTubeId = (url: string) => {
@@ -52,10 +53,11 @@ const SupabasePostView = ({
 
         {/* Global Hero Banner */}
         <div className="mb-8">
-          <img
+          <ResponsiveImage
             src={heroBannerUrl}
             alt="Baking Great Bread At Home Blog"
             className="w-full h-32 md:h-48 object-cover rounded-lg"
+            loading="lazy"
           />
         </div>
 
@@ -101,10 +103,11 @@ const SupabasePostView = ({
 
           {/* Inline Thumbnail */}
           {(supabasePost as any).inline_image_url && (
-            <img
+            <ResponsiveImage
               src={(supabasePost as any).inline_image_url}
               alt={supabasePost.title}
               className="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-lg mb-8"
+              loading="lazy"
             />
           )}
 
@@ -132,12 +135,11 @@ const SupabasePostView = ({
                         className="block cursor-pointer group relative overflow-hidden rounded-lg"
                         title="Click to visit link"
                       >
-                        <img 
-                          src={src} 
+                        <ResponsiveImage 
+                          src={src || ''} 
                           alt={cleanAlt} 
                           loading="lazy"
                           className="w-full h-auto rounded-lg shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-primary/20"
-                          {...props}
                         />
                         <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
                         <div className="absolute bottom-4 left-4 right-4 text-center bg-background/90 backdrop-blur-sm rounded px-3 py-2 text-sm text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -151,12 +153,11 @@ const SupabasePostView = ({
                 // Regular image without link
                 return (
                   <div className="my-6">
-                    <img 
-                      src={src} 
-                      alt={alt} 
+                    <ResponsiveImage 
+                      src={src || ''} 
+                      alt={alt || ''} 
                       loading="lazy"
                       className="w-full h-auto rounded-lg shadow-lg"
-                      {...props}
                     />
                   </div>
                 );

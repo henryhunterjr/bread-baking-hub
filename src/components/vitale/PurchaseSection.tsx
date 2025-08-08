@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Minus, Plus, Shield, Truck, Clock } from 'lucide-react';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 export const PurchaseSection = () => {
   const [quantity, setQuantity] = useState(1);
@@ -30,7 +31,7 @@ export const PurchaseSection = () => {
         <Card className="p-8 max-w-2xl mx-auto">
           <CardHeader className="text-center">
             <div className="mb-4">
-              <img 
+              <ResponsiveImage 
                 src="/lovable-uploads/154d14c0-76bd-47e3-b378-282823bda6fd.png"
                 alt="Vitale Sourdough Starter Package"
                 className="w-32 h-32 mx-auto rounded-xl object-cover"

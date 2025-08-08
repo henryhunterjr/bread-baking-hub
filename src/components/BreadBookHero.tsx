@@ -1,6 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, BookOpen, Heart } from 'lucide-react';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 export const BreadBookHero = () => {
   return (
@@ -64,7 +65,7 @@ export const BreadBookHero = () => {
 
           {/* Right side - Book image */}
           <div className="relative">
-            <img 
+            <ResponsiveImage 
               src="/lovable-uploads/f5ba460b-77f5-486f-8ec9-b09297a70958.png"
               alt="Bread: A Journey Through History, Science, Art, and Community by Henry Hunter"
               className="rounded-2xl shadow-warm w-full animate-fade-in"

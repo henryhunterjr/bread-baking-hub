@@ -7,6 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { motion, AnimatePresence } from 'framer-motion';
 import type { SymptomCardProps } from '@/types/crustAndCrumb';
 import { formatSymptomTitle, CRUST_AND_CRUMB_CONSTANTS } from '@/utils/crustAndCrumbUtils';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 // Import troubleshooting images
 import sunkenMiddleBefore from '@/assets/troubleshooting/sunken_middle_before.jpg';
@@ -115,24 +116,22 @@ const SymptomCard: React.FC<SymptomCardProps> = ({ symptom, isOpen, onToggle }) 
                       {getImageSrc('before') && (
                         <div>
                           <h5 className="text-sm font-medium text-red-700 mb-2">Problem Example</h5>
-                          <img 
-                            src={getImageSrc('before')}
+                          <ResponsiveImage 
+                            src={getImageSrc('before') || ''}
                             alt={`Problem example: ${formatSymptomTitle(symptom)}`}
                             className="w-full h-32 object-cover rounded border border-red-200"
                             loading="lazy"
-                            onError={handleImageError}
                           />
                         </div>
                       )}
                       {getImageSrc('after') && (
                         <div>
                           <h5 className="text-sm font-medium text-green-700 mb-2">Solution Example</h5>
-                          <img 
-                            src={getImageSrc('after')}
+                          <ResponsiveImage 
+                            src={getImageSrc('after') || ''}
                             alt={`Solution example: ${formatSymptomTitle(symptom)}`}
                             className="w-full h-32 object-cover rounded border border-green-200"
                             loading="lazy"
-                            onError={handleImageError}
                           />
                         </div>
                       )}

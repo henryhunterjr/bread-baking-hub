@@ -5,6 +5,7 @@ import BlogPostSkeleton from './BlogPostSkeleton';
 import BlogPostMeta from './BlogPostMeta';
 import BlogPostSEO from './BlogPostSEO';
 import SocialShare from './SocialShare';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface BlogPostGridProps {
   posts: BlogPost[];
@@ -55,21 +56,11 @@ const BlogPostGrid = ({ posts, loading, skeletonCount = 6, selectedCategory, cat
             >
               <div className="relative overflow-hidden">
                 {post.image ? (
-                  <img 
+                  <ResponsiveImage 
                     src={post.image} 
                     alt={post.imageAlt || `Featured image for ${post.title}`}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                    width={400}
-                    height={192}
                     loading="lazy"
-                    decoding="async"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      if (target.nextElementSibling) {
-                        (target.nextElementSibling as HTMLElement).style.display = 'flex';
-                      }
-                    }}
                   />
                 ) : null}
                 <div 

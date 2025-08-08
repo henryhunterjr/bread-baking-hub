@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-
+import { Helmet } from 'react-helmet-async';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 const About = () => {
   // Remove auto-scroll to top to prevent unwanted scrolling behavior
   // useEffect(() => {
@@ -12,15 +12,37 @@ const About = () => {
 
   return (
     <div className="bg-background text-foreground">
+      <Helmet>
+        <title>About Henry Hunter | Baking Great Bread at Home</title>
+        <meta name="description" content="Meet Henry Hunter, master baker and founder of Baking Great Bread at Home. Learn his story, mission, and approach to teaching bread baking." />
+        <link rel="canonical" href="https://bread-baking-hub.vercel.app/about" />
+        <meta property="og:title" content="About Henry Hunter" />
+        <meta property="og:description" content="Master baker, author, and founder of Baking Great Bread at Home." />
+        <meta property="og:url" content="https://bread-baking-hub.vercel.app/about" />
+        <meta property="og:type" content="profile" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "Henry Hunter",
+          "url": "https://bread-baking-hub.vercel.app/about",
+          "image": "https://bread-baking-hub.vercel.app/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png",
+          "jobTitle": "Master Baker & Author",
+          "sameAs": [
+            "https://www.youtube.com/@bakinggreatbread",
+            "https://www.instagram.com/bakinggreatbread"
+          ]
+        })}</script>
+      </Helmet>
       <Header />
       <main className="py-20 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-start mb-12">
             <div>
-              <img 
+              <ResponsiveImage 
                 src="/lovable-uploads/c5a7c8ed-91ce-467c-871d-f50a78adbb3e.png" 
                 alt="Henry M. Hunter in his kitchen wearing chef's apron" 
                 className="rounded-2xl shadow-stone w-full h-auto"
+                loading="lazy"
               />
             </div>
             <div>
@@ -61,10 +83,11 @@ const About = () => {
             
             <div className="bg-stone-100 dark:bg-stone-800 p-6 rounded-lg mt-8">
               <p className="text-primary font-semibold text-xl mb-2">— Henry M. Hunter</p>
-              <img 
+              <ResponsiveImage 
                 src="/lovable-uploads/2d4c0625-d16c-44e8-8ec7-2287d1bc2a0c.png" 
                 alt="Henry M. Hunter signature" 
                 className="opacity-80 h-6 mb-2"
+                loading="lazy"
               />
               <p className="text-muted-foreground">Founder, Baking Great Bread at Home</p>
             </div>

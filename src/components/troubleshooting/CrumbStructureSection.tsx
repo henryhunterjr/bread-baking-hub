@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 export default function CrumbStructureSection() {
   return (
@@ -20,10 +21,11 @@ export default function CrumbStructureSection() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/df3b3be5-2c18-4db6-9ddc-b96a0f64584f.png', '_blank')}>
                 <CardContent className="p-4">
-                  <img 
+                  <ResponsiveImage 
                     src="/lovable-uploads/df3b3be5-2c18-4db6-9ddc-b96a0f64584f.png" 
                     alt="Perfect sourdough crumb"
                     className="w-full h-32 object-cover rounded-lg mb-3"
+                    loading="lazy"
                   />
                   <h5 className="font-semibold text-sm mb-2">Excellent Sourdough Crumb</h5>
                   <p className="text-xs text-muted-foreground mb-2">Well-developed holes, good structure, proper fermentation.</p>
@@ -33,10 +35,11 @@ export default function CrumbStructureSection() {
               
               <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/544551ff-397f-4f33-bf2f-daff4ddffe46.png', '_blank')}>
                 <CardContent className="p-4">
-                  <img 
+                  <ResponsiveImage 
                     src="/lovable-uploads/544551ff-397f-4f33-bf2f-daff4ddffe46.png" 
                     alt="Multiple bread loaves"
                     className="w-full h-32 object-cover rounded-lg mb-3"
+                    loading="lazy"
                   />
                   <h5 className="font-semibold text-sm mb-2">Consistent Batch Results</h5>
                   <p className="text-xs text-muted-foreground mb-2">Multiple loaves showing consistent shaping and baking.</p>

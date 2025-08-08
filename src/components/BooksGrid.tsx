@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Eye } from "lucide-react";
 import { memo } from "react";
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 // Import the new book cover images
 import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
@@ -251,12 +252,12 @@ const BooksGrid = memo(({ onPreview }: BooksGridProps) => {
                 )}
                 
                 {book.coverImage ? (
-                  <img 
+                  <ResponsiveImage 
                     src={book.coverImage} 
                     alt={book.title}
                     className="w-full h-auto object-contain bg-gradient-to-br from-muted/10 to-muted/20"
-                    style={{ aspectRatio: '2/3', minHeight: '300px' }}
-                  />
+                    loading="lazy"
+                    />
                 ) : (
                   <div className={`${book.coverGradient} aspect-[2/3] min-h-[300px] flex flex-col justify-center items-center text-white p-6 text-center relative`}>
                     {/* Book spine effect */}

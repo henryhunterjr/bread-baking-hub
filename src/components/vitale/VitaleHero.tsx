@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 export const VitaleHero = () => {
   const scrollToPurchase = () => {
@@ -15,7 +16,7 @@ export const VitaleHero = () => {
           <div className="space-y-8">
             {/* Vitale Logo */}
             <div className="flex justify-center">
-              <img 
+              <ResponsiveImage 
                 src="/lovable-uploads/fff984e8-765a-4f2a-94dc-c79799d4b371.png"
                 alt="Vitale Logo"
                 className="h-40 md:h-48"
@@ -69,7 +70,7 @@ export const VitaleHero = () => {
           <div className="space-y-6">
             {/* Beautiful bread cross-section */}
             <div className="relative">
-              <img 
+              <ResponsiveImage 
                 src="/lovable-uploads/24966444-25da-4770-ba7a-701e9c733a89.png"
                 alt="Beautiful sourdough bread made with Vitale starter - perfect crumb structure"
                 className="rounded-2xl shadow-warm w-full"
@@ -81,14 +82,14 @@ export const VitaleHero = () => {
             </div>
             <div className="grid grid-cols-2 gap-4">
               {/* Two golden loaves */}
-              <img 
+              <ResponsiveImage 
                 src="/lovable-uploads/09251f62-4b32-40a7-bfb1-92fb1c4bd710.png"
                 alt="Two golden sourdough loaves baked with Vitale starter"
                 className="rounded-xl shadow-stone w-full"
                 loading="lazy"
               />
               {/* Vitale starter package with beautiful presentation */}
-              <img 
+              <ResponsiveImage 
                 src="/lovable-uploads/eff7994a-acf1-4b30-9e68-1d09a3b5b33f.png"
                 alt="Vitale sourdough starter package beautifully presented with flowers and bread slices"
                 className="rounded-xl shadow-stone w-full object-cover"

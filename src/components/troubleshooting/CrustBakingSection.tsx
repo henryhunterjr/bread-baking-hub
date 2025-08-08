@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 export default function CrustBakingSection() {
   return (
@@ -19,10 +20,11 @@ export default function CrustBakingSection() {
             <h4 className="text-lg font-semibold text-primary mb-4">Burnt Bottom Issues</h4>
             <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/63142592-06a7-4148-a952-38bb2b6f6090.png', '_blank')}>
               <CardContent className="p-4">
-                <img 
+                <ResponsiveImage 
                   src="/lovable-uploads/63142592-06a7-4148-a952-38bb2b6f6090.png" 
                   alt="Burnt bottom bread"
                   className="w-full h-48 object-cover rounded-lg mb-3"
+                  loading="lazy"
                 />
                 <h5 className="font-semibold text-sm mb-2">Severely Burnt Bottom</h5>
                 <p className="text-xs text-muted-foreground mb-2">Dark, charred bottom crust while top looks normal.</p>
@@ -37,10 +39,11 @@ export default function CrustBakingSection() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/e87024c4-9b8d-4b03-b097-a63ed218970d.png', '_blank')}>
                 <CardContent className="p-4">
-                  <img 
+                  <ResponsiveImage 
                     src="/lovable-uploads/e87024c4-9b8d-4b03-b097-a63ed218970d.png" 
                     alt="Perfect sourdough loaves"
                     className="w-full h-32 object-cover rounded-lg mb-3"
+                    loading="lazy"
                   />
                   <h5 className="font-semibold text-sm mb-2">Perfect Artisan Loaves</h5>
                   <p className="text-xs text-muted-foreground mb-2">Beautiful golden crust, excellent oven spring, proper scoring.</p>
@@ -50,10 +53,11 @@ export default function CrustBakingSection() {
               
               <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/9087fac4-9b4e-4823-928d-1d6231bbe8b7.png', '_blank')}>
                 <CardContent className="p-4">
-                  <img 
+                  <ResponsiveImage 
                     src="/lovable-uploads/9087fac4-9b4e-4823-928d-1d6231bbe8b7.png" 
                     alt="Perfect sourdough crumb"
                     className="w-full h-32 object-cover rounded-lg mb-3"
+                    loading="lazy"
                   />
                   <h5 className="font-semibold text-sm mb-2">Ideal Crumb Structure</h5>
                   <p className="text-xs text-muted-foreground mb-2">Open, airy crumb with even hole distribution and great texture.</p>

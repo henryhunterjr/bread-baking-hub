@@ -1,6 +1,7 @@
 import { Clock, User, Calendar, Tag } from 'lucide-react';
 import { BlogPost } from '@/utils/blogFetcher';
 import { Badge } from '@/components/ui/badge';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface BlogPostMetaProps {
   post: BlogPost;
@@ -22,14 +23,11 @@ const BlogPostMeta = ({
       {/* Author Info */}
       {showAuthor && (
         <div className="flex items-center gap-2">
-          <img 
+          <ResponsiveImage 
             src="/lovable-uploads/2684d6d8-b462-457a-b9c0-98603f87a17e.png"
             alt={`${post.author.name} avatar`}
             className="w-6 h-6 rounded-full object-cover"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = '/placeholder-avatar.png';
-            }}
+            loading="lazy"
           />
           <div className="flex items-center gap-1 text-muted-foreground">
             <User className="w-3 h-3" />

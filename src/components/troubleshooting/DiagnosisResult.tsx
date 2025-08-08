@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, RotateCcw, HelpCircle } from 'lucide-react';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface Symptom {
   id: string;
@@ -78,7 +79,7 @@ const DiagnosisResult: React.FC<DiagnosisResultProps> = ({ symptom, onReset }) =
               {symptom.images.before && (
                 <div>
                   <h5 className="text-sm font-medium text-stone-700 mb-2">Problem Example</h5>
-                  <img 
+                  <ResponsiveImage 
                     src={symptom.images.before}
                     alt={`Problem example: ${getTitle(symptom)}`}
                     className="w-full h-32 object-cover rounded border border-stone-200"
@@ -89,7 +90,7 @@ const DiagnosisResult: React.FC<DiagnosisResultProps> = ({ symptom, onReset }) =
               {symptom.images.after && (
                 <div>
                   <h5 className="text-sm font-medium text-stone-700 mb-2">Corrected Result</h5>
-                  <img 
+                  <ResponsiveImage 
                     src={symptom.images.after}
                     alt={`Corrected result: ${getTitle(symptom)}`}
                     className="w-full h-32 object-cover rounded border border-stone-200"

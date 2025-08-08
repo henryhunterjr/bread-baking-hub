@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 // Import book cover images
 import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
@@ -82,10 +83,11 @@ const BooksPreview = () => {
                 )}
                 
                 {book.coverImage ? (
-                  <img 
+                  <ResponsiveImage 
                     src={book.coverImage} 
                     alt={book.title}
                     className="w-full h-full object-contain bg-gradient-to-br from-muted/10 to-muted/20"
+                    loading="lazy"
                   />
                 ) : (
                   <div className={`${book.coverGradient} h-full flex flex-col justify-center items-center text-white p-6 text-center relative`}>

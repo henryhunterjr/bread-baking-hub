@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ExternalLink, Play, X } from 'lucide-react';
 import { trackPodcastPlay, trackPodcastExternalLink } from '@/utils/appEvents';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 const PodcastSection = () => {
   const [isPlayerOpen, setIsPlayerOpen] = useState(false);
@@ -36,10 +37,11 @@ const PodcastSection = () => {
           <div className="flex justify-center mb-8">
             <Card className="overflow-hidden shadow-xl max-w-2xl w-full">
               <div className="relative group cursor-pointer" onClick={handlePlayClick}>
-                <img 
+                <ResponsiveImage 
                   src="/lovable-uploads/2f64aae9-1c6a-410a-a324-31bdda9461e2.png" 
                   alt="The Jar Podcast with Henry Hunter - Wisdom on Bread, Beyond the Loaf"
                   className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <div className="bg-primary/90 text-primary-foreground rounded-full p-4">

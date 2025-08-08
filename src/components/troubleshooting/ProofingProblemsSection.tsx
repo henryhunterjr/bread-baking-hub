@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 export default function ProofingProblemsSection() {
   return (
@@ -20,10 +21,11 @@ export default function ProofingProblemsSection() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/0ba59526-59a0-4dc4-ac14-27d171d6425e.png', '_blank')}>
                 <CardContent className="p-4">
-                  <img 
+                  <ResponsiveImage 
                     src="/lovable-uploads/0ba59526-59a0-4dc4-ac14-27d171d6425e.png" 
                     alt="Slightly Underproofed bread crumb"
                     className="w-full h-32 object-cover rounded-lg mb-3"
+                    loading="lazy"
                   />
                   <h5 className="font-semibold text-sm mb-2">Slightly Underproofed</h5>
                   <p className="text-xs text-muted-foreground mb-2">Dense crumb with smaller holes, dough didn't fully develop.</p>
@@ -33,10 +35,11 @@ export default function ProofingProblemsSection() {
               
               <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/9b10f418-f94f-420b-8126-409a16a4eace.png', '_blank')}>
                 <CardContent className="p-4">
-                  <img 
+                  <ResponsiveImage 
                     src="/lovable-uploads/9b10f418-f94f-420b-8126-409a16a4eace.png" 
                     alt="Significantly Underproofed bread crumb"
                     className="w-full h-32 object-cover rounded-lg mb-3"
+                    loading="lazy"
                   />
                   <h5 className="font-semibold text-sm mb-2">Significantly Underproofed</h5>
                   <p className="text-xs text-muted-foreground mb-2">Very dense, gummy crumb with large irregular holes.</p>
@@ -52,10 +55,11 @@ export default function ProofingProblemsSection() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/71542cc4-5cca-4b79-9b32-f7550884b84e.png', '_blank')}>
                 <CardContent className="p-4">
-                  <img 
+                  <ResponsiveImage 
                     src="/lovable-uploads/71542cc4-5cca-4b79-9b32-f7550884b84e.png" 
                     alt="Nicely Proofed bread crumb"
                     className="w-full h-32 object-cover rounded-lg mb-3"
+                    loading="lazy"
                   />
                   <h5 className="font-semibold text-sm mb-2">Nicely Proofed</h5>
                   <p className="text-xs text-muted-foreground mb-2">Even, open crumb structure with good hole distribution.</p>
@@ -71,10 +75,11 @@ export default function ProofingProblemsSection() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/a439508d-31d4-4791-997e-3fd30946ca10.png', '_blank')}>
                 <CardContent className="p-4">
-                  <img 
+                  <ResponsiveImage 
                     src="/lovable-uploads/a439508d-31d4-4791-997e-3fd30946ca10.png" 
                     alt="Slightly Overproofed bread crumb"
                     className="w-full h-32 object-cover rounded-lg mb-3"
+                    loading="lazy"
                   />
                   <h5 className="font-semibold text-sm mb-2">Slightly Overproofed</h5>
                   <p className="text-xs text-muted-foreground mb-2">Larger holes, structure still intact but losing some strength.</p>
@@ -84,10 +89,11 @@ export default function ProofingProblemsSection() {
               
               <Card className="bg-background hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.open('/lovable-uploads/e40cd78a-5af5-4ba1-9c1f-28b66e1d2495.png', '_blank')}>
                 <CardContent className="p-4">
-                  <img 
+                  <ResponsiveImage 
                     src="/lovable-uploads/e40cd78a-5af5-4ba1-9c1f-28b66e1d2495.png" 
                     alt="Significantly Overproofed bread crumb"
                     className="w-full h-32 object-cover rounded-lg mb-3"
+                    loading="lazy"
                   />
                   <h5 className="font-semibold text-sm mb-2">Significantly Overproofed</h5>
                   <p className="text-xs text-muted-foreground mb-2">Flat, dense crumb with loss of structure and shape.</p>
@@ -101,17 +107,17 @@ export default function ProofingProblemsSection() {
           <div className="mt-8 p-4 bg-muted/30 rounded-lg">
             <h4 className="text-lg font-semibold mb-4">Quick Reference Comparison</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <img 
+              <ResponsiveImage 
                 src="/lovable-uploads/6576db00-103a-4cb4-93b3-2613f56d9e47.png" 
                 alt="Bread crumb comparison grid"
                 className="w-full rounded-lg cursor-pointer hover:shadow-lg transition-shadow"
-                onClick={() => window.open('/lovable-uploads/6576db00-103a-4cb4-93b3-2613f56d9e47.png', '_blank')}
+                loading="lazy"
               />
-              <img 
+              <ResponsiveImage 
                 src="/lovable-uploads/2f9d94ed-1d8a-4e00-9ae0-45dfec7907ae.png" 
                 alt="Proofing stages comparison"
                 className="w-full rounded-lg cursor-pointer hover:shadow-lg transition-shadow"
-                onClick={() => window.open('/lovable-uploads/2f9d94ed-1d8a-4e00-9ae0-45dfec7907ae.png', '_blank')}
+                loading="lazy"
               />
             </div>
           </div>

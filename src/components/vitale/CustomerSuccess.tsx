@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Star } from 'lucide-react';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 export const CustomerSuccess = () => {
   const testimonials = [
@@ -44,7 +45,7 @@ export const CustomerSuccess = () => {
             <Card key={index} className="p-6 h-full">
               <CardHeader className="text-center">
                 <div className="w-28 h-28 mx-auto mb-4 rounded-full overflow-hidden">
-                  <img 
+                  <ResponsiveImage 
                     src={testimonial.image}
                     alt={`Success story from ${testimonial.name}`}
                     className="w-full h-full object-cover"
