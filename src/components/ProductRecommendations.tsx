@@ -12,13 +12,16 @@ interface Product {
   id: string;
   name: string;
   description: string;
-  image: string;
+  image_url: string;
   price: string;
   affiliate_link: string;
   utm_params: string;
   category: string;
   keywords: string[];
   regions: string[];
+  brand: string;
+  featured: boolean;
+  seasonal_tags: string[];
 }
 
 interface ProductRecommendationsProps {
@@ -131,7 +134,7 @@ export const ProductRecommendations = ({
                 >
                   <div className="relative overflow-hidden">
                     <img 
-                      src={product.image} 
+                      src={product.image_url} 
                       alt={product.name}
                       className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
                     />

@@ -37,6 +37,11 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const SearchTest = lazy(() => import("./pages/SearchTest"));
 const InlineSearchTestPage = lazy(() => import("./pages/InlineSearchTest"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Tools = lazy(() => import("./pages/Tools"));
+const Guides = lazy(() => import("./pages/Guides"));
+const Challenges = lazy(() => import("./pages/Challenges"));
+const Coaching = lazy(() => import("./pages/Coaching"));
+const Contact = lazy(() => import("./pages/Contact"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -89,6 +94,11 @@ const App = () => {
                 <Route path="/feed.xml" element={<FeedRedirect />} />
                 <Route path="/sitemap.xml" element={<SitemapRedirect />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/tools" element={<Tools />} />
+                <Route path="/guides" element={<Guides />} />
+                <Route path="/challenges" element={<Challenges />} />
+                <Route path="/coaching" element={<Coaching />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route path="/search-test" element={<SearchTest />} />
                 <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
                 <Route path="/offline" element={<OfflineFallback />} />
