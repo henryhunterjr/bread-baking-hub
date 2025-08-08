@@ -1,3 +1,4 @@
+import { logger } from '@/utils/logger';
 // Simple search utility - no external dependencies
 export interface SearchablePost {
   title: string;
@@ -9,7 +10,7 @@ export const filterPosts = (posts: SearchablePost[], query: string): SearchableP
   if (!query.trim()) return posts;
   
   const searchLower = query.toLowerCase();
-  console.log('Filtering posts with query:', searchLower);
+  logger.log('Filtering posts with query:', searchLower);
   
   return posts.filter(post => {
     const titleMatch = post.title.toLowerCase().includes(searchLower);

@@ -1,5 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
-
+import { logger } from '@/utils/logger';
 interface BlogClickData {
   post_id: string;
   post_title: string;
@@ -20,9 +20,9 @@ export const trackBlogClick = async (clickData: BlogClickData) => {
       }
     });
     
-    console.log('Blog click tracked:', clickData.post_title);
+    logger.log('Blog click tracked:', clickData.post_title);
   } catch (error) {
-    console.error('Failed to track blog click:', error);
+    logger.error('Failed to track blog click:', error);
     // Don't throw - tracking failures shouldn't break user experience
   }
 };

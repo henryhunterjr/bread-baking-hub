@@ -3,6 +3,8 @@
  * Validates required environment variables at startup
  */
 
+import { logger } from '@/utils/logger';
+
 interface AppConfig {
   supabase: {
     url: string;
@@ -30,7 +32,7 @@ export const config: AppConfig = {
 
 // Log configuration in development only
 if (config.isDevelopment) {
-  console.log('App configuration loaded:', {
+  logger.log('App configuration loaded:', {
     supabaseUrl: config.supabase.url,
     isDev: config.isDevelopment,
   });

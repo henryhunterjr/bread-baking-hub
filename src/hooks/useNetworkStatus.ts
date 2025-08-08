@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
+import { logger } from '@/utils/logger';
 
 export const useNetworkStatus = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   useEffect(() => {
     const handleOnline = () => {
-      console.log('Network: Online');
+      logger.log('Network: Online');
       setIsOnline(true);
     };
     
     const handleOffline = () => {
-      console.log('Network: Offline');
+      logger.log('Network: Offline');
       setIsOnline(false);
     };
 
