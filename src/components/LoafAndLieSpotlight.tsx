@@ -101,7 +101,7 @@ const LoafAndLieSpotlight = ({ onPreview, onAudio }: LoafAndLieSpotlightProps) =
                 className="border-gray-600 text-gray-200 hover:bg-gray-800"
                 asChild
               >
-                <a href="https://hunter53.gumroad.com/l/ixsjex" target="_blank" rel="noopener noreferrer">
+                <a href="/go?u=https%3A%2F%2Fhunter53.gumroad.com%2Fl%2Fixsjex" target="_self" rel="noopener noreferrer">
                   <ExternalLink className="mr-2 h-5 w-5" />
                   Get the Book
                 </a>

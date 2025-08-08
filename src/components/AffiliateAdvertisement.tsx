@@ -22,7 +22,8 @@ export const AffiliateAdvertisement = ({
   context
 }: AffiliateAdvertisementProps) => {
   const handleClick = () => {
-    window.open(affiliateLink, '_blank', 'noopener,noreferrer');
+    const url = `/go?u=${encodeURIComponent(affiliateLink)}`;
+    window.location.href = url;
   };
 
   return (

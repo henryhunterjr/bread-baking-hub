@@ -95,7 +95,8 @@ export const ProductRecommendations = ({
     }
 
     const fullUrl = `${product.affiliate_link}${product.affiliate_link.includes('?') ? '&' : '?'}${product.utm_params}`;
-    window.open(fullUrl, '_blank', 'noopener,noreferrer');
+    const redirectUrl = `/go?u=${encodeURIComponent(fullUrl)}`;
+    window.location.href = redirectUrl;
   };
 
   return (

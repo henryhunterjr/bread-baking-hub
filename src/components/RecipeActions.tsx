@@ -33,20 +33,42 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
 
   const handlePrint = () => {
     const printContent = generatePrintableHTML(recipe);
+
+    // Try popup window first
     const printWindow = window.open('', '_blank');
-    
     if (printWindow) {
       printWindow.document.write(printContent);
       printWindow.document.close();
       printWindow.focus();
       printWindow.print();
       printWindow.close();
-      
-      toast({
-        title: "Print Ready",
-        description: "Recipe formatted for printing",
-      });
+    } else {
+      // Fallback: hidden iframe print (works in iframes/pop-up blocked contexts)
+      const iframe = document.createElement('iframe');
+      iframe.style.position = 'fixed';
+      iframe.style.right = '0';
+      iframe.style.bottom = '0';
+      iframe.style.width = '0';
+      iframe.style.height = '0';
+      iframe.style.border = '0';
+      document.body.appendChild(iframe);
+      const doc = iframe.contentWindow?.document;
+      if (doc) {
+        doc.open();
+        doc.write(printContent);
+        doc.close();
+        iframe.onload = () => {
+          iframe.contentWindow?.focus();
+          iframe.contentWindow?.print();
+          setTimeout(() => document.body.removeChild(iframe), 1000);
+        };
+      }
     }
+
+    toast({
+      title: "Print Ready",
+      description: "Recipe formatted for printing",
+    });
   };
 
   const handleDownloadPDF = async () => {
@@ -94,7 +116,8 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
     const body = encodeURIComponent(generateEmailBody(recipe));
     const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
     
-    window.open(mailtoLink);
+    // Use location href to avoid popup blockers in iframes
+    window.location.href = mailtoLink;
     
     toast({
       title: "Email Ready",

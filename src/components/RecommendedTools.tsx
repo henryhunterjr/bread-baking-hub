@@ -80,7 +80,7 @@ const products: Product[] = [
 
 const RecommendedTools = () => {
   const handleProductClick = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.location.href = `/go?u=${encodeURIComponent(url)}`;
   };
 
   return (

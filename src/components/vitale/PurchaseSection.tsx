@@ -13,7 +13,7 @@ export const PurchaseSection = () => {
   };
 
   const handlePurchase = () => {
-    window.open('https://vitalesourdoughco.etsy.com', '_blank');
+    window.location.href = '/go?s=vitale';
   };
 
   return (

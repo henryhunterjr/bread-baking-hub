@@ -205,7 +205,7 @@ export const TestimonialsSection = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="https://bit.ly/3srdSYS"
-              target="_blank"
+              target="_self"
               rel="noopener noreferrer"
               className="bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors inline-flex items-center justify-center gap-2"
             >

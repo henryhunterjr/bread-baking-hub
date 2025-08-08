@@ -79,7 +79,7 @@ const ToolsResources = () => {
               <h3 className="text-lg font-bold text-foreground mb-3">{tool.title}</h3>
               <p className="text-stone-300 text-sm mb-4 line-clamp-3">{tool.description}</p>
               <a 
-                href={tool.link}
+                href={tool.link.startsWith('http') ? `/go?u=${encodeURIComponent(tool.link)}` : tool.link}
                 className="inline-flex items-center text-primary hover:text-primary/80 font-medium text-sm group-hover:underline transition-colors"
               >
                 Try it out
