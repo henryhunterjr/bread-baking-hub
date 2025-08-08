@@ -77,7 +77,9 @@ export const RecipeDisplaySection = ({
               folder: '',
               tags: [],
               is_public: false,
-              slug: ''
+              slug: '',
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString()
             }}
             onSave={onRecipeUpdate}
             onCancel={onEditToggle}

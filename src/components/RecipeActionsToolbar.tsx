@@ -63,7 +63,7 @@ export const RecipeActionsToolbar = ({ recipe, imageUrl, onSaved }: RecipeAction
         if (slugError) {
           console.error('Error generating slug:', slugError);
         } else {
-          slug = slugData;
+          slug = slugData as string | null;
         }
       }
 
@@ -72,7 +72,7 @@ export const RecipeActionsToolbar = ({ recipe, imageUrl, onSaved }: RecipeAction
         .insert({
           user_id: user.id,
           title: recipe.title,
-          data: recipe,
+          data: recipe as any,
           image_url: imageUrl || null,
           folder: folder.trim() || null,
           tags: tags.length > 0 ? tags : null,

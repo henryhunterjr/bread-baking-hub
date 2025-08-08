@@ -5,6 +5,7 @@ import { FullRecipeEditForm } from './FullRecipeEditForm';
 import { RecipeVersionManager } from './RecipeVersionManager';
 import { memo } from 'react';
 import { Recipe, RecipeData, RecipeUpdateData } from '@/types';
+import type { FormattedRecipe } from '@/types/recipe-workspace';
 
 
 interface RecipeCardProps {
@@ -106,7 +107,7 @@ export const RecipeCard = memo(({
       </div>
       {!isEditing && (
         <FormattedRecipeDisplay 
-          recipe={recipe.data} 
+          recipe={recipe.data as unknown as FormattedRecipe & { recommended_products?: string[] }} 
           imageUrl={recipe.image_url}
           recipeData={recipe}
         />

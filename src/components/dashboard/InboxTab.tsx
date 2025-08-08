@@ -9,8 +9,18 @@ import { supabase } from '@/integrations/supabase/client';
 import { Inbox, Calendar, Mail, FileText, Import, Trash2, Plus } from 'lucide-react';
 import { format } from 'date-fns';
 import { submitYourNewsletterContent } from '@/utils/submitContent';
-import type { AIDraft, DraftImportHandler } from '@/types';
+import type { DraftImportHandler } from '@/types';
 
+interface AiDraftRow {
+  id: string;
+  type: string;
+  payload: unknown;
+  created_at: string;
+  run_date: string;
+  imported: boolean;
+  discarded: boolean;
+  updated_at: string;
+}
 
 interface InboxTabProps {
   onImportDraft: DraftImportHandler;
@@ -18,7 +28,7 @@ interface InboxTabProps {
 
 
 const InboxTab = ({ onImportDraft }: InboxTabProps) => {
-  const [drafts, setDrafts] = useState<AIDraft[]>([]);
+  const [drafts, setDrafts] = useState<AiDraftRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [importing, setImporting] = useState<string | null>(null);
   const [discarding, setDiscarding] = useState<string | null>(null);
@@ -43,7 +53,7 @@ const InboxTab = ({ onImportDraft }: InboxTabProps) => {
       console.log('Number of drafts found:', data?.length || 0);
       
       if (error) throw error;
-      setDrafts(data || []);
+      setDrafts((data as AiDraftRow[]) || []);
     } catch (error) {
       console.error('Error fetching drafts:', error);
       toast({
@@ -60,7 +70,7 @@ const InboxTab = ({ onImportDraft }: InboxTabProps) => {
     fetchDrafts();
   }, []);
 
-  const handleImport = async (draft: AIDraft) => {
+  const handleImport = async (draft: AiDraftRow) => {
     setImporting(draft.id);
     try {
       console.log('Importing draft:', draft.id);

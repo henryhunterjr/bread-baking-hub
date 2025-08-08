@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Calculator, Users, ChefHat } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import { Recipe } from '@/types';
+import { Recipe, RecipeIngredient } from '@/types';
 
 interface RecipeScalerProps {
   recipe: Recipe;
@@ -81,14 +81,26 @@ export const RecipeScaler = ({ recipe, onScaledRecipe }: RecipeScalerProps) => {
     
     // Scale ingredients
     if (scaledData.ingredients) {
-      scaledData.ingredients = scaledData.ingredients.map((ingredient: string) => 
-        scaleIngredient(ingredient, scaleFactor)
-      );
+      if (Array.isArray(scaledData.ingredients) && typeof (scaledData.ingredients as any)[0] === 'string') {
+        scaledData.ingredients = (scaledData.ingredients as string[]).map((ingredient) => 
+          scaleIngredient(ingredient, scaleFactor)
+        );
+      } else {
+        const ingArr = scaledData.ingredients as RecipeIngredient[];
+        scaledData.ingredients = ingArr.map((ing) => {
+          const combined = [ing.amount_metric || ing.amount_volume, ing.item, ing.note]
+            .filter(Boolean)
+            .join(' ');
+          return scaleIngredient(combined, scaleFactor);
+        });
+      }
     }
 
     // Update servings in description or notes
     if (scaledData.servings) {
-      scaledData.servings = Math.round(scaledData.servings * scaleFactor);
+      const baseServings = Number(scaledData.servings) || servings;
+      const newServings = Math.round(baseServings * scaleFactor);
+      scaledData.servings = String(newServings);
     }
 
     const scaledRecipe = {
