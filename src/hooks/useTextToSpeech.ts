@@ -63,7 +63,7 @@ export const useTextToSpeech = () => {
 
       // Call our ElevenLabs edge function
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
-        body: { text }
+        body: { text, voiceId: 'wAGzRVkxKEs8La0lmdrE' }
       });
 
       if (error) throw error;

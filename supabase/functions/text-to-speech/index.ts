@@ -26,7 +26,7 @@ serve(async (req) => {
     // Use preferred ElevenLabs voice by default, allow override via request
     const voiceId = overrideVoiceId || 'wAGzRVkxKEs8La0lmdrE' // AI Krusty default voice
 
-    // Generate speech using ElevenLabs with graceful fallback if voice fails
+    // Generate speech using ElevenLabs with explicit-voice handling and graceful fallback
     const makeRequest = async (id: string) => {
       return await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${id}`, {
         method: 'POST',
@@ -51,17 +51,30 @@ serve(async (req) => {
 
     if (!response.ok) {
       const errorText = await response.text()
-      // If the error seems voice-related (e.g., limit, missing, or unauthorized), fall back to a reliable default voice
-      if (/voice/i.test(errorText)) {
+      const isVoiceError = /voice/i.test(errorText)
+
+      if (isVoiceError && overrideVoiceId) {
+        // Explicit voice requested and failed — surface actionable message without fallback
+        return new Response(
+          JSON.stringify({
+            code: 'ELEVEN_VOICE_UNAVAILABLE',
+            message: 'Requested ElevenLabs voice is not available to your account. Add it to your library and ensure you are under your custom voice limit, then try again.'
+          }),
+          { status: 409, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      // If voice-related and no explicit override, fall back to a reliable default voice
+      if (isVoiceError) {
         console.warn('ElevenLabs voice error, falling back to Aria voice. Details:', errorText)
         response = await makeRequest('9BWtsMINqrJLrRacOk9x') // Aria
       }
     }
 
     if (!response.ok) {
-      const errorText = await response.text()
-      console.error(`ElevenLabs API error (${response.status}):`, errorText)
-      throw new Error(`ElevenLabs API error: ${errorText}`)
+      const errorText2 = await response.text()
+      console.error(`ElevenLabs API error (${response.status}):`, errorText2)
+      throw new Error(`ElevenLabs API error: ${errorText2}`)
     }
 
     // Convert audio buffer to base64 (chunked to avoid stack overflow)
