@@ -53,17 +53,21 @@ serve(async (req) => {
       const errorText = await response.text()
       const isVoiceError = /voice/i.test(errorText)
 
+      if (isVoiceError && overrideVoiceId) {
+        // Explicit voice requested and failed — surface actionable message without fallback
+        return new Response(
+          JSON.stringify({
+            code: 'ELEVEN_VOICE_UNAVAILABLE',
+            message: 'Requested ElevenLabs voice is not available to your account. Add it to your library and ensure you are under your custom voice limit, then try again.'
+          }),
+          { status: 409, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      // If voice-related and no explicit override, fall back to a reliable default voice
       if (isVoiceError) {
-        // Fallback to a reliable male default voice (Daniel) to keep UX smooth
-        console.warn('Requested ElevenLabs voice failed; falling back to Daniel. Details:', errorText)
-        const fallbackId = 'onwK4e9ZLuTAKqWW03F9' // Daniel
-        const fallbackResponse = await makeRequest(fallbackId)
-        if (!fallbackResponse.ok) {
-          const err2 = await fallbackResponse.text()
-          console.error(`Fallback voice failed (${fallbackResponse.status}):`, err2)
-          throw new Error(`ElevenLabs API error after fallback: ${err2}`)
-        }
-        response = fallbackResponse
+        console.warn('ElevenLabs voice error, falling back to Aria voice. Details:', errorText)
+        response = await makeRequest('9BWtsMINqrJLrRacOk9x') // Aria
       }
     }
 

@@ -129,7 +129,7 @@ export const useTextToSpeech = () => {
       setIsPlaying(false);
       toast({
         title: "Voice Error",
-        description: "Could not generate voice response. Please check your internet connection.",
+        description: "Could not generate voice response. If you requested a specific voice, ensure it’s added to your ElevenLabs library and you’re under the custom voice limit.",
         variant: "destructive"
       });
     }
