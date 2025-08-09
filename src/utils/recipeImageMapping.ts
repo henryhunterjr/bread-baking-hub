@@ -28,6 +28,7 @@ export const recipeImageMapping: Record<string, string> = {
   "rye-sourdough-caraway": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
   "super-seeded-sourdough-loaf": "/lovable-uploads/06971d11-8ec2-417f-8518-8e179926a6f8.png",
   "henrys-marbled-sourdough-bread": "/lovable-uploads/7e01ce1f-67e8-4bfd-866d-0652d3e903f9.png",
+  "henrys-artisan-rye-sourdough-boule": "/lovable-uploads/6ed25ae6-4928-46c6-9fe0-fa7af97ffa2d.png",
   
   // SOURDOUGH ITEMS - Bagels, pretzels, etc.
   "sourdough-bagels": "/lovable-uploads/b1f81606-ae96-4033-b3ad-33d3b9cebdd3.png",

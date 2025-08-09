@@ -711,6 +711,86 @@ export const useSeasonalRecipes = () => {
     ensureCinnamonSwirl();
   }, [loading, recipes]);
 
+  // One-time ensure Henry's Artisan Rye Sourdough Boule is present
+  useEffect(() => {
+    const ensureRyeBoule = async () => {
+      if (loading) return;
+      const targetSlug = 'henrys-artisan-rye-sourdough-boule';
+      if (recipes.some(r => r.slug === targetSlug)) return;
+      try {
+        const data: SeasonalRecipeData = {
+          season: 'Fall',
+          holidays: [],
+          featuredDates: { start: '09-01', end: '11-30' },
+          category: ['sourdough', 'whole grain'],
+          occasion: ['artisan baking'],
+          prepTime: '45 min active; 3–4 days total',
+          bakeTime: '45 minutes',
+          totalTime: '3–4 days (mostly inactive)',
+          difficulty: 'advanced',
+          yield: '1 large boule',
+          ingredients: [
+            'Rye Starter (build over 3–4 days): 50g dark rye flour, 50g bread flour, 100g water, 20g active starter; daily feeds 25g rye + 25g bread + 50g water',
+            'Final Dough:',
+            'Bread flour — 400g (3¼ cups)',
+            'Dark rye flour — 100g (¾ cup)',
+            'Water (room temp) — 375g (1½ cups)',
+            'Active rye starter — 100g (½ cup)',
+            'Salt — 10g (2 tsp)',
+            'Optional: cooked rye berries — 50g (¼ cup)',
+            'Optional: caraway seeds — 5g (2 tsp)'
+          ],
+          method: [
+            'Build rye starter 3–4 days ahead with daily feeds until it doubles in 4–6 hours.',
+            'Autolyse: mix flours and water; rest 30 minutes.',
+            'Final mix: add rye starter and salt; mix using Rubaud 5–7 minutes. Fold in rye berries and caraway if using.',
+            'Bulk ferment 4–5 hours with coil folds every 45 minutes for first 3 hours until 60–70% rise and jiggly.',
+            'Pre‑shape, rest 20–30 minutes, then shape a tight boule and place seam‑up in a floured banneton.',
+            'Cold retard 12–18 hours.',
+            'Bake at 475°F/245°C in Dutch oven: 22 min covered, 20–23 min uncovered to ~205°F/96°C internal; cool fully.'
+          ],
+          notes: 'Rye ferments quickly—watch for over‑proofing. The purple‑brown crust develops with full bake and proper steam.',
+          equipment: [
+            'Mixing bowl','Bench scraper','Kitchen scale','Banneton','Dutch oven or Brød & Taylor Baking Shell','Lame','Clean towels'
+          ],
+        };
+
+        const imageUrl = getRecipeImage(targetSlug, undefined);
+        const { data: res, error } = await supabase.functions.invoke('upsert-recipe', {
+          body: {
+            title: "Henry's Artisan Rye Sourdough Boule",
+            slug: targetSlug,
+            data,
+            imageUrl,
+            tags: ['sourdough','rye','artisan','boule'],
+            folder: 'Seasonal',
+            isPublic: true,
+          },
+        });
+        if (error) {
+          console.error('Failed to upsert Rye Sourdough Boule:', error);
+          return;
+        }
+        const created = res?.data;
+        const newRecipe: SeasonalRecipe = {
+          id: created?.id || crypto.randomUUID(),
+          title: "Henry's Artisan Rye Sourdough Boule",
+          slug: targetSlug,
+          folder: 'Seasonal',
+          tags: ['sourdough','rye','artisan','boule'],
+          is_public: true,
+          image_url: imageUrl,
+          created_at: created?.created_at || new Date().toISOString(),
+          data,
+        };
+        setRecipes(prev => [newRecipe, ...prev]);
+      } catch (e) {
+        console.error('ensureRyeBoule error', e);
+      }
+    };
+    ensureRyeBoule();
+  }, [loading, recipes]);
+
   // Filter recipes based on current filters
   const filteredRecipes = recipes.filter(recipe => {
     if (selectedSeason !== 'All' && recipe.data.season !== selectedSeason) return false;
