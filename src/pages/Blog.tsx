@@ -174,17 +174,39 @@ const Blog = () => {
               }}
             >
               {/* Search Bar */}
-              <div className="mb-8 max-w-md mx-auto">
-                <div className="relative">
+              <div className="mb-8 max-w-2xl mx-auto">
+                <form
+                  className="relative"
+                  role="search"
+                  aria-label="Search blog posts"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSearchChange(searchQuery.trim());
+                  }}
+                >
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                   <Input
-                    type="text"
-                    placeholder="Search blog posts..."
+                    type="search"
+                    placeholder="Search blog posts…"
                     value={searchQuery}
                     onChange={(e) => handleSearchChange(e.target.value)}
-                    className="pl-10 bg-card border-primary/20 focus:border-primary"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleSearchChange(searchQuery.trim());
+                      }
+                    }}
+                    aria-label="Search blog posts"
+                    className="pl-10 pr-28 bg-card border-primary/20 focus:border-primary"
                   />
-                </div>
+                  <Button
+                    type="submit"
+                    aria-label="Search"
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                  >
+                    Search
+                  </Button>
+                </form>
               </div>
 
               {/* Category Filter */}
