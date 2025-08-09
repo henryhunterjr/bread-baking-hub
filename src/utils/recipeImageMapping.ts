@@ -27,7 +27,7 @@ export const recipeImageMapping: Record<string, string> = {
   "roasted-garlic-rosemary-sourdough": "/lovable-uploads/2c4b7075-6963-4ba1-bc31-e2129773be19.png",
   "rye-sourdough-caraway": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
   "super-seeded-sourdough-loaf": "/lovable-uploads/06971d11-8ec2-417f-8518-8e179926a6f8.png",
-  "henrys-marbled-sourdough-bread": "/lovable-uploads/3cab5e17-c744-43cc-8db7-b229b06d7b04.png",
+  "henrys-marbled-sourdough-bread": "/lovable-uploads/7e01ce1f-67e8-4bfd-866d-0652d3e903f9.png",
   
   // SOURDOUGH ITEMS - Bagels, pretzels, etc.
   "sourdough-bagels": "/lovable-uploads/b1f81606-ae96-4033-b3ad-33d3b9cebdd3.png",
@@ -102,7 +102,7 @@ export function getRecipeImage(slug: string, imageUrl?: string | null): string {
   console.log('🔍 getRecipeImage DEBUG:', { slug, imageUrl });
   
   // CRITICAL: For problematic recipes, ALWAYS use mapping first
-  const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread', 'henrys-whole-wheat-sourdough-recipe', 'holiday-star-cinnamon-bread', 'ultimate-dinner-rolls-rosemary-sea-salt'];
+  const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread', 'henrys-whole-wheat-sourdough-recipe', 'holiday-star-cinnamon-bread', 'ultimate-dinner-rolls-rosemary-sea-salt', 'henrys-marbled-sourdough-bread'];
   
   if (problematicRecipes.includes(slug) && recipeImageMapping[slug]) {
     console.log('✅ FORCING mapping URL for problematic recipe', slug, ':', recipeImageMapping[slug]);
