@@ -513,6 +513,104 @@ export const useSeasonalRecipes = () => {
     ensureBananaBread();
   }, [loading, recipes]);
 
+  // One-time ensure Henry's Marbled Sourdough Bread is present
+  useEffect(() => {
+    const ensureMarbledSourdough = async () => {
+      if (loading) return;
+      const targetSlug = 'henrys-marbled-sourdough-bread';
+      if (recipes.some(r => r.slug === targetSlug)) return;
+      try {
+        const season = getCurrentSeason();
+        const featuredDatesBySeason: Record<Season, { start: string; end: string }> = {
+          Winter: { start: '12-01', end: '02-28' },
+          Spring: { start: '03-01', end: '05-31' },
+          Summer: { start: '06-01', end: '08-31' },
+          Fall: { start: '09-01', end: '11-30' },
+        };
+
+        const data: SeasonalRecipeData = {
+          season,
+          holidays: [],
+          featuredDates: featuredDatesBySeason[season],
+          category: ['sourdough'],
+          occasion: ['artisan baking', 'showpiece'],
+          prepTime: '30 minutes active, 24 hours total',
+          bakeTime: '45 minutes',
+          totalTime: '24–30 hours',
+          difficulty: 'advanced',
+          yield: '1 large loaf',
+          ingredients: [
+            'Base White Dough:',
+            'Bread flour — 400g (3¼ cups)',
+            'Warm water — 300g (1¼ cups)',
+            'Active sourdough starter — 80g (⅓ cup)',
+            'Salt — 8g (1½ tsp)',
+            'Golden Turmeric Dough:',
+            'Bread flour — 100g (¾ cup)',
+            'Warm water — 75g (⅓ cup)',
+            'Active sourdough starter — 20g (1 Tbsp)',
+            'Ground turmeric — 4g (2 tsp)',
+            'Salt — 2g (½ tsp)'
+          ],
+          method: [
+            'Make white dough: mix flour, water, starter; autolyse 30 min. Add salt and mix using Rubaud ~5 min.',
+            'Make turmeric dough: whisk turmeric into flour, add water, starter, salt; mix until smooth and golden.',
+            'Bulk ferment both: coil folds every 45 min for first 3 hours; ferment until 50–70% rise, jiggly and light.',
+            'Pre-shape each into a loose round; rest 20–30 minutes under damp towels.',
+            'Laminate to marble: roll white dough to ~12×16 in; distribute turmeric pieces and roll, or stack sheets and roll tightly.',
+            'Final shape as boule or batard, maintaining pattern; place seam‑side up in a floured banneton.',
+            'Cold retard 12–18 hours; dough should spring back slowly with a slight indentation (poke test).',
+            'Bake in preheated Dutch oven at 475°F/245°C: 22 min covered, 18–23 min uncovered to ~205°F/96°C internal.',
+            'Cool at least 2 hours before slicing to reveal the marble.'
+          ],
+          notes: 'Handle gently to preserve contrast. For black/green/red marbles, replace turmeric with charcoal, spirulina, or beetroot powder.',
+          equipment: [
+            '2 large mixing bowls',
+            'Bench scraper',
+            'Kitchen scale',
+            'Proofing basket (banneton)',
+            'Dutch oven or Brød & Taylor Baking Shell',
+            'Lame or sharp knife',
+            'Clean kitchen towels'
+          ],
+        };
+
+        const imageUrl = getRecipeImage(targetSlug, undefined);
+        const { data: res, error } = await supabase.functions.invoke('upsert-recipe', {
+          body: {
+            title: "Henry's Marbled Sourdough Bread",
+            slug: targetSlug,
+            data,
+            imageUrl,
+            tags: ['sourdough', 'marbled', 'turmeric', 'artisan'],
+            folder: 'Seasonal',
+            isPublic: true,
+          },
+        });
+        if (error) {
+          console.error('Failed to upsert Henry\'s Marbled Sourdough Bread:', error);
+          return;
+        }
+        const created = res?.data;
+        const newRecipe: SeasonalRecipe = {
+          id: created?.id || crypto.randomUUID(),
+          title: "Henry's Marbled Sourdough Bread",
+          slug: targetSlug,
+          folder: 'Seasonal',
+          tags: ['sourdough', 'marbled', 'turmeric', 'artisan'],
+          is_public: true,
+          image_url: imageUrl,
+          created_at: created?.created_at || new Date().toISOString(),
+          data,
+        };
+        setRecipes(prev => [newRecipe, ...prev]);
+      } catch (e) {
+        console.error('ensureMarbledSourdough error', e);
+      }
+    };
+    ensureMarbledSourdough();
+  }, [loading, recipes]);
+
   // Filter recipes based on current filters
   const filteredRecipes = recipes.filter(recipe => {
     if (selectedSeason !== 'All' && recipe.data.season !== selectedSeason) return false;

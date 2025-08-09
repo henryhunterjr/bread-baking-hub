@@ -27,6 +27,7 @@ export const recipeImageMapping: Record<string, string> = {
   "roasted-garlic-rosemary-sourdough": "/lovable-uploads/2c4b7075-6963-4ba1-bc31-e2129773be19.png",
   "rye-sourdough-caraway": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg",
   "super-seeded-sourdough-loaf": "/lovable-uploads/06971d11-8ec2-417f-8518-8e179926a6f8.png",
+  "henrys-marbled-sourdough-bread": "/lovable-uploads/3cab5e17-c744-43cc-8db7-b229b06d7b04.png",
   
   // SOURDOUGH ITEMS - Bagels, pretzels, etc.
   "sourdough-bagels": "/lovable-uploads/b1f81606-ae96-4033-b3ad-33d3b9cebdd3.png",
