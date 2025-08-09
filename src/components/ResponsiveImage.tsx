@@ -131,7 +131,7 @@ export const ResponsiveImage = ({
           }`}
           onLoad={handleLoad}
           onError={handleError}
-          fetchPriority={priority ? 'high' : 'auto'}
+          
           role="img"
         />
       </picture>

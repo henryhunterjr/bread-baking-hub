@@ -26,29 +26,42 @@ serve(async (req) => {
     // Use preferred ElevenLabs voice by default, allow override via request
     const voiceId = overrideVoiceId || 'wAGzRVkxKEs8La0lmdrE' // AI Krusty default voice
 
-    // Generate speech using ElevenLabs
-    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-      method: 'POST',
-      headers: {
-        'xi-api-key': elevenLabsApiKey,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        text,
-        model_id: 'eleven_turbo_v2_5', // Fast, high-quality model
-        voice_settings: {
-          stability: 0.5,
-          similarity_boost: 0.75,
-          style: 0.8, // More conversational style
-          use_speaker_boost: true
-        }
-      }),
-    })
+    // Generate speech using ElevenLabs with graceful fallback if voice fails
+    const makeRequest = async (id: string) => {
+      return await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${id}`, {
+        method: 'POST',
+        headers: {
+          'xi-api-key': elevenLabsApiKey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text,
+          model_id: 'eleven_turbo_v2_5', // Fast, high-quality model
+          voice_settings: {
+            stability: 0.5,
+            similarity_boost: 0.75,
+            style: 0.8, // More conversational style
+            use_speaker_boost: true
+          }
+        }),
+      })
+    }
+
+    let response = await makeRequest(voiceId)
 
     if (!response.ok) {
-      const error = await response.text()
-      console.error(`ElevenLabs API error (${response.status}):`, error)
-      throw new Error(`ElevenLabs API error: ${error}`)
+      const errorText = await response.text()
+      // If the error seems voice-related (e.g., limit, missing, or unauthorized), fall back to a reliable default voice
+      if (/voice/i.test(errorText)) {
+        console.warn('ElevenLabs voice error, falling back to Aria voice. Details:', errorText)
+        response = await makeRequest('9BWtsMINqrJLrRacOk9x') // Aria
+      }
+    }
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error(`ElevenLabs API error (${response.status}):`, errorText)
+      throw new Error(`ElevenLabs API error: ${errorText}`)
     }
 
     // Convert audio buffer to base64 (chunked to avoid stack overflow)
