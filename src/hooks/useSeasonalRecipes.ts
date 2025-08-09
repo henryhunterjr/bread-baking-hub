@@ -331,6 +331,95 @@ export const useSeasonalRecipes = () => {
     ensureHolidayStar();
   }, [loading, recipes]);
 
+  // One-time ensure Ultimate Dinner Rolls is present
+  useEffect(() => {
+    const ensureDinnerRolls = async () => {
+      if (loading) return;
+      const targetSlug = 'ultimate-dinner-rolls-rosemary-sea-salt';
+      if (recipes.some(r => r.slug === targetSlug)) return;
+      try {
+        const data: SeasonalRecipeData = {
+          season: 'Fall',
+          holidays: ['Thanksgiving', 'Christmas'],
+          featuredDates: { start: '11-01', end: '12-31' },
+          category: ['yeast bread', 'enriched', 'holiday bread'],
+          occasion: ['holiday dinner', 'family gathering'],
+          prepTime: '30 minutes',
+          bakeTime: '25–30 minutes',
+          totalTime: '1 hr 30 minutes',
+          difficulty: 'beginner',
+          yield: '12 rolls',
+          ingredients: [
+            'Whole milk — 240 mL (1 cup)',
+            'Warm water — 120 mL (1/2 cup)',
+            'Unsalted butter, melted — 57 g (1/4 cup)',
+            'Sugar — 50 g (1/4 cup)',
+            'Active dry yeast — 7 g (2 1/4 tsp; 1 packet)',
+            'All-purpose flour — 500 g (about 4 cups; plus up to 50 g more if using a stand mixer)',
+            'Kosher salt — 9 g (1 1/2 tsp)',
+            'Large eggs, room temperature — 2 (one reserved for egg wash)',
+            'Neutral oil for greasing',
+            'Fresh rosemary sprigs',
+            'Maldon sea salt for finishing',
+          ],
+          method: [
+            'Combine milk, water, melted butter, and sugar in a bowl.',
+            'Sprinkle yeast over the mixture, stir, and let stand for 5 minutes until foamy.',
+            'In a stand mixer or large bowl, mix flour and salt. Add beaten eggs to the yeast mixture, then combine with the dry ingredients. Mix for 10–15 minutes until roughly combined.',
+            'Turn the dough onto a floured surface and knead by hand, adding flour as needed, until a smooth ball forms and it is less sticky.',
+            'Place dough in an oiled bowl, cover, and let rise until doubled in size, about 1 hour.',
+            'Punch down dough, divide into 12 rolls, and place on a greased or parchment-lined baking sheet. Let rise for 30 minutes.',
+            'Preheat oven to 375°F (190°C).',
+            'Brush rolls with beaten egg. Decorate each with a rosemary sprig and sprinkle with Maldon salt.',
+            'Bake for 25–30 minutes until golden.',
+            'Enjoy the aromatic and flavorful rolls!',
+          ],
+          notes: 'Best with bread flour for extra structure. Don\'t skip the second rise for fluffiness. Rolls freeze well up to 3 months.',
+          equipment: [
+            'Stand mixer (optional)',
+            'Baking sheet',
+            'Mixing bowls',
+            'Measuring cups and spoons',
+            'Digital scale',
+          ],
+        };
+
+        const imageUrl = getRecipeImage(targetSlug, undefined);
+        const { data: res, error } = await supabase.functions.invoke('upsert-recipe', {
+          body: {
+            title: 'Ultimate Dinner Rolls with Rosemary and Sea Salt',
+            slug: targetSlug,
+            data,
+            imageUrl,
+            tags: ['dinner rolls', 'rosemary', 'sea salt', 'yeast bread', 'enriched'],
+            folder: 'Seasonal',
+            isPublic: true,
+          },
+        });
+        if (error) {
+          console.error('Failed to upsert Ultimate Dinner Rolls:', error);
+          return;
+        }
+        const created = res?.data;
+        const newRecipe: SeasonalRecipe = {
+          id: created?.id || crypto.randomUUID(),
+          title: 'Ultimate Dinner Rolls with Rosemary and Sea Salt',
+          slug: targetSlug,
+          folder: 'Seasonal',
+          tags: ['dinner rolls', 'rosemary', 'sea salt', 'yeast bread', 'enriched'],
+          is_public: true,
+          image_url: imageUrl,
+          created_at: created?.created_at || new Date().toISOString(),
+          data,
+        };
+        setRecipes(prev => [newRecipe, ...prev]);
+      } catch (e) {
+        console.error('ensureDinnerRolls error', e);
+      }
+    };
+    ensureDinnerRolls();
+  }, [loading, recipes]);
+
   // Filter recipes based on current filters
   const filteredRecipes = recipes.filter(recipe => {
     if (selectedSeason !== 'All' && recipe.data.season !== selectedSeason) return false;
