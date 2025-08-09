@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { text } = await req.json()
+    const { text, voiceId: overrideVoiceId } = await req.json()
 
     if (!text) {
       throw new Error('Text is required')
@@ -23,8 +23,8 @@ serve(async (req) => {
       throw new Error('ElevenLabs API key not configured')
     }
 
-    // Use a standard ElevenLabs voice that should work with most API keys
-    const voiceId = '9BWtsMINqrJLrRacOk9x' // Aria voice
+    // Use preferred ElevenLabs voice by default, allow override via request
+    const voiceId = overrideVoiceId || 'wAGzRVkxKEs8La0lmdrE' // AI Krusty default voice
 
     // Generate speech using ElevenLabs
     const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
