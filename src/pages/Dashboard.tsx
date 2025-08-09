@@ -686,6 +686,8 @@ const PostForm = ({ postData, setPostData, onImageUpload, showNewsletterToggle }
                 src={postData.inlineImageUrl}
                 alt="Inline content preview"
                 className="w-20 h-20 object-cover rounded border"
+                loading="lazy"
+                decoding="async"
               />
               <div className="text-xs text-muted-foreground">
                 <p>✓ Inline image set</p>
@@ -743,6 +745,8 @@ const PostForm = ({ postData, setPostData, onImageUpload, showNewsletterToggle }
                 src={postData.socialImageUrl}
                 alt="Social media preview"
                 className="w-20 h-20 object-cover rounded border"
+                loading="lazy"
+                decoding="async"
               />
               <div className="text-xs text-muted-foreground">
                 <p>✓ Social preview set</p>

@@ -195,6 +195,8 @@ export const BlogImageGrid = () => {
                     src={image.publicUrl}
                     alt={image.altText}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <Button

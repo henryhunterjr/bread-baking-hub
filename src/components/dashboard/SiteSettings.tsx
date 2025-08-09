@@ -174,6 +174,8 @@ export const SiteSettings = () => {
                       src={heroBannerUrl}
                       alt="Hero banner preview"
                       className="w-32 h-16 object-cover rounded border"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="text-xs text-muted-foreground">
                       <p>✓ Banner set</p>

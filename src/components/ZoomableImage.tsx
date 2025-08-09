@@ -98,6 +98,8 @@ export const ZoomableImage: React.FC<ZoomableImageProps> = ({
         {...imgProps}
         className="w-full h-full object-contain select-none"
         draggable={false}
+        loading={(imgProps as any)?.loading ?? 'lazy'}
+        decoding="async"
         style={{
           transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
           transformOrigin: 'center center',

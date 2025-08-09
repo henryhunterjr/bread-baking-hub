@@ -160,6 +160,8 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
                 src={post.author.avatar}
                 alt={`${post.author.name} avatar`}
                 className="w-16 h-16 rounded-full"
+                loading="lazy"
+                decoding="async"
               />
               <div>
                 <h3 className="font-semibold text-lg mb-2">About {post.author.name}</h3>

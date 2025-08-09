@@ -254,6 +254,8 @@ export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
                       src={post.hero_image_url}
                       alt={post.title}
                       className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg"
+                      loading="lazy"
+                      decoding="async"
                     />
                   ) : (
                     <div className="w-16 h-16 sm:w-20 sm:h-20 bg-muted rounded-lg flex items-center justify-center">

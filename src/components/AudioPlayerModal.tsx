@@ -16,6 +16,8 @@ const AudioPlayerModal = ({ selectedBook, onClose }: AudioPlayerModalProps) => {
   const [volume, setVolume] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -50,6 +52,31 @@ const AudioPlayerModal = ({ selectedBook, onClose }: AudioPlayerModalProps) => {
       audio.removeEventListener('error', handleError);
     };
   }, [selectedBook]);
+
+  // Accessibility: focus trap and ESC to close
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'Tab' && dialogRef.current) {
+        const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+          'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        } else if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          (last as HTMLElement).focus();
+        }
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    closeBtnRef.current?.focus();
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   const togglePlayPause = () => {
     const audio = audioRef.current;
@@ -102,12 +129,17 @@ const AudioPlayerModal = ({ selectedBook, onClose }: AudioPlayerModalProps) => {
       <div 
         className="bg-background rounded-2xl max-w-2xl w-full shadow-stone animate-scale-in"
         onClick={(e) => e.stopPropagation()}
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="audio-modal-title"
+        aria-describedby="audio-modal-desc"
       >
         <div className="flex flex-col">
           {/* Header */}
           <div className="flex justify-between items-start p-6 pb-4">
             <div className="flex-1">
-              <h1 className="text-2xl font-bold text-foreground mb-1">
+              <h1 id="audio-modal-title" className="text-2xl font-bold text-foreground mb-1">
                 {selectedBook.title}
               </h1>
               <p className="text-lg text-muted-foreground italic">
@@ -117,7 +149,7 @@ const AudioPlayerModal = ({ selectedBook, onClose }: AudioPlayerModalProps) => {
                 By {selectedBook.author}
               </p>
             </div>
-            <Button variant="ghost" size="icon" onClick={onClose}>
+            <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close dialog" ref={closeBtnRef}>
               <X className="h-6 w-6" />
             </Button>
           </div>
@@ -139,7 +171,7 @@ const AudioPlayerModal = ({ selectedBook, onClose }: AudioPlayerModalProps) => {
               <div className="flex-1 w-full">
                 <div className="bg-card rounded-xl p-6 border">
                   <div className="text-center mb-6">
-                    <h3 className="text-lg font-semibold mb-2">Audio Excerpt</h3>
+                    <h3 id="audio-modal-desc" className="text-lg font-semibold mb-2">Audio Excerpt</h3>
                     <p className="text-sm text-muted-foreground">
                       Listen to a preview of this audiobook
                     </p>

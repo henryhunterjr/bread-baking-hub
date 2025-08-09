@@ -306,6 +306,8 @@ const InboxTab = ({ onImportDraft }: InboxTabProps) => {
                         src={url}
                         alt={`AI generated image ${index + 1}`}
                         className="w-20 h-20 object-cover rounded border"
+                        loading="lazy"
+                        decoding="async"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none';
                         }}

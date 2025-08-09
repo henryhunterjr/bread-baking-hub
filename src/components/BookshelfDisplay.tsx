@@ -84,6 +84,8 @@ const BookshelfDisplay = ({ onPreview }: BookshelfDisplayProps) => {
                         filter: 'drop-shadow(2px 4px 8px rgba(0,0,0,0.3))',
                         backfaceVisibility: 'hidden'
                       }}
+                      loading="lazy"
+                      decoding="async"
                     />
                     {/* Book spine shadow */}
                     <div className="absolute top-0 right-0 w-2 h-full bg-black/20 rounded-r transform translate-x-full -skew-y-12 origin-top"></div>
@@ -118,6 +120,8 @@ const BookshelfDisplay = ({ onPreview }: BookshelfDisplayProps) => {
                         filter: 'drop-shadow(2px 4px 8px rgba(0,0,0,0.3))',
                         backfaceVisibility: 'hidden'
                       }}
+                      loading="lazy"
+                      decoding="async"
                     />
                     {/* Book spine shadow */}
                     <div className="absolute top-0 right-0 w-2 h-full bg-black/20 rounded-r transform translate-x-full -skew-y-12 origin-top"></div>

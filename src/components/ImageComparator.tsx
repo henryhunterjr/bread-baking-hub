@@ -48,6 +48,8 @@ const ImageComparator: React.FC<ImageComparatorProps> = ({
             alt="Before"
             className="w-full h-full object-cover"
             style={{ aspectRatio: height ? `${width}/${height}` : aspectRatio }}
+            loading="lazy"
+            decoding="async"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = `https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=${width || 400}&h=${height || 300}&fit=crop`;
@@ -71,6 +73,8 @@ const ImageComparator: React.FC<ImageComparatorProps> = ({
             alt="After"
             className="w-full h-full object-cover"
             style={{ aspectRatio: height ? `${width}/${height}` : aspectRatio }}
+            loading="lazy"
+            decoding="async"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.src = `https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=${width || 400}&h=${height || 300}&fit=crop`;

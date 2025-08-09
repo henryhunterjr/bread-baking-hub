@@ -126,12 +126,13 @@ export const ResponsiveImage = ({
           sizes={sizes}
           alt={alt}
           loading={priority ? 'eager' : loading}
+          decoding="async"
+          fetchPriority={priority ? 'high' : 'auto'}
           className={`w-full h-full object-cover transition-opacity duration-300 ${
             imageLoaded ? 'opacity-100' : 'opacity-0'
           }`}
           onLoad={handleLoad}
           onError={handleError}
-          
           role="img"
         />
       </picture>

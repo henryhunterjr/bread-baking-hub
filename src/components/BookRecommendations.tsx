@@ -200,6 +200,8 @@ export const BookRecommendations = ({
                   src={book.coverImage || `/api/placeholder/200/300`}
                   alt={book.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               

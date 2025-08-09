@@ -99,6 +99,8 @@ export const RecipeQuickAccessDrawer = ({ onRecipeSelect }: RecipeQuickAccessDra
                             src={getImageForRecipe(recipe)}
                             alt={recipe.title}
                             className="w-16 h-16 object-cover rounded-lg ml-4"
+                            loading="lazy"
+                            decoding="async"
                           />
                         )}
                       </div>

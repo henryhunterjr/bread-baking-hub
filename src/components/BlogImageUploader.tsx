@@ -288,6 +288,8 @@ export const BlogImageUploader = () => {
                 src={uploadedImage.publicUrl}
                 alt={uploadedImage.altText}
                 className="max-h-48 mx-auto rounded border"
+                loading="lazy"
+                decoding="async"
               />
               <div className="flex items-center justify-center gap-2">
                 <span className="text-sm text-muted-foreground">
