@@ -30,6 +30,49 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
   const colors = getSeasonalColors(season);
   const SeasonIcon = seasonIcons[season];
 
+  // Servings scaling helpers
+  const getBaseServings = (yieldText?: string) => {
+    if (!yieldText) return 1;
+    const match = yieldText.match(/\d+(?:\.\d+)?/);
+    return match ? Number(match[0]) || 1 : 1;
+  };
+  const baseServings = getBaseServings(recipe.data.yield);
+  const [servings, setServings] = useState<number>(baseServings);
+  const factor = servings > 0 && baseServings > 0 ? servings / baseServings : 1;
+
+  const normalizeFractions = (str: string) =>
+    str.replace(/½/g, '1/2').replace(/¼/g, '1/4').replace(/¾/g, '3/4');
+  const parseQuantity = (input: string): { qty: number | null; rest: string } => {
+    const str = normalizeFractions((input || '').trim());
+    const match = str.match(/^((\d+\s+\d+\/\d+)|(\d+\/\d+)|(\d+(?:\.\d+)?))/);
+    if (!match) return { qty: null, rest: input || '' };
+    const raw = match[1];
+    let qty = 0;
+    if (raw.includes(' ')) {
+      const [whole, frac] = raw.split(' ');
+      const [n, d] = frac.split('/').map(Number);
+      qty = Number(whole) + (n / d);
+    } else if (raw.includes('/')) {
+      const [n, d] = raw.split('/').map(Number);
+      qty = n / d;
+    } else {
+      qty = Number(raw);
+    }
+    const rest = str.slice(match[0].length);
+    return { qty, rest };
+  };
+  const formatQty = (qty: number): string => {
+    const rounded = Math.round(qty * 100) / 100;
+    return String(rounded);
+  };
+  const scaleAmount = (text: string, f: number): string => {
+    if (!text) return '';
+    const { qty, rest } = parseQuantity(text);
+    if (qty === null) return text;
+    const scaled = qty * f;
+    return `${formatQty(scaled)}${rest}`;
+  };
+
   return (
     <Dialog open={!!recipe} onOpenChange={onClose} aria-labelledby="recipe-modal-title">
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" role="dialog" aria-modal="true">
@@ -60,6 +103,20 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
             recipe={recipe}
             className="border-t pt-4"
           />
+
+          {/* Servings Selector */}
+          <div className="mt-4 flex items-center gap-3">
+            <label htmlFor="servings-input" className="text-sm text-muted-foreground">Servings</label>
+            <input
+              id="servings-input"
+              type="number"
+              min={1}
+              value={servings}
+              onChange={(e) => setServings(Math.max(1, Number(e.target.value) || baseServings))}
+              className="h-9 w-24 rounded-md border border-border bg-background px-2 text-foreground"
+            />
+            <span className="text-xs text-muted-foreground">Base: {baseServings}</span>
+          </div>
         </DialogHeader>
         
         <div className="space-y-6">
@@ -147,10 +204,10 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                   <div key={index} className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg" role="listitem">
                     <span className="font-medium">{ingredientName}</span>
                     <div className="text-right">
-                      {metric && <div className="font-semibold">{metric}</div>}
-                      {volume && <div className="text-sm text-muted-foreground">({volume})</div>}
+                      {metric && <div className="font-semibold">{scaleAmount(metric, factor)}</div>}
+                      {volume && <div className="text-sm text-muted-foreground">({scaleAmount(volume, factor)})</div>}
                       {!metric && !volume && measurements && (
-                        <div className="font-semibold">{measurements}</div>
+                        <div className="font-semibold">{scaleAmount(measurements, factor)}</div>
                       )}
                     </div>
                   </div>

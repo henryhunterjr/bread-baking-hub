@@ -10,7 +10,7 @@ const Guides = () => {
     {
       title: "Sourdough Starter Guide",
       description: "Learn how to create and maintain a healthy sourdough starter from scratch.",
-      link: "/vitale-starter",
+      link: "https://sourdough-starter-master-kxo6qxb.gamma.site/",
       difficulty: "Beginner"
     },
     {
@@ -76,7 +76,11 @@ const Guides = () => {
                   </CardHeader>
                   <CardContent className="pt-0">
                     <Button asChild className="w-full">
-                      <Link to={guide.link}>View Guide</Link>
+                      {guide.link.startsWith('http') ? (
+                        <a href={guide.link} target="_self" rel="noopener noreferrer">View Guide</a>
+                      ) : (
+                        <Link to={guide.link}>View Guide</Link>
+                      )}
                     </Button>
                   </CardContent>
                 </Card>

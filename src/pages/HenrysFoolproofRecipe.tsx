@@ -119,7 +119,7 @@ const HenrysFoolproofRecipe = () => {
   ];
 
   const resourceLinks = [
-    { url: "#", text: "Sourdough Starter Guide", description: "Learn to keep your starter strong.", external: false },
+    { url: "https://sourdough-starter-master-kxo6qxb.gamma.site/", text: "Sourdough Starter Guide", description: "Learn to keep your starter strong.", external: true },
     { url: "#", text: "Brød & Taylor Baking Shell", description: "My favorite tool for consistent results.", external: false },
     { url: "https://bit.ly/3srdSYS", text: "Join the Facebook Group", description: "Connect with thousands of bakers for tips and feedback!", external: true },
     { url: "#", text: "My sourdough baking process", description: "", external: false }
