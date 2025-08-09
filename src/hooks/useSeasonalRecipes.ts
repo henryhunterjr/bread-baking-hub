@@ -420,6 +420,99 @@ export const useSeasonalRecipes = () => {
     ensureDinnerRolls();
   }, [loading, recipes]);
 
+  // One-time ensure Henry's Perfect Banana Nut Bread is present
+  useEffect(() => {
+    const ensureBananaBread = async () => {
+      if (loading) return;
+      const targetSlug = 'henrys-perfect-banana-nut-bread';
+      if (recipes.some(r => r.slug === targetSlug)) return;
+      try {
+        const data: SeasonalRecipeData = {
+          season: 'Fall',
+          holidays: [],
+          featuredDates: { start: '09-01', end: '12-31' },
+          category: ['quick bread'],
+          occasion: ['breakfast', 'snack', 'brunch'],
+          prepTime: '15 minutes',
+          bakeTime: '60–65 minutes',
+          totalTime: '1 hour 20 minutes',
+          difficulty: 'beginner',
+          yield: '1 loaf (12 slices)',
+          ingredients: [
+            'Very ripe bananas, mashed — 400g (3–4 large)',
+            'All-purpose flour — 280g (2¼ cups)',
+            'Unsalted butter, melted (brown butter) — 115g (½ cup)',
+            'Brown sugar, packed — 150g (¾ cup)',
+            'Granulated sugar — 50g (¼ cup)',
+            'Large egg, beaten — 1',
+            'Vanilla extract — 8g (1½ tsp)',
+            'Baking soda — 5g (1 tsp)',
+            'Salt — 3g (½ tsp)',
+            'Ground cinnamon — 2g (½ tsp)',
+            'Walnuts, roughly chopped — 100g (¾ cup)',
+            'Optional topping: walnuts 50g (⅓ cup), brown sugar 25g (2 Tbsp), butter 15g (1 Tbsp)',
+          ],
+          method: [
+            'Preheat oven to 350°F (175°C). Grease and parchment‑line a 9×5‑inch loaf pan.',
+            'Toast walnuts 5–7 minutes until fragrant; cool.',
+            'Mash bananas until mostly smooth. Brown the butter; cool slightly.',
+            'Whisk bananas with brown butter, brown sugar, granulated sugar, egg, and vanilla.',
+            'In a separate bowl whisk flour, baking soda, salt, and cinnamon.',
+            'Fold dry into wet just until no dry flour remains; do not overmix.',
+            'Fold in toasted walnuts (reserve some for topping if desired).',
+            'Pour into pan. Optional: mix topping and sprinkle over batter.',
+            'Bake 60–65 minutes until a toothpick has a few moist crumbs and internal temp is ~200°F (93°C).',
+            'Cool 10 minutes in pan, then lift out and cool completely before slicing.',
+          ],
+          notes: 'Use very ripe bananas and brown butter for deep flavor. Avoid overmixing to keep the crumb tender.',
+          equipment: [
+            '9×5‑inch loaf pan',
+            'Large mixing bowl',
+            'Medium bowl',
+            'Kitchen scale',
+            'Measuring cups and spoons',
+            'Wire whisk',
+            'Rubber spatula',
+            'Wire cooling rack',
+          ],
+        };
+
+        const imageUrl = getRecipeImage(targetSlug, undefined);
+        const { data: res, error } = await supabase.functions.invoke('upsert-recipe', {
+          body: {
+            title: "Henry's Perfect Banana Nut Bread",
+            slug: targetSlug,
+            data,
+            imageUrl,
+            tags: ['banana bread','quick bread','walnut','brown butter'],
+            folder: 'Seasonal',
+            isPublic: true,
+          },
+        });
+        if (error) {
+          console.error('Failed to upsert Banana Nut Bread:', error);
+          return;
+        }
+        const created = res?.data;
+        const newRecipe: SeasonalRecipe = {
+          id: created?.id || crypto.randomUUID(),
+          title: "Henry's Perfect Banana Nut Bread",
+          slug: targetSlug,
+          folder: 'Seasonal',
+          tags: ['banana bread','quick bread','walnut','brown butter'],
+          is_public: true,
+          image_url: imageUrl,
+          created_at: created?.created_at || new Date().toISOString(),
+          data,
+        };
+        setRecipes(prev => [newRecipe, ...prev]);
+      } catch (e) {
+        console.error('ensureBananaBread error', e);
+      }
+    };
+    ensureBananaBread();
+  }, [loading, recipes]);
+
   // Filter recipes based on current filters
   const filteredRecipes = recipes.filter(recipe => {
     if (selectedSeason !== 'All' && recipe.data.season !== selectedSeason) return false;
