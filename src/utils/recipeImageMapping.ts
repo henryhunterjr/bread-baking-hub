@@ -18,7 +18,7 @@ export const recipeImageMapping: Record<string, string> = {
   
   // SOURDOUGH BREADS - Use sourdough images
   "basic-sourdough-loaf": "/lovable-uploads/3cab5e17-c744-43cc-8db7-b229b06d7b04.png",
-  "henrys-whole-wheat-sourdough-recipe": "/lovable-uploads/f3d58d11-7ecf-40f5-938e-efd26e63b99e.png",
+  "henrys-whole-wheat-sourdough-recipe": "/lovable-uploads/e0a7bf8b-0956-4177-9569-5c388a442be1.png",
   "apricot-almond-sourdough": "/lovable-uploads/bb7c5e63-3ec6-4f3e-9fda-52740b5db7e7.png",
   "cherry-vanilla-sourdough": "/lovable-uploads/8c576450-cbf8-47f0-a751-48a4efc4d7d3.png",
   "light-sourdough-batard": "/lovable-uploads/fd01d2cb-fc25-444f-b935-8125023ad76e.png",
