@@ -84,6 +84,60 @@ const Books = () => {
     }
   };
 
+  // Additional structured data for author, featured book, and product listings
+  const siteUrl = "https://bread-baking-hub.vercel.app";
+  const ogImageUrl = `${siteUrl}${bookData.journey.coverImage}`;
+
+  const authorPersonSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Henry Hunter",
+    url: `${siteUrl}/about`,
+    image: `${siteUrl}/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png`,
+    jobTitle: "Master Baker & Author",
+    sameAs: [
+      "https://www.youtube.com/@bakinggreatbread",
+      "https://www.instagram.com/bakinggreatbread"
+    ]
+  };
+
+  const breadJourney = bookData.journey;
+  const breadJourneyBookSchema = breadJourney ? {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    name: breadJourney.title,
+    alternateName: breadJourney.subtitle,
+    author: { "@type": "Person", name: breadJourney.author },
+    image: `${siteUrl}${breadJourney.coverImage}`,
+    inLanguage: "en",
+    bookFormat: "EBook",
+    description: breadJourney.description,
+    publisher: { "@type": "Organization", name: "Baking Great Bread" },
+    url: `${canonicalUrl}#${breadJourney.id}`,
+    workExample: breadJourney.sampleUrl ? {
+      "@type": "Book",
+      url: breadJourney.sampleUrl,
+      bookFormat: "EBook"
+    } : undefined
+  } : undefined;
+
+  const productSchemas = ['journey', 'sourdough', 'loaflie', 'market']
+    .filter((id) => (bookData as any)[id])
+    .map((id) => {
+      const b = (bookData as any)[id];
+      return {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: b.title,
+        description: b.description,
+        image: `${siteUrl}${b.coverImage}`,
+        brand: { "@type": "Brand", name: "Baking Great Bread" },
+        sku: b.id,
+        url: `${canonicalUrl}#${b.id}`,
+        category: "Books"
+      };
+    });
+
   return (
     <>
       <Helmet>
@@ -94,11 +148,31 @@ const Books = () => {
         <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={ogImageUrl} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: sanitizeStructuredData(collectionSchema) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: sanitizeStructuredData(authorPersonSchema) }}
+        />
+        {breadJourneyBookSchema && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: sanitizeStructuredData(breadJourneyBookSchema) }}
+          />
+        )}
+        {productSchemas && productSchemas.length > 0 && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: sanitizeStructuredData(productSchemas) }}
+          />
+        )}
       </Helmet>
       <div className="bg-background text-foreground min-h-screen">
         <Header />

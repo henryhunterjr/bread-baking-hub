@@ -70,6 +70,14 @@ const Contact = () => {
       <Helmet>
         <title>Contact Henry Hunter - Bread Baking Expert | Baking Great Bread</title>
         <meta name="description" content="Get in touch with Henry Hunter for bread baking questions, coaching, or collaborations. Personal responses within 24 hours." />
+        <link rel="canonical" href="https://bread-baking-hub.vercel.app/contact" />
+        <meta property="og:title" content="Contact Henry Hunter - Bread Baking Expert | Baking Great Bread" />
+        <meta property="og:description" content="Get in touch with Henry Hunter for bread baking questions, coaching, or collaborations. Personal responses within 24 hours." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bread-baking-hub.vercel.app/contact" />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
       </Helmet>
       
       <div className="min-h-screen bg-background">

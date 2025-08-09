@@ -50,6 +50,14 @@ const Guides = () => {
       <Helmet>
         <title>Bread Baking Guides - Step by Step Tutorials | Baking Great Bread</title>
         <meta name="description" content="Comprehensive bread baking guides and tutorials. Learn sourdough, artisan breads, and traditional techniques with expert instruction." />
+        <link rel="canonical" href="https://bread-baking-hub.vercel.app/guides" />
+        <meta property="og:title" content="Bread Baking Guides - Step by Step Tutorials | Baking Great Bread" />
+        <meta property="og:description" content="Comprehensive bread baking guides and tutorials. Learn sourdough, artisan breads, and traditional techniques with expert instruction." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bread-baking-hub.vercel.app/guides" />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
       </Helmet>
       
       <div className="min-h-screen bg-background">

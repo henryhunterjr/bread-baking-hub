@@ -28,6 +28,14 @@ const Challenges = () => {
       <Helmet>
         <title>Monthly Baking Challenges - Join Our Community | Baking Great Bread</title>
         <meta name="description" content="Join our monthly baking challenges and improve your skills with our supportive community. New recipes and techniques every month." />
+        <link rel="canonical" href="https://bread-baking-hub.vercel.app/challenges" />
+        <meta property="og:title" content="Monthly Baking Challenges - Join Our Community | Baking Great Bread" />
+        <meta property="og:description" content="Join our monthly baking challenges and improve your skills with our supportive community. New recipes and techniques every month." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bread-baking-hub.vercel.app/challenges" />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
       </Helmet>
       
       <div className="min-h-screen bg-background">

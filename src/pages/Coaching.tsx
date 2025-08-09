@@ -50,6 +50,14 @@ const Coaching = () => {
       <Helmet>
         <title>Personal Bread Baking Coaching with Henry Hunter | Baking Great Bread</title>
         <meta name="description" content="Get personalized bread baking coaching from expert Henry Hunter. One-on-one sessions for beginners to advanced bakers." />
+        <link rel="canonical" href="https://bread-baking-hub.vercel.app/coaching" />
+        <meta property="og:title" content="Personal Bread Baking Coaching with Henry Hunter | Baking Great Bread" />
+        <meta property="og:description" content="Get personalized bread baking coaching from expert Henry Hunter. One-on-one sessions for beginners to advanced bakers." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://bread-baking-hub.vercel.app/coaching" />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
       </Helmet>
       
       <div className="min-h-screen bg-background">

@@ -116,20 +116,21 @@ const Blog = () => {
         <title>Blog - Baking Great Bread</title>
         <meta name="description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog. Learn troubleshooting methods, seasonal adjustments, and the science behind perfect bread." />
         <meta name="keywords" content="bread baking blog, sourdough tips, bread troubleshooting, baking techniques, Henry's bread recipes" />
+        <link rel="canonical" href="https://bread-baking-hub.vercel.app/blog" />
         
         {/* Open Graph meta tags */}
         <meta property="og:title" content="Blog - Baking Great Bread" />
         <meta property="og:description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog. Learn troubleshooting methods, seasonal adjustments, and the science behind perfect bread." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://bread-baking-hub.vercel.app/blog" />
-        <meta property="og:image" content="/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png" />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
         <meta property="og:site_name" content="Baking Great Bread" />
         
         {/* Twitter Card meta tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Blog - Baking Great Bread" />
         <meta name="twitter:description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog." />
-        <meta name="twitter:image" content="/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png" />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
         
         {/* RSS Feed Link */}
         <link rel="alternate" type="application/rss+xml" title="Baking Great Bread RSS Feed" href="https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/rss-feed" />
