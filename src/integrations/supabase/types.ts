@@ -305,6 +305,48 @@ export type Database = {
         }
         Relationships: []
       }
+      qa_feedback: {
+        Row: {
+          body: string | null
+          created_at: string
+          created_by: string
+          id: string
+          metadata: Json
+          severity: string
+          status: string
+          target_id: string | null
+          target_type: string
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          created_by: string
+          id?: string
+          metadata?: Json
+          severity?: string
+          status?: string
+          target_id?: string | null
+          target_type: string
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          created_by?: string
+          id?: string
+          metadata?: Json
+          severity?: string
+          status?: string
+          target_id?: string | null
+          target_type?: string
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       recipe_versions: {
         Row: {
           created_at: string
@@ -466,6 +508,30 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -475,9 +541,16 @@ export type Database = {
         Args: { recipe_title: string; recipe_user_id: string }
         Returns: string
       }
+      has_role: {
+        Args: {
+          _user_id: string
+          _role: Database["public"]["Enums"]["app_role"]
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user" | "qa_reviewer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -604,6 +677,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user", "qa_reviewer"],
+    },
   },
 } as const
