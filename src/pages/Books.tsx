@@ -14,6 +14,8 @@ import BreadJourneyFeatured from "@/components/BreadJourneyFeatured";
 import BookPreviewModal from "@/components/BookPreviewModal";
 import AudioPlayerModal from "@/components/AudioPlayerModal";
 import { bookData } from "@/data/books-data";
+import { Helmet } from 'react-helmet-async';
+import { sanitizeStructuredData } from '@/utils/sanitize';
 
 const Books = () => {
   const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
@@ -53,11 +55,55 @@ const Books = () => {
     }
   };
 
+  // SEO metadata
+  const canonicalUrl = "https://bread-baking-hub.vercel.app/books";
+  const metaTitle = "Books by Henry Hunter Jr – Baking Great Bread";
+  const metaDescription = "Explore Henry Hunter Jr’s bread books: Bread: A Journey, Sourdough for the Rest of Us, and more. Previews, audio excerpts, and purchase links.";
+
+  // Structured data for CollectionPage with ItemList of books
+  const booksList = Object.values(bookData);
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Books by Henry Hunter Jr",
+    description: metaDescription,
+    url: canonicalUrl,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: booksList.map((b, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "Book",
+          name: b.title,
+          author: { "@type": "Person", name: b.author },
+          image: b.coverImage,
+          url: `${canonicalUrl}#${b.id}`
+        }
+      }))
+    }
+  };
+
   return (
-    <div className="bg-background text-foreground min-h-screen">
-      <Header />
-      
-      {/* Hero Slideshow */}
+    <>
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: sanitizeStructuredData(collectionSchema) }}
+        />
+      </Helmet>
+      <div className="bg-background text-foreground min-h-screen">
+        <Header />
+        <main id="main-content" role="main" tabIndex={-1}>
+
       <BooksHeroSlideshow onPreview={(slideId) => showPreview(slideId)} />
 
       {/* Author Reflection Block 1 */}
@@ -125,8 +171,10 @@ const Books = () => {
         onClose={closeAudioPlayer}
       />
 
+      </main>
       <Footer />
     </div>
+    </>
   );
 };
 
