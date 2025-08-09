@@ -118,7 +118,26 @@ export const useSeasonalRecipes = () => {
             };
           }) as SeasonalRecipe[];
 
-          // Deduplicate by slug (keep most recent by created_at)
+          // Find duplicates by slug
+          const counts = typedRecipes.reduce<Record<string, number>>((acc, r) => {
+            const key = r.slug || r.title;
+            acc[key] = (acc[key] || 0) + 1;
+            return acc;
+          }, {});
+          const dupSlugs = Object.keys(counts).filter(k => counts[k] > 1);
+
+          // Fire-and-forget cleanup of duplicates in DB (keep newest)
+          if (dupSlugs.length > 0) {
+            try {
+              await supabase.functions.invoke('cleanup-duplicate-recipes', {
+                body: { slugs: dupSlugs }
+              });
+            } catch (e) {
+              console.warn('Duplicate cleanup invoke failed', e);
+            }
+          }
+
+          // Deduplicate locally by slug (keep most recent by created_at)
           const dedupedMap = new Map<string, SeasonalRecipe>();
           typedRecipes.forEach(r => {
             const key = r.slug || r.title;
