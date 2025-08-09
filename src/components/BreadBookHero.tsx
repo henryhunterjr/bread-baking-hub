@@ -44,7 +44,7 @@ export const BreadBookHero = () => {
                     className="flex-1"
                     asChild
                   >
-                    <a href="https://www.amazon.com/dp/B0CH2D2GDB" target="_blank" rel="noopener noreferrer">
+                    <a href="https://a.co/d/fDyKdyp" target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="mr-2 h-4 w-4" />
                       Buy on Amazon
                     </a>
@@ -66,7 +66,7 @@ export const BreadBookHero = () => {
           {/* Right side - Book image */}
           <div className="relative">
             <ResponsiveImage 
-              src="/lovable-uploads/f5ba460b-77f5-486f-8ec9-b09297a70958.png"
+              src="/lovable-uploads/6cd3602b-f737-4c3d-a3f4-772cd8654362.png"
               alt="Bread: A Journey Through History, Science, Art, and Community by Henry Hunter"
               className="rounded-2xl shadow-warm w-full animate-fade-in"
               loading="lazy"

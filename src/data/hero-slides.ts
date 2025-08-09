@@ -1,6 +1,6 @@
 import { HeroSlide } from "@/types/hero-slide";
 import heroYeastWater from "/lovable-uploads/04a1e339-f8be-41dd-b672-b74d8c70c1bd.png";
-import heroBreadJourney from "/lovable-uploads/bc026f92-81e2-4d16-8328-a13f53dc666f.png";
+import heroBreadJourney from "/lovable-uploads/6cd3602b-f737-4c3d-a3f4-772cd8654362.png";
 import heroSourdoughRest from "/lovable-uploads/2a175afa-69e3-4c4f-b6b1-528bd0634eb9.png";
 import heroVitaleMastery from "/lovable-uploads/47fc6d49-8e46-4eb3-a2df-2a1fc47ac10c.png";
 import heroOvenMarket from "/lovable-uploads/bf859aa6-8525-4149-afdd-62597c742ef7.png";
@@ -30,7 +30,7 @@ export const heroSlides: HeroSlide[] = [
     description: "Explore bread's profound impact on human civilization. From ancient grains to modern artisan techniques, this comprehensive guide weaves together history, science, and practical baking wisdom.",
     backgroundImage: heroBreadJourney,
     overlayPosition: "left",
-    amazonUrl: "https://www.amazon.com/dp/B0CH2D2GDB",
+    amazonUrl: "https://a.co/d/fDyKdyp",
     previewContent: `
       <h2>Bread: A Journey - Preview</h2>
       <h3>Introduction: The Universal Language of Bread</h3>

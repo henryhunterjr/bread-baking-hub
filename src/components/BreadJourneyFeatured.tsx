@@ -14,7 +14,7 @@ const BreadJourneyFeatured = ({ onListen }: BreadJourneyFeaturedProps) => {
           {/* Background Image */}
           <div 
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/lovable-uploads/3dd9d3e1-4062-40cc-82b2-41f79418dcdb.png)' }}
+            style={{ backgroundImage: 'url(/lovable-uploads/6cd3602b-f737-4c3d-a3f4-772cd8654362.png)' }}
           />
           
           {/* Overlay */}
@@ -49,7 +49,7 @@ const BreadJourneyFeatured = ({ onListen }: BreadJourneyFeaturedProps) => {
                   className="bg-white/90 hover:bg-white text-gray-900 border-0 shadow-lg"
                   asChild
                 >
-                  <a href="https://www.amazon.com/dp/B0DJQWN4FM" target="_blank" rel="noopener noreferrer">
+                  <a href="https://a.co/d/fDyKdyp" target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="mr-2 h-5 w-5" />
                     Buy Now
                   </a>
