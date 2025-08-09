@@ -2,12 +2,14 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { PDFDocument } from "https://cdn.skypack.dev/pdf-lib@1.17.1";
 import { createCanvas } from "https://deno.land/x/canvas@v1.4.1/mod.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
 serve(async (req) => {
@@ -39,6 +41,39 @@ serve(async (req) => {
           status: 400 
         }
       );
+    }
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+    if (!allowedTypes.includes(file.type)) {
+      return new Response(
+        JSON.stringify({ error: 'Unsupported file type. Please upload JPG, PNG, or PDF.' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
+    }
+
+    // Persist a temporary copy to Storage for debugging/auditing
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    );
+
+    const ext = file.name.split('.').pop() || (file.type === 'application/pdf' ? 'pdf' : 'bin');
+    const uploadPath = `raw-uploads/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+    let uploadedUrl = '';
+
+    try {
+      const { data: up, error: upErr } = await supabase.storage
+        .from('recipe-uploads')
+        .upload(uploadPath, file, { cacheControl: '3600', upsert: false });
+      if (!upErr && up?.path) {
+        const { data: pub } = supabase.storage.from('recipe-uploads').getPublicUrl(up.path);
+        uploadedUrl = pub.publicUrl;
+      } else if (upErr) {
+        console.warn('Temp upload failed (non-fatal):', upErr.message);
+      }
+    } catch (e) {
+      console.warn('Temp upload exception (non-fatal):', e);
     }
 
     let base64 = '';
@@ -146,7 +181,7 @@ serve(async (req) => {
       const recipe = JSON.parse(cleanedText);
       console.log('Successfully parsed recipe:', recipe.title);
       
-      return new Response(JSON.stringify({ recipe }), {
+      return new Response(JSON.stringify({ recipe, uploadedUrl }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     } catch (parseError) {
