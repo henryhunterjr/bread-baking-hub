@@ -1,5 +1,5 @@
 // Updated recipeImageMapping.ts with working WordPress URLs
-import henrysWholeWheatSourdough from '@/assets/recipes/henrys-whole-wheat-sourdough.webp';
+
 export const recipeImageMapping: Record<string, string> = {
   // FOCACCIA RECIPES - Use focaccia images
   "lemon-thyme-focaccia": "https://bakinggreatbread.blog/wp-content/uploads/2023/08/img_5045.jpg",
@@ -18,7 +18,7 @@ export const recipeImageMapping: Record<string, string> = {
   
   // SOURDOUGH BREADS - Use sourdough images
   "basic-sourdough-loaf": "/lovable-uploads/3cab5e17-c744-43cc-8db7-b229b06d7b04.png",
-  "henrys-whole-wheat-sourdough-recipe": henrysWholeWheatSourdough,
+  "henrys-whole-wheat-sourdough-recipe": "/lovable-uploads/f3d58d11-7ecf-40f5-938e-efd26e63b99e.png",
   "apricot-almond-sourdough": "/lovable-uploads/bb7c5e63-3ec6-4f3e-9fda-52740b5db7e7.png",
   "cherry-vanilla-sourdough": "/lovable-uploads/8c576450-cbf8-47f0-a751-48a4efc4d7d3.png",
   "light-sourdough-batard": "/lovable-uploads/fd01d2cb-fc25-444f-b935-8125023ad76e.png",
@@ -98,7 +98,7 @@ export function getRecipeImage(slug: string, imageUrl?: string | null): string {
   console.log('🔍 getRecipeImage DEBUG:', { slug, imageUrl });
   
   // CRITICAL: For problematic recipes, ALWAYS use mapping first
-  const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread'];
+  const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread', 'henrys-whole-wheat-sourdough-recipe'];
   
   if (problematicRecipes.includes(slug) && recipeImageMapping[slug]) {
     console.log('✅ FORCING mapping URL for problematic recipe', slug, ':', recipeImageMapping[slug]);
