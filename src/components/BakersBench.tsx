@@ -93,6 +93,35 @@ const BakersBench = () => {
       thumbnail: "/lovable-uploads/c1225388-44e4-4de5-a0c7-15ba9198e7f7.png",
       link: "https://february-baking-challeng-2xj44f0.gamma.site/",
       type: "seasonal"
+    },
+    // New Gamma pages (temporary thumbnails from your uploads; update links if different)
+    {
+      title: "Give Bread Instead (Holiday Challenge)",
+      description: "This Holiday Season, give homemade bread as the perfect gift.",
+      thumbnail: "/lovable-uploads/52f625dc-3e68-4315-b686-b4a28e6ec226.png",
+      link: "#", // TODO: replace with published Gamma page URL
+      type: "seasonal"
+    },
+    {
+      title: "Sourdough Conversion Challenge",
+      description: "Convert your favorite yeast recipes to sourdough.",
+      thumbnail: "/lovable-uploads/09c8881c-d626-4390-a889-bed6bac99dfd.png",
+      link: "#", // TODO: replace with published Gamma page URL
+      type: "sourdough"
+    },
+    {
+      title: "August Challenge – #BlueRibbon Bake",
+      description: "County fair bakes worthy of a blue ribbon.",
+      thumbnail: "/lovable-uploads/8d5f316f-d7b0-464e-8306-4db6ea04f0fe.png",
+      link: "#", // TODO: replace with published Gamma page URL
+      type: "seasonal"
+    },
+    {
+      title: "February 2025 Challenge #Love",
+      description: "Bake with heart—share your #Love themed bakes.",
+      thumbnail: "/lovable-uploads/93086385-e498-4bde-999e-d18bbb9471f1.png",
+      link: "#", // TODO: replace with published Gamma page URL
+      type: "seasonal"
     }
   ];
 
