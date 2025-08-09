@@ -7,10 +7,13 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
+  cards?: Array<{ id: string; title: string; excerpt: string; url: string }>;
+  meta?: { hasMore?: boolean };
 }
 
 interface ChatMessageProps {
   message: Message;
+  onShowMore?: () => void;
 }
 
 export const ChatMessage = ({ message }: ChatMessageProps) => {

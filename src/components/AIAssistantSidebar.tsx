@@ -22,7 +22,7 @@ interface AIAssistantSidebarProps {
   onToggle: () => void;
 }
 
-type AssistantMode = 'general' | 'tips' | 'substitutions' | 'scaling' | 'troubleshooting';
+type AssistantMode = 'general' | 'tips' | 'substitutions' | 'scaling' | 'troubleshooting' | 'concierge';
 
 export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssistantSidebarProps) => {
   const isMobile = useIsMobile();
@@ -258,6 +258,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="general">General Help</SelectItem>
+              <SelectItem value="concierge">Concierge (Site & Blog)</SelectItem>
               <SelectItem value="tips">Tips & Techniques</SelectItem>
               <SelectItem value="substitutions">Substitutions</SelectItem>
               <SelectItem value="scaling">Recipe Scaling</SelectItem>
@@ -303,7 +304,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
               )}
               
               {messages.map((message) => (
-                <ChatMessage key={message.id} message={message} />
+                <ChatMessage key={message.id} message={message} onShowMore={() => handleSend('show more')} />
               ))}
               
               {isLoading && (
