@@ -611,6 +611,106 @@ export const useSeasonalRecipes = () => {
     ensureMarbledSourdough();
   }, [loading, recipes]);
 
+  // One-time ensure Henry's Perfect Cinnamon Swirl Bread is present
+  useEffect(() => {
+    const ensureCinnamonSwirl = async () => {
+      if (loading) return;
+      const targetSlug = 'henrys-perfect-cinnamon-swirl-bread';
+      if (recipes.some(r => r.slug === targetSlug)) return;
+      try {
+        const data: SeasonalRecipeData = {
+          season: 'Fall',
+          holidays: [],
+          featuredDates: { start: '09-01', end: '11-30' },
+          category: ['yeast bread', 'enriched'],
+          occasion: ['breakfast', 'brunch', 'tea time'],
+          prepTime: '30 min active, ~3 hrs rising',
+          bakeTime: '35–40 minutes',
+          totalTime: 'About 4 hours',
+          difficulty: 'intermediate',
+          yield: '1 loaf (12 slices)',
+          ingredients: [
+            'For the Enriched Dough:',
+            'Bread flour — 500g (4 cups)',
+            'Whole milk, warmed — 240g (1 cup)',
+            'Active dry yeast — 7g (2¼ tsp)',
+            'Granulated sugar — 50g (¼ cup)',
+            'Unsalted butter, softened — 60g (4 Tbsp)',
+            'Large egg — 1',
+            'Salt — 8g (1½ tsp)',
+            'Vanilla extract — 5g (1 tsp)',
+            'For the Cinnamon Filling (anti‑separation):',
+            'Light brown sugar, packed — 100g (½ cup)',
+            'Ground cinnamon — 15g (2 Tbsp)',
+            'All‑purpose flour — 15g (2 Tbsp)',
+            'Unsalted butter, melted — 30g (2 Tbsp)',
+            'Vanilla extract — 2g (½ tsp)',
+            'Pinch of salt — 1g (pinch)',
+            'For the Egg Wash:',
+            'Large egg — 1',
+            'Heavy cream or milk — 15g (1 Tbsp)'
+          ],
+          method: [
+            'Activate yeast: Warm milk to 105–110°F (40–43°C). Mix with yeast and 1 Tbsp sugar; rest 5–10 min until foamy.',
+            'Make dough: In mixer, combine flour, remaining sugar, and salt. Add yeast mixture, softened butter, egg, and vanilla. Knead 8–10 min to a smooth, elastic dough (slightly tacky); windowpane test.',
+            'First rise: Place in greased bowl, cover, and let rise 1–1.5 hours until doubled.',
+            'Prepare filling: Whisk brown sugar, cinnamon, flour, and salt. Stir in melted butter and vanilla to form a spreadable paste.',
+            'Roll and fill: Roll dough to 12×18 in rectangle. Spread filling evenly, leaving a 1‑inch clean border on the far long edge; brush border lightly with water.',
+            'Roll with tension: Starting from the near long edge, roll tightly but gently, maintaining even pressure. Pinch seam to seal; place seam‑side down.',
+            'Pan shape: Transfer to a greased 9×5‑inch loaf pan; tuck ends under neatly.',
+            'Second rise: Cover and proof 45–60 min until loaf crowns rim; poke test springs back slowly.',
+            'Glaze and bake: Preheat oven to 350°F (175°C). Brush with egg wash; bake 35–40 min until deep golden and 190°F (88°C) internal.',
+            'Cool completely: Cool 10 min in pan, then on a wire rack until fully cool before slicing to keep the swirl intact.'
+          ],
+          notes: 'Flour in the filling binds moisture and prevents gaps; slightly tacky dough seals better; maintain rolling tension and allow full cooling before slicing.',
+          equipment: [
+            'Stand mixer with dough hook',
+            'Large mixing bowl',
+            '9×5‑inch loaf pan',
+            'Rolling pin',
+            'Bench scraper',
+            'Kitchen scale',
+            'Clean kitchen towels',
+            'Pastry brush'
+          ],
+        };
+
+        const imageUrl = getRecipeImage(targetSlug, undefined);
+        const { data: res, error } = await supabase.functions.invoke('upsert-recipe', {
+          body: {
+            title: "Henry's Perfect Cinnamon Swirl Bread",
+            slug: targetSlug,
+            data,
+            imageUrl,
+            tags: ['cinnamon','swirl','enriched','yeast bread'],
+            folder: 'Seasonal',
+            isPublic: true,
+          },
+        });
+        if (error) {
+          console.error('Failed to upsert Cinnamon Swirl Bread:', error);
+          return;
+        }
+        const created = res?.data;
+        const newRecipe: SeasonalRecipe = {
+          id: created?.id || crypto.randomUUID(),
+          title: "Henry's Perfect Cinnamon Swirl Bread",
+          slug: targetSlug,
+          folder: 'Seasonal',
+          tags: ['cinnamon','swirl','enriched','yeast bread'],
+          is_public: true,
+          image_url: imageUrl,
+          created_at: created?.created_at || new Date().toISOString(),
+          data,
+        };
+        setRecipes(prev => [newRecipe, ...prev]);
+      } catch (e) {
+        console.error('ensureCinnamonSwirl error', e);
+      }
+    };
+    ensureCinnamonSwirl();
+  }, [loading, recipes]);
+
   // Filter recipes based on current filters
   const filteredRecipes = recipes.filter(recipe => {
     if (selectedSeason !== 'All' && recipe.data.season !== selectedSeason) return false;
