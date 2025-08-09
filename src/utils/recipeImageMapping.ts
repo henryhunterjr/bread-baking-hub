@@ -84,7 +84,7 @@ export const recipeImageMapping: Record<string, string> = {
   "hanukkah-challah": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg",
   "special-round-challah": "/lovable-uploads/39d28f2a-71e4-4711-8c5e-6d0542d82c1b.png",
   "easter-paska": "/lovable-uploads/6eded5fa-0dd5-4b7b-b7fc-108afbc3f96e.png",
-  "holiday-star-cinnamon-bread": "/lovable-uploads/2f3f1e90-1a12-4b8a-bd83-8e8b8f95c7e7.png"
+  "holiday-star-cinnamon-bread": "/lovable-uploads/d7809864-6aac-432c-98e6-a38878473e1b.png"
 };
 
 // Fallback images:

@@ -57,7 +57,10 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             onError={(e) => {
               console.error("Image failed to load for:", recipe.slug, "URL:", e.currentTarget.src);
-              e.currentTarget.src = "https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/01/henry-s-foolproof-sourdough-loaf.png";
+              const fallback = getRecipeImage(recipe.slug, undefined);
+              if (e.currentTarget.src !== fallback) {
+                e.currentTarget.src = fallback;
+              }
             }}
           />
           
