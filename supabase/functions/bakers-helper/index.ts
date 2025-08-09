@@ -65,8 +65,14 @@ serve(async (req) => {
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error?.message || 'Failed to get AI response');
+      // Some upstream failures are not JSON; capture safely
+      const errorText = await response.text();
+      try {
+        const errorJson = JSON.parse(errorText);
+        throw new Error(errorJson.error?.message || 'Failed to get AI response');
+      } catch (_) {
+        throw new Error(errorText || 'Failed to get AI response');
+      }
     }
 
     const data = await response.json();
