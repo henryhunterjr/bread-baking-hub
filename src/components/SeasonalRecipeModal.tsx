@@ -65,14 +65,10 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
         <div className="space-y-6">
           {/* Recipe Image */}
           <div className="relative h-64 rounded-lg overflow-hidden">
-            <ResponsiveImage
+            <ZoomableImage
               src={getRecipeImage(recipe.slug, recipe.image_url)}
               alt={recipe.title}
               className="w-full h-full"
-              priority={false}
-              onError={() => {
-                // Fallback handled by ResponsiveImage component
-              }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           </div>
