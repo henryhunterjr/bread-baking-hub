@@ -47,6 +47,8 @@ const GithubReadme = lazy(() => import("./pages/GithubReadme"));
 const GithubWriteTest = lazy(() => import("./pages/GithubWriteTest"));
 const GoRedirect = lazy(() => import("./pages/GoRedirect"));
 const LazyAIAssistantSidebar = lazy(() => import("./components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
+const MyFavorites = lazy(() => import("./pages/MyFavorites"));
+const MyReviews = lazy(() => import("./pages/MyReviews"));
 
 // Feed redirect component
 const FeedRedirect = () => {

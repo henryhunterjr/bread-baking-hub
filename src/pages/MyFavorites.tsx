@@ -1,0 +1,84 @@
+import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+interface FavoriteItem {
+  created_at: string;
+  recipe: {
+    id: string;
+    title: string;
+    slug?: string | null;
+    image_url?: string | null;
+  } | null;
+}
+
+const MyFavorites = () => {
+  const { user } = useAuth();
+  const [items, setItems] = useState<FavoriteItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) return;
+    const load = async () => {
+      setLoading(true);
+      const { data } = await supabase
+        .from("user_favorites")
+        .select("created_at, recipe:recipes(id,title,slug,image_url)")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+      setItems((data as any) || []);
+      setLoading(false);
+    };
+    load();
+  }, [user?.id]);
+
+  return (
+    <div className="bg-background text-foreground min-h-screen">
+      <Helmet>
+        <title>My Favorites | Baking Great Bread</title>
+        <meta name="description" content="Your saved favorite recipes." />
+        <link rel="canonical" href="https://bread-baking-hub.vercel.app/my-favorites" />
+      </Helmet>
+      <Header />
+      <main className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-6">My Favorites</h1>
+        {(!user) && <p>Please sign in to view your favorites.</p>}
+        {user && (
+          loading ? (
+            <p>Loading…</p>
+          ) : items.length === 0 ? (
+            <p className="text-muted-foreground">No favorites yet.</p>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {items.map((it, idx) => (
+                <Card key={idx}>
+                  <CardHeader>
+                    <CardTitle className="text-primary">{it.recipe?.title || 'Untitled Recipe'}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    {it.recipe?.image_url && (
+                      <img src={it.recipe.image_url} alt={it.recipe.title} className="w-full h-40 object-cover rounded" loading="lazy" />
+                    )}
+                    {it.recipe?.slug && (
+                      <Button asChild variant="outline">
+                        <a href={`/r/${it.recipe.slug}`}>Open Recipe</a>
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )
+        )}
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+export default MyFavorites;

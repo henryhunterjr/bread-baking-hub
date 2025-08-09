@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf, Heart, Star } from 'lucide-react';
 import { SeasonalRecipe, Season, getSeasonalColors } from '@/hooks/useSeasonalRecipes';
 import { getRecipeImage } from '@/utils/recipeImageMapping';
 import { RecipeActions } from '@/components/RecipeActions';
@@ -8,6 +8,9 @@ import { RecipeRating } from '@/components/RecipeRating';
 import { ZoomableImage } from '@/components/ZoomableImage';
 import CookingMode from '@/components/CookingMode';
 import { useRef, useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast';
 
 interface SeasonalRecipeModalProps {
   recipe: SeasonalRecipe | null;
@@ -73,6 +76,174 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     return `${formatQty(scaled)}${rest}`;
   };
 
+  // Engagement state (ratings, favorites, reviews)
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [avgRating, setAvgRating] = useState<number | null>(null);
+  const [ratingCount, setRatingCount] = useState<number>(0);
+  const [myRating, setMyRating] = useState<number | null>(null);
+  const [isFav, setIsFav] = useState<boolean>(false);
+  const [loadingEngagement, setLoadingEngagement] = useState<boolean>(false);
+  const [reviews, setReviews] = useState<Array<{ id: string; comment: string; photo_url?: string; created_at: string }>>([]);
+  const [reviewText, setReviewText] = useState<string>('');
+  const [reviewFile, setReviewFile] = useState<File | null>(null);
+  const [submittingReview, setSubmittingReview] = useState<boolean>(false);
+
+  useEffect(() => {
+    const load = async () => {
+      if (!recipe?.id) return;
+      try {
+        // Ratings
+        const { data: ratingRows, error: ratingErr } = await supabase
+          .from('recipe_ratings')
+          .select('rating')
+          .eq('recipe_id', recipe.id);
+        if (!ratingErr && ratingRows) {
+          const total = ratingRows.reduce((sum: number, r: any) => sum + (r.rating || 0), 0);
+          setRatingCount(ratingRows.length);
+          setAvgRating(ratingRows.length ? total / ratingRows.length : null);
+        }
+        // My rating
+        if (user?.id) {
+          const { data: my, error: myErr } = await supabase
+            .from('recipe_ratings')
+            .select('rating')
+            .eq('recipe_id', recipe.id)
+            .eq('user_id', user.id)
+            .maybeSingle();
+          if (!myErr && my) setMyRating(my.rating ?? null);
+          // Favorite
+          const { data: fav, error: favErr } = await supabase
+            .from('user_favorites')
+            .select('id')
+            .eq('recipe_id', recipe.id)
+            .eq('user_id', user.id)
+            .maybeSingle();
+          if (!favErr) setIsFav(!!fav);
+        } else {
+          setMyRating(null);
+          setIsFav(false);
+        }
+        // Reviews (latest 5)
+        const { data: revs } = await supabase
+          .from('recipe_reviews')
+          .select('id, comment, photo_url, created_at')
+          .eq('recipe_id', recipe.id)
+          .order('created_at', { ascending: false })
+          .limit(5);
+        setReviews(revs || []);
+      } catch (e) {
+        // ignore
+      }
+    };
+    load();
+  }, [recipe?.id, user?.id]);
+
+  const handleRate = async (value: number) => {
+    if (!user) {
+      toast({ title: 'Login required', description: 'Please sign in to rate recipes.' });
+      return;
+    }
+    setLoadingEngagement(true);
+    const { error } = await supabase.from('recipe_ratings').upsert(
+      { recipe_id: recipe.id, user_id: user.id, rating: value },
+      { onConflict: 'recipe_id,user_id' }
+    );
+    setLoadingEngagement(false);
+    if (error) {
+      toast({ title: 'Rating failed', description: error.message, variant: 'destructive' });
+    } else {
+      setMyRating(value);
+      // refresh aggregates
+      const { data: ratingRows } = await supabase
+        .from('recipe_ratings')
+        .select('rating')
+        .eq('recipe_id', recipe.id);
+      const total = (ratingRows || []).reduce((sum: number, r: any) => sum + (r.rating || 0), 0);
+      setRatingCount(ratingRows?.length || 0);
+      setAvgRating(ratingRows && ratingRows.length ? total / ratingRows.length : null);
+      toast({ title: 'Thanks!', description: 'Your rating was saved.' });
+    }
+  };
+
+  const toggleFavorite = async () => {
+    if (!user) {
+      toast({ title: 'Login required', description: 'Please sign in to save favorites.' });
+      return;
+    }
+    setLoadingEngagement(true);
+    try {
+      if (isFav) {
+        const { error } = await supabase
+          .from('user_favorites')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('recipe_id', recipe.id);
+        if (error) throw error;
+        setIsFav(false);
+        toast({ title: 'Removed from favorites' });
+      } else {
+        const { error } = await supabase
+          .from('user_favorites')
+          .insert({ user_id: user.id, recipe_id: recipe.id });
+        if (error) throw error;
+        setIsFav(true);
+        toast({ title: 'Saved to favorites' });
+      }
+    } catch (e: any) {
+      toast({ title: 'Favorite error', description: e.message, variant: 'destructive' });
+    } finally {
+      setLoadingEngagement(false);
+    }
+  };
+
+  const submitReview = async () => {
+    if (!user) {
+      toast({ title: 'Login required', description: 'Please sign in to leave a review.' });
+      return;
+    }
+    if (!reviewText.trim()) {
+      toast({ title: 'Review required', description: 'Please enter a comment.', variant: 'destructive' });
+      return;
+    }
+    setSubmittingReview(true);
+    try {
+      let photoUrl: string | undefined;
+      if (reviewFile) {
+        const ext = reviewFile.name.split('.').pop() || 'jpg';
+        const path = `review-photos/${user.id}/${Date.now()}.${ext}`;
+        const { data: up, error: upErr } = await supabase.storage
+          .from('recipe-uploads')
+          .upload(path, reviewFile, { cacheControl: '3600', upsert: false });
+        if (upErr) throw upErr;
+        const { data: pub } = supabase.storage.from('recipe-uploads').getPublicUrl(up.path);
+        photoUrl = pub.publicUrl;
+      }
+      const { error } = await supabase.from('recipe_reviews').insert({
+        recipe_id: recipe.id,
+        user_id: user.id,
+        comment: reviewText.trim(),
+        photo_url: photoUrl
+      });
+      if (error) throw error;
+      setReviewText('');
+      setReviewFile(null);
+      // refresh reviews
+      const { data: revs } = await supabase
+        .from('recipe_reviews')
+        .select('id, comment, photo_url, created_at')
+        .eq('recipe_id', recipe.id)
+        .order('created_at', { ascending: false })
+        .limit(5);
+      setReviews(revs || []);
+      toast({ title: 'Review submitted' });
+    } catch (e: any) {
+      toast({ title: 'Review error', description: e.message, variant: 'destructive' });
+    } finally {
+      setSubmittingReview(false);
+    }
+  };
+
   return (
     <Dialog open={!!recipe} onOpenChange={onClose} aria-labelledby="recipe-modal-title">
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" role="dialog" aria-modal="true">
@@ -89,15 +260,49 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
           
           {/* Recipe Rating */}
           <RecipeRating 
-            rating={4.7 + Math.random() * 0.3}
-            reviewCount={Math.floor(Math.random() * 200) + 50}
+            rating={avgRating ?? 0}
+            reviewCount={ratingCount}
             difficulty={recipe.data.difficulty as 'beginner' | 'intermediate' | 'expert'}
-            trending={Math.random() > 0.7}
-            communityFavorite={Math.random() > 0.8}
-            successRate={Math.floor(Math.random() * 10) + 90}
-            className="mb-4"
+            trending={ratingCount > 10 && (avgRating ?? 0) >= 4.5}
+            communityFavorite={ratingCount > 50 && (avgRating ?? 0) >= 4.6}
+            successRate={Math.min(99, Math.max(85, Math.round((avgRating ?? 0) * 20)))}
+            className="mb-2"
           />
-          
+
+          {/* Rate & Favorite Controls */}
+          <div className="flex flex-wrap items-center gap-4 mb-4">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Your rating:</span>
+              {Array.from({ length: 5 }, (_, i) => i + 1).map((val) => (
+                <button
+                  key={val}
+                  onClick={() => handleRate(val)}
+                  disabled={loadingEngagement || !user}
+                  aria-label={`Rate ${val} star${val > 1 ? 's' : ''}`}
+                  className="disabled:opacity-50"
+                >
+                  <Star
+                    className={`h-5 w-5 ${myRating && myRating >= val ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground'}`}
+                  />
+                </button>
+              ))}
+              {!user && (
+                <span className="text-xs text-muted-foreground ml-2">Sign in to rate</span>
+              )}
+            </div>
+
+            <button
+              onClick={toggleFavorite}
+              disabled={loadingEngagement || !user}
+              className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm hover:bg-muted disabled:opacity-50"
+              aria-pressed={isFav}
+              aria-label="Save to favorites"
+            >
+              <Heart className={`h-4 w-4 ${isFav ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} />
+              {isFav ? 'Favorited' : 'Save to Favorites'}
+            </button>
+          </div>
+
           {/* Recipe Actions */}
           <RecipeActions 
             recipe={recipe}
@@ -300,6 +505,54 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
               </div>
             </div>
           )}
+
+          {/* Reviews */}
+          <section aria-labelledby="reviews-heading" className="mt-6">
+            <h3 id="reviews-heading" className="text-lg font-semibold mb-3">Reviews</h3>
+            {user ? (
+              <div className="mb-4 space-y-3">
+                <textarea
+                  value={reviewText}
+                  onChange={(e) => setReviewText(e.target.value)}
+                  placeholder="Share your experience with this recipe..."
+                  className="w-full min-h-[80px] rounded-md border border-border bg-background p-3 text-sm"
+                />
+                <div className="flex items-center justify-between gap-3">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setReviewFile(e.target.files?.[0] || null)}
+                    className="text-sm"
+                  />
+                  <button
+                    onClick={submitReview}
+                    disabled={submittingReview || !reviewText.trim()}
+                    className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm hover:bg-muted disabled:opacity-50"
+                  >
+                    {submittingReview ? 'Submitting…' : 'Submit Review'}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground mb-4">Sign in to leave a review.</p>
+            )}
+
+            <div className="space-y-3">
+              {reviews.length === 0 ? (
+                <p className="text-sm text-muted-foreground">No reviews yet. Be the first to review!</p>
+              ) : (
+                reviews.map((r) => (
+                  <div key={r.id} className="rounded-lg border border-border p-3">
+                    <p className="text-sm leading-relaxed">{r.comment}</p>
+                    {r.photo_url && (
+                      <img src={r.photo_url} alt="Review photo" className="mt-2 h-32 w-auto rounded-md object-cover" loading="lazy" />
+                    )}
+                    <p className="mt-1 text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString()}</p>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
         </div>
       </DialogContent>
     </Dialog>

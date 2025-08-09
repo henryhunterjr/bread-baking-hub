@@ -80,6 +80,12 @@ const Header = () => {
                   <Link to="/my-recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     My Recipes
                   </Link>
+                  <Link to="/my-favorites" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    My Favorites
+                  </Link>
+                  <Link to="/my-reviews" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    My Reviews
+                  </Link>
                   <Link to="/dashboard" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     Dashboard
                   </Link>
