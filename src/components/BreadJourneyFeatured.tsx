@@ -12,10 +12,19 @@ const BreadJourneyFeatured = ({ onListen }: BreadJourneyFeaturedProps) => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="relative overflow-hidden rounded-2xl shadow-stone">
           {/* Background Image */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/lovable-uploads/6cd3602b-f737-4c3d-a3f4-772cd8654362.png)' }}
-          />
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            src="/lovable-uploads/drive-1B-qILrva5lCLDQkLZSisiP3Xt2UpQhf5.mp4"
+            poster="/lovable-uploads/6cd3602b-f737-4c3d-a3f4-772cd8654362.png"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="Bread: A Journey hero background video"
+          >
+            <source src="/lovable-uploads/drive-1B-qILrva5lCLDQkLZSisiP3Xt2UpQhf5.mp4" type="video/mp4" />
+          </video>
           
           {/* Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
