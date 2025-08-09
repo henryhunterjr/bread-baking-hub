@@ -1,15 +1,19 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf } from 'lucide-react';
+import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf, ChevronLeft, ChevronRight } from 'lucide-react';
 import { SeasonalRecipe, Season, getSeasonalColors } from '@/hooks/useSeasonalRecipes';
 import { getRecipeImage } from '@/utils/recipeImageMapping';
 import { RecipeActions } from '@/components/RecipeActions';
 import { RecipeRating } from '@/components/RecipeRating';
-import { ResponsiveImage } from '@/components/ResponsiveImage';
+import { ZoomableImage } from '@/components/ZoomableImage';
+import CookingMode from '@/components/CookingMode';
+import { useRef, useState, useEffect } from 'react';
 
 interface SeasonalRecipeModalProps {
   recipe: SeasonalRecipe | null;
   onClose: () => void;
+  onNext?: () => void;
+  onPrev?: () => void;
 }
 
 const seasonIcons = {
