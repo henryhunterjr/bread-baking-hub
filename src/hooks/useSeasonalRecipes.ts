@@ -230,6 +230,107 @@ export const useSeasonalRecipes = () => {
     ensureHenryRecipe();
   }, [loading, recipes]);
 
+  // One-time ensure Holiday Star Cinnamon Bread is present
+  useEffect(() => {
+    const ensureHolidayStar = async () => {
+      if (loading) return;
+      const targetSlug = 'holiday-star-cinnamon-bread';
+      if (recipes.some(r => r.slug === targetSlug)) return;
+      try {
+        const data: SeasonalRecipeData = {
+          season: 'Winter',
+          holidays: ['Christmas', 'Holidays'],
+          featuredDates: { start: '12-01', end: '12-31' },
+          category: ['enriched', 'holiday bread'],
+          occasion: ['holiday brunch', 'festive centerpiece', 'gift giving'],
+          prepTime: '20 min active, 1 hr 15 min rising',
+          bakeTime: '25–30 min',
+          totalTime: 'About 2 hours',
+          difficulty: 'intermediate',
+          yield: '8–10 generous portions',
+          ingredients: [
+            'For the Enriched Dough:',
+            'Whole milk, warmed — 250ml (1 cup)',
+            'Fresh yeast — 21g (or 7g active dry/instant yeast)',
+            'All-purpose flour — 500g (4 cups; 300g + 200g divided)',
+            'White sugar — 50g (4 Tbsp)',
+            'Salt — 2.5g (1/2 tsp)',
+            'Unsalted butter, very soft — 50g (1/2 stick)',
+            'Large egg, beaten — 1',
+            'For the Cinnamon Filling:',
+            'Unsalted butter, melted — 50g (1/2 stick)',
+            'White sugar — 100g (8 Tbsp)',
+            'Ground cinnamon — 15g (3 tsp)',
+            'For the Egg Wash:',
+            'Large egg, beaten — 1',
+            'Whole milk — 30ml (2 Tbsp)',
+            'To Serve: Powdered sugar for dusting; optional vanilla icing'
+          ],
+          method: [
+            'Activate yeast: Warm milk to ~100°F/38°C. Dissolve yeast and let sit 5–10 minutes until frothy.',
+            'Mix base: Whisk 300g flour, sugar, and salt. Add yeast mixture, soft butter, and egg. Stir to shaggy dough.',
+            'Knead: Gradually add remaining 200g flour; knead 5–7 minutes until smooth and elastic (slightly sticky is OK).',
+            'First rise: Place in greased bowl, cover, rise ~1 hour until doubled.',
+            'Prepare filling: Mix melted butter, sugar, cinnamon; set aside.',
+            'Divide and roll: Deflate, divide into 4. Roll each to a 10-inch circle.',
+            'Layer: First circle on parchment; spread 1/3 filling. Repeat with second and third layers; top with fourth.',
+            'Mark center: Gently press a 3-inch guide circle in the center.',
+            'Cut: Slice into 16 equal sections from guide circle to edge, keeping center intact.',
+            'Twist: Take adjacent pairs; twist away from each other twice; pinch ends to form 8 points.',
+            'Second rise: Cover and rest 15–20 minutes while preheating oven to 350°F/180°C.',
+            'Egg wash: Whisk egg and milk; brush all over.',
+            'Bake: 25–30 minutes until golden and 190°F/88°C internal.',
+            'Finish: Cool 10 minutes; dust with powdered sugar. Optional drizzle vanilla icing.'
+          ],
+          notes: 'Keep dough slightly sticky for tenderness; twist sections evenly for a clean star; use sharp cuts to avoid dragging.',
+          equipment: [
+            'Large mixing bowl',
+            'Kitchen scale',
+            'Rolling pin',
+            'Parchment paper',
+            '3-inch round glass or cutter',
+            'Sharp knife or bench scraper',
+            'Pastry brush',
+            'Large baking sheet'
+          ]
+        };
+
+        const imageUrl = getRecipeImage(targetSlug, undefined);
+        const { data: res, error } = await supabase.functions.invoke('upsert-recipe', {
+          body: {
+            title: 'Holiday Star Cinnamon Bread',
+            slug: targetSlug,
+            data,
+            imageUrl,
+            tags: ['holiday bread', 'enriched', 'cinnamon', 'pull-apart', 'festive'],
+            folder: 'Seasonal',
+            isPublic: true,
+          },
+        });
+        if (error) {
+          console.error('Failed to upsert Holiday Star Cinnamon Bread:', error);
+          return;
+        }
+        const created = res?.data;
+        const newRecipe: SeasonalRecipe = {
+          id: created?.id || crypto.randomUUID(),
+          title: 'Holiday Star Cinnamon Bread',
+          slug: targetSlug,
+          folder: 'Seasonal',
+          tags: ['holiday bread', 'enriched', 'cinnamon', 'pull-apart', 'festive'],
+          is_public: true,
+          image_url: imageUrl,
+          created_at: created?.created_at || new Date().toISOString(),
+          data,
+        };
+        setRecipes(prev => [newRecipe, ...prev]);
+      } catch (e) {
+        console.error('ensureHolidayStar error', e);
+      }
+    };
+    ensureHolidayStar();
+  }, [loading, recipes]);
+
   // Filter recipes based on current filters
   const filteredRecipes = recipes.filter(recipe => {
     if (selectedSeason !== 'All' && recipe.data.season !== selectedSeason) return false;

@@ -83,7 +83,8 @@ export const recipeImageMapping: Record<string, string> = {
   // HOLIDAY BREADS
   "hanukkah-challah": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg",
   "special-round-challah": "/lovable-uploads/39d28f2a-71e4-4711-8c5e-6d0542d82c1b.png",
-  "easter-paska": "/lovable-uploads/6eded5fa-0dd5-4b7b-b7fc-108afbc3f96e.png"
+  "easter-paska": "/lovable-uploads/6eded5fa-0dd5-4b7b-b7fc-108afbc3f96e.png",
+  "holiday-star-cinnamon-bread": "/lovable-uploads/2f3f1e90-1a12-4b8a-bd83-8e8b8f95c7e7.png"
 };
 
 // Fallback images:
@@ -98,7 +99,7 @@ export function getRecipeImage(slug: string, imageUrl?: string | null): string {
   console.log('🔍 getRecipeImage DEBUG:', { slug, imageUrl });
   
   // CRITICAL: For problematic recipes, ALWAYS use mapping first
-  const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread', 'henrys-whole-wheat-sourdough-recipe'];
+  const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread', 'henrys-whole-wheat-sourdough-recipe', 'holiday-star-cinnamon-bread'];
   
   if (problematicRecipes.includes(slug) && recipeImageMapping[slug]) {
     console.log('✅ FORCING mapping URL for problematic recipe', slug, ':', recipeImageMapping[slug]);
