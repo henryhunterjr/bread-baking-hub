@@ -102,7 +102,7 @@ const ToolsResources = () => {
                 {selectedTool?.infoContent}
               </p>
               <Button asChild className="w-full">
-                <a href={selectedTool?.link}>
+                <a href={selectedTool?.link ? (selectedTool.link.startsWith('http') ? `/go?u=${encodeURIComponent(selectedTool.link)}` : selectedTool.link) : '#'}>
                   Try the Calculator
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </a>
