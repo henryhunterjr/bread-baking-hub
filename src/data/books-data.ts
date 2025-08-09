@@ -10,6 +10,7 @@ export interface BookData {
   description: string;
   coverImage: string;
   previewContent: string;
+  sampleUrl?: string;
   audioUrl?: string;
 }
 
@@ -63,6 +64,7 @@ export const bookData: Record<string, BookData> = {
       <h4>✓ Troubleshooting made simple</h4>
       <p>Sticky dough? Lifeless starter? Weird oven results? Get straight answers without the fluff. This book cuts through the mystique to deliver practical advice that works in real kitchens for real people.</p>
     `,
+    sampleUrl: "https://read.amazon.com/sample/B0FGQPM4TG?clientId=share",
     audioUrl: undefined
   },
   journey: {
@@ -85,6 +87,7 @@ export const bookData: Record<string, BookData> = {
         <li>Building community through the art of bread-making</li>
       </ul>
     `,
+    sampleUrl: "https://read.amazon.com/sample/B0CH2D2GDB?clientId=share",
     audioUrl: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/audio-files/ElevenLabs_BREAD_A_Journey_Through_History,_Science,_Art,_and_Community.mp3"
   },
   vitale: {
@@ -120,6 +123,7 @@ export const bookData: Record<string, BookData> = {
       
       <p><em>[Preview continues with purchasing full book...]</em></p>
     `,
+    sampleUrl: "https://read.amazon.com/sample/B0CVB8ZCFV?clientId=share",
     audioUrl: undefined
   },
   market: {
@@ -151,6 +155,7 @@ export const bookData: Record<string, BookData> = {
       <p>When I arrived at the market, I found Sarah cheerfully chatting with customers, making change with the confidence of someone who'd been doing this for years. It wasn't until our third customer of the day handed me a ten-dollar bill for a single sourdough loaf that I realized something was wrong...</p>
       <p><em>[Preview continues with purchasing full book...]</em></p>
     `,
+    sampleUrl: "https://read.amazon.com/sample/B0D8PNGC7Q?clientId=share",
     audioUrl: undefined
   },
   loaflie: {
@@ -216,6 +221,7 @@ export const bookData: Record<string, BookData> = {
       
       <p><em>[Available now on Amazon]</em></p>
     `,
+    sampleUrl: "https://read.amazon.com/sample/B0CGMF3NBS?clientId=share",
     audioUrl: undefined
   },
   watchers: {
@@ -247,6 +253,7 @@ export const bookData: Record<string, BookData> = {
       
       <p><em>[Available now - Visit landing page for more details]</em></p>
     `,
+    sampleUrl: "https://read.amazon.com/sample/B0DR2LDDSD?clientId=share",
     audioUrl: undefined
   }
 };

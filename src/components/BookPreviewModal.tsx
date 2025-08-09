@@ -47,15 +47,17 @@ const BookPreviewModal = ({
                 Listen to Excerpt
               </Button>
             )}
-            <Button 
-              variant="outline" 
-              className="w-full max-w-[200px]"
-              asChild
-            >
-              <a href="https://read.amazon.com/sample/B0FGQPM4TG?clientId=share" target="_blank" rel="noopener noreferrer">
-                Read Sample
-              </a>
-            </Button>
+            {selectedBook.sampleUrl && (
+              <Button 
+                variant="outline" 
+                className="w-full max-w-[200px]"
+                asChild
+              >
+                <a href={selectedBook.sampleUrl} target="_blank" rel="noopener noreferrer">
+                  Read Sample
+                </a>
+              </Button>
+            )}
           </div>
 
           {/* Right side - Book Details */}
