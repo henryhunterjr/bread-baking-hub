@@ -111,14 +111,27 @@ export const useSeasonalRecipes = () => {
           // Type-safe conversion of the data with proper recipe image mapping
           const typedRecipes = (data || []).map(recipe => {
             const finalImageUrl = getRecipeImage(recipe.slug, recipe.image_url);
-            
             return {
               ...recipe,
               data: recipe.data as unknown as SeasonalRecipeData,
               image_url: finalImageUrl
             };
           }) as SeasonalRecipe[];
-          setRecipes(typedRecipes);
+
+          // Deduplicate by slug (keep most recent by created_at)
+          const dedupedMap = new Map<string, SeasonalRecipe>();
+          typedRecipes.forEach(r => {
+            const key = r.slug || r.title;
+            const existing = dedupedMap.get(key);
+            if (!existing) {
+              dedupedMap.set(key, r);
+            } else {
+              const newer = new Date(r.created_at) > new Date(existing.created_at) ? r : existing;
+              dedupedMap.set(key, newer);
+            }
+          });
+
+          setRecipes(Array.from(dedupedMap.values()));
         }
       } catch (error) {
         console.error('Error fetching seasonal recipes:', error);
