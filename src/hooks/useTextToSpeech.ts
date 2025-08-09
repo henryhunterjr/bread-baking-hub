@@ -63,7 +63,7 @@ export const useTextToSpeech = () => {
 
       // Call our ElevenLabs edge function
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
-        body: { text, voiceId: 'wAGzRVkxKEs8La0lmdrE' }
+        body: { text }
       });
 
       if (error) throw error;
@@ -129,7 +129,7 @@ export const useTextToSpeech = () => {
       setIsPlaying(false);
       toast({
         title: "Voice Error",
-        description: "Could not generate voice response. If you requested a specific voice, ensure it’s added to your ElevenLabs library and you’re under the custom voice limit.",
+        description: "Could not generate voice response. Please try again.",
         variant: "destructive"
       });
     }
