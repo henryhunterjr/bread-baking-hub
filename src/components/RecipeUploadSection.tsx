@@ -29,6 +29,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
   const [validationError, setValidationError] = useState<string | null>(null);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState<string | null>(null);
 
   // File validation constants
   const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
@@ -104,11 +105,11 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
 
     setIsLoading(true);
     setUploadProgress(0);
-    
+    setServerError(null);
+
     try {
-      // Simulate progress stages
+      // Progress stages
       setUploadProgress(10);
-      
       const formData = new FormData();
       formData.append('file', selectedFile);
 
@@ -191,10 +192,10 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
 
             if (imgError) {
               console.error('Image upload error:', imgError);
-              toast({ title: 'Image upload failed', description: imgError.message, variant: 'destructive' });
-            } else if (imgData?.success) {
-              imageUrl = imgData.imageUrl;
-              console.log('Edge function image URL:', imageUrl);
+              setServerError(imgError.message);
+            } else if (imgData?.uploadedUrl || imgData?.imageUrl) {
+              imageUrl = imgData.uploadedUrl || imgData.imageUrl;
+              console.log('Edge function file URL:', imageUrl);
             }
           }
           
@@ -236,16 +237,10 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       });
       
       onRecipeFormatted(data.recipe, imageUrl);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error formatting recipe:', error);
-      const errorMessage = error.message || "Failed to format your recipe. Please try again or check if your image is clear and readable.";
-      
-      toast({
-        title: "Upload Error", 
-        description: errorMessage,
-        variant: "destructive",
-      });
-      
+      const errorMessage = error?.message || 'Unexpected error';
+      setServerError(errorMessage);
       onError(errorMessage);
     } finally {
       setIsLoading(false);
@@ -367,11 +362,10 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
               <Progress value={uploadProgress} className="h-3" />
               <div className="text-center space-y-1">
                 <p className="text-sm font-medium">
-                  {uploadProgress < 20 && "Preparing file..."}
-                  {uploadProgress >= 20 && uploadProgress < 60 && "Uploading to AI processor..."}
-                  {uploadProgress >= 60 && uploadProgress < 80 && "Extracting recipe data..."}
-                  {uploadProgress >= 80 && uploadProgress < 100 && "Finalizing recipe..."}
-                  {uploadProgress >= 100 && "Complete!"}
+                  {uploadProgress < 25 && "Uploading…"}
+                  {uploadProgress >= 25 && uploadProgress < 60 && "Extracting…"}
+                  {uploadProgress >= 60 && uploadProgress < 100 && "Formatting…"}
+                  {uploadProgress >= 100 && "Done"}
                 </p>
                 <p className="text-xs text-muted-foreground">
                   This may take a few moments while our AI analyzes your recipe
@@ -381,6 +375,13 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
           )}
         </CardContent>
       </Card>
+
+      {serverError && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>{serverError}</AlertDescription>
+        </Alert>
+      )}
     </div>
   );
 };

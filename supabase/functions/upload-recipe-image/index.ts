@@ -32,7 +32,16 @@ serve(async (req) => {
     // Parse form data to get the uploaded file
     const formData = await req.formData();
     const file = formData.get('file') as File;
-    const recipeSlug = formData.get('recipeSlug') as string;
+    const recipeSlug = (formData.get('recipeSlug') as string) || '';
+    
+    // Try to resolve user id from Authorization header (optional)
+    const authHeader = req.headers.get('Authorization') ?? '';
+    let userId = 'anonymous';
+    if (authHeader.startsWith('Bearer ')) {
+      const token = authHeader.replace('Bearer ', '');
+      const { data: { user } = { user: null }, error: userError } = await supabase.auth.getUser(token);
+      if (user && !userError) userId = user.id;
+    }
     
     if (!file) {
       return new Response(
@@ -44,21 +53,13 @@ serve(async (req) => {
       );
     }
 
-    if (!recipeSlug) {
-      return new Response(
-        JSON.stringify({ error: 'No recipe slug provided' }),
-        { 
-          status: 400, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
-      );
-    }
+    // recipeSlug is optional for backward compatibility
 
     // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf'];
     if (!allowedTypes.includes(file.type)) {
       return new Response(
-        JSON.stringify({ error: 'Invalid file type. Only JPG, PNG, and WebP are allowed.' }),
+        JSON.stringify({ error: 'Invalid file type. Only JPG, PNG, WEBP, and PDF are allowed.', code: 'invalid_file_type' }),
         { 
           status: 400, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -66,10 +67,10 @@ serve(async (req) => {
       );
     }
 
-    // Validate file size (10MB limit)
-    if (file.size > 10 * 1024 * 1024) {
+    // Validate file size (20MB limit)
+    if (file.size > 20 * 1024 * 1024) {
       return new Response(
-        JSON.stringify({ error: 'File too large. Maximum size is 10MB.' }),
+        JSON.stringify({ error: 'File too large. Maximum size is 20MB.', code: 'file_too_large' }),
         { 
           status: 400, 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -77,9 +78,10 @@ serve(async (req) => {
       );
     }
 
-    // Generate unique filename
-    const fileExt = file.name.split('.').pop() || 'jpg';
-    const fileName = `recipe-images/${recipeSlug}_${Date.now()}.${fileExt}`;
+    // Generate storage path inside bucket
+    const originalName = file.name || `${recipeSlug || 'upload'}`;
+    const safeName = originalName.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const fileName = `raw-uploads/${userId}/${Date.now()}-${safeName}`;
 
     console.log(`Uploading file: ${fileName} for recipe: ${recipeSlug}`);
 
@@ -112,9 +114,11 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: true, 
-        imageUrl: publicUrl,
-        filename: fileName,
-        recipeSlug: recipeSlug
+        uploadedUrl: publicUrl,
+        mime: file.type,
+        size: file.size,
+        path: uploadData.path,
+        recipeSlug
       }),
       { 
         status: 200, 

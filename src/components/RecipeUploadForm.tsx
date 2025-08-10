@@ -1,9 +1,8 @@
-
 'use client';
 import { useState } from 'react';
-import { UploadResult } from '@/types';
+import { supabase } from '@/integrations/supabase/client';
 
-export default function RecipeUploadForm({ onSuccess }: { onSuccess: (data: UploadResult) => void }) {
+export default function RecipeUploadForm({ onSuccess }: { onSuccess: (data: any) => void }) {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,18 +17,12 @@ export default function RecipeUploadForm({ onSuccess }: { onSuccess: (data: Uplo
     formData.append('file', file);
 
     try {
-      const res = await fetch('https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/format-recipe', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeWNrc2t1Y25lbGp2dXF6cnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NDI0MTUsImV4cCI6MjA1MjMxODQxNX0.-Bx7Y0d_aMcHakE27Z5QKriY6KPpG1m8n0uuLaamFfY`,
-        },
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.recipe) onSuccess(data.recipe);
+      const { data, error } = await supabase.functions.invoke('format-recipe', { body: formData });
+      if (error) throw new Error(error.message);
+      if (data?.recipe) onSuccess(data.recipe);
       else throw new Error('No recipe returned.');
     } catch (err: any) {
-      setError('Failed to process recipe.');
+      setError(err?.message || 'Failed to process recipe.');
       console.error(err);
     } finally {
       setLoading(false);

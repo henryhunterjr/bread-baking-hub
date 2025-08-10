@@ -3,7 +3,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { PDFDocument } from "https://cdn.skypack.dev/pdf-lib@1.17.1";
 import { createCanvas } from "https://deno.land/x/canvas@v1.4.1/mod.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
+import { encode as b64encode } from "https://deno.land/std@0.224.0/encoding/base64.ts";
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
 const corsHeaders = {
@@ -24,7 +24,7 @@ serve(async (req) => {
 
     if (!file) {
       return new Response(
-        JSON.stringify({ error: 'No file provided' }),
+        JSON.stringify({ error: 'No file provided', code: 'missing_file' }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 400 
@@ -35,7 +35,7 @@ serve(async (req) => {
     // Check file size (limit to 20MB)
     if (file.size > 20 * 1024 * 1024) {
       return new Response(
-        JSON.stringify({ error: 'File too large. Please use files under 20MB.' }),
+        JSON.stringify({ error: 'File too large. Please use files under 20MB.', code: 'file_too_large' }),
         { 
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 400 
@@ -47,7 +47,7 @@ serve(async (req) => {
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
     if (!allowedTypes.includes(file.type)) {
       return new Response(
-        JSON.stringify({ error: 'Unsupported file type. Please upload JPG, PNG, or PDF.' }),
+        JSON.stringify({ error: 'Unsupported file type. Please upload JPG, PNG, or PDF.', code: 'invalid_file_type' }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
       );
     }
@@ -58,8 +58,18 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
+    // Resolve user id (optional)
+    const authHeader = req.headers.get('Authorization') ?? '';
+    let userId = 'anonymous';
+    if (authHeader.startsWith('Bearer ')) {
+      const token = authHeader.replace('Bearer ', '');
+      const { data: { user } = { user: null }, error: userError } = await supabase.auth.getUser(token);
+      if (user && !userError) userId = user.id;
+    }
+
     const ext = file.name.split('.').pop() || (file.type === 'application/pdf' ? 'pdf' : 'bin');
-    const uploadPath = `raw-uploads/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+    const safeName = (file.name || `upload.${ext}`).replace(/[^a-zA-Z0-9._-]/g, '_');
+    const uploadPath = `raw-uploads/${userId}/${Date.now()}-${safeName}`;
     let uploadedUrl = '';
 
     try {
@@ -84,24 +94,14 @@ serve(async (req) => {
       try {
         console.log('Processing PDF file...');
         const arrayBuffer = await file.arrayBuffer();
-        
-        // For PDFs, we'll send them directly to OpenAI as GPT-4o can handle PDFs
-        let binary = '';
-        const chunkSize = 8192;
         const uint8Array = new Uint8Array(arrayBuffer);
-        for (let i = 0; i < uint8Array.length; i += chunkSize) {
-          const chunk = uint8Array.slice(i, i + chunkSize);
-          binary += String.fromCharCode.apply(null, Array.from(chunk));
-        }
-        
-        base64 = btoa(binary);
+        base64 = b64encode(uint8Array);
         mimeType = 'application/pdf';
-        
         console.log('Successfully processed PDF file');
       } catch (pdfError) {
         console.error('PDF processing error:', pdfError);
         return new Response(
-          JSON.stringify({ error: 'Unable to process PDF. Please try again or upload an image instead.' }),
+          JSON.stringify({ error: 'Unable to process PDF. Please try again or upload an image instead.', code: 'pdf_processing_error' }),
           { 
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
             status: 400 
@@ -113,15 +113,7 @@ serve(async (req) => {
       console.log('Processing image file...');
       const arrayBuffer = await file.arrayBuffer();
       const uint8Array = new Uint8Array(arrayBuffer);
-      
-      // Convert to base64 in chunks to avoid stack overflow
-      let binary = '';
-      const chunkSize = 8192;
-      for (let i = 0; i < uint8Array.length; i += chunkSize) {
-        const chunk = uint8Array.slice(i, i + chunkSize);
-        binary += String.fromCharCode.apply(null, Array.from(chunk));
-      }
-      base64 = btoa(binary);
+      base64 = b64encode(uint8Array);
       console.log('Successfully processed image file');
     }
 
@@ -181,7 +173,7 @@ serve(async (req) => {
       const recipe = JSON.parse(cleanedText);
       console.log('Successfully parsed recipe:', recipe.title);
       
-      return new Response(JSON.stringify({ recipe, uploadedUrl }), {
+      return new Response(JSON.stringify({ recipe, uploadedUrl, mime: mimeType, size: file.size }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     } catch (parseError) {
