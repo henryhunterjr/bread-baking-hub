@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
-import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf } from 'lucide-react';
+import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf, Star } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { SeasonalRecipe, Season, getSeasonalColors } from '@/hooks/useSeasonalRecipes';
 import { getRecipeImage } from '@/utils/recipeImageMapping';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface SeasonalRecipeCardProps {
   recipe: SeasonalRecipe;
@@ -35,6 +37,24 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
   const colors = getSeasonalColors(season) || getSeasonalColors('Winter'); // fallback to Winter
   const SeasonIcon = seasonIcons[season] || seasonIcons.Winter; // fallback to Winter icon
 
+  const [avgRating, setAvgRating] = useState<number | null>(null);
+  const [ratingCount, setRatingCount] = useState<number>(0);
+
+  useEffect(() => {
+    const load = async () => {
+      const { data, error } = await supabase
+        .from('recipe_ratings')
+        .select('rating')
+        .eq('recipe_id', recipe.id);
+      if (!error && data) {
+        const total = data.reduce((sum: number, r: any) => sum + (r.rating || 0), 0);
+        setRatingCount(data.length);
+        setAvgRating(data.length ? total / data.length : null);
+      }
+    };
+    load();
+  }, [recipe.id]);
+
   return (
     <motion.div
       whileHover={{ y: -4, scale: 1.02 }}
@@ -65,6 +85,25 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
               }
             }}
           />
+
+          {/* Rating overlay */}
+          {avgRating !== null && (
+            <button
+              className="absolute top-3 left-3 rounded-full bg-background/85 backdrop-blur px-2 py-1 text-xs flex items-center gap-1 shadow"
+              onClick={(e) => {
+                e.stopPropagation();
+                onRecipeClick(recipe);
+                setTimeout(() => {
+                  window.dispatchEvent(new CustomEvent('scroll-reviews'));
+                }, 200);
+              }}
+              aria-label={`${avgRating.toFixed(1)} stars from ${ratingCount} reviews (opens reviews)`}
+            >
+              <Star className="h-3.5 w-3.5 text-yellow-500 fill-yellow-500" />
+              <span>{avgRating.toFixed(1)}</span>
+              <span className="text-muted-foreground">({ratingCount})</span>
+            </button>
+          )}
           
           {/* Season Badge */}
           <div className="absolute top-3 right-3">

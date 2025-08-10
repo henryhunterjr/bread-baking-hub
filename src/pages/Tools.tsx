@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ToolsResources from "@/components/ToolsResources";
 import RecommendedTools from "@/components/RecommendedTools";
+import { Testimonials } from "@/components/Testimonials";
 
 const Tools = () => {
   return (
@@ -30,6 +31,7 @@ const Tools = () => {
               Discover the tools and equipment that will elevate your bread baking journey. 
               From beginner essentials to professional-grade equipment.
             </p>
+            <Testimonials className="mb-10" />
             
             <ToolsResources />
             <RecommendedTools />

@@ -11,6 +11,7 @@ import { useSeasonalRecipes, Season, Category, Difficulty, SeasonalRecipe } from
 import { SeasonalRecipeModal } from '@/components/SeasonalRecipeModal';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
+import { useEffect } from 'react';
 
 const Recipes = () => {
   const {
@@ -37,6 +38,17 @@ const Recipes = () => {
   const handleRecipeClick = (recipe: SeasonalRecipe) => {
     setSelectedRecipe(recipe);
   };
+
+  // When rating on a card is clicked, open modal and scroll to reviews
+  useEffect(() => {
+    const handler = () => {
+      setTimeout(() => {
+        document.getElementById('reviews-heading')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 400);
+    };
+    window.addEventListener('scroll-reviews', handler);
+    return () => window.removeEventListener('scroll-reviews', handler);
+  }, [selectedRecipe]);
 
   return (
     <div className="bg-background text-foreground min-h-screen">

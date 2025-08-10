@@ -359,6 +359,17 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
             successRate={Math.min(99, Math.max(85, Math.round((avgRating ?? 0) * 20)))}
             className="mb-2"
           />
+          <div className="flex items-center gap-3 mb-2">
+            <Button
+              variant="link"
+              size="sm"
+              className="px-0"
+              onClick={() => document.getElementById('reviews-heading')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              aria-label="Read reviews"
+            >
+              Read reviews ({ratingCount})
+            </Button>
+          </div>
 
           {/* Rate & Favorite Controls */}
           <div className="flex flex-wrap items-center gap-4 mb-4">

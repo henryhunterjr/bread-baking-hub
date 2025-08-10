@@ -19,6 +19,7 @@ import { AuthorBioSection } from "../components/AuthorBioSection";
 import { SocialProofBanner } from "../components/SocialProofBanner";
 const LazyAIAssistantSidebar = lazy(() => import("../components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
 import { sanitizeStructuredData } from '@/utils/sanitize';
+import { Testimonials } from '@/components/Testimonials';
 
 const Index = () => {
   const [isAIOpen, setIsAIOpen] = useState(false);
@@ -122,6 +123,7 @@ const Index = () => {
       <main id="main-content" role="main" tabIndex={-1}>
         <HeroSection />
         <SocialProofBanner />
+        <Testimonials className="px-4 mt-6" />
         <AboutHenry />
         <PodcastSection />
         <BooksPreview />
