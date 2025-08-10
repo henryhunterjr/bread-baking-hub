@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf, Heart, Star } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf, Heart, Star, X } from 'lucide-react';
 import { SeasonalRecipe, Season, getSeasonalColors } from '@/hooks/useSeasonalRecipes';
 import { getRecipeImage } from '@/utils/recipeImageMapping';
 import { RecipeActions } from '@/components/RecipeActions';
@@ -139,6 +140,34 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     load();
   }, [recipe?.id, user?.id]);
 
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (!recipe) return;
+    const prevOverflow = document.body.style.overflow;
+    const prevOverscroll = (document.body.style as any).overscrollBehavior;
+    document.body.style.overflow = 'hidden';
+    (document.body.style as any).overscrollBehavior = 'contain';
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      (document.body.style as any).overscrollBehavior = prevOverscroll;
+    };
+  }, [recipe]);
+
+  // Swipe-down to close on mobile
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0];
+    touchStart.current = { x: t.clientX, y: t.clientY };
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStart.current) return;
+    const t = e.changedTouches[0];
+    const dy = t.clientY - touchStart.current.y;
+    const dx = t.clientX - touchStart.current.x;
+    if (dy > 80 && Math.abs(dy) > Math.abs(dx)) onClose();
+    touchStart.current = null;
+  };
+
   const handleRate = async (value: number) => {
     if (!user) {
       toast({ title: 'Login required', description: 'Please sign in to rate recipes.' });
@@ -246,7 +275,13 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
 
   return (
     <Dialog open={!!recipe} onOpenChange={onClose} aria-labelledby="recipe-modal-title">
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto recipe-print-area" role="dialog" aria-modal="true">
+      <DialogContent
+        className="recipe-print-area w-screen h-screen max-w-none max-h-none rounded-none p-0 overflow-y-auto sm:max-w-4xl sm:max-h-[90vh] sm:rounded-lg sm:p-6"
+        role="dialog"
+        aria-modal="true"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
         <style>
           {`@media print {
             body * { visibility: hidden !important; }
@@ -256,8 +291,20 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
             h1, h2, h3 { break-after: avoid; }
           }`}
         </style>
-        <DialogHeader>
-          <div className="flex items-center gap-3">
+        {/* Mobile sticky header */}
+        <div className="sm:hidden sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b px-4 py-3 flex items-center gap-3 min-h-[56px]">
+          <Button onClick={onClose} variant="ghost" size="sm" aria-label="Close" className="min-h-[44px] min-w-[44px]">
+            <X className="h-5 w-5" />
+          </Button>
+          <div className="flex-1 font-semibold text-base truncate" id="recipe-modal-title-mobile">{recipe.title}</div>
+          <Badge variant="secondary" className="flex items-center gap-1">
+            <SeasonIcon className="w-4 h-4" />
+            {season}
+          </Badge>
+        </div>
+
+        <DialogHeader className="px-4 sm:px-0">
+          <div className="hidden sm:flex items-center gap-3">
             <DialogTitle id="recipe-modal-title" className="text-2xl flex-1">
               {recipe.title}
             </DialogTitle>
@@ -288,7 +335,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                   onClick={() => handleRate(val)}
                   disabled={loadingEngagement || !user}
                   aria-label={`Rate ${val} star${val > 1 ? 's' : ''}`}
-                  className="disabled:opacity-50"
+                  className="disabled:opacity-50 h-11 w-11 min-h-[44px] min-w-[44px] grid place-items-center rounded-md hover:bg-muted"
                 >
                   <Star
                     className={`h-5 w-5 ${myRating && myRating >= val ? 'fill-yellow-400 text-yellow-400' : 'text-muted-foreground'}`}
@@ -300,16 +347,18 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
               )}
             </div>
 
-            <button
+            <Button
               onClick={toggleFavorite}
               disabled={loadingEngagement || !user}
-              className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm hover:bg-muted disabled:opacity-50"
+              variant="outline"
+              size="sm"
               aria-pressed={isFav}
               aria-label="Save to favorites"
+              className="min-h-[44px] min-w-[44px]"
             >
               <Heart className={`h-4 w-4 ${isFav ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`} />
               {isFav ? 'Favorited' : 'Save to Favorites'}
-            </button>
+            </Button>
           </div>
 
           {/* Recipe Actions */}
@@ -327,7 +376,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
               min={1}
               value={servings}
               onChange={(e) => setServings(Math.max(1, Number(e.target.value) || baseServings))}
-              className="h-9 w-24 rounded-md border border-border bg-background px-2 text-foreground"
+              className="h-11 min-h-[44px] w-28 rounded-md border border-border bg-background px-3 text-foreground"
             />
             <span className="text-xs text-muted-foreground">Base: {baseServings}</span>
           </div>
@@ -533,13 +582,15 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                     onChange={(e) => setReviewFile(e.target.files?.[0] || null)}
                     className="text-sm"
                   />
-                  <button
-                    onClick={submitReview}
-                    disabled={submittingReview || !reviewText.trim()}
-                    className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm hover:bg-muted disabled:opacity-50"
-                  >
-                    {submittingReview ? 'Submitting…' : 'Submit Review'}
-                  </button>
+                    <Button
+                      onClick={submitReview}
+                      disabled={submittingReview || !reviewText.trim()}
+                      size="sm"
+                      variant="outline"
+                      className="min-h-[44px] min-w-[44px]"
+                    >
+                      {submittingReview ? 'Submitting…' : 'Submit Review'}
+                    </Button>
                 </div>
               </div>
             ) : (
