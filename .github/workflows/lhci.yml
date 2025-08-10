@@ -1,0 +1,28 @@
+name: Lighthouse CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lhci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci || npm i
+
+      - name: Install LHCI
+        run: npx -y @lhci/cli@0.13.x install || true
+
+      - name: Run Lighthouse CI (Preview URL required)
+        env:
+          LHCI_BASE_URL: ${{ secrets.PREVIEW_URL }}
+        run: npx lhci autorun --upload.target=temporary-public-storage
