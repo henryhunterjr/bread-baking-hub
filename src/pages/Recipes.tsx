@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { SeasonalHero } from '@/components/SeasonalHero';
@@ -40,6 +41,20 @@ const Recipes = () => {
   return (
     <div className="bg-background text-foreground min-h-screen">
       <Header />
+      <Helmet>
+        <title>Seasonal Bread Recipes – Baking Great Bread</title>
+        <meta name="description" content="Explore seasonal bread recipes with ingredients, instructions, and tips from Henry Hunter." />
+        <link rel="canonical" href="https://bread-baking-hub.vercel.app/recipes" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Seasonal Bread Recipes – Baking Great Bread" />
+        <meta property="og:description" content="Explore seasonal bread recipes with ingredients, instructions, and tips from Henry Hunter." />
+        <meta property="og:url" content="https://bread-baking-hub.vercel.app/recipes" />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Seasonal Bread Recipes – Baking Great Bread" />
+        <meta name="twitter:description" content="Explore seasonal bread recipes with ingredients, instructions, and tips from Henry Hunter." />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
+      </Helmet>
       
       <main>
         {/* Hero Section with Book Card */}

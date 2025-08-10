@@ -12,6 +12,7 @@ import { useRef, useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
+import { sanitizeStructuredData } from '@/utils/sanitize';
 
 interface SeasonalRecipeModalProps {
   recipe: SeasonalRecipe | null;
@@ -25,6 +26,38 @@ const seasonIcons = {
   Spring: Flower,
   Summer: Sun,
   Fall: Leaf,
+};
+
+// JSON-LD for Recipe schema
+const RecipeStructuredData = ({
+  recipe,
+  avgRating,
+  ratingCount,
+}: {
+  recipe: SeasonalRecipe;
+  avgRating: number | null;
+  ratingCount: number;
+}) => {
+  const imageUrl = getRecipeImage(recipe.slug, recipe.image_url);
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    name: recipe.title,
+    image: [imageUrl],
+    author: { "@type": "Person", name: "Henry Hunter" },
+    datePublished: new Date().toISOString(),
+    recipeCategory: (recipe.data as any).category?.[0],
+    recipeYield: (recipe.data as any).yield,
+    recipeIngredient: (recipe.data as any).ingredients,
+    recipeInstructions: (recipe.data as any).method?.map((text: string) => ({ "@type": "HowToStep", text })),
+    aggregateRating: avgRating ? { "@type": "AggregateRating", ratingValue: avgRating, ratingCount } : undefined,
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: sanitizeStructuredData(schema) }}
+    />
+  );
 };
 
 export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProps) => {
@@ -304,6 +337,8 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
         </div>
 
         <DialogHeader className="px-4 sm:px-0">
+          {/* JSON-LD for Recipe */}
+          <RecipeStructuredData recipe={recipe} avgRating={avgRating} ratingCount={ratingCount} />
           <div className="hidden sm:flex items-center gap-3">
             <DialogTitle id="recipe-modal-title" className="text-2xl flex-1">
               {recipe.title}

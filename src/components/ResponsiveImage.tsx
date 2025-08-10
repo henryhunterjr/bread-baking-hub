@@ -35,6 +35,14 @@ export const ResponsiveImage = ({
   const [imageError, setImageError] = useState(false);
   const [supportsWebP, setSupportsWebP] = useState(false);
 
+  // Dev warning for missing/empty alt text
+  useEffect(() => {
+    if (!alt || !alt.trim()) {
+      // eslint-disable-next-line no-console
+      console.warn('ResponsiveImage: alt text should be a non-empty string for src:', src);
+    }
+  }, [alt, src]);
+
   // Check WebP support
   useEffect(() => {
     const checkWebPSupport = () => {
