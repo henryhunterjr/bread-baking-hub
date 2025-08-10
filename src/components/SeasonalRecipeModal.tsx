@@ -246,7 +246,16 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
 
   return (
     <Dialog open={!!recipe} onOpenChange={onClose} aria-labelledby="recipe-modal-title">
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" role="dialog" aria-modal="true">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto recipe-print-area" role="dialog" aria-modal="true">
+        <style>
+          {`@media print {
+            body * { visibility: hidden !important; }
+            .recipe-print-area, .recipe-print-area * { visibility: visible !important; }
+            .recipe-print-area { position: absolute; inset: 0; width: 100%; padding: 1in; }
+            .no-print { display: none !important; }
+            h1, h2, h3 { break-after: avoid; }
+          }`}
+        </style>
         <DialogHeader>
           <div className="flex items-center gap-3">
             <DialogTitle id="recipe-modal-title" className="text-2xl flex-1">
@@ -306,7 +315,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
           {/* Recipe Actions */}
           <RecipeActions 
             recipe={recipe}
-            className="border-t pt-4"
+            className="border-t pt-4 no-print"
           />
 
           {/* Servings Selector */}

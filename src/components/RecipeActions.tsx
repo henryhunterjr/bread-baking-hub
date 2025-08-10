@@ -30,6 +30,9 @@ interface RecipeActionsProps {
 export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) => {
   const { toast } = useToast();
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [showEmailFallback, setShowEmailFallback] = useState(false);
+  const [mailtoHref, setMailtoHref] = useState('');
+  const [emailContent, setEmailContent] = useState('');
 
   const handlePrint = () => {
     const printContent = generatePrintableHTML(recipe);
@@ -102,27 +105,43 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
     } catch (error) {
       console.error('Error generating PDF:', error);
       toast({
-        title: "PDF Error",
-        description: "Failed to generate PDF. Please try again.",
-        variant: "destructive",
+        title: 'Print to PDF',
+        description: 'PDF blocked. Opening print — choose “Save as PDF”.',
       });
+      try {
+        handlePrint();
+      } catch (e) {
+        // noop
+      }
     } finally {
       setIsGeneratingPDF(false);
     }
   };
 
-  const handleEmailRecipe = () => {
-    const subject = encodeURIComponent(`Recipe: ${recipe.title}`);
-    const body = encodeURIComponent(generateEmailBody(recipe));
-    const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
-    
-    // Use location href to avoid popup blockers in iframes
-    window.location.href = mailtoLink;
-    
-    toast({
-      title: "Email Ready",
-      description: "Opening your email client with the recipe",
-    });
+  const handleEmailRecipe = async () => {
+    const subject = `Recipe: ${recipe.title}`;
+    const bodyText = generateEmailBody(recipe);
+    const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+
+    if (navigator.share && typeof navigator.share === 'function') {
+      try {
+        await navigator.share({ title: recipe.title, text: bodyText, url: window.location.href });
+        return;
+      } catch (_) {
+        // fall through to fallback UI
+      }
+    }
+
+    setMailtoHref(mailtoLink);
+    setEmailContent(bodyText);
+    setShowEmailFallback(true);
+
+    try {
+      await navigator.clipboard.writeText(bodyText);
+      toast({ title: 'Copied!', description: 'Email content copied. Paste into your mail app.' });
+    } catch (err) {
+      // ignore
+    }
   };
 
   const handleShare = async () => {
@@ -162,7 +181,7 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
   };
 
   return (
-    <div className={`flex flex-wrap gap-2 ${className}`}>
+    <div className={`flex flex-wrap gap-2 no-print ${className}`}>
       <Button
         onClick={handlePrint}
         variant="outline"
@@ -203,6 +222,26 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
         <Share className="h-4 w-4" />
         Share
       </Button>
+      {showEmailFallback && (
+        <div className="w-full mt-2 rounded-md border border-border p-3 bg-background">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-medium">Email fallback</span>
+            <button className="text-xs underline" onClick={() => setShowEmailFallback(false)} aria-label="Close email fallback">Close</button>
+          </div>
+          <a href={mailtoHref} className="text-sm underline" aria-label="Open your email client">Open email client</a>
+          <textarea
+            className="mt-2 w-full h-32 rounded-md border border-border bg-background p-2 text-sm"
+            readOnly
+            value={emailContent}
+            onFocus={(e) => e.currentTarget.select()}
+            aria-label="Email content"
+          />
+          <div className="mt-2 flex gap-2">
+            <Button size="sm" variant="outline" onClick={async () => { try { await navigator.clipboard.writeText(emailContent); toast({ title: 'Copied!', description: 'Email content copied.' }); } catch (_) {} }}>Copy</Button>
+            <Button size="sm" variant="ghost" onClick={() => setShowEmailFallback(false)}>Done</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
