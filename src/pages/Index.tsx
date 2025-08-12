@@ -3,23 +3,23 @@ import { Helmet } from 'react-helmet-async';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
-import AboutHenry from "../components/AboutHenry";
-import BooksPreview from "../components/BooksPreview";
-import ToolsResources from "../components/ToolsResources";
-import { FromOvenToMarketHero } from "../components/FromOvenToMarketHero";
-import { BreadBookHero } from "../components/BreadBookHero";
-import BakersBench from "../components/BakersBench";
-import MonthlyChallenge from "../components/MonthlyChallenge";
-import LatestBlogPosts from "../components/LatestBlogPosts";
-import CallToAction from "../components/CallToAction";
-import PodcastSection from "../components/PodcastSection";
-import RecommendedTools from "../components/RecommendedTools";
-import { TestimonialsSection } from "../components/TestimonialsSection";
-import { AuthorBioSection } from "../components/AuthorBioSection";
-import { SocialProofBanner } from "../components/SocialProofBanner";
+const SocialProofBanner = lazy(() => import("../components/SocialProofBanner").then(m => ({ default: m.SocialProofBanner })));
+const Testimonials = lazy(() => import("../components/Testimonials").then(m => ({ default: m.Testimonials })));
+const AboutHenry = lazy(() => import("../components/AboutHenry"));
+const BooksPreview = lazy(() => import("../components/BooksPreview"));
+const ToolsResources = lazy(() => import("../components/ToolsResources"));
+const FromOvenToMarketHero = lazy(() => import("../components/FromOvenToMarketHero").then(m => ({ default: m.FromOvenToMarketHero })));
+const BreadBookHero = lazy(() => import("../components/BreadBookHero").then(m => ({ default: m.BreadBookHero })));
+const BakersBench = lazy(() => import("../components/BakersBench"));
+const MonthlyChallenge = lazy(() => import("../components/MonthlyChallenge"));
+const LatestBlogPosts = lazy(() => import("../components/LatestBlogPosts"));
+const CallToAction = lazy(() => import("../components/CallToAction"));
+const PodcastSection = lazy(() => import("../components/PodcastSection"));
+const RecommendedTools = lazy(() => import("../components/RecommendedTools"));
+const TestimonialsSection = lazy(() => import("../components/TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
+const AuthorBioSection = lazy(() => import("../components/AuthorBioSection").then(m => ({ default: m.AuthorBioSection })));
 const LazyAIAssistantSidebar = lazy(() => import("../components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
 import { sanitizeStructuredData } from '@/utils/sanitize';
-import { Testimonials } from '@/components/Testimonials';
 
 const Index = () => {
   const [isAIOpen, setIsAIOpen] = useState(false);
@@ -116,27 +116,62 @@ const Index = () => {
             __html: sanitizeStructuredData(personSchema)
           }}
         />
+        {/* Performance hints */}
+        <link rel="preconnect" href="https://ojyckskucneljvuqzrsw.supabase.co" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://i0.wp.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://secure.gravatar.com" crossOrigin="anonymous" />
+        <link rel="preload" as="image" href="/lovable-uploads/db15ab36-18a2-4103-b9d5-a5e58af2b2a2.png" />
       </Helmet>
       
     <div className="bg-background text-foreground">
       <Header />
       <main id="main-content" role="main" tabIndex={-1}>
         <HeroSection />
-        <SocialProofBanner />
-        <Testimonials className="px-4 mt-6" />
-        <AboutHenry />
-        <PodcastSection />
-        <BooksPreview />
-        <ToolsResources />
-        <RecommendedTools />
-        <TestimonialsSection />
-        <AuthorBioSection />
-        <FromOvenToMarketHero />
-        <BakersBench />
-        <MonthlyChallenge />
-        <BreadBookHero />
-        <LatestBlogPosts />
-        <CallToAction />
+        <Suspense fallback={null}>
+          <SocialProofBanner />
+        </Suspense>
+        <Suspense fallback={null}>
+          <Testimonials className="px-4 mt-6" />
+        </Suspense>
+        <Suspense fallback={null}>
+          <AboutHenry />
+        </Suspense>
+        <Suspense fallback={null}>
+          <PodcastSection />
+        </Suspense>
+        <Suspense fallback={null}>
+          <BooksPreview />
+        </Suspense>
+        <Suspense fallback={null}>
+          <ToolsResources />
+        </Suspense>
+        <Suspense fallback={null}>
+          <RecommendedTools />
+        </Suspense>
+        <Suspense fallback={null}>
+          <TestimonialsSection />
+        </Suspense>
+        <Suspense fallback={null}>
+          <AuthorBioSection />
+        </Suspense>
+        <Suspense fallback={null}>
+          <FromOvenToMarketHero />
+        </Suspense>
+        <Suspense fallback={null}>
+          <BakersBench />
+        </Suspense>
+        <Suspense fallback={null}>
+          <MonthlyChallenge />
+        </Suspense>
+        <Suspense fallback={null}>
+          <BreadBookHero />
+        </Suspense>
+        <Suspense fallback={null}>
+          <LatestBlogPosts />
+        </Suspense>
+        <Suspense fallback={null}>
+          <CallToAction />
+        </Suspense>
       </main>
       <Footer />
       <Suspense fallback={null}>
