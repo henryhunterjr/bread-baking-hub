@@ -186,16 +186,26 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
             uploadForm.append('file', fileToSend);
             uploadForm.append('recipeSlug', slugFromTitle || `recipe-${Date.now()}`);
 
-            const { data: imgData, error: imgError } = await supabase.functions.invoke('upload-recipe-image', {
-              body: uploadForm,
-            });
-
-            if (imgError) {
-              console.error('Image upload error:', imgError);
-              setServerError(imgError.message);
-            } else if (imgData?.uploadedUrl || imgData?.imageUrl) {
-              imageUrl = imgData.uploadedUrl || imgData.imageUrl;
-              console.log('Edge function file URL:', imageUrl);
+            try {
+              const resp = await fetch('https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/upload-recipe-image', {
+                method: 'POST',
+                body: uploadForm,
+              });
+              const imgData = await resp.json().catch(() => ({}));
+              if (!resp.ok || !imgData?.success) {
+                const msg = imgData?.error || imgData?.details || `Upload failed (${resp.status})`;
+                console.error('Image upload error:', msg);
+                setServerError(msg);
+                toast({ title: 'Image upload failed', description: msg, variant: 'destructive' });
+              } else if (imgData?.uploadedUrl || imgData?.imageUrl) {
+                imageUrl = imgData.uploadedUrl || imgData.imageUrl;
+                console.log('Edge function file URL:', imageUrl);
+              }
+            } catch (imgErr: any) {
+              const msg = imgErr?.message || 'Image upload failed';
+              console.error('Image upload exception:', imgErr);
+              setServerError(msg);
+              toast({ title: 'Image upload failed', description: msg, variant: 'destructive' });
             }
           }
           

@@ -32,24 +32,22 @@ export const useRecipeImageUpload = () => {
       formData.append('file', file);
       formData.append('recipeSlug', recipeSlug);
 
-      // Upload via edge function
-      const { data, error } = await supabase.functions.invoke('upload-recipe-image', {
+      // Upload via edge function (multipart/form-data)
+      const resp = await fetch('https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/upload-recipe-image', {
+        method: 'POST',
         body: formData,
       });
+      const data = await resp.json().catch(() => ({} as any));
 
-      if (error) {
-        throw new Error(error.message || 'Upload failed');
+      if (!resp.ok || !data?.success) {
+        throw new Error(data?.error || data?.details || `Upload failed (${resp.status})`);
       }
 
-      if (!data.success) {
-        throw new Error(data.error || 'Upload failed');
-      }
-
-      // Update recipe mapping
+      const uploadedUrl = data.uploadedUrl || data.imageUrl;
       const { error: mappingError } = await supabase.functions.invoke('update-recipe-mapping', {
         body: {
           recipeSlug,
-          imageUrl: data.imageUrl
+          imageUrl: uploadedUrl
         }
       });
 
@@ -70,7 +68,7 @@ export const useRecipeImageUpload = () => {
 
       return {
         success: true,
-        imageUrl: data.imageUrl
+        imageUrl: uploadedUrl
       };
 
     } catch (error) {

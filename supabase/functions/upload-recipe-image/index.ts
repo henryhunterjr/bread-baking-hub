@@ -115,6 +115,7 @@ serve(async (req) => {
       JSON.stringify({ 
         success: true, 
         uploadedUrl: publicUrl,
+        imageUrl: publicUrl,
         mime: file.type,
         size: file.size,
         path: uploadData.path,
