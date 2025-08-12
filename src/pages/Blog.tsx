@@ -19,6 +19,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { generateBlogListingSchema } from '@/utils/structuredData';
 import { useBlogCache } from '@/utils/blogCache';
 import { sanitizeStructuredData } from '@/utils/sanitize';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -151,13 +152,15 @@ const Blog = () => {
         <main>
           {/* Hero Section */}
           <section className="py-20 px-4 bg-gradient-hero">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-5xl md:text-6xl font-bold text-primary mb-6">
-                Baking Great Bread Blog
-              </h1>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Dive deep into the art and science of bread baking with expert tips, troubleshooting guides, and seasonal insights to elevate your craft.
-              </p>
+            <h1 className="sr-only">Baking Great Bread Blog</h1>
+            <div className="max-w-7xl mx-auto">
+              <ResponsiveImage
+                src="/lovable-uploads/b5e1dc0c-46f0-43df-9624-3a332d98ec4e.png"
+                alt="Baking Great Bread at Home Blog hero image featuring a cozy kitchen scene with bread, bowls, and baking tools"
+                className="rounded-2xl shadow-warm w-full"
+                priority={true}
+                sizes="(max-width: 768px) 100vw, 1200px"
+              />
             </div>
           </section>
 
