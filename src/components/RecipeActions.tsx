@@ -76,10 +76,40 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
 
   const handleDownloadPDF = async () => {
     setIsGeneratingPDF(true);
+    const inIframe = (() => { try { return window.self !== window.top; } catch { return true; } })();
+    const fallback = async () => {
+      try {
+        const text = generateEmailBody(recipe);
+        const resp = await fetch('https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/export-pdf', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: recipe.title, text })
+        });
+        if (!resp.ok) throw new Error(`Server PDF failed (${resp.status})`);
+        const blob = await resp.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${recipe.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        toast({ title: 'PDF Ready', description: 'Downloaded server-generated PDF.' });
+      } catch (err) {
+        console.error('Server PDF fallback failed:', err);
+        toast({ title: 'Print to PDF', description: 'PDF blocked. Opening print — choose “Save as PDF”.' });
+        try { handlePrint(); } catch {}
+      }
+    };
+
     try {
+      if (inIframe) {
+        await fallback();
+        return;
+      }
+
       const printContent = generatePrintableHTML(recipe);
-      
-      // Create a temporary element
       const element = document.createElement('div');
       element.innerHTML = printContent;
       element.style.position = 'absolute';
@@ -87,7 +117,7 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
       document.body.appendChild(element);
 
       const options = {
-        margin: [0.5, 0.5, 0.5, 0.5],
+        margin: [0.5, 0.5, 0.5, 0.5] as number[],
         filename: `${recipe.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true },
@@ -95,24 +125,11 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
       };
 
       await html2pdf().set(options).from(element).save();
-      
       document.body.removeChild(element);
-      
-      toast({
-        title: "PDF Downloaded",
-        description: "Recipe saved as PDF to your downloads",
-      });
+      toast({ title: 'PDF Downloaded', description: 'Recipe saved as PDF to your downloads' });
     } catch (error) {
       console.error('Error generating PDF:', error);
-      toast({
-        title: 'Print to PDF',
-        description: 'PDF blocked. Opening print — choose “Save as PDF”.',
-      });
-      try {
-        handlePrint();
-      } catch (e) {
-        // noop
-      }
+      await fallback();
     } finally {
       setIsGeneratingPDF(false);
     }
