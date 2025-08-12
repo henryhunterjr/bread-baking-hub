@@ -27,9 +27,30 @@ export const useRecipeImageUpload = () => {
         throw new Error('File too large. Maximum size is 10MB.');
       }
 
+      // Optionally compress images for performance
+      let fileToSend: File = file;
+      if (file.type.startsWith('image/')) {
+        try {
+          const compressedBlob = await imageCompression(file, {
+            maxWidthOrHeight: 1600,
+            initialQuality: 0.8,
+            fileType: 'image/webp',
+            maxSizeMB: 1.2,
+            useWebWorker: true,
+          });
+          fileToSend = new File(
+            [compressedBlob],
+            file.name.replace(/\.[^.]+$/, '.webp'),
+            { type: 'image/webp' }
+          );
+        } catch (e) {
+          console.warn('Compression failed, uploading original file');
+        }
+      }
+
       // Create form data
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', fileToSend);
       formData.append('recipeSlug', recipeSlug);
 
       // Upload via edge function (multipart/form-data)

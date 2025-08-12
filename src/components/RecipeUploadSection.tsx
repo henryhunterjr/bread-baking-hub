@@ -122,15 +122,16 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       });
 
       setUploadProgress(40);
-      const { data: formatData, error: formatError } = await supabase.functions.invoke('format-recipe', {
+      const formatResp = await fetch('https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/format-recipe', {
+        method: 'POST',
         body: formData,
       });
 
       setUploadProgress(60);
 
-      if (formatError) {
-        console.error('Format function error:', formatError);
-        const errorMessage = formatError.message || 'Failed to format recipe';
+      if (!formatResp.ok) {
+        const errJson = await formatResp.json().catch(() => ({} as any));
+        const errorMessage = errJson?.error || errJson?.message || `Failed to format recipe (${formatResp.status})`;
         toast({
           title: 'Upload Failed',
           description: errorMessage,
@@ -141,7 +142,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
 
       setUploadProgress(80);
 
-      const data = formatData as any;
+      const data = await formatResp.json() as any;
       console.log('Received recipe data:', data);
       
       let imageUrl = null;
@@ -213,22 +214,26 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
           if (data.recipe.course) tags.push(String(data.recipe.course));
           if (data.recipe.cuisine) tags.push(String(data.recipe.cuisine));
 
-          const { error: saveError } = await supabase
-            .from('recipes')
-            .insert({
-              user_id: user.id,
+          const { data: upsertData, error: upsertError } = await supabase.functions.invoke('upsert-recipe', {
+            body: {
               title: data.recipe.title,
-              data: data.recipe,
-              image_url: imageUrl,
-              tags,
               slug: slugFromTitle || null,
-            });
+              data: data.recipe,
+              imageUrl: imageUrl,
+              tags,
+              folder: null,
+              isPublic: false,
+              userId: user.id,
+            },
+          });
           
-          if (saveError) {
-            console.error('Error saving recipe:', saveError);
-            // Don't fail the whole operation if saving fails
+          if (upsertError || !upsertData?.success) {
+            const msg = (upsertError as any)?.message || (upsertData as any)?.error || 'Failed to save recipe';
+            console.error('Error saving recipe via edge function:', msg);
+            setServerError(msg);
+            toast({ title: 'Save failed', description: msg, variant: 'destructive' });
           } else {
-            console.log('Recipe saved successfully to database');
+            console.log('Recipe saved successfully via edge function');
             toast({ title: 'Recipe saved!', description: 'Redirecting to your recipes...', variant: 'default' });
             navigate('/recipes');
           }
