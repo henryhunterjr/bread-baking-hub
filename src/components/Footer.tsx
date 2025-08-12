@@ -79,10 +79,10 @@ const Footer = () => {
                 placeholder="Your email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-stone-800 border-stone-600 focus:border-primary rounded-r-none flex-1"
+                className="bg-stone-800 border-stone-600 focus:border-primary rounded-r-none flex-1 h-11"
                 required
               />
-              <Button type="submit" variant="warm" className="rounded-l-none">
+              <Button type="submit" variant="warm" className="rounded-l-none h-11">
                 Subscribe
               </Button>
             </form>

@@ -203,7 +203,7 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
         onClick={handlePrint}
         variant="outline"
         size="sm"
-        className="flex items-center gap-2"
+        className="flex items-center gap-2 h-11"
       >
         <Printer className="h-4 w-4" />
         Print Recipe
@@ -214,7 +214,7 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
         variant="outline"
         size="sm"
         disabled={isGeneratingPDF}
-        className="flex items-center gap-2"
+        className="flex items-center gap-2 h-11"
       >
         <Download className="h-4 w-4" />
         {isGeneratingPDF ? 'Generating...' : 'Save as PDF'}
@@ -224,7 +224,7 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
         onClick={handleEmailRecipe}
         variant="outline"
         size="sm"
-        className="flex items-center gap-2"
+        className="flex items-center gap-2 h-11"
       >
         <Mail className="h-4 w-4" />
         Email Recipe
@@ -234,18 +234,18 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
         onClick={handleShare}
         variant="outline"
         size="sm"
-        className="flex items-center gap-2"
+        className="flex items-center gap-2 h-11"
       >
         <Share className="h-4 w-4" />
         Share
       </Button>
       {showEmailFallback && (
-        <div className="w-full mt-2 rounded-md border border-border p-3 bg-background">
+        <div className="w-full mt-2 rounded-md border border-border p-3 bg-background animate-fade-in">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium">Email fallback</span>
             <button className="text-xs underline" onClick={() => setShowEmailFallback(false)} aria-label="Close email fallback">Close</button>
           </div>
-          <a href={mailtoHref} className="text-sm underline" aria-label="Open your email client">Open email client</a>
+          <a href={mailtoHref} className="text-sm underline story-link" aria-label="Open your email client">Open email client</a>
           <textarea
             className="mt-2 w-full h-32 rounded-md border border-border bg-background p-2 text-sm"
             readOnly
@@ -254,8 +254,8 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
             aria-label="Email content"
           />
           <div className="mt-2 flex gap-2">
-            <Button size="sm" variant="outline" onClick={async () => { try { await navigator.clipboard.writeText(emailContent); toast({ title: 'Copied!', description: 'Email content copied.' }); } catch (_) {} }}>Copy</Button>
-            <Button size="sm" variant="ghost" onClick={() => setShowEmailFallback(false)}>Done</Button>
+            <Button size="sm" variant="outline" className="h-11" onClick={async () => { try { await navigator.clipboard.writeText(emailContent); toast({ title: 'Copied!', description: 'Email content copied.' }); } catch (_) {} }}>Copy</Button>
+            <Button size="sm" variant="ghost" className="h-11" onClick={() => setShowEmailFallback(false)}>Done</Button>
           </div>
         </div>
       )}

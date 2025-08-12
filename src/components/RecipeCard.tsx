@@ -69,7 +69,7 @@ export const RecipeCard = memo(({
                   variant="ghost"
                   size="sm"
                   onClick={() => onAskAssistant(recipe.data)}
-                  className="text-xs"
+                  className="text-xs h-11"
                 >
                   Ask Baker's Helper
                 </Button>
@@ -90,7 +90,7 @@ export const RecipeCard = memo(({
               variant="outline" 
               size="sm"
               onClick={onEdit}
-              className="w-full sm:w-auto touch-manipulation"
+              className="w-full sm:w-auto h-11 touch-manipulation"
             >
               Edit Title
             </Button>
@@ -98,7 +98,7 @@ export const RecipeCard = memo(({
               variant="hero" 
               size="sm"
               onClick={onFullEdit}
-              className="w-full sm:w-auto touch-manipulation"
+              className="w-full sm:w-auto h-11 touch-manipulation"
             >
               Edit Recipe
             </Button>

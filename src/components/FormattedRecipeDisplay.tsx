@@ -113,7 +113,7 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
             onClick={handlePrint}
             variant="outline"
             size="sm"
-            className="flex items-center justify-center gap-2 w-full sm:w-auto touch-manipulation"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto h-11 touch-manipulation"
           >
             <Printer className="h-4 w-4" />
             Print
@@ -122,7 +122,7 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
             onClick={handleDownloadPDF}
             variant="outline"
             size="sm"
-            className="flex items-center justify-center gap-2 w-full sm:w-auto touch-manipulation"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto h-11 touch-manipulation"
           >
             <Download className="h-4 w-4" />
             Download PDF
