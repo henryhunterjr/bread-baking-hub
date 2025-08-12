@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Mail, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
 
 interface NewsletterSignupProps {
   className?: string;
@@ -25,14 +26,16 @@ const NewsletterSignup = ({ className }: NewsletterSignupProps) => {
     setIsSubmitting(true);
     
     try {
-      // Placeholder for newsletter service integration
-      // Replace with actual API call to Mailchimp, ConvertKit, etc.
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .insert({ email });
+
+      if (error) throw error;
+
       setIsSubscribed(true);
       setEmail('');
       toast.success('Successfully subscribed to our newsletter!');
-    } catch (error) {
+    } catch (error: any) {
       toast.error('Failed to subscribe. Please try again.');
     } finally {
       setIsSubmitting(false);
