@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -49,6 +51,9 @@ export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [revalidating, setRevalidating] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
+  const [savingId, setSavingId] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<'all' | 'drafts' | 'published'>('all');
 
   useEffect(() => {
     fetchPosts();
@@ -82,6 +87,14 @@ export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
       setLoading(false);
     }
   };
+
+  const displayedPosts = posts
+    .filter((p) => (statusFilter === 'all' ? true : statusFilter === 'drafts' ? !!p.is_draft : !p.is_draft))
+    .filter((p) => {
+      const q = search.trim().toLowerCase();
+      if (!q) return true;
+      return p.title.toLowerCase().includes(q) || (p.subtitle || '').toLowerCase().includes(q) || (p.tags || []).some(t => t.toLowerCase().includes(q));
+    });
 
   const getPostUrl = (post: BlogPost) => {
     return `${window.location.origin}/blog/${post.slug}`;
@@ -195,6 +208,34 @@ export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
     }
   };
 
+  const updatePost = async (id: string, updates: Partial<BlogPost>) => {
+    setSavingId(id);
+    try {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .update(updates)
+        .eq('id', id)
+        .select('*')
+        .single();
+      if (error) throw error;
+      setPosts((prev) => prev.map((p) => (p.id === id ? { ...p, ...data } : p)));
+      toast({ title: 'Saved', description: 'Post updated.' });
+    } catch (error) {
+      console.error('Error updating post:', error);
+      toast({ title: 'Save failed', description: "Couldn't save changes.", variant: 'destructive' });
+    } finally {
+      setSavingId(null);
+    }
+  };
+
+  const handleToggleDraft = async (post: BlogPost) => {
+    const makeLive = post.is_draft;
+    await updatePost(post.id, { 
+      is_draft: !post.is_draft,
+      published_at: makeLive ? new Date().toISOString() : null,
+    });
+  };
+
   if (loading) {
     return (
       <div className="space-y-4">
@@ -242,8 +283,21 @@ export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
         </Badge>
       </div>
 
+      <div className="flex items-center gap-2">
+        <Input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search by title, subtitle, or tag..."
+          aria-label="Search posts"
+          className="max-w-md"
+        />
+        {search && (
+          <Button variant="ghost" size="sm" onClick={() => setSearch('')}>Clear</Button>
+        )}
+      </div>
+
       <div className="space-y-3">
-        {posts.map((post) => (
+        {displayedPosts.map((post) => (
           <Card key={post.id} className="group hover:shadow-md transition-shadow">
             <CardContent className="p-6">
               <div className="flex items-start gap-4">
@@ -267,12 +321,33 @@ export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
                 <div className="flex items-start justify-between flex-1 min-w-0">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
-                      <h3 className="text-lg font-semibold text-foreground truncate">
-                        {post.title}
-                      </h3>
-                      <Badge variant={post.is_draft ? "secondary" : "default"} className="shrink-0">
-                        {post.is_draft ? 'Draft' : 'Published'}
-                      </Badge>
+                      <Input
+                        defaultValue={post.title}
+                        onBlur={(e) => {
+                          const newVal = e.target.value.trim();
+                          if (newVal && newVal !== post.title) updatePost(post.id, { title: newVal });
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+                        }}
+                        disabled={savingId === post.id}
+                        className="h-8 max-w-md"
+                        aria-label="Edit post title"
+                      />
+                      <div className="flex items-center gap-2 shrink-0">
+                        <Badge variant={post.is_draft ? "secondary" : "default"}>
+                          {post.is_draft ? 'Draft' : 'Published'}
+                        </Badge>
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <span>Draft</span>
+                          <Switch
+                            checked={!post.is_draft}
+                            onCheckedChange={() => handleToggleDraft(post)}
+                            aria-label="Toggle published"
+                          />
+                          <span>Live</span>
+                        </div>
+                      </div>
                     </div>
                     
                     {post.subtitle && (

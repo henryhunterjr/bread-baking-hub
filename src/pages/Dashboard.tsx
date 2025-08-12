@@ -32,6 +32,8 @@ import { UpdateThumbnail } from '@/components/dashboard/UpdateThumbnail';
 import { SiteSettings } from '@/components/dashboard/SiteSettings';
 import { supabase } from '@/integrations/supabase/client';
 import { Tables } from '@/integrations/supabase/types';
+import AdminSubscribers from '@/components/admin/AdminSubscribers';
+import AdminRecipes from '@/components/admin/AdminRecipes';
 
 interface BlogPostData {
   id?: string;
@@ -427,7 +429,7 @@ const Dashboard = () => {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full max-w-4xl grid-cols-6">
+            <TabsList className="grid w-full max-w-4xl grid-cols-8">
               <TabsTrigger value="posts" className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
                 All Posts
@@ -444,6 +446,14 @@ const Dashboard = () => {
               <TabsTrigger value="newsletter" className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
                 Newsletter
+              </TabsTrigger>
+              <TabsTrigger value="recipes" className="flex items-center gap-2">
+                <FileText className="w-4 h-4" />
+                Recipes
+              </TabsTrigger>
+              <TabsTrigger value="subscribers" className="flex items-center gap-2">
+                <Mail className="w-4 h-4" />
+                Subscribers
               </TabsTrigger>
               <TabsTrigger value="images" className="flex items-center gap-2">
                 <ImageIcon className="w-4 h-4" />
@@ -502,6 +512,14 @@ const Dashboard = () => {
                 isSavingDraft={isSavingDraft}
                 isPublishing={isPublishing}
               />
+            </TabsContent>
+
+            <TabsContent value="recipes" className="space-y-6">
+              <AdminRecipes />
+            </TabsContent>
+
+            <TabsContent value="subscribers" className="space-y-6">
+              <AdminSubscribers />
             </TabsContent>
 
             <TabsContent value="images" className="space-y-6">
