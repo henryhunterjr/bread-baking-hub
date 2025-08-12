@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { usePublicRecipe } from '@/hooks/usePublicRecipe';
 import { FormattedRecipeDisplay } from '@/components/FormattedRecipeDisplay';
 import Header from '@/components/Header';
@@ -48,6 +49,32 @@ const PublicRecipe = () => {
 
   return (
     <div className="bg-background text-foreground min-h-screen">
+      <Helmet>
+        <title>{`${recipe.title} | Baking Great Bread`}</title>
+        <meta name="description" content={(recipe.data?.introduction as string) || `Recipe: ${recipe.title} by Henry Hunter.`} />
+        <link rel="canonical" href={`https://bread-baking-hub.vercel.app/r/${slug}`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={`${recipe.title} | Baking Great Bread`} />
+        <meta property="og:description" content={(recipe.data?.introduction as string) || `Recipe: ${recipe.title} by Henry Hunter.`} />
+        <meta property="og:image" content={recipe.image_url || 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/default-recipe.jpg'} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Recipe",
+            name: recipe.title,
+            image: recipe.image_url ? [recipe.image_url] : undefined,
+            description: (recipe.data?.introduction as string) || undefined,
+            author: { "@type": "Person", name: "Henry Hunter" },
+            datePublished: recipe.created_at,
+            recipeIngredient: Array.isArray((recipe.data as any)?.ingredients)
+              ? (recipe.data as any).ingredients.map((i: any) => typeof i === 'string' ? i : `${i.amount_metric || i.amount_volume || ''} ${i.item}`.trim())
+              : [],
+            recipeInstructions: Array.isArray((recipe.data as any)?.method)
+              ? (recipe.data as any).method.map((m: any) => ({ "@type": "HowToStep", text: typeof m === 'string' ? m : m.instruction }))
+              : []
+          })}
+        </script>
+      </Helmet>
       <Header />
       <main className="py-20 px-4">
         <div className="max-w-4xl mx-auto space-y-6">

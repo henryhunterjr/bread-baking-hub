@@ -9,6 +9,7 @@ import BackToTop from "@/components/BackToTop";
 // AIAssistantSidebar is lazy-loaded below
 import { useState, Suspense, lazy } from "react";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
+import DefaultSEO from "./components/DefaultSEO";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 
 // Import Index directly to avoid lazy loading issues on main page
@@ -77,6 +78,7 @@ const App = () => {
             <OfflineBanner />
             <BackToTop />
             <BrowserRouter>
+              <DefaultSEO />
               <Suspense fallback={<SimpleLoadingSpinner />}>
               <Routes>
                 <Route path="/" element={<Index />} />

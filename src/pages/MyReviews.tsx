@@ -71,7 +71,7 @@ const MyReviews = () => {
                   <CardContent className="space-y-2">
                     <p className="text-sm leading-relaxed">{it.comment}</p>
                     {it.photo_url && (
-                      <img src={it.photo_url} alt="Review photo" className="h-40 w-auto rounded object-cover" loading="lazy" />
+                      <img src={it.photo_url} alt={`Review photo for ${it.recipe?.title || 'recipe'}`} className="h-40 w-auto rounded object-cover" loading="lazy" />
                     )}
                     {it.recipe?.slug && (
                       <a href={`/r/${it.recipe.slug}`} className="text-primary underline text-sm">Open Recipe →</a>
