@@ -96,6 +96,8 @@ const App = () => {
                 <Route path="/recipe-workspace" element={<RecipeWorkspace />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/my-recipes" element={<MyRecipes />} />
+                <Route path="/my-favorites" element={<MyFavorites />} />
+                <Route path="/my-reviews" element={<MyReviews />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/books" element={<Books />} />
