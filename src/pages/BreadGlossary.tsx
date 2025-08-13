@@ -8,6 +8,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { Label } from '@/components/ui/label';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 interface GlossaryTerm {
   id: string;
@@ -394,6 +396,7 @@ const BreadGlossary = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       {/* Hero Section */}
       <section className="relative h-80 overflow-hidden">
         <div 
@@ -674,6 +677,7 @@ const BreadGlossary = () => {
           )}
         </DialogContent>
       </Dialog>
+      <Footer />
     </div>
   );
 };
