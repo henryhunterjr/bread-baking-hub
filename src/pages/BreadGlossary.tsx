@@ -425,7 +425,7 @@ const BreadGlossary = () => {
           }}
         />
         <div className="absolute inset-0 bg-black/30" />
-        <div className="relative h-full flex items-end justify-center pb-16">
+        <div className="relative h-full flex items-end justify-center pb-8">
           <div className="text-center text-white">
             <p className="text-lg md:text-xl mb-2 drop-shadow-md">
               Your comprehensive guide to bread baking terminology
