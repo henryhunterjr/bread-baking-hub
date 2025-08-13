@@ -17,6 +17,7 @@ interface PerformanceMetric {
 class ErrorMonitor {
   private isProduction = window.location.hostname !== 'localhost' && 
                         !window.location.hostname.includes('lovableproject.com');
+  private performanceObserver: PerformanceObserver | null = null;
 
   init() {
     // Global error handler
@@ -58,17 +59,54 @@ class ErrorMonitor {
   private setupPerformanceMonitoring() {
     // Monitor Core Web Vitals
     if ('PerformanceObserver' in window) {
-      const observer = new PerformanceObserver((list) => {
+      this.performanceObserver = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          this.logPerformanceMetric({
-            name: entry.name,
-            value: entry.duration || 0,
-            timestamp: Date.now(),
-          });
+          // Monitor Core Web Vitals specifically
+          if (entry.entryType === 'navigation') {
+            this.logPerformanceMetric({
+              name: 'page_load_time',
+              value: entry.duration || 0,
+              timestamp: Date.now(),
+            });
+          }
+          
+          if (entry.entryType === 'largest-contentful-paint') {
+            this.logPerformanceMetric({
+              name: 'largest_contentful_paint',
+              value: entry.startTime,
+              timestamp: Date.now(),
+            });
+          }
+          
+          if (entry.entryType === 'first-input') {
+            const fidEntry = entry as any;
+            this.logPerformanceMetric({
+              name: 'first_input_delay',
+              value: fidEntry.processingStart - entry.startTime,
+              timestamp: Date.now(),
+            });
+          }
+          
+          if (entry.entryType === 'layout-shift') {
+            const clsEntry = entry as any;
+            this.logPerformanceMetric({
+              name: 'cumulative_layout_shift',
+              value: clsEntry.value,
+              timestamp: Date.now(),
+            });
+          }
         }
       });
 
-      observer.observe({ entryTypes: ['measure', 'navigation'] });
+      // Observe Core Web Vitals
+      try {
+        this.performanceObserver.observe({ 
+          entryTypes: ['navigation', 'largest-contentful-paint', 'first-input', 'layout-shift'] 
+        });
+      } catch (e) {
+        // Fallback for browsers that don't support all entry types
+        this.performanceObserver.observe({ entryTypes: ['navigation'] });
+      }
     }
   }
 
