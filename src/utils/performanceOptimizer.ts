@@ -222,7 +222,7 @@ export class PerformanceOptimizer {
   public static optimizeBundle() {
     // Code splitting markers for dynamic imports
     return {
-      loadRecipeEditor: () => import('../components/recipe-edit/RecipeEditor'),
+      loadRecipeEditor: () => import('../components/FullRecipeEditForm'),
       loadChartComponents: () => import('recharts'),
       loadMarkdownEditor: () => import('@uiw/react-md-editor'),
       loadImageCompression: () => import('browser-image-compression')
