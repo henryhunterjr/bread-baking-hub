@@ -31,7 +31,7 @@ const Header = () => {
               <img 
                 src={officialLogo}
                 alt="Baking Great Bread at Home - Official Logo"
-                className="w-10 h-10 rounded-full object-cover shadow-lg"
+                className="w-12 h-12 rounded-full object-cover shadow-lg"
               />
             </Link>
           </div>
