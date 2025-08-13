@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Info, Wheat } from 'lucide-react';
+import { Menu, X, Info } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { SkipLink, VisuallyHidden } from './AccessibilityComponents';
+import officialLogo from '@/assets/official-logo.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,12 +26,13 @@ const Header = () => {
             <Link 
               to="/" 
               className="flex items-center hover:opacity-80 transition-opacity"
-              aria-label="Baking Great Bread - Home"
+              aria-label="Baking Great Bread at Home - Home"
             >
-              <div className="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center shadow-lg">
-                <Wheat className="w-6 h-6 text-white" aria-hidden="true" />
-                <VisuallyHidden>Baking Great Bread Logo</VisuallyHidden>
-              </div>
+              <img 
+                src={officialLogo}
+                alt="Baking Great Bread at Home - Official Logo"
+                className="w-10 h-10 rounded-full object-cover shadow-lg"
+              />
             </Link>
           </div>
           
