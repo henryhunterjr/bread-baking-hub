@@ -124,14 +124,17 @@ const Blog = () => {
         <meta property="og:description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog. Learn troubleshooting methods, seasonal adjustments, and the science behind perfect bread." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://bread-baking-hub.vercel.app/blog" />
-        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
+        <meta property="og:image" content="https://bread-baking-hub.vercel.app/lovable-uploads/2e6d4bc0-b25b-4ee5-94b9-d9baeb170152.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Baking Great Bread at Home Blog - Fresh baked bread with kitchen tools" />
         <meta property="og:site_name" content="Baking Great Bread" />
         
         {/* Twitter Card meta tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Blog - Baking Great Bread" />
         <meta name="twitter:description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog." />
-        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
+        <meta name="twitter:image" content="https://bread-baking-hub.vercel.app/lovable-uploads/2e6d4bc0-b25b-4ee5-94b9-d9baeb170152.png" />
         
         {/* RSS Feed Link */}
         <link rel="alternate" type="application/rss+xml" title="Baking Great Bread RSS Feed" href="https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/rss-feed" />
