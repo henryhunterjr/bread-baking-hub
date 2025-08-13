@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import OfflineBanner from "@/components/OfflineBanner";
 import BackToTop from "@/components/BackToTop";
+import { AccessibilityEnhancements, EnhancedSkipLink } from "@/components/AccessibilityEnhancements";
+import { PerformanceOptimizer, CriticalCSS } from "@/components/PerformanceOptimizer";
 // AIAssistantSidebar is lazy-loaded below
 import { useState, Suspense, lazy } from "react";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
@@ -73,13 +75,18 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <TooltipProvider>
+            <CriticalCSS />
+            <PerformanceOptimizer />
+            <AccessibilityEnhancements />
             <Toaster />
             <Sonner />
             <OfflineBanner />
             <BackToTop />
             <BrowserRouter>
+              <EnhancedSkipLink />
               <DefaultSEO />
               <Suspense fallback={<SimpleLoadingSpinner />}>
+              <main id="main-content">
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/recipe-formatter" element={<RecipeFormatter />} />
@@ -118,6 +125,7 @@ const App = () => {
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              </main>
             </Suspense>
             
             {/* Site-wide AI Assistant - Crusty */}
