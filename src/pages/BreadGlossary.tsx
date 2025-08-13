@@ -417,17 +417,24 @@ const BreadGlossary = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-hero text-white py-20">
-        <div className="absolute inset-0 bg-overlay-darker/60"></div>
-        <div className="relative container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center mb-6">
-            <Book className="h-12 w-12 mr-4" />
-            <h1 className="text-5xl font-bold">Bread Baker's Glossary</h1>
+      <section className="relative h-80 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ 
+            backgroundImage: `url(/lovable-uploads/a7440ca6-c641-4ad7-a994-f6ef4a375679.png)`
+          }}
+        />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="relative h-full flex items-center justify-center">
+          <div className="text-center text-white">
+            <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">
+              Bread Baker's Glossary
+            </h1>
+            <p className="text-lg md:text-xl mb-2 drop-shadow-md">
+              Your comprehensive guide to bread baking terminology
+            </p>
+            <p className="text-base md:text-lg text-amber-200 drop-shadow-md">by Henry Hunter</p>
           </div>
-          <p className="text-xl mb-4 max-w-2xl mx-auto">
-            Your comprehensive guide to bread baking terminology
-          </p>
-          <p className="text-lg text-amber-200">by Henry Hunter</p>
         </div>
       </section>
 
