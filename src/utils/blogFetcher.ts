@@ -76,13 +76,21 @@ interface FetchPostsResponse {
 
 const BLOG_PROXY_URL = 'https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/blog-proxy';
 
+// Decode HTML entities
+const decodeHtmlEntities = (text: string): string => {
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+};
+
 // Strip HTML tags and limit to specified word count
 export const stripHtml = (html: string, wordLimit: number = 20): string => {
   const text = html.replace(/<[^>]*>/g, '');
-  const words = text.split(' ').filter(word => word.length > 0);
+  const decodedText = decodeHtmlEntities(text);
+  const words = decodedText.split(' ').filter(word => word.length > 0);
   
   if (words.length <= wordLimit) {
-    return text;
+    return decodedText;
   }
   
   return words.slice(0, wordLimit).join(' ') + '...';
@@ -181,7 +189,7 @@ export const fetchBlogPosts = async (
       
       return {
         id: post.id,
-        title: post.title.rendered,
+        title: decodeHtmlEntities(post.title.rendered),
         excerpt: stripHtml(post.excerpt.rendered, 20),
         date: new Date(post.date).toLocaleDateString('en-US', {
           year: 'numeric',
