@@ -31,7 +31,11 @@ const Header = () => {
               <img 
                 src={officialLogo}
                 alt="Baking Great Bread at Home - Official Logo"
-                className="w-12 h-12 rounded-full object-cover shadow-lg"
+                className="w-16 h-16 rounded-full object-cover shadow-lg border-2 border-white/20"
+                onError={(e) => {
+                  console.error('Logo failed to load:', officialLogo);
+                  e.currentTarget.src = '/placeholder.svg';
+                }}
               />
             </Link>
           </div>
