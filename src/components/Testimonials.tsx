@@ -9,18 +9,28 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    quote: "Henry's method finally gave me consistent oven spring. My family thinks I'm a pro!",
-    author: 'Marissa K., Portland',
+    quote: "Henry's method finally gave me consistent oven spring. My family thinks I'm a pro! The troubleshooting guide saved my sourdough starter after I thought it was ruined.",
+    author: 'Marissa K., Portland (via Instagram)',
     rating: 5,
   },
   {
-    quote: 'The seasonal approach clicked for me—my summer focaccia has never been better.',
-    author: 'Daniel R., Austin',
+    quote: 'The seasonal approach clicked for me—my summer focaccia has never been better. I love how Henry explains the science behind temperature and humidity effects.',
+    author: 'Daniel R., Austin (Facebook Community)',
     rating: 5,
   },
   {
-    quote: 'Clear steps, zero fluff. I went from flat loaves to gorgeous ear scores in a week.',
-    author: 'Priya S., Toronto',
+    quote: 'Clear steps, zero fluff. I went from flat loaves to gorgeous ear scores in a week. My neighbors keep asking for bread now!',
+    author: 'Priya S., Toronto (Email Subscriber)',
+    rating: 5,
+  },
+  {
+    quote: 'The tools guide helped me choose the right equipment. My investment in a good banneton and lame made all the difference in my bread quality.',
+    author: 'James M., Seattle (YouTube Comment)',
+    rating: 5,
+  },
+  {
+    quote: 'Henry\'s podcast episodes while I bake are perfect. The timing tips and his calm explanations make even complicated techniques feel approachable.',
+    author: 'Sofia L., Miami (Podcast Review)',
     rating: 5,
   },
 ];

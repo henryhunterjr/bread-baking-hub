@@ -8,6 +8,8 @@ import OfflineBanner from "@/components/OfflineBanner";
 import BackToTop from "@/components/BackToTop";
 import { AccessibilityEnhancements, EnhancedSkipLink } from "@/components/AccessibilityEnhancements";
 import { PerformanceOptimizer, CriticalCSS } from "@/components/PerformanceOptimizer";
+import { ContentQualityChecker } from "@/components/ContentQualityChecker";
+import "@/utils/errorMonitoring";
 // AIAssistantSidebar is lazy-loaded below
 import { useState, Suspense, lazy } from "react";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
@@ -78,6 +80,7 @@ const App = () => {
             <CriticalCSS />
             <PerformanceOptimizer />
             <AccessibilityEnhancements />
+            <ContentQualityChecker />
             <Toaster />
             <Sonner />
             <OfflineBanner />
