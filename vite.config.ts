@@ -104,16 +104,54 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
-          ui: ['@radix-ui/react-dialog'],
-          utils: ['date-fns', 'clsx', 'tailwind-merge']
+          // Core React
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          
+          // UI Components
+          ui: [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-toast',
+            '@radix-ui/react-progress'
+          ],
+          
+          // Utilities
+          utils: ['date-fns', 'clsx', 'tailwind-merge', 'zustand'],
+          
+          // Form & Validation
+          forms: ['react-hook-form', '@hookform/resolvers', 'zod'],
+          
+          // Data & Query
+          data: ['@tanstack/react-query', '@supabase/supabase-js'],
+          
+          // Rich Content
+          editor: ['@uiw/react-md-editor', 'react-markdown', 'remark-gfm'],
+          
+          // Charts & Visualization
+          charts: ['recharts'],
+          
+          // Heavy Libraries (lazy-loaded)
+          compression: ['browser-image-compression'],
+          pdf: ['html2pdf.js'],
+          
+          // Framer Motion (animation heavy)
+          animation: ['framer-motion']
         }
       }
     },
-    // Optimize for production
+    // Enhanced production optimization
     minify: 'esbuild',
     sourcemap: false,
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500, // Lower threshold for better chunking
+    cssCodeSplit: true,
+    
+    // Tree shaking optimization
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false
+    }
   },
   // Image optimization
   assetsInclude: ['**/*.webp'],
