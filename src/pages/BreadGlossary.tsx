@@ -1,280 +1,234 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Search, X, Heart, ChevronLeft, ChevronRight, Plus, Book } from 'lucide-react';
+import { Search, Heart, Plus, X, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/components/ui/use-toast';
 import { Label } from '@/components/ui/label';
-import { useToast } from '@/hooks/use-toast';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 
 interface GlossaryTerm {
+  id: string;
   term: string;
   definition: string;
   categories: string[];
-  related?: string[];
+  relatedTerms?: string[];
 }
 
+// Static glossary data with comprehensive bread-making terms
 const glossaryData: GlossaryTerm[] = [
   {
-    term: "Absorption",
-    definition: "Flour's water-holding capacity, typically 55-65% for bread flour. This determines how much water the flour can absorb and affects final dough consistency.",
-    categories: ["technique"],
-    related: ["Hydration", "Flour", "Water"]
+    id: 'absorption',
+    term: 'Absorption',
+    definition: 'The amount of liquid that flour can absorb, typically expressed as a percentage of the flour weight. Higher protein flours generally have higher absorption rates.',
+    categories: ['technique'],
+    relatedTerms: ['hydration', 'protein', 'gluten']
   },
   {
-    term: "Active Dry Yeast",
-    definition: "Granular yeast requiring activation in warm water (105-110°F). Unlike instant yeast, it must be dissolved in liquid before use to ensure proper fermentation.",
-    categories: ["ingredient"],
-    related: ["Yeast", "Fermentation", "Temperature"]
+    id: 'active-dry-yeast',
+    term: 'Active Dry Yeast',
+    definition: 'A form of commercial yeast that has been dried and granulated. Must be dissolved in warm liquid before use to activate the yeast cells.',
+    categories: ['ingredient'],
+    relatedTerms: ['instant-yeast', 'fresh-yeast', 'proofing']
   },
   {
-    term: "Aliquot Jar",
-    definition: "Small container to monitor exact dough rise percentage during fermentation. This allows precise tracking of bulk fermentation progress.",
-    categories: ["tool"],
-    related: ["Bulk Fermentation", "Monitoring", "Timing"]
+    id: 'aliquot-jar',
+    term: 'Aliquot Jar',
+    definition: 'A small container used to hold a sample portion of sourdough starter to monitor its rise and activity without disturbing the main culture.',
+    categories: ['tool'],
+    relatedTerms: ['sourdough-starter', 'float-test', 'peak-activity']
   },
   {
-    term: "Autolyse",
-    definition: "Resting flour and water (no yeast/salt) to improve gluten development (30min-1hr). This technique allows flour to fully hydrate and makes dough easier to work with.",
-    categories: ["technique"],
-    related: ["Gluten", "Hydration", "Mixing"]
+    id: 'autolyse',
+    term: 'Autolyse',
+    definition: 'A resting period where flour and water are mixed and left to hydrate before adding other ingredients. This improves dough extensibility and reduces mixing time.',
+    categories: ['technique'],
+    relatedTerms: ['hydration', 'gluten-development', 'extensibility']
   },
   {
-    term: "Baguette",
-    definition: "Long thin French bread with crisp crust (traditionally 250g, 55-65cm long). The classic French bread shape requiring specific shaping and scoring techniques.",
-    categories: ["bread"],
-    related: ["Shaping", "Scoring", "French Bread"]
+    id: 'baker-percentage',
+    term: 'Baker\'s Percentage',
+    definition: 'A system of measuring ingredients as percentages of the total flour weight, where flour is always 100%. This allows easy scaling of recipes.',
+    categories: ['technique'],
+    relatedTerms: ['scaling', 'hydration', 'formula']
   },
   {
-    term: "Baker's Percentage",
-    definition: "System where flour=100%, other ingredients are % of flour weight. This standardized method allows easy recipe scaling and comparison.",
-    categories: ["technique"],
-    related: ["Scaling", "Ratios", "Recipe"]
+    id: 'banneton',
+    term: 'Banneton',
+    definition: 'A coiled cane or rattan basket used for the final proofing of bread dough, particularly sourdough. Creates distinctive spiral patterns on the crust.',
+    categories: ['tool'],
+    relatedTerms: ['proofing', 'final-proof', 'shaping']
   },
   {
-    term: "Banneton",
-    definition: "Rattan proofing basket creating spiral patterns (use rice flour to prevent sticking). Essential tool for shaping and supporting artisan loaves during final proof.",
-    categories: ["tool"],
-    related: ["Proofing", "Shaping", "Rice Flour"]
+    id: 'bench-knife',
+    term: 'Bench Knife',
+    definition: 'A rectangular blade tool used for cutting, dividing, and moving dough. Also called a bench scraper or dough scraper.',
+    categories: ['tool'],
+    relatedTerms: ['dividing', 'portioning', 'shaping']
   },
   {
-    term: "Bassinage",
-    definition: "Gradually adding reserved water to dough for better gluten control. This technique helps manage high-hydration doughs by developing strength first.",
-    categories: ["technique"],
-    related: ["Hydration", "Gluten", "Mixing"]
+    id: 'bulk-fermentation',
+    term: 'Bulk Fermentation',
+    definition: 'The first rise of bread dough after mixing, during which the dough develops flavor and structure through fermentation.',
+    categories: ['process'],
+    relatedTerms: ['fermentation', 'first-rise', 'gluten-development']
   },
   {
-    term: "Bench Knife",
-    definition: "Metal rectangle for dividing dough and cleaning surfaces. Essential tool for portioning, transferring, and maintaining workspace cleanliness.",
-    categories: ["tool"],
-    related: ["Dividing", "Portioning", "Workspace"]
+    id: 'crumb',
+    term: 'Crumb',
+    definition: 'The interior texture and structure of bread, characterized by the size, shape, and distribution of air pockets or holes.',
+    categories: ['bread'],
+    relatedTerms: ['texture', 'gluten-network', 'fermentation']
   },
   {
-    term: "Bigas",
-    definition: "Italian stiff pre-ferment (50-60% hydration) using commercial yeast. Creates complex flavors and improves dough structure in Italian breads.",
-    categories: ["ingredient"],
-    related: ["Pre-ferment", "Italian Bread", "Fermentation"]
+    id: 'dough-temperature',
+    term: 'Dough Temperature',
+    definition: 'The temperature of mixed dough, typically targeted between 75-78°F (24-26°C) for optimal fermentation rate and flavor development.',
+    categories: ['technique'],
+    relatedTerms: ['fermentation', 'yeast-activity', 'temperature-control']
   },
   {
-    term: "Boule",
-    definition: "Round loaf shape (French for 'ball'). One of the classic artisan bread shapes, requiring proper shaping technique for good structure.",
-    categories: ["bread"],
-    related: ["Shaping", "Artisan Bread", "French"]
+    id: 'fermentation',
+    term: 'Fermentation',
+    definition: 'The process by which yeast converts sugars into carbon dioxide and alcohol, creating the gas that makes bread rise and developing flavor compounds.',
+    categories: ['process'],
+    relatedTerms: ['yeast', 'rise', 'flavor-development']
   },
   {
-    term: "Ciabatta",
-    definition: "Italian 'slipper' bread with irregular holes (high hydration 75-80%). Known for its open crumb structure and rustic appearance.",
-    categories: ["bread"],
-    related: ["High Hydration", "Italian Bread", "Open Crumb"]
+    id: 'final-proof',
+    term: 'Final Proof',
+    definition: 'The last rise of shaped bread dough before baking, when the dough develops its final volume and texture.',
+    categories: ['process'],
+    relatedTerms: ['proofing', 'second-rise', 'oven-spring']
   },
   {
-    term: "Cold Retardation",
-    definition: "Slowing fermentation via refrigeration (34-38°F) for flavor development. This technique improves taste complexity and extends working time.",
-    categories: ["technique"],
-    related: ["Fermentation", "Temperature", "Flavor"]
+    id: 'gluten',
+    term: 'Gluten',
+    definition: 'A protein network formed when flour proteins (glutenin and gliadin) combine with water and are developed through mixing or kneading.',
+    categories: ['ingredient'],
+    relatedTerms: ['protein', 'kneading', 'dough-strength']
   },
   {
-    term: "Cornicione",
-    definition: "Pizza's puffed outer crust edge (Neapolitan style should be 1-2cm tall). The hallmark of properly fermented and baked Neapolitan pizza.",
-    categories: ["pizza"],
-    related: ["Pizza", "Neapolitan", "Fermentation"]
+    id: 'hydration',
+    term: 'Hydration',
+    definition: 'The ratio of liquid to flour in a dough, expressed as a percentage. Higher hydration creates more open crumb structure but can be harder to handle.',
+    categories: ['technique'],
+    relatedTerms: ['absorption', 'liquid', 'crumb-structure']
   },
   {
-    term: "Couche",
-    definition: "Heavy linen for supporting baguettes during proofing. Provides structure and absorbs moisture while maintaining proper shape.",
-    categories: ["tool"],
-    related: ["Baguette", "Proofing", "Shaping"]
+    id: 'kneading',
+    term: 'Kneading',
+    definition: 'The process of working dough to develop the gluten network through stretching and folding motions, creating dough strength and elasticity.',
+    categories: ['technique'],
+    relatedTerms: ['gluten-development', 'mixing', 'dough-strength']
   },
   {
-    term: "Crumb",
-    definition: "Bread's internal structure ('open'=large holes, 'tight'=uniform small holes). The texture inside the loaf that indicates fermentation quality.",
-    categories: ["technique"],
-    related: ["Texture", "Fermentation", "Structure"]
+    id: 'lame',
+    term: 'Lame',
+    definition: 'A razor blade holder used for scoring bread dough before baking. Allows for precise, clean cuts that control how the bread expands in the oven.',
+    categories: ['tool'],
+    relatedTerms: ['scoring', 'slashing', 'oven-spring']
   },
   {
-    term: "Diastatic Malt",
-    definition: "Enzyme-rich malt powder aiding starch-to-sugar conversion (use 0.5-1%). Improves fermentation activity and crust color.",
-    categories: ["ingredient"],
-    related: ["Enzymes", "Fermentation", "Crust Color"]
+    id: 'levain',
+    term: 'Levain',
+    definition: 'A portion of sourdough starter that has been refreshed and built up specifically for use in a bread recipe. Often used interchangeably with "starter."',
+    categories: ['ingredient'],
+    relatedTerms: ['sourdough-starter', 'natural-leaven', 'fermentation']
   },
   {
-    term: "Dutch Oven",
-    definition: "Cast iron pot creating steam environment for crust development. Essential for achieving professional-quality crust at home.",
-    categories: ["tool"],
-    related: ["Steam", "Crust", "Home Baking"]
+    id: 'oven-spring',
+    term: 'Oven Spring',
+    definition: 'The rapid rise that occurs when bread first enters the hot oven, caused by expanding gases and steam formation before the crust sets.',
+    categories: ['process'],
+    relatedTerms: ['baking', 'steam', 'crust-formation']
   },
   {
-    term: "Ear",
-    definition: "Raised crust edge from proper scoring (hold lame at 30° angle). The signature of well-executed scoring technique.",
-    categories: ["technique"],
-    related: ["Scoring", "Lame", "Crust"]
+    id: 'poke-test',
+    term: 'Poke Test',
+    definition: 'A method to test if dough is properly proofed by gently poking it with a finger. Properly proofed dough will spring back slowly, leaving a slight indentation.',
+    categories: ['technique'],
+    relatedTerms: ['proofing', 'final-proof', 'readiness-test']
   },
   {
-    term: "Enriched Dough",
-    definition: "Contains fats/eggs/dairy (e.g., brioche: 20-25% butter, 10% eggs). Creates tender, rich breads with extended shelf life.",
-    categories: ["ingredient"],
-    related: ["Butter", "Eggs", "Dairy", "Brioche"]
+    id: 'poolish',
+    term: 'Poolish',
+    definition: 'A liquid pre-ferment made with equal weights of flour and water plus a small amount of yeast. Aged 12-24 hours to develop flavor.',
+    categories: ['technique'],
+    relatedTerms: ['pre-ferment', 'biga', 'flavor-development']
   },
   {
-    term: "Flying Crust",
-    definition: "Hollow gap between crust and crumb from underproofing. A defect indicating insufficient fermentation time.",
-    categories: ["technique"],
-    related: ["Proofing", "Fermentation", "Defects"]
+    id: 'scoring',
+    term: 'Scoring',
+    definition: 'Making cuts on the surface of shaped dough before baking to control expansion and create decorative patterns. Also called slashing.',
+    categories: ['technique'],
+    relatedTerms: ['lame', 'expansion', 'decoration']
   },
   {
-    term: "Focaccia",
-    definition: "Italian olive oil-rich flatbread (hydrations 70-75%). Characterized by dimpled surface and herb toppings.",
-    categories: ["bread"],
-    related: ["Italian Bread", "Olive Oil", "Flatbread"]
+    id: 'sourdough-starter',
+    term: 'Sourdough Starter',
+    definition: 'A culture of wild yeast and bacteria maintained in a mixture of flour and water, used as a natural leavening agent for bread.',
+    categories: ['ingredient'],
+    relatedTerms: ['wild-yeast', 'natural-leaven', 'fermentation']
   },
   {
-    term: "Gluten",
-    definition: "Elastic protein network (gliadin + glutenin) developed through kneading. Provides structure, elasticity, and gas retention in bread.",
-    categories: ["ingredient"],
-    related: ["Protein", "Kneading", "Structure"]
+    id: 'steam',
+    term: 'Steam',
+    definition: 'Moisture introduced to the oven during the early stages of baking to keep the crust flexible longer, allowing for better oven spring and crust development.',
+    categories: ['technique'],
+    relatedTerms: ['oven-spring', 'crust', 'baking-technique']
   },
   {
-    term: "Grigne",
-    definition: "French for the 'ear' formed by proper scoring. The opened scoring cut that creates the characteristic crust feature.",
-    categories: ["technique"],
-    related: ["Scoring", "Ear", "French"]
+    id: 'stretch-and-fold',
+    term: 'Stretch and Fold',
+    definition: 'A gentle technique for developing gluten strength during bulk fermentation by stretching the dough and folding it over itself.',
+    categories: ['technique'],
+    relatedTerms: ['gluten-development', 'bulk-fermentation', 'dough-strength']
   },
   {
-    term: "High-Hydration Dough",
-    definition: "Contains >75% water relative to flour weight. Creates open crumb but requires advanced handling techniques.",
-    categories: ["technique"],
-    related: ["Hydration", "Open Crumb", "Handling"]
+    id: 'windowpane-test',
+    term: 'Windowpane Test',
+    definition: 'A test for gluten development where a small piece of dough is stretched thin enough to see light through it without tearing.',
+    categories: ['technique'],
+    relatedTerms: ['gluten-development', 'kneading', 'dough-readiness']
+  },
+  // Pizza-specific terms
+  {
+    id: 'pizza-stone',
+    term: 'Pizza Stone',
+    definition: 'A thick, flat stone used in the oven to provide even heat distribution and create a crispy pizza crust bottom.',
+    categories: ['pizza', 'tool'],
+    relatedTerms: ['heat-retention', 'crispy-crust', 'thermal-mass']
   },
   {
-    term: "Hoagie Roll",
-    definition: "Soft sandwich roll with slight crust (often contains oil/sugar). American-style roll designed for sandwiches.",
-    categories: ["bread"],
-    related: ["Sandwich", "Soft Roll", "American"]
+    id: 'neapolitan-style',
+    term: 'Neapolitan Style',
+    definition: 'Traditional Italian pizza style featuring a thin, soft crust with slightly charred edges, typically baked at very high temperatures.',
+    categories: ['pizza'],
+    relatedTerms: ['thin-crust', 'high-heat', 'traditional']
   },
   {
-    term: "Kaiser Roll",
-    definition: "Round crusty roll with 5-petal shape (traditionally 90g each). Austrian-style roll with distinctive star pattern.",
-    categories: ["bread"],
-    related: ["Austrian", "Shaping", "Rolls"]
+    id: 'pizza-peel',
+    term: 'Pizza Peel',
+    definition: 'A flat, shovel-like tool used to slide pizzas into and out of ovens, typically made of wood or metal.',
+    categories: ['pizza', 'tool'],
+    relatedTerms: ['pizza-stone', 'launching', 'retrieval']
   },
   {
-    term: "Lame",
-    definition: "Razor blade for scoring (curved blades best for ears). Essential tool for controlled expansion and decorative patterns.",
-    categories: ["tool"],
-    related: ["Scoring", "Ear", "Razor"]
+    id: 'pizza-dough-balls',
+    term: 'Pizza Dough Balls',
+    definition: 'Individual portions of pizza dough that have been shaped into balls and allowed to rest before stretching into pizza bases.',
+    categories: ['pizza', 'technique'],
+    relatedTerms: ['portioning', 'resting', 'shaping']
   },
   {
-    term: "Levain",
-    definition: "French sourdough starter (typically 20% of total flour weight). Active culture used to leaven bread naturally.",
-    categories: ["ingredient"],
-    related: ["Sourdough", "Starter", "French"]
-  },
-  {
-    term: "Maillard Reaction",
-    definition: "Browning process at 285°F+ creating crust flavor. Chemical reaction between amino acids and sugars that develops color and taste.",
-    categories: ["process"],
-    related: ["Browning", "Flavor", "Temperature"]
-  },
-  {
-    term: "Mise en Place",
-    definition: "'Everything in place' organization before baking. French culinary principle of preparing and organizing all ingredients and tools.",
-    categories: ["technique"],
-    related: ["Organization", "Preparation", "French"]
-  },
-  {
-    term: "Oven Spring",
-    definition: "Final rapid rise when dough hits heat (ideal oven temp 450-500°F). Critical phase determining final loaf volume and texture.",
-    categories: ["process"],
-    related: ["Temperature", "Volume", "Baking"]
-  },
-  {
-    term: "Poolish",
-    definition: "100% hydration pre-ferment (equal flour/water by weight). French pre-ferment technique for flavor development.",
-    categories: ["ingredient"],
-    related: ["Pre-ferment", "Hydration", "French"]
-  },
-  {
-    term: "Pâte Fermentée",
-    definition: "'Old dough' saved from previous batch (extends fermentation). French technique using yesterday's dough to improve today's bread.",
-    categories: ["ingredient"],
-    related: ["Pre-ferment", "Fermentation", "French"]
-  },
-  {
-    term: "Scoring",
-    definition: "Strategic cuts controlling bread expansion ('grignes' require shallow angle). Essential technique for proper oven spring and appearance.",
-    categories: ["technique"],
-    related: ["Expansion", "Lame", "Grigne"]
-  },
-  {
-    term: "Sourdough Starter",
-    definition: "Wild yeast culture (feed 1:1:1 ratio flour/water/starter). Living culture requiring regular maintenance for bread leavening.",
-    categories: ["ingredient"],
-    related: ["Wild Yeast", "Feeding", "Culture"]
-  },
-  {
-    term: "Tangzhong",
-    definition: "Cooked flour-water roux for softer breads (65°C gelation point). Asian technique creating incredibly soft, long-lasting bread texture.",
-    categories: ["technique"],
-    related: ["Roux", "Soft Bread", "Asian"]
-  },
-  {
-    term: "Tunnels",
-    definition: "Large irregular holes from inadequate degassing. Defect caused by insufficient handling during shaping.",
-    categories: ["technique"],
-    related: ["Degassing", "Shaping", "Defects"]
-  },
-  {
-    term: "Vital Wheat Gluten",
-    definition: "75-80% protein additive (use +1-2% for whole grain). Supplement to strengthen low-protein or whole grain flours.",
-    categories: ["ingredient"],
-    related: ["Protein", "Whole Grain", "Strengthening"]
-  },
-  {
-    term: "Yeast",
-    definition: "Saccharomyces cerevisiae converts sugars to CO₂ (optimal 75-78°F). Living organism responsible for fermentation and leavening.",
-    categories: ["ingredient"],
-    related: ["Fermentation", "Temperature", "Leavening"]
-  },
-  {
-    term: "00 Flour",
-    definition: "Italian fine-milled wheat (9-11% protein, ideal for Neapolitan pizza). Specially processed flour for authentic Italian pizza and pasta.",
-    categories: ["ingredient"],
-    related: ["Italian", "Pizza", "Protein"]
-  },
-  {
-    term: "Canotto",
-    definition: "Ultra-puffy cornicione style (proof 8-12hrs at 75°F). Neapolitan pizza style characterized by extremely airy crust edges.",
-    categories: ["pizza"],
-    related: ["Neapolitan", "Proofing", "Cornicione"]
-  },
-  {
-    term: "Leoparding",
-    definition: "Charred spotting on Neapolitan pizza crust (900°F+ ovens). Distinctive marks from high-temperature wood-fired ovens.",
-    categories: ["pizza"],
-    related: ["Neapolitan", "High Temperature", "Charring"]
+    id: 'stretching',
+    term: 'Stretching',
+    definition: 'The technique of expanding pizza dough into a flat circle using hands or gravity, preserving the gas bubbles formed during fermentation.',
+    categories: ['pizza', 'technique'],
+    relatedTerms: ['pizza-dough-balls', 'gas-bubbles', 'thin-crust']
   }
 ];
 
@@ -318,104 +272,128 @@ const BreadGlossary = () => {
 
     // Filter by category
     if (selectedCategory !== 'all') {
-      filtered = filtered.filter(term => term.categories.includes(selectedCategory));
+      filtered = filtered.filter(term =>
+        term.categories.includes(selectedCategory)
+      );
     }
 
     // Filter by letter
     if (selectedLetter !== 'all') {
-      filtered = filtered.filter(term => term.term.charAt(0).toUpperCase() === selectedLetter);
+      filtered = filtered.filter(term =>
+        term.term.toLowerCase().startsWith(selectedLetter.toLowerCase())
+      );
     }
+
+    // Sort alphabetically
+    filtered.sort((a, b) => a.term.localeCompare(b.term));
 
     setFilteredTerms(filtered);
   }, [searchQuery, selectedCategory, selectedLetter]);
 
-  const toggleFavorite = useCallback((termName: string) => {
-    const newFavorites = favorites.includes(termName)
-      ? favorites.filter(fav => fav !== termName)
-      : [...favorites, termName];
-    
-    setFavorites(newFavorites);
-    localStorage.setItem('bread-glossary-favorites', JSON.stringify(newFavorites));
-  }, [favorites]);
+  const toggleFavorite = useCallback((termId: string) => {
+    setFavorites(prev => {
+      const newFavorites = prev.includes(termId)
+        ? prev.filter(id => id !== termId)
+        : [...prev, termId];
+      
+      localStorage.setItem('bread-glossary-favorites', JSON.stringify(newFavorites));
+      
+      toast({
+        title: prev.includes(termId) ? "Removed from favorites" : "Added to favorites",
+        description: prev.includes(termId) 
+          ? "Term removed from your favorites list" 
+          : "Term added to your favorites list",
+      });
+      
+      return newFavorites;
+    });
+  }, [toast]);
 
   const openTermModal = useCallback((term: GlossaryTerm) => {
     setSelectedTerm(term);
-    setCurrentTermIndex(filteredTerms.findIndex(t => t.term === term.term));
+    const index = filteredTerms.findIndex(t => t.id === term.id);
+    setCurrentTermIndex(index);
   }, [filteredTerms]);
 
-  const navigateTerm = useCallback((direction: 'prev' | 'next') => {
-    const newIndex = direction === 'prev' ? currentTermIndex - 1 : currentTermIndex + 1;
-    if (newIndex >= 0 && newIndex < filteredTerms.length) {
-      setCurrentTermIndex(newIndex);
-      setSelectedTerm(filteredTerms[newIndex]);
-    }
+  const navigateTerms = useCallback((direction: 'prev' | 'next') => {
+    const newIndex = direction === 'prev' 
+      ? Math.max(0, currentTermIndex - 1)
+      : Math.min(filteredTerms.length - 1, currentTermIndex + 1);
+    
+    setCurrentTermIndex(newIndex);
+    setSelectedTerm(filteredTerms[newIndex]);
   }, [currentTermIndex, filteredTerms]);
 
-  const handleSuggestSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  const handleSuggestSubmit = useCallback(() => {
     if (!suggestTerm.trim() || !suggestDefinition.trim()) {
       toast({
-        title: "Error",
-        description: "Please fill in both fields",
+        title: "Incomplete suggestion",
+        description: "Please provide both a term and definition",
         variant: "destructive"
       });
       return;
     }
 
-    // Check if term already exists
-    if (glossaryData.some(t => t.term.toLowerCase() === suggestTerm.toLowerCase())) {
-      toast({
-        title: "Error",
-        description: "This term already exists in the glossary",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // Store suggestion
-    const suggestions = JSON.parse(localStorage.getItem('bread-glossary-suggestions') || '[]');
-    suggestions.push({
-      term: suggestTerm.trim(),
-      definition: suggestDefinition.trim(),
-      timestamp: new Date().toISOString(),
-      status: 'pending'
-    });
-    localStorage.setItem('bread-glossary-suggestions', JSON.stringify(suggestions));
-
+    // In a real app, this would send to a backend
     toast({
-      title: "Success",
-      description: "Thank you for your suggestion! It will be reviewed and added to the glossary."
+      title: "Thank you!",
+      description: "Your term suggestion has been submitted for review",
     });
 
     setSuggestTerm('');
     setSuggestDefinition('');
     setShowSuggestForm(false);
-  };
+  }, [suggestTerm, suggestDefinition, toast]);
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     setSearchQuery('');
     setSelectedCategory('all');
     setSelectedLetter('all');
-  };
+  }, []);
 
-  const highlightText = (text: string, query: string) => {
+  const highlightSearchTerm = (text: string, query: string): React.ReactNode => {
     if (!query.trim()) return text;
     
-    const regex = new RegExp(`(${query})`, 'gi');
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
     const parts = text.split(regex);
     
-    return parts.map((part, index) =>
+    return parts.map((part, index) => 
       regex.test(part) ? (
-        <span key={index} className="bg-warning/30 px-1 rounded font-medium">{part}</span>
+        <mark key={index} className="bg-amber-200 dark:bg-amber-800 px-1 rounded">
+          {part}
+        </mark>
       ) : part
     );
   };
 
-  return (
-    <div className="bg-background text-foreground">
-      <Header />
+  const getRelatedTermsText = (relatedTerms?: string[]): React.ReactNode => {
+    if (!relatedTerms?.length) return null;
+    
+    return relatedTerms.map((termId, index) => {
+      const relatedTerm = glossaryData.find(t => t.id === termId);
+      if (!relatedTerm) return termId;
       
+      const termText = relatedTerm.term;
+      const highlighted = searchQuery.trim() 
+        ? highlightSearchTerm(termText, searchQuery)
+        : termText;
+      
+      return (
+        <React.Fragment key={termId}>
+          <button
+            onClick={() => openTermModal(relatedTerm)}
+            className="text-primary hover:text-primary/80 underline transition-colors"
+          >
+            {highlighted}
+          </button>
+          {index < relatedTerms.length - 1 && ', '}
+        </React.Fragment>
+      );
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative h-80 overflow-hidden">
         <div 
@@ -496,194 +474,206 @@ const BreadGlossary = () => {
           </CardContent>
         </Card>
 
+        {/* Results Count */}
+        <div className="mb-6 text-center">
+          <p className="text-muted-foreground">
+            Showing {filteredTerms.length} term{filteredTerms.length !== 1 ? 's' : ''}
+            {searchQuery && ` for "${searchQuery}"`}
+            {selectedCategory !== 'all' && ` in ${selectedCategory}`}
+            {selectedLetter !== 'all' && ` starting with "${selectedLetter}"`}
+          </p>
+        </div>
+
         {/* Terms Grid */}
-        {filteredTerms.length === 0 ? (
-          <Card className="text-center py-12">
-            <CardContent>
-              <Search className="h-16 w-16 mx-auto mb-4 text-muted-foreground opacity-30" />
-              <h3 className="text-xl font-semibold mb-2">No terms found</h3>
-              <p className="text-muted-foreground">Try adjusting your search or filters</p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {filteredTerms.map((term) => (
-              <Card key={term.term} className="cursor-pointer hover:shadow-warm transition-all duration-300 hover:-translate-y-1 relative group">
-                <CardContent className="p-6">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
+          {filteredTerms.map((term) => (
+            <Card 
+              key={term.id} 
+              className="hover:shadow-stone-lg transition-all duration-200 cursor-pointer bg-card border-stone group"
+              onClick={() => openTermModal(term)}
+            >
+              <CardContent className="p-6">
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="text-xl font-bold text-primary group-hover:text-primary/80 transition-colors">
+                    {highlightSearchTerm(term.term, searchQuery)}
+                  </h3>
                   <Button
                     variant="ghost"
-                    size="icon"
-                    className={`absolute top-4 right-4 ${favorites.includes(term.term) ? 'text-destructive' : 'text-muted-foreground'}`}
+                    size="sm"
                     onClick={(e) => {
                       e.stopPropagation();
-                      toggleFavorite(term.term);
+                      toggleFavorite(term.id);
                     }}
+                    className="text-rose-500 hover:text-rose-600 transition-colors p-1"
                   >
-                    <Heart className={`h-5 w-5 ${favorites.includes(term.term) ? 'fill-current' : ''}`} />
+                    <Heart 
+                      className={`h-5 w-5 ${
+                        favorites.includes(term.id) ? 'fill-current' : ''
+                      }`} 
+                    />
                   </Button>
-                  
-                  <div className="flex justify-between items-start mb-4" onClick={() => openTermModal(term)}>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-primary mb-2">
-                        {highlightText(term.term, searchQuery)}
-                      </h3>
-                    </div>
-                    <div className="bg-primary text-primary-foreground w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ml-4">
-                      {term.term.charAt(0).toUpperCase()}
-                    </div>
-                  </div>
-                  
-                  <div onClick={() => openTermModal(term)}>
-                    <p className="text-muted-foreground text-sm line-clamp-3">
-                      {highlightText(
-                        term.definition.length > 120 
-                          ? term.definition.substring(0, 120) + '...' 
-                          : term.definition,
-                        searchQuery
-                      )}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                </div>
+                
+                <p className="text-muted-foreground mb-4 line-clamp-3">
+                  {highlightSearchTerm(term.definition, searchQuery)}
+                </p>
+                
+                <div className="flex flex-wrap gap-2">
+                  {term.categories.map(category => (
+                    <Badge key={category} variant="secondary" className="text-xs">
+                      {category}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* No Results */}
+        {filteredTerms.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-xl text-muted-foreground mb-4">No terms found</p>
+            <p className="text-muted-foreground mb-6">
+              Try adjusting your search or filters, or suggest a new term below.
+            </p>
+            <Button variant="warm" onClick={() => setShowSuggestForm(true)}>
+              <Plus className="h-4 w-4 mr-2" />
+              Suggest a Term
+            </Button>
           </div>
         )}
 
-        {/* Suggest Term Section */}
-        <Card className="bg-section shadow-stone">
-          <CardContent className="p-8">
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-primary mb-4">Suggest a Term</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Know a bread baking term that's missing? Help our community by suggesting it!
+        {/* Suggest New Term Section */}
+        <Card className="bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800">
+          <CardContent className="p-6">
+            <div className="text-center mb-4">
+              <h2 className="text-2xl font-bold text-primary mb-2">Know a term we're missing?</h2>
+              <p className="text-muted-foreground">
+                Help us build the most comprehensive bread baking glossary by suggesting new terms.
               </p>
             </div>
-
+            
             {!showSuggestForm ? (
               <div className="text-center">
-                <Button variant="warm" size="lg" onClick={() => setShowSuggestForm(true)}>
-                  <Plus className="h-5 w-5 mr-2" />
-                  Suggest a New Term
+                <Button variant="warm" onClick={() => setShowSuggestForm(true)}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Suggest a Term
                 </Button>
               </div>
             ) : (
-              <form onSubmit={handleSuggestSubmit} className="max-w-md mx-auto space-y-4">
+              <div className="space-y-4 max-w-md mx-auto">
                 <div>
                   <Label htmlFor="suggest-term">Term</Label>
                   <Input
                     id="suggest-term"
+                    placeholder="Enter the term..."
                     value={suggestTerm}
                     onChange={(e) => setSuggestTerm(e.target.value)}
-                    required
                   />
                 </div>
                 <div>
                   <Label htmlFor="suggest-definition">Definition</Label>
                   <Textarea
                     id="suggest-definition"
+                    placeholder="Provide a clear definition..."
                     value={suggestDefinition}
                     onChange={(e) => setSuggestDefinition(e.target.value)}
-                    placeholder="Provide a clear, helpful definition..."
-                    required
-                    rows={4}
+                    rows={3}
                   />
                 </div>
-                <div className="flex gap-2">
-                  <Button type="submit" variant="warm" className="flex-1">
-                    <Plus className="h-4 w-4 mr-2" />
+                <div className="flex gap-2 justify-center">
+                  <Button variant="warm" onClick={handleSuggestSubmit}>
                     Submit Suggestion
                   </Button>
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={() => setShowSuggestForm(false)}
-                  >
+                  <Button variant="outline" onClick={() => {
+                    setShowSuggestForm(false);
+                    setSuggestTerm('');
+                    setSuggestDefinition('');
+                  }}>
                     Cancel
                   </Button>
                 </div>
-              </form>
+              </div>
             )}
           </CardContent>
         </Card>
       </main>
 
       {/* Term Detail Modal */}
-      <Dialog open={!!selectedTerm} onOpenChange={() => setSelectedTerm(null)}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <Dialog open={!!selectedTerm} onOpenChange={(open) => !open && setSelectedTerm(null)}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           {selectedTerm && (
             <>
               <DialogHeader>
-                <div className="text-sm text-muted-foreground mb-2">
-                  <span 
-                    className="cursor-pointer hover:underline"
-                    onClick={() => {
-                      setSelectedLetter(selectedTerm.term.charAt(0).toUpperCase());
-                      setSelectedTerm(null);
-                    }}
-                  >
-                    {selectedTerm.term.charAt(0).toUpperCase()}
-                  </span>
-                  {' > '}
-                  <span>{selectedTerm.term}</span>
-                </div>
-                <DialogTitle className="text-2xl">{selectedTerm.term}</DialogTitle>
-              </DialogHeader>
-              
-              <div className="space-y-6">
-                <p className="text-lg leading-relaxed">{selectedTerm.definition}</p>
-                
-                {selectedTerm.related && selectedTerm.related.length > 0 && (
-                  <div>
-                    <h4 className="text-lg font-semibold mb-3 text-primary">Related Terms</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedTerm.related.map(relatedTerm => {
-                        const related = glossaryData.find(t => t.term === relatedTerm);
-                        return related ? (
-                          <Button
-                            key={relatedTerm}
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setSelectedTerm(related)}
-                            className="bg-amber-50 hover:bg-amber-100 border-amber-200"
-                          >
-                            {relatedTerm}
-                          </Button>
-                        ) : null;
-                      })}
+                <div className="flex items-center justify-between">
+                  <DialogTitle className="text-2xl font-bold text-primary">
+                    {selectedTerm.term}
+                  </DialogTitle>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => toggleFavorite(selectedTerm.id)}
+                      className="text-rose-500 hover:text-rose-600"
+                    >
+                      <Heart 
+                        className={`h-5 w-5 ${
+                          favorites.includes(selectedTerm.id) ? 'fill-current' : ''
+                        }`} 
+                      />
+                    </Button>
+                    <div className="flex items-center gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => navigateTerms('prev')}
+                        disabled={currentTermIndex === 0}
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </Button>
+                      <span className="text-sm text-muted-foreground">
+                        {currentTermIndex + 1} of {filteredTerms.length}
+                      </span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => navigateTerms('next')}
+                        disabled={currentTermIndex === filteredTerms.length - 1}
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
                     </div>
                   </div>
-                )}
-                
-                <div className="flex justify-between items-center pt-4 border-t">
-                  <Button
-                    variant="outline"
-                    onClick={() => navigateTerm('prev')}
-                    disabled={currentTermIndex === 0}
-                  >
-                    <ChevronLeft className="h-4 w-4 mr-1" />
-                    Previous
-                  </Button>
-                  
-                  <span className="text-sm text-muted-foreground">
-                    {currentTermIndex + 1} of {filteredTerms.length}
-                  </span>
-                  
-                  <Button
-                    variant="outline"
-                    onClick={() => navigateTerm('next')}
-                    disabled={currentTermIndex === filteredTerms.length - 1}
-                  >
-                    Next
-                    <ChevronRight className="h-4 w-4 ml-1" />
-                  </Button>
                 </div>
+              </DialogHeader>
+              
+              <div className="space-y-4">
+                <div className="flex flex-wrap gap-2">
+                  {selectedTerm.categories.map(category => (
+                    <Badge key={category} variant="secondary">
+                      {category}
+                    </Badge>
+                  ))}
+                </div>
+                
+                <p className="text-muted-foreground leading-relaxed">
+                  {highlightSearchTerm(selectedTerm.definition, searchQuery)}
+                </p>
+                
+                {selectedTerm.relatedTerms && selectedTerm.relatedTerms.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold text-primary mb-2">Related Terms:</h4>
+                    <p className="text-muted-foreground">
+                      {getRelatedTermsText(selectedTerm.relatedTerms)}
+                    </p>
+                  </div>
+                )}
               </div>
             </>
           )}
         </DialogContent>
       </Dialog>
-
-      <Footer />
     </div>
   );
 };
