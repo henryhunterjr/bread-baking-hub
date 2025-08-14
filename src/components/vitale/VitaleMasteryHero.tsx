@@ -1,7 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Eye } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const VitaleMasteryHero = () => {
+  const navigate = useNavigate();
+  
   const vitaleSlide = {
     id: "vitale",
     title: "Vitale Sourdough Mastery",
@@ -9,6 +12,17 @@ const VitaleMasteryHero = () => {
     description: "Ready to transform your relationship with sourdough? This complete guide shares the secrets behind Henry Hunter's 10+ year relationship with his treasured starter – the foundation of consistently exceptional bread.",
     backgroundImage: "/lovable-uploads/e7320a6f-7363-46a3-a5a5-c30644bac35a.png",
     amazonUrl: "https://www.amazon.com/dp/B0CVB8ZCFV"
+  };
+
+  const handlePreviewClick = () => {
+    // Track analytics if available
+    if (typeof (window as any).gtag !== 'undefined') {
+      (window as any).gtag('event', 'vitale_preview_click', {
+        event_category: 'engagement',
+        event_label: 'vitale_sourdough_mastery'
+      });
+    }
+    navigate('/preview/vitale-sourdough-mastery');
   };
 
   return (
@@ -52,6 +66,8 @@ const VitaleMasteryHero = () => {
                 variant="outline" 
                 size="lg" 
                 className="w-full border-white text-white hover:bg-white hover:text-black"
+                onClick={handlePreviewClick}
+                data-analytics="vitale_preview_click"
               >
                 <Eye className="mr-2 h-4 w-4" />
                 Preview Book
@@ -89,6 +105,8 @@ const VitaleMasteryHero = () => {
                     variant="outline" 
                     size="lg" 
                     className="border-white text-white hover:bg-white hover:text-black"
+                    onClick={handlePreviewClick}
+                    data-analytics="vitale_preview_click"
                   >
                     <Eye className="mr-2 h-4 w-4" />
                     Preview Book

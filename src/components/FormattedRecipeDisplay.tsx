@@ -1,6 +1,7 @@
 import { useRef, useMemo, memo, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { RecipeScalingControl } from '@/components/ui/RecipeScalingControl';
 import { Printer, Download } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import { ProductRecommendations } from './ProductRecommendations';
@@ -130,24 +131,11 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
         </div>
       </div>
       
-      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-        <span className="text-sm text-muted-foreground">Adjust servings:</span>
-        <div className="flex gap-2">
-          {[0.5, 1, 2, 3].map((f) => (
-            <Button
-              key={f}
-              variant={scale === f ? 'hero' : 'outline'}
-              size="sm"
-              className="h-11"
-              onClick={() => setScale(f)}
-              aria-pressed={scale === f}
-              aria-label={`Scale recipe to ${f}x`}
-            >
-              {f}x
-            </Button>
-          ))}
-        </div>
-      </div>
+      <RecipeScalingControl 
+        scale={scale}
+        onScaleChange={setScale}
+        className="mb-6"
+      />
 
       <div ref={printRef} className="print-container">
       
