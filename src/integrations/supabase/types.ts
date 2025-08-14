@@ -913,7 +913,48 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      admin_submissions_view: {
+        Row: {
+          created_at: string | null
+          id: string | null
+          notes: string | null
+          priority: string | null
+          status: string | null
+          submission_data: Json | null
+          submission_type: string | null
+          submitter_email: string | null
+          submitter_name: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string | null
+          notes?: string | null
+          priority?: string | null
+          status?: string | null
+          submission_data?: Json | null
+          submission_type?: string | null
+          submitter_email?: string | null
+          submitter_name?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string | null
+          notes?: string | null
+          priority?: string | null
+          status?: string | null
+          submission_data?: Json | null
+          submission_type?: string | null
+          submitter_email?: string | null
+          submitter_name?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       create_secure_submission: {
