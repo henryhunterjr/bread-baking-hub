@@ -910,42 +910,7 @@ export type Database = {
       }
     }
     Views: {
-      user_mfa_status: {
-        Row: {
-          created_at: string | null
-          has_backup_codes: boolean | null
-          has_phone_number: boolean | null
-          id: string | null
-          is_active: boolean | null
-          is_verified: boolean | null
-          method: string | null
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          has_backup_codes?: never
-          has_phone_number?: never
-          id?: string | null
-          is_active?: boolean | null
-          is_verified?: boolean | null
-          method?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          has_backup_codes?: never
-          has_phone_number?: never
-          id?: string | null
-          is_active?: boolean | null
-          is_verified?: boolean | null
-          method?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       decrypt_mfa_secret: {
@@ -967,6 +932,19 @@ export type Database = {
       get_user_mfa_secret: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      get_user_mfa_status: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          method: string
+          is_verified: boolean
+          is_active: boolean
+          created_at: string
+          updated_at: string
+          has_phone_number: boolean
+          has_backup_codes: boolean
+        }[]
       }
       has_role: {
         Args: {

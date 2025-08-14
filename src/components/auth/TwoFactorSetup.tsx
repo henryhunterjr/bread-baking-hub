@@ -83,7 +83,7 @@ const TwoFactorSetup = () => {
   };
 
   const verifyAndSave = async () => {
-    if (!verificationCode) {
+    if (!verificationCode || !user?.id) {
       toast({
         title: 'Code Required',
         description: 'Please enter the verification code',
@@ -99,14 +99,13 @@ const TwoFactorSetup = () => {
         Math.random().toString(36).substring(2, 8).toUpperCase()
       );
 
-      const { error } = await supabase.from('user_mfa').insert({
-        user_id: user?.id,
-        method,
-        secret: method === 'totp' ? secret : null,
-        phone_number: method === 'sms' ? phoneNumber : null,
-        backup_codes: codes,
-        is_verified: true,
-        is_active: true,
+      // Use the secure encrypted function to store MFA data
+      const { data, error } = await supabase.rpc('store_encrypted_mfa_secret', {
+        p_user_id: user.id,
+        p_method: method,
+        p_secret: method === 'totp' ? secret : null,
+        p_phone_number: method === 'sms' ? phoneNumber : null,
+        p_backup_codes: codes,
       });
 
       if (error) throw error;
