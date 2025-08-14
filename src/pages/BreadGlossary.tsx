@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Heart, Plus, X, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { BackgroundImageWithFallback } from '@/components/ui/BackgroundImageWithFallback';
 
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -400,11 +401,9 @@ const BreadGlossary = () => {
       <Header />
       {/* Hero Section */}
       <section className="relative h-80 overflow-hidden">
-        <div 
+        <BackgroundImageWithFallback 
+          src="/lovable-uploads/1a955074-3f70-4ec7-803e-f2d08223022b.png"
           className="absolute inset-0 bg-cover bg-center"
-          style={{ 
-            backgroundImage: `url(/lovable-uploads/1a955074-3f70-4ec7-803e-f2d08223022b.png)`
-          }}
         />
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative h-full flex items-end justify-center pb-8">

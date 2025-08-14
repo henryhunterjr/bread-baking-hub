@@ -1,6 +1,7 @@
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useAuth } from '@/hooks/useAuth';
 import { useRecipeWorkspace } from '@/hooks/useRecipeWorkspace';
+import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -25,11 +26,12 @@ const RecipeWorkspace = () => {
           
           {/* Hero Image Section */}
           <div className="w-full">
-            <img
+            <ImageWithFallback
               src="/lovable-uploads/7c954928-23fe-4169-bec1-ffa0629d80f2.png"
               alt="Recipe workspace - kitchen counter with tablet, notebook, and baking tools"
               className="w-full h-48 md:h-64 lg:h-80 object-cover object-bottom rounded-lg shadow-lg"
               loading="eager"
+              priority
             />
             <div className="text-center space-y-4 mt-6">
               <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
