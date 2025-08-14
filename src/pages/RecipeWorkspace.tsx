@@ -1,6 +1,7 @@
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useAuth } from '@/hooks/useAuth';
 import { useRecipeWorkspace } from '@/hooks/useRecipeWorkspace';
+import recipeWorkspaceHero from '@/assets/recipe-workspace-hero.png';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { RecipeUploadSection } from '../components/RecipeUploadSection';
@@ -25,7 +26,7 @@ const RecipeWorkspace = () => {
           {/* Hero Image Section */}
           <div className="w-full">
             <img
-              src="/lovable-uploads/6d185a45-b40f-4f3c-8fff-81862683500d.png"
+              src={recipeWorkspaceHero}
               alt="Recipe workspace - kitchen counter with tablet, notebook, and baking tools"
               className="w-full h-48 md:h-64 lg:h-80 object-cover object-bottom rounded-lg shadow-lg"
               loading="eager"
