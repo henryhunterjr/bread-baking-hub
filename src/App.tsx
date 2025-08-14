@@ -79,15 +79,15 @@ const App = () => {
     <AppErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <TooltipProvider>
-            <CriticalCSS />
-            <PerformanceOptimizer />
-            <AccessibilityEnhancements />
-            <ContentQualityChecker />
-            <Toaster />
-            <Sonner />
-            <OfflineBanner />
-            <BackToTop />
+          {/* TooltipProvider temporarily removed due to React bundling issue */}
+          <CriticalCSS />
+          <PerformanceOptimizer />
+          <AccessibilityEnhancements />
+          <ContentQualityChecker />
+          <Toaster />
+          <Sonner />
+          <OfflineBanner />
+          <BackToTop />
             <BrowserRouter>
               <EnhancedSkipLink />
               <DefaultSEO />
@@ -147,7 +147,6 @@ const App = () => {
               />
             </Suspense>
             </BrowserRouter>
-          </TooltipProvider>
         </AuthProvider>
       </QueryClientProvider>
     </AppErrorBoundary>
