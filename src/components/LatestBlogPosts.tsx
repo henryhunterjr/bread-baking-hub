@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import NewsletterSignup from './NewsletterSignup';
+import EnhancedNewsletterSignup from './enhanced/EnhancedNewsletterSignup';
 import CategoryFilter from './blog/CategoryFilter';
 import BlogPostGrid from './blog/BlogPostGrid';
 import BlogPagination from './blog/BlogPagination';
@@ -134,7 +134,7 @@ const LatestBlogPosts = () => {
         
         {/* Newsletter Signup */}
         <div className="mt-20">
-          <NewsletterSignup />
+          <EnhancedNewsletterSignup />
         </div>
       </div>
     </section>

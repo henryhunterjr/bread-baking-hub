@@ -1,23 +1,7 @@
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
+import EnhancedNewsletterSignup from './enhanced/EnhancedNewsletterSignup';
 
 const CallToAction = () => {
-  const [email, setEmail] = useState('');
-  const { toast } = useToast();
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      toast({
-        title: "Subscribed!",
-        description: "Thank you for subscribing to our weekly tips!",
-      });
-      setEmail('');
-    }
-  };
-
   return (
     <section className="py-20 px-4 bg-gradient-subtle">
       <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -44,27 +28,11 @@ const CallToAction = () => {
           </div>
           
           <div className="bg-card p-8 rounded-xl">
-            <h3 className="text-2xl font-bold text-primary mb-4">Get Weekly Tips</h3>
-            <p className="text-muted-foreground mb-6">
-              Receive actionable bread baking tips, new recipes, and exclusive content 
-              delivered to your inbox every week.
-            </p>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <Input 
-                type="email" 
-                placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-stone-700 border-stone-600 focus:border-primary"
-                required
-              />
-              <Button type="submit" variant="warm" size="lg" className="w-full">
-                Subscribe Now
-              </Button>
-            </form>
-            <p className="text-muted-foreground text-sm mt-3">
-              No spam. Unsubscribe anytime. We respect your privacy.
-            </p>
+            <EnhancedNewsletterSignup 
+              variant="compact"
+              title="Get Weekly Tips"
+              description="Receive actionable bread baking tips, new recipes, and exclusive content delivered to your inbox every week."
+            />
           </div>
         </div>
         

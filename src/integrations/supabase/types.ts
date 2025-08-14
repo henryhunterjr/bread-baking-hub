@@ -264,6 +264,7 @@ export type Database = {
           active: boolean | null
           created_at: string | null
           email: string
+          facebook_group_member: boolean | null
           id: string
           name: string | null
           subscribed_at: string | null
@@ -273,6 +274,7 @@ export type Database = {
           active?: boolean | null
           created_at?: string | null
           email: string
+          facebook_group_member?: boolean | null
           id?: string
           name?: string | null
           subscribed_at?: string | null
@@ -282,6 +284,7 @@ export type Database = {
           active?: boolean | null
           created_at?: string | null
           email?: string
+          facebook_group_member?: boolean | null
           id?: string
           name?: string | null
           subscribed_at?: string | null

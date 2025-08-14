@@ -6,7 +6,7 @@ import BlogPostSEO from './BlogPostSEO';
 import BlogPostMeta from './BlogPostMeta';
 import CommentsSystem from './CommentsSystem';
 import SocialShare from './SocialShare';
-import NewsletterSignup from '../NewsletterSignup';
+import EnhancedNewsletterSignup from '../enhanced/EnhancedNewsletterSignup';
 import { BlogPost } from '@/utils/blogFetcher';
 import { sanitizeHtml } from '@/utils/sanitize';
 
@@ -175,7 +175,7 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
 
           {/* Newsletter Signup */}
           <div className="mb-8">
-            <NewsletterSignup />
+            <EnhancedNewsletterSignup />
           </div>
 
           {/* Comments */}

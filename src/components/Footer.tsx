@@ -1,24 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
+import EnhancedNewsletterSignup from './enhanced/EnhancedNewsletterSignup';
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
-  const { toast } = useToast();
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      toast({
-        title: "Subscribed!",
-        description: "Thank you for subscribing!",
-      });
-      setEmail('');
-    }
-  };
-
   return (
     <footer className="bg-background border-t border-stone-700">
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -72,20 +55,10 @@ const Footer = () => {
           
           <div>
             <h4 className="font-semibold text-foreground mb-4">Stay Connected</h4>
-            <p className="text-muted-foreground text-sm mb-4">Get weekly tips and new recipes</p>
-            <form onSubmit={handleSubmit} className="flex">
-              <Input 
-                type="email" 
-                placeholder="Your email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-stone-800 border-stone-600 focus:border-primary rounded-r-none flex-1 h-11"
-                required
-              />
-              <Button type="submit" variant="warm" className="rounded-l-none h-11">
-                Subscribe
-              </Button>
-            </form>
+            <EnhancedNewsletterSignup 
+              variant="inline"
+              className="mb-4"
+            />
           </div>
         </div>
         
