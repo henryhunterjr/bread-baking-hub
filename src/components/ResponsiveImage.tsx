@@ -135,7 +135,7 @@ export const ResponsiveImage = ({
           alt={alt}
           loading={priority ? 'eager' : loading}
           decoding="async"
-          fetchPriority={priority ? 'high' : 'auto'}
+          {...(priority && { fetchPriority: 'high' })}
           className={`w-full h-full object-cover transition-opacity duration-300 ${
             imageLoaded ? 'opacity-100' : 'opacity-0'
           }`}
