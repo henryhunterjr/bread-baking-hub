@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { haptic } from '@/utils/haptics';
 
@@ -133,8 +133,13 @@ const CookingMode = ({ title, steps, open: controlledOpen, onOpenChange, autoVoi
       )}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-3xl h-[90vh] flex flex-col">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold">{title}</h2>
+          <DialogHeader>
+            <DialogTitle className="text-xl font-semibold">{title}</DialogTitle>
+            <DialogDescription className="sr-only">
+              Interactive cooking mode with step-by-step instructions, timer controls, and voice guidance for {title}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex items-center justify-between mt-4">
             <div className="flex items-center gap-3">
               <span className="text-sm text-muted-foreground">Step {index + 1} of {safeSteps.length}</span>
               <Button variant={voiceEnabled ? 'hero' : 'outline'} size="sm" onClick={() => setVoiceEnabled((v) => !v)}>
