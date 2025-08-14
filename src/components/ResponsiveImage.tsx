@@ -101,10 +101,12 @@ export const ResponsiveImage = ({
       {/* Loading placeholder */}
       {!imageLoaded && !imageError && (
         <div 
-          className="absolute inset-0 bg-muted animate-pulse flex items-center justify-center"
+          className="absolute inset-0 bg-muted rounded-md overflow-hidden"
           aria-hidden="true"
         >
-          <div className="text-muted-foreground text-sm">Loading image...</div>
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-muted-foreground/10 to-transparent animate-pulse" />
+          <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
         </div>
       )}
       

@@ -91,18 +91,32 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   }, [src, currentSrc, hasErrored]);
 
   return (
-    <img
-      src={currentSrc}
-      alt={alt}
-      className={className}
-      width={width}
-      height={height}
-      loading={priority ? 'eager' : loading}
-      sizes={sizes}
-      style={style}
-      onLoad={handleLoad}
-      onError={handleError}
-      {...(priority && { fetchPriority: 'high' as const })}
-    />
+    <div className="relative overflow-hidden">
+      {/* Loading skeleton */}
+      {!hasErrored && (
+        <div 
+          className="absolute inset-0 bg-muted rounded-md overflow-hidden animate-pulse"
+          style={{ display: retryCount.current === 0 ? 'block' : 'none' }}
+          aria-hidden="true"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-muted-foreground/10 to-transparent" />
+          <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        </div>
+      )}
+      
+      <img
+        src={currentSrc}
+        alt={alt}
+        className={className}
+        width={width}
+        height={height}
+        loading={priority ? 'eager' : loading}
+        sizes={sizes}
+        style={style}
+        onLoad={handleLoad}
+        onError={handleError}
+        {...(priority && { fetchPriority: 'high' as const })}
+      />
+    </div>
   );
 };
