@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+import * as React from 'react'
 import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from 'react-helmet-async'
@@ -12,11 +12,11 @@ registerServiceWorker();
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+  <React.StrictMode>
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
     </HelmetProvider>
-  </StrictMode>
+  </React.StrictMode>
 );
