@@ -4,8 +4,8 @@ import { Home, BookOpen, Bookmark, Search } from 'lucide-react';
 const navItems = [
   { to: '/', label: 'Home', icon: Home },
   { to: '/recipes', label: 'Recipes', icon: BookOpen },
-  { to: '/my-recipes', label: 'Saved', icon: Bookmark },
-  { to: '/search-test', label: 'Search', icon: Search },
+  { to: '/my-favorites', label: 'Favorites', icon: Bookmark },
+  { to: '/search', label: 'Search', icon: Search },
 ];
 
 const MobileBottomNav = () => {

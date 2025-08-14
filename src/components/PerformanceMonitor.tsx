@@ -137,7 +137,7 @@ export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({ children
     const preloadCriticalResources = () => {
       const criticalImages = [
         '/hero/fallback.jpg',
-        '/lovable-uploads/82d8e259-f73d-4691-958e-1dd4d0bf240d.png'
+        'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/logo-primary.png'
       ];
 
       criticalImages.forEach(src => {
