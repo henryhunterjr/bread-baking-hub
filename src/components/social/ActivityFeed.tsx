@@ -18,9 +18,6 @@ interface ActivityItem {
   visibility: 'public' | 'followers' | 'private';
   activity_data: any;
   created_at: string;
-  profiles?: {
-    display_name: string;
-  };
 }
 
 interface ActivityFeedProps {
@@ -47,10 +44,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
     try {
       let query = supabase
         .from('user_activities')
-        .select(`
-          *,
-          profiles(display_name)
-        `)
+        .select('*')
         .order('created_at', { ascending: false })
         .limit(limit);
 
@@ -72,10 +66,14 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
 
       // Type-safe mapping
       const typedActivities: ActivityItem[] = (data || []).map(item => ({
-        ...item,
+        id: item.id,
+        user_id: item.user_id,
         activity_type: item.activity_type as ActivityItem['activity_type'],
         target_type: item.target_type as ActivityItem['target_type'],
+        target_id: item.target_id || '',
         visibility: item.visibility as ActivityItem['visibility'],
+        activity_data: item.activity_data,
+        created_at: item.created_at,
       }));
 
       setActivities(typedActivities);
@@ -104,7 +102,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
   };
 
   const getActivityMessage = (activity: ActivityItem) => {
-    const userName = activity.profiles?.display_name || 'Someone';
+    const userName = activity.activity_data?.user_name || 'Someone';
     
     switch (activity.activity_type) {
       case 'recipe_created':
@@ -227,7 +225,7 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
                   <div className="flex items-center gap-2">
                     <Avatar className="w-8 h-8">
                       <AvatarFallback className="text-xs">
-                        {(activity.profiles?.display_name || 'U').charAt(0).toUpperCase()}
+                        {(activity.activity_data?.user_name || 'U').charAt(0).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     {getActivityIcon(activity.activity_type)}
