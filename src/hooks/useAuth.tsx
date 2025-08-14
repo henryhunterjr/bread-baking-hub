@@ -1,7 +1,9 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import * as React from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { AuthContextType } from '@/types';
+
+const { useState, useEffect, createContext, useContext } = React;
 
 // Auth cleanup utility to prevent limbo states
 export const cleanupAuthState = () => {
