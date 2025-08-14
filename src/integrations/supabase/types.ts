@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
+  // Allows to automatically instanciate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
@@ -1258,18 +1258,18 @@ export type Database = {
       assign_ab_variant: {
         Args: {
           experiment_name: string
-          session_identifier?: string
           user_identifier?: string
+          session_identifier?: string
         }
         Returns: string
       }
       create_secure_submission: {
         Args: {
-          p_priority?: string
+          p_submitter_name: string
+          p_submitter_email: string
           p_submission_data: Json
           p_submission_type?: string
-          p_submitter_email: string
-          p_submitter_name: string
+          p_priority?: string
         }
         Returns: Json
       }
@@ -1288,28 +1288,24 @@ export type Database = {
       get_admin_submissions: {
         Args: Record<PropertyKey, never>
         Returns: {
-          created_at: string
           id: string
-          notes: string
-          priority: string
-          status: string
+          submitter_name: string
+          submitter_email: string
           submission_data: Json
           submission_type: string
-          submitter_email: string
-          submitter_name: string
-          updated_at: string
+          priority: string
+          status: string
+          notes: string
           user_id: string
+          created_at: string
+          updated_at: string
         }[]
       }
-      get_auth_security_status: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
       get_core_web_vitals_summary: {
-        Args: { end_date?: string; start_date?: string }
+        Args: { start_date?: string; end_date?: string }
         Returns: {
-          avg_value: number
           metric_type: string
+          avg_value: number
           p75_value: number
           p90_value: number
           sample_count: number
@@ -1320,27 +1316,27 @@ export type Database = {
         Returns: string
       }
       get_related_recipes: {
-        Args: { limit_count?: number; recipe_id: string }
+        Args: { recipe_id: string; limit_count?: number }
         Returns: {
           id: string
-          image_url: string
-          similarity_score: number
-          slug: string
-          tags: string[]
           title: string
+          slug: string
+          image_url: string
+          tags: string[]
+          similarity_score: number
         }[]
       }
       get_trending_recipes: {
         Args: { days_back?: number; limit_count?: number }
         Returns: {
-          activity_score: number
-          created_at: string
           id: string
-          image_url: string
-          slug: string
-          tags: string[]
           title: string
+          slug: string
+          image_url: string
+          tags: string[]
           user_id: string
+          created_at: string
+          activity_score: number
         }[]
       }
       get_user_mfa_secret: {
@@ -1350,70 +1346,70 @@ export type Database = {
       get_user_mfa_status: {
         Args: Record<PropertyKey, never>
         Returns: {
-          created_at: string
-          has_backup_codes: boolean
-          has_phone_number: boolean
           id: string
-          is_active: boolean
-          is_verified: boolean
           method: string
+          is_verified: boolean
+          is_active: boolean
+          created_at: string
           updated_at: string
+          has_phone_number: boolean
+          has_backup_codes: boolean
         }[]
       }
       has_role: {
         Args: {
-          _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
+          _role: Database["public"]["Enums"]["app_role"]
         }
         Returns: boolean
       }
       search_blog_posts: {
         Args: {
-          limit_count?: number
           search_query: string
           tag_filters?: string[]
+          limit_count?: number
         }
         Returns: {
-          excerpt: string
-          hero_image_url: string
           id: string
-          published_at: string
-          search_rank: number
+          title: string
           slug: string
           subtitle: string
+          hero_image_url: string
           tags: string[]
-          title: string
+          published_at: string
+          excerpt: string
+          search_rank: number
         }[]
       }
       search_recipes: {
         Args: {
+          search_query: string
           dietary_filters?: string[]
           difficulty_filter?: string
+          prep_time_max?: number
+          total_time_max?: number
           ingredients_filter?: string[]
           limit_count?: number
-          prep_time_max?: number
-          search_query: string
-          total_time_max?: number
         }
         Returns: {
+          id: string
+          title: string
+          slug: string
+          image_url: string
+          tags: string[]
+          user_id: string
           created_at: string
           excerpt: string
-          id: string
-          image_url: string
           search_rank: number
-          slug: string
-          tags: string[]
-          title: string
-          user_id: string
         }[]
       }
       store_encrypted_mfa_secret: {
         Args: {
-          p_backup_codes?: string[]
-          p_method: string
-          p_phone_number?: string
-          p_secret: string
           p_user_id: string
+          p_method: string
+          p_secret: string
+          p_phone_number?: string
+          p_backup_codes?: string[]
         }
         Returns: string
       }
@@ -1426,7 +1422,7 @@ export type Database = {
         Returns: Json
       }
       verify_backup_code: {
-        Args: { p_backup_code: string; p_user_id: string }
+        Args: { p_user_id: string; p_backup_code: string }
         Returns: boolean
       }
     }

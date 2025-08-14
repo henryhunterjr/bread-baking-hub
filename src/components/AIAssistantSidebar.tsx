@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Send, MessageCircle, X, Mic, MicOff, Play, Volume2, VolumeX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -27,15 +27,15 @@ type AssistantMode = 'general' | 'tips' | 'substitutions' | 'scaling' | 'trouble
 export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssistantSidebarProps) => {
   const isMobile = useIsMobile();
   const isOnline = useNetworkStatus();
-  const [input, setInput] = React.useState('');
-  const [micEnabled, setMicEnabled] = React.useState(false);
-  const [isListening, setIsListening] = React.useState(false);
-  const [timeoutWarning, setTimeoutWarning] = React.useState(false);
-  const [speechEnabled, setSpeechEnabled] = React.useState(false);
-  const scrollAreaRef = React.useRef<HTMLDivElement>(null);
-  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
-  const warningTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
-  const lastSpokenMessageRef = React.useRef<string | null>(null);
+  const [input, setInput] = useState('');
+  const [micEnabled, setMicEnabled] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [timeoutWarning, setTimeoutWarning] = useState(false);
+  const [speechEnabled, setSpeechEnabled] = useState(false);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const warningTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastSpokenMessageRef = useRef<string | null>(null);
   const { toast } = useToast();
   
   const { messages, isLoading, mode, setMode, sendMessage } = useAIChat({ recipeContext });
@@ -78,14 +78,14 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
   };
 
   // Auto-scroll to bottom when new messages arrive
-  React.useEffect(() => {
+  useEffect(() => {
     if (scrollAreaRef.current) {
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
     }
   }, [messages]);
 
   // Auto-play Krusty's responses (only when sidebar is open, message is new, and speech is enabled)
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isOpen || !speechEnabled) return;
     
     const lastMessage = messages[messages.length - 1];
@@ -99,7 +99,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
   }, [messages, isLoading, isOpen, speechEnabled, speak]);
 
   // Monitor speech recognition state and cleanup when it stops
-  React.useEffect(() => {
+  useEffect(() => {
     if (!speechRecognition.isListening && micEnabled) {
       // Speech recognition ended, cleanup mic state
       setMicEnabled(false);
@@ -185,7 +185,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
           
           {/* Avatar image */}
           <ResponsiveImage 
-            src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/family-photos/crusty-avatar.png"
+            src="/lovable-uploads/8cb72eaf-5058-4063-8999-6b31c041d83b.png"
             alt="👨🏽‍🍳 Krusty | Baking Guide"
             className="w-full h-full rounded-full object-cover relative z-10"
             loading="lazy"
@@ -212,7 +212,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
               {/* Avatar in top-left */}
               <div className={`relative w-12 h-12 transition-all duration-300 ${(isListening || isPlaying) ? 'shadow-lg shadow-primary/30' : ''}`}>
                 <ResponsiveImage 
-                  src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/family-photos/crusty-avatar.png"
+                  src="/lovable-uploads/8cb72eaf-5058-4063-8999-6b31c041d83b.png"
                   alt="👨🏽‍🍳 Krusty"
                   className={`w-full h-full rounded-full object-cover border-2 border-primary/30 transition-all duration-300 ${
                     (isListening || isPlaying) ? 'ring-2 ring-primary ring-opacity-50 animate-pulse' : ''

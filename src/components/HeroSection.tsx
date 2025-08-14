@@ -28,7 +28,7 @@ const HeroSection = () => {
           </div>
           <div className="relative">
             <ResponsiveImage
-              src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/hero-main.png"
+              src="/lovable-uploads/db15ab36-18a2-4103-b9d5-a5e58af2b2a2.png"
               alt="Beautiful artisan bread with perfect crumb structure showing heart-shaped pattern"
               className="rounded-2xl shadow-stone w-full aspect-[4/3]"
               priority={true}

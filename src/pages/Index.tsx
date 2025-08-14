@@ -1,28 +1,28 @@
-import * as React from 'react';
+import { useState, Suspense, lazy } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
-const SocialProofBanner = React.lazy(() => import("../components/SocialProofBanner").then(m => ({ default: m.SocialProofBanner })));
-const Testimonials = React.lazy(() => import("../components/Testimonials").then(m => ({ default: m.Testimonials })));
-const AboutHenry = React.lazy(() => import("../components/AboutHenry"));
-const BooksPreview = React.lazy(() => import("../components/BooksPreview"));
-const ToolsResources = React.lazy(() => import("../components/ToolsResources"));
-const FromOvenToMarketHero = React.lazy(() => import("../components/FromOvenToMarketHero").then(m => ({ default: m.FromOvenToMarketHero })));
-const BreadBookHero = React.lazy(() => import("../components/BreadBookHero").then(m => ({ default: m.BreadBookHero })));
-const BakersBench = React.lazy(() => import("../components/BakersBench"));
-const MonthlyChallenge = React.lazy(() => import("../components/MonthlyChallenge"));
-const LatestBlogPosts = React.lazy(() => import("../components/LatestBlogPosts"));
-const CallToAction = React.lazy(() => import("../components/CallToAction"));
-const PodcastSection = React.lazy(() => import("../components/PodcastSection"));
-const RecommendedTools = React.lazy(() => import("../components/RecommendedTools"));
-const TestimonialsSection = React.lazy(() => import("../components/TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
-const AuthorBioSection = React.lazy(() => import("../components/AuthorBioSection").then(m => ({ default: m.AuthorBioSection })));
-const LazyAIAssistantSidebar = React.lazy(() => import("../components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
+const SocialProofBanner = lazy(() => import("../components/SocialProofBanner").then(m => ({ default: m.SocialProofBanner })));
+const Testimonials = lazy(() => import("../components/Testimonials").then(m => ({ default: m.Testimonials })));
+const AboutHenry = lazy(() => import("../components/AboutHenry"));
+const BooksPreview = lazy(() => import("../components/BooksPreview"));
+const ToolsResources = lazy(() => import("../components/ToolsResources"));
+const FromOvenToMarketHero = lazy(() => import("../components/FromOvenToMarketHero").then(m => ({ default: m.FromOvenToMarketHero })));
+const BreadBookHero = lazy(() => import("../components/BreadBookHero").then(m => ({ default: m.BreadBookHero })));
+const BakersBench = lazy(() => import("../components/BakersBench"));
+const MonthlyChallenge = lazy(() => import("../components/MonthlyChallenge"));
+const LatestBlogPosts = lazy(() => import("../components/LatestBlogPosts"));
+const CallToAction = lazy(() => import("../components/CallToAction"));
+const PodcastSection = lazy(() => import("../components/PodcastSection"));
+const RecommendedTools = lazy(() => import("../components/RecommendedTools"));
+const TestimonialsSection = lazy(() => import("../components/TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
+const AuthorBioSection = lazy(() => import("../components/AuthorBioSection").then(m => ({ default: m.AuthorBioSection })));
+const LazyAIAssistantSidebar = lazy(() => import("../components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
 import { sanitizeStructuredData } from '@/utils/sanitize';
 
 const Index = () => {
-  const [isAIOpen, setIsAIOpen] = React.useState(false);
+  const [isAIOpen, setIsAIOpen] = useState(false);
 
   // Generate organization structured data
   const organizationSchema = {
@@ -127,59 +127,59 @@ const Index = () => {
       <Header />
       <main id="main-content" role="main" tabIndex={-1}>
         <HeroSection />
-        <React.Suspense fallback={null}>
+        <Suspense fallback={null}>
           <SocialProofBanner />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <Testimonials className="px-4 mt-6" />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <AboutHenry />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <PodcastSection />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <BooksPreview />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <ToolsResources />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <RecommendedTools />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <TestimonialsSection />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <AuthorBioSection />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <FromOvenToMarketHero />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <BakersBench />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <MonthlyChallenge />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <BreadBookHero />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <LatestBlogPosts />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <CallToAction />
-        </React.Suspense>
+        </Suspense>
       </main>
       <Footer />
-      <React.Suspense fallback={null}>
+      <Suspense fallback={null}>
         <LazyAIAssistantSidebar 
           isOpen={isAIOpen}
           onToggle={() => setIsAIOpen(!isAIOpen)}
         />
-      </React.Suspense>
+      </Suspense>
     </div>
     </>
   );

@@ -13,7 +13,7 @@ export const AuthorBioSection = () => {
           <div className="space-y-6">
             <div className="relative">
               <ResponsiveImage
-                src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/family-photos/author-bio.png"
+                src="/lovable-uploads/817f9119-54ab-4a7e-8906-143e981eac8a.png"
                 alt="Henry Hunter - Master Baker and Author"
                 className="rounded-2xl shadow-warm aspect-square"
                 priority={false}

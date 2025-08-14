@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 
 // Performance optimization component for final Lighthouse improvements
 export const PerformanceOptimizer = () => {
-  React.useEffect(() => {
+  useEffect(() => {
     // Preload critical resources
     const preloadCriticalResources = () => {
       // Preload hero images
@@ -111,7 +111,7 @@ export const PerformanceOptimizer = () => {
 
 // Critical CSS injector for above-the-fold content
 export const CriticalCSS = () => {
-  React.useEffect(() => {
+  useEffect(() => {
     const criticalCSS = `
       /* Critical styles for above-the-fold content */
       .bg-gradient-hero {

@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 
 // Enhanced accessibility fixes for final validation
 export const AccessibilityEnhancements = () => {
-  React.useEffect(() => {
+  useEffect(() => {
     // Ensure all images have meaningful alt text
     const images = document.querySelectorAll('img');
     images.forEach(img => {
@@ -66,7 +66,7 @@ export const AccessibilityEnhancements = () => {
 
 // Hook for improved focus management
 export const useAccessibleFocus = () => {
-  React.useEffect(() => {
+  useEffect(() => {
     // Enhanced focus outline for better visibility
     const style = document.createElement('style');
     style.textContent = `

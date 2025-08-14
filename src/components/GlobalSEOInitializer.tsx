@@ -92,7 +92,7 @@ export const GlobalSEOInitializer = () => {
           '@type': 'Organization',
           name: 'Baking Great Bread',
           url: 'https://bread-baking-hub.vercel.app',
-          logo: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/seo-logo.png',
+          logo: 'https://bread-baking-hub.vercel.app/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png',
           description: 'Expert bread baking education and community led by master baker Henry Hunter',
           founder: {
             '@type': 'Person',

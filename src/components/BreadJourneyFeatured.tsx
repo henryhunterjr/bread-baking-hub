@@ -14,8 +14,8 @@ const BreadJourneyFeatured = ({ onListen }: BreadJourneyFeaturedProps) => {
           {/* Background Image */}
           <video
             className="absolute inset-0 w-full h-full object-cover"
-            src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/audio-files/bread-journey-video.mp4"
-            poster="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/video-poster.png"
+            src="/lovable-uploads/drive-1B-qILrva5lCLDQkLZSisiP3Xt2UpQhf5.mp4"
+            poster="/lovable-uploads/6cd3602b-f737-4c3d-a3f4-772cd8654362.png"
             autoPlay
             muted
             loop
@@ -23,7 +23,7 @@ const BreadJourneyFeatured = ({ onListen }: BreadJourneyFeaturedProps) => {
             preload="metadata"
             aria-label="Bread: A Journey hero background video"
           >
-            <source src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/audio-files/bread-journey-video.mp4" type="video/mp4" />
+            <source src="/lovable-uploads/drive-1B-qILrva5lCLDQkLZSisiP3Xt2UpQhf5.mp4" type="video/mp4" />
           </video>
           
           {/* Overlay */}

@@ -11,52 +11,51 @@ import { PerformanceOptimizer, CriticalCSS } from "@/components/PerformanceOptim
 import { ContentQualityChecker } from "@/components/ContentQualityChecker";
 import "@/utils/errorMonitoring";
 // AIAssistantSidebar is lazy-loaded below
-import * as React from "react";
+import { useState, Suspense, lazy } from "react";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import DefaultSEO from "./components/DefaultSEO";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 
 // Import Index directly to avoid lazy loading issues on main page
 import Index from "./pages/Index";
-const RecipeFormatter = React.lazy(() => import("./pages/RecipeFormatter"));
-const RecipeWorkspace = React.lazy(() => import("./pages/RecipeWorkspace"));
-const Auth = React.lazy(() => import("./pages/Auth"));
-const MyRecipes = React.lazy(() => import("./pages/MyRecipes"));
-const About = React.lazy(() => import("./pages/About"));
-const Blog = React.lazy(() => import("./pages/Blog"));
-const BlogPost = React.lazy(() => import("./pages/BlogPost"));
-const Books = React.lazy(() => import("./pages/Books"));
-const Recipes = React.lazy(() => import("./pages/Recipes"));
-const VitaleStarter = React.lazy(() => import("./pages/VitaleStarter"));
-const VitalePreview = React.lazy(() => import("./pages/VitalePreview"));
-const KaiserRolls = React.lazy(() => import("./pages/KaiserRolls"));
-const PublicRecipe = React.lazy(() => import("./pages/PublicRecipe"));
-const HenrysFoolproofRecipe = React.lazy(() => import("./pages/HenrysFoolproofRecipe"));
-const BreadGlossary = React.lazy(() => import("./pages/BreadGlossary"));
-const BreadCalculator = React.lazy(() => import("./pages/BreadCalculator"));
-const Community = React.lazy(() => import("./pages/Community"));
-const TroubleshootingPage = React.lazy(() => import("./pages/TroubleshootingPage"));
-const OfflineFallback = React.lazy(() => import("./pages/OfflineFallback"));
-const CrustAndCrumb = React.lazy(() => import("./pages/CrustAndCrumb"));
-const Legal = React.lazy(() => import("./pages/Legal"));
-const NotFound = React.lazy(() => import("./pages/NotFound"));
-const SearchTest = React.lazy(() => import("./pages/SearchTest"));
-const InlineSearchTestPage = React.lazy(() => import("./pages/InlineSearchTest"));
-const Dashboard = React.lazy(() => import("./pages/Dashboard"));
-const Tools = React.lazy(() => import("./pages/Tools"));
-const Guides = React.lazy(() => import("./pages/Guides"));
-const Challenges = React.lazy(() => import("./pages/Challenges"));
-const Coaching = React.lazy(() => import("./pages/Coaching"));
-const Contact = React.lazy(() => import("./pages/Contact"));
-const GithubRoot = React.lazy(() => import("./pages/GithubRoot"));
-const GithubReadme = React.lazy(() => import("./pages/GithubReadme"));
-const GithubWriteTest = React.lazy(() => import("./pages/GithubWriteTest"));
-const GoRedirect = React.lazy(() => import("./pages/GoRedirect"));
-const LazyAIAssistantSidebar = React.lazy(() => import("./components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
-const MyFavorites = React.lazy(() => import("./pages/MyFavorites"));
-const MyReviews = React.lazy(() => import("./pages/MyReviews"));
-const SearchResultsPage = React.lazy(() => import("./pages/SearchResultsPage"));
-const PerformanceTestingPage = React.lazy(() => import("./pages/PerformanceTestingPage"));
+const RecipeFormatter = lazy(() => import("./pages/RecipeFormatter"));
+const RecipeWorkspace = lazy(() => import("./pages/RecipeWorkspace"));
+const Auth = lazy(() => import("./pages/Auth"));
+const MyRecipes = lazy(() => import("./pages/MyRecipes"));
+const About = lazy(() => import("./pages/About"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const Books = lazy(() => import("./pages/Books"));
+const Recipes = lazy(() => import("./pages/Recipes"));
+const VitaleStarter = lazy(() => import("./pages/VitaleStarter"));
+const VitalePreview = lazy(() => import("./pages/VitalePreview"));
+const KaiserRolls = lazy(() => import("./pages/KaiserRolls"));
+const PublicRecipe = lazy(() => import("./pages/PublicRecipe"));
+const HenrysFoolproofRecipe = lazy(() => import("./pages/HenrysFoolproofRecipe"));
+const BreadGlossary = lazy(() => import("./pages/BreadGlossary"));
+const BreadCalculator = lazy(() => import("./pages/BreadCalculator"));
+const Community = lazy(() => import("./pages/Community"));
+const TroubleshootingPage = lazy(() => import("./pages/TroubleshootingPage"));
+const OfflineFallback = lazy(() => import("./pages/OfflineFallback"));
+const CrustAndCrumb = lazy(() => import("./pages/CrustAndCrumb"));
+const Legal = lazy(() => import("./pages/Legal"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const SearchTest = lazy(() => import("./pages/SearchTest"));
+const InlineSearchTestPage = lazy(() => import("./pages/InlineSearchTest"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Tools = lazy(() => import("./pages/Tools"));
+const Guides = lazy(() => import("./pages/Guides"));
+const Challenges = lazy(() => import("./pages/Challenges"));
+const Coaching = lazy(() => import("./pages/Coaching"));
+const Contact = lazy(() => import("./pages/Contact"));
+const GithubRoot = lazy(() => import("./pages/GithubRoot"));
+const GithubReadme = lazy(() => import("./pages/GithubReadme"));
+const GithubWriteTest = lazy(() => import("./pages/GithubWriteTest"));
+const GoRedirect = lazy(() => import("./pages/GoRedirect"));
+const LazyAIAssistantSidebar = lazy(() => import("./components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
+const MyFavorites = lazy(() => import("./pages/MyFavorites"));
+const MyReviews = lazy(() => import("./pages/MyReviews"));
+const SearchResultsPage = lazy(() => import("./pages/SearchResultsPage"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -73,25 +72,25 @@ const SitemapRedirect = () => {
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [isAIAssistantOpen, setIsAIAssistantOpen] = React.useState(false);
+  const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
 
   return (
     <AppErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          {/* TooltipProvider temporarily removed due to React bundling issue */}
-          <CriticalCSS />
-          <PerformanceOptimizer />
-          <AccessibilityEnhancements />
-          <ContentQualityChecker />
-          <Toaster />
-          <Sonner />
-          <OfflineBanner />
-          <BackToTop />
+          <TooltipProvider>
+            <CriticalCSS />
+            <PerformanceOptimizer />
+            <AccessibilityEnhancements />
+            <ContentQualityChecker />
+            <Toaster />
+            <Sonner />
+            <OfflineBanner />
+            <BackToTop />
             <BrowserRouter>
               <EnhancedSkipLink />
               <DefaultSEO />
-              <React.Suspense fallback={<SimpleLoadingSpinner />}>
+              <Suspense fallback={<SimpleLoadingSpinner />}>
               <main id="main-content">
               <Routes>
                 <Route path="/" element={<Index />} />
@@ -126,7 +125,6 @@ const App = () => {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/search-test" element={<SearchTest />} />
                 <Route path="/search" element={<SearchResultsPage />} />
-                <Route path="/performance-testing" element={<PerformanceTestingPage />} />
                 <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
                 <Route path="/offline" element={<OfflineFallback />} />
                 <Route path="/github-root" element={<GithubRoot />} />
@@ -137,16 +135,17 @@ const App = () => {
                 <Route path="*" element={<NotFound />} />
               </Routes>
               </main>
-            </React.Suspense>
+            </Suspense>
             
             {/* Site-wide AI Assistant - Crusty */}
-            <React.Suspense fallback={null}>
+            <Suspense fallback={null}>
               <LazyAIAssistantSidebar 
                 isOpen={isAIAssistantOpen}
                 onToggle={() => setIsAIAssistantOpen(!isAIAssistantOpen)}
               />
-            </React.Suspense>
+            </Suspense>
             </BrowserRouter>
+          </TooltipProvider>
         </AuthProvider>
       </QueryClientProvider>
     </AppErrorBoundary>
