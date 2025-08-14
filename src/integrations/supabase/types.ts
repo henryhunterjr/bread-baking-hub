@@ -913,48 +913,7 @@ export type Database = {
       }
     }
     Views: {
-      admin_submissions_view: {
-        Row: {
-          created_at: string | null
-          id: string | null
-          notes: string | null
-          priority: string | null
-          status: string | null
-          submission_data: Json | null
-          submission_type: string | null
-          submitter_email: string | null
-          submitter_name: string | null
-          updated_at: string | null
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          id?: string | null
-          notes?: string | null
-          priority?: string | null
-          status?: string | null
-          submission_data?: Json | null
-          submission_type?: string | null
-          submitter_email?: string | null
-          submitter_name?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          id?: string | null
-          notes?: string | null
-          priority?: string | null
-          status?: string | null
-          submission_data?: Json | null
-          submission_type?: string | null
-          submitter_email?: string | null
-          submitter_name?: string | null
-          updated_at?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       create_secure_submission: {
@@ -978,6 +937,22 @@ export type Database = {
       generate_recipe_slug: {
         Args: { recipe_title: string; recipe_user_id: string }
         Returns: string
+      }
+      get_admin_submissions: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          submitter_name: string
+          submitter_email: string
+          submission_data: Json
+          submission_type: string
+          priority: string
+          status: string
+          notes: string
+          user_id: string
+          created_at: string
+          updated_at: string
+        }[]
       }
       get_decrypted_mfa_secret: {
         Args: { p_user_id: string }
