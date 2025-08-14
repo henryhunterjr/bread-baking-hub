@@ -642,6 +642,48 @@ export type Database = {
         }
         Relationships: []
       }
+      search_analytics: {
+        Row: {
+          clicked_result_id: string | null
+          clicked_result_type: string | null
+          created_at: string
+          filters_applied: Json | null
+          id: string
+          results_count: number | null
+          search_context: string | null
+          search_query: string
+          search_type: string
+          session_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          clicked_result_id?: string | null
+          clicked_result_type?: string | null
+          created_at?: string
+          filters_applied?: Json | null
+          id?: string
+          results_count?: number | null
+          search_context?: string | null
+          search_query: string
+          search_type?: string
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          clicked_result_id?: string | null
+          clicked_result_type?: string | null
+          created_at?: string
+          filters_applied?: Json | null
+          id?: string
+          results_count?: number | null
+          search_context?: string | null
+          search_query?: string
+          search_type?: string
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       security_audit_log: {
         Row: {
           created_at: string
@@ -911,6 +953,39 @@ export type Database = {
         }
         Relationships: []
       }
+      user_viewing_history: {
+        Row: {
+          content_id: string
+          content_title: string
+          content_type: string
+          content_url: string | null
+          id: string
+          user_id: string
+          view_duration: number | null
+          viewed_at: string
+        }
+        Insert: {
+          content_id: string
+          content_title: string
+          content_type: string
+          content_url?: string | null
+          id?: string
+          user_id: string
+          view_duration?: number | null
+          viewed_at?: string
+        }
+        Update: {
+          content_id?: string
+          content_title?: string
+          content_type?: string
+          content_url?: string | null
+          id?: string
+          user_id?: string
+          view_duration?: number | null
+          viewed_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -958,6 +1033,30 @@ export type Database = {
         Args: { p_user_id: string }
         Returns: string
       }
+      get_related_recipes: {
+        Args: { recipe_id: string; limit_count?: number }
+        Returns: {
+          id: string
+          title: string
+          slug: string
+          image_url: string
+          tags: string[]
+          similarity_score: number
+        }[]
+      }
+      get_trending_recipes: {
+        Args: { days_back?: number; limit_count?: number }
+        Returns: {
+          id: string
+          title: string
+          slug: string
+          image_url: string
+          tags: string[]
+          user_id: string
+          created_at: string
+          activity_score: number
+        }[]
+      }
       get_user_mfa_secret: {
         Args: Record<PropertyKey, never>
         Returns: string
@@ -981,6 +1080,46 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
         }
         Returns: boolean
+      }
+      search_blog_posts: {
+        Args: {
+          search_query: string
+          tag_filters?: string[]
+          limit_count?: number
+        }
+        Returns: {
+          id: string
+          title: string
+          slug: string
+          subtitle: string
+          hero_image_url: string
+          tags: string[]
+          published_at: string
+          excerpt: string
+          search_rank: number
+        }[]
+      }
+      search_recipes: {
+        Args: {
+          search_query: string
+          dietary_filters?: string[]
+          difficulty_filter?: string
+          prep_time_max?: number
+          total_time_max?: number
+          ingredients_filter?: string[]
+          limit_count?: number
+        }
+        Returns: {
+          id: string
+          title: string
+          slug: string
+          image_url: string
+          tags: string[]
+          user_id: string
+          created_at: string
+          excerpt: string
+          search_rank: number
+        }[]
       }
       store_encrypted_mfa_secret: {
         Args: {
