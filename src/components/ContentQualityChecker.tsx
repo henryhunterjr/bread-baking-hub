@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import * as React from 'react';
 import { AlertTriangle, CheckCircle, Info } from 'lucide-react';
 
 interface QualityIssue {
@@ -16,10 +16,10 @@ export const ContentQualityChecker = ({
   enabled = process.env.NODE_ENV === 'development',
   showInProduction = false 
 }: ContentQualityCheckerProps) => {
-  const [issues, setIssues] = useState<QualityIssue[]>([]);
-  const [isVisible, setIsVisible] = useState(false);
+  const [issues, setIssues] = React.useState<QualityIssue[]>([]);
+  const [isVisible, setIsVisible] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!enabled && !showInProduction) return;
 
     const checkContentQuality = () => {
