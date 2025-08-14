@@ -910,7 +910,42 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      user_mfa_status: {
+        Row: {
+          created_at: string | null
+          has_backup_codes: boolean | null
+          has_phone_number: boolean | null
+          id: string | null
+          is_active: boolean | null
+          is_verified: boolean | null
+          method: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          has_backup_codes?: never
+          has_phone_number?: never
+          id?: string | null
+          is_active?: boolean | null
+          is_verified?: boolean | null
+          method?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          has_backup_codes?: never
+          has_phone_number?: never
+          id?: string | null
+          is_active?: boolean | null
+          is_verified?: boolean | null
+          method?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       decrypt_mfa_secret: {
