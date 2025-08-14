@@ -23,6 +23,7 @@ export default defineConfig(({ mode }) => ({
           '**/node_modules/**',
         ],
         runtimeCaching: [
+          // Supabase storage images
           {
             urlPattern: /^https:\/\/ojyckskucneljvuqzrsw\.supabase\.co\/storage\/v1\/object\/public\/.*/i,
             handler: 'CacheFirst',
@@ -34,6 +35,19 @@ export default defineConfig(({ mode }) => ({
               },
             },
           },
+          // External image domains used in the app
+          {
+            urlPattern: /^https:\/\/(images\.unsplash\.com|img\.youtube\.com|bakinggreatbread\.blog|challengerbreadware\.com|hollandbowlmill\.com|i\.etsystatic\.com|henrysbreadkitchen\.wpcomstaging\.com)\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'external-images',
+              expiration: {
+                maxEntries: 200,
+                maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+              },
+            },
+          },
+          // Supabase API
           {
             urlPattern: /^https:\/\/ojyckskucneljvuqzrsw\.supabase\.co\/rest\/v1\/.*/i,
             handler: 'StaleWhileRevalidate',
@@ -45,6 +59,7 @@ export default defineConfig(({ mode }) => ({
               },
             },
           },
+          // Navigation pages
           {
             urlPattern: ({ request }) => request.mode === 'navigate',
             handler: 'NetworkFirst',
@@ -153,6 +168,6 @@ export default defineConfig(({ mode }) => ({
       unknownGlobalSideEffects: false
     }
   },
-  // Image optimization
-  assetsInclude: ['**/*.webp'],
+  // Image optimization - include all common image formats
+  assetsInclude: ['**/*.webp', '**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.svg', '**/*.gif'],
 }));
