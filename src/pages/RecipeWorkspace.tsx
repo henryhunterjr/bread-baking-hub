@@ -26,7 +26,7 @@ const RecipeWorkspace = () => {
           {/* Hero Image Section */}
           <div className="w-full">
             <img
-              src="/hero/recipe-workspace-hero.png"
+              src="/lovable-uploads/7c954928-23fe-4169-bec1-ffa0629d80f2.png"
               alt="Recipe workspace - kitchen counter with tablet, notebook, and baking tools"
               className="w-full h-48 md:h-64 lg:h-80 object-cover object-bottom rounded-lg shadow-lg"
               loading="eager"
