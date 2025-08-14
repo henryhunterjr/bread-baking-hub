@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Menu, X, Info } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { SkipLink, VisuallyHidden } from './AccessibilityComponents';
-const officialLogo = '/lovable-uploads/a6444d96-c909-441a-9140-caee94be1496.png';
+const officialLogo = '/lovable-uploads/82d8e259-f73d-4691-958e-1dd4d0bf240d.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

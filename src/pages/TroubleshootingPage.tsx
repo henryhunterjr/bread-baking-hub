@@ -6,6 +6,7 @@ import RecipeAnalysisSection from '@/components/troubleshooting/RecipeAnalysisSe
 import ScanHistorySection from '@/components/troubleshooting/ScanHistorySection';
 import TroubleshootingVisualGuide from '@/components/troubleshooting/TroubleshootingVisualGuide';
 import TroubleshootingContent from '@/components/troubleshooting/TroubleshootingContent';
+import TroubleshootingHero from '@/components/troubleshooting/TroubleshootingHero';
 import { useToast } from '@/hooks/use-toast';
 import { detectSymptoms } from '@/utils/SymptomMatcher';
 import symptomsData from '@/data/symptoms.json';
@@ -80,6 +81,7 @@ export default function TroubleshootingPage() {
   return (
     <div className="bg-background text-foreground min-h-screen">
       <Header />
+      <TroubleshootingHero />
       
       <main className="container mx-auto px-4 py-8">
         <RecipeAnalysisSection 
