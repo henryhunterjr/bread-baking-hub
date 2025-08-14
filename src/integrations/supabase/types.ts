@@ -975,18 +975,6 @@ export type Database = {
           has_backup_codes: boolean
         }[]
       }
-      get_user_submissions: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          id: string
-          submission_type: string
-          priority: string
-          status: string
-          created_at: string
-          updated_at: string
-          notes: string
-        }[]
-      }
       has_role: {
         Args: {
           _user_id: string
