@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Menu, X, Info } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { SkipLink, VisuallyHidden } from './AccessibilityComponents';
+import GlobalSearch from './GlobalSearch';
 const officialLogo = '/lovable-uploads/82d8e259-f73d-4691-958e-1dd4d0bf240d.png';
 
 const Header = () => {
@@ -73,8 +74,14 @@ const Header = () => {
             </Link>
           </div>
           
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+          
+          <div className="hidden md:flex items-center space-x-6">
+            {/* Global Search */}
+            <div className="w-80">
+              <GlobalSearch />
+            </div>
+            
+            <div className="flex items-baseline space-x-4">
               <Link to="/recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Recipes
               </Link>

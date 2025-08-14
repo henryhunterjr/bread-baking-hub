@@ -55,6 +55,7 @@ const GoRedirect = lazy(() => import("./pages/GoRedirect"));
 const LazyAIAssistantSidebar = lazy(() => import("./components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
 const MyFavorites = lazy(() => import("./pages/MyFavorites"));
 const MyReviews = lazy(() => import("./pages/MyReviews"));
+const SearchResultsPage = lazy(() => import("./pages/SearchResultsPage"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -123,6 +124,7 @@ const App = () => {
                 <Route path="/coaching" element={<Coaching />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/search-test" element={<SearchTest />} />
+                <Route path="/search" element={<SearchResultsPage />} />
                 <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
                 <Route path="/offline" element={<OfflineFallback />} />
                 <Route path="/github-root" element={<GithubRoot />} />
