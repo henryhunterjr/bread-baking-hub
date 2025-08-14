@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import * as React from 'react';
 import { Search, X, Clock, TrendingUp, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,19 +30,19 @@ export const GlobalSearch = ({
   showFilters = true,
   className = ""
 }: GlobalSearchProps) => {
-  const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
-  const [recentSearches, setRecentSearches] = useState<string[]>([]);
-  const [popularSearches, setPopularSearches] = useState<string[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [query, setQuery] = React.useState('');
+  const [suggestions, setSuggestions] = React.useState<SearchSuggestion[]>([]);
+  const [recentSearches, setRecentSearches] = React.useState<string[]>([]);
+  const [popularSearches, setPopularSearches] = React.useState<string[]>([]);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [selectedFilters, setSelectedFilters] = React.useState<string[]>([]);
   
   const debouncedQuery = useDebounce(query, 300);
-  const searchRef = useRef<HTMLDivElement>(null);
+  const searchRef = React.useRef<HTMLDivElement>(null);
   
   // Load recent searches from localStorage
-  useEffect(() => {
+  React.useEffect(() => {
     const stored = localStorage.getItem('recent-searches');
     if (stored) {
       setRecentSearches(JSON.parse(stored));
@@ -50,7 +50,7 @@ export const GlobalSearch = ({
   }, []);
 
   // Load popular searches
-  useEffect(() => {
+  React.useEffect(() => {
     const loadPopularSearches = async () => {
       try {
         const { data } = await supabase
@@ -73,7 +73,7 @@ export const GlobalSearch = ({
   }, []);
 
   // Search suggestions
-  useEffect(() => {
+  React.useEffect(() => {
     if (!debouncedQuery.trim()) {
       setSuggestions([]);
       return;
@@ -134,7 +134,7 @@ export const GlobalSearch = ({
   }, [debouncedQuery]);
 
   // Handle click outside to close
-  useEffect(() => {
+  React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setIsOpen(false);
@@ -145,7 +145,7 @@ export const GlobalSearch = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleSearch = useCallback(async (searchQuery: string) => {
+  const handleSearch = React.useCallback(async (searchQuery: string) => {
     if (!searchQuery.trim()) return;
 
     // Save to recent searches
@@ -166,7 +166,7 @@ export const GlobalSearch = ({
     window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`;
   }, [recentSearches, suggestions.length, selectedFilters]);
 
-  const handleSuggestionClick = useCallback(async (suggestion: SearchSuggestion) => {
+  const handleSuggestionClick = React.useCallback(async (suggestion: SearchSuggestion) => {
     // Log click analytics
     await supabase.from('search_analytics').insert({
       search_query: query,
