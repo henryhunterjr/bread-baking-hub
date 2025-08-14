@@ -11,7 +11,7 @@ import { PerformanceOptimizer, CriticalCSS } from "@/components/PerformanceOptim
 import { ContentQualityChecker } from "@/components/ContentQualityChecker";
 import "@/utils/errorMonitoring";
 // AIAssistantSidebar is lazy-loaded below
-import { useState, Suspense, lazy } from "react";
+import React, { useState, Suspense, lazy } from "react";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import DefaultSEO from "./components/DefaultSEO";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
