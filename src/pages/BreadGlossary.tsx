@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Heart, Plus, X, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { BackgroundImageWithFallback } from '@/components/ui/BackgroundImageWithFallback';
+import { Hero } from '@/components/ui/Hero';
 
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -400,21 +400,17 @@ const BreadGlossary = () => {
     <div className="min-h-screen bg-background">
       <Header />
       {/* Hero Section */}
-      <section className="relative h-80 overflow-hidden">
-        <BackgroundImageWithFallback 
-          src="/lovable-uploads/1a955074-3f70-4ec7-803e-f2d08223022b.png"
-          className="absolute inset-0 bg-cover bg-center"
-        />
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="relative h-full flex items-end justify-center pb-8">
-          <div className="text-center text-white">
-            <p className="text-lg md:text-xl mb-2 drop-shadow-md">
-              Your comprehensive guide to bread baking terminology
-            </p>
-            <p className="text-base md:text-lg text-amber-200 drop-shadow-md">by Henry Hunter</p>
-          </div>
-        </div>
-      </section>
+      <Hero 
+        imageSrc="/lovable-uploads/1a955074-3f70-4ec7-803e-f2d08223022b.png"
+        imageAlt="Bread Glossary - Wooden letter blocks spelling GLOSSARY"
+        description="Your comprehensive guide to bread baking terminology"
+        eyebrow="by Henry Hunter"
+        variant="background"
+        textPosition="bottom"
+        height="lg"
+        overlayOpacity="dark"
+        textColor="white"
+      />
 
       <main className="container mx-auto px-4 py-8">
         {/* Search and Filters */}

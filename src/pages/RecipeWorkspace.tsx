@@ -1,7 +1,7 @@
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useAuth } from '@/hooks/useAuth';
 import { useRecipeWorkspace } from '@/hooks/useRecipeWorkspace';
-import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
+import { Hero } from '@/components/ui/Hero';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -25,20 +25,15 @@ const RecipeWorkspace = () => {
         <div className="max-w-6xl mx-auto space-y-8">
           
           {/* Hero Image Section */}
-          <div className="w-full">
-            <ImageWithFallback
-              src="/lovable-uploads/7c954928-23fe-4169-bec1-ffa0629d80f2.png"
-              alt="Recipe workspace - kitchen counter with tablet, notebook, and baking tools"
-              className="w-full h-48 md:h-64 lg:h-80 object-cover object-bottom rounded-lg shadow-lg"
-              loading="eager"
-              priority
-            />
-            <div className="text-center space-y-4 mt-6">
-              <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-                Your complete recipe creation studio. Upload, format, edit, and save your recipes with AI assistance.
-              </p>
-            </div>
-          </div>
+          <Hero 
+            imageSrc="/lovable-uploads/7c954928-23fe-4169-bec1-ffa0629d80f2.png"
+            imageAlt="Recipe workspace - kitchen counter with tablet, notebook, and baking tools"
+            description="Your complete recipe creation studio. Upload, format, edit, and save your recipes with AI assistance."
+            variant="below"
+            rounded
+            shadow
+            priority
+          />
 
           {/* Progress Steps */}
           <WorkflowProgress currentStep={workspace.currentStep} />

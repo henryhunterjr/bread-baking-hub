@@ -6,7 +6,7 @@ import RecipeAnalysisSection from '@/components/troubleshooting/RecipeAnalysisSe
 import ScanHistorySection from '@/components/troubleshooting/ScanHistorySection';
 import TroubleshootingVisualGuide from '@/components/troubleshooting/TroubleshootingVisualGuide';
 import TroubleshootingContent from '@/components/troubleshooting/TroubleshootingContent';
-import TroubleshootingHero from '@/components/troubleshooting/TroubleshootingHero';
+import { Hero } from '@/components/ui/Hero';
 import { useToast } from '@/hooks/use-toast';
 import { detectSymptoms } from '@/utils/SymptomMatcher';
 import symptomsData from '@/data/symptoms.json';
@@ -81,7 +81,15 @@ export default function TroubleshootingPage() {
   return (
     <div className="bg-background text-foreground min-h-screen">
       <Header />
-      <TroubleshootingHero />
+      <Hero 
+        imageSrc="/lovable-uploads/929d8961-290b-4bf6-a6a1-16fee8b2a307.png"
+        imageAlt="Troubleshooting - Bread baking tools and ingredients on wooden surface"
+        title="Troubleshooting"
+        subtitle="Solve your bread baking challenges"
+        variant="overlay"
+        textPosition="center"
+        priority
+      />
       
       <main className="container mx-auto px-4 py-8">
         <RecipeAnalysisSection 
