@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Heart, Plus, X, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import glossaryHero from '@/assets/glossary-hero.png';
+
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -403,7 +403,7 @@ const BreadGlossary = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
-            backgroundImage: `url(${glossaryHero})`
+            backgroundImage: `url(/hero/glossary-hero.png)`
           }}
         />
         <div className="absolute inset-0 bg-black/30" />

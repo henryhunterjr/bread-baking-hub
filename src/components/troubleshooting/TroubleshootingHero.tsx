@@ -1,15 +1,14 @@
 import React from 'react';
-import troubleshootingHero from '@/assets/troubleshooting-hero.png';
 
 export default function TroubleshootingHero() {
   return (
     <div className="relative w-full h-48 md:h-64 lg:h-80 overflow-hidden">
       <img
-        src={troubleshootingHero}
+        src="/hero/troubleshooting-hero.png"
         alt="Troubleshooting - Bread baking tools and ingredients on wooden surface"
         className="w-full h-full object-cover"
         onError={(e) => {
-          console.error('Troubleshooting hero image failed to load');
+          console.error('Troubleshooting hero image failed to load:', '/hero/troubleshooting-hero.png');
           e.currentTarget.style.display = 'none';
         }}
       />
