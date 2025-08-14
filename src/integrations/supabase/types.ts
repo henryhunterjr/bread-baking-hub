@@ -963,6 +963,14 @@ export type Database = {
         }
         Returns: string
       }
+      subscribe_to_newsletter: {
+        Args: { p_email: string; p_name?: string }
+        Returns: Json
+      }
+      unsubscribe_from_newsletter: {
+        Args: { p_email: string }
+        Returns: Json
+      }
       verify_backup_code: {
         Args: { p_user_id: string; p_backup_code: string }
         Returns: boolean
