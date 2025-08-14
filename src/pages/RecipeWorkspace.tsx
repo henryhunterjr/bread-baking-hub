@@ -22,15 +22,19 @@ const RecipeWorkspace = () => {
       <main className={`py-20 px-4 ${user ? 'pb-32' : ''}`}>
         <div className="max-w-6xl mx-auto space-y-8">
           
-          {/* Header Section */}
-          <div className="text-center space-y-4">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Sparkles className="h-8 w-8 text-primary" />
-              <h1 className="text-3xl sm:text-4xl font-bold text-primary">Recipe Workspace</h1>
+          {/* Hero Image Section */}
+          <div className="w-full">
+            <img
+              src="/lovable-uploads/6d185a45-b40f-4f3c-8fff-81862683500d.png"
+              alt="Recipe workspace - kitchen counter with tablet, notebook, and baking tools"
+              className="w-full h-48 md:h-64 lg:h-80 object-cover rounded-lg shadow-lg"
+              loading="eager"
+            />
+            <div className="text-center space-y-4 mt-6">
+              <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
+                Your complete recipe creation studio. Upload, format, edit, and save your recipes with AI assistance.
+              </p>
             </div>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-              Your complete recipe creation studio. Upload, format, edit, and save your recipes with AI assistance.
-            </p>
           </div>
 
           {/* Progress Steps */}
