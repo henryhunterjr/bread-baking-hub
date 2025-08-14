@@ -70,8 +70,10 @@ export const BookSEO = ({ book, canonical }: BookSEOProps) => {
     "url": "https://bread-baking-hub.vercel.app",
     "logo": "https://bread-baking-hub.vercel.app/assets/logo.png",
     "sameAs": [
-      "https://www.youtube.com/@bakinggreatbread",
-      "https://www.instagram.com/bakinggreatbread"
+      "https://www.facebook.com/groups/1082865755403754",
+      "https://www.instagram.com/bakinggreatbread/",
+      "https://www.youtube.com/@henryhunterjr",
+      "https://bakinggreatbread.store/"
     ]
   };
 

@@ -115,7 +115,7 @@ export const AuthorBioSection = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button size="lg" asChild>
-                <a href="https://bit.ly/3srdSYS" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/groups/1082865755403754" target="_blank" rel="noopener noreferrer">
                   <Facebook className="h-4 w-4 mr-2" />
                   Join My Community
                 </a>

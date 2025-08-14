@@ -21,7 +21,7 @@ const CallToAction = () => {
               in our welcoming, inclusive community.
             </p>
             <Button variant="default" size="lg" asChild className="bg-blue-600 hover:bg-blue-700">
-              <a href="https://bit.ly/3srdSYS" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.facebook.com/groups/1082865755403754" target="_blank" rel="noopener noreferrer">
                 Join Facebook Group
               </a>
             </Button>

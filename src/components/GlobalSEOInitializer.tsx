@@ -99,9 +99,10 @@ export const GlobalSEOInitializer = () => {
             name: 'Henry Hunter'
           },
           sameAs: [
-            'https://twitter.com/bakinggreatbread',
-            'https://instagram.com/bakinggreatbread',
-            'https://youtube.com/@bakinggreatbread'
+            'https://www.facebook.com/groups/1082865755403754',
+            'https://www.instagram.com/bakinggreatbread/',
+            'https://www.youtube.com/@henryhunterjr',
+            'https://bakinggreatbread.store/'
           ]
         };
 
