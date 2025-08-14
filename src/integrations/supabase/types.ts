@@ -807,6 +807,7 @@ export type Database = {
           method: string
           phone_number: string | null
           secret: string | null
+          secret_encrypted: boolean | null
           updated_at: string
           user_id: string
         }
@@ -819,6 +820,7 @@ export type Database = {
           method: string
           phone_number?: string | null
           secret?: string | null
+          secret_encrypted?: boolean | null
           updated_at?: string
           user_id: string
         }
@@ -831,6 +833,7 @@ export type Database = {
           method?: string
           phone_number?: string | null
           secret?: string | null
+          secret_encrypted?: boolean | null
           updated_at?: string
           user_id?: string
         }
@@ -922,6 +925,10 @@ export type Database = {
         Args: { recipe_title: string; recipe_user_id: string }
         Returns: string
       }
+      get_decrypted_mfa_secret: {
+        Args: { p_user_id: string }
+        Returns: string
+      }
       get_user_mfa_secret: {
         Args: Record<PropertyKey, never>
         Returns: string
@@ -931,6 +938,20 @@ export type Database = {
           _user_id: string
           _role: Database["public"]["Enums"]["app_role"]
         }
+        Returns: boolean
+      }
+      store_encrypted_mfa_secret: {
+        Args: {
+          p_user_id: string
+          p_method: string
+          p_secret: string
+          p_phone_number?: string
+          p_backup_codes?: string[]
+        }
+        Returns: string
+      }
+      verify_backup_code: {
+        Args: { p_user_id: string; p_backup_code: string }
         Returns: boolean
       }
     }
