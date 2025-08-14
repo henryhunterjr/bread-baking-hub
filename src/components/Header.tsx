@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Info } from 'lucide-react';
@@ -8,11 +8,11 @@ import GlobalSearch from './GlobalSearch';
 const officialLogo = 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/official-logo.png';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { user, signOut } = useAuth();
 
   // Body scroll lock for mobile menu
-  useEffect(() => {
+  React.useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
@@ -31,7 +31,7 @@ const Header = () => {
   }, [isMenuOpen]);
 
   // Handle ESC key to close menu
-  useEffect(() => {
+  React.useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isMenuOpen) {
         setIsMenuOpen(false);

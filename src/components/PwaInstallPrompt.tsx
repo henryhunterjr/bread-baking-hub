@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import * as React from 'react';
 import { useA2HS } from '@/hooks/useA2HS';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
@@ -8,7 +8,7 @@ import { hapticSuccess } from '@/utils/haptics';
 const PwaInstallPrompt = () => {
   const { isSupported, promptInstall } = useA2HS();
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isSupported) return;
 
     const id = toast({

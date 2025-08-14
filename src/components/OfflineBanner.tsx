@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import * as React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { WifiOff, RefreshCw, Download } from 'lucide-react';
@@ -10,10 +10,10 @@ interface OfflineBannerProps {
 }
 
 const OfflineBanner = ({ onRetry, cachedPosts = [] }: OfflineBannerProps) => {
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [showBanner, setShowBanner] = useState(!navigator.onLine);
+  const [isOnline, setIsOnline] = React.useState(navigator.onLine);
+  const [showBanner, setShowBanner] = React.useState(!navigator.onLine);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleOnline = () => {
       setIsOnline(true);
       setShowBanner(false);
