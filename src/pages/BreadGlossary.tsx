@@ -403,7 +403,7 @@ const BreadGlossary = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
-            backgroundImage: `url(/hero/glossary-hero.png)`
+            backgroundImage: `url(/lovable-uploads/1a955074-3f70-4ec7-803e-f2d08223022b.png)`
           }}
         />
         <div className="absolute inset-0 bg-black/30" />
