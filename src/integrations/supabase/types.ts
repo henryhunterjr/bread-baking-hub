@@ -185,6 +185,50 @@ export type Database = {
         }
         Relationships: []
       }
+      collaboration_sessions: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          is_active: boolean
+          owner_id: string
+          participants: Json | null
+          recipe_id: string
+          session_data: Json | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          owner_id: string
+          participants?: Json | null
+          recipe_id: string
+          session_data?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          owner_id?: string
+          participants?: Json | null
+          recipe_id?: string
+          session_data?: Json | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collaboration_sessions_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       manuscripts: {
         Row: {
           content: string
@@ -305,6 +349,42 @@ export type Database = {
         }
         Relationships: []
       }
+      push_notifications: {
+        Row: {
+          body: string
+          clicked_at: string | null
+          data: Json | null
+          delivered_at: string | null
+          id: string
+          sent_at: string | null
+          status: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          clicked_at?: string | null
+          data?: Json | null
+          delivered_at?: string | null
+          id?: string
+          sent_at?: string | null
+          status?: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          clicked_at?: string | null
+          data?: Json | null
+          delivered_at?: string | null
+          id?: string
+          sent_at?: string | null
+          status?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       qa_feedback: {
         Row: {
           body: string | null
@@ -375,6 +455,47 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "recipe_ratings_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      recipe_recommendations: {
+        Row: {
+          confidence_score: number | null
+          created_at: string
+          id: string
+          interaction_type: string | null
+          metadata: Json | null
+          recipe_id: string
+          recommendation_type: string
+          user_id: string
+        }
+        Insert: {
+          confidence_score?: number | null
+          created_at?: string
+          id?: string
+          interaction_type?: string | null
+          metadata?: Json | null
+          recipe_id: string
+          recommendation_type: string
+          user_id: string
+        }
+        Update: {
+          confidence_score?: number | null
+          created_at?: string
+          id?: string
+          interaction_type?: string | null
+          metadata?: Json | null
+          recipe_id?: string
+          recommendation_type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipe_recommendations_recipe_id_fkey"
             columns: ["recipe_id"]
             isOneToOne: false
             referencedRelation: "recipes"
@@ -581,6 +702,39 @@ export type Database = {
         }
         Relationships: []
       }
+      user_activities: {
+        Row: {
+          activity_data: Json | null
+          activity_type: string
+          created_at: string
+          id: string
+          target_id: string | null
+          target_type: string
+          user_id: string
+          visibility: string
+        }
+        Insert: {
+          activity_data?: Json | null
+          activity_type: string
+          created_at?: string
+          id?: string
+          target_id?: string | null
+          target_type: string
+          user_id: string
+          visibility?: string
+        }
+        Update: {
+          activity_data?: Json | null
+          activity_type?: string
+          created_at?: string
+          id?: string
+          target_id?: string | null
+          target_type?: string
+          user_id?: string
+          visibility?: string
+        }
+        Relationships: []
+      }
       user_favorites: {
         Row: {
           created_at: string
@@ -609,6 +763,90 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_mfa: {
+        Row: {
+          backup_codes: string[] | null
+          created_at: string
+          id: string
+          is_active: boolean
+          is_verified: boolean
+          method: string
+          phone_number: string | null
+          secret: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          backup_codes?: string[] | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          is_verified?: boolean
+          method: string
+          phone_number?: string | null
+          secret?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          backup_codes?: string[] | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          is_verified?: boolean
+          method?: string
+          phone_number?: string | null
+          secret?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_preferences: {
+        Row: {
+          allergens: string[] | null
+          cooking_goals: string[] | null
+          created_at: string
+          dietary_restrictions: string[] | null
+          id: string
+          notification_preferences: Json | null
+          onboarding_completed: boolean
+          personalization_data: Json | null
+          preferred_units: string | null
+          skill_level: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          allergens?: string[] | null
+          cooking_goals?: string[] | null
+          created_at?: string
+          dietary_restrictions?: string[] | null
+          id?: string
+          notification_preferences?: Json | null
+          onboarding_completed?: boolean
+          personalization_data?: Json | null
+          preferred_units?: string | null
+          skill_level?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          allergens?: string[] | null
+          cooking_goals?: string[] | null
+          created_at?: string
+          dietary_restrictions?: string[] | null
+          id?: string
+          notification_preferences?: Json | null
+          onboarding_completed?: boolean
+          personalization_data?: Json | null
+          preferred_units?: string | null
+          skill_level?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {
