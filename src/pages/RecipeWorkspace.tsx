@@ -27,7 +27,7 @@ const RecipeWorkspace = () => {
             <img
               src="/lovable-uploads/6d185a45-b40f-4f3c-8fff-81862683500d.png"
               alt="Recipe workspace - kitchen counter with tablet, notebook, and baking tools"
-              className="w-full h-48 md:h-64 lg:h-80 object-cover rounded-lg shadow-lg"
+              className="w-full h-48 md:h-64 lg:h-80 object-cover object-bottom rounded-lg shadow-lg"
               loading="eager"
             />
             <div className="text-center space-y-4 mt-6">
