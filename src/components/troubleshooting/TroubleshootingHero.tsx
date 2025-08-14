@@ -1,10 +1,11 @@
 import React from 'react';
+import troubleshootingHero from '@/assets/troubleshooting-hero.png';
 
 export default function TroubleshootingHero() {
   return (
     <div className="relative w-full h-48 md:h-64 lg:h-80 overflow-hidden">
       <img
-        src="/lovable-uploads/eaf0d859-99d8-4b28-a169-3f592a59fb20.png"
+        src={troubleshootingHero}
         alt="Troubleshooting - Bread baking tools and ingredients on wooden surface"
         className="w-full h-full object-cover"
         onError={(e) => {

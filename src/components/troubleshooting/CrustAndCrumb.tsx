@@ -280,6 +280,11 @@ const CrustAndCrumb: React.FC = () => {
             <p className="mt-1 text-xs text-panthers-blue-200">
               Crust & Crumb v{CRUST_AND_CRUMB_CONSTANTS.VERSION} | Powered by Baking Great Bread at Home
             </p>
+            <div className="mt-4">
+              <Link to="/troubleshooting" className="inline-flex items-center gap-2 text-sm text-panthers-blue-200 hover:text-white transition-colors">
+                ← Back to Troubleshooting
+              </Link>
+            </div>
           </div>
         </div>
       </div>
