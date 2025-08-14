@@ -55,8 +55,9 @@ const Header = () => {
         role="banner"
       >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="navigation" role="navigation" aria-label="Main navigation">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
+        <div className="flex items-center h-16 gap-4">
+          {/* Logo - Far Left */}
+          <div className="flex-shrink-0">
             <Link 
               to="/" 
               className="flex items-center hover:opacity-80 transition-opacity"
@@ -65,7 +66,7 @@ const Header = () => {
               <img 
                 src={officialLogo}
                 alt="Baking Great Bread at Home - Official Logo"
-                className="w-16 h-16 rounded-full object-cover shadow-lg border-2 border-white/20"
+                className="w-12 h-12 rounded-full object-cover shadow-lg border-2 border-white/20"
                 onError={(e) => {
                   console.error('Logo failed to load:', officialLogo);
                   e.currentTarget.src = '/placeholder.svg';
@@ -73,81 +74,86 @@ const Header = () => {
               />
             </Link>
           </div>
-          
-          
-          <div className="hidden md:flex items-center space-x-6">
-            {/* Global Search */}
+
+          {/* Search Bar - Center Left (Desktop Only) */}
+          <div className="hidden lg:flex flex-shrink-0">
             <div className="w-80">
               <GlobalSearch />
             </div>
-            
-            <div className="flex items-baseline space-x-4">
-              <Link to="/recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Recipes
-              </Link>
-              <Link to="/vitale-starter" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Vitale Starter
-              </Link>
-               <Link to="/books" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                 Library
-               </Link>
-              <Link to="/glossary" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Glossary
-              </Link>
-              <Link to="/recipe-workspace" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Recipe Workspace
-              </Link>
-              <Link to="/blog" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Blog
-              </Link>
-              <Link to="/community" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Community
-              </Link>
-              <Link to="/troubleshooting" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                Troubleshooting
-              </Link>
-               <a 
-                 href="/go?u=https%3A%2F%2Fwebsim.ai%2Fc%2F0F908fPvBQKz0z2wj" 
-                 target="_self" 
-                 rel="noopener noreferrer"
-                 className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
-               >
-                 Crust & Crumb
-               </a>
-              <Link 
-                to="/legal" 
-                className="text-header-foreground hover:text-primary px-2 py-2 rounded-md transition-colors"
-                title="Legal Information"
-              >
-                <Info className="h-4 w-4" />
-              </Link>
-              {user ? (
-                <>
-                  <Link to="/my-recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                    My Recipes
-                  </Link>
-                  <Link to="/my-favorites" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                    My Favorites
-                  </Link>
-                  <Link to="/my-reviews" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                    My Reviews
-                  </Link>
-                  <Link to="/dashboard" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                    Dashboard
-                  </Link>
-                  <Button variant="warm" size="sm" onClick={signOut}>
-                    Logout
-                  </Button>
-                </>
-              ) : (
-                <Button variant="warm" size="sm" asChild>
-                  <Link to="/auth">Login</Link>
-                </Button>
-              )}
-            </div>
           </div>
           
-          <div className="md:hidden">
+          {/* Navigation Links - Center (Desktop Only) */}
+          <div className="hidden md:flex items-center space-x-1 flex-1 justify-center">
+            <Link to="/recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+              Recipes
+            </Link>
+            <Link to="/vitale-starter" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+              Vitale Starter
+            </Link>
+            <Link to="/books" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+              Library
+            </Link>
+            <Link to="/glossary" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+              Glossary
+            </Link>
+            <Link to="/recipe-workspace" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+              Recipe Workspace
+            </Link>
+            <Link to="/blog" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+              Blog
+            </Link>
+            <Link to="/community" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+              Community
+            </Link>
+            <Link to="/troubleshooting" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+              Troubleshooting
+            </Link>
+            <a 
+              href="/go?u=https%3A%2F%2Fwebsim.ai%2Fc%2F0F908fPvBQKz0z2wj" 
+              target="_self" 
+              rel="noopener noreferrer"
+              className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap"
+            >
+              Crust & Crumb
+            </a>
+            <Link 
+              to="/legal" 
+              className="text-header-foreground hover:text-primary px-2 py-2 rounded-md transition-colors"
+              title="Legal Information"
+            >
+              <Info className="h-4 w-4" />
+            </Link>
+          </div>
+
+          {/* User Actions - Far Right */}
+          <div className="hidden md:flex items-center space-x-2 flex-shrink-0">
+            {user ? (
+              <>
+                <Link to="/my-recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+                  My Recipes
+                </Link>
+                <Link to="/my-favorites" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+                  My Favorites
+                </Link>
+                <Link to="/my-reviews" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+                  My Reviews
+                </Link>
+                <Link to="/dashboard" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+                  Dashboard
+                </Link>
+                <Button variant="warm" size="sm" onClick={signOut} className="ml-2">
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Button variant="warm" size="sm" asChild>
+                <Link to="/auth">Login</Link>
+              </Button>
+            )}
+          </div>
+          
+          {/* Mobile Menu Button - Far Right (Mobile Only) */}
+          <div className="md:hidden ml-auto">
             <Button
               variant="ghost"
               size="icon"
@@ -176,15 +182,23 @@ const Header = () => {
             {/* Mobile menu */}
             <div className="fixed inset-x-0 top-16 z-50 md:hidden bg-background border-b border-border shadow-warm" id="mobile-menu" role="menu" aria-label="Mobile navigation menu">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 max-h-[calc(100vh-4rem)] overflow-y-auto" role="none">
+              
+              {/* Search in mobile menu */}
+              <div className="px-3 py-2">
+                <GlobalSearch />
+              </div>
+              
+              <div className="border-t border-border my-2"></div>
+              
               <Link to="/recipes" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Recipes
               </Link>
               <Link to="/vitale-starter" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Vitale Starter
               </Link>
-               <Link to="/books" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
-                 Library
-               </Link>
+              <Link to="/books" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
+                Library
+              </Link>
               <Link to="/glossary" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Glossary
               </Link>
@@ -200,26 +214,53 @@ const Header = () => {
               <Link to="/troubleshooting" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Troubleshooting
               </Link>
-               <a 
-                 href="/go?u=https%3A%2F%2Fwebsim.ai%2Fc%2F0F908fPvBQKz0z2wj" 
-                 target="_self" 
-                 rel="noopener noreferrer"
-                 className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors"
-                 onClick={closeMenu}
-               >
-                 Crust & Crumb
-               </a>
+              <a 
+                href="/go?u=https%3A%2F%2Fwebsim.ai%2Fc%2F0F908fPvBQKz0z2wj" 
+                target="_self" 
+                rel="noopener noreferrer"
+                className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors"
+                onClick={closeMenu}
+              >
+                Crust & Crumb
+              </a>
               <Link to="/legal" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Legal Information
               </Link>
-              {user && (
+              {user ? (
                 <>
+                  <div className="border-t border-border my-2"></div>
                   <Link to="/my-recipes" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                     My Recipes
+                  </Link>
+                  <Link to="/my-favorites" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
+                    My Favorites
+                  </Link>
+                  <Link to="/my-reviews" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
+                    My Reviews
                   </Link>
                   <Link to="/dashboard" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                     Dashboard
                   </Link>
+                  <Button 
+                    variant="warm" 
+                    size="sm" 
+                    onClick={() => {
+                      signOut();
+                      closeMenu();
+                    }}
+                    className="mx-3 mt-2"
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <div className="border-t border-border my-2"></div>
+                  <div className="px-3 py-2">
+                    <Button variant="warm" size="sm" asChild className="w-full">
+                      <Link to="/auth" onClick={closeMenu}>Login</Link>
+                    </Button>
+                  </div>
                 </>
               )}
             </div>
