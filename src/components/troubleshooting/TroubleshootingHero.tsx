@@ -4,7 +4,7 @@ export default function TroubleshootingHero() {
   return (
     <div className="relative w-full h-48 md:h-64 lg:h-80 overflow-hidden">
       <img
-        src="/hero/troubleshooting-hero.png"
+        src="/lovable-uploads/929d8961-290b-4bf6-a6a1-16fee8b2a307.png"
         alt="Troubleshooting - Bread baking tools and ingredients on wooden surface"
         className="w-full h-full object-cover"
         onError={(e) => {
