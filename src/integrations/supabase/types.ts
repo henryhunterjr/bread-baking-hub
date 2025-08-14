@@ -642,6 +642,36 @@ export type Database = {
         }
         Relationships: []
       }
+      security_audit_log: {
+        Row: {
+          created_at: string
+          event_data: Json | null
+          event_type: string
+          id: string
+          ip_address: unknown | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_data?: Json | null
+          event_type: string
+          id?: string
+          ip_address?: unknown | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_data?: Json | null
+          event_type?: string
+          id?: string
+          ip_address?: unknown | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       site_settings: {
         Row: {
           created_at: string
@@ -880,8 +910,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      decrypt_mfa_secret: {
+        Args: { encrypted_secret: string }
+        Returns: string
+      }
+      encrypt_mfa_secret: {
+        Args: { secret_text: string }
+        Returns: string
+      }
       generate_recipe_slug: {
         Args: { recipe_title: string; recipe_user_id: string }
+        Returns: string
+      }
+      get_user_mfa_secret: {
+        Args: Record<PropertyKey, never>
         Returns: string
       }
       has_role: {
