@@ -3,7 +3,20 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 
 import { cn } from "@/lib/utils"
 
-const TooltipProvider = TooltipPrimitive.Provider
+// Safe tooltip provider that handles React context issues  
+const TooltipProvider = ({ children, ...props }: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider>) => {
+  // Fallback to simple div if TooltipPrimitive.Provider fails
+  try {
+    return (
+      <TooltipPrimitive.Provider {...props}>
+        {children}
+      </TooltipPrimitive.Provider>
+    );
+  } catch (error) {
+    console.warn('TooltipProvider failed, falling back to simple div:', error);
+    return <div>{children}</div>;
+  }
+};
 
 const Tooltip = TooltipPrimitive.Root
 

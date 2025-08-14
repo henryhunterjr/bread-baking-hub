@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, Info, Lightbulb, Microscope } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { SymptomCardProps } from '@/types/crustAndCrumb';
 import { formatSymptomTitle, CRUST_AND_CRUMB_CONSTANTS } from '@/utils/crustAndCrumbUtils';
@@ -77,16 +77,9 @@ const SymptomCard: React.FC<SymptomCardProps> = ({ symptom, isOpen, onToggle }) 
                     <div className="flex items-center gap-2 mb-2">
                       <Lightbulb className="h-4 w-4 text-amber-600" />
                       <h4 className="font-semibold text-amber-800">Quick Fix</h4>
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Info className="h-3 w-3 text-amber-600" />
-                          </TooltipTrigger>
-                          <TooltipContent className="bg-amber-100 text-amber-800 border-amber-200">
-                            <p>Immediate steps to solve this issue</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <div title="Immediate steps to solve this issue">
+                        <Info className="h-3 w-3 text-amber-600" />
+                      </div>
                     </div>
                     <p className="text-stone-700 text-sm leading-relaxed">{symptom.quickFix}</p>
                   </div>
@@ -96,16 +89,9 @@ const SymptomCard: React.FC<SymptomCardProps> = ({ symptom, isOpen, onToggle }) 
                     <div className="flex items-center gap-2 mb-2">
                       <Microscope className="h-4 w-4 text-stone-600" />
                       <h4 className="font-semibold text-stone-800">The Science</h4>
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Info className="h-3 w-3 text-stone-600" />
-                          </TooltipTrigger>
-                          <TooltipContent className="bg-stone-100 text-stone-800 border-stone-200">
-                            <p>Understanding why this happens</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <div title="Understanding why this happens">
+                        <Info className="h-3 w-3 text-stone-600" />
+                      </div>
                     </div>
                     <p className="text-stone-700 text-sm leading-relaxed">{symptom.deepDive}</p>
                   </div>

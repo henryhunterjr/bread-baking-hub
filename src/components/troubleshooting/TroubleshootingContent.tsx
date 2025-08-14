@@ -3,7 +3,7 @@ import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import TroubleshootingTable from '@/components/TroubleshootingTable';
 import TroubleshootingCard from '@/components/TroubleshootingCard';
 import CommunityBridge from '@/components/CommunityBridge';
@@ -37,8 +37,7 @@ export default function TroubleshootingContent({
   toggleCardExpansion 
 }: TroubleshootingContentProps) {
   return (
-    <TooltipProvider>
-      <div>
+    <div>
         {/* View Toggle */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
@@ -76,16 +75,14 @@ export default function TroubleshootingContent({
                           {symptom.category}
                         </Badge>
                         {symptom.labels.slice(0, 2).map((label) => (
-                          <Tooltip key={label}>
-                            <TooltipTrigger asChild>
-                              <Badge variant="outline" className="text-xs hover:bg-primary/20">
-                                {label}
-                              </Badge>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p className="max-w-xs">{symptom.quickFix}</p>
-                            </TooltipContent>
-                          </Tooltip>
+                          <Badge 
+                            key={label}
+                            variant="outline" 
+                            className="text-xs hover:bg-primary/20"
+                            title={symptom.quickFix}
+                          >
+                            {label}
+                          </Badge>
                         ))}
                       </div>
                     </CardHeader>
@@ -144,7 +141,6 @@ export default function TroubleshootingContent({
             </div>
           )}
         </div>
-      </div>
-    </TooltipProvider>
+    </div>
   );
 }

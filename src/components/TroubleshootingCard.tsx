@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface Symptom {
@@ -21,7 +21,7 @@ interface TroubleshootingCardProps {
 
 const TroubleshootingCard: React.FC<TroubleshootingCardProps> = ({ symptom, isHighlighted = false }) => {
   return (
-    <TooltipProvider>
+    <div>
       <Card className={`w-full max-w-2xl mx-auto transition-all duration-300 ${isHighlighted ? 'ring-2 ring-primary bg-primary/10' : 'bg-card text-card-foreground'} hover:bg-muted/50`}>
         <CardHeader className="py-6">
           <div className="flex items-start justify-between gap-4">
@@ -117,7 +117,7 @@ const TroubleshootingCard: React.FC<TroubleshootingCardProps> = ({ symptom, isHi
           </div>
         </CardContent>
       </Card>
-    </TooltipProvider>
+    </div>
   );
 };
 
