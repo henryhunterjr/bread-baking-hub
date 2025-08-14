@@ -708,6 +708,7 @@ export type Database = {
           submitter_email: string
           submitter_name: string
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -720,6 +721,7 @@ export type Database = {
           submitter_email: string
           submitter_name: string
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -732,6 +734,7 @@ export type Database = {
           submitter_email?: string
           submitter_name?: string
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -913,6 +916,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_secure_submission: {
+        Args: {
+          p_submitter_name: string
+          p_submitter_email: string
+          p_submission_data: Json
+          p_submission_type?: string
+          p_priority?: string
+        }
+        Returns: Json
+      }
       decrypt_mfa_secret: {
         Args: { encrypted_secret: string }
         Returns: string
@@ -944,6 +957,18 @@ export type Database = {
           updated_at: string
           has_phone_number: boolean
           has_backup_codes: boolean
+        }[]
+      }
+      get_user_submissions: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          submission_type: string
+          priority: string
+          status: string
+          created_at: string
+          updated_at: string
+          notes: string
         }[]
       }
       has_role: {
