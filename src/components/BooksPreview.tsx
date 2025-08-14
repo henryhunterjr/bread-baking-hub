@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 // Import book cover images
-import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
-import breadJourneyCover from "/lovable-uploads/bread-journey-cover-hd.png";
-import seasonalBakingCover from "/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png";
+import sourdoughCover from "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/sourdough-cover.png";
+import breadJourneyCover from "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/bread-journey-cover-hd.png";
+import seasonalBakingCover from "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/seasonal-baking-cover.png";
 
 interface Book {
   id: string;

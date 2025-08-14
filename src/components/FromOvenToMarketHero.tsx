@@ -11,7 +11,7 @@ export const FromOvenToMarketHero = () => {
           {/* Left side - Book image */}
           <div className="relative">
             <ResponsiveImage 
-              src="/lovable-uploads/95d3ead0-8c78-4ab5-9710-a0d28e1cb0e7.png"
+              src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/market-hero.png"
               alt="From Oven to Market - The Ultimate Guide to Selling Your Artisan Bread by Henry Hunter"
               className="rounded-2xl shadow-warm w-full animate-fade-in"
               loading="lazy"

@@ -55,71 +55,70 @@ const BakersBench = () => {
     {
       title: "The Modern Baker's Toolkit",
       description: "Essential tools and techniques for modern bread baking",
-      thumbnail: "/lovable-uploads/6aad1feb-5cbe-4539-830e-5c5b14ef0b79.png",
+      thumbnail: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/recipe-uploads/recipe-1.png",
       link: "https://modern-bakers-toolkit-7n439ft.gamma.site/",
       type: "toolkit"
     },
     {
       title: "Market Fresh Challenge",
       description: "Farm-to-table bread baking with seasonal ingredients",
-      thumbnail: "/lovable-uploads/fce61684-fea2-4c54-86b5-2e05b69655d5.png",
+      thumbnail: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/recipe-uploads/recipe-2.png",
       link: "https://market-fresh-6ejlurg.gamma.site/",
       type: "seasonal"
     },
     {
       title: "Sourdough Starter 101",
       description: "Master the art of wild yeast cultivation",
-      thumbnail: "/lovable-uploads/3dd9d3e1-4062-40cc-82b2-41f79418dcdb.png",
+      thumbnail: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/recipe-uploads/recipe-3.png",
       link: "https://sourdough-starter-master-kxo6qxb.gamma.site/",
       type: "sourdough"
     },
     {
       title: "Score Big Challenge",
       description: "Perfect your bread scoring techniques",
-      thumbnail: "/lovable-uploads/fecb5d01-9088-44ad-8722-faaccc87696a.png",
+      thumbnail: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/recipe-uploads/recipe-4.png",
       link: "https://score-big-challenge-4cl87nq.gamma.site/",
       type: "technique"
     },
     {
       title: "Bewitching Halloween Breads",
       description: "Fun and festive bread ideas for Halloween",
-      thumbnail: "/lovable-uploads/eef793ee-a94a-4d13-9293-213e2ec9e632.png",
+      thumbnail: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/recipe-uploads/recipe-5.png",
       link: "https://bewitching-breads-hallow-osjjysy.gamma.site/",
       type: "seasonal"
     },
     {
       title: "February Love Challenge",
       description: "Heart-warming breads for Valentine's Day",
-      thumbnail: "/lovable-uploads/c1225388-44e4-4de5-a0c7-15ba9198e7f7.png",
+      thumbnail: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/recipe-uploads/recipe-6.png",
       link: "https://february-baking-challeng-2xj44f0.gamma.site/",
       type: "seasonal"
     },
-    // New Gamma pages (temporary thumbnails from your uploads; update links if different)
     {
       title: "Give Bread Instead (Holiday Challenge)",
       description: "This Holiday Season, give homemade bread as the perfect gift.",
-      thumbnail: "/lovable-uploads/52f625dc-3e68-4315-b686-b4a28e6ec226.png",
+      thumbnail: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/recipe-uploads/recipe-7.png",
       link: "#", // TODO: replace with published Gamma page URL
       type: "seasonal"
     },
     {
       title: "Sourdough Conversion Challenge",
       description: "Convert your favorite yeast recipes to sourdough.",
-      thumbnail: "/lovable-uploads/09c8881c-d626-4390-a889-bed6bac99dfd.png",
+      thumbnail: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/recipe-uploads/recipe-8.png",
       link: "#", // TODO: replace with published Gamma page URL
       type: "sourdough"
     },
     {
       title: "August Challenge – #BlueRibbon Bake",
       description: "County fair bakes worthy of a blue ribbon.",
-      thumbnail: "/lovable-uploads/8d5f316f-d7b0-464e-8306-4db6ea04f0fe.png",
+      thumbnail: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/recipe-uploads/recipe-9.png",
       link: "#", // TODO: replace with published Gamma page URL
       type: "seasonal"
     },
     {
       title: "February 2025 Challenge #Love",
       description: "Bake with heart—share your #Love themed bakes.",
-      thumbnail: "/lovable-uploads/93086385-e498-4bde-999e-d18bbb9471f1.png",
+      thumbnail: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/recipe-uploads/recipe-10.png",
       link: "#", // TODO: replace with published Gamma page URL
       type: "seasonal"
     }

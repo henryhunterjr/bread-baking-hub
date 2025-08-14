@@ -11,7 +11,7 @@ const LoafAndLieHeroSection = ({ onListen }: LoafAndLieHeroSectionProps) => {
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: 'url(/lovable-uploads/a95e5824-e4a5-4592-a465-9ea4df7c5488.png)' }}
+        style={{ backgroundImage: 'url(https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/loaf-lie-hero.png)' }}
       />
       
       {/* Buttons positioned in upper right */}

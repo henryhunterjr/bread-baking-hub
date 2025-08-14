@@ -66,7 +66,7 @@ export const BreadBookHero = () => {
           {/* Right side - Book image */}
           <div className="relative">
             <ResponsiveImage 
-              src="/lovable-uploads/6cd3602b-f737-4c3d-a3f4-772cd8654362.png"
+              src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/video-poster.png"
               alt="Bread: A Journey Through History, Science, Art, and Community by Henry Hunter"
               className="rounded-2xl shadow-warm w-full animate-fade-in"
               loading="lazy"

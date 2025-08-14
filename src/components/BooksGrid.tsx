@@ -6,12 +6,12 @@ import { memo } from "react";
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 // Import the new book cover images
-import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
-import breadJourneyCover from "/lovable-uploads/171c5ec1-d38e-4257-a2e4-60b75d2e2909.png";
-import yeastWaterCover from "/lovable-uploads/1bca24b8-dbf6-440d-8240-4c714ec30891.png";
-import marketCover from "/lovable-uploads/a0d33e20-2a9e-46c9-a500-e9e01876a8df.png";
-import seasonalBakingCover from "/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png";
-import loafLieCover from "/lovable-uploads/83cde278-edfc-4a30-98f4-79f37c79346e.png";
+import sourdoughCover from "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/sourdough-cover.png";
+import breadJourneyCover from "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/bread-journey-cover.png";
+import yeastWaterCover from "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/yeast-water-cover.png";
+import marketCover from "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/market-cover.png";
+import seasonalBakingCover from "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/seasonal-baking-cover.png";
+import loafLieCover from "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/loaf-lie-cover.png";
 
 interface Book {
   id: string;

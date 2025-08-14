@@ -5,7 +5,7 @@ import { Menu, X, Info } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { SkipLink, VisuallyHidden } from './AccessibilityComponents';
 import GlobalSearch from './GlobalSearch';
-const officialLogo = '/lovable-uploads/82d8e259-f73d-4691-958e-1dd4d0bf240d.png';
+const officialLogo = 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/official-logo.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

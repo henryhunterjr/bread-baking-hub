@@ -19,7 +19,7 @@ const ComingSoonBlock = ({
   featureList = [],
   showNavigation = false,
   showNotifyButton = true,
-  backgroundImage = "/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png"
+  backgroundImage = "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/seasonal-baking-cover.png"
 }: ComingSoonBlockProps) => {
   return (
     <section className="py-20 relative overflow-hidden">
