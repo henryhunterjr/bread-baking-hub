@@ -1,6 +1,6 @@
 // Import book cover images
-import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
-import breadJourneyCover from "/lovable-uploads/171c5ec1-d38e-4257-a2e4-60b75d2e2909.png";
+import sourdoughCover from "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/sourdough-for-the-rest-of-us/sourdoughcover.png";
+import breadJourneyCover from "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/bread-a-journey/breadjourneycover.png";
 
 export interface BookData {
   id: string;
@@ -21,7 +21,7 @@ export const bookData: Record<string, BookData> = {
     subtitle: "A Journey Through the Seasons",
     author: "Henry Hunter",
     description: "This isn't just a cookbook. It's a year-long journey through time, temperature, and tradition. Baking Great Bread at Home is the culmination of Henry Hunter's decades of hands-in-the-dough experience, told through seasonal rhythms, family memories, and the deep, ancient craft of breadmaking. Inside, you'll find master-level techniques made accessible, recipes that evolve with the weather and the baker, and stories that remind us why bread has always been at the heart of community.",
-    coverImage: "/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png",
+    coverImage: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home/seasonalcover.png",
     previewContent: `
       <h2>Baking Great Bread at Home - Preview</h2>
       <h3>A Journey Through the Seasons</h3>
@@ -96,7 +96,7 @@ export const bookData: Record<string, BookData> = {
     subtitle: "Master the Art of Fermentation and Baking",
     author: "Henry Hunter",
     description: "Ready to transform your relationship with sourdough? 'Vitale Sourdough Mastery' shares the secrets behind Henry Hunter's 10+ year relationship with his treasured starter – the foundation of consistently exceptional bread. Written by the founder of the global 'Baking Great Bread at Home' community, this book goes beyond recipes to teach you the living culture mastery that separates good bakers from great ones.",
-    coverImage: "/lovable-uploads/ed2db3c9-f60e-4085-ab44-a1df3ff34c0f.png",
+    coverImage: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/vitale-sourdough-mastery/vitalecover.png",
     previewContent: `
       <h2>Vitale Sourdough Mastery - Preview</h2>
       <h3>Master the Art of Fermentation and Baking – The Complete Guide to Sourdough Excellence</h3>
@@ -132,7 +132,7 @@ export const bookData: Record<string, BookData> = {
     subtitle: "The Ultimate Guide to Selling Your Artisan Bread",
     author: "Henry Hunter",
     description: "Transform Your Passion Into Profit – The Complete Roadmap from Home Baker to Market Success. Are you a passionate home baker whose friends and family constantly rave about your bread? Do you dream of turning those weekend baking sessions into a thriving business? Written by Henry Hunter, a former television executive who successfully transformed his own baking passion into a profitable farmers market business, this book offers the rare combination of practical business advice and authentic personal experience.",
-    coverImage: "/lovable-uploads/f8d77db8-e27f-43fa-ad7d-4d582b56881f.png",
+    coverImage: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/from-oven-to-market/marketcover.png",
     previewContent: `
       <h2>From Oven to Market - Preview</h2>
       <h3>Transform Your Passion Into Profit</h3>
@@ -164,7 +164,7 @@ export const bookData: Record<string, BookData> = {
     subtitle: "A History of What We Broke and How We're Taking It Back",
     author: "Henry Hunter",
     description: "What if the bread on your table was never meant to nourish you? In The Loaf and the LIE, Henry Hunter pulls back the curtain on the industrial food machine that replaced ancestral wisdom with shelf-stable profits. Told in gripping, investigative detail with the fire of someone who's spent a lifetime in both the kitchen and the archives, this exposé traces the moment bread became a product—and how we're reclaiming its soul.",
-    coverImage: "/lovable-uploads/83cde278-edfc-4a30-98f4-79f37c79346e.png",
+    coverImage: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/the-loaf-and-the-lie/loafliecover.png",
     previewContent: `
       <h2>The Loaf and the LIE - Preview</h2>
       <h3>A History of What We Broke and How We're Taking It Back</h3>
@@ -198,7 +198,7 @@ export const bookData: Record<string, BookData> = {
     subtitle: "Wild Fermentation Made Simple",
     author: "Henry Hunter",
     description: "Discover the ancient art of wild yeast cultivation through fruit fermentation. A complete guide to creating and using yeast water as an alternative to traditional sourdough starters.",
-    coverImage: "/lovable-uploads/6f937c37-592f-4516-8414-a82a3c9dc838.png",
+    coverImage: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/yeast-water-handbook/yeastcover.png",
     previewContent: `
       <h2>The Yeast Water Handbook - Preview</h2>
       <h3>Chapter 1: What is Yeast Water?</h3>
@@ -230,7 +230,7 @@ export const bookData: Record<string, BookData> = {
     subtitle: "A Science Fiction Epic",
     author: "Henry Hunter",
     description: "A departure from bread baking into the realm of science fiction. An epic tale of humanity's encounter with otherworldly beings and the choices that define our future.",
-    coverImage: "/lovable-uploads/2b4a2ed0-1e01-4acf-9de5-2e2165f803b6.png",
+    coverImage: "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/watchers-descent/watcherscover.png",
     previewContent: `
       <h2>The Watchers' Descent - Preview</h2>
       <h3>A Science Fiction Epic</h3>
