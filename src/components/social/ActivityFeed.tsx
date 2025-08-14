@@ -65,16 +65,29 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({
       if (error) throw error;
 
       // Type-safe mapping
-      const typedActivities: ActivityItem[] = (data || []).map(item => ({
-        id: item.id,
-        user_id: item.user_id,
-        activity_type: item.activity_type as ActivityItem['activity_type'],
-        target_type: item.target_type as ActivityItem['target_type'],
-        target_id: item.target_id || '',
-        visibility: item.visibility as ActivityItem['visibility'],
-        activity_data: item.activity_data,
-        created_at: item.created_at,
-      }));
+      const typedActivities: ActivityItem[] = (data || []).map(item => {
+        const {
+          id,
+          user_id,
+          activity_type,
+          target_type,
+          target_id,
+          visibility,
+          activity_data,
+          created_at
+        } = item;
+
+        return {
+          id,
+          user_id,
+          activity_type: activity_type as ActivityItem['activity_type'],
+          target_type: target_type as ActivityItem['target_type'],
+          target_id: target_id || '',
+          visibility: visibility as ActivityItem['visibility'],
+          activity_data,
+          created_at,
+        };
+      });
 
       setActivities(typedActivities);
     } catch (error) {
