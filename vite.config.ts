@@ -16,7 +16,6 @@ export default defineConfig(({ mode }) => ({
     VitePWA({
       registerType: "autoUpdate",
       devOptions: { enabled: false },
-      // KILL SWITCH: forces old SWs to self-remove on this deploy
       selfDestroying: false,
       workbox: {
         cleanupOutdatedCaches: true,
@@ -27,27 +26,34 @@ export default defineConfig(({ mode }) => ({
       },
     }),
   ].filter(Boolean),
+
   resolve: {
     dedupe: ["react", "react-dom"],
     alias: {
       "@": path.resolve(__dirname, "./src"),
       jsdom: path.resolve(__dirname, "./src/shims/empty-module.ts"),
+      // 🔒 Force a single copy of React/ReactDOM
+      react: path.resolve(__dirname, "node_modules/react"),
+      "react-dom": path.resolve(__dirname, "node_modules/react-dom"),
     },
   },
+
   optimizeDeps: {
     exclude: ["jsdom", "canvas", "iconv-lite", "whatwg-encoding", "html-encoding-sniffer"],
   },
+
   test: {
     globals: true,
     environment: "jsdom",
     setupFiles: "./src/test/setup.ts",
   },
+
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          // Core React
-          vendor: ["react", "react-dom", "react-router-dom"],
+          // ❌ removed: vendor chunk that previously split react/react-dom/react-router-dom
+          // Keep the rest of your chunking as-is:
 
           // UI Components
           ui: [
@@ -82,6 +88,7 @@ export default defineConfig(({ mode }) => ({
         },
       },
     },
+
     // Enhanced production optimization
     minify: "esbuild",
     sourcemap: false,
@@ -95,6 +102,7 @@ export default defineConfig(({ mode }) => ({
       unknownGlobalSideEffects: false,
     },
   },
+
   // Image optimization - include all common image formats
   assetsInclude: ["**/*.webp", "**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.svg", "**/*.gif"],
 }));
