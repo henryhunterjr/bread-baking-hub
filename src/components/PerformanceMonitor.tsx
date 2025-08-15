@@ -7,18 +7,12 @@ interface PerformanceMonitorProps {
 
 export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({ children }) => {
   useEffect(() => {
-    // Register service worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then((registration) => {
-          console.log('Service Worker registered:', registration);
-          
-          // Enable background sync for analytics
-          if ('serviceWorker' in navigator && 'sync' in (window as any).ServiceWorkerRegistration.prototype) {
-            (registration as any).sync.register('analytics-sync');
-          }
-        })
-        .catch((error) => {
+    // Service worker registration is handled by VitePWA in main.tsx
+    // Enable background sync for analytics if supported
+    if ('serviceWorker' in navigator && 'sync' in (window as any).ServiceWorkerRegistration.prototype) {
+      navigator.serviceWorker.ready.then((registration) => {
+        (registration as any).sync.register('analytics-sync');
+      }).catch((error) => {
           console.error('Service Worker registration failed:', error);
         });
     }

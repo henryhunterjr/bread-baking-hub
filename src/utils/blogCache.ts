@@ -159,20 +159,20 @@ export class BlogCacheManager {
   }
 }
 
-// Service Worker registration helper
-export const registerServiceWorker = (): void => {
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', async () => {
-      try {
-        // Register a basic service worker for caching
-        const registration = await navigator.serviceWorker.register('/sw.js');
-        console.log('ServiceWorker registered:', registration);
-      } catch (error) {
-        console.log('ServiceWorker registration failed:', error);
-      }
-    });
-  }
-};
+// Deprecated: service worker registration is handled by VitePWA via virtual:pwa-register in main.tsx
+// export const registerServiceWorker = (): void => {
+//   if ('serviceWorker' in navigator) {
+//     window.addEventListener('load', async () => {
+//       try {
+//         // Register a basic service worker for caching
+//         const registration = await navigator.serviceWorker.register('/sw.js');
+//         console.log('ServiceWorker registered:', registration);
+//       } catch (error) {
+//         console.log('ServiceWorker registration failed:', error);
+//       }
+//     });
+//   }
+// };
 
 // Hook for using cached posts
 export const useBlogCache = () => {
