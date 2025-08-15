@@ -18,6 +18,15 @@ createRoot(document.getElementById("root")!).render(
   </StrictMode>
 );
 
+// Register SW in production, but skip on Lovable "preview--" hosts
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
-  registerSW({ immediate: true, onRegisteredSW: (url) => console.log('SW registered:', url) })
+  const isPreview = location.hostname.startsWith('preview--');
+  if (!isPreview) {
+    registerSW({
+      immediate: true,
+      onRegisteredSW: () => console.log('SW registered')
+    });
+  } else {
+    console.log('SW not registered on preview host');
+  }
 }
