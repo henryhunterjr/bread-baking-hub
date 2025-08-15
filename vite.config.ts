@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => ({
       registerType: "autoUpdate",
       devOptions: { enabled: false },
       // KILL SWITCH: forces old SWs to self-remove on this deploy
-      selfDestroying: true,
+      selfDestroying: false,
       workbox: {
         cleanupOutdatedCaches: true,
         clientsClaim: true,
