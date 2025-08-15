@@ -1251,10 +1251,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      apply_security_hardening: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
       assign_ab_variant: {
         Args: {
           experiment_name: string
