@@ -2,9 +2,12 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import ReleaseChecklist from '@/components/ReleaseChecklist';
-import AccessibilityAudit from '@/components/AccessibilityAudit';
-import PerformanceAudit from '@/components/PerformanceAudit';
+import { ReleaseChecklist } from '@/components/ReleaseChecklist';
+import { AccessibilityAudit } from '@/components/AccessibilityAudit';
+import { PerformanceAudit } from '@/components/PerformanceAudit';
+import { CrossBrowserTesting } from '@/components/CrossBrowserTesting';
+import { ErrorMonitoring } from '@/components/ErrorMonitoring';
+import { DeploymentReadiness } from '@/components/DeploymentReadiness';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { checkLovableUploads, highlightLovableUploadViolations, clearLovableUploadHighlights } from '@/utils/lovableUploadsChecker';
 import { runSEOAudit, generateSEOReport } from '@/utils/seoAudit';
@@ -61,7 +64,7 @@ const ReleaseChecklistPage = () => {
         </div>
 
         <Tabs defaultValue="checklist" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-8">
             <TabsTrigger value="checklist" className="flex items-center gap-2">
               <CheckCircle className="h-4 w-4" />
               Checklist
@@ -81,6 +84,18 @@ const ReleaseChecklistPage = () => {
             <TabsTrigger value="accessibility" className="flex items-center gap-2">
               <Eye className="h-4 w-4" />
               Accessibility
+            </TabsTrigger>
+            <TabsTrigger value="browser" className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4" />
+              Browser
+            </TabsTrigger>
+            <TabsTrigger value="monitoring" className="flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4" />
+              Monitoring
+            </TabsTrigger>
+            <TabsTrigger value="deployment" className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4" />
+              Deploy
             </TabsTrigger>
           </TabsList>
 
@@ -229,6 +244,18 @@ const ReleaseChecklistPage = () => {
 
           <TabsContent value="accessibility">
             <AccessibilityAudit />
+          </TabsContent>
+          
+          <TabsContent value="browser">
+            <CrossBrowserTesting />
+          </TabsContent>
+          
+          <TabsContent value="monitoring">
+            <ErrorMonitoring />
+          </TabsContent>
+          
+          <TabsContent value="deployment">
+            <DeploymentReadiness />
           </TabsContent>
         </Tabs>
       </main>
