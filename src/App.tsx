@@ -51,7 +51,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 const GithubRoot = lazy(() => import("./pages/GithubRoot"));
 const GithubReadme = lazy(() => import("./pages/GithubReadme"));
 const GithubWriteTest = lazy(() => import("./pages/GithubWriteTest"));
-const CreateBranch = lazy(() => import("./pages/CreateBranch"));
+
 const GoRedirect = lazy(() => import("./pages/GoRedirect"));
 const LazyAIAssistantSidebar = lazy(() => import("./components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
 const MyFavorites = lazy(() => import("./pages/MyFavorites"));
@@ -131,7 +131,7 @@ const App = () => {
                 <Route path="/github-root" element={<GithubRoot />} />
                 <Route path="/github-readme" element={<GithubReadme />} />
                 <Route path="/github-write-test" element={<GithubWriteTest />} />
-                <Route path="/create-branch" element={<CreateBranch />} />
+                
                 <Route path="/go" element={<GoRedirect />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
