@@ -42,7 +42,10 @@ const Header = () => {
     return () => document.removeEventListener('keydown', handleEscKey);
   }, [isMenuOpen]);
 
-  const closeMenu = () => setIsMenuOpen(false);
+  const closeMenu = () => {
+    console.log('Closing menu');
+    setIsMenuOpen(false);
+  };
 
   return (
     <>
@@ -157,7 +160,10 @@ const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => {
+                console.log('Menu button clicked, current state:', isMenuOpen);
+                setIsMenuOpen(!isMenuOpen);
+              }}
               className="text-header-foreground hover:text-primary h-11 w-11"
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isMenuOpen}
