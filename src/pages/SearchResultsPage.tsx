@@ -95,7 +95,7 @@ const SearchResultsPage = () => {
             title: recipe.title,
             excerpt: recipe.excerpt || '',
             type: 'recipe' as const,
-            url: `/recipe/${recipe.slug}`,
+            url: `/recipes/${recipe.slug}`,
             image_url: recipe.image_url,
             tags: recipe.tags,
             search_rank: recipe.search_rank
@@ -380,15 +380,13 @@ const SearchResultsPage = () => {
                         <CardContent className="p-6">
                           <Link to={result.url} className="block group">
                             <div className="flex gap-4">
-                              {result.image_url && (
-                                <div className="flex-shrink-0">
-                                  <ImageWithFallback
-                                    src={result.image_url}
-                                    alt={result.title}
-                                    className="w-24 h-24 rounded object-cover"
-                                  />
-                                </div>
-                              )}
+                              <div className="flex-shrink-0">
+                                <ImageWithFallback
+                                  src={result.image_url || ''}
+                                  alt={result.title}
+                                  className="w-24 h-24 rounded object-cover"
+                                />
+                              </div>
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-start justify-between mb-2">
                                   <h3 className="text-lg font-semibold group-hover:text-primary transition-colors line-clamp-2">

@@ -1,4 +1,5 @@
 import React, { useState, Suspense, lazy } from "react";
+import { Navigate, useParams } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -70,6 +71,12 @@ const SitemapRedirect = () => {
   return <div>Redirecting to sitemap...</div>;
 };
 
+// Recipe redirect component for backward compatibility
+const RecipeRedirect = () => {
+  const { slug } = useParams<{ slug: string }>();
+  return <Navigate to={`/recipes/${slug}`} replace />;
+};
+
 function App() {
   const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
 
@@ -112,7 +119,9 @@ function App() {
                     <Route path="/troubleshooting" element={<TroubleshootingPage />} />
                     <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
                     <Route path="/legal" element={<Legal />} />
+                    <Route path="/recipes/:slug" element={<PublicRecipe />} />
                     <Route path="/r/:slug" element={<PublicRecipe />} />
+                    <Route path="/recipe/:slug" element={<RecipeRedirect />} />
                     <Route path="/feed.xml" element={<FeedRedirect />} />
                     <Route path="/sitemap.xml" element={<SitemapRedirect />} />
                     <Route path="/dashboard" element={<Dashboard />} />

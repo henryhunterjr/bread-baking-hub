@@ -30,10 +30,11 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   onLoad,
   onError,
 }) => {
-  const [currentSrc, setCurrentSrc] = useState(src);
-  const [hasErrored, setHasErrored] = useState(false);
+  const fallbackImage = '/assets/recipe-placeholder.svg';
+  
+  const [currentSrc, setCurrentSrc] = useState(src || fallbackImage);
+  const [hasErrored, setHasErrored] = useState(!src);
   const retryCount = useRef(0);
-  const fallbackImage = '/hero/fallback.jpg';
 
   const logError = useCallback((url: string, error?: string) => {
     if (!loggedErrors.has(url)) {
@@ -47,7 +48,7 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     const failedSrc = imgElement.src;
 
     // Don't retry if we're already on the fallback image
-    if (failedSrc.includes('/hero/fallback.jpg')) {
+    if (failedSrc.includes('/assets/recipe-placeholder.svg')) {
       logError(failedSrc, 'Fallback image also failed');
       return;
     }
@@ -83,27 +84,18 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
 
   // Reset state when src prop changes
   React.useEffect(() => {
-    if (src !== currentSrc && !hasErrored) {
-      setCurrentSrc(src);
-      setHasErrored(false);
+    const newSrc = src || fallbackImage;
+    const shouldUseFallback = !src;
+    
+    if (newSrc !== currentSrc || shouldUseFallback !== hasErrored) {
+      setCurrentSrc(newSrc);
+      setHasErrored(shouldUseFallback);
       retryCount.current = 0;
     }
-  }, [src, currentSrc, hasErrored]);
+  }, [src, currentSrc, hasErrored, fallbackImage]);
 
   return (
     <div className="relative overflow-hidden">
-      {/* Loading skeleton */}
-      {!hasErrored && (
-        <div 
-          className="absolute inset-0 bg-muted rounded-md overflow-hidden animate-pulse"
-          style={{ display: retryCount.current === 0 ? 'block' : 'none' }}
-          aria-hidden="true"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-muted-foreground/10 to-transparent" />
-          <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-        </div>
-      )}
-      
       <img
         src={currentSrc}
         alt={alt}

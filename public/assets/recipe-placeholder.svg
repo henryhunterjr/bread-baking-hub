@@ -1,0 +1,19 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#F3F4F6"/>
+  <g opacity="0.6">
+    <!-- Plate -->
+    <ellipse cx="200" cy="200" rx="80" ry="15" fill="#E5E7EB"/>
+    <!-- Main dish shape -->
+    <ellipse cx="200" cy="180" rx="60" ry="40" fill="#D1D5DB"/>
+    <!-- Garnish elements -->
+    <circle cx="180" cy="170" r="6" fill="#9CA3AF"/>
+    <circle cx="220" cy="170" r="6" fill="#9CA3AF"/>
+    <circle cx="200" cy="190" r="4" fill="#9CA3AF"/>
+    <!-- Fork and knife -->
+    <rect x="130" y="140" width="2" height="30" fill="#9CA3AF"/>
+    <rect x="128" y="138" width="6" height="4" fill="#9CA3AF"/>
+    <rect x="268" y="140" width="2" height="30" fill="#9CA3AF"/>
+    <path d="M266 138h6v2h-2v2h2v2h-6v-6z" fill="#9CA3AF"/>
+  </g>
+  <text x="200" y="260" text-anchor="middle" fill="#9CA3AF" font-family="system-ui, sans-serif" font-size="14" font-weight="500">Recipe Image</text>
+</svg>
