@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useEffect, createContext, useContext } from 'react';
+import * as React from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { AuthContextType } from '@/types';
@@ -20,36 +19,18 @@ export const cleanupAuthState = () => {
   });
 };
 
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = React.createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  // Debug logging for React availability
-  console.log('React object:', React);
-  console.log('useState function:', useState);
-  console.log('typeof useState:', typeof useState);
-  
-  if (!React) {
-    console.error('React is null or undefined!');
-    return <div>React loading error</div>;
-  }
-  
-  if (typeof useState !== 'function') {
-    console.error('useState is not a function:', useState);
-    return <div>useState error</div>;
-  }
-  
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  // Use React.useState directly to avoid import issues
+  const [user, setUser] = React.useState<User | null>(null);
+  const [session, setSession] = React.useState<Session | null>(null);
+  const [loading, setLoading] = React.useState(true);
 
-  useEffect(() => {
-    
-    
+  React.useEffect(() => {
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
@@ -57,7 +38,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         // Defer any additional data fetching to prevent deadlocks
         if (event === 'SIGNED_IN' && session?.user) {
           setTimeout(() => {
-            
+            // Additional user data fetching can go here
           }, 0);
         }
       }
@@ -65,7 +46,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
@@ -92,8 +72,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signIn = async (email: string, password: string) => {
     try {
-      
-      
       // Clean up existing state first
       cleanupAuthState();
       
@@ -101,7 +79,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         await supabase.auth.signOut({ scope: 'global' });
       } catch (err) {
-        
+        // Continue even if this fails
       }
       
       const { error } = await supabase.auth.signInWithPassword({
@@ -111,9 +89,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       if (error) {
         console.error('Sign in error:', error);
-      } else {
-        
-        // Let the auth state change handle the redirect naturally
       }
       
       return { error };
@@ -125,14 +100,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signOut = async () => {
     try {
-      
       // Clean up auth state first
       cleanupAuthState();
       // Attempt global sign out
       try {
         await supabase.auth.signOut({ scope: 'global' });
       } catch (err) {
-        
+        // Continue even if this fails
       }
       // Force page reload for clean state
       window.location.href = '/';
@@ -160,7 +134,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
+  const context = React.useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
