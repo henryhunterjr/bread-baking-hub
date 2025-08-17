@@ -1,4 +1,5 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { AuthContextType } from '@/types';
@@ -23,8 +24,20 @@ export const cleanupAuthState = () => {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  // Debug logging for React availability
   console.log('React object:', React);
-  console.log('useState available:', typeof useState);
+  console.log('useState function:', useState);
+  console.log('typeof useState:', typeof useState);
+  
+  if (!React) {
+    console.error('React is null or undefined!');
+    return <div>React loading error</div>;
+  }
+  
+  if (typeof useState !== 'function') {
+    console.error('useState is not a function:', useState);
+    return <div>useState error</div>;
+  }
   
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
