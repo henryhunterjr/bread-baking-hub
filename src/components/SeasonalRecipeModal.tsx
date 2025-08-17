@@ -176,13 +176,25 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
   // Prevent background scroll when modal is open
   useEffect(() => {
     if (!recipe) return;
+    
+    // Store original values
     const prevOverflow = document.body.style.overflow;
     const prevOverscroll = (document.body.style as any).overscrollBehavior;
+    const prevScrollbarGutter = (document.body.style as any).scrollbarGutter;
+    
+    // Apply scroll lock with scrollbar compensation
     document.body.style.overflow = 'hidden';
     (document.body.style as any).overscrollBehavior = 'contain';
+    (document.body.style as any).scrollbarGutter = 'stable';
+    
     return () => {
-      document.body.style.overflow = prevOverflow;
-      (document.body.style as any).overscrollBehavior = prevOverscroll;
+      // Restore original values
+      document.body.style.overflow = prevOverflow || '';
+      (document.body.style as any).overscrollBehavior = prevOverscroll || '';
+      (document.body.style as any).scrollbarGutter = prevScrollbarGutter || '';
+      
+      // Force a layout recalculation to ensure scroll is restored
+      document.body.offsetHeight;
     };
   }, [recipe]);
 

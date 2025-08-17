@@ -162,14 +162,16 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
   };
 
   const handleShare = async () => {
-    const url = window.location.href;
+    // Generate the correct URL for the individual recipe page
+    const baseUrl = window.location.origin;
+    const recipeUrl = recipe.slug ? `${baseUrl}/recipes/${recipe.slug}` : window.location.href;
     
     if (navigator.share) {
       try {
         await navigator.share({
           title: recipe.title,
           text: `Check out this recipe: ${recipe.title}`,
-          url: url,
+          url: recipeUrl,
         });
         
         toast({
@@ -182,9 +184,9 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
     } else {
       // Fallback to clipboard
       try {
-        await navigator.clipboard.writeText(url);
+        await navigator.clipboard.writeText(recipeUrl);
         toast({
-          title: "Link Copied",
+          title: "Link Copied",  
           description: "Recipe link copied to clipboard",
         });
       } catch (error) {
