@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 const App = () => {
-  const [isAIAssistantOpen, setIsAIAssistantOpen] = React.useState(false);
+  const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
 
   return (
     <div>
