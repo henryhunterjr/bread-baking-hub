@@ -1,3 +1,5 @@
+
+import React, { useState, Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,7 +13,6 @@ import { PerformanceOptimizer, CriticalCSS } from "@/components/PerformanceOptim
 import { ContentQualityChecker } from "@/components/ContentQualityChecker";
 import "@/utils/errorMonitoring";
 // AIAssistantSidebar is lazy-loaded below
-import { useState, Suspense, lazy } from "react";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import DefaultSEO from "./components/DefaultSEO";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
