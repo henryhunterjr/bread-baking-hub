@@ -70,15 +70,12 @@ const SitemapRedirect = () => {
   return <div>Redirecting to sitemap...</div>;
 };
 
-const queryClient = new QueryClient();
-
 function App() {
   const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
 
   return (
     <AppErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
+      <AuthProvider>
           <TooltipProvider>
             <CriticalCSS />
             <PerformanceOptimizer />
@@ -146,7 +143,6 @@ function App() {
             </BrowserRouter>
           </TooltipProvider>
         </AuthProvider>
-      </QueryClientProvider>
     </AppErrorBoundary>
   );
 }
