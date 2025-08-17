@@ -1,4 +1,3 @@
-
 import React, { useState, Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -12,13 +11,14 @@ import { AccessibilityEnhancements, EnhancedSkipLink } from "@/components/Access
 import { PerformanceOptimizer, CriticalCSS } from "@/components/PerformanceOptimizer";
 import { ContentQualityChecker } from "@/components/ContentQualityChecker";
 import "@/utils/errorMonitoring";
-// AIAssistantSidebar is lazy-loaded below
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import DefaultSEO from "./components/DefaultSEO";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 
 // Import Index directly to avoid lazy loading issues on main page
 import Index from "./pages/Index";
+
+// Lazy loaded components
 const RecipeFormatter = lazy(() => import("./pages/RecipeFormatter"));
 const RecipeWorkspace = lazy(() => import("./pages/RecipeWorkspace"));
 const Auth = lazy(() => import("./pages/Auth"));
@@ -52,7 +52,6 @@ const Contact = lazy(() => import("./pages/Contact"));
 const GithubRoot = lazy(() => import("./pages/GithubRoot"));
 const GithubReadme = lazy(() => import("./pages/GithubReadme"));
 const GithubWriteTest = lazy(() => import("./pages/GithubWriteTest"));
-
 const GoRedirect = lazy(() => import("./pages/GoRedirect"));
 const LazyAIAssistantSidebar = lazy(() => import("./components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
 const MyFavorites = lazy(() => import("./pages/MyFavorites"));
@@ -73,8 +72,8 @@ const SitemapRedirect = () => {
 
 const queryClient = new QueryClient();
 
-const App = () => {
-  const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
+function App() {
+  const [isAIAssistantOpen, setIsAIAssistantOpen] = React.useState(false);
 
   return (
     <AppErrorBoundary>
@@ -93,66 +92,63 @@ const App = () => {
               <EnhancedSkipLink />
               <DefaultSEO />
               <Suspense fallback={<SimpleLoadingSpinner />}>
-              <main id="main-content">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/recipe-formatter" element={<RecipeFormatter />} />
-                <Route path="/recipe-workspace" element={<RecipeWorkspace />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/my-recipes" element={<MyRecipes />} />
-                <Route path="/my-favorites" element={<MyFavorites />} />
-                <Route path="/my-reviews" element={<MyReviews />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/books" element={<Books />} />
-                <Route path="/recipes" element={<Recipes />} />
-                <Route path="/vitale-starter" element={<VitaleStarter />} />
-                <Route path="/preview/vitale-sourdough-mastery" element={<VitalePreview />} />
-                <Route path="/kaiser-rolls" element={<KaiserRolls />} />
-                <Route path="/henrys-foolproof-recipe" element={<HenrysFoolproofRecipe />} />
-                <Route path="/glossary" element={<BreadGlossary />} />
-                <Route path="/bread-calculator" element={<BreadCalculator />} />
-                <Route path="/community" element={<Community />} />
-                <Route path="/troubleshooting" element={<TroubleshootingPage />} />
-                <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
-                <Route path="/legal" element={<Legal />} />
-                <Route path="/r/:slug" element={<PublicRecipe />} />
-                <Route path="/feed.xml" element={<FeedRedirect />} />
-                <Route path="/sitemap.xml" element={<SitemapRedirect />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/tools" element={<Tools />} />
-                <Route path="/guides" element={<Guides />} />
-                <Route path="/challenges" element={<Challenges />} />
-                <Route path="/coaching" element={<Coaching />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/search-test" element={<SearchTest />} />
-                <Route path="/search" element={<SearchResultsPage />} />
-                <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
-                <Route path="/offline" element={<OfflineFallback />} />
-                <Route path="/github-root" element={<GithubRoot />} />
-                <Route path="/github-readme" element={<GithubReadme />} />
-                <Route path="/github-write-test" element={<GithubWriteTest />} />
-                
-                <Route path="/go" element={<GoRedirect />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-              </main>
-            </Suspense>
-            
-            {/* Site-wide AI Assistant - Crusty */}
-            <Suspense fallback={null}>
-              <LazyAIAssistantSidebar 
-                isOpen={isAIAssistantOpen}
-                onToggle={() => setIsAIAssistantOpen(!isAIAssistantOpen)}
-              />
-            </Suspense>
+                <main id="main-content">
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/recipe-formatter" element={<RecipeFormatter />} />
+                    <Route path="/recipe-workspace" element={<RecipeWorkspace />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/my-recipes" element={<MyRecipes />} />
+                    <Route path="/my-favorites" element={<MyFavorites />} />
+                    <Route path="/my-reviews" element={<MyReviews />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/books" element={<Books />} />
+                    <Route path="/recipes" element={<Recipes />} />
+                    <Route path="/vitale-starter" element={<VitaleStarter />} />
+                    <Route path="/preview/vitale-sourdough-mastery" element={<VitalePreview />} />
+                    <Route path="/kaiser-rolls" element={<KaiserRolls />} />
+                    <Route path="/henrys-foolproof-recipe" element={<HenrysFoolproofRecipe />} />
+                    <Route path="/glossary" element={<BreadGlossary />} />
+                    <Route path="/bread-calculator" element={<BreadCalculator />} />
+                    <Route path="/community" element={<Community />} />
+                    <Route path="/troubleshooting" element={<TroubleshootingPage />} />
+                    <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
+                    <Route path="/legal" element={<Legal />} />
+                    <Route path="/r/:slug" element={<PublicRecipe />} />
+                    <Route path="/feed.xml" element={<FeedRedirect />} />
+                    <Route path="/sitemap.xml" element={<SitemapRedirect />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/tools" element={<Tools />} />
+                    <Route path="/guides" element={<Guides />} />
+                    <Route path="/challenges" element={<Challenges />} />
+                    <Route path="/coaching" element={<Coaching />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/search-test" element={<SearchTest />} />
+                    <Route path="/search" element={<SearchResultsPage />} />
+                    <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
+                    <Route path="/offline" element={<OfflineFallback />} />
+                    <Route path="/github-root" element={<GithubRoot />} />
+                    <Route path="/github-readme" element={<GithubReadme />} />
+                    <Route path="/github-write-test" element={<GithubWriteTest />} />
+                    <Route path="/go" element={<GoRedirect />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </main>
+              </Suspense>
+              
+              <Suspense fallback={null}>
+                <LazyAIAssistantSidebar 
+                  isOpen={isAIAssistantOpen}
+                  onToggle={() => setIsAIAssistantOpen(!isAIAssistantOpen)}
+                />
+              </Suspense>
             </BrowserRouter>
           </TooltipProvider>
         </AuthProvider>
       </QueryClientProvider>
     </AppErrorBoundary>
   );
-};
+}
 
 export default App;
