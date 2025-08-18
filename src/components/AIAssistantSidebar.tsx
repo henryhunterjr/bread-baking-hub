@@ -55,13 +55,42 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
     },
     onError: (error) => {
       setIsListening(false);
-      setMicEnabled(false); // Fix mic state desync
+      setMicEnabled(false);
       clearTimeouts();
-      toast({
-        title: "Speech Recognition Error",
-        description: "Could not recognize speech. Please try again.",
-        variant: "destructive"
-      });
+      
+      // Handle different error types with appropriate messages
+      switch (error) {
+        case 'microphone-access':
+          toast({
+            title: "Microphone Error",
+            description: "Could not access microphone. Please check permissions.",
+            variant: "destructive"
+          });
+          break;
+        case 'permission-denied':
+          toast({
+            title: "Microphone Permission",
+            description: "Microphone permission denied. Please allow access and try again.",
+            variant: "destructive"
+          });
+          break;
+        case 'network-error':
+          toast({
+            title: "Network Error", 
+            description: "Speech recognition service unavailable. Check your connection.",
+            variant: "destructive"
+          });
+          break;
+        default:
+          // Only show generic error for unexpected issues
+          if (error && error !== 'no-speech' && error !== 'aborted') {
+            toast({
+              title: "Speech Recognition Error",
+              description: "Could not recognize speech. Please try again.",
+              variant: "destructive"
+            });
+          }
+      }
     }
   });
 

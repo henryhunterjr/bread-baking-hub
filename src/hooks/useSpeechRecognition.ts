@@ -101,8 +101,33 @@ export const useSpeechRecognition = (options: UseSpeechRecognitionOptions = {}) 
 
       recognition.onerror = (event) => {
         setIsListening(false);
-        console.error('Speech recognition error:', event.error);
-        options.onError?.(event.error);
+        
+        // Handle different error types appropriately
+        switch (event.error) {
+          case 'no-speech':
+            // This is normal - user just wasn't speaking, don't show error
+            console.log('No speech detected, continuing to listen...');
+            break;
+          case 'aborted':
+            // User manually stopped, don't show error
+            console.log('Speech recognition aborted by user');
+            break;
+          case 'audio-capture':
+            console.error('Microphone access error:', event.error);
+            options.onError?.('microphone-access');
+            break;
+          case 'not-allowed':
+            console.error('Microphone permission denied:', event.error);
+            options.onError?.('permission-denied');
+            break;
+          case 'network':
+            console.error('Network error during speech recognition:', event.error);
+            options.onError?.('network-error');
+            break;
+          default:
+            console.error('Speech recognition error:', event.error);
+            options.onError?.(event.error);
+        }
       };
 
       recognition.onend = () => {
