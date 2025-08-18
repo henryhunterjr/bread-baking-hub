@@ -1,7 +1,16 @@
-import * as React from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-import { AuthContextType } from '@/types';
+
+// Define AuthContextType inline to avoid circular imports
+export interface AuthContextType {
+  user: User | null;
+  session: Session | null;
+  signUp: (email: string, password: string, displayName?: string) => Promise<{ error: any | null }>;
+  signIn: (email: string, password: string) => Promise<{ error: any | null }>;
+  signOut: () => Promise<void>;
+  loading: boolean;
+}
 
 // Auth cleanup utility to prevent limbo states
 export const cleanupAuthState = () => {
@@ -19,15 +28,19 @@ export const cleanupAuthState = () => {
   });
 };
 
-const AuthContext = React.createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  // Use React.useState directly to avoid import issues
-  const [user, setUser] = React.useState<User | null>(null);
-  const [session, setSession] = React.useState<Session | null>(null);
-  const [loading, setLoading] = React.useState(true);
+  // Debug React import issue - should now work with named imports
+  console.log('AuthProvider rendering, useState available:', !!useState);
+  console.log('AuthProvider rendering, useEffect available:', !!useEffect);
 
-  React.useEffect(() => {
+  // Use named imports directly
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
@@ -134,7 +147,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const useAuth = () => {
-  const context = React.useContext(AuthContext);
+  const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
