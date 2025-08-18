@@ -23,8 +23,8 @@ serve(async (req) => {
       throw new Error('ElevenLabs API key not configured')
     }
 
-    // Use a standard ElevenLabs voice that should work with most API keys
-    const voiceId = overrideVoiceId || '9BWtsMINqrJLrRacOk9x' // Aria (known-good)
+    // Use Krusty's cloned voice as default, with Aria as fallback
+    const voiceId = overrideVoiceId || 'wwKGRQE13syDBEa0SHLz' // Krusty's cloned voice
 
     // Generate speech using ElevenLabs with explicit-voice handling and graceful fallback
     const makeRequest = async (id: string) => {
