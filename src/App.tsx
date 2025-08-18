@@ -77,12 +77,26 @@ const RecipeRedirect = () => {
   return <Navigate to={`/recipes/${slug}`} replace />;
 };
 
+// Create QueryClient instance
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    },
+  },
+});
+
 function App() {
+  console.log('App component rendering - React hooks check');
+  console.log('useState available:', !!useState);
+  
   const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
 
   return (
     <AppErrorBoundary>
-      <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
           <TooltipProvider>
             <CriticalCSS />
             <PerformanceOptimizer />
@@ -152,6 +166,7 @@ function App() {
             </BrowserRouter>
           </TooltipProvider>
         </AuthProvider>
+      </QueryClientProvider>
     </AppErrorBoundary>
   );
 }
