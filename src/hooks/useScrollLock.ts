@@ -44,15 +44,11 @@ const lockScroll = (caller?: string) => {
     
     console.log(`🔒 Stored original styles:`, originalStyles);
 
-    // Apply scroll lock with preserved scroll position
+    // Apply CSS-only scroll lock - no position manipulation to avoid layout shifts
     document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = '100%';
     (document.body.style as any).overscrollBehavior = 'contain';
-    (document.body.style as any).scrollbarGutter = 'stable';
     
-    console.log(`🔒 Applied scroll lock styles`);
+    console.log(`🔒 Applied CSS-only scroll lock (overflow: hidden)`);
   }
   scrollLockCount++;
   console.log(`🔒 Count AFTER: ${scrollLockCount}`);
