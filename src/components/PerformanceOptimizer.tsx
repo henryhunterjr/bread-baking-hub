@@ -37,9 +37,24 @@ export const PerformanceOptimizer = () => {
       });
     };
 
-    // Skip image optimization to prevent loading interference
+    // Optimize images for better LCP
     const optimizeImages = () => {
-      // Disabled to prevent image loading conflicts
+      const images = document.querySelectorAll('img');
+      images.forEach((img, index) => {
+        // Set priority for above-the-fold images
+        if (index < 3) {
+          img.loading = 'eager';
+          img.fetchPriority = 'high';
+        } else {
+          img.loading = 'lazy';
+          img.fetchPriority = 'low';
+        }
+
+        // Add width/height if missing to prevent CLS
+        if (!img.width && !img.height) {
+          img.style.aspectRatio = '16/9';
+        }
+      });
     };
 
     // Optimize third-party resources

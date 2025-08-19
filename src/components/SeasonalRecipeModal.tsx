@@ -179,8 +179,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     load();
   }, [recipe?.id, user?.id]);
 
-  // Use the scroll lock hook for the modal
-  useScrollLock(!!recipe, 'SeasonalRecipeModal');
+  // Let Radix UI Dialog handle scroll lock natively - no custom hook needed
 
   // Focus management and DOM cleanup effects
   useEffect(() => {
