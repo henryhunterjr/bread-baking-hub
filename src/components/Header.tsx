@@ -28,7 +28,6 @@ const Header = () => {
   }, [isMenuOpen]);
 
   const closeMenu = () => {
-    console.log('Closing menu');
     setIsMenuOpen(false);
   };
 
@@ -56,7 +55,6 @@ const Header = () => {
                 alt="Baking Great Bread at Home - Official Logo"
                 className="w-12 h-12 rounded-full object-cover shadow-lg border-2 border-white/20"
                 onError={(e) => {
-                  console.error('Logo failed to load:', officialLogo);
                   e.currentTarget.src = '/placeholder.svg';
                 }}
               />
@@ -145,10 +143,7 @@ const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => {
-                console.log('Menu button clicked, current state:', isMenuOpen);
-                setIsMenuOpen(!isMenuOpen);
-              }}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-header-foreground hover:text-primary h-11 w-11"
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isMenuOpen}

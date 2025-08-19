@@ -10,6 +10,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import type { FormattedRecipe } from '@/types/recipe-workspace';
+import { logger } from '@/utils/logger';
 
 interface RecipeActionsToolbarProps {
   recipe: FormattedRecipe;
@@ -61,7 +62,7 @@ export const RecipeActionsToolbar = ({ recipe, imageUrl, onSaved }: RecipeAction
           });
 
         if (slugError) {
-          console.error('Error generating slug:', slugError);
+          logger.error('Error generating slug:', slugError);
         } else {
           slug = slugData as string | null;
         }
@@ -94,7 +95,7 @@ export const RecipeActionsToolbar = ({ recipe, imageUrl, onSaved }: RecipeAction
       onSaved?.(data.id);
 
     } catch (error) {
-      console.error('Error saving recipe:', error);
+      logger.error('Error saving recipe:', error);
       toast({
         title: "Save failed",
         description: "Failed to save recipe. Please try again.",

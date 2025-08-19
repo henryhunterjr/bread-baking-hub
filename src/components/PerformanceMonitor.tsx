@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { analytics } from '@/utils/analytics';
+import { logger } from '@/utils/logger';
 
 interface PerformanceMonitorProps {
   children: React.ReactNode;
@@ -13,7 +14,7 @@ export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({ children
       navigator.serviceWorker.ready.then((registration) => {
         (registration as any).sync.register('analytics-sync');
       }).catch((error) => {
-          console.error('Service Worker registration failed:', error);
+          logger.error('Service Worker registration failed:', error);
         });
     }
 
@@ -22,31 +23,39 @@ export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({ children
       const entries = list.getEntries();
       
       entries.forEach((entry) => {
-        // Log performance entries for debugging
+        // Log performance entries for debugging (only critical ones)
         if (entry.entryType === 'navigation') {
           const nav = entry as PerformanceNavigationTiming;
-          console.log('Navigation Performance:', {
-            type: entry.entryType,
-            name: entry.name,
-            duration: entry.duration,
-            domContentLoaded: nav.domContentLoadedEventEnd - nav.domContentLoadedEventStart,
-            loadComplete: nav.loadEventEnd - nav.loadEventStart
-          });
+          // Only log if there are performance issues
+          if (nav.duration > 3000) {
+            logger.warn('Slow navigation performance detected:', {
+              duration: entry.duration,
+              domContentLoaded: nav.domContentLoadedEventEnd - nav.domContentLoadedEventStart,
+              loadComplete: nav.loadEventEnd - nav.loadEventStart
+            });
+          }
         }
         
         if (entry.entryType === 'largest-contentful-paint') {
-          console.log('LCP:', entry.startTime);
+          // Only log if LCP is poor (>2.5s)
+          if (entry.startTime > 2500) {
+            logger.warn('Poor LCP performance:', entry.startTime);
+          }
         }
         
         if (entry.entryType === 'first-input') {
           const fid = entry as PerformanceEventTiming;
-          console.log('FID:', fid.processingStart - fid.startTime);
+          const fidValue = fid.processingStart - fid.startTime;
+          // Only log if FID is poor (>100ms)
+          if (fidValue > 100) {
+            logger.warn('Poor FID performance:', fidValue);
+          }
         }
         
         if (entry.entryType === 'layout-shift') {
           const cls = entry as any; // LayoutShift interface may not be available
-          if (!cls.hadRecentInput) {
-            console.log('CLS:', cls.value);
+          if (!cls.hadRecentInput && cls.value > 0.1) {
+            logger.warn('Poor CLS performance:', cls.value);
           }
         }
       });
@@ -67,7 +76,7 @@ export const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({ children
         observer.observe({ entryTypes: [type] });
       } catch (e) {
         // Some entry types might not be supported
-        console.warn(`Performance observer entry type "${type}" not supported`);
+        logger.warn(`Performance observer entry type "${type}" not supported`);
       }
     });
 

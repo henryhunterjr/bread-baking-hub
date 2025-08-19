@@ -13,6 +13,7 @@ import { Upload, FileText, Image, AlertCircle, CheckCircle2 } from 'lucide-react
 import type { FormattedRecipe } from '@/types/recipe-workspace';
 import imageCompression from 'browser-image-compression';
 import { useNavigate } from 'react-router-dom';
+import { logger } from '@/utils/logger';
 
 interface RecipeUploadSectionProps {
   onRecipeFormatted: (recipe: FormattedRecipe, imageUrl?: string) => void;
@@ -113,7 +114,6 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       const formData = new FormData();
       formData.append('file', selectedFile);
 
-      console.log('Uploading file:', selectedFile.name, selectedFile.type, selectedFile.size);
       setUploadProgress(20);
 
       toast({
@@ -143,14 +143,12 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       setUploadProgress(80);
 
       const data = await formatResp.json() as any;
-      console.log('Received recipe data:', data);
       
       let imageUrl = null;
       
       // Save recipe to database if user is logged in
       if (user && data.recipe) {
         try {
-          console.log('Saving recipe to database for user:', user.id);
           
           // Compute a slug from the recipe title
           const slugFromTitle = data.recipe.title
@@ -161,7 +159,6 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
 
           // Upload image via Edge Function (uses service role) so we don't depend on Storage RLS
           if (selectedFile.type.startsWith('image/') || selectedFile.type === 'application/pdf') {
-            console.log('Uploading image via edge function...');
 
             // Compress images client-side for performance (keep original for AI processing)
             let fileToSend: File = selectedFile;
@@ -177,9 +174,8 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
                 fileToSend = new File([compressedBlob], selectedFile.name.replace(/\.[^.]+$/, '.webp'), {
                   type: 'image/webp',
                 });
-                console.log('Compressed image from', selectedFile.size, 'to', fileToSend.size, 'bytes');
               } catch (compressErr) {
-                console.warn('Image compression failed, sending original file', compressErr);
+                logger.warn('Image compression failed, sending original file', compressErr);
               }
             }
 
@@ -195,16 +191,15 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
               const imgData = await resp.json().catch(() => ({}));
               if (!resp.ok || !imgData?.success) {
                 const msg = imgData?.error || imgData?.details || `Upload failed (${resp.status})`;
-                console.error('Image upload error:', msg);
+                logger.error('Image upload error:', msg);
                 setServerError(msg);
                 toast({ title: 'Image upload failed', description: msg, variant: 'destructive' });
               } else if (imgData?.uploadedUrl || imgData?.imageUrl) {
                 imageUrl = imgData.uploadedUrl || imgData.imageUrl;
-                console.log('Edge function file URL:', imageUrl);
               }
             } catch (imgErr: any) {
               const msg = imgErr?.message || 'Image upload failed';
-              console.error('Image upload exception:', imgErr);
+              logger.error('Image upload exception:', imgErr);
               setServerError(msg);
               toast({ title: 'Image upload failed', description: msg, variant: 'destructive' });
             }
@@ -229,16 +224,15 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
           
           if (upsertError || !upsertData?.success) {
             const msg = (upsertError as any)?.message || (upsertData as any)?.error || 'Failed to save recipe';
-            console.error('Error saving recipe via edge function:', msg);
+            logger.error('Error saving recipe via edge function:', msg);
             setServerError(msg);
             toast({ title: 'Save failed', description: msg, variant: 'destructive' });
           } else {
-            console.log('Recipe saved successfully via edge function');
             toast({ title: 'Recipe saved!', description: 'Redirecting to your recipes...', variant: 'default' });
             navigate('/recipes');
           }
         } catch (saveError) {
-          console.error('Error saving recipe:', saveError);
+          logger.error('Error saving recipe:', saveError);
           // Don't fail the whole operation if saving fails
         }
       }
@@ -253,7 +247,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       
       onRecipeFormatted(data.recipe, imageUrl);
     } catch (error: any) {
-      console.error('Error formatting recipe:', error);
+      logger.error('Error formatting recipe:', error);
       const errorMessage = error?.message || 'Unexpected error';
       setServerError(errorMessage);
       onError(errorMessage);

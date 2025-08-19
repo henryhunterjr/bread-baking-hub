@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Upload, Copy, X, Image as ImageIcon } from 'lucide-react';
+import { logger } from '@/utils/logger';
 
 interface ImageMetadata {
   altText: string;
@@ -67,14 +68,12 @@ export const BlogImageUploader = () => {
   };
 
   const handleFileUpload = async (file: File) => {
-    console.log('handleFileUpload called with file:', file.name);
     if (!user) {
-      console.log('No user found');
+      logger.warn('No user found for file upload');
       return;
     }
     
     if (!metadata.altText.trim()) {
-      console.log('No alt text provided');
       toast({
         title: "Alt text required",
         description: "Please provide alt text for accessibility before uploading.",
@@ -83,38 +82,30 @@ export const BlogImageUploader = () => {
       return;
     }
 
-    console.log('Starting upload process...');
     setUploading(true);
     try {
       // Get image dimensions
-      console.log('Getting image dimensions...');
       const dimensions = await getImageDimensions(file);
-      console.log('Dimensions:', dimensions);
       
       // Generate file path
       const filePath = generateFilePath(file.name, metadata.postTitle);
-      console.log('Generated file path:', filePath);
       
       // Upload to Supabase Storage
-      console.log('Uploading to Supabase storage...');
       const { error: uploadError } = await supabase.storage
         .from('blog-images')
         .upload(filePath, file);
 
       if (uploadError) {
-        console.error('Storage upload error:', uploadError);
+        logger.error('Storage upload error:', uploadError);
         throw uploadError;
       }
-      console.log('File uploaded successfully to storage');
 
       // Get public URL
       const { data: { publicUrl } } = supabase.storage
         .from('blog-images')
         .getPublicUrl(filePath);
-      console.log('Public URL:', publicUrl);
 
       // Save metadata to database
-      console.log('Saving metadata to database...');
       const { data: metadataRecord, error: metadataError } = await supabase
         .from('blog_images_metadata')
         .insert({
@@ -132,10 +123,9 @@ export const BlogImageUploader = () => {
         .single();
 
       if (metadataError) {
-        console.error('Database metadata error:', metadataError);
+        logger.error('Database metadata error:', metadataError);
         throw metadataError;
       }
-      console.log('Metadata saved:', metadataRecord);
 
       setUploadedImage({
         id: metadataRecord.id,
@@ -154,7 +144,7 @@ export const BlogImageUploader = () => {
       });
 
     } catch (error) {
-      console.error('Upload error:', error);
+      logger.error('Upload error:', error);
       toast({
         title: "Upload failed",
         description: "Failed to upload image. Please try again.",

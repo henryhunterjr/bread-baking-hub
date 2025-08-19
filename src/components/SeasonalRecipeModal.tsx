@@ -298,7 +298,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
   };
 
   return (
-    <Dialog open={!!recipe} onOpenChange={onClose}>
+    <Dialog open={!!recipe} onOpenChange={(open) => !open && onClose()}>
       <DialogContent 
         className="w-[95vw] max-w-4xl h-[90vh] max-h-[900px] overflow-hidden p-0 gap-0 
                    sm:w-full sm:h-auto sm:max-h-[90vh]
