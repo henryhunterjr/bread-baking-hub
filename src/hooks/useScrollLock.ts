@@ -6,24 +6,31 @@ let originalStyles: {
   overflow: string;
   position: string;
   width: string;
+  top: string;
   overscrollBehavior: string;
   scrollbarGutter: string;
 } | null = null;
+let scrollY = 0;
 
 const lockScroll = () => {
   if (scrollLockCount === 0) {
+    // Store current scroll position
+    scrollY = window.scrollY;
+    
     // Store original styles only when first lock is applied
     originalStyles = {
       overflow: document.body.style.overflow,
       position: document.body.style.position,
       width: document.body.style.width,
+      top: document.body.style.top,
       overscrollBehavior: (document.body.style as any).overscrollBehavior || '',
       scrollbarGutter: (document.body.style as any).scrollbarGutter || '',
     };
 
-    // Apply scroll lock
+    // Apply scroll lock with preserved scroll position
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
     document.body.style.width = '100%';
     (document.body.style as any).overscrollBehavior = 'contain';
     (document.body.style as any).scrollbarGutter = 'stable';
@@ -39,11 +46,13 @@ const unlockScroll = () => {
     document.body.style.overflow = originalStyles.overflow;
     document.body.style.position = originalStyles.position;
     document.body.style.width = originalStyles.width;
+    document.body.style.top = originalStyles.top;
     (document.body.style as any).overscrollBehavior = originalStyles.overscrollBehavior;
     (document.body.style as any).scrollbarGutter = originalStyles.scrollbarGutter;
     
-    // Force layout recalculation
-    document.body.offsetHeight;
+    // Restore scroll position
+    window.scrollTo(0, scrollY);
+    
     originalStyles = null;
   }
 };
