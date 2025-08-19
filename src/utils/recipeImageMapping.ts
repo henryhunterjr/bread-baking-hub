@@ -101,11 +101,8 @@ const fallbackImages = [
 ];
 
 export function getRecipeImage(slug: string, imageUrl?: string | null): string {
-  console.log('🔍 getRecipeImage DEBUG:', { slug, imageUrl });
-  
   const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread', 'henrys-whole-wheat-sourdough-recipe', 'holiday-star-cinnamon-bread', 'ultimate-dinner-rolls-rosemary-sea-salt', 'henrys-marbled-sourdough-bread', 'henrys-perfect-cinnamon-swirl-bread'];
   if (problematicRecipes.includes(slug) && recipeImageMapping[slug]) {
-    console.log('✅ FORCING mapping URL for problematic recipe', slug, ':', recipeImageMapping[slug]);
     return recipeImageMapping[slug];
   }
   
@@ -115,20 +112,17 @@ export function getRecipeImage(slug: string, imageUrl?: string | null): string {
   // Check our mapping first (for staging URLs) or if no imageUrl
   if (isStagingUrl || !imageUrl || imageUrl.trim() === "") {
     if (recipeImageMapping[slug]) {
-      console.log('✅ Using mapping URL for', slug, ':', recipeImageMapping[slug]);
       return recipeImageMapping[slug];
     }
   }
   
   // Use direct image_url only if it's not a staging URL
   if (imageUrl && imageUrl.trim() !== "" && !isStagingUrl) {
-    console.log('✅ Using direct URL for', slug, ':', imageUrl);
     return imageUrl;
   }
   
   // Finally use a fallback image
   const fallbackIndex = Math.abs(slug.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % fallbackImages.length;
   const fallbackUrl = fallbackImages[fallbackIndex];
-  console.log('⚠️ Using fallback URL for', slug, ':', fallbackUrl);
   return fallbackUrl;
 }
