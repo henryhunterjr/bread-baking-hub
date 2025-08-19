@@ -1,5 +1,4 @@
 import * as React from "react";
-const { useState, Suspense, lazy } = React;
 import { Navigate, useParams } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -21,44 +20,44 @@ import { AppErrorBoundary } from "./components/AppErrorBoundary";
 import Index from "./pages/Index";
 
 // Lazy loaded components
-const RecipeFormatter = lazy(() => import("./pages/RecipeFormatter"));
-const RecipeWorkspace = lazy(() => import("./pages/RecipeWorkspace"));
-const Auth = lazy(() => import("./pages/Auth"));
-const MyRecipes = lazy(() => import("./pages/MyRecipes"));
-const About = lazy(() => import("./pages/About"));
-const Blog = lazy(() => import("./pages/Blog"));
-const BlogPost = lazy(() => import("./pages/BlogPost"));
-const Books = lazy(() => import("./pages/Books"));
-const Recipes = lazy(() => import("./pages/Recipes"));
-const VitaleStarter = lazy(() => import("./pages/VitaleStarter"));
-const VitalePreview = lazy(() => import("./pages/VitalePreview"));
-const KaiserRolls = lazy(() => import("./pages/KaiserRolls"));
-const PublicRecipe = lazy(() => import("./pages/PublicRecipe"));
-const HenrysFoolproofRecipe = lazy(() => import("./pages/HenrysFoolproofRecipe"));
-const BreadGlossary = lazy(() => import("./pages/BreadGlossary"));
-const BreadCalculator = lazy(() => import("./pages/BreadCalculator"));
-const Community = lazy(() => import("./pages/Community"));
-const TroubleshootingPage = lazy(() => import("./pages/TroubleshootingPage"));
-const OfflineFallback = lazy(() => import("./pages/OfflineFallback"));
-const CrustAndCrumb = lazy(() => import("./pages/CrustAndCrumb"));
-const Legal = lazy(() => import("./pages/Legal"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-const SearchTest = lazy(() => import("./pages/SearchTest"));
-const InlineSearchTestPage = lazy(() => import("./pages/InlineSearchTest"));
-const Dashboard = lazy(() => import("./pages/Dashboard"));
-const Tools = lazy(() => import("./pages/Tools"));
-const Guides = lazy(() => import("./pages/Guides"));
-const Challenges = lazy(() => import("./pages/Challenges"));
-const Coaching = lazy(() => import("./pages/Coaching"));
-const Contact = lazy(() => import("./pages/Contact"));
-const GithubRoot = lazy(() => import("./pages/GithubRoot"));
-const GithubReadme = lazy(() => import("./pages/GithubReadme"));
-const GithubWriteTest = lazy(() => import("./pages/GithubWriteTest"));
-const GoRedirect = lazy(() => import("./pages/GoRedirect"));
-const LazyAIAssistantSidebar = lazy(() => import("./components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
-const MyFavorites = lazy(() => import("./pages/MyFavorites"));
-const MyReviews = lazy(() => import("./pages/MyReviews"));
-const SearchResultsPage = lazy(() => import("./pages/SearchResultsPage"));
+const RecipeFormatter = React.lazy(() => import("./pages/RecipeFormatter"));
+const RecipeWorkspace = React.lazy(() => import("./pages/RecipeWorkspace"));
+const Auth = React.lazy(() => import("./pages/Auth"));
+const MyRecipes = React.lazy(() => import("./pages/MyRecipes"));
+const About = React.lazy(() => import("./pages/About"));
+const Blog = React.lazy(() => import("./pages/Blog"));
+const BlogPost = React.lazy(() => import("./pages/BlogPost"));
+const Books = React.lazy(() => import("./pages/Books"));
+const Recipes = React.lazy(() => import("./pages/Recipes"));
+const VitaleStarter = React.lazy(() => import("./pages/VitaleStarter"));
+const VitalePreview = React.lazy(() => import("./pages/VitalePreview"));
+const KaiserRolls = React.lazy(() => import("./pages/KaiserRolls"));
+const PublicRecipe = React.lazy(() => import("./pages/PublicRecipe"));
+const HenrysFoolproofRecipe = React.lazy(() => import("./pages/HenrysFoolproofRecipe"));
+const BreadGlossary = React.lazy(() => import("./pages/BreadGlossary"));
+const BreadCalculator = React.lazy(() => import("./pages/BreadCalculator"));
+const Community = React.lazy(() => import("./pages/Community"));
+const TroubleshootingPage = React.lazy(() => import("./pages/TroubleshootingPage"));
+const OfflineFallback = React.lazy(() => import("./pages/OfflineFallback"));
+const CrustAndCrumb = React.lazy(() => import("./pages/CrustAndCrumb"));
+const Legal = React.lazy(() => import("./pages/Legal"));
+const NotFound = React.lazy(() => import("./pages/NotFound"));
+const SearchTest = React.lazy(() => import("./pages/SearchTest"));
+const InlineSearchTestPage = React.lazy(() => import("./pages/InlineSearchTest"));
+const Dashboard = React.lazy(() => import("./pages/Dashboard"));
+const Tools = React.lazy(() => import("./pages/Tools"));
+const Guides = React.lazy(() => import("./pages/Guides"));
+const Challenges = React.lazy(() => import("./pages/Challenges"));
+const Coaching = React.lazy(() => import("./pages/Coaching"));
+const Contact = React.lazy(() => import("./pages/Contact"));
+const GithubRoot = React.lazy(() => import("./pages/GithubRoot"));
+const GithubReadme = React.lazy(() => import("./pages/GithubReadme"));
+const GithubWriteTest = React.lazy(() => import("./pages/GithubWriteTest"));
+const GoRedirect = React.lazy(() => import("./pages/GoRedirect"));
+const LazyAIAssistantSidebar = React.lazy(() => import("./components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
+const MyFavorites = React.lazy(() => import("./pages/MyFavorites"));
+const MyReviews = React.lazy(() => import("./pages/MyReviews"));
+const SearchResultsPage = React.lazy(() => import("./pages/SearchResultsPage"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -100,7 +99,7 @@ function App() {
             <BrowserRouter>
               <EnhancedSkipLink />
               <DefaultSEO />
-              <Suspense fallback={<SimpleLoadingSpinner />}>
+              <React.Suspense fallback={<SimpleLoadingSpinner />}>
                 <main id="main-content">
                   <Routes>
                     <Route path="/" element={<Index />} />
@@ -146,14 +145,14 @@ function App() {
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>
-              </Suspense>
+              </React.Suspense>
               
-              <Suspense fallback={null}>
+              <React.Suspense fallback={null}>
                 <LazyAIAssistantSidebar 
                   isOpen={isAIAssistantOpen}
                   onToggle={() => setIsAIAssistantOpen(!isAIAssistantOpen)}
                 />
-              </Suspense>
+              </React.Suspense>
             </BrowserRouter>
           </TooltipProvider>
       </AuthProvider>
