@@ -78,9 +78,6 @@ const RecipeRedirect = () => {
 };
 
 function App() {
-  console.log('App component rendering - React hooks check');
-  console.log('React object:', React);
-  console.log('React.useState available:', !!React.useState);
   
   const [isAIAssistantOpen, setIsAIAssistantOpen] = React.useState(false);
 
