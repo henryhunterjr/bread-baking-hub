@@ -61,11 +61,11 @@ export const useTextToSpeech = () => {
       setShowPlayButton(false);
       setPendingText(null);
 
-      // Call our ElevenLabs edge function with Krusty's voice
+      // Call our ElevenLabs edge function with user's custom voice
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: { 
           text,
-          voiceId: 'wwKGRQE13syDBEa0SHLz' // Krusty's custom voice
+          voiceId: 'wAGzRVkxKEs8La0lmdrE' // User's custom voice
         }
       });
 
