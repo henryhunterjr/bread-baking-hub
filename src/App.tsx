@@ -3,7 +3,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import OfflineBanner from "@/components/OfflineBanner";
@@ -77,16 +77,6 @@ const RecipeRedirect = () => {
   return <Navigate to={`/recipes/${slug}`} replace />;
 };
 
-// Create QueryClient instance
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 1,
-      staleTime: 5 * 60 * 1000, // 5 minutes
-    },
-  },
-});
-
 function App() {
   console.log('App component rendering - React hooks check');
   console.log('useState available:', !!useState);
@@ -95,8 +85,7 @@ function App() {
 
   return (
     <AppErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
+      <AuthProvider>
           <TooltipProvider>
             <CriticalCSS />
             <PerformanceOptimizer />
@@ -165,8 +154,7 @@ function App() {
               </Suspense>
             </BrowserRouter>
           </TooltipProvider>
-        </AuthProvider>
-      </QueryClientProvider>
+      </AuthProvider>
     </AppErrorBoundary>
   );
 }
