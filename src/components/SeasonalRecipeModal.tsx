@@ -179,7 +179,35 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     load();
   }, [recipe?.id, user?.id]);
 
-  // Let Radix UI Dialog handle scroll lock natively - no custom hook needed
+  // Custom scroll management with proper restoration
+  useEffect(() => {
+    if (!recipe) return;
+    
+    const scrollY = window.scrollY;
+    console.log(`🔒 Locking scroll at position: ${scrollY}`);
+    
+    // Lock scroll
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    
+    return () => {
+      console.log(`🔓 Restoring scroll to position: ${scrollY}`);
+      
+      // Restore styles
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      
+      // Restore scroll position
+      requestAnimationFrame(() => {
+        window.scrollTo(0, scrollY);
+        console.log(`🔓 Scroll restored, new position: ${window.scrollY}`);
+      });
+    };
+  }, [recipe]);
 
   // Focus management and DOM cleanup effects
   useEffect(() => {
@@ -382,6 +410,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
       <ScrollDebugPanel isOpen={!!recipe} />
       <Dialog 
         open={!!recipe} 
+        modal={false}
         onOpenChange={(open) => {
           if (!open) {
             handleClose();
