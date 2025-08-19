@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Clock, ChefHat, Users, Snowflake, Flower, Sun, Leaf, Heart, Star, X } from 'lucide-react';
@@ -177,6 +177,19 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
   // Use the scroll lock hook for the modal
   useScrollLock(!!recipe);
 
+  // Ensure cleanup runs before unmount to prevent scroll issues
+  useEffect(() => {
+    return () => {
+      // Force cleanup when component unmounts
+      if (recipe) {
+        // Add a small delay to ensure DOM updates complete
+        setTimeout(() => {
+          document.body.style.overflow = '';
+        }, 50);
+      }
+    };
+  }, [recipe]);
+
   // Swipe-down to close on mobile
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const onTouchStart = (e: React.TouchEvent) => {
@@ -298,13 +311,29 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
   };
 
   return (
-    <Dialog open={!!recipe} onOpenChange={(open) => !open && onClose()}>
+    <Dialog 
+      open={!!recipe} 
+      onOpenChange={(open) => {
+        if (!open) {
+          onClose();
+        }
+      }}
+    >
       <DialogContent 
         className="w-[95vw] max-w-4xl h-[90vh] max-h-[900px] overflow-hidden p-0 gap-0 
                    sm:w-full sm:h-auto sm:max-h-[90vh]
                    flex flex-col"
         aria-labelledby="recipe-modal-title"
+        aria-describedby="recipe-modal-description"
       >
+        {/* Accessible title and description for screen readers */}
+        <DialogTitle id="recipe-modal-title" className="sr-only">
+          {recipe.title} - Seasonal Recipe Details
+        </DialogTitle>
+        <DialogDescription id="recipe-modal-description" className="sr-only">
+          Detailed view of {recipe.title}, a {recipe.data.season?.toLowerCase()} recipe including ingredients, instructions, ratings, and reviews. 
+          This recipe serves {recipe.data.yield} and has a {recipe.data.difficulty} difficulty level.
+        </DialogDescription>
         <style>{`
           @media print {
             .no-print { display: none !important; }
@@ -338,9 +367,9 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
             {/* JSON-LD for Recipe */}
             <RecipeStructuredData recipe={recipe} avgRating={avgRating} ratingCount={ratingCount} />
             <div className="hidden sm:flex items-center gap-3">
-              <DialogTitle id="recipe-modal-title" className="text-2xl flex-1">
+              <h1 className="text-2xl flex-1 font-semibold leading-none tracking-tight">
                 {recipe.title}
-              </DialogTitle>
+              </h1>
               <Badge variant="secondary" className="flex items-center gap-1">
                 <SeasonIcon className="w-4 h-4" />
                 {season}
