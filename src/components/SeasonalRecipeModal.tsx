@@ -179,34 +179,38 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     load();
   }, [recipe?.id, user?.id]);
 
-  // Custom scroll management with proper restoration
+  // Robust scroll position management
+  const scrollPositionRef = useRef<number>(0);
+  
   useEffect(() => {
-    if (!recipe) return;
-    
-    const scrollY = window.scrollY;
-    console.log(`🔒 Locking scroll at position: ${scrollY}`);
-    
-    // Lock scroll
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = '100%';
-    
-    return () => {
-      console.log(`🔓 Restoring scroll to position: ${scrollY}`);
+    if (recipe) {
+      // Opening modal - capture and lock scroll
+      scrollPositionRef.current = window.scrollY;
+      console.log(`🔒 Capturing scroll position: ${scrollPositionRef.current}`);
       
-      // Restore styles
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollPositionRef.current}px`;
+      document.body.style.width = '100%';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+    } else {
+      // Closing modal - restore scroll
+      console.log(`🔓 Restoring scroll to: ${scrollPositionRef.current}`);
+      
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.top = '';
       document.body.style.width = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
       
-      // Restore scroll position
-      requestAnimationFrame(() => {
-        window.scrollTo(0, scrollY);
-        console.log(`🔓 Scroll restored, new position: ${window.scrollY}`);
-      });
-    };
+      // Use setTimeout to ensure DOM has updated
+      setTimeout(() => {
+        window.scrollTo(0, scrollPositionRef.current);
+        console.log(`🔓 Final scroll position: ${window.scrollY}`);
+      }, 0);
+    }
   }, [recipe]);
 
   // Focus management and DOM cleanup effects
@@ -410,7 +414,6 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
       <ScrollDebugPanel isOpen={!!recipe} />
       <Dialog 
         open={!!recipe} 
-        modal={false}
         onOpenChange={(open) => {
           if (!open) {
             handleClose();
