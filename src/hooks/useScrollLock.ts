@@ -86,11 +86,11 @@ const unlockScroll = (caller?: string) => {
     // If original overflow was empty, set to 'visible' to ensure scrollability
     const targetOverflow = originalStyles.overflow || 'visible';
     document.body.style.overflow = targetOverflow;
-    document.body.style.position = originalStyles.position;
-    document.body.style.width = originalStyles.width;
-    document.body.style.top = originalStyles.top;
-    (document.body.style as any).overscrollBehavior = originalStyles.overscrollBehavior;
-    (document.body.style as any).scrollbarGutter = originalStyles.scrollbarGutter;
+    document.body.style.position = originalStyles.position || '';
+    document.body.style.width = originalStyles.width || '';
+    document.body.style.top = originalStyles.top || '';
+    (document.body.style as any).overscrollBehavior = originalStyles.overscrollBehavior || '';
+    (document.body.style as any).scrollbarGutter = originalStyles.scrollbarGutter || '';
     
     console.log(`🔓 Restored overflow to: "${targetOverflow}"`);
     console.log(`🔓 Restored position to: "${originalStyles.position}"`);
