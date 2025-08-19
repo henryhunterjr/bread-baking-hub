@@ -43,7 +43,8 @@ const unlockScroll = () => {
   
   if (scrollLockCount === 0 && originalStyles) {
     // Restore original styles only when no locks remain
-    document.body.style.overflow = originalStyles.overflow;
+    // If original overflow was empty, set to 'visible' to ensure scrollability
+    document.body.style.overflow = originalStyles.overflow || 'visible';
     document.body.style.position = originalStyles.position;
     document.body.style.width = originalStyles.width;
     document.body.style.top = originalStyles.top;
