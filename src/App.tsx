@@ -97,51 +97,49 @@ function App() {
               <EnhancedSkipLink />
               <DefaultSEO />
               <React.Suspense fallback={<SimpleLoadingSpinner />}>
-                <main id="main-content">
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/recipe-formatter" element={<RecipeFormatter />} />
-                    <Route path="/recipe-workspace" element={<RecipeWorkspace />} />
-                    <Route path="/auth" element={<Auth />} />
-                    <Route path="/my-recipes" element={<MyRecipes />} />
-                    <Route path="/my-favorites" element={<MyFavorites />} />
-                    <Route path="/my-reviews" element={<MyReviews />} />
-                    <Route path="/blog" element={<Blog />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/books" element={<Books />} />
-                    <Route path="/recipes" element={<Recipes />} />
-                    <Route path="/vitale-starter" element={<VitaleStarter />} />
-                    <Route path="/preview/vitale-sourdough-mastery" element={<VitalePreview />} />
-                    <Route path="/kaiser-rolls" element={<KaiserRolls />} />
-                    <Route path="/henrys-foolproof-recipe" element={<HenrysFoolproofRecipe />} />
-                    <Route path="/glossary" element={<BreadGlossary />} />
-                    <Route path="/bread-calculator" element={<BreadCalculator />} />
-                    <Route path="/community" element={<Community />} />
-                    <Route path="/troubleshooting" element={<TroubleshootingPage />} />
-                    <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
-                    <Route path="/legal" element={<Legal />} />
-                    <Route path="/recipes/:slug" element={<PublicRecipe />} />
-                    <Route path="/r/:slug" element={<PublicRecipe />} />
-                    <Route path="/recipe/:slug" element={<RecipeRedirect />} />
-                    <Route path="/feed.xml" element={<FeedRedirect />} />
-                    <Route path="/sitemap.xml" element={<SitemapRedirect />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/tools" element={<Tools />} />
-                    <Route path="/guides" element={<Guides />} />
-                    <Route path="/challenges" element={<Challenges />} />
-                    <Route path="/coaching" element={<Coaching />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/search-test" element={<SearchTest />} />
-                    <Route path="/search" element={<SearchResultsPage />} />
-                    <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
-                    <Route path="/offline" element={<OfflineFallback />} />
-                    <Route path="/github-root" element={<GithubRoot />} />
-                    <Route path="/github-readme" element={<GithubReadme />} />
-                    <Route path="/github-write-test" element={<GithubWriteTest />} />
-                    <Route path="/go" element={<GoRedirect />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </main>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/recipe-formatter" element={<RecipeFormatter />} />
+                  <Route path="/recipe-workspace" element={<RecipeWorkspace />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route path="/my-recipes" element={<MyRecipes />} />
+                  <Route path="/my-favorites" element={<MyFavorites />} />
+                  <Route path="/my-reviews" element={<MyReviews />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/books" element={<Books />} />
+                  <Route path="/recipes" element={<Recipes />} />
+                  <Route path="/vitale-starter" element={<VitaleStarter />} />
+                  <Route path="/preview/vitale-sourdough-mastery" element={<VitalePreview />} />
+                  <Route path="/kaiser-rolls" element={<KaiserRolls />} />
+                  <Route path="/henrys-foolproof-recipe" element={<HenrysFoolproofRecipe />} />
+                  <Route path="/glossary" element={<BreadGlossary />} />
+                  <Route path="/bread-calculator" element={<BreadCalculator />} />
+                  <Route path="/community" element={<Community />} />
+                  <Route path="/troubleshooting" element={<TroubleshootingPage />} />
+                  <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
+                  <Route path="/legal" element={<Legal />} />
+                  <Route path="/recipes/:slug" element={<PublicRecipe />} />
+                  <Route path="/r/:slug" element={<PublicRecipe />} />
+                  <Route path="/recipe/:slug" element={<RecipeRedirect />} />
+                  <Route path="/feed.xml" element={<FeedRedirect />} />
+                  <Route path="/sitemap.xml" element={<SitemapRedirect />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/tools" element={<Tools />} />
+                  <Route path="/guides" element={<Guides />} />
+                  <Route path="/challenges" element={<Challenges />} />
+                  <Route path="/coaching" element={<Coaching />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/search-test" element={<SearchTest />} />
+                  <Route path="/search" element={<SearchResultsPage />} />
+                  <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
+                  <Route path="/offline" element={<OfflineFallback />} />
+                  <Route path="/github-root" element={<GithubRoot />} />
+                  <Route path="/github-readme" element={<GithubReadme />} />
+                  <Route path="/github-write-test" element={<GithubWriteTest />} />
+                  <Route path="/go" element={<GoRedirect />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
               </React.Suspense>
               
               <React.Suspense fallback={null}>
