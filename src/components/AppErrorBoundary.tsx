@@ -1,11 +1,11 @@
-import React, { Component, ReactNode } from 'react';
+import * as React from 'react';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface Props {
-  children: ReactNode;
-  fallback?: ReactNode;
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
 }
 
 interface State {
@@ -13,7 +13,7 @@ interface State {
   error?: Error;
 }
 
-export class AppErrorBoundary extends Component<Props, State> {
+export class AppErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
