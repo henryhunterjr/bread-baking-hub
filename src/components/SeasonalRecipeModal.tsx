@@ -220,9 +220,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
             }
           });
 
-          // Reset body styles
-          document.body.style.overflow = '';
-          document.body.style.paddingRight = '';
+          // Let useScrollLock handle body styles - don't interfere
           
           // Clear any potential memory leaks from refs
           previouslyFocusedElementRef.current = null;
