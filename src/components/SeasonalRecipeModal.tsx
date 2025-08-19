@@ -179,7 +179,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
   }, [recipe?.id, user?.id]);
 
   // Use the scroll lock hook for the modal
-  useScrollLock(!!recipe);
+  useScrollLock(!!recipe, 'SeasonalRecipeModal');
 
   // Focus management and DOM cleanup effects
   useEffect(() => {

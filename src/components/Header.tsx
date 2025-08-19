@@ -13,7 +13,7 @@ const Header = () => {
   const { user, signOut } = useAuth();
 
   // Use the scroll lock hook for mobile menu
-  useScrollLock(isMenuOpen);
+  useScrollLock(isMenuOpen, 'Header-MobileMenu');
 
   // Handle ESC key to close menu
   React.useEffect(() => {
