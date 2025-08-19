@@ -8,7 +8,7 @@ import { RecipeActions } from '@/components/RecipeActions';
 import { RecipeRating } from '@/components/RecipeRating';
 import { ZoomableImage } from '@/components/ZoomableImage';
 import CookingMode from '@/components/CookingMode';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
@@ -67,6 +67,10 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
   const season = recipe.data.season;
   const colors = getSeasonalColors(season);
   const SeasonIcon = seasonIcons[season];
+
+  // Refs for focus management and DOM cleanup
+  const dialogContentRef = useRef<HTMLDivElement>(null);
+  const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
 
   // Servings scaling helpers
   const getBaseServings = (yieldText?: string) => {
@@ -177,18 +181,71 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
   // Use the scroll lock hook for the modal
   useScrollLock(!!recipe);
 
-  // Ensure cleanup runs before unmount to prevent scroll issues
+  // Focus management and DOM cleanup effects
+  useEffect(() => {
+    if (recipe) {
+      // Store currently focused element
+      previouslyFocusedElementRef.current = document.activeElement as HTMLElement;
+      
+      // Focus the dialog content after a brief delay to ensure it's mounted
+      const focusTimeout = setTimeout(() => {
+        if (dialogContentRef.current) {
+          dialogContentRef.current.focus();
+        }
+      }, 100);
+
+      return () => {
+        clearTimeout(focusTimeout);
+      };
+    }
+  }, [recipe]);
+
+  // Comprehensive cleanup effect when modal closes
   useEffect(() => {
     return () => {
-      // Force cleanup when component unmounts
       if (recipe) {
-        // Add a small delay to ensure DOM updates complete
-        setTimeout(() => {
+        // Restore focus to previously focused element
+        if (previouslyFocusedElementRef.current && document.body.contains(previouslyFocusedElementRef.current)) {
+          previouslyFocusedElementRef.current.focus();
+        }
+
+        // Force cleanup of DOM references and styles
+        const cleanup = () => {
+          // Clear any remaining object URLs
+          document.querySelectorAll('img[src^="blob:"]').forEach(img => {
+            const src = (img as HTMLImageElement).src;
+            if (src.startsWith('blob:')) {
+              URL.revokeObjectURL(src);
+            }
+          });
+
+          // Reset body styles
           document.body.style.overflow = '';
-        }, 50);
+          document.body.style.paddingRight = '';
+          
+          // Clear any potential memory leaks from refs
+          previouslyFocusedElementRef.current = null;
+        };
+
+        // Use both immediate and delayed cleanup for robustness
+        cleanup();
+        setTimeout(cleanup, 100);
       }
     };
   }, [recipe]);
+
+  // Enhanced close handler with proper cleanup
+  const handleClose = useCallback(() => {
+    // Reset all local state
+    setServings(baseServings);
+    setReviewText('');
+    setReviewFile(null);
+    setSubmittingReview(false);
+    setLoadingEngagement(false);
+    
+    // Call parent close handler
+    onClose();
+  }, [baseServings, onClose]);
 
   // Swipe-down to close on mobile
   const touchStart = useRef<{ x: number; y: number } | null>(null);
@@ -201,7 +258,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     const t = e.changedTouches[0];
     const dy = t.clientY - touchStart.current.y;
     const dx = t.clientX - touchStart.current.x;
-    if (dy > 80 && Math.abs(dy) > Math.abs(dx)) onClose();
+    if (dy > 80 && Math.abs(dy) > Math.abs(dx)) handleClose();
     touchStart.current = null;
   };
 
@@ -315,25 +372,23 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
       open={!!recipe} 
       onOpenChange={(open) => {
         if (!open) {
-          onClose();
+          handleClose();
         }
       }}
     >
       <DialogContent 
+        ref={dialogContentRef}
         className="w-[95vw] max-w-4xl h-[90vh] max-h-[900px] overflow-hidden p-0 gap-0 
                    sm:w-full sm:h-auto sm:max-h-[90vh]
-                   flex flex-col"
+                   flex flex-col focus:outline-none"
         aria-labelledby="recipe-modal-title"
         aria-describedby="recipe-modal-description"
+        onInteractOutside={(e) => {
+          e.preventDefault();
+          handleClose();
+        }}
+        onEscapeKeyDown={handleClose}
       >
-        {/* Accessible title and description for screen readers */}
-        <DialogTitle id="recipe-modal-title" className="sr-only">
-          {recipe.title} - Seasonal Recipe Details
-        </DialogTitle>
-        <DialogDescription id="recipe-modal-description" className="sr-only">
-          Detailed view of {recipe.title}, a {recipe.data.season?.toLowerCase()} recipe including ingredients, instructions, ratings, and reviews. 
-          This recipe serves {recipe.data.yield} and has a {recipe.data.difficulty} difficulty level.
-        </DialogDescription>
         <style>{`
           @media print {
             .no-print { display: none !important; }
@@ -344,7 +399,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
         {/* Mobile sticky header with improved touch targets */}
         <div className="sm:hidden sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b px-3 py-2 flex items-center gap-2 min-h-[60px]">
           <Button 
-            onClick={onClose} 
+            onClick={handleClose} 
             variant="ghost" 
             size="sm" 
             aria-label="Close recipe modal" 
@@ -352,7 +407,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
           >
             <X className="h-6 w-6" />
           </Button>
-          <div className="flex-1 font-semibold text-sm leading-tight line-clamp-2" id="recipe-modal-title-mobile">
+          <div className="flex-1 font-semibold text-sm leading-tight line-clamp-2">
             {recipe.title}
           </div>
           <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1 text-xs">
@@ -362,8 +417,21 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
         </div>
 
         {/* Scrollable content area */}
-        <div className="flex-1 overflow-y-auto overscroll-behavior-contain px-4 sm:px-6">
+        <div 
+          className="flex-1 overflow-y-auto overscroll-behavior-contain px-4 sm:px-6"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
           <DialogHeader className="py-4 sm:py-6">
+            {/* Accessible title and description - properly structured */}
+            <DialogTitle id="recipe-modal-title" className="sr-only">
+              {recipe.title} - Seasonal Recipe Details
+            </DialogTitle>
+            <DialogDescription id="recipe-modal-description" className="sr-only">
+              Detailed view of {recipe.title}, a {recipe.data.season?.toLowerCase()} recipe including ingredients, instructions, ratings, and reviews. 
+              This recipe serves {recipe.data.yield} and has a {recipe.data.difficulty} difficulty level.
+            </DialogDescription>
+            
             {/* JSON-LD for Recipe */}
             <RecipeStructuredData recipe={recipe} avgRating={avgRating} ratingCount={ratingCount} />
             <div className="hidden sm:flex items-center gap-3">
