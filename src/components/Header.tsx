@@ -5,30 +5,15 @@ import { Menu, X, Info } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { SkipLink, VisuallyHidden } from './AccessibilityComponents';
 import GlobalSearch from './GlobalSearch';
+import { useScrollLock } from '@/hooks/useScrollLock';
 const officialLogo = '/lovable-uploads/82d8e259-f73d-4691-958e-1dd4d0bf240d.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { user, signOut } = useAuth();
 
-  // Body scroll lock for mobile menu
-  React.useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-    } else {
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-    };
-  }, [isMenuOpen]);
+  // Use the scroll lock hook for mobile menu
+  useScrollLock(isMenuOpen);
 
   // Handle ESC key to close menu
   React.useEffect(() => {

@@ -13,6 +13,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeStructuredData } from '@/utils/sanitize';
+import { useScrollLock } from '@/hooks/useScrollLock';
 
 interface SeasonalRecipeModalProps {
   recipe: SeasonalRecipe | null;
@@ -173,46 +174,8 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     load();
   }, [recipe?.id, user?.id]);
 
-  // Prevent background scroll when modal is open
-  useEffect(() => {
-    if (!recipe) {
-      // Ensure scroll is restored when no recipe is selected
-      document.body.style.overflow = '';
-      (document.body.style as any).overscrollBehavior = '';
-      (document.body.style as any).scrollbarGutter = '';
-      return;
-    }
-    
-    // Store original values
-    const prevOverflow = document.body.style.overflow;
-    const prevOverscroll = (document.body.style as any).overscrollBehavior;
-    const prevScrollbarGutter = (document.body.style as any).scrollbarGutter;
-    
-    // Apply scroll lock with scrollbar compensation
-    document.body.style.overflow = 'hidden';
-    (document.body.style as any).overscrollBehavior = 'contain';
-    (document.body.style as any).scrollbarGutter = 'stable';
-    
-    return () => {
-      // Restore original values
-      document.body.style.overflow = prevOverflow || '';
-      (document.body.style as any).overscrollBehavior = prevOverscroll || '';
-      (document.body.style as any).scrollbarGutter = prevScrollbarGutter || '';
-      
-      // Force a layout recalculation to ensure scroll is restored
-      document.body.offsetHeight;
-    };
-  }, [recipe]);
-
-  // Additional cleanup on component unmount to ensure scroll is always restored
-  useEffect(() => {
-    return () => {
-      // Emergency cleanup - ensure body scroll is always restored
-      document.body.style.overflow = '';
-      (document.body.style as any).overscrollBehavior = '';
-      (document.body.style as any).scrollbarGutter = '';
-    };
-  }, []);
+  // Use the scroll lock hook for the modal
+  useScrollLock(!!recipe);
 
   // Swipe-down to close on mobile
   const touchStart = useRef<{ x: number; y: number } | null>(null);
