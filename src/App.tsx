@@ -1,4 +1,5 @@
-import React, { useState, Suspense, lazy } from "react";
+import * as React from "react";
+const { useState, Suspense, lazy } = React;
 import { Navigate, useParams } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -79,9 +80,10 @@ const RecipeRedirect = () => {
 
 function App() {
   console.log('App component rendering - React hooks check');
-  console.log('useState available:', !!useState);
+  console.log('React object:', React);
+  console.log('React.useState available:', !!React.useState);
   
-  const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(false);
+  const [isAIAssistantOpen, setIsAIAssistantOpen] = React.useState(false);
 
   return (
     <AppErrorBoundary>
