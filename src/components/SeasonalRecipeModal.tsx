@@ -175,7 +175,13 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
 
   // Prevent background scroll when modal is open
   useEffect(() => {
-    if (!recipe) return;
+    if (!recipe) {
+      // Ensure scroll is restored when no recipe is selected
+      document.body.style.overflow = '';
+      (document.body.style as any).overscrollBehavior = '';
+      (document.body.style as any).scrollbarGutter = '';
+      return;
+    }
     
     // Store original values
     const prevOverflow = document.body.style.overflow;
@@ -197,6 +203,16 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
       document.body.offsetHeight;
     };
   }, [recipe]);
+
+  // Additional cleanup on component unmount to ensure scroll is always restored
+  useEffect(() => {
+    return () => {
+      // Emergency cleanup - ensure body scroll is always restored
+      document.body.style.overflow = '';
+      (document.body.style as any).overscrollBehavior = '';
+      (document.body.style as any).scrollbarGutter = '';
+    };
+  }, []);
 
   // Swipe-down to close on mobile
   const touchStart = useRef<{ x: number; y: number } | null>(null);
