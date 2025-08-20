@@ -229,7 +229,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
           
           {/* Avatar image */}
           <ResponsiveImage 
-            src="/lovable-uploads/2f3f1e90-1a12-4b8a-bd83-8e8b8f95c7e7.png"
+            src="/lovable-uploads/976b4e22-6b7f-44b0-bfc3-7643ff24b2bd.png"
             alt="👨🏽‍🍳 Krusty | Baking Guide"
             className="w-full h-full rounded-full object-cover relative z-10"
             loading="lazy"
@@ -259,7 +259,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
               {/* Avatar in top-left */}
               <div className={`relative w-12 h-12 transition-all duration-300 ${(isListening || isPlaying) ? 'shadow-lg shadow-primary/30' : ''}`}>
                <img 
-                 src="/lovable-uploads/2f3f1e90-1a12-4b8a-bd83-8e8b8f95c7e7.png"
+                 src="/lovable-uploads/976b4e22-6b7f-44b0-bfc3-7643ff24b2bd.png"
                  alt="👨🏽‍🍳 Krusty"
                  className={`w-full h-full rounded-full object-cover border-2 border-primary/30 transition-all duration-300 ${
                    (isListening || isPlaying) ? 'ring-2 ring-primary ring-opacity-50 animate-pulse' : ''
