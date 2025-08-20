@@ -76,13 +76,13 @@ const Header = () => {
             </div>
           </div>
           
-          {/* Navigation Links - Center (Desktop Only) */}
-          <div className="hidden lg:flex items-center flex-1 justify-center">
+          {/* Navigation Links - Compact for all desktop screens */}
+          <div className="hidden md:flex items-center flex-1 justify-center">
             <NavigationMenu>
-              <NavigationMenuList className="gap-1">
+              <NavigationMenuList className="gap-0">
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
-                    <Link to="/recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+                    <Link to="/recipes" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
                       Recipes
                     </Link>
                   </NavigationMenuLink>
@@ -90,26 +90,23 @@ const Header = () => {
                 
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
-                    <Link to="/vitale-starter" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
-                      Vitale Starter
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                
-                <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
-                    <Link to="/books" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+                    <Link to="/books" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
                       Library
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-header-foreground hover:text-primary text-sm font-medium">
-                    Resources
+                  <NavigationMenuTrigger className="text-header-foreground hover:text-primary text-sm font-medium px-2">
+                    More
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-48 p-2">
+                      <NavigationMenuLink asChild>
+                        <Link to="/vitale-starter" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                          Vitale Starter
+                        </Link>
+                      </NavigationMenuLink>
                       <NavigationMenuLink asChild>
                         <Link to="/glossary" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
                           Glossary
@@ -125,16 +122,6 @@ const Header = () => {
                           Troubleshooting
                         </Link>
                       </NavigationMenuLink>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-header-foreground hover:text-primary text-sm font-medium">
-                    Community
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="w-48 p-2">
                       <NavigationMenuLink asChild>
                         <Link to="/blog" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
                           Blog
@@ -155,73 +142,54 @@ const Header = () => {
                           Crust & Crumb
                         </a>
                       </NavigationMenuLink>
+                      <div className="border-t border-border my-1"></div>
+                      <NavigationMenuLink asChild>
+                        <Link to="/legal" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                          Legal Information
+                        </Link>
+                      </NavigationMenuLink>
                     </div>
                   </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
-                    <Link 
-                      to="/legal" 
-                      className="text-header-foreground hover:text-primary px-2 py-2 rounded-md transition-colors"
-                      title="Legal Information"
-                    >
-                      <Info className="h-4 w-4" />
-                    </Link>
-                  </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
           </div>
 
-          {/* Simplified nav for medium screens */}
-          <div className="hidden md:flex lg:hidden items-center space-x-1 flex-1 justify-center">
-            <Link to="/recipes" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
-              Recipes
-            </Link>
-            <Link to="/vitale-starter" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
-              Starter
-            </Link>
-            <Link to="/books" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
-              Library
-            </Link>
-          </div>
-
           {/* User Actions - Far Right */}
-          <div className="hidden md:flex items-center space-x-1 flex-shrink-0">
+          <div className="hidden md:flex items-center flex-shrink-0">
             {user ? (
               <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger className="text-header-foreground hover:text-primary text-sm font-medium px-2">
-                      My Account
+                    <NavigationMenuTrigger className="text-header-foreground hover:text-primary text-xs font-medium px-1">
+                      Account
                     </NavigationMenuTrigger>
                     <NavigationMenuContent>
-                      <div className="w-40 p-2">
+                      <div className="w-36 p-2">
                         <NavigationMenuLink asChild>
-                          <Link to="/my-recipes" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                          <Link to="/my-recipes" className="block px-2 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
                             My Recipes
                           </Link>
                         </NavigationMenuLink>
                         <NavigationMenuLink asChild>
-                          <Link to="/my-favorites" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                            My Favorites
+                          <Link to="/my-favorites" className="block px-2 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                            Favorites
                           </Link>
                         </NavigationMenuLink>
                         <NavigationMenuLink asChild>
-                          <Link to="/my-reviews" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                            My Reviews
+                          <Link to="/my-reviews" className="block px-2 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                            Reviews
                           </Link>
                         </NavigationMenuLink>
                         <NavigationMenuLink asChild>
-                          <Link to="/dashboard" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                          <Link to="/dashboard" className="block px-2 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
                             Dashboard
                           </Link>
                         </NavigationMenuLink>
                         <div className="border-t border-border my-1"></div>
                         <button
                           onClick={signOut}
-                          className="block w-full text-left px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors"
+                          className="block w-full text-left px-2 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors"
                         >
                           Logout
                         </button>
