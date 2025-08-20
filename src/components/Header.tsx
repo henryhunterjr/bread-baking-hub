@@ -1,11 +1,19 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Info } from 'lucide-react';
+import { Menu, X, Info, ChevronDown } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { SkipLink, VisuallyHidden } from './AccessibilityComponents';
 import GlobalSearch from './GlobalSearch';
 import { useScrollLock } from '@/hooks/useScrollLock';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@/components/ui/navigation-menu';
 const officialLogo = '/lovable-uploads/82d8e259-f73d-4691-958e-1dd4d0bf240d.png';
 
 const Header = () => {
@@ -69,68 +77,159 @@ const Header = () => {
           </div>
           
           {/* Navigation Links - Center (Desktop Only) */}
-          <div className="hidden md:flex items-center space-x-1 flex-1 justify-center">
-            <Link to="/recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+          <div className="hidden lg:flex items-center flex-1 justify-center">
+            <NavigationMenu>
+              <NavigationMenuList className="gap-1">
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link to="/recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+                      Recipes
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link to="/vitale-starter" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+                      Vitale Starter
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link to="/books" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+                      Library
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-header-foreground hover:text-primary text-sm font-medium">
+                    Resources
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="w-48 p-2">
+                      <NavigationMenuLink asChild>
+                        <Link to="/glossary" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                          Glossary
+                        </Link>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                        <Link to="/recipe-workspace" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                          Recipe Workspace
+                        </Link>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                        <Link to="/troubleshooting" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                          Troubleshooting
+                        </Link>
+                      </NavigationMenuLink>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-header-foreground hover:text-primary text-sm font-medium">
+                    Community
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="w-48 p-2">
+                      <NavigationMenuLink asChild>
+                        <Link to="/blog" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                          Blog
+                        </Link>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                        <Link to="/community" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                          Community
+                        </Link>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                        <a 
+                          href="/go?u=https%3A%2F%2Fwebsim.ai%2Fc%2F0F908fPvBQKz0z2wj" 
+                          target="_self" 
+                          rel="noopener noreferrer"
+                          className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors"
+                        >
+                          Crust & Crumb
+                        </a>
+                      </NavigationMenuLink>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link 
+                      to="/legal" 
+                      className="text-header-foreground hover:text-primary px-2 py-2 rounded-md transition-colors"
+                      title="Legal Information"
+                    >
+                      <Info className="h-4 w-4" />
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+
+          {/* Simplified nav for medium screens */}
+          <div className="hidden md:flex lg:hidden items-center space-x-1 flex-1 justify-center">
+            <Link to="/recipes" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
               Recipes
             </Link>
-            <Link to="/vitale-starter" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
-              Vitale Starter
+            <Link to="/vitale-starter" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
+              Starter
             </Link>
-            <Link to="/books" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
+            <Link to="/books" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
               Library
-            </Link>
-            <Link to="/glossary" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
-              Glossary
-            </Link>
-            <Link to="/recipe-workspace" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
-              Recipe Workspace
-            </Link>
-            <Link to="/blog" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
-              Blog
-            </Link>
-            <Link to="/community" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
-              Community
-            </Link>
-            <Link to="/troubleshooting" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
-              Troubleshooting
-            </Link>
-            <a 
-              href="/go?u=https%3A%2F%2Fwebsim.ai%2Fc%2F0F908fPvBQKz0z2wj" 
-              target="_self" 
-              rel="noopener noreferrer"
-              className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap"
-            >
-              Crust & Crumb
-            </a>
-            <Link 
-              to="/legal" 
-              className="text-header-foreground hover:text-primary px-2 py-2 rounded-md transition-colors"
-              title="Legal Information"
-            >
-              <Info className="h-4 w-4" />
             </Link>
           </div>
 
           {/* User Actions - Far Right */}
-          <div className="hidden md:flex items-center space-x-2 flex-shrink-0">
+          <div className="hidden md:flex items-center space-x-1 flex-shrink-0">
             {user ? (
-              <>
-                <Link to="/my-recipes" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
-                  My Recipes
-                </Link>
-                <Link to="/my-favorites" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
-                  My Favorites
-                </Link>
-                <Link to="/my-reviews" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
-                  My Reviews
-                </Link>
-                <Link to="/dashboard" className="text-header-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap">
-                  Dashboard
-                </Link>
-                <Button variant="warm" size="sm" onClick={signOut} className="ml-2">
-                  Logout
-                </Button>
-              </>
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="text-header-foreground hover:text-primary text-sm font-medium px-2">
+                      My Account
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="w-40 p-2">
+                        <NavigationMenuLink asChild>
+                          <Link to="/my-recipes" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                            My Recipes
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link to="/my-favorites" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                            My Favorites
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link to="/my-reviews" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                            My Reviews
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link to="/dashboard" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                            Dashboard
+                          </Link>
+                        </NavigationMenuLink>
+                        <div className="border-t border-border my-1"></div>
+                        <button
+                          onClick={signOut}
+                          className="block w-full text-left px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors"
+                        >
+                          Logout
+                        </button>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             ) : (
               <Button variant="warm" size="sm" asChild>
                 <Link to="/auth">Login</Link>

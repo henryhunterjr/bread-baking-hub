@@ -235,9 +235,12 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
             loading="lazy"
           />
           
-          {/* Fallback content if image doesn't load */}
-          <div className="absolute inset-0 rounded-full bg-primary flex items-center justify-center z-5">
-            <MessageCircle className="h-8 w-8 text-primary-foreground" />
+          {/* Enhanced fallback content */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center z-5 shadow-lg">
+            <div className="text-center">
+              <div className="text-2xl mb-1">👨🏽‍🍳</div>
+              <div className="text-xs font-medium text-primary-foreground/90">Krusty</div>
+            </div>
           </div>
           
           {/* Subtle glow effect */}
