@@ -63,7 +63,9 @@ const Recipes = () => {
         <meta property="og:title" content="Recipes | Baking Great Bread at Home" />
         <meta property="og:description" content="Discover our collection of tried and true bread recipes, from classic sourdough to seasonal specialties. Perfect for home bakers of all skill levels." />
         <meta property="og:url" content="https://bread-baking-hub.vercel.app/recipes" />
-        <meta property="og:image" content="/lovable-uploads/218723c3-e566-4b81-a9e5-a341a5e61037.png" />
+        <meta property="og:image" content="https://bread-baking-hub.vercel.app/lovable-uploads/218723c3-e566-4b81-a9e5-a341a5e61037.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Baking Great Bread at Home Recipes - Tried and True Favorites" />
         <meta property="og:site_name" content="Baking Great Bread at Home" />
         
@@ -71,7 +73,7 @@ const Recipes = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Recipes | Baking Great Bread at Home" />
         <meta name="twitter:description" content="Discover our collection of tried and true bread recipes, from classic sourdough to seasonal specialties. Perfect for home bakers of all skill levels." />
-        <meta name="twitter:image" content="/lovable-uploads/218723c3-e566-4b81-a9e5-a341a5e61037.png" />
+        <meta name="twitter:image" content="https://bread-baking-hub.vercel.app/lovable-uploads/218723c3-e566-4b81-a9e5-a341a5e61037.png" />
         <meta name="twitter:image:alt" content="Baking Great Bread at Home Recipes - Tried and True Favorites" />
       </Helmet>
       
