@@ -5,6 +5,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { RecipeImportExport } from '@/components/RecipeImportExport';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -264,7 +266,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
         <CardHeader className="pb-4">
           <CardTitle className="text-primary flex items-center gap-2">
             <Upload className="h-5 w-5" />
-            How to Upload Your Recipe
+            How to Add Your Recipe
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -272,25 +274,23 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
             <div className="space-y-2">
               <h4 className="font-semibold flex items-center gap-2">
                 <Image className="h-4 w-4 text-primary" />
-                Image Files
+                Upload Files
               </h4>
               <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• JPG, JPEG, PNG formats</li>
+                <li>• JPG, JPEG, PNG, PDF formats</li>
                 <li>• Clear, readable text</li>
-                <li>• Good lighting and focus</li>
                 <li>• Maximum 20MB file size</li>
               </ul>
             </div>
             <div className="space-y-2">
               <h4 className="font-semibold flex items-center gap-2">
                 <FileText className="h-4 w-4 text-primary" />
-                PDF Documents
+                Type or Paste
               </h4>
               <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Text-based PDFs preferred</li>
-                <li>• Scanned images also supported</li>
-                <li>• Single or multi-page</li>
-                <li>• Maximum 20MB file size</li>
+                <li>• Copy from websites or books</li>
+                <li>• Type directly into the text area</li>
+                <li>• JSON format also supported</li>
               </ul>
             </div>
           </div>
@@ -304,84 +304,102 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
         </CardContent>
       </Card>
 
-      {/* Upload Card */}
+      {/* Upload/Import Tabs */}
       <Card className="shadow-warm">
         <CardHeader>
-          <CardTitle className="text-primary">Upload Your Recipe</CardTitle>
+          <CardTitle className="text-primary">Add Your Recipe</CardTitle>
           <CardDescription>
-            Our AI will extract and format your recipe automatically
+            Choose to upload a file or manually enter your recipe
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-3">
-              <Label htmlFor="recipe-file" className="text-base font-semibold">
-                Choose Recipe File
-              </Label>
-              <div className="relative">
-                <Input
-                  id="recipe-file"
-                  type="file"
-                  accept="image/jpeg,image/jpg,image/png,application/pdf"
-                  onChange={handleFileChange}
-                  className="cursor-pointer touch-manipulation file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
-                  disabled={isLoading}
-                />
-              </div>
-              
-              {selectedFile && (
-                <div className="bg-muted/50 rounded-lg p-4 space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 className="h-4 w-4 text-green-600" />
-                    <span className="font-medium">File Ready:</span>
-                    <span>{selectedFile.name}</span>
-                  </div>
-                  <div className="text-xs text-muted-foreground flex gap-4">
-                    <span>Type: {ALLOWED_TYPES[selectedFile.type as keyof typeof ALLOWED_TYPES]}</span>
-                    <span>Size: {formatFileSize(selectedFile.size)}</span>
-                  </div>
-                </div>
-              )}
-            </div>
+          <Tabs defaultValue="upload" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="upload">Upload File</TabsTrigger>
+              <TabsTrigger value="manual">Type/Paste Recipe</TabsTrigger>
+            </TabsList>
             
-            <Button 
-              type="submit" 
-              variant="hero" 
-              size="lg" 
-              disabled={!selectedFile || isLoading || !!validationError}
-              className="w-full touch-manipulation"
-            >
-              {isLoading ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                  Formatting Recipe...
+            <TabsContent value="upload" className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-3">
+                  <Label htmlFor="recipe-file" className="text-base font-semibold">
+                    Choose Recipe File
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="recipe-file"
+                      type="file"
+                      accept="image/jpeg,image/jpg,image/png,application/pdf"
+                      onChange={handleFileChange}
+                      className="cursor-pointer touch-manipulation file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+                      disabled={isLoading}
+                    />
+                  </div>
+                  
+                  {selectedFile && (
+                    <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+                      <div className="flex items-center gap-2 text-sm">
+                        <CheckCircle2 className="h-4 w-4 text-green-600" />
+                        <span className="font-medium">File Ready:</span>
+                        <span>{selectedFile.name}</span>
+                      </div>
+                      <div className="text-xs text-muted-foreground flex gap-4">
+                        <span>Type: {ALLOWED_TYPES[selectedFile.type as keyof typeof ALLOWED_TYPES]}</span>
+                        <span>Size: {formatFileSize(selectedFile.size)}</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              ) : (
-                'Format My Recipe'
-              )}
-            </Button>
-          </form>
+                
+                <Button 
+                  type="submit" 
+                  variant="hero" 
+                  size="lg" 
+                  disabled={!selectedFile || isLoading || !!validationError}
+                  className="w-full touch-manipulation"
+                >
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                      Formatting Recipe...
+                    </div>
+                  ) : (
+                    'Format My Recipe'
+                  )}
+                </Button>
+              </form>
 
-          {isLoading && (
-            <div className="mt-6 space-y-4">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Processing your recipe...</span>
-                <span className="text-primary font-semibold">{uploadProgress}%</span>
-              </div>
-              <Progress value={uploadProgress} className="h-3" />
-              <div className="text-center space-y-1">
-                <p className="text-sm font-medium">
-                  {uploadProgress < 25 && "Uploading…"}
-                  {uploadProgress >= 25 && uploadProgress < 60 && "Extracting…"}
-                  {uploadProgress >= 60 && uploadProgress < 100 && "Formatting…"}
-                  {uploadProgress >= 100 && "Done"}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  This may take a few moments while our AI analyzes your recipe
-                </p>
-              </div>
-            </div>
-          )}
+              {isLoading && (
+                <div className="mt-6 space-y-4">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Processing your recipe...</span>
+                    <span className="text-primary font-semibold">{uploadProgress}%</span>
+                  </div>
+                  <Progress value={uploadProgress} className="h-3" />
+                  <div className="text-center space-y-1">
+                    <p className="text-sm font-medium">
+                      {uploadProgress < 25 && "Uploading…"}
+                      {uploadProgress >= 25 && uploadProgress < 60 && "Extracting…"}
+                      {uploadProgress >= 60 && uploadProgress < 100 && "Formatting…"}
+                      {uploadProgress >= 100 && "Done"}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      This may take a few moments while our AI analyzes your recipe
+                    </p>
+                  </div>
+                </div>
+              )}
+            </TabsContent>
+            
+            <TabsContent value="manual" className="space-y-6">
+              <RecipeImportExport 
+                onImport={(recipe) => {
+                  console.log('Manual recipe imported:', recipe);
+                  onRecipeFormatted(recipe);
+                }}
+              />
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
 

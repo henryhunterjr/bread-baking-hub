@@ -179,76 +179,36 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     load();
   }, [recipe?.id, user?.id]);
 
-  // Scroll position management - completely manual approach
+  // Simplified scroll position management
   const scrollPositionRef = useRef<number>(0);
-  const isRestoringRef = useRef<boolean>(false);
   
   useEffect(() => {
-    if (recipe && !isRestoringRef.current) {
+    if (recipe) {
       // Opening modal - capture and lock scroll
       scrollPositionRef.current = window.scrollY;
-      console.log(`🔒 Modal opening - capturing scroll position: ${scrollPositionRef.current}`);
-      
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollPositionRef.current}px`;
       document.body.style.width = '100%';
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-    } else if (!recipe && !isRestoringRef.current) {
-      // Modal is closing - restore scroll position
-      isRestoringRef.current = true; // Prevent re-entry
-      console.log(`🔓 Modal closing - restoring scroll to: ${scrollPositionRef.current}`);
-      
-      // Clear body styles immediately
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      
-      // Force scroll restoration with aggressive retry
-      const performRestore = () => {
-        console.log(`🔄 Attempting to restore scroll to: ${scrollPositionRef.current}`);
-        window.scrollTo(0, scrollPositionRef.current);
-        
-        // Verify restoration worked
-        setTimeout(() => {
-          const currentScroll = window.scrollY;
-          console.log(`🔍 Current scroll after restore: ${currentScroll}, target: ${scrollPositionRef.current}`);
-          
-          if (Math.abs(currentScroll - scrollPositionRef.current) > 5) {
-            console.log(`🔄 Scroll restoration incomplete, retrying...`);
-            window.scrollTo(0, scrollPositionRef.current);
-            
-            // Final fallback attempt
-            setTimeout(() => {
-              window.scrollTo(0, scrollPositionRef.current);
-              console.log(`🔄 Final restore attempt, current scroll: ${window.scrollY}`);
-              isRestoringRef.current = false; // Allow future restorations
-            }, 200);
-          } else {
-            console.log(`✅ Scroll restoration successful`);
-            isRestoringRef.current = false; // Allow future restorations
-          }
-        }, 100);
-      };
-      
-      // Multiple timing strategies for restoration
-      performRestore(); // Immediate
-      requestAnimationFrame(performRestore); // Next frame
-      setTimeout(performRestore, 50); // Small delay
-      setTimeout(performRestore, 150); // Larger delay as fallback
     }
+    
+    return () => {
+      if (recipe) {
+        // Cleanup on close - restore scroll position
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollPositionRef.current);
+      }
+    };
   }, [recipe]);
 
-  // Simplified close handler with extensive debugging
+  // Simplified close handler
   const handleClose = useCallback(() => {
     console.log(`🚪 MODAL CLOSE - Starting close process`);
     console.log(`🚪 Current recipe state:`, recipe);
     console.log(`🚪 Current scroll position captured:`, scrollPositionRef.current);
-    console.log(`🚪 isRestoringRef:`, isRestoringRef.current);
     
     // Reset all local state
     setServings(baseServings);
