@@ -114,27 +114,27 @@ const Blog = () => {
   return (
     <>
       <Helmet>
-        <title>Blog - Baking Great Bread</title>
-        <meta name="description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog. Learn troubleshooting methods, seasonal adjustments, and the science behind perfect bread." />
+        <title>Blog | Baking Great Bread at Home</title>
+        <meta name="description" content="Read the latest bread baking tutorials, tips, and stories from our community of home bakers. Learn techniques and discover new recipes." />
         <meta name="keywords" content="bread baking blog, sourdough tips, bread troubleshooting, baking techniques, Henry's bread recipes" />
         <link rel="canonical" href="https://bread-baking-hub.vercel.app/blog" />
         
         {/* Open Graph meta tags */}
-        <meta property="og:title" content="Blog - Baking Great Bread" />
-        <meta property="og:description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog. Learn troubleshooting methods, seasonal adjustments, and the science behind perfect bread." />
+        <meta property="og:title" content="Blog | Baking Great Bread at Home" />
+        <meta property="og:description" content="Read the latest bread baking tutorials, tips, and stories from our community of home bakers. Learn techniques and discover new recipes." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://bread-baking-hub.vercel.app/blog" />
-        <meta property="og:image" content="https://bread-baking-hub.vercel.app/lovable-uploads/2e6d4bc0-b25b-4ee5-94b9-d9baeb170152.png" />
+        <meta property="og:image" content="/lovable-uploads/1df33d05-6c4f-409b-a817-9b27e6d8edbc.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Baking Great Bread at Home Blog - Fresh baked bread with kitchen tools" />
-        <meta property="og:site_name" content="Baking Great Bread" />
+        <meta property="og:image:alt" content="Baking Great Bread at Home Blog - Bread making tutorials and tips" />
+        <meta property="og:site_name" content="Baking Great Bread at Home" />
         
         {/* Twitter Card meta tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Blog - Baking Great Bread" />
-        <meta name="twitter:description" content="Discover the latest bread baking tips, techniques, and recipes from Henry's blog." />
-        <meta name="twitter:image" content="https://bread-baking-hub.vercel.app/lovable-uploads/2e6d4bc0-b25b-4ee5-94b9-d9baeb170152.png" />
+        <meta name="twitter:title" content="Blog | Baking Great Bread at Home" />
+        <meta name="twitter:description" content="Read the latest bread baking tutorials, tips, and stories from our community of home bakers. Learn techniques and discover new recipes." />
+        <meta name="twitter:image" content="/lovable-uploads/1df33d05-6c4f-409b-a817-9b27e6d8edbc.png" />
         
         {/* RSS Feed Link */}
         <link rel="alternate" type="application/rss+xml" title="Baking Great Bread RSS Feed" href="https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/rss-feed" />
