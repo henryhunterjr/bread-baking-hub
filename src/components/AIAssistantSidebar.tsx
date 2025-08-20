@@ -31,7 +31,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
   const [micEnabled, setMicEnabled] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [timeoutWarning, setTimeoutWarning] = useState(false);
-  const [speechEnabled, setSpeechEnabled] = useState(false);
+  const [speechEnabled, setSpeechEnabled] = useState(true);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const warningTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -113,9 +113,17 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
     }
   }, [messages]);
 
-  // Auto-play Krusty's responses (only when sidebar is open, message is new, and speech is enabled)
+  // Auto-play Krusty's responses and initial greeting
   useEffect(() => {
     if (!isOpen || !speechEnabled) return;
+    
+    // Send initial greeting when sidebar opens for the first time with voice enabled
+    if (messages.length === 0 && speechEnabled) {
+      setTimeout(() => {
+        const greeting = "Hey there! I'm Krusty, your baking buddy! I'm speaking to you right now, but if you'd prefer to just read my responses, you can click the little speaker icon at the top of this chat to turn off my voice. Now, what can I help you bake today?";
+        speak(greeting);
+      }, 500);
+    }
     
     const lastMessage = messages[messages.length - 1];
     if (lastMessage && 
