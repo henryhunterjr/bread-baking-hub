@@ -36,10 +36,11 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const warningTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastSpokenMessageRef = useRef<string | null>(null);
+  const hasSpokenGreetingRef = useRef<boolean>(false);
   const { toast } = useToast();
   
   const { messages, isLoading, mode, setMode, sendMessage } = useAIChat({ recipeContext });
-  const { speak, isPlaying, showPlayButton, playPending } = useTextToSpeech();
+  const { speak, stop, isPlaying, showPlayButton, playPending } = useTextToSpeech();
 
   const speechRecognition = useSpeechRecognition({
     continuous: true,
@@ -115,14 +116,20 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
 
   // Auto-play Krusty's responses and initial greeting
   useEffect(() => {
-    if (!isOpen || !speechEnabled) return;
+    if (!isOpen || !speechEnabled) {
+      // Stop any current speech when sidebar closes or speech is disabled
+      stop();
+      return;
+    }
     
-    // Send initial greeting when sidebar opens for the first time with voice enabled
-    if (messages.length === 0 && speechEnabled) {
+    // Send initial greeting only once when sidebar opens for the first time
+    if (messages.length === 0 && speechEnabled && !hasSpokenGreetingRef.current) {
+      hasSpokenGreetingRef.current = true;
       setTimeout(() => {
         const greeting = "Hey there! I'm Krusty, your baking buddy! I'm speaking to you right now, but if you'd prefer to just read my responses, you can click the little speaker icon at the top of this chat to turn off my voice. Now, what can I help you bake today?";
         speak(greeting);
       }, 500);
+      return; // Don't process other messages during greeting
     }
     
     const lastMessage = messages[messages.length - 1];
@@ -133,7 +140,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
       lastSpokenMessageRef.current = lastMessage.id;
       speak(lastMessage.content);
     }
-  }, [messages, isLoading, isOpen, speechEnabled, speak]);
+  }, [messages, isLoading, isOpen, speechEnabled, speak, stop]);
 
   // Monitor speech recognition state and cleanup when it stops
   useEffect(() => {
@@ -272,7 +279,10 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setSpeechEnabled(!speechEnabled)}
+                onClick={() => {
+                  stop(); // Stop any current speech
+                  setSpeechEnabled(!speechEnabled);
+                }}
                 className={`touch-manipulation ${speechEnabled ? 'text-primary' : 'text-muted-foreground'}`}
                 title={speechEnabled ? "Turn off voice responses" : "Turn on voice responses"}
               >
@@ -281,7 +291,10 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
               <Button 
                 variant="ghost" 
                 size="sm" 
-                onClick={onToggle}
+                onClick={() => {
+                  stop(); // Stop any current speech
+                  onToggle();
+                }}
                 className="touch-manipulation"
               >
                 <X className="h-4 w-4" />
