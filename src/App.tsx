@@ -12,6 +12,7 @@ import { AccessibilityEnhancements, EnhancedSkipLink } from "@/components/Access
 import { PerformanceOptimizer, CriticalCSS } from "@/components/PerformanceOptimizer";
 import { ContentQualityChecker } from "@/components/ContentQualityChecker";
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Analytics } from '@vercel/analytics/react';
 import "@/utils/errorMonitoring";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import DefaultSEO from "./components/DefaultSEO";
@@ -91,6 +92,7 @@ function App() {
             <AccessibilityEnhancements />
             <ContentQualityChecker enabled={false} />
             <SpeedInsights />
+            <Analytics />
             <Toaster />
             <Sonner />
             <OfflineBanner />
