@@ -90,8 +90,24 @@ const Header = () => {
                 
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
+                    <Link to="/vitale-starter" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
+                      Vitale Starter
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
                     <Link to="/books" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
                       Library
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link to="/blog" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
+                      Blog
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
@@ -102,11 +118,6 @@ const Header = () => {
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="w-48 p-2">
-                      <NavigationMenuLink asChild>
-                        <Link to="/vitale-starter" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                          Vitale Starter
-                        </Link>
-                      </NavigationMenuLink>
                       <NavigationMenuLink asChild>
                         <Link to="/glossary" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
                           Glossary
@@ -120,11 +131,6 @@ const Header = () => {
                       <NavigationMenuLink asChild>
                         <Link to="/troubleshooting" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
                           Troubleshooting
-                        </Link>
-                      </NavigationMenuLink>
-                      <NavigationMenuLink asChild>
-                        <Link to="/blog" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                          Blog
                         </Link>
                       </NavigationMenuLink>
                       <NavigationMenuLink asChild>
