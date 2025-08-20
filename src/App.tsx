@@ -88,7 +88,7 @@ function App() {
             <CriticalCSS />
             <PerformanceOptimizer />
             <AccessibilityEnhancements />
-            <ContentQualityChecker />
+            <ContentQualityChecker enabled={false} />
             <Toaster />
             <Sonner />
             <OfflineBanner />

@@ -61,11 +61,11 @@ export const useTextToSpeech = () => {
       setShowPlayButton(false);
       setPendingText(null);
 
-      // Call our ElevenLabs edge function with default Aria voice
+      // Call our ElevenLabs edge function with user's custom voice
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: { 
           text,
-          voiceId: '9BWtsMINqrJLrRacOk9x' // Aria - default working voice
+          voiceId: 'VQWIG7jHNSEv826utbm8' // User's custom voice
         }
       });
 
