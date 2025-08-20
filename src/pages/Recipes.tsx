@@ -68,7 +68,7 @@ const Recipes = () => {
         <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
       </Helmet>
       
-      <main>
+      <main id="main-content" role="main" tabIndex={-1}>
         {/* Hero Section with Book Card */}
         <div className="relative h-[600px] overflow-hidden">
           <ResponsiveImage 

@@ -492,13 +492,15 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
             onTouchEnd={onTouchEnd}
           >
             <DialogHeader className="py-4 sm:py-6">
-              {/* Accessible title and description - properly structured */}
-              <DialogTitle id="recipe-modal-title" className="sr-only">
-                {recipe.title} - Seasonal Recipe Details
+              {/* Accessible title and description - properly structured for screen readers */}
+              <DialogTitle id="recipe-modal-title">
+                <span className="sr-only">{recipe.title} - Seasonal Recipe Details</span>
               </DialogTitle>
-              <DialogDescription id="recipe-modal-description" className="sr-only">
-                Detailed view of {recipe.title}, a {recipe.data.season?.toLowerCase()} recipe including ingredients, instructions, ratings, and reviews. 
-                This recipe serves {recipe.data.yield} and has a {recipe.data.difficulty} difficulty level.
+              <DialogDescription id="recipe-modal-description">
+                <span className="sr-only">
+                  Detailed view of {recipe.title}, a {recipe.data.season?.toLowerCase()} recipe including ingredients, instructions, ratings, and reviews. 
+                  This recipe serves {recipe.data.yield} and has a {recipe.data.difficulty} difficulty level.
+                </span>
               </DialogDescription>
               
               {/* JSON-LD for Recipe */}
