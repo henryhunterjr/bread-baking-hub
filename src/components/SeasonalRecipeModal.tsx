@@ -179,14 +179,15 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     load();
   }, [recipe?.id, user?.id]);
 
-  // Robust scroll position management
+  // Scroll position management - completely manual approach
   const scrollPositionRef = useRef<number>(0);
+  const isRestoringRef = useRef<boolean>(false);
   
   useEffect(() => {
-    if (recipe) {
+    if (recipe && !isRestoringRef.current) {
       // Opening modal - capture and lock scroll
       scrollPositionRef.current = window.scrollY;
-      console.log(`🔒 Capturing scroll position: ${scrollPositionRef.current}`);
+      console.log(`🔒 Modal opening - capturing scroll position: ${scrollPositionRef.current}`);
       
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
@@ -194,10 +195,12 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
       document.body.style.width = '100%';
       document.body.style.left = '0';
       document.body.style.right = '0';
-    } else {
-      // Closing modal - restore scroll
-      console.log(`🔓 Restoring scroll to: ${scrollPositionRef.current}`);
+    } else if (!recipe && !isRestoringRef.current) {
+      // Modal is closing - restore scroll position
+      isRestoringRef.current = true; // Prevent re-entry
+      console.log(`🔓 Modal closing - restoring scroll to: ${scrollPositionRef.current}`);
       
+      // Clear body styles immediately
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.top = '';
@@ -205,13 +208,60 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
       document.body.style.left = '';
       document.body.style.right = '';
       
-      // Use setTimeout to ensure DOM has updated
-      setTimeout(() => {
+      // Force scroll restoration with aggressive retry
+      const performRestore = () => {
+        console.log(`🔄 Attempting to restore scroll to: ${scrollPositionRef.current}`);
         window.scrollTo(0, scrollPositionRef.current);
-        console.log(`🔓 Final scroll position: ${window.scrollY}`);
-      }, 0);
+        
+        // Verify restoration worked
+        setTimeout(() => {
+          const currentScroll = window.scrollY;
+          console.log(`🔍 Current scroll after restore: ${currentScroll}, target: ${scrollPositionRef.current}`);
+          
+          if (Math.abs(currentScroll - scrollPositionRef.current) > 5) {
+            console.log(`🔄 Scroll restoration incomplete, retrying...`);
+            window.scrollTo(0, scrollPositionRef.current);
+            
+            // Final fallback attempt
+            setTimeout(() => {
+              window.scrollTo(0, scrollPositionRef.current);
+              console.log(`🔄 Final restore attempt, current scroll: ${window.scrollY}`);
+              isRestoringRef.current = false; // Allow future restorations
+            }, 200);
+          } else {
+            console.log(`✅ Scroll restoration successful`);
+            isRestoringRef.current = false; // Allow future restorations
+          }
+        }, 100);
+      };
+      
+      // Multiple timing strategies for restoration
+      performRestore(); // Immediate
+      requestAnimationFrame(performRestore); // Next frame
+      setTimeout(performRestore, 50); // Small delay
+      setTimeout(performRestore, 150); // Larger delay as fallback
     }
   }, [recipe]);
+
+  // Simplified close handler with extensive debugging
+  const handleClose = useCallback(() => {
+    console.log(`🚪 MODAL CLOSE - Starting close process`);
+    console.log(`🚪 Current recipe state:`, recipe);
+    console.log(`🚪 Current scroll position captured:`, scrollPositionRef.current);
+    console.log(`🚪 isRestoringRef:`, isRestoringRef.current);
+    
+    // Reset all local state
+    setServings(baseServings);
+    setReviewText('');
+    setReviewFile(null);
+    setSubmittingReview(false);
+    setLoadingEngagement(false);
+    
+    console.log(`🚪 About to call onClose()`);
+    // Call parent close handler - this will set recipe to null and trigger scroll restoration
+    onClose();
+    console.log(`🚪 onClose() called`);
+  }, [baseServings, onClose, recipe]);
 
   // Focus management and DOM cleanup effects
   useEffect(() => {
@@ -263,31 +313,6 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
       }
     };
   }, [recipe]);
-
-  // Enhanced close handler with detailed logging
-  const handleClose = useCallback(() => {
-    console.log(`🚪 MODAL CLOSE - Starting close process`);
-    console.log(`🚪 Body overflow before close: "${document.body.style.overflow}"`);
-    console.log(`🚪 Body position before close: "${document.body.style.position}"`);
-    
-    // Reset all local state
-    setServings(baseServings);
-    setReviewText('');
-    setReviewFile(null);
-    setSubmittingReview(false);
-    setLoadingEngagement(false);
-    
-    // Add a small delay to ensure scroll lock cleanup completes
-    setTimeout(() => {
-      console.log(`🚪 MODAL CLOSE - After timeout`);
-      console.log(`🚪 Body overflow after close: "${document.body.style.overflow}"`);
-      console.log(`🚪 Body position after close: "${document.body.style.position}"`);
-      console.log(`🚪 Can scroll after close: ${document.body.scrollHeight > window.innerHeight ? 'YES' : 'NO'}`);
-    }, 200);
-    
-    // Call parent close handler
-    onClose();
-  }, [baseServings, onClose]);
 
   // Swipe-down to close on mobile
   const touchStart = useRef<{ x: number; y: number } | null>(null);
