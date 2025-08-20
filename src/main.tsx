@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from 'react-helmet-async'
 import { registerSW } from 'virtual:pwa-register'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import App from './App.tsx'
 import './index.css'
 
@@ -20,6 +21,7 @@ createRoot(document.getElementById("root")!).render(
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <App />
+      <SpeedInsights />
     </QueryClientProvider>
   </HelmetProvider>
 );
