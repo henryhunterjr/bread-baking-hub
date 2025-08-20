@@ -248,7 +248,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
   }
 
   return (
-    <div className={`fixed ${isMobile ? 'inset-0' : 'right-0 top-0'} ${isMobile ? 'w-full h-full' : 'h-full w-96'} bg-background ${isMobile ? '' : 'border-l border-border'} shadow-warm z-40`}>
+    <div className={`fixed ${isMobile ? 'inset-0' : 'right-0 top-0'} ${isMobile ? 'w-full h-full' : 'h-full w-96'} bg-background ${isMobile ? '' : 'border-l border-border'} shadow-warm z-50`}>
       <Card className="h-full rounded-none border-0">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
@@ -371,7 +371,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
             </div>
           </ScrollArea>
 
-          <div className="flex gap-2 mt-4">
+          <div className="flex gap-2 mt-4 relative z-10">
             <div className="flex-1 relative">
               <Input
                 value={input}
@@ -383,9 +383,9 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
                   "Ask about baking..."
                 }
                 disabled={isLoading || !isOnline}
-                className="pr-24"
+                className="pr-24 relative z-10"
               />
-              <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-1">
+              <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-1 z-20">
                 {timeoutWarning && (
                   <span className="text-xs text-amber-600 animate-pulse mr-1">
                     Still listening...
@@ -394,7 +394,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
                 <Button
                   variant="ghost"
                   size="sm"
-                  className={`h-8 w-8 transition-colors ${
+                  className={`h-8 w-8 transition-colors relative z-20 ${
                     micEnabled ? 'text-red-500 hover:text-red-600' : 'text-muted-foreground hover:text-foreground'
                   }`}
                   onClick={toggleMic}
@@ -412,7 +412,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
                 onClick={() => handleSend()} 
                 disabled={!input.trim() || isLoading || !isOnline}
                 variant="hero"
-                className="touch-manipulation"
+                className="touch-manipulation relative z-20"
               >
                 <Send className="h-4 w-4" />
               </Button>
