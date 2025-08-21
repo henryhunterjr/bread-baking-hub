@@ -17,6 +17,82 @@
     <!-- Google Fonts (swap for faster rendering) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap">
 
+    <!-- Immediate og:image script for social media crawlers -->
+    <script>
+      (function() {
+        var path = window.location.pathname;
+        var ogImage = '';
+        var ogTitle = 'Baking Great Bread at Home – Recipes, Tools & Community Hub';
+        var ogDescription = 'Proven recipes and expert techniques for exceptional homemade bread.';
+        
+        // Set page-specific og:image based on path
+        if (path.includes('/blog/')) {
+          ogImage = 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif';
+        } else if (path === '/workspace') {
+          ogImage = '/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png';
+          ogTitle = 'Bread Baking Workspace | Baking Great Bread';
+          ogDescription = 'Your personal bread baking workspace with recipes, tools, and progress tracking.';
+        } else if (path === '/about') {
+          ogImage = '/lovable-uploads/c851e2b3-f2f7-4b52-9e98-d4e6f7c44ff8.png';
+          ogTitle = 'About Henry Hunter | Baking Great Bread';
+          ogDescription = 'Learn about Henry Hunter and his passion for teaching exceptional bread baking techniques.';
+        } else if (path === '/contact') {
+          ogImage = '/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png';
+          ogTitle = 'Contact Us | Baking Great Bread';
+          ogDescription = 'Get in touch with us for bread baking questions, feedback, or collaboration opportunities.';
+        } else if (path === '/my-recipes') {
+          ogImage = '/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png';
+          ogTitle = 'My Recipe Library | Baking Great Bread';
+          ogDescription = 'Save and organize your favorite bread recipes in your personal library.';
+        } else {
+          // Default homepage image
+          ogImage = 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif';
+        }
+        
+        // Convert relative URLs to absolute
+        if (ogImage.startsWith('/')) {
+          ogImage = 'https://bread-baking-hub.vercel.app' + ogImage;
+        }
+        
+        // Create and inject meta tags immediately
+        var meta = document.createElement('meta');
+        meta.setAttribute('property', 'og:image');
+        meta.setAttribute('content', ogImage);
+        document.head.appendChild(meta);
+        
+        var metaTitle = document.createElement('meta');
+        metaTitle.setAttribute('property', 'og:title');
+        metaTitle.setAttribute('content', ogTitle);
+        document.head.appendChild(metaTitle);
+        
+        var metaDesc = document.createElement('meta');
+        metaDesc.setAttribute('property', 'og:description');
+        metaDesc.setAttribute('content', ogDescription);
+        document.head.appendChild(metaDesc);
+        
+        var metaType = document.createElement('meta');
+        metaType.setAttribute('property', 'og:type');
+        metaType.setAttribute('content', 'website');
+        document.head.appendChild(metaType);
+        
+        var metaUrl = document.createElement('meta');
+        metaUrl.setAttribute('property', 'og:url');
+        metaUrl.setAttribute('content', 'https://bread-baking-hub.vercel.app' + path);
+        document.head.appendChild(metaUrl);
+        
+        // Twitter cards
+        var twitterCard = document.createElement('meta');
+        twitterCard.setAttribute('name', 'twitter:card');
+        twitterCard.setAttribute('content', 'summary_large_image');
+        document.head.appendChild(twitterCard);
+        
+        var twitterImage = document.createElement('meta');
+        twitterImage.setAttribute('name', 'twitter:image');
+        twitterImage.setAttribute('content', ogImage);
+        document.head.appendChild(twitterImage);
+      })();
+    </script>
+
   </head>
 
   <body>
