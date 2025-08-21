@@ -2,6 +2,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useAuth } from '@/hooks/useAuth';
 import { useRecipeWorkspace } from '@/hooks/useRecipeWorkspace';
 import { Hero } from '@/components/ui/Hero';
+import { Helmet } from 'react-helmet-async';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -19,8 +20,33 @@ const RecipeWorkspace = () => {
   const workspace = useRecipeWorkspace();
 
   return (
-    <div className="bg-background text-foreground min-h-screen relative">
-      <Header />
+    <>
+      <Helmet>
+        <title>Recipe Workspace | Baking Great Bread at Home</title>
+        <meta name="description" content="Your complete recipe creation studio. Upload, format, edit, and save your recipes with AI assistance. Create professional recipe cards and organize your baking collection." />
+        <link rel="canonical" href="https://the-bakers-bench.lovable.app/workspace" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Recipe Workspace | Baking Great Bread at Home" />
+        <meta property="og:description" content="Your complete recipe creation studio. Upload, format, edit, and save your recipes with AI assistance. Create professional recipe cards and organize your baking collection." />
+        <meta property="og:url" content="https://the-bakers-bench.lovable.app/workspace" />
+        <meta property="og:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/7c954928-23fe-4169-bec1-ffa0629d80f2.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Recipe workspace - kitchen counter with tablet, notebook, and baking tools" />
+        <meta property="og:site_name" content="Baking Great Bread at Home" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Recipe Workspace | Baking Great Bread at Home" />
+        <meta name="twitter:description" content="Your complete recipe creation studio. Upload, format, edit, and save your recipes with AI assistance. Create professional recipe cards and organize your baking collection." />
+        <meta name="twitter:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/7c954928-23fe-4169-bec1-ffa0629d80f2.png" />
+        <meta name="twitter:image:alt" content="Recipe workspace - kitchen counter with tablet, notebook, and baking tools" />
+      </Helmet>
+      
+      <div className="bg-background text-foreground min-h-screen relative">
+        <Header />
       <main className={`py-20 px-4 ${user ? 'pb-32' : ''}`}>
         <div className="max-w-6xl mx-auto space-y-8">
           
@@ -83,7 +109,8 @@ const RecipeWorkspace = () => {
       {user && (
         <RecipeQuickAccessDrawer onRecipeSelect={workspace.handleRecipeSelect} />
       )}
-    </div>
+      </div>
+    </>
   );
 };
 

@@ -16,7 +16,8 @@ export const GlobalSEOInitializer = () => {
       const existingOgImage = document.querySelector('meta[property="og:image"]');
       const hasPageSpecificSEO = existingOgImage && 
         (existingOgImage.getAttribute('content')?.includes('218723c3-e566-4b81-a9e5-a341a5e61037') || // recipes image
-         existingOgImage.getAttribute('content')?.includes('1df33d05-6c4f-409b-a817-9b27e6d8edbc')); // blog image
+         existingOgImage.getAttribute('content')?.includes('1df33d05-6c4f-409b-a817-9b27e6d8edbc') || // blog image
+         existingOgImage.getAttribute('content')?.includes('7c954928-23fe-4169-bec1-ffa0629d80f2')); // workspace image
       
       setShouldRenderDefaultSEO(!hasPageSpecificSEO);
     };
