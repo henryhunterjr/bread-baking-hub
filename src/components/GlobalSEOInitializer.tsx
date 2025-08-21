@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AccessibilityChecker } from './AccessibilityChecker';
 import { SEOOptimizer } from './SEOOptimizer';
@@ -7,6 +7,26 @@ import PerformanceOptimizer from '../utils/performanceOptimizer';
 // Global SEO and performance initialization component
 export const GlobalSEOInitializer = () => {
   const location = useLocation();
+  const [shouldRenderDefaultSEO, setShouldRenderDefaultSEO] = useState(true);
+
+  // Check if page already has specific Open Graph meta tags
+  useEffect(() => {
+    const checkForExistingSEO = () => {
+      // Check if page-specific og:image meta tag exists
+      const existingOgImage = document.querySelector('meta[property="og:image"]');
+      const hasPageSpecificSEO = existingOgImage && 
+        (existingOgImage.getAttribute('content')?.includes('218723c3-e566-4b81-a9e5-a341a5e61037') || // recipes image
+         existingOgImage.getAttribute('content')?.includes('1df33d05-6c4f-409b-a817-9b27e6d8edbc')); // blog image
+      
+      setShouldRenderDefaultSEO(!hasPageSpecificSEO);
+    };
+
+    // Check immediately and after a small delay to catch dynamically added meta tags
+    checkForExistingSEO();
+    const timeoutId = setTimeout(checkForExistingSEO, 50);
+
+    return () => clearTimeout(timeoutId);
+  }, [location.pathname]);
 
   useEffect(() => {
     // Initialize performance optimizer
@@ -194,7 +214,7 @@ export const GlobalSEOInitializer = () => {
 
   return (
     <>
-      <SEOOptimizer />
+      {shouldRenderDefaultSEO && <SEOOptimizer />}
       {process.env.NODE_ENV === 'development' && <AccessibilityChecker />}
     </>
   );
