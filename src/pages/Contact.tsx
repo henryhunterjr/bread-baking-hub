@@ -74,10 +74,19 @@ const Contact = () => {
         <meta property="og:title" content="Contact Henry Hunter - Bread Baking Expert | Baking Great Bread" />
         <meta property="og:description" content="Get in touch with Henry Hunter for bread baking questions, coaching, or collaborations. Personal responses within 24 hours." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://bread-baking-hub.vercel.app/contact" />
-        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
+        <meta property="og:url" content="https://the-bakers-bench.lovable.app/contact" />
+        <meta property="og:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/c851e2b3-f2f7-4b52-9e98-d4e6f7c44ff8.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Contact Henry Hunter - Bread Baking Expert" />
+        <meta property="og:site_name" content="Baking Great Bread at Home" />
+        
+        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
+        <meta name="twitter:title" content="Contact Henry Hunter - Bread Baking Expert | Baking Great Bread" />
+        <meta name="twitter:description" content="Get in touch with Henry Hunter for bread baking questions, coaching, or collaborations. Personal responses within 24 hours." />
+        <meta name="twitter:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/c851e2b3-f2f7-4b52-9e98-d4e6f7c44ff8.png" />
+        <meta name="twitter:image:alt" content="Contact Henry Hunter - Bread Baking Expert" />
       </Helmet>
       
       <div className="min-h-screen bg-background">

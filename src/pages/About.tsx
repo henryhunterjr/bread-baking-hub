@@ -16,10 +16,22 @@ const About = () => {
         <title>About Henry Hunter | Baking Great Bread at Home</title>
         <meta name="description" content="Meet Henry Hunter, master baker and founder of Baking Great Bread at Home. Learn his story, mission, and approach to teaching bread baking." />
         <link rel="canonical" href="https://bread-baking-hub.vercel.app/about" />
-        <meta property="og:title" content="About Henry Hunter" />
-        <meta property="og:description" content="Master baker, author, and founder of Baking Great Bread at Home." />
-        <meta property="og:url" content="https://bread-baking-hub.vercel.app/about" />
+        <meta property="og:title" content="About Henry Hunter | Baking Great Bread at Home" />
+        <meta property="og:description" content="Meet Henry Hunter, master baker and founder of Baking Great Bread at Home. Learn his story, mission, and approach to teaching bread baking." />
+        <meta property="og:url" content="https://the-bakers-bench.lovable.app/about" />
         <meta property="og:type" content="profile" />
+        <meta property="og:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Henry Hunter - Master Baker and Author" />
+        <meta property="og:site_name" content="Baking Great Bread at Home" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="About Henry Hunter | Baking Great Bread at Home" />
+        <meta name="twitter:description" content="Meet Henry Hunter, master baker and founder of Baking Great Bread at Home. Learn his story, mission, and approach to teaching bread baking." />
+        <meta name="twitter:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png" />
+        <meta name="twitter:image:alt" content="Henry Hunter - Master Baker and Author" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Person",

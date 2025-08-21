@@ -17,7 +17,10 @@ export const GlobalSEOInitializer = () => {
       const hasPageSpecificSEO = existingOgImage && 
         (existingOgImage.getAttribute('content')?.includes('218723c3-e566-4b81-a9e5-a341a5e61037') || // recipes image
          existingOgImage.getAttribute('content')?.includes('1df33d05-6c4f-409b-a817-9b27e6d8edbc') || // blog image
-         existingOgImage.getAttribute('content')?.includes('7c954928-23fe-4169-bec1-ffa0629d80f2')); // workspace image
+         existingOgImage.getAttribute('content')?.includes('7c954928-23fe-4169-bec1-ffa0629d80f2') || // workspace image
+         existingOgImage.getAttribute('content')?.includes('e9d4e95a-2202-46e4-9b07-ae4646daff63') || // about image
+         existingOgImage.getAttribute('content')?.includes('c851e2b3-f2f7-4b52-9e98-d4e6f7c44ff8') || // contact image
+         existingOgImage.getAttribute('content')?.includes('43da7651-de36-46f7-ab6a-22e594aed31b')); // my-recipes image
       
       setShouldRenderDefaultSEO(!hasPageSpecificSEO);
     };
