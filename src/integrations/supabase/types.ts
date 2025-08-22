@@ -1388,35 +1388,36 @@ export type Database = {
         Returns: boolean
       }
       search_blog_posts: {
-        Args: {
-          limit_count?: number
-          search_query: string
-          tag_filters?: string[]
-        }
+        Args:
+          | { limit_count?: number; search_query: string }
+          | {
+              limit_count?: number
+              search_query: string
+              tag_filters?: string[]
+            }
         Returns: {
           excerpt: string
           hero_image_url: string
           id: string
-          published_at: string
           search_rank: number
           slug: string
-          subtitle: string
           tags: string[]
           title: string
         }[]
       }
       search_recipes: {
-        Args: {
-          dietary_filters?: string[]
-          difficulty_filter?: string
-          ingredients_filter?: string[]
-          limit_count?: number
-          prep_time_max?: number
-          search_query: string
-          total_time_max?: number
-        }
+        Args:
+          | {
+              dietary_filters?: string[]
+              difficulty_filter?: string
+              ingredients_filter?: string[]
+              limit_count?: number
+              prep_time_max?: number
+              search_query: string
+              total_time_max?: number
+            }
+          | { limit_count?: number; search_query: string }
         Returns: {
-          created_at: string
           excerpt: string
           id: string
           image_url: string
@@ -1424,7 +1425,6 @@ export type Database = {
           slug: string
           tags: string[]
           title: string
-          user_id: string
         }[]
       }
       set_limit: {
