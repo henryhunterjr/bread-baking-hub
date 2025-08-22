@@ -12,6 +12,9 @@ interface ResponsiveImageProps {
   tabletSrc?: string;
   desktopSrc?: string;
   loading?: 'lazy' | 'eager';
+  width?: number;
+  height?: number;
+  aspectRatio?: string;
   onLoad?: () => void;
   onError?: () => void;
 }
@@ -28,6 +31,9 @@ export const ResponsiveImage = ({
   tabletSrc,
   desktopSrc,
   loading = 'lazy',
+  width,
+  height,
+  aspectRatio,
   onLoad,
   onError
 }: ResponsiveImageProps) => {
@@ -135,12 +141,18 @@ export const ResponsiveImage = ({
           srcSet={srcSet}
           sizes={sizes}
           alt={alt}
+          width={width}
+          height={height}
           loading={priority ? 'eager' : loading}
           decoding="async"
           {...(priority && { fetchPriority: 'high' })}
           className={`w-full h-full object-cover transition-opacity duration-300 ${
             imageLoaded ? 'opacity-100' : 'opacity-0'
           }`}
+          style={{
+            ...(aspectRatio && { aspectRatio }),
+            ...(width && height && !aspectRatio && { aspectRatio: `${width}/${height}` })
+          }}
           onLoad={handleLoad}
           onError={handleError}
           role="img"
