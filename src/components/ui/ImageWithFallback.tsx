@@ -95,7 +95,7 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   }, [src, currentSrc, hasErrored, fallbackImage]);
 
   return (
-    <div className="relative overflow-hidden">
+    <div className={`relative overflow-hidden ${!width || !height ? 'aspect-video' : ''}`}>
       <img
         src={currentSrc}
         alt={alt}
@@ -104,7 +104,10 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
         height={height}
         loading={priority ? 'eager' : loading}
         sizes={sizes}
-        style={style}
+        style={{
+          ...style,
+          ...(width && height && { aspectRatio: `${width}/${height}` })
+        }}
         onLoad={handleLoad}
         onError={handleError}
         {...(priority && { fetchPriority: 'high' as const })}
