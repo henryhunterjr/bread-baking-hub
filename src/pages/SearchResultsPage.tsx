@@ -16,6 +16,53 @@ import { supabase } from '@/integrations/supabase/client';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 import { logger } from '@/utils/logger';
 
+// Helper functions for tokenized client-side search
+const tokenize = (q: string) => q.toLowerCase().trim().split(/\s+/).filter(Boolean);
+
+const clientFilter = (q: string, recipes: any[], posts: any[]) => {
+  const tokens = tokenize(q);
+  const score = (title: string, excerpt: string, tags: string[] = []) => {
+    let s = 0;
+    tokens.forEach(t => {
+      if (title.toLowerCase().includes(t)) s += 2;
+      if (excerpt.toLowerCase().includes(t)) s += 1;
+      if (tags.some(tag => tag.toLowerCase().includes(t))) s += 1.5;
+    });
+    return s;
+  };
+
+  const recs = recipes.filter(r =>
+    tokens.every(t =>
+      r.title.toLowerCase().includes(t) ||
+      (r.data?.excerpt || '').toLowerCase().includes(t) ||
+      (r.tags || []).some(tag => tag.toLowerCase().includes(t))
+    )
+  ).map(r => ({ 
+    ...r, 
+    type: 'recipe', 
+    search_rank: score(r.title, r.data?.excerpt || '', r.tags),
+    excerpt: r.data?.excerpt || '',
+    url: `/recipes/${r.slug ?? r.id}`,
+    image_url: r.image_url
+  }));
+
+  const blg = posts.filter(p =>
+    tokens.every(t =>
+      p.title.toLowerCase().includes(t) ||
+      (p.excerpt || '').toLowerCase().includes(t) ||
+      (p.tags || []).some(tag => tag.toLowerCase().includes(t))
+    )
+  ).map(p => ({ 
+    ...p, 
+    type: 'blog_post', 
+    search_rank: score(p.title, p.excerpt || '', p.tags),
+    url: `/blog/${p.slug}`,
+    image_url: p.hero_image_url
+  }));
+
+  return [...recs, ...blg].sort((a,b) => (b.search_rank ?? 0) - (a.search_rank ?? 0));
+};
+
 interface SearchResult {
   id: string;
   title: string;
@@ -44,6 +91,7 @@ const SearchResultsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [totalResults, setTotalResults] = useState(0);
+  const [clientCache, setClientCache] = useState<{recipes: any[]; posts: any[]}>({recipes: [], posts: []});
 
   const [filters, setFilters] = useState<SearchFilters>({
     contentType: 'all',
@@ -59,6 +107,42 @@ const SearchResultsPage = () => {
   ];
 
   const difficultyOptions = ['beginner', 'intermediate', 'advanced'];
+
+  // Load client cache for fallback search
+  useEffect(() => {
+    let cancelled = false;
+    const loadClientCache = async () => {
+      try {
+        // Load basic recipe data for fallback
+        const { data: recipes, error: rErr } = await supabase
+          .from('recipes')
+          .select('id,title,slug,tags,image_url,data,is_public')
+          .eq('is_public', true)
+          .limit(100);
+        if (rErr) logger.warn('recipes cache load error', rErr);
+
+        // Load basic blog post data for fallback  
+        const { data: posts, error: pErr } = await supabase
+          .from('blog_posts')
+          .select('id,title,slug,excerpt,tags,hero_image_url,published_at,is_draft')
+          .eq('is_draft', false)
+          .not('published_at', 'is', null)
+          .limit(100);
+        if (pErr) logger.warn('blog_posts cache load error', pErr);
+
+        if (!cancelled) {
+          setClientCache({
+            recipes: recipes ?? [],
+            posts: posts ?? []
+          });
+        }
+      } catch (e) {
+        logger.error('client cache load failed', e);
+      }
+    };
+    loadClientCache();
+    return () => { cancelled = true; };
+  }, []);
 
   // Perform search when query or filters change
   useEffect(() => {
@@ -77,7 +161,7 @@ const SearchResultsPage = () => {
   const performSearch = async () => {
     setIsLoading(true);
     try {
-      const allResults: SearchResult[] = [];
+      let allResults: SearchResult[] = [];
       let hasErrors = false;
 
       // Search recipes if not filtering to specific type
@@ -150,6 +234,23 @@ const SearchResultsPage = () => {
         allResults.push(...glossaryResults);
       }
 
+      // Client-side fallback if no server results
+      if (allResults.length === 0) {
+        logger.log('No server results, trying client-side fallback');
+        const fallbackResults = clientFilter(query, clientCache.recipes, clientCache.posts);
+        allResults = fallbackResults.map(result => ({
+          id: result.id,
+          title: result.title,
+          excerpt: result.excerpt || '',
+          type: result.type as 'recipe' | 'blog_post',
+          url: result.url,
+          image_url: result.image_url,
+          tags: result.tags,
+          published_at: result.published_at,
+          search_rank: result.search_rank
+        }));
+      }
+
       // Sort by relevance (search_rank desc), then by published date (desc)
       allResults.sort((a, b) => {
         const rankDiff = (b.search_rank || 0) - (a.search_rank || 0);
@@ -175,11 +276,6 @@ const SearchResultsPage = () => {
         });
       } catch (error) {
         logger.warn('Failed to log search analytics:', error);
-      }
-
-      // Show fallback message if all RPCs failed
-      if (hasErrors && allResults.length === 0) {
-        logger.warn('All search RPCs failed, showing fallback message');
       }
 
     } catch (error) {
@@ -384,18 +480,9 @@ const SearchResultsPage = () => {
                 <p className="text-lg text-muted-foreground mb-4">
                   No results found for "{query}"
                 </p>
-                <div className="space-y-4">
-                  <p className="text-sm text-muted-foreground">Try:</p>
-                  <ul className="text-sm text-muted-foreground space-y-1">
-                    <li>• Checking your spelling</li>
-                    <li>• Using different keywords</li>
-                    <li>• Removing some filters</li>
-                    <li>• Searching for broader terms</li>
-                  </ul>
-                  <p className="text-xs text-muted-foreground mt-4">
-                    If you're experiencing search issues, please try again later.
-                  </p>
-                </div>
+                <p className="text-sm text-muted-foreground">
+                  No results. Try fewer words or different terms.
+                </p>
               </div>
             ) : (
               <Tabs value={filters.contentType} onValueChange={(value: any) => handleFilterChange('contentType', value)}>
