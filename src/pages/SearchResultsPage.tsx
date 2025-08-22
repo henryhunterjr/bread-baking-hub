@@ -218,7 +218,7 @@ const SearchResultsPage = () => {
               url: `/blog/${post.slug}`,
               image_url: post.hero_image_url,
               tags: post.tags,
-              published_at: post.published_at,
+              published_at: new Date().toISOString(),
               search_rank: post.search_rank
             })));
           }

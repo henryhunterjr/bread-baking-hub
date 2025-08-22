@@ -158,8 +158,8 @@ const Blog = () => {
             <h1 className="sr-only">Baking Great Bread Blog</h1>
             <div className="max-w-7xl mx-auto">
               <ResponsiveImage
-                src="/lovable-uploads/b5e1dc0c-46f0-43df-9624-3a332d98ec4e.png"
-                alt="Baking Great Bread at Home Blog hero image featuring a cozy kitchen scene with bread, bowls, and baking tools"
+                src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-blog-recipes-tips-and-expert-guidance/untitled-600-x-300-px-1200-x-630-px-1200-x-600-px-1200-x-500-px-1200-x-450-px.png"
+                alt="Rustic kitchen scene with wooden cutting board displaying Baking Great Bread at Home Blog text, surrounded by baking ingredients, rolling pin, mixing bowls, and fresh flowers"
                 className="rounded-2xl shadow-warm w-full"
                 priority={true}
                 sizes="(max-width: 768px) 100vw, 1200px"
