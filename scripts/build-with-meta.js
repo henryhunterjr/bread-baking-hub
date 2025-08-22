@@ -27,12 +27,12 @@ const routeMetaData = {
     description: 'Read our latest articles on bread baking...',
     image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-blog/scoring-1200-x-250-px-1280-x-720-px.png'
   },
-  '/workspace': {
+  '/recipe-workspace': {
     title: 'Recipe Work Space - AI-Powered Recipe Creation',
     description: 'Create and format recipes with our AI-powered studio...',
     image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/recipe-work-space-ai-powered-recipe-creation-and-formatting-studio/sunday-fun-day-1200-x-630-px.png'
   },
-  '/vitale': {
+  '/vitale-starter': {
     title: 'Vitale - Dehydrated Sourdough Starter',
     description: 'Baking bread in just 3 days with Vitale...',
     image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/vitale-dehydrated-sourdough-starter-baking-bread-in-just-3-days/vitale-thumbnail.png'
@@ -52,7 +52,7 @@ const routeMetaData = {
     description: 'Find solutions to common bread baking problems...',
     image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/troubleshooting-solve-your-bread-baking-challenges-and-problems/troubleshooting.png'
   },
-  '/library': {
+  '/books': {
     title: 'The Library - Bread Baking Books and Resources Collection',
     description: 'Your personal recipe collection...',
     image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/the-library-bread-baking-books-and-resources-collection/the-library.png'
@@ -64,12 +64,12 @@ const routesToGenerate = [
   '/',
   '/blog',
   '/recipes',
-  '/workspace',
-  '/vitale',
+  '/recipe-workspace',
+  '/vitale-starter',
   '/glossary',
   '/community',
   '/troubleshooting',
-  '/library'
+  '/books'
 ];
 
 function generateHtmlForRoute(route, templateContent) {
