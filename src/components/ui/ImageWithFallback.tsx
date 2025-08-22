@@ -1,15 +1,15 @@
 import React, { useState, useCallback, useRef } from 'react';
+import { cn } from '@/lib/utils';
 
-interface ImageWithFallbackProps {
-  src: string;
-  alt: string;
-  className?: string;
+interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+  src?: string;
+  alt?: string;
+  fallbackSrc?: string;
   width?: number;
   height?: number;
   priority?: boolean;
   sizes?: string;
   loading?: 'lazy' | 'eager';
-  style?: React.CSSProperties;
   onLoad?: () => void;
   onError?: () => void;
 }
@@ -19,26 +19,24 @@ const loggedErrors = new Set<string>();
 
 export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   src,
-  alt,
-  className = '',
+  alt = "Image",
+  fallbackSrc = '/assets/recipe-placeholder.svg',
+  className,
   width,
   height,
   priority = false,
   sizes,
   loading = 'lazy',
-  style,
   onLoad,
   onError,
+  ...props
 }) => {
-  const fallbackImage = '/assets/recipe-placeholder.svg';
-  
-  const [currentSrc, setCurrentSrc] = useState(src || fallbackImage);
-  const [hasErrored, setHasErrored] = useState(!src);
+  const [error, setError] = useState(false);
   const retryCount = useRef(0);
 
-  const logError = useCallback((url: string, error?: string) => {
+  const logError = useCallback((url: string, errorMsg?: string) => {
     if (!loggedErrors.has(url)) {
-      console.error(`ImageWithFallback: Failed to load image: ${url}`, error || '');
+      console.error(`ImageWithFallback: Failed to load image: ${url}`, errorMsg || '');
       loggedErrors.add(url);
     }
   }, []);
@@ -48,7 +46,7 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     const failedSrc = imgElement.src;
 
     // Don't retry if we're already on the fallback image
-    if (failedSrc.includes('/assets/recipe-placeholder.svg')) {
+    if (failedSrc.includes(fallbackSrc)) {
       logError(failedSrc, 'Fallback image also failed');
       return;
     }
@@ -57,13 +55,13 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     logError(failedSrc);
 
     // Retry once for transient network failures
-    if (retryCount.current === 0) {
+    if (retryCount.current === 0 && src) {
       retryCount.current = 1;
       
       setTimeout(() => {
         // Check if the image is still in the DOM and hasn't been replaced
-        if (imgElement.src === failedSrc && !hasErrored) {
-          setCurrentSrc(src + '?retry=1'); // Add cache-busting parameter
+        if (imgElement.src === failedSrc && !error) {
+          imgElement.src = src + '?retry=1'; // Add cache-busting parameter
         }
       }, 250);
       
@@ -71,46 +69,47 @@ export const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
     }
 
     // After retry fails, use fallback
-    setHasErrored(true);
-    setCurrentSrc(fallbackImage);
+    setError(true);
     onError?.();
-  }, [src, hasErrored, logError, onError]);
+  }, [src, error, logError, onError, fallbackSrc]);
 
   const handleLoad = useCallback(() => {
-    // Reset retry count on successful load
+    // Reset retry count and error state on successful load
     retryCount.current = 0;
+    setError(false);
     onLoad?.();
   }, [onLoad]);
 
-  // Reset state when src prop changes
+  // Reset error state when src prop changes
   React.useEffect(() => {
-    const newSrc = src || fallbackImage;
-    const shouldUseFallback = !src;
-    
-    if (newSrc !== currentSrc || shouldUseFallback !== hasErrored) {
-      setCurrentSrc(newSrc);
-      setHasErrored(shouldUseFallback);
+    if (src) {
+      setError(false);
       retryCount.current = 0;
     }
-  }, [src, currentSrc, hasErrored, fallbackImage]);
+  }, [src]);
+
+  // Calculate aspect style for layout stability
+  const aspectStyle = !width || !height
+    ? { aspectRatio: "16/9" }
+    : { width, height };
 
   return (
-    <div className={`relative overflow-hidden ${!width || !height ? 'aspect-video' : ''}`}>
+    <div 
+      style={aspectStyle} 
+      className={cn("overflow-hidden bg-muted", className)}
+    >
       <img
-        src={currentSrc}
+        src={error || !src ? fallbackSrc : src}
         alt={alt}
-        className={className}
+        loading={priority ? 'eager' : loading}
         width={width}
         height={height}
-        loading={priority ? 'eager' : loading}
         sizes={sizes}
-        style={{
-          ...style,
-          ...(width && height && { aspectRatio: `${width}/${height}` })
-        }}
+        className="w-full h-full object-cover"
         onLoad={handleLoad}
         onError={handleError}
         {...(priority && { fetchPriority: 'high' as const })}
+        {...props}
       />
     </div>
   );
