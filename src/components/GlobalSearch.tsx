@@ -115,23 +115,30 @@ export const GlobalSearch = ({
   // Client-side fallback search
   const clientFilter = React.useCallback((q: string) => {
     if (!q.trim()) return [];
-    const tokens = q.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    const match = (text: string) => tokens.every(t => text.toLowerCase().includes(t));
+    const tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
+    
+    const match = (text: string, tags: string[] = []) => 
+      tokens.every(t =>
+        text.toLowerCase().includes(t) || 
+        tags.some(tag => tag.toLowerCase().includes(t))
+      );
+
     const score = (title: string, excerpt: string, tags: string[] = []) => {
       const hayTitle = title.toLowerCase();
       const hayExcerpt = (excerpt || '').toLowerCase();
       const hayTags = tags.map(t => t.toLowerCase());
       let s = 0;
+      
       tokens.forEach(t => {
-        if (hayTitle.includes(t)) s += 1.0;
-        if (hayExcerpt.includes(t)) s += 0.6;
-        if (hayTags.some(tag => tag.includes(t))) s += 0.5;
+        if (hayTitle.includes(t)) s += 2;     // Higher score for title matches
+        if (hayExcerpt.includes(t)) s += 1;   // Medium score for excerpt matches
+        if (hayTags.some(tag => tag.includes(t))) s += 1.5; // Good score for tag matches
       });
       return s;
     };
 
     const postResults = clientCache.posts
-      .filter(p => match(`${p.title} ${p.excerpt || ''} ${(p.tags || []).join(' ')}`))
+      .filter(p => match(`${p.title} ${p.excerpt || ''}`, p.tags || []))
       .map(p => ({
         id: p.id,
         title: p.title,
@@ -143,7 +150,7 @@ export const GlobalSearch = ({
       }));
 
     const recResults = clientCache.recipes
-      .filter(r => match(`${r.title} ${(r.data?.description || '')} ${(r.tags || []).join(' ')}`))
+      .filter(r => match(`${r.title} ${r.data?.description || ''}`, r.tags || []))
       .map(r => ({
         id: r.id,
         title: r.title,
@@ -213,10 +220,16 @@ export const GlobalSearch = ({
         const glossaryMatches = searchGlossaryTerms(debouncedQuery);
         merged.push(...glossaryMatches.slice(0, 2));
 
-        // Fallback to client-side if server results are insufficient
-        const final = merged.length >= 3 
-          ? merged.sort((a, b) => (b.search_rank ?? 0) - (a.search_rank ?? 0)).slice(0, 8)
-          : clientFilter(debouncedQuery);
+        // Always fall back to client search if server results are insufficient or empty
+        let final: SearchSuggestion[];
+        if (merged.length < 3) {
+          // Use client filter as primary results when server is empty/insufficient
+          const clientResults = clientFilter(debouncedQuery);
+          final = clientResults.length > 0 ? clientResults : merged;
+        } else {
+          // Use server results when sufficient
+          final = merged.sort((a, b) => (b.search_rank ?? 0) - (a.search_rank ?? 0)).slice(0, 8);
+        }
 
         if (!cancelled) setSuggestions(final);
       } catch (error) {
