@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "vite build && node scripts/build-with-meta.js",
   "outputDirectory": "dist",
   "framework": "vite",
   "rewrites": [
