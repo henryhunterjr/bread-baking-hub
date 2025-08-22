@@ -14,6 +14,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { supabase } from '@/integrations/supabase/client';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
+import { logger } from '@/utils/logger';
 
 interface SearchResult {
   id: string;
@@ -77,52 +78,69 @@ const SearchResultsPage = () => {
     setIsLoading(true);
     try {
       const allResults: SearchResult[] = [];
+      let hasErrors = false;
 
       // Search recipes if not filtering to specific type
       if (filters.contentType === 'all' || filters.contentType === 'recipe') {
-        const { data: recipes } = await supabase.rpc('search_recipes', {
-          search_query: query,
-          dietary_filters: filters.dietaryRestrictions,
-          difficulty_filter: filters.difficulty || null,
-          prep_time_max: filters.prepTime ? parseInt(filters.prepTime) : null,
-          total_time_max: filters.totalTime ? parseInt(filters.totalTime) : null,
-          limit_count: 20
-        });
+        try {
+          const { data: recipes, error } = await supabase.rpc('search_recipes', {
+            search_query: query,
+            dietary_filters: filters.dietaryRestrictions,
+            difficulty_filter: filters.difficulty || null,
+            prep_time_max: filters.prepTime ? parseInt(filters.prepTime) : null,
+            total_time_max: filters.totalTime ? parseInt(filters.totalTime) : null,
+            limit_count: 20
+          });
 
-        if (recipes) {
-          allResults.push(...recipes.map(recipe => ({
-            id: recipe.id,
-            title: recipe.title,
-            excerpt: recipe.excerpt || '',
-            type: 'recipe' as const,
-            url: `/recipes/${recipe.slug}`,
-            image_url: recipe.image_url,
-            tags: recipe.tags,
-            search_rank: recipe.search_rank
-          })));
+          if (error) {
+            logger.error('Recipe search RPC error:', error);
+            hasErrors = true;
+          } else if (recipes) {
+            allResults.push(...recipes.map(recipe => ({
+              id: recipe.id,
+              title: recipe.title,
+              excerpt: recipe.excerpt || '',
+              type: 'recipe' as const,
+              url: `/recipes/${recipe.slug}`,
+              image_url: recipe.image_url,
+              tags: recipe.tags,
+              search_rank: recipe.search_rank
+            })));
+          }
+        } catch (error) {
+          logger.error('Recipe search failed:', error);
+          hasErrors = true;
         }
       }
 
       // Search blog posts
       if (filters.contentType === 'all' || filters.contentType === 'blog_post') {
-        const { data: posts } = await supabase.rpc('search_blog_posts', {
-          search_query: query,
-          tag_filters: filters.blogTags,
-          limit_count: 20
-        });
+        try {
+          const { data: posts, error } = await supabase.rpc('search_blog_posts', {
+            search_query: query,
+            tag_filters: filters.blogTags,
+            limit_count: 20
+          });
 
-        if (posts) {
-          allResults.push(...posts.map(post => ({
-            id: post.id,
-            title: post.title,
-            excerpt: post.excerpt || '',
-            type: 'blog_post' as const,
-            url: `/blog/${post.slug}`,
-            image_url: post.hero_image_url,
-            tags: post.tags,
-            published_at: post.published_at,
-            search_rank: post.search_rank
-          })));
+          if (error) {
+            logger.error('Blog search RPC error:', error);
+            hasErrors = true;
+          } else if (posts) {
+            allResults.push(...posts.map(post => ({
+              id: post.id,
+              title: post.title,
+              excerpt: post.excerpt || '',
+              type: 'blog_post' as const,
+              url: `/blog/${post.slug}`,
+              image_url: post.hero_image_url,
+              tags: post.tags,
+              published_at: post.published_at,
+              search_rank: post.search_rank
+            })));
+          }
+        } catch (error) {
+          logger.error('Blog search failed:', error);
+          hasErrors = true;
         }
       }
 
@@ -132,22 +150,42 @@ const SearchResultsPage = () => {
         allResults.push(...glossaryResults);
       }
 
-      // Sort by relevance (search_rank) and set results
-      allResults.sort((a, b) => (b.search_rank || 0) - (a.search_rank || 0));
+      // Sort by relevance (search_rank desc), then by published date (desc)
+      allResults.sort((a, b) => {
+        const rankDiff = (b.search_rank || 0) - (a.search_rank || 0);
+        if (rankDiff !== 0) return rankDiff;
+        
+        // Secondary sort by published date (most recent first)
+        const aDate = a.published_at ? new Date(a.published_at).getTime() : 0;
+        const bDate = b.published_at ? new Date(b.published_at).getTime() : 0;
+        return bDate - aDate;
+      });
+
       setResults(allResults);
       setTotalResults(allResults.length);
 
       // Log search analytics
-      await supabase.from('search_analytics').insert({
-        search_query: query,
-        search_type: 'advanced',
-        results_count: allResults.length,
-        filters_applied: JSON.stringify(filters),
-        search_context: 'search_page'
-      });
+      try {
+        await supabase.from('search_analytics').insert({
+          search_query: query,
+          search_type: 'advanced',
+          results_count: allResults.length,
+          filters_applied: JSON.stringify(filters),
+          search_context: 'search_page'
+        });
+      } catch (error) {
+        logger.warn('Failed to log search analytics:', error);
+      }
+
+      // Show fallback message if all RPCs failed
+      if (hasErrors && allResults.length === 0) {
+        logger.warn('All search RPCs failed, showing fallback message');
+      }
 
     } catch (error) {
-      console.error('Search error:', error);
+      logger.error('Search error:', error);
+      setResults([]);
+      setTotalResults(0);
     } finally {
       setIsLoading(false);
     }
@@ -354,6 +392,9 @@ const SearchResultsPage = () => {
                     <li>• Removing some filters</li>
                     <li>• Searching for broader terms</li>
                   </ul>
+                  <p className="text-xs text-muted-foreground mt-4">
+                    If you're experiencing search issues, please try again later.
+                  </p>
                 </div>
               </div>
             ) : (

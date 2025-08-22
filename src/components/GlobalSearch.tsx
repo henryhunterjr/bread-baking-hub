@@ -7,6 +7,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useDebounce } from '@/hooks/useDebounce';
 import { supabase } from '@/integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
+import { logger } from '@/utils/logger';
 
 interface SearchSuggestion {
   id: string;
@@ -15,6 +17,7 @@ interface SearchSuggestion {
   excerpt?: string;
   image_url?: string;
   url: string;
+  search_rank?: number;
 }
 
 interface GlobalSearchProps {
@@ -37,9 +40,11 @@ export const GlobalSearch = ({
   const [isOpen, setIsOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedFilters, setSelectedFilters] = React.useState<string[]>([]);
+  const [clientCache, setClientCache] = React.useState<{posts: any[]; recipes: any[]}>({posts: [], recipes: []});
   
-  const debouncedQuery = useDebounce(query, 300);
+  const debouncedQuery = useDebounce(query, 200);
   const searchRef = React.useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   
   // Load recent searches from localStorage
   React.useEffect(() => {
@@ -47,6 +52,41 @@ export const GlobalSearch = ({
     if (stored) {
       setRecentSearches(JSON.parse(stored));
     }
+  }, []);
+
+  // Preload lightweight client cache for fallback search
+  React.useEffect(() => {
+    let cancelled = false;
+    const loadCache = async () => {
+      try {
+        // Load small payloads: title, slug, excerpt, tags, image
+        const { data: posts, error: pErr } = await supabase
+          .from('blog_posts')
+          .select('id,title,slug,excerpt,tags,hero_image_url,published_at,is_draft')
+          .eq('is_draft', false)
+          .not('published_at', 'is', null)
+          .limit(250);
+        if (pErr) logger.warn('blog_posts preload error', pErr);
+
+        const { data: recipes, error: rErr } = await supabase
+          .from('recipes')
+          .select('id,title,slug,tags,image_url,data,is_public')
+          .eq('is_public', true)
+          .limit(250);
+        if (rErr) logger.warn('recipes preload error', rErr);
+
+        if (!cancelled) {
+          setClientCache({
+            posts: posts ?? [],
+            recipes: recipes ?? []
+          });
+        }
+      } catch (e) {
+        logger.error('preload failed', e);
+      }
+    };
+    loadCache();
+    return () => { cancelled = true; };
   }, []);
 
   // Load popular searches
@@ -72,6 +112,53 @@ export const GlobalSearch = ({
     loadPopularSearches();
   }, []);
 
+  // Client-side fallback search
+  const clientFilter = React.useCallback((q: string) => {
+    if (!q.trim()) return [];
+    const tokens = q.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    const match = (text: string) => tokens.every(t => text.toLowerCase().includes(t));
+    const score = (title: string, excerpt: string, tags: string[] = []) => {
+      const hayTitle = title.toLowerCase();
+      const hayExcerpt = (excerpt || '').toLowerCase();
+      const hayTags = tags.map(t => t.toLowerCase());
+      let s = 0;
+      tokens.forEach(t => {
+        if (hayTitle.includes(t)) s += 1.0;
+        if (hayExcerpt.includes(t)) s += 0.6;
+        if (hayTags.some(tag => tag.includes(t))) s += 0.5;
+      });
+      return s;
+    };
+
+    const postResults = clientCache.posts
+      .filter(p => match(`${p.title} ${p.excerpt || ''} ${(p.tags || []).join(' ')}`))
+      .map(p => ({
+        id: p.id,
+        title: p.title,
+        type: 'blog_post' as const,
+        excerpt: p.excerpt || '',
+        image_url: p.hero_image_url,
+        url: `/blog/${p.slug}`,
+        search_rank: score(p.title, p.excerpt, p.tags)
+      }));
+
+    const recResults = clientCache.recipes
+      .filter(r => match(`${r.title} ${(r.data?.description || '')} ${(r.tags || []).join(' ')}`))
+      .map(r => ({
+        id: r.id,
+        title: r.title,
+        type: 'recipe' as const,
+        excerpt: r.data?.description || '',
+        image_url: r.image_url,
+        url: `/recipes/${r.slug ?? r.id}`,
+        search_rank: score(r.title, r.data?.description || '', r.tags)
+      }));
+
+    return [...postResults, ...recResults]
+      .sort((a, b) => (b.search_rank ?? 0) - (a.search_rank ?? 0))
+      .slice(0, 8);
+  }, [clientCache]);
+
   // Search suggestions
   React.useEffect(() => {
     if (!debouncedQuery.trim()) {
@@ -79,59 +166,70 @@ export const GlobalSearch = ({
       return;
     }
 
+    let cancelled = false;
     const searchContent = async () => {
       setIsLoading(true);
       try {
-        const suggestions: SearchSuggestion[] = [];
+        const merged: SearchSuggestion[] = [];
 
-        // Search recipes
-        const { data: recipes } = await supabase.rpc('search_recipes', {
+        // Server-side search first
+        const { data: recipes, error: rErr } = await supabase.rpc('search_recipes', {
           search_query: debouncedQuery,
-          limit_count: 3
+          limit_count: 5
         });
+        if (rErr) logger.warn('search_recipes rpc error', rErr);
 
         if (recipes) {
-          suggestions.push(...recipes.map(recipe => ({
-            id: recipe.id,
-            title: recipe.title,
+          merged.push(...recipes.map((r: any) => ({
+            id: r.id,
+            title: r.title,
             type: 'recipe' as const,
-            excerpt: recipe.excerpt,
-            image_url: recipe.image_url,
-            url: `/recipe/${recipe.slug}`
+            excerpt: r.excerpt ?? '',
+            image_url: r.image_url,
+            url: `/recipes/${r.slug ?? r.id}`,
+            search_rank: r.search_rank ?? 0
           })));
         }
 
-        // Search blog posts
-        const { data: posts } = await supabase.rpc('search_blog_posts', {
+        const { data: posts, error: pErr } = await supabase.rpc('search_blog_posts', {
           search_query: debouncedQuery,
-          limit_count: 3
+          limit_count: 5
         });
+        if (pErr) logger.warn('search_blog_posts rpc error', pErr);
 
         if (posts) {
-          suggestions.push(...posts.map(post => ({
-            id: post.id,
-            title: post.title,
+          merged.push(...posts.map((p: any) => ({
+            id: p.id,
+            title: p.title,
             type: 'blog_post' as const,
-            excerpt: post.excerpt,
-            image_url: post.hero_image_url,
-            url: `/blog/${post.slug}`
+            excerpt: p.excerpt ?? '',
+            image_url: p.hero_image_url,
+            url: `/blog/${p.slug}`,
+            search_rank: p.search_rank ?? 0
           })));
         }
 
-        // Search glossary terms (static data from BreadGlossary component)
+        // Add glossary terms
         const glossaryMatches = searchGlossaryTerms(debouncedQuery);
-        suggestions.push(...glossaryMatches.slice(0, 3));
+        merged.push(...glossaryMatches.slice(0, 2));
 
-        setSuggestions(suggestions);
+        // Fallback to client-side if server results are insufficient
+        const final = merged.length >= 3 
+          ? merged.sort((a, b) => (b.search_rank ?? 0) - (a.search_rank ?? 0)).slice(0, 8)
+          : clientFilter(debouncedQuery);
+
+        if (!cancelled) setSuggestions(final);
       } catch (error) {
-        console.error('Search error:', error);
+        logger.error('Search error:', error);
+        if (!cancelled) setSuggestions(clientFilter(debouncedQuery));
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     };
 
     searchContent();
-  }, [debouncedQuery]);
+    return () => { cancelled = true; };
+  }, [debouncedQuery, clientFilter]);
 
   // Handle click outside to close
   React.useEffect(() => {
@@ -154,35 +252,44 @@ export const GlobalSearch = ({
     localStorage.setItem('recent-searches', JSON.stringify(updated));
 
     // Log search analytics
-    await supabase.from('search_analytics').insert({
-      search_query: searchQuery,
-      search_type: 'global',
-      results_count: suggestions.length,
-      filters_applied: JSON.stringify({ filters: selectedFilters }),
-      search_context: window.location.pathname
-    });
+    try {
+      await supabase.from('search_analytics').insert({
+        search_query: searchQuery,
+        search_type: 'global',
+        results_count: suggestions.length,
+        filters_applied: JSON.stringify({ filters: selectedFilters }),
+        search_context: window.location.pathname
+      });
+    } catch (error) {
+      logger.warn('Failed to log search analytics:', error);
+    }
 
-    // Navigate to search results page
-    window.location.href = `/search?q=${encodeURIComponent(searchQuery)}`;
-  }, [recentSearches, suggestions.length, selectedFilters]);
+    // Navigate to search results page using React Router
+    navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+    setIsOpen(false);
+  }, [recentSearches, suggestions.length, selectedFilters, navigate]);
 
   const handleSuggestionClick = React.useCallback(async (suggestion: SearchSuggestion) => {
     // Log click analytics
-    await supabase.from('search_analytics').insert({
-      search_query: query,
-      search_type: 'global',
-      clicked_result_id: suggestion.id,
-      clicked_result_type: suggestion.type,
-      search_context: window.location.pathname
-    });
+    try {
+      await supabase.from('search_analytics').insert({
+        search_query: query,
+        search_type: 'global',
+        clicked_result_id: suggestion.id,
+        clicked_result_type: suggestion.type,
+        search_context: window.location.pathname
+      });
+    } catch (error) {
+      logger.warn('Failed to log click analytics:', error);
+    }
 
     if (onResultClick) {
       onResultClick(suggestion);
     } else {
-      window.location.href = suggestion.url;
+      navigate(suggestion.url);
     }
     setIsOpen(false);
-  }, [query, onResultClick]);
+  }, [query, onResultClick, navigate]);
 
   const clearSearch = () => {
     setQuery('');
@@ -204,7 +311,10 @@ export const GlobalSearch = ({
           onFocus={() => setIsOpen(true)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
+              e.preventDefault();
               handleSearch(query);
+            } else if (e.key === 'Escape') {
+              clearSearch();
             }
           }}
           className="pl-10 pr-10"
@@ -226,8 +336,7 @@ export const GlobalSearch = ({
             {/* Loading state */}
             {isLoading && (
               <div className="p-4 text-center text-muted-foreground">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto"></div>
-                <p className="mt-2">Searching...</p>
+                <div className="text-sm">Searching…</div>
               </div>
             )}
 
