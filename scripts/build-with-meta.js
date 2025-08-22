@@ -1,5 +1,11 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Add __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Base URL for the site
 const BASE_URL = 'https://bread-baking-hub.vercel.app';
@@ -90,39 +96,67 @@ function createDirectory(dirPath) {
 }
 
 function buildWithMeta() {
-  const distPath = path.join(__dirname, '..', 'dist');
-  const templatePath = path.join(distPath, 'index.html');
-  
-  if (!fs.existsSync(templatePath)) {
-    console.error('Template index.html not found in dist folder. Run vite build first.');
+  try {
+    const distPath = path.join(__dirname, '..', 'dist');
+    const templatePath = path.join(distPath, 'index.html');
+    
+    console.log(`🔍 Looking for template at: ${templatePath}`);
+    
+    if (!fs.existsSync(templatePath)) {
+      console.error('❌ Template index.html not found in dist folder. Run vite build first.');
+      process.exit(1);
+    }
+    
+    const templateContent = fs.readFileSync(templatePath, 'utf8');
+    console.log('📄 Template content loaded successfully');
+    
+    // Verify template has placeholders
+    if (!templateContent.includes('__OG_TITLE__')) {
+      console.warn('⚠️  Warning: Template does not contain __OG_TITLE__ placeholder');
+    }
+    
+    console.log('🔧 Generating static HTML files with Open Graph meta tags...');
+    
+    routesToGenerate.forEach(route => {
+      try {
+        console.log(`🔄 Processing route: ${route}`);
+        const htmlContent = generateHtmlForRoute(route, templateContent);
+        
+        // Verify replacements worked
+        if (htmlContent.includes('__OG_TITLE__')) {
+          console.warn(`⚠️  Warning: Placeholders still exist in ${route} HTML`);
+        }
+        
+        if (route === '/') {
+          // Update the root index.html
+          fs.writeFileSync(templatePath, htmlContent);
+          console.log(`✅ Generated: /index.html`);
+        } else {
+          // Create directory structure for the route
+          const routePath = path.join(distPath, route);
+          console.log(`📁 Creating directory: ${routePath}`);
+          createDirectory(routePath);
+          
+          // Write the HTML file
+          const htmlPath = path.join(routePath, 'index.html');
+          fs.writeFileSync(htmlPath, htmlContent);
+          console.log(`✅ Generated: ${route}/index.html`);
+        }
+      } catch (error) {
+        console.error(`❌ Error processing route ${route}:`, error.message);
+        throw error;
+      }
+    });
+    
+    console.log('🎉 Static HTML generation complete!');
+    console.log('📱 Each route now has proper Open Graph meta tags for social media sharing.');
+    console.log(`📊 Total routes processed: ${routesToGenerate.length}`);
+    
+  } catch (error) {
+    console.error('❌ Build script failed:', error.message);
+    console.error('Stack trace:', error.stack);
     process.exit(1);
   }
-  
-  const templateContent = fs.readFileSync(templatePath, 'utf8');
-  
-  console.log('🔧 Generating static HTML files with Open Graph meta tags...');
-  
-  routesToGenerate.forEach(route => {
-    const htmlContent = generateHtmlForRoute(route, templateContent);
-    
-    if (route === '/') {
-      // Update the root index.html
-      fs.writeFileSync(templatePath, htmlContent);
-      console.log(`✅ Generated: /index.html`);
-    } else {
-      // Create directory structure for the route
-      const routePath = path.join(distPath, route);
-      createDirectory(routePath);
-      
-      // Write the HTML file
-      const htmlPath = path.join(routePath, 'index.html');
-      fs.writeFileSync(htmlPath, htmlContent);
-      console.log(`✅ Generated: ${route}/index.html`);
-    }
-  });
-  
-  console.log('🎉 Static HTML generation complete!');
-  console.log('📱 Each route now has proper Open Graph meta tags for social media sharing.');
 }
 
 // Run the build process
