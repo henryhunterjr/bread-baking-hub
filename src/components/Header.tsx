@@ -106,6 +106,22 @@ const Header = () => {
                 
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
+                    <Link to="/recipe-workspace" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
+                      Workspace
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link to="/crust-and-crumb" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
+                      Crust & Crumb
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
                     <Link to="/blog" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
                       Blog
                     </Link>
@@ -124,11 +140,6 @@ const Header = () => {
                         </Link>
                       </NavigationMenuLink>
                       <NavigationMenuLink asChild>
-                        <Link to="/recipe-workspace" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                          Recipe Workspace
-                        </Link>
-                      </NavigationMenuLink>
-                      <NavigationMenuLink asChild>
                         <Link to="/troubleshooting" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
                           Troubleshooting
                         </Link>
@@ -137,16 +148,6 @@ const Header = () => {
                         <Link to="/community" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
                           Community
                         </Link>
-                      </NavigationMenuLink>
-                      <NavigationMenuLink asChild>
-                        <a 
-                          href="/go?u=https%3A%2F%2Fwebsim.ai%2Fc%2F0F908fPvBQKz0z2wj" 
-                          target="_self" 
-                          rel="noopener noreferrer"
-                          className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors"
-                        >
-                          Crust & Crumb
-                        </a>
                       </NavigationMenuLink>
                       <div className="border-t border-border my-1"></div>
                       <NavigationMenuLink asChild>
@@ -273,15 +274,9 @@ const Header = () => {
               <Link to="/troubleshooting" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Troubleshooting
               </Link>
-              <a 
-                href="/go?u=https%3A%2F%2Fwebsim.ai%2Fc%2F0F908fPvBQKz0z2wj" 
-                target="_self" 
-                rel="noopener noreferrer"
-                className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors"
-                onClick={closeMenu}
-              >
+              <Link to="/crust-and-crumb" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Crust & Crumb
-              </a>
+              </Link>
               <Link to="/legal" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Legal Information
               </Link>
