@@ -13,54 +13,49 @@ const BASE_URL = 'https://bread-baking-hub.vercel.app';
 // Meta data for each route
 const routeMetaData = {
   '/': {
-    title: 'Baking Great Bread at Home – Recipes, Tools & Community Hub',
-    description: 'Proven recipes and expert techniques for exceptional homemade bread.',
-    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif'
-  },
-  '/blog': {
-    title: 'Bread Baking Blog | Baking Great Bread',
-    description: 'Expert bread baking tips, techniques, and recipes from professional baker Henry Hunter.',
-    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif'
+    title: 'Baking Great Bread at Home - Learn Artisan Bread Making Techniques',
+    description: 'Master the art of artisan bread making...',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-learn-artisan-bread-making-techniques/a-striking-social-media-thumbnail-advertdfs6eor0shwsglim6-mjqqx5wemn1ftju8rabqm0fmqg.png'
   },
   '/recipes': {
-    title: 'Bread Recipes Collection | Baking Great Bread',
-    description: 'Discover our collection of proven bread recipes from basic loaves to artisan masterpieces.',
-    image: 'https://bread-baking-hub.vercel.app/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png'
+    title: 'Recipes - Delicious Home Cooking Ideas',
+    description: 'Explore our collection of tested recipes...',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/recipes-delicious-home-cooking-ideas/recipes-thumbnail.png'
   },
-  '/about': {
-    title: 'About Henry Hunter | Baking Great Bread',
-    description: 'Learn about Henry Hunter and his passion for teaching exceptional bread baking techniques.',
-    image: 'https://bread-baking-hub.vercel.app/lovable-uploads/c851e2b3-f2f7-4b52-9e98-d4e6f7c44ff8.png'
-  },
-  '/contact': {
-    title: 'Contact Us | Baking Great Bread',
-    description: 'Get in touch with us for bread baking questions, feedback, or collaboration opportunities.',
-    image: 'https://bread-baking-hub.vercel.app/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png'
+  '/blog': {
+    title: 'Baking Great Bread at Home - Blog',
+    description: 'Read our latest articles on bread baking...',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-blog/scoring-1200-x-250-px-1280-x-720-px.png'
   },
   '/workspace': {
-    title: 'Bread Baking Workspace | Baking Great Bread',
-    description: 'Your personal bread baking workspace with recipes, tools, and progress tracking.',
-    image: 'https://bread-baking-hub.vercel.app/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png'
+    title: 'Recipe Work Space - AI-Powered Recipe Creation',
+    description: 'Create and format recipes with our AI-powered studio...',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/recipe-work-space-ai-powered-recipe-creation-and-formatting-studio/sunday-fun-day-1200-x-630-px.png'
   },
-  '/vitale-starter': {
-    title: 'Vitale Sourdough Starter | Baking Great Bread',
-    description: 'Get your foolproof sourdough starter system that guarantees perfect bread every time.',
-    image: 'https://bread-baking-hub.vercel.app/lovable-uploads/vitale-starter-social.png'
+  '/vitale': {
+    title: 'Vitale - Dehydrated Sourdough Starter',
+    description: 'Baking bread in just 3 days with Vitale...',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/vitale-dehydrated-sourdough-starter-baking-bread-in-just-3-days/vitale-thumbnail.png'
   },
-  '/my-recipes': {
-    title: 'My Recipe Library | Baking Great Bread',
-    description: 'Save and organize your favorite bread recipes in your personal library.',
-    image: 'https://bread-baking-hub.vercel.app/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png'
+  '/glossary': {
+    title: 'Glossary - Comprehensive Guide to Bread Baking Terminology',
+    description: 'Learn the language of bread baking...',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/glossary-comprehensive-guide-to-bread-baking-terminology/a-social-media-thumbnail-1200x630-pixelslylw5ur6td2zimxwbcfkzgggzrg2opro-rpmbfjdtrga.png'
   },
-  '/loaf-and-lie': {
-    title: 'Loaf & Lie Audiobook | Baking Great Bread',
-    description: 'Listen to the captivating audiobook about bread baking adventures and mysteries.',
-    image: 'https://bread-baking-hub.vercel.app/lovable-uploads/a95e5824-e4a5-4592-a465-9ea4df7c5488.png'
+  '/community': {
+    title: 'Baking Great Bread at Home - Join Our Supportive Baking Community',
+    description: 'Connect with fellow bakers...',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-join-our-supportive-baking-community/a-warm-inviting-lifestyle-photograph-sho9sttfiagry2spdvvrlstkqbrxrfijer9-kofpmfryhtg.png'
   },
-  '/tools': {
-    title: 'Bread Baking Tools & Equipment | Baking Great Bread',
-    description: 'Essential tools and equipment recommendations for perfect bread baking at home.',
-    image: 'https://bread-baking-hub.vercel.app/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png'
+  '/troubleshooting': {
+    title: 'Troubleshooting - Solve Your Bread Baking Challenges',
+    description: 'Find solutions to common bread baking problems...',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/troubleshooting-solve-your-bread-baking-challenges-and-problems/troubleshooting.png'
+  },
+  '/library': {
+    title: 'The Library - Bread Baking Books and Resources Collection',
+    description: 'Your personal recipe collection...',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/the-library-bread-baking-books-and-resources-collection/the-library.png'
   }
 };
 
@@ -68,14 +63,13 @@ const routeMetaData = {
 const routesToGenerate = [
   '/',
   '/blog',
-  '/recipes', 
-  '/about',
-  '/contact',
+  '/recipes',
   '/workspace',
-  '/vitale-starter',
-  '/my-recipes',
-  '/loaf-and-lie',
-  '/tools'
+  '/vitale',
+  '/glossary',
+  '/community',
+  '/troubleshooting',
+  '/library'
 ];
 
 function generateHtmlForRoute(route, templateContent) {
