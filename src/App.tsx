@@ -157,7 +157,7 @@ function App() {
                 </React.Suspense>
               </BrowserRouter>
             </CriticalResourceLoader>
-            <PerformanceDebugger />
+            {/* Performance debugger removed to prevent re-render flashing */}
           </TooltipProvider>
       </AuthProvider>
     </AppErrorBoundary>
