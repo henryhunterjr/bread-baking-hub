@@ -206,6 +206,11 @@ All colors MUST be HSL.
     contain: layout style paint;
   }
   
+  /* Container queries optimization */
+  .container-optimized {
+    contain: layout style paint;
+  }
+  
   /* Optimize animations */
   .animate-transform {
     will-change: transform;
@@ -213,6 +218,15 @@ All colors MUST be HSL.
   
   .animate-opacity {
     will-change: opacity;
+  }
+  
+  /* Component-level containment */
+  .book-card {
+    contain: layout style;
+  }
+  
+  .modal-content {
+    contain: layout style;
   }
   
   /* Font loading optimization */

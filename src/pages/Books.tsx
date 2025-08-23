@@ -11,9 +11,15 @@ import PraiseSocialProof from "@/components/PraiseSocialProof";
 import LoafAndLieSpotlight from "@/components/LoafAndLieSpotlight";
 import LoafAndLieHeroSection from "@/components/LoafAndLieHeroSection";
 import BreadJourneyFeatured from "@/components/BreadJourneyFeatured";
-import BookPreviewModal from "@/components/BookPreviewModal";
-import AudioPlayerModal from "@/components/AudioPlayerModal";
-import VideoPlayerModal from "@/components/VideoPlayerModal";
+import { Suspense } from "react";
+import { 
+  LazyAudioPlayerModal, 
+  LazyVideoPlayerModal, 
+  LazyBookPreviewModal,
+  AudioPlayerFallback,
+  VideoPlayerFallback,
+  BookPreviewFallback
+} from "@/components/LazyComponentLoader";
 import { bookData } from "@/data/books-data";
 import { Helmet } from 'react-helmet-async';
 import { sanitizeStructuredData } from '@/utils/sanitize';
@@ -282,26 +288,32 @@ const Books = () => {
         </div>
       </section>
 
-      <BookPreviewModal 
-        selectedBook={selectedBook}
-        isPlayingAudio={isPlayingAudio}
-        onClose={closePreview}
-        onPlayAudio={playAudioExcerpt}
-        onVideoPlay={playVideoFromPreview}
-      />
+      <Suspense fallback={<BookPreviewFallback />}>
+        <LazyBookPreviewModal 
+          selectedBook={selectedBook}
+          isPlayingAudio={isPlayingAudio}
+          onClose={closePreview}
+          onPlayAudio={playAudioExcerpt}
+          onVideoPlay={playVideoFromPreview}
+        />
+      </Suspense>
 
-      <AudioPlayerModal 
-        selectedBook={selectedAudioBook}
-        onClose={closeAudioPlayer}
-      />
+      <Suspense fallback={<AudioPlayerFallback />}>
+        <LazyAudioPlayerModal 
+          selectedBook={selectedAudioBook}
+          onClose={closeAudioPlayer}
+        />
+      </Suspense>
 
-      <VideoPlayerModal 
-        isOpen={!!selectedVideo}
-        onClose={closeVideoPlayer}
-        videoUrl={selectedVideo?.url || ''}
-        title={selectedVideo?.title || ''}
-        description={selectedVideo?.description || ''}
-      />
+      <Suspense fallback={<VideoPlayerFallback />}>
+        <LazyVideoPlayerModal 
+          isOpen={!!selectedVideo}
+          onClose={closeVideoPlayer}
+          videoUrl={selectedVideo?.url || ''}
+          title={selectedVideo?.title || ''}
+          description={selectedVideo?.description || ''}
+        />
+      </Suspense>
 
       </main>
       <Footer />

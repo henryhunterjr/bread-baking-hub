@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ResponsiveImage } from '@/components/ResponsiveImage';
+import { OptimizedImage } from '@/components/OptimizedImage';
 import henryPortraitImage from '@/assets/henry-portrait.jpg';
 
 const AboutHenry = () => {
@@ -9,11 +9,14 @@ const AboutHenry = () => {
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="relative">
-            <ResponsiveImage 
+            <OptimizedImage 
               src="/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png" 
               alt="Henry Hunter in his kitchen" 
-              className="rounded-2xl shadow-stone w-full h-auto"
-              loading="lazy"
+              width={600}
+              height={600}
+              className="rounded-2xl shadow-stone w-full h-auto gpu-accelerated"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              quality={70}
             />
             <div className="absolute top-4 left-4 bg-black/50 text-foreground px-3 py-1 rounded-full text-sm">
               Master Baker & Author

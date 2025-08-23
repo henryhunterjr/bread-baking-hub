@@ -17,6 +17,7 @@ import { Analytics } from '@vercel/analytics/react';
 import "@/utils/errorMonitoring";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import DefaultSEO from "./components/DefaultSEO";
+import { PerformanceDebugger } from '@/components/PerformanceMetrics';
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 
 // Import Index directly to avoid lazy loading issues on main page
@@ -156,6 +157,7 @@ function App() {
                 </React.Suspense>
               </BrowserRouter>
             </CriticalResourceLoader>
+            <PerformanceDebugger />
           </TooltipProvider>
       </AuthProvider>
     </AppErrorBoundary>

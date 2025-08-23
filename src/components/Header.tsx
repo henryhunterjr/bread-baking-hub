@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { SkipLink, VisuallyHidden } from './AccessibilityComponents';
 import GlobalSearch from './GlobalSearch';
 import { useScrollLock } from '@/hooks/useScrollLock';
-import { SafeImage } from '@/components/ui/SafeImage';
+import { OptimizedImage } from '@/components/OptimizedImage';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -59,17 +59,14 @@ const Header = () => {
               className="flex items-center hover:opacity-80 transition-opacity"
               aria-label="Baking Great Bread at Home - Home"
             >
-               <SafeImage
+               <OptimizedImage
                  src={officialLogo}
                  alt="Baking Great Bread at Home - Official Logo"
-                 width={160}
-                 height={40}
-                 loading="eager"
-                 fetchPriority="high"
-                 className="w-12 h-12 rounded-full object-cover shadow-lg border-2 border-white/20"
-                 onError={(e) => {
-                   e.currentTarget.src = '/placeholder.svg';
-                 }}
+                 width={48}
+                 height={48}
+                 priority={true}
+                 className="w-12 h-12 rounded-full object-cover shadow-lg border-2 border-white/20 gpu-accelerated"
+                 quality={70}
                />
             </Link>
           </div>

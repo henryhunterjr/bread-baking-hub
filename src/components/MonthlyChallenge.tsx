@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { ResponsiveImage } from '@/components/ResponsiveImage';
+import { OptimizedImage } from '@/components/OptimizedImage';
 const recipeImage = '/lovable-uploads/21d4d7bb-e47a-434d-b2c3-a7c787e13e07.png';
 
 const MonthlyChallenge = () => {
@@ -48,11 +48,14 @@ const MonthlyChallenge = () => {
           </div>
           
           <div className="relative">
-            <ResponsiveImage 
+            <OptimizedImage 
               src={recipeImage} 
               alt="Henry's Foolproof Sourdough Loaf with perfect crumb structure"
-              className="rounded-2xl shadow-stone w-full h-auto"
-              loading="lazy"
+              width={600}
+              height={450}
+              className="rounded-2xl shadow-stone w-full h-auto gpu-accelerated"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              quality={70}
             />
             <div className="absolute -top-4 -right-4 bg-primary-foreground text-primary p-4 rounded-lg shadow-warm">
               <p className="font-bold text-2xl">15K+</p>

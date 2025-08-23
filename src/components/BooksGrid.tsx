@@ -242,7 +242,7 @@ const BooksGrid = memo(({ onPreview, onVideoPlay }: BooksGridProps) => {
           {books.map((book) => (
             <Card 
               key={book.id} 
-              className={`shadow-warm hover:shadow-stone transition-all duration-300 hover:-translate-y-2 ${
+              className={`shadow-warm hover:shadow-stone transition-all duration-300 hover:-translate-y-2 book-card gpu-accelerated ${
                 book.featured ? 'ring-2 ring-primary scale-105' : ''
               }`}
             >

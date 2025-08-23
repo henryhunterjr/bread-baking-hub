@@ -2,7 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Users, BookOpen, Calendar, Award, Facebook, Instagram } from 'lucide-react';
-import { ResponsiveImage } from './ResponsiveImage';
+import { OptimizedImage } from '@/components/OptimizedImage';
 
 export const AuthorBioSection = () => {
   return (
@@ -12,11 +12,15 @@ export const AuthorBioSection = () => {
           {/* Left - Image and Social Proof */}
           <div className="space-y-6">
             <div className="relative">
-              <ResponsiveImage
+              <OptimizedImage
                 src="/lovable-uploads/817f9119-54ab-4a7e-8906-143e981eac8a.png"
                 alt="Henry Hunter - Master Baker and Author"
-                className="rounded-2xl shadow-warm aspect-square"
+                width={500}
+                height={500}
+                className="rounded-2xl shadow-warm aspect-square gpu-accelerated"
                 priority={false}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                quality={70}
               />
               
               {/* Achievement Badges */}
