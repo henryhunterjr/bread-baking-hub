@@ -153,7 +153,8 @@ export class PerformanceOptimizer {
 
   private preloadCriticalFonts() {
     const criticalFonts = [
-      'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
+      'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+      'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap'
     ];
 
     criticalFonts.forEach(href => {
@@ -162,9 +163,27 @@ export class PerformanceOptimizer {
         link.rel = 'preload';
         link.as = 'style';
         link.href = href;
+        link.setAttribute('importance', 'high');
         link.onload = () => {
           link.rel = 'stylesheet';
         };
+        document.head.appendChild(link);
+      }
+    });
+    
+    // Preload critical hero images for LCP optimization
+    const criticalImages = [
+      '/lovable-uploads/6ed25ae6-4928-46c6-9fe0-fa7af97ffa2d.png', // Hero image
+      'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/logo-primary.png'
+    ];
+    
+    criticalImages.forEach(src => {
+      if (!document.querySelector(`link[href="${src}"]`)) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = src;
+        link.setAttribute('importance', 'high');
         document.head.appendChild(link);
       }
     });
@@ -173,8 +192,11 @@ export class PerformanceOptimizer {
   private optimizeImages() {
     const images = document.querySelectorAll('img');
     images.forEach((img, index) => {
-      // Set loading priority based on position
-      if (index < 3) {
+      // Set loading priority based on position and viewport
+      const rect = img.getBoundingClientRect();
+      const isAboveFold = rect.top < window.innerHeight;
+      
+      if (index < 3 || isAboveFold) {
         img.loading = 'eager';
         img.setAttribute('fetchpriority', 'high');
       } else {
@@ -182,16 +204,32 @@ export class PerformanceOptimizer {
         img.setAttribute('fetchpriority', 'low');
       }
 
-      // Add aspect ratio if missing
+      // Fix layout shift by ensuring dimensions
       if (!img.width && !img.height && !img.style.aspectRatio) {
-        img.style.aspectRatio = '16/9';
+        // Use common recipe card aspect ratio
+        img.style.aspectRatio = '4/3';
+        img.style.width = '100%';
+        img.style.height = 'auto';
+      }
+      
+      // Ensure explicit dimensions to prevent CLS
+      if (img.naturalWidth && img.naturalHeight && !img.style.aspectRatio) {
+        img.style.aspectRatio = `${img.naturalWidth}/${img.naturalHeight}`;
       }
 
-      // Add error handling
+      // Add error handling and fallback
       img.onerror = () => {
-        img.style.display = 'none';
-        console.warn('Failed to load image:', img.src);
+        img.src = '/hero/fallback.jpg'; // Fallback image
+        img.alt = 'Image failed to load';
       };
+    });
+    
+    // Optimize hero images specifically for LCP
+    const heroImages = document.querySelectorAll('.hero img, [data-hero] img, .hero-image') as NodeListOf<HTMLImageElement>;
+    heroImages.forEach(img => {
+      img.loading = 'eager';
+      img.setAttribute('fetchpriority', 'high');
+      img.setAttribute('importance', 'high');
     });
   }
 

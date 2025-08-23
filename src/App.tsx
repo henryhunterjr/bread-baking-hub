@@ -11,6 +11,7 @@ import BackToTop from "@/components/BackToTop";
 import { AccessibilityEnhancements, EnhancedSkipLink } from "@/components/AccessibilityEnhancements";
 import { PerformanceOptimizer, CriticalCSS } from "@/components/PerformanceOptimizer";
 import { ContentQualityChecker } from "@/components/ContentQualityChecker";
+import { CriticalResourceLoader } from "@/components/CriticalResourceLoader";
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
 import "@/utils/errorMonitoring";
@@ -153,6 +154,7 @@ function App() {
                 />
               </React.Suspense>
             </BrowserRouter>
+            </CriticalResourceLoader>
           </TooltipProvider>
       </AuthProvider>
     </AppErrorBoundary>

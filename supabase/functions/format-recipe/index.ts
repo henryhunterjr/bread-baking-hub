@@ -214,8 +214,32 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Error in format-recipe function:', error);
+    
+    // Log structured error to Supabase
+    try {
+      await supabase.from('error_logs').insert({
+        function_name: 'format-recipe',
+        error_type: error.name || 'UnknownError',
+        error_message: error.message || 'Failed to process recipe',
+        error_stack: error.stack,
+        request_payload: {
+          file_type: file?.type,
+          file_size: file?.size,
+          user_id: userId
+        },
+        timestamp: new Date().toISOString(),
+        severity: 'error'
+      });
+    } catch (logError) {
+      console.error('Failed to log error to database:', logError);
+    }
+    
     return new Response(
-      JSON.stringify({ error: error.message || 'Failed to process recipe' }),
+      JSON.stringify({ 
+        error: error.message || 'Failed to process recipe',
+        code: 'internal_error',
+        timestamp: new Date().toISOString()
+      }),
       {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

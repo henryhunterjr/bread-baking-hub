@@ -186,6 +186,23 @@ All colors MUST be HSL.
     scrollbar-gutter: stable; /* Prevent layout shift when scrollbar disappears/appears */
   }
   
+  /* Critical performance optimizations */
+  img {
+    /* Prevent layout shift for images */
+    aspect-ratio: attr(width) / attr(height);
+  }
+  
+  /* Critical resource hints */
+  link[rel="preload"] {
+    /* High priority for critical resources */
+    importance: high;
+  }
+  
+  /* Optimize font loading */
+  @font-face {
+    font-display: swap; /* Prevent invisible text during font swap */
+  }
+  
   /* Ensure font-display: swap for better loading performance */
   @font-face {
     font-family: 'Playfair Display';
