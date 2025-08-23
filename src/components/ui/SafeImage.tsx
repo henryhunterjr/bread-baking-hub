@@ -1,44 +1,26 @@
 import * as React from 'react';
 
-type Props = React.ImgHTMLAttributes<HTMLImageElement> & {
-  width?: number;
-  height?: number;
+type Props = Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'fetchpriority'> & {
   aspectRatio?: `${number} / ${number}`;
-  fetchpriority?: 'high' | 'low' | 'auto';
   fit?: 'cover' | 'contain' | 'none';
+  fetchpriority?: 'high' | 'low' | 'auto';
 };
 
 export default function SafeImage({
-  width,
-  height,
   aspectRatio,
-  loading = 'lazy',
-  decoding = 'async',
-  fetchpriority = 'auto',
   fit = 'cover',
+  fetchpriority,
   style,
   ...rest
 }: Props) {
   const styleWithAR = aspectRatio
     ? { aspectRatio, objectFit: fit, ...style }
     : { objectFit: fit, ...style };
-  const useDims = !aspectRatio;
-  const onlyW = useDims && width && !height;
-  const onlyH = useDims && height && !width;
-  const w = useDims ? width : undefined;
-  const h = useDims ? height : undefined;
-  
-  return (
-    <img
-      {...rest}
-      loading={loading}
-      decoding={decoding as any}
-      {...(fetchpriority !== 'auto' && { fetchpriority })}
-      width={onlyW ? width : w}
-      height={onlyH ? height : h}
-      style={styleWithAR}
-    />
-  );
+
+  // Don't pass unknown camelCase props; attach lowercase attribute explicitly
+  const lower = fetchpriority ? ({ fetchpriority } as any) : {};
+
+  return <img {...rest} {...lower} style={styleWithAR} />;
 }
 
 export { SafeImage };

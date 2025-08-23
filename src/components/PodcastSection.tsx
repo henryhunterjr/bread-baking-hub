@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { ExternalLink, Play, X } from 'lucide-react';
 import { trackPodcastPlay, trackPodcastExternalLink } from '@/utils/appEvents';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
@@ -82,7 +82,7 @@ const PodcastSection = () => {
 
       {/* Media Player Modal */}
       <Dialog open={isPlayerOpen} onOpenChange={setIsPlayerOpen}>
-        <DialogContent className="max-w-4xl w-full p-0">
+        <DialogContent className="max-w-4xl w-full p-0" aria-describedby="podcast-desc">
           <DialogHeader className="p-6 pb-0">
             <DialogTitle className="flex items-center justify-between">
               <span>The Jar Podcast</span>
@@ -95,6 +95,9 @@ const PodcastSection = () => {
                 <X className="h-4 w-4" />
               </Button>
             </DialogTitle>
+            <DialogDescription id="podcast-desc" className="sr-only">
+              Audio player for The Jar Podcast episodes featuring bread baking discussions and techniques
+            </DialogDescription>
           </DialogHeader>
           <div className="aspect-video">
             <iframe

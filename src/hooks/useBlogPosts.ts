@@ -67,14 +67,14 @@ export const useBlogPosts = () => {
           if (cached) {
             setPosts(cached.posts);
             setTotalPages(1); // No pagination for cached posts
-            console.log('Loaded cached blog posts');
+            if (import.meta.env.DEV) console.debug('Loaded cached blog posts');
             return;
           }
         }
 
-        console.log('Loading blog posts for homepage...', { currentPage, selectedCategory, searchQuery: debouncedSearchQuery });
+        if (import.meta.env.DEV) console.debug('Loading blog posts for homepage...', { currentPage, selectedCategory, searchQuery: debouncedSearchQuery });
         const response: FetchPostsResponse = await fetchBlogPosts(currentPage, selectedCategory, 6, debouncedSearchQuery);
-        console.log('Blog posts loaded successfully:', response);
+        if (import.meta.env.DEV) console.debug('Blog posts loaded successfully:', response);
         
         setPosts(response.posts);
         setTotalPages(response.totalPages);

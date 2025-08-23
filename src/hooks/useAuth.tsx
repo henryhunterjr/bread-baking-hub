@@ -32,9 +32,11 @@ const AuthContext = React.createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // Debug React import issue - detailed debugging
-  console.log('AuthProvider rendering - React:', React);
-  console.log('AuthProvider rendering - React.useState:', React.useState);
-  console.log('AuthProvider rendering - typeof React.useState:', typeof React.useState);
+  if (import.meta.env.DEV) {
+    console.debug('AuthProvider rendering - React:', React);
+    console.debug('AuthProvider rendering - React.useState:', React.useState);
+    console.debug('AuthProvider rendering - typeof React.useState:', typeof React.useState);
+  }
   
   // Use React.useState directly to avoid import issues
   const [user, setUser] = React.useState<User | null>(null);

@@ -14,7 +14,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeStructuredData } from '@/utils/sanitize';
-import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
+import { useScrollLock } from '@/hooks/useScrollLock';
 import { SafeImage } from '@/components/ui/SafeImage';
 import { RecipeShareButton } from '@/components/RecipeShareButton';
 
@@ -181,10 +181,10 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     load();
   }, [recipe?.id, user?.id]);
 
-  // Use the useBodyScrollLock hook for proper scroll management
-  useBodyScrollLock(!!recipe);
+  // Use the useScrollLock hook for proper scroll management
+  useScrollLock(!!recipe, 'recipe-modal');
 
-  // Simplified close handler
+  // Simplified close handler with recovery
   const handleClose = useCallback(() => {
     // Reset all local state
     setServings(baseServings);
@@ -195,6 +195,13 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     
     // Call parent close handler
     onClose();
+
+    // Last-resort recovery
+    setTimeout(() => {
+      if (document.body.style.overflow === 'hidden') {
+        import('@/utils/scrollLockManager').then(m => m.default.forceReset());
+      }
+    }, 0);
   }, [baseServings, onClose]);
 
   // Focus management and DOM cleanup effects

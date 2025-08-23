@@ -1,15 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import scrollLock from '@/utils/scrollLockManager';
 
 export default function RouteCleanupHandler() {
-  const location = useLocation();
-  
-  useEffect(() => {
-    return () => {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
-    };
-  }, [location.pathname]);
-  
+  const { pathname } = useLocation();
+  useEffect(() => { scrollLock.forceReset(); }, [pathname]);
   return null;
 }

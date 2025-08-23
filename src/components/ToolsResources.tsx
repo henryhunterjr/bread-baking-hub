@@ -1,6 +1,6 @@
 import { ArrowRight, Info } from 'lucide-react';
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
 const ToolsResources = () => {
@@ -91,11 +91,14 @@ const ToolsResources = () => {
 
         {/* Info Dialog */}
         <Dialog open={showInfoDialog} onOpenChange={setShowInfoDialog}>
-          <DialogContent className="max-w-2xl">
+          <DialogContent className="max-w-2xl" aria-describedby="tool-desc">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 {selectedTool?.icon} {selectedTool?.title}
               </DialogTitle>
+              <DialogDescription id="tool-desc" className="sr-only">
+                Information and details about the {selectedTool?.title} tool
+              </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <p className="text-muted-foreground leading-relaxed">
