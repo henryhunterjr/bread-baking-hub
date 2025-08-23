@@ -136,87 +136,112 @@ const calculateReadTime = (content: string): string => {
 };
 
 // Fetch blog posts with optional filters
+// Request deduplication cache to prevent multiple simultaneous requests
+const requestCache = new Map<string, Promise<FetchPostsResponse>>();
+
 export const fetchBlogPosts = async (
   page: number = 1,
   categoryId?: number,
   perPage: number = 6,
   searchQuery?: string
 ): Promise<FetchPostsResponse> => {
-  try {
-    let url = `${BLOG_PROXY_URL}?endpoint=posts&page=${page}&per_page=${perPage}`;
-    
-    if (categoryId) {
-      url += `&categories=${categoryId}`;
-    }
-    
-    if (searchQuery) {
-      url += `&search=${encodeURIComponent(searchQuery)}`;
-    }
-    
-    console.log('Fetching blog posts via proxy:', url);
-    
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    });
-    
-    if (!response.ok) {
-      console.error('Proxy HTTP error:', response.status, response.statusText);
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const result = await response.json();
-    const posts: WordPressPost[] = result.data;
-    const totalPages = result.totalPages;
-    
-    const transformedPosts: BlogPost[] = posts.map(post => {
-      // Extract tags from embedded terms
-      const tags = post._embedded?.['wp:term']?.[1]
-        ?.filter(term => term.taxonomy === 'post_tag')
-        ?.map(tag => tag.name) || [];
+  // Create cache key for request deduplication
+  const cacheKey = `${page}-${categoryId || 'all'}-${perPage}-${searchQuery || ''}`;
+  
+  // Return existing promise if request is already in flight
+  if (requestCache.has(cacheKey)) {
+    return requestCache.get(cacheKey)!;
+  }
+  // Create the actual request promise
+  const requestPromise = (async (): Promise<FetchPostsResponse> => {
+    try {
+      let url = `${BLOG_PROXY_URL}?endpoint=posts&page=${page}&per_page=${perPage}`;
       
-      // Extract author info
-      const authorData = post._embedded?.['author']?.[0];
-      const author = {
-        id: post.author,
-        name: authorData?.name || 'Henry',
-        description: authorData?.description || '',
-        avatar: authorData?.avatar_urls?.['48'] || authorData?.avatar_urls?.['96'] || '/placeholder-avatar.png'
-      };
+      if (categoryId) {
+        url += `&categories=${categoryId}`;
+      }
+      
+      if (searchQuery) {
+        url += `&search=${encodeURIComponent(searchQuery)}`;
+      }
+      
+      console.log('Fetching blog posts via proxy:', url);
+      
+      const response = await fetch(url, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        console.error('Proxy HTTP error:', response.status, response.statusText);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const result = await response.json();
+      const posts: WordPressPost[] = result.data;
+      const totalPages = result.totalPages;
+      
+      const transformedPosts: BlogPost[] = posts.map(post => {
+        // Extract tags from embedded terms
+        const tags = post._embedded?.['wp:term']?.[1]
+          ?.filter(term => term.taxonomy === 'post_tag')
+          ?.map(tag => tag.name) || [];
+        
+        // Extract author info
+        const authorData = post._embedded?.['author']?.[0];
+        const author = {
+          id: post.author,
+          name: authorData?.name || 'Henry',
+          description: authorData?.description || '',
+          avatar: authorData?.avatar_urls?.['48'] || authorData?.avatar_urls?.['96'] || '/placeholder-avatar.png'
+        };
+        
+        return {
+          id: post.id,
+          title: decodeHtmlEntities(post.title.rendered),
+          excerpt: stripHtml(post.excerpt.rendered, 20),
+          date: new Date(post.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }),
+          modified: post.modified,
+          image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+          imageAlt: post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || post.title.rendered,
+          link: post.link,
+          readTime: calculateReadTime(post.content.rendered),
+          categories: post.categories,
+          tags,
+          author,
+          freshness: calculateFreshness(post.modified, post.date)
+        };
+      });
+      
+      console.log(`Cached ${transformedPosts.length} blog posts`);
       
       return {
-        id: post.id,
-        title: decodeHtmlEntities(post.title.rendered),
-        excerpt: stripHtml(post.excerpt.rendered, 20),
-        date: new Date(post.date).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        }),
-        modified: post.modified,
-        image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
-        imageAlt: post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || post.title.rendered,
-        link: post.link,
-        readTime: calculateReadTime(post.content.rendered),
-        categories: post.categories,
-        tags,
-        author,
-        freshness: calculateFreshness(post.modified, post.date)
+        posts: transformedPosts,
+        totalPages: totalPages,
+        currentPage: page
       };
-    });
-    
-    return {
-      posts: transformedPosts,
-      totalPages,
-      currentPage: page
-    };
-  } catch (error) {
-    console.error('Error fetching blog posts:', error);
-    throw error;
-  }
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+      throw error;
+    }
+  })();
+  
+  // Cache the promise to prevent duplicate requests
+  requestCache.set(cacheKey, requestPromise);
+  
+  // Clean up cache after request completes (success or failure)
+  requestPromise.finally(() => {
+    // Remove from cache after a short delay to allow for quick subsequent requests
+    setTimeout(() => requestCache.delete(cacheKey), 1000);
+  });
+  
+  return requestPromise;
 };
 
 // Fetch categories

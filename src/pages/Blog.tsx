@@ -59,38 +59,54 @@ const Blog = () => {
     loadCategories();
   }, []);
 
-  // Load posts when page, category, or search changes
+  // Load posts with proper cancellation and deduplication
   useEffect(() => {
+    let isCancelled = false;
+    
     const loadPosts = async () => {
+      if (loading) return; // Prevent concurrent requests
+      
       try {
         setLoading(true);
         setError(null);
-        const response: FetchPostsResponse = await fetchBlogPosts(currentPage, selectedCategory, 9, debouncedSearchQuery);
-        setPosts(response.posts);
-        setTotalPages(response.totalPages);
         
-        // Cache posts for offline use
-        if (response.posts.length > 0) {
-          cachePosts(response.posts);
+        const response: FetchPostsResponse = await fetchBlogPosts(currentPage, selectedCategory, 9, debouncedSearchQuery);
+        
+        if (!isCancelled) {
+          setPosts(response.posts);
+          setTotalPages(response.totalPages);
+          
+          // Cache posts for offline use
+          if (response.posts.length > 0) {
+            cachePosts(response.posts);
+          }
         }
       } catch (err) {
-        console.error('Failed to load posts:', err);
-        
-        // Try to use cached posts if available
-        const cachedPosts = getCachedPosts();
-        if (cachedPosts.length > 0) {
-          setPosts(cachedPosts);
-          setError('Using cached posts. Some content may be outdated.');
-        } else {
-          setError('Failed to load blog posts. Please check your connection and try again.');
+        if (!isCancelled) {
+          console.error('Failed to load posts:', err);
+          
+          // Try to use cached posts if available
+          const cachedPosts = getCachedPosts();
+          if (cachedPosts.length > 0) {
+            setPosts(cachedPosts);
+            setError('Using cached posts. Some content may be outdated.');
+          } else {
+            setError('Failed to load blog posts. Please check your connection and try again.');
+          }
         }
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     };
 
     loadPosts();
-  }, [currentPage, selectedCategory, debouncedSearchQuery, cachePosts, getCachedPosts]);
+    
+    return () => {
+      isCancelled = true;
+    };
+  }, [currentPage, selectedCategory, debouncedSearchQuery]); // Removed functions from dependencies
 
   // Filter posts by tags
   useEffect(() => {
