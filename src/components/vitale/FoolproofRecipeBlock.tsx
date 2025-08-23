@@ -35,14 +35,10 @@ const FoolproofRecipeBlock = () => {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="default" size="lg" asChild className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
-                <Link to="/henrys-foolproof-recipe">
-                  Go to Recipe
-                </Link>
+                <Link to="/henrys-foolproof-recipe">Go to Recipe</Link>
               </Button>
               <Button variant="heroOutline" size="lg" asChild className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-                <a href="https://bit.ly/3srdSYS" target="_blank" rel="noopener noreferrer">
-                  Join Community
-                </a>
+                <a href="https://bit.ly/3srdSYS" target="_blank" rel="noopener noreferrer">Join Community</a>
               </Button>
             </div>
           </div>
