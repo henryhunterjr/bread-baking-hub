@@ -81,6 +81,8 @@ export const GlobalSearch = ({
             posts: posts ?? [],
             recipes: recipes ?? []
           });
+          // Log preload telemetry
+          logger.log('preload', { posts: (posts ?? []).length, recipes: (recipes ?? []).length });
         }
       } catch (e) {
         logger.error('preload failed', e);
@@ -229,14 +231,24 @@ export const GlobalSearch = ({
         const glossaryMatches = searchGlossaryTerms(debouncedQuery);
         merged.push(...glossaryMatches.slice(0, 2));
 
-        // Use fallback if server results are insufficient
+        // Strict fallback trigger: use client search only if server results are empty
+        const mergedCount = merged.length;
+        const usingFallback = mergedCount === 0;
         let final: SearchSuggestion[];
-        if (merged.length < 3) {
-          const clientResults = clientFilter(debouncedQuery);
-          final = clientResults.length > 0 ? clientResults : merged;
+        if (usingFallback) {
+          final = clientFilter(debouncedQuery);
         } else {
           final = merged.sort((a, b) => (b.search_rank ?? 0) - (a.search_rank ?? 0)).slice(0, 8);
         }
+        
+        // Log search telemetry
+        logger.log('globalSearch', {
+          q: debouncedQuery,
+          mergedCount,
+          localPosts: clientCache.posts.length,
+          localRecipes: clientCache.recipes.length,
+          usingFallback
+        });
 
         if (!cancelled) setSuggestions(final);
       } catch (error) {

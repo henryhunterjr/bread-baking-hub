@@ -135,6 +135,8 @@ const SearchResultsPage = () => {
             recipes: recipes ?? [],
             posts: posts ?? []
           });
+          // Log preload telemetry
+          logger.log('preload', { posts: (posts ?? []).length, recipes: (recipes ?? []).length });
         }
       } catch (e) {
         logger.error('client cache load failed', e);
@@ -234,9 +236,10 @@ const SearchResultsPage = () => {
         allResults.push(...glossaryResults);
       }
 
-      // Client-side fallback if no server results
-      if (allResults.length === 0) {
-        logger.log('No server results, trying client-side fallback');
+      // Strict fallback trigger: use client search only if server results are empty
+      const mergedCount = allResults.length;
+      const usingFallback = mergedCount === 0;
+      if (usingFallback) {
         const fallbackResults = clientFilter(query, clientCache.recipes, clientCache.posts);
         allResults = fallbackResults.map(result => ({
           id: result.id,
@@ -250,6 +253,15 @@ const SearchResultsPage = () => {
           search_rank: result.search_rank
         }));
       }
+
+      // Log search telemetry
+      logger.log('globalSearch', {
+        q: query,
+        mergedCount,
+        localPosts: clientCache.posts.length,
+        localRecipes: clientCache.recipes.length,
+        usingFallback
+      });
 
       // Sort by relevance (search_rank desc), then by published date (desc)
       allResults.sort((a, b) => {
