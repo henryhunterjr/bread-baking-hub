@@ -18,7 +18,14 @@ export function SafeImage({
   ...rest
 }: Props) {
   const hasDims = !!width && !!height;
-  const styleWithAR = aspectRatio ? { aspectRatio, ...style } : style;
+  const hasAspectRatio = !!aspectRatio;
+  
+  // Apply default 16/9 aspect ratio if no dimensions or aspectRatio provided
+  const finalStyle = hasAspectRatio 
+    ? { aspectRatio, ...style }
+    : !hasDims 
+      ? { aspectRatio: '16 / 9', ...style }
+      : style;
 
   return (
     <img
@@ -28,7 +35,7 @@ export function SafeImage({
       {...(fetchPriority !== 'auto' && { fetchPriority })}
       width={hasDims ? width : undefined}
       height={hasDims ? height : undefined}
-      style={styleWithAR}
+      style={finalStyle}
     />
   );
 }
