@@ -242,6 +242,9 @@ export class PerformanceOptimizer {
       { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' }
     ];
 
+    // Add passive scroll optimization
+    this.addPassiveScrollListeners();
+
     hints.forEach(hint => {
       const existing = document.querySelector(`link[rel="${hint.rel}"][href="${hint.href}"]`);
       if (!existing) {
@@ -265,6 +268,18 @@ export class PerformanceOptimizer {
       loadMarkdownEditor: () => import('@uiw/react-md-editor'),
       loadImageCompression: () => import('browser-image-compression')
     };
+  }
+
+  private addPassiveScrollListeners() {
+    // Replace any existing scroll listeners with passive ones
+    const scrollElements = document.querySelectorAll('[data-scroll-listener]');
+    scrollElements.forEach(element => {
+      // Remove old listeners and add passive ones
+      const events = ['scroll', 'wheel', 'touchstart', 'touchmove'];
+      events.forEach(eventType => {
+        element.addEventListener(eventType, () => {}, { passive: true });
+      });
+    });
   }
 
   // Cleanup

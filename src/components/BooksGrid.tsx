@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Eye } from "lucide-react";
 import { memo } from "react";
-import { ResponsiveImage } from '@/components/ResponsiveImage';
+import { OptimizedImage } from '@/components/OptimizedImage';
 
 // Import the new book cover images
 import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
@@ -252,11 +252,14 @@ const BooksGrid = memo(({ onPreview }: BooksGridProps) => {
                 )}
                 
                 {book.coverImage ? (
-                  <ResponsiveImage 
+                  <OptimizedImage 
                     src={book.coverImage} 
-                    alt={book.title}
+                    alt={`${book.title} book cover`}
+                    width={380}
+                    height={570}
                     className="w-full h-auto object-contain bg-gradient-to-br from-muted/10 to-muted/20"
-                    loading="lazy"
+                    priority={book.featured}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 ) : (
                   <div className={`${book.coverGradient} aspect-[2/3] min-h-[300px] flex flex-col justify-center items-center text-white p-6 text-center relative`}>

@@ -262,8 +262,8 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
                 <SafeImage
                   src="/lovable-uploads/976b4e22-6b7f-44b0-bfc3-7643ff24b2bd.png"
                   alt="👨🏽‍🍳 Krusty"
-                  width={64}
-                  height={64}
+                  width={48}
+                  height={48}
                   className={`rounded-full object-cover border-2 border-primary/30 transition-all duration-300 ${
                     (isListening || isPlaying) ? 'ring-2 ring-primary ring-opacity-50 animate-pulse' : ''
                   }`}

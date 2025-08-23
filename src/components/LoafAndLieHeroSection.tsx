@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Headphones, Download } from "lucide-react";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 interface LoafAndLieHeroSectionProps {
   onListen: () => void;
@@ -9,9 +10,14 @@ const LoafAndLieHeroSection = ({ onListen }: LoafAndLieHeroSectionProps) => {
   return (
     <section className="relative w-full h-[60vh] min-h-[400px] overflow-hidden">
       {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: 'url(/lovable-uploads/a95e5824-e4a5-4592-a465-9ea4df7c5488.png)' }}
+      <OptimizedImage
+        src="/lovable-uploads/a95e5824-e4a5-4592-a465-9ea4df7c5488.png"
+        alt="Loaf and Lie book cover background"
+        width={1920}
+        height={1080}
+        priority={true}
+        className="absolute inset-0 w-full h-full object-cover"
+        sizes="100vw"
       />
       
       {/* Buttons positioned in upper right */}
