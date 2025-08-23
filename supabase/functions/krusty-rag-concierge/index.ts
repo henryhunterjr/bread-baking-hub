@@ -504,17 +504,11 @@ ${recipeContext ? `Current recipe context: ${JSON.stringify(recipeContext)}` : '
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: [
-          {
-            role: 'system',
-            content: systemPrompt
-          },
-          {
-            role: 'user',
-            content: message
-          }
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: message }
         ],
+        max_tokens: 500,
         temperature: 0.7,
-        max_tokens: 600,
       }),
     });
 
