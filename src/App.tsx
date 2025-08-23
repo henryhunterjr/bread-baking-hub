@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Navigate, useParams, useLocation } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +18,7 @@ import "@/utils/errorMonitoring";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import DefaultSEO from "./components/DefaultSEO";
 import { PerformanceDebugger } from '@/components/PerformanceMetrics';
+import { RouteCleanupHandler } from "./components/RouteCleanupHandler";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 
 // Import Index directly to avoid lazy loading issues on main page
@@ -82,16 +83,6 @@ const RecipeRedirect = () => {
 };
 
 function App() {
-  const location = useLocation();
-  
-  // Safety cleanup on route change to prevent stuck scroll lock
-  React.useEffect(() => {
-    return () => {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
-    };
-  }, [location.pathname]);
-  
   const [isAIAssistantOpen, setIsAIAssistantOpen] = React.useState(false);
 
   return (
@@ -109,7 +100,8 @@ function App() {
             <OfflineBanner />
             <BackToTop />
             <CriticalResourceLoader>
-              <BrowserRouter>
+            <BrowserRouter>
+              <RouteCleanupHandler />
                 <EnhancedSkipLink />
                 <DefaultSEO />
                 <React.Suspense fallback={<SimpleLoadingSpinner />}>
