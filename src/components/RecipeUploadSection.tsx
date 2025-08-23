@@ -125,16 +125,31 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       });
 
       setUploadProgress(40);
+      
+      // Call format-recipe edge function with proper authorization
       const formatResp = await fetch('https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/format-recipe', {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeWNrc2t1Y25lbGp2dXF6cnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NDI0MTUsImV4cCI6MjA1MjMxODQxNX0.-Bx7Y0d_aMcHakE27Z5QKriY6KPpG1m8n0uuLaamFfY'}`
+        },
         body: formData,
       });
 
       setUploadProgress(60);
 
       if (!formatResp.ok) {
-        const errJson = await formatResp.json().catch(() => ({} as any));
+        const errJson = await formatResp.json().catch(() => ({}));
         const errorMessage = errJson?.error || errJson?.message || `Failed to format recipe (${formatResp.status})`;
+        
+        // Log the detailed error for debugging
+        logger.error('Format recipe error:', {
+          status: formatResp.status,
+          statusText: formatResp.statusText,
+          error: errJson,
+          headers: Object.fromEntries(formatResp.headers.entries())
+        });
+        
+        setServerError(errorMessage);
         toast({
           title: 'Upload Failed',
           description: errorMessage,
@@ -419,9 +434,39 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
       </Card>
 
       {serverError && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>{serverError}</AlertDescription>
+        <Alert variant="destructive" className="flex items-start gap-3">
+          <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+          <div className="flex-1 space-y-3">
+            <AlertDescription className="text-sm">
+              <strong>Upload Failed:</strong> {serverError}
+            </AlertDescription>
+            <div className="flex flex-wrap gap-2">
+              <Button 
+                size="sm" 
+                variant="outline" 
+                onClick={() => {
+                  setServerError(null);
+                  if (selectedFile) {
+                    handleSubmit({ preventDefault: () => {} } as React.FormEvent);
+                  }
+                }}
+                disabled={!selectedFile || isLoading}
+                className="h-8 text-xs"
+              >
+                Try Again
+              </Button>
+              <Button 
+                size="sm" 
+                variant="outline" 
+                asChild
+                className="h-8 text-xs"
+              >
+                <a href={`mailto:support@bakinggreatbread.com?subject=Recipe Format Error&body=I'm having trouble formatting a recipe. Error: ${encodeURIComponent(serverError)}`}>
+                  Contact Support
+                </a>
+              </Button>
+            </div>
+          </div>
         </Alert>
       )}
     </div>
