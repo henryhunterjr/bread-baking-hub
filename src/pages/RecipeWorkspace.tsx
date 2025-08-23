@@ -3,6 +3,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useRecipeWorkspace } from '@/hooks/useRecipeWorkspace';
 import { Hero } from '@/components/ui/Hero';
 import { Helmet } from 'react-helmet-async';
+import { Suspense, lazy, useState } from 'react';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -14,10 +15,13 @@ import { RecipeDisplaySection } from '../components/workspace/RecipeDisplaySecti
 import { WorkspaceSuccessState } from '../components/workspace/WorkspaceSuccessState';
 import { Sparkles } from 'lucide-react';
 
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
+
 const RecipeWorkspace = () => {
   const isMobile = useIsMobile();
   const { user } = useAuth();
   const workspace = useRecipeWorkspace();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <>
@@ -109,6 +113,15 @@ const RecipeWorkspace = () => {
       {user && (
         <RecipeQuickAccessDrawer onRecipeSelect={workspace.handleRecipeSelect} />
       )}
+      
+      {/* Krusty AI Assistant */}
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          recipeContext={workspace.editedRecipe || workspace.formattedRecipe?.recipe}
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
       </div>
     </>
   );
