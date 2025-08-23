@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, useLocation } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -82,6 +82,15 @@ const RecipeRedirect = () => {
 };
 
 function App() {
+  const location = useLocation();
+  
+  // Safety cleanup on route change to prevent stuck scroll lock
+  React.useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, [location.pathname]);
   
   const [isAIAssistantOpen, setIsAIAssistantOpen] = React.useState(false);
 

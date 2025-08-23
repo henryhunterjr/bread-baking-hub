@@ -72,8 +72,8 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
               aspectRatio="16 / 9"
               fit="cover"
               className="w-full rounded-lg"
-              loading="eager"
-              fetchPriority="high"
+              loading="lazy"
+              fetchPriority="low"
             />
           ) : (
             <SafeImage
@@ -82,8 +82,8 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
               aspectRatio="16 / 9"
               fit="cover"
               className="w-full rounded-lg"
-              loading="eager"
-              fetchPriority="high"
+              loading="lazy"
+              fetchPriority="low"
             />
           )}
         </div>
@@ -98,8 +98,8 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
                 aspectRatio="16 / 9"
                 fit="cover"
                 className="w-full"
-                loading="eager"
-                fetchPriority="high"
+                loading="lazy"
+                fetchPriority="low"
               />
             </div>
           )}
