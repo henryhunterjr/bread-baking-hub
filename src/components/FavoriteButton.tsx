@@ -1,45 +1,44 @@
 import { Button } from '@/components/ui/button';
-import { Heart, Loader2 } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { useUserRecipes } from '@/hooks/useUserRecipes';
+import { cn } from '@/lib/utils';
 
 interface FavoriteButtonProps {
-  recipeId: string;
+  recipeSlug: string;
   variant?: 'default' | 'outline' | 'ghost';
   size?: 'sm' | 'default' | 'lg';
   className?: string;
 }
 
 export const FavoriteButton = ({ 
-  recipeId, 
-  variant = 'ghost', 
+  recipeSlug, 
+  variant = 'outline', 
   size = 'default',
   className 
 }: FavoriteButtonProps) => {
-  const { toggleFavorite, isRecipeFavorited, loading } = useUserRecipes();
+  const { isRecipeFavorited, toggleFavorite, loading } = useUserRecipes();
+  const favorited = isRecipeFavorited(recipeSlug);
 
-  const isFavorited = isRecipeFavorited(recipeId);
-
-  const handleToggleFavorite = async () => {
-    await toggleFavorite(recipeId, !isFavorited);
+  const handleToggle = async () => {
+    await toggleFavorite(recipeSlug, !favorited);
   };
 
   return (
     <Button
       variant={variant}
       size={size}
-      onClick={handleToggleFavorite}
+      onClick={handleToggle}
       disabled={loading}
-      className={className}
-      aria-label={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
+      className={cn(className)}
+      aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
     >
-      {loading ? (
-        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-      ) : (
-        <Heart 
-          className={`w-4 h-4 mr-2 ${isFavorited ? 'fill-red-500 text-red-500' : ''}`} 
-        />
-      )}
-      {isFavorited ? 'Favorited' : 'Favorite'}
+      <Heart 
+        className={cn(
+          "w-4 h-4 mr-2", 
+          favorited ? "fill-current text-red-500" : "text-muted-foreground"
+        )} 
+      />
+      {favorited ? 'Favorited' : 'Favorite'}
     </Button>
   );
 };

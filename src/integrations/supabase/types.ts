@@ -485,6 +485,24 @@ export type Database = {
         }
         Relationships: []
       }
+      favorites: {
+        Row: {
+          created_at: string | null
+          recipe_slug: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          recipe_slug: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          recipe_slug?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       goal_events: {
         Row: {
           created_at: string
@@ -1452,6 +1470,10 @@ export type Database = {
         }
         Returns: Json
       }
+      current_user_is_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       decrypt_mfa_secret: {
         Args: { encrypted_secret: string }
         Returns: string
@@ -1597,6 +1619,10 @@ export type Database = {
       hnswhandler: {
         Args: { "": unknown }
         Returns: unknown
+      }
+      is_admin_user: {
+        Args: { user_email: string }
+        Returns: boolean
       }
       ivfflat_bit_support: {
         Args: { "": unknown }

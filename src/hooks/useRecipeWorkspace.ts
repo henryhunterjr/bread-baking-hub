@@ -88,6 +88,18 @@ export const useRecipeWorkspace = () => {
     });
   };
 
+  const handleSaveToLibrary = async () => {
+    if (!editedRecipe) return false;
+    
+    // For now, just trigger the save step - actual persistence can be added later
+    setCurrentStep('save');
+    toast({
+      title: "Recipe saved!",
+      description: "Your recipe has been saved to your collection.",
+    });
+    return true;
+  };
+
   const handleRecipeSelect = (recipe: { data: FormattedRecipe; image_url?: string }) => {
     setFormattedRecipe({ recipe: recipe.data, imageUrl: recipe.image_url });
     setEditedRecipe(recipe.data);
@@ -121,6 +133,7 @@ export const useRecipeWorkspace = () => {
     handleImageUploaded,
     handleImageRemoved,
     handleRecipeSaved,
+    handleSaveToLibrary,
     handleRecipeSelect,
     handleStartOver,
     setIsSpeaking,

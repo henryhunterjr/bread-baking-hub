@@ -120,7 +120,7 @@ const MyRecipes = () => {
                               size="sm"
                             />
                             <FavoriteButton 
-                              recipeId={userRecipe.recipe_id}
+                              recipeSlug={userRecipe.recipe_id}
                               size="sm"
                             />
                           </div>
@@ -186,7 +186,7 @@ const MyRecipes = () => {
                               size="sm"
                             />
                             <FavoriteButton 
-                              recipeId={userRecipe.recipe_id}
+                              recipeSlug={userRecipe.recipe_id}
                               size="sm"
                             />
                           </div>
