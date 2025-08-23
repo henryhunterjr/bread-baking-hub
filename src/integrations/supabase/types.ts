@@ -1323,22 +1323,34 @@ export type Database = {
       user_recipes: {
         Row: {
           created_at: string | null
+          folder: string | null
           id: string
+          is_favorite: boolean | null
           recipe_id: string
+          slug: string | null
+          title: string
           updated_at: string | null
           user_id: string
         }
         Insert: {
           created_at?: string | null
+          folder?: string | null
           id?: string
+          is_favorite?: boolean | null
           recipe_id: string
+          slug?: string | null
+          title?: string
           updated_at?: string | null
           user_id: string
         }
         Update: {
           created_at?: string | null
+          folder?: string | null
           id?: string
+          is_favorite?: boolean | null
           recipe_id?: string
+          slug?: string | null
+          title?: string
           updated_at?: string | null
           user_id?: string
         }

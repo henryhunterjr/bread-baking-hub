@@ -141,7 +141,11 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
       {/* Recipe Actions */}
       <div className="flex flex-wrap gap-4 pt-6 border-t">
         {recipeId && (
-          <SaveRecipeButton recipeId={recipeId} />
+          <SaveRecipeButton 
+            recipeId={recipeId} 
+            recipeTitle={title || recipe.title}
+            recipeSlug={slug}
+          />
         )}
         {slug && (
           <RecipeActions 

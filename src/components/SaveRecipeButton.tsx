@@ -4,13 +4,19 @@ import { useUserRecipes } from '@/hooks/useUserRecipes';
 
 interface SaveRecipeButtonProps {
   recipeId: string;
+  recipeTitle: string;
+  recipeSlug?: string;
+  folder?: string;
   variant?: 'default' | 'outline' | 'ghost';
   size?: 'sm' | 'default' | 'lg';
   className?: string;
 }
 
 export const SaveRecipeButton = ({ 
-  recipeId, 
+  recipeId,
+  recipeTitle,
+  recipeSlug,
+  folder,
   variant = 'outline', 
   size = 'default',
   className 
@@ -23,7 +29,12 @@ export const SaveRecipeButton = ({
     if (isSaved) {
       await removeRecipe(recipeId);
     } else {
-      await saveRecipe(recipeId);
+      await saveRecipe({
+        recipe_id: recipeId,
+        title: recipeTitle,
+        slug: recipeSlug,
+        folder,
+      });
     }
   };
 

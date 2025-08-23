@@ -1,235 +1,225 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { SafeImage } from '@/components/ui/SafeImage';
-import { Search, Star, Eye, Trash2, ExternalLink } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
-import { getRecipeImage } from '@/utils/recipeImageMapping';
-
-interface UserRecipe {
-  id: string;
-  created_at: string;
-  recipe: {
-    id: string;
-    title: string;
-    slug: string;
-    image_url?: string;
-    tags?: string[];
-    data: any;
-  };
-}
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import { useAuth } from '@/hooks/useAuth';
+import { useUserRecipes } from '@/hooks/useUserRecipes';
+import { SaveRecipeButton } from '@/components/SaveRecipeButton';
+import { FavoriteButton } from '@/components/FavoriteButton';
+import { BookOpen, Heart, Plus, Loader2 } from 'lucide-react';
 
 const MyRecipes = () => {
-  const { user, loading: authLoading } = useAuth();
-  const navigate = useNavigate();
-  const [recipes, setRecipes] = useState<UserRecipe[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
+  const { user } = useAuth();
+  const { userRecipes, favorites, loading, getMyRecipes, getMyFavorites } = useUserRecipes();
+  const [activeTab, setActiveTab] = useState('all');
 
   useEffect(() => {
-    if (!authLoading && !user) {
-      navigate('/auth');
-      return;
-    }
-
     if (user) {
-      fetchMyRecipes();
+      getMyRecipes();
+      getMyFavorites();
     }
-  }, [user, authLoading, navigate]);
+  }, [user]);
 
-  const fetchMyRecipes = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('user_recipes')
-        .select(`
-          id,
-          created_at,
-          recipe:recipes(
-            id,
-            title,
-            slug,
-            image_url,
-            tags,
-            data
-          )
-        `)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      setRecipes(data || []);
-    } catch (error) {
-      console.error('Error fetching my recipes:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load your recipes. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const removeFromLibrary = async (userRecipeId: string) => {
-    try {
-      const { error } = await supabase
-        .from('user_recipes')
-        .delete()
-        .eq('id', userRecipeId);
-
-      if (error) throw error;
-
-      setRecipes(prev => prev.filter(r => r.id !== userRecipeId));
-      toast({
-        title: "Removed from library",
-        description: "Recipe has been removed from your library.",
-      });
-    } catch (error) {
-      console.error('Error removing recipe:', error);
-      toast({
-        title: "Error",
-        description: "Failed to remove recipe. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const filteredRecipes = recipes.filter(userRecipe =>
-    userRecipe.recipe?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    userRecipe.recipe?.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
-
-  if (authLoading || loading) {
+  if (!user) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading your recipes...</p>
+      <>
+        <Helmet>
+          <title>My Recipes | Baking Great Bread at Home</title>
+          <meta name="description" content="Access your saved recipes and favorites. Sign in to view your personal recipe collection." />
+        </Helmet>
+        
+        <div className="bg-background text-foreground min-h-screen">
+          <Header />
+          <main className="py-20 px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <BookOpen className="h-16 w-16 mx-auto mb-6 text-muted-foreground" />
+              <h1 className="text-3xl font-bold mb-4">My Recipe Library</h1>
+              <p className="text-xl text-muted-foreground mb-8">
+                Please sign in to access your saved recipes and favorites.
+              </p>
+              <Button asChild size="lg" variant="hero">
+                <Link to="/auth">Sign In</Link>
+              </Button>
+            </div>
+          </main>
+          <Footer />
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <main className="min-h-screen bg-background" role="main">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">My Recipe Library</h1>
-          <p className="text-muted-foreground">Your saved recipes from across the site</p>
-        </div>
-
-        {/* Search */}
-        <div className="mb-6">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-            <Input
-              placeholder="Search your recipes..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-        </div>
-
-        {filteredRecipes.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="mb-4">
-              <Star className="mx-auto w-12 h-12 text-muted-foreground" />
+    <>
+      <Helmet>
+        <title>My Recipes | Baking Great Bread at Home</title>
+        <meta name="description" content="Your personal collection of saved baking recipes and favorites." />
+      </Helmet>
+      
+      <div className="bg-background text-foreground min-h-screen">
+        <Header />
+        <main className="py-20 px-4">
+          <div className="max-w-6xl mx-auto space-y-8">
+            {/* Header Section */}
+            <div className="text-center space-y-4">
+              <BookOpen className="h-16 w-16 mx-auto text-primary" />
+              <h1 className="text-4xl font-bold text-primary">My Recipe Library</h1>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Your personal collection of saved recipes and favorites
+              </p>
             </div>
-            <h3 className="text-lg font-medium text-foreground mb-2">
-              {searchQuery ? 'No recipes found' : 'No saved recipes yet'}
-            </h3>
-            <p className="text-muted-foreground mb-4">
-              {searchQuery 
-                ? 'Try adjusting your search terms'
-                : 'Save recipes from the site to see them here'
-              }
-            </p>
-            {!searchQuery && (
-              <Button asChild>
-                <Link to="/recipes">Browse Recipes</Link>
-              </Button>
-            )}
-          </div>
-        ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredRecipes.map((userRecipe) => {
-              const recipe = userRecipe.recipe;
-              if (!recipe) return null;
 
-              const imageUrl = getRecipeImage(recipe.slug, recipe.image_url);
-              const excerpt = recipe.data?.description || recipe.data?.introduction || '';
+            {/* Tabs for All Recipes vs Favorites */}
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto">
+                <TabsTrigger value="all" className="flex items-center gap-2">
+                  <BookOpen className="h-4 w-4" />
+                  All Recipes ({userRecipes.length})
+                </TabsTrigger>
+                <TabsTrigger value="favorites" className="flex items-center gap-2">
+                  <Heart className="h-4 w-4" />
+                  Favorites ({favorites.length})
+                </TabsTrigger>
+              </TabsList>
 
-              return (
-                <Card key={userRecipe.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                  <div className="aspect-video relative">
-                    <SafeImage
-                      src={imageUrl}
-                      alt={recipe.title}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
+              <TabsContent value="all" className="space-y-6">
+                {loading ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    <span className="ml-2 text-muted-foreground">Loading your recipes...</span>
                   </div>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-lg line-clamp-2">
-                      {recipe.title}
-                    </CardTitle>
-                    {excerpt && (
-                      <p className="text-sm text-muted-foreground line-clamp-2">
-                        {excerpt}
-                      </p>
-                    )}
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    {recipe.tags && recipe.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mb-4">
-                        {recipe.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-1 bg-accent text-accent-foreground text-xs rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                        {recipe.tags.length > 3 && (
-                          <span className="px-2 py-1 bg-accent text-accent-foreground text-xs rounded-full">
-                            +{recipe.tags.length - 3} more
-                          </span>
-                        )}
-                      </div>
-                    )}
-                    <div className="flex gap-2">
-                      <Button asChild size="sm" className="flex-1">
-                        <Link to={`/recipe/${recipe.slug}`}>
-                          <Eye className="w-4 h-4 mr-1" />
-                          View Recipe
-                        </Link>
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => removeFromLibrary(userRecipe.id)}
-                        className="px-2"
-                        aria-label="Remove from library"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        )}
+                ) : userRecipes.length > 0 ? (
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {userRecipes.map((userRecipe) => (
+                      <Card key={userRecipe.id} className="shadow-warm hover:shadow-lg transition-shadow">
+                        <CardHeader>
+                          <CardTitle className="text-lg">{userRecipe.title}</CardTitle>
+                          <CardDescription>
+                            Saved {new Date(userRecipe.created_at).toLocaleDateString()}
+                            {userRecipe.folder && (
+                              <Badge variant="secondary" className="ml-2">
+                                {userRecipe.folder}
+                              </Badge>
+                            )}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="flex flex-wrap gap-2">
+                            <SaveRecipeButton 
+                              recipeId={userRecipe.recipe_id}
+                              recipeTitle={userRecipe.title}
+                              recipeSlug={userRecipe.slug}
+                              folder={userRecipe.folder}
+                              size="sm"
+                            />
+                            <FavoriteButton 
+                              recipeId={userRecipe.recipe_id}
+                              size="sm"
+                            />
+                          </div>
+                          {userRecipe.slug && (
+                            <Button asChild variant="outline" size="sm" className="w-full">
+                              <Link to={`/recipes/${userRecipe.slug}`}>
+                                View Recipe
+                              </Link>
+                            </Button>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12 space-y-4">
+                    <BookOpen className="h-16 w-16 mx-auto text-muted-foreground" />
+                    <h3 className="text-xl font-semibold">No Saved Recipes</h3>
+                    <p className="text-muted-foreground max-w-md mx-auto">
+                      Start saving recipes to your library by clicking the save button on any recipe.
+                    </p>
+                    <Button asChild variant="hero">
+                      <Link to="/recipes">
+                        <Plus className="h-4 w-4 mr-2" />
+                        Browse Recipes
+                      </Link>
+                    </Button>
+                  </div>
+                )}
+              </TabsContent>
 
-        <div className="mt-8 text-center text-sm text-muted-foreground">
-          Saved {filteredRecipes.length} recipe{filteredRecipes.length !== 1 ? 's' : ''}
-        </div>
+              <TabsContent value="favorites" className="space-y-6">
+                {loading ? (
+                  <div className="flex items-center justify-center py-12">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    <span className="ml-2 text-muted-foreground">Loading your favorites...</span>
+                  </div>
+                ) : favorites.length > 0 ? (
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {favorites.map((userRecipe) => (
+                      <Card key={userRecipe.id} className="shadow-warm hover:shadow-lg transition-shadow border-red-200">
+                        <CardHeader>
+                          <CardTitle className="text-lg flex items-center gap-2">
+                            <Heart className="h-4 w-4 fill-red-500 text-red-500" />
+                            {userRecipe.title}
+                          </CardTitle>
+                          <CardDescription>
+                            Favorited {new Date(userRecipe.updated_at).toLocaleDateString()}
+                            {userRecipe.folder && (
+                              <Badge variant="secondary" className="ml-2">
+                                {userRecipe.folder}
+                              </Badge>
+                            )}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="flex flex-wrap gap-2">
+                            <SaveRecipeButton 
+                              recipeId={userRecipe.recipe_id}
+                              recipeTitle={userRecipe.title}
+                              recipeSlug={userRecipe.slug}
+                              folder={userRecipe.folder}
+                              size="sm"
+                            />
+                            <FavoriteButton 
+                              recipeId={userRecipe.recipe_id}
+                              size="sm"
+                            />
+                          </div>
+                          {userRecipe.slug && (
+                            <Button asChild variant="outline" size="sm" className="w-full">
+                              <Link to={`/recipes/${userRecipe.slug}`}>
+                                View Recipe
+                              </Link>
+                            </Button>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-12 space-y-4">
+                    <Heart className="h-16 w-16 mx-auto text-muted-foreground" />
+                    <h3 className="text-xl font-semibold">No Favorite Recipes</h3>
+                    <p className="text-muted-foreground max-w-md mx-auto">
+                      Mark recipes as favorites by clicking the heart button to see them here.
+                    </p>
+                    <Button asChild variant="hero">
+                      <Link to="/recipes">
+                        <Plus className="h-4 w-4 mr-2" />
+                        Browse Recipes
+                      </Link>
+                    </Button>
+                  </div>
+                )}
+              </TabsContent>
+            </Tabs>
+          </div>
+        </main>
+        <Footer />
       </div>
-    </main>
+    </>
   );
 };
 
