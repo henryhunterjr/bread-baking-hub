@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import Header from "../components/Header";
@@ -14,6 +14,8 @@ import { RecipeShareButton } from '@/components/RecipeShareButton';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 import { useEffect } from 'react';
+
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 const Recipes = () => {
   const {
@@ -32,6 +34,7 @@ const Recipes = () => {
   } = useSeasonalRecipes();
 
   const [selectedRecipe, setSelectedRecipe] = useState<SeasonalRecipe | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleSeasonChange = (season: Season) => {
     setSelectedSeason(season);
@@ -242,6 +245,15 @@ const Recipes = () => {
       
       {/* Handle recipe URL parameters */}
       <RecipeModalUrlHandler onRecipeSelect={handleRecipeSelect} />
+      
+      {/* Krusty AI Assistant */}
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          recipeContext={selectedRecipe}
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
     </div>
   );
 };

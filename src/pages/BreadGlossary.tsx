@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
 import { Search, Heart, Plus, X, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Hero } from '@/components/ui/Hero';
@@ -12,6 +12,8 @@ import { useToast } from '@/components/ui/use-toast';
 import { Label } from '@/components/ui/label';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 interface GlossaryTerm {
   id: string;
@@ -250,6 +252,7 @@ const BreadGlossary = () => {
   const [showSuggestForm, setShowSuggestForm] = useState(false);
   const [suggestTerm, setSuggestTerm] = useState('');
   const [suggestDefinition, setSuggestDefinition] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { toast } = useToast();
 
   // Load favorites from localStorage
@@ -675,6 +678,14 @@ const BreadGlossary = () => {
         </DialogContent>
       </Dialog>
       <Footer />
+      
+      {/* Krusty AI Assistant */}
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
     </div>
   );
 };

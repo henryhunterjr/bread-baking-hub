@@ -63,7 +63,7 @@ export const GlobalSearch = ({
         // Load small payloads: title, slug, excerpt, tags, image
         const { data: posts, error: pErr } = await supabase
           .from('blog_posts')
-          .select('id,title,slug,excerpt,tags,hero_image_url,published_at,is_draft')
+          .select('id,title,slug,subtitle,tags,hero_image_url,published_at,is_draft')
           .eq('is_draft', false)
           .not('published_at', 'is', null)
           .limit(250);

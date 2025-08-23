@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
@@ -13,10 +13,13 @@ import { SaveRecipeButton } from '@/components/SaveRecipeButton';
 import { FavoriteButton } from '@/components/FavoriteButton';
 import { BookOpen, Heart, Plus, Loader2 } from 'lucide-react';
 
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
+
 const MyRecipes = () => {
   const { user } = useAuth();
   const { userRecipes, favorites, loading, getMyRecipes, getMyFavorites } = useUserRecipes();
   const [activeTab, setActiveTab] = useState('all');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -218,6 +221,13 @@ const MyRecipes = () => {
           </div>
         </main>
         <Footer />
+        
+        <Suspense fallback={null}>
+          <LazyAIAssistantSidebar
+            isOpen={isSidebarOpen}
+            onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+          />
+        </Suspense>
       </div>
     </>
   );

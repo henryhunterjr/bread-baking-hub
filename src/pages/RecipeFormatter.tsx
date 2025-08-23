@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { RecipeUploadSection } from '../components/RecipeUploadSection';
 import { FormattedRecipeDisplay } from '../components/FormattedRecipeDisplay';
-import { VoiceInterface } from '../components/VoiceInterface';
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 interface FormattedRecipe {
   title: string;
@@ -27,7 +27,7 @@ interface RecipeWithImage {
 const RecipeFormatter = () => {
   const isMobile = useIsMobile();
   const [formattedRecipe, setFormattedRecipe] = useState<RecipeWithImage | null>(null);
-  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { toast } = useToast();
 
   const handleRecipeFormatted = (recipe: FormattedRecipe, imageUrl?: string) => {
@@ -74,10 +74,13 @@ const RecipeFormatter = () => {
       </main>
       <Footer />
       
-      <VoiceInterface
-        onSpeakingChange={setIsSpeaking}
-        recipeContext={formattedRecipe?.recipe}
-      />
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          recipeContext={formattedRecipe?.recipe}
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
     </div>
   );
 };

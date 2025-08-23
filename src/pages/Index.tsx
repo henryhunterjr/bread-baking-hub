@@ -19,11 +19,12 @@ const RecommendedTools = React.lazy(() => import("../components/RecommendedTools
 const TestimonialsSection = React.lazy(() => import("../components/TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
 const AuthorBioSection = React.lazy(() => import("../components/AuthorBioSection").then(m => ({ default: m.AuthorBioSection })));
 import { sanitizeStructuredData } from '@/utils/sanitize';
-import { VoiceInterface } from '@/components/VoiceInterface';
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
+
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 const Index = () => {
-  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Generate organization structured data
   const organizationSchema = {
@@ -176,9 +177,12 @@ const Index = () => {
       </main>
       <Footer />
       
-      <VoiceInterface
-        onSpeakingChange={setIsSpeaking}
-      />
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
     </div>
     </>
   );
