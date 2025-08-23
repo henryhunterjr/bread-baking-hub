@@ -4,7 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
+import { Suspense, lazy, useState } from 'react';
+
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
+
 const About = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   // Remove auto-scroll to top to prevent unwanted scrolling behavior
   // useEffect(() => {
   //   window.scrollTo(0, 0);
@@ -113,6 +118,13 @@ const About = () => {
         </div>
       </main>
       <Footer />
+      
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
     </div>
   );
 };

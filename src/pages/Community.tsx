@@ -6,8 +6,12 @@ import { ExternalLink, Users, Heart, BookOpen, MessageCircle } from 'lucide-reac
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
+import { Suspense, lazy, useState } from 'react';
+
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 const Community = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <div className="bg-background text-foreground">
       <Header />
@@ -210,6 +214,13 @@ const Community = () => {
       </main>
 
       <Footer />
+      
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
     </div>
   );
 };

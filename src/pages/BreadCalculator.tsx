@@ -10,6 +10,9 @@ import { Calculator, Download, Printer, Info, RotateCcw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Suspense, lazy } from 'react';
+
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 interface Recipe {
   name: string;
@@ -24,6 +27,7 @@ interface Recipe {
 }
 
 const BreadCalculator = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentUnit, setCurrentUnit] = useState<'grams' | 'ounces'>('grams');
   const [recipeName, setRecipeName] = useState('');
   
@@ -785,6 +789,13 @@ const BreadCalculator = () => {
       </div>
       
       <Footer />
+      
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
     </div>
   );
 };

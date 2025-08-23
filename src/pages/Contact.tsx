@@ -9,8 +9,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, MessageSquare, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Suspense, lazy } from 'react';
+
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 const Contact = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -193,6 +197,13 @@ const Contact = () => {
         </main>
         
         <Footer />
+        
+        <Suspense fallback={null}>
+          <LazyAIAssistantSidebar
+            isOpen={isSidebarOpen}
+            onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+          />
+        </Suspense>
       </div>
     </>
   );

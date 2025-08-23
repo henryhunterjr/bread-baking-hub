@@ -11,8 +11,12 @@ import { useToast } from '@/hooks/use-toast';
 import { detectSymptoms } from '@/utils/SymptomMatcher';
 import symptomsData from '@/data/symptoms.json';
 import { format } from 'date-fns';
+import { Suspense, lazy } from 'react';
+
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 export default function TroubleshootingPage() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [recipeText, setRecipeText] = useState<string>("");
   const [results, setResults] = useState<string[] | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
@@ -132,6 +136,13 @@ export default function TroubleshootingPage() {
       </main>
       
       <Footer />
+      
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
     </div>
   );
 }

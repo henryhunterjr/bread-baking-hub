@@ -148,16 +148,16 @@ const Header = () => {
                           Glossary
                         </Link>
                       </NavigationMenuLink>
-                      <NavigationMenuLink asChild>
-                         <Link to="/troubleshooting" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                           Troubleshooting
-                         </Link>
-                       </NavigationMenuLink>
                        <NavigationMenuLink asChild>
-                         <Link to="/help" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                           Help
-                         </Link>
-                       </NavigationMenuLink>
+                          <Link to="/troubleshooting" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                            Troubleshooting
+                          </Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link to="/help" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                            Help
+                          </Link>
+                        </NavigationMenuLink>
                       <NavigationMenuLink asChild>
                         <Link to="/community" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
                           Community
