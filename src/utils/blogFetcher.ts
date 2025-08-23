@@ -76,6 +76,9 @@ interface FetchPostsResponse {
 
 const BLOG_PROXY_URL = 'https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/blog-proxy';
 
+// Cache for deduplicating blog fetches
+const cache = new Map<string, Promise<any>>();
+
 // Decode HTML entities
 const decodeHtmlEntities = (text: string): string => {
   const textarea = document.createElement('textarea');
@@ -140,8 +143,16 @@ export const fetchBlogPosts = async (
   page: number = 1,
   categoryId?: number,
   perPage: number = 6,
-  searchQuery?: string
+  searchQuery?: string,
+  force: boolean = false
 ): Promise<FetchPostsResponse> => {
+  const cacheKey = `posts-${page}-${categoryId || 'all'}-${perPage}-${searchQuery || ''}`;
+  
+  // Return cached promise if exists and not forced
+  if (!force && cache.has(cacheKey)) {
+    return cache.get(cacheKey);
+  }
+  
   try {
     let url = `${BLOG_PROXY_URL}?endpoint=posts&page=${page}&per_page=${perPage}`;
     
@@ -155,94 +166,123 @@ export const fetchBlogPosts = async (
     
     console.log('Fetching blog posts via proxy:', url);
     
-    const response = await fetch(url, {
+    const fetchPromise = fetch(url, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
-    });
+    })
+    .then(response => {
+      if (!response.ok) {
+        console.error('Proxy HTTP error:', response.status, response.statusText);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(result => {
+      const posts: WordPressPost[] = result.data;
+      const totalPages = result.totalPages;
     
-    if (!response.ok) {
-      console.error('Proxy HTTP error:', response.status, response.statusText);
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const result = await response.json();
-    const posts: WordPressPost[] = result.data;
-    const totalPages = result.totalPages;
-    
-    const transformedPosts: BlogPost[] = posts.map(post => {
-      // Extract tags from embedded terms
-      const tags = post._embedded?.['wp:term']?.[1]
-        ?.filter(term => term.taxonomy === 'post_tag')
-        ?.map(tag => tag.name) || [];
-      
-      // Extract author info
-      const authorData = post._embedded?.['author']?.[0];
-      const author = {
-        id: post.author,
-        name: authorData?.name || 'Henry',
-        description: authorData?.description || '',
-        avatar: authorData?.avatar_urls?.['48'] || authorData?.avatar_urls?.['96'] || '/placeholder-avatar.png'
-      };
+      const transformedPosts: BlogPost[] = posts.map(post => {
+        // Extract tags from embedded terms
+        const tags = post._embedded?.['wp:term']?.[1]
+          ?.filter(term => term.taxonomy === 'post_tag')
+          ?.map(tag => tag.name) || [];
+        
+        // Extract author info
+        const authorData = post._embedded?.['author']?.[0];
+        const author = {
+          id: post.author,
+          name: authorData?.name || 'Henry',
+          description: authorData?.description || '',
+          avatar: authorData?.avatar_urls?.['48'] || authorData?.avatar_urls?.['96'] || '/placeholder-avatar.png'
+        };
+        
+        return {
+          id: post.id,
+          title: decodeHtmlEntities(post.title.rendered),
+          excerpt: stripHtml(post.excerpt.rendered, 20),
+          date: new Date(post.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }),
+          modified: post.modified,
+          image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+          imageAlt: post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || post.title.rendered,
+          link: post.link,
+          readTime: calculateReadTime(post.content.rendered),
+          categories: post.categories,
+          tags,
+          author,
+          freshness: calculateFreshness(post.modified, post.date)
+        };
+      });
       
       return {
-        id: post.id,
-        title: decodeHtmlEntities(post.title.rendered),
-        excerpt: stripHtml(post.excerpt.rendered, 20),
-        date: new Date(post.date).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        }),
-        modified: post.modified,
-        image: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
-        imageAlt: post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || post.title.rendered,
-        link: post.link,
-        readTime: calculateReadTime(post.content.rendered),
-        categories: post.categories,
-        tags,
-        author,
-        freshness: calculateFreshness(post.modified, post.date)
+        posts: transformedPosts,
+        totalPages,
+        currentPage: page
       };
+    })
+    .finally(() => {
+      // Clear cache after 1 second
+      setTimeout(() => cache.delete(cacheKey), 1000);
     });
     
-    return {
-      posts: transformedPosts,
-      totalPages,
-      currentPage: page
-    };
+    // Cache the promise
+    cache.set(cacheKey, fetchPromise);
+    return fetchPromise;
   } catch (error) {
     console.error('Error fetching blog posts:', error);
+    cache.delete(cacheKey);
     throw error;
   }
 };
 
 // Fetch categories
-export const fetchCategories = async (): Promise<WordPressCategory[]> => {
+export const fetchCategories = async (force: boolean = false): Promise<WordPressCategory[]> => {
+  const cacheKey = 'categories';
+  
+  // Return cached promise if exists and not forced
+  if (!force && cache.has(cacheKey)) {
+    return cache.get(cacheKey);
+  }
+  
   try {
     const url = `${BLOG_PROXY_URL}?endpoint=categories`;
     console.log('Fetching categories via proxy:', url);
     
-    const response = await fetch(url, {
+    const fetchPromise = fetch(url, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
+    })
+    .then(response => {
+      if (!response.ok) {
+        console.error('Categories proxy HTTP error:', response.status, response.statusText);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(result => {
+      const categories: WordPressCategory[] = result.data;
+      return categories.filter(cat => cat.count > 0); // Only show categories with posts
+    })
+    .finally(() => {
+      // Clear cache after 5 seconds (categories change less frequently)
+      setTimeout(() => cache.delete(cacheKey), 5000);
     });
     
-    if (!response.ok) {
-      console.error('Categories proxy HTTP error:', response.status, response.statusText);
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const result = await response.json();
-    const categories: WordPressCategory[] = result.data;
-    return categories.filter(cat => cat.count > 0); // Only show categories with posts
+    // Cache the promise
+    cache.set(cacheKey, fetchPromise);
+    return fetchPromise;
   } catch (error) {
     console.error('Error fetching categories:', error);
+    cache.delete(cacheKey);
     throw error;
   }
 };

@@ -18,6 +18,7 @@ import "@/utils/errorMonitoring";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import DefaultSEO from "./components/DefaultSEO";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
+import RouteCleanupHandler from "./components/RouteCleanupHandler";
 
 // Import Index directly to avoid lazy loading issues on main page
 import Index from "./pages/Index";
@@ -100,6 +101,7 @@ function App() {
             <BackToTop />
             <CriticalResourceLoader>
               <BrowserRouter>
+                <RouteCleanupHandler />
                 <EnhancedSkipLink />
                 <DefaultSEO />
                 <React.Suspense fallback={<SimpleLoadingSpinner />}>

@@ -249,9 +249,9 @@ const AIRecommendations = () => {
                    <SafeImage
                      src={recommendation.recipe.image_url}
                      alt={recommendation.recipe.title}
-                     width={320}
-                     height={200}
-                     className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                     aspectRatio="16 / 9"
+                     fit="cover"
+                     className="w-full group-hover:scale-105 transition-transform"
                    />
                 </div>
               )}

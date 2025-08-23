@@ -388,9 +388,10 @@ export const GlobalSearch = ({
                          alt={suggestion.title}
                          width={48}
                          height={48}
-                         className="rounded object-cover flex-shrink-0"
+                         fit="cover"
+                         className="rounded flex-shrink-0"
                        />
-                    )}
+                     )}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <h4 className="font-medium text-sm truncate">{suggestion.title}</h4>

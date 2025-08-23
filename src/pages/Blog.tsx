@@ -178,7 +178,8 @@ const Blog = () => {
                 src={BLOG_HERO}
                 alt="Rustic kitchen scene with wooden cutting board displaying 'Baking Great Bread at Home Blog' text, surrounded by baking ingredients, rolling pin, mixing bowls, and fresh flowers"
                 aspectRatio="16 / 9"
-                className="w-full object-cover rounded-2xl shadow-warm"
+                fit="cover"
+                className="w-full rounded-2xl shadow-warm"
                 loading="eager"
                 fetchPriority="high"
               />

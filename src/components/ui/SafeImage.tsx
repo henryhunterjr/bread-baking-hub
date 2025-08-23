@@ -3,41 +3,42 @@ import * as React from 'react';
 type Props = React.ImgHTMLAttributes<HTMLImageElement> & {
   width?: number;
   height?: number;
-  aspectRatio?: `${number} / ${number}`; // e.g., '16 / 9'
+  aspectRatio?: `${number} / ${number}`;
   fetchPriority?: 'high' | 'low' | 'auto';
+  fit?: 'cover' | 'contain' | 'none';
 };
 
-export function SafeImage({
+export default function SafeImage({
   width,
   height,
   aspectRatio,
   loading = 'lazy',
   decoding = 'async',
   fetchPriority = 'auto',
+  fit = 'cover',
   style,
   ...rest
 }: Props) {
-  const hasDims = !!width && !!height;
-  const hasAspectRatio = !!aspectRatio;
+  const styleWithAR = aspectRatio
+    ? { aspectRatio, objectFit: fit, ...style }
+    : { objectFit: fit, ...style };
+  const useDims = !aspectRatio;
+  const onlyW = useDims && width && !height;
+  const onlyH = useDims && height && !width;
+  const w = useDims ? width : undefined;
+  const h = useDims ? height : undefined;
   
-  // Apply default 16/9 aspect ratio if no dimensions or aspectRatio provided
-  const finalStyle = hasAspectRatio 
-    ? { aspectRatio, ...style }
-    : !hasDims 
-      ? { aspectRatio: '16 / 9', ...style }
-      : style;
-
   return (
     <img
       {...rest}
       loading={loading}
       decoding={decoding as any}
-      {...(fetchPriority !== 'auto' && { fetchpriority: fetchPriority })}
-      width={hasDims ? width : undefined}
-      height={hasDims ? height : undefined}
-      style={finalStyle}
+      {...(fetchPriority !== 'auto' && { fetchPriority })}
+      width={onlyW ? width : w}
+      height={onlyH ? height : h}
+      style={styleWithAR}
     />
   );
 }
 
-export default SafeImage;
+export { SafeImage };

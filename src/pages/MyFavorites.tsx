@@ -70,7 +70,7 @@ const MyFavorites = () => {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {it.recipe?.image_url && (
-                      <SafeImage src={it.recipe.image_url} alt={it.recipe.title} aspectRatio="16 / 9" className="w-full object-cover rounded" />
+                      <SafeImage src={it.recipe.image_url} alt={it.recipe.title} aspectRatio="16 / 9" fit="cover" className="w-full rounded" />
                     )}
                     {it.recipe?.slug && (
                       <Button asChild variant="outline">

@@ -14,7 +14,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeStructuredData } from '@/utils/sanitize';
-import { useScrollLock } from '@/hooks/useScrollLock';
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 import { SafeImage } from '@/components/ui/SafeImage';
 import { RecipeShareButton } from '@/components/RecipeShareButton';
 
@@ -181,8 +181,8 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     load();
   }, [recipe?.id, user?.id]);
 
-  // Use the useScrollLock hook for proper scroll management
-  useScrollLock(!!recipe, 'recipe-modal');
+  // Use the useBodyScrollLock hook for proper scroll management
+  useBodyScrollLock(!!recipe);
 
   // Simplified close handler
   const handleClose = useCallback(() => {
@@ -774,7 +774,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                       <div key={r.id} className="rounded-lg border border-border p-3">
                         <p className="text-sm leading-relaxed">{r.comment}</p>
                         {r.photo_url && (
-                          <SafeImage src={r.photo_url} alt={`Review photo for ${recipe.title}`} width={320} height={200} className="mt-2 h-32 w-auto rounded-md object-cover" />
+                          <SafeImage src={r.photo_url} alt={`Review photo for ${recipe.title}`} width={320} height={200} fit="cover" className="mt-2 h-32 w-auto rounded-md" />
                         )}
                         <p className="mt-1 text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString()}</p>
                       </div>

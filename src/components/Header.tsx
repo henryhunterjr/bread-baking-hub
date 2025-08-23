@@ -5,7 +5,7 @@ import { Menu, X, Info, ChevronDown } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { SkipLink, VisuallyHidden } from './AccessibilityComponents';
 import GlobalSearch from './GlobalSearch';
-import { useScrollLock } from '@/hooks/useScrollLock';
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 import { SafeImage } from '@/components/ui/SafeImage';
 import {
   NavigationMenu,
@@ -22,7 +22,7 @@ const Header = () => {
   const { user, signOut } = useAuth();
 
   // Use the scroll lock hook for mobile menu
-  useScrollLock(isMenuOpen, 'Header-MobileMenu');
+  useBodyScrollLock(isMenuOpen);
 
   // Handle ESC key to close menu
   React.useEffect(() => {
@@ -62,11 +62,12 @@ const Header = () => {
                <SafeImage
                  src={officialLogo}
                  alt="Baking Great Bread at Home - Official Logo"
-                 width={160}
-                 height={40}
+                 width={48}
+                 height={48}
+                 fit="cover"
                  loading="eager"
                  fetchPriority="high"
-                 className="w-12 h-12 rounded-full object-cover shadow-lg border-2 border-white/20"
+                 className="w-12 h-12 rounded-full shadow-lg border-2 border-white/20"
                  onError={(e) => {
                    e.currentTarget.src = '/placeholder.svg';
                  }}
