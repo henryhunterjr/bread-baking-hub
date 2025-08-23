@@ -1,9 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { PDFDocument } from "https://cdn.skypack.dev/pdf-lib@1.17.1";
-import { createCanvas } from "https://deno.land/x/canvas@v1.4.1/mod.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { encode as b64encode } from "https://deno.land/std@0.224.0/encoding/base64.ts";
+import { encodeBase64 } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
 const corsHeaders = {
@@ -19,6 +17,22 @@ serve(async (req) => {
   }
 
   try {
+    // Validate required environment variables
+    if (!openAIApiKey) {
+      console.error('Missing OPENAI_API_KEY environment variable');
+      return new Response(
+        JSON.stringify({ error: 'Configuration error: Missing API key', code: 'missing_config' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
+      );
+    }
+
+    if (!Deno.env.get('SUPABASE_URL') || !Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')) {
+      console.error('Missing Supabase configuration');
+      return new Response(
+        JSON.stringify({ error: 'Configuration error: Missing Supabase config', code: 'missing_config' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
+      );
+    }
     const formData = await req.formData();
     const file = formData.get('file') as File;
 
@@ -95,7 +109,7 @@ serve(async (req) => {
         console.log('Processing PDF file...');
         const arrayBuffer = await file.arrayBuffer();
         const uint8Array = new Uint8Array(arrayBuffer);
-        base64 = b64encode(uint8Array);
+        base64 = encodeBase64(uint8Array);
         mimeType = 'application/pdf';
         console.log('Successfully processed PDF file');
       } catch (pdfError) {
@@ -113,7 +127,7 @@ serve(async (req) => {
       console.log('Processing image file...');
       const arrayBuffer = await file.arrayBuffer();
       const uint8Array = new Uint8Array(arrayBuffer);
-      base64 = b64encode(uint8Array);
+      base64 = encodeBase64(uint8Array);
       console.log('Successfully processed image file');
     }
 
@@ -150,8 +164,24 @@ serve(async (req) => {
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error('OpenAI API error:', errorData);
-      throw new Error('OpenAI API request failed');
+      console.error('OpenAI API error:', { status: response.status, statusText: response.statusText, error: errorData });
+      
+      if (response.status === 401) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid OpenAI API key', code: 'openai_auth_error' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
+        );
+      } else if (response.status === 429) {
+        return new Response(
+          JSON.stringify({ error: 'OpenAI rate limit exceeded. Please try again later.', code: 'openai_rate_limit' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 429 }
+        );
+      } else {
+        return new Response(
+          JSON.stringify({ error: 'OpenAI API request failed', code: 'openai_error', details: errorData }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
+        );
+      }
     }
 
     const data = await response.json();
