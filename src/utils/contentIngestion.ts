@@ -99,7 +99,7 @@ export async function ingestContentItem(item: ContentItem): Promise<void> {
         content_id: contentItem.id,
         chunk_index: index,
         text_chunk: chunk,
-        embedding: `[${embedding.join(',')}]` // Convert to string format for database
+        embedding: `[${embedding.join(',')}]` // Convert array to pgvector string format
       };
     });
 

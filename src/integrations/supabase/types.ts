@@ -346,27 +346,21 @@ export type Database = {
         Row: {
           chunk_index: number
           content_id: string
-          created_at: string
           embedding: string
-          id: string
           text_chunk: string
           updated_at: string
         }
         Insert: {
-          chunk_index?: number
+          chunk_index: number
           content_id: string
-          created_at?: string
           embedding: string
-          id?: string
           text_chunk: string
           updated_at?: string
         }
         Update: {
           chunk_index?: number
           content_id?: string
-          created_at?: string
           embedding?: string
-          id?: string
           text_chunk?: string
           updated_at?: string
         }
@@ -382,41 +376,35 @@ export type Database = {
       }
       content_items: {
         Row: {
-          body_text: string
-          created_at: string
+          body_text: string | null
           id: string
-          metadata: Json | null
           slug: string
           summary: string | null
           tags: string[] | null
           title: string
-          type: Database["public"]["Enums"]["content_type"]
+          type: string
           updated_at: string
           url: string
         }
         Insert: {
-          body_text: string
-          created_at?: string
+          body_text?: string | null
           id?: string
-          metadata?: Json | null
           slug: string
           summary?: string | null
           tags?: string[] | null
           title: string
-          type: Database["public"]["Enums"]["content_type"]
+          type: string
           updated_at?: string
           url: string
         }
         Update: {
-          body_text?: string
-          created_at?: string
+          body_text?: string | null
           id?: string
-          metadata?: Json | null
           slug?: string
           summary?: string | null
           tags?: string[] | null
           title?: string
-          type?: Database["public"]["Enums"]["content_type"]
+          type?: string
           updated_at?: string
           url?: string
         }
@@ -499,34 +487,28 @@ export type Database = {
       }
       help_topics: {
         Row: {
-          audience: string[] | null
-          created_at: string
-          id: string
+          audience: string[]
           key: string
-          links: Json | null
-          steps: string[] | null
+          links: Json[]
+          steps: string[]
           summary: string
           title: string
           updated_at: string
         }
         Insert: {
-          audience?: string[] | null
-          created_at?: string
-          id?: string
+          audience?: string[]
           key: string
-          links?: Json | null
-          steps?: string[] | null
+          links?: Json[]
+          steps: string[]
           summary: string
           title: string
           updated_at?: string
         }
         Update: {
-          audience?: string[] | null
-          created_at?: string
-          id?: string
+          audience?: string[]
           key?: string
-          links?: Json | null
-          steps?: string[] | null
+          links?: Json[]
+          steps?: string[]
           summary?: string
           title?: string
           updated_at?: string
@@ -1559,16 +1541,16 @@ export type Database = {
         Args: { "": string } | { "": unknown } | { "": unknown }
         Returns: string
       }
-      match_content_embeddings: {
+      match_content: {
         Args: {
-          filter_type?: string
-          match_count?: number
+          filter_type: string
+          match_count: number
           query_embedding: string
         }
         Returns: {
           chunk_index: number
           content_id: string
-          similarity: number
+          score: number
           text_chunk: string
         }[]
       }
@@ -1685,7 +1667,6 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user" | "qa_reviewer"
-      content_type: "recipe" | "blog" | "glossary" | "help"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1814,7 +1795,6 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user", "qa_reviewer"],
-      content_type: ["recipe", "blog", "glossary", "help"],
     },
   },
 } as const

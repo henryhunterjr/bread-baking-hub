@@ -96,10 +96,10 @@ async function findByStructuredQuery(query: {
   
   if (error) {
     console.error('Structured query error:', error);
-    return [];
+      return [];
   }
 
-  return data || [];
+    return data || [];
 }
 
 async function findByFuzzy(text: string, type?: string): Promise<ContentItem[]> {
@@ -159,7 +159,7 @@ async function semanticSearch(query: string, type?: string, k = 6): Promise<Scor
   try {
     const queryEmbedding = await generateEmbedding(query);
     
-    const { data, error } = await supabase.rpc('match_content_embeddings', {
+    const { data, error } = await supabase.rpc('match_content', {
       query_embedding: queryEmbedding,
       match_count: k,
       filter_type: type || null
@@ -353,7 +353,8 @@ function formatHelpResponse(topic: HelpTopic): string {
   if (topic.links.length > 0) {
     response += `**Helpful links:**\n`;
     topic.links.forEach(link => {
-      response += `• [${link.label}](${link.url})\n`;
+      const linkObj = typeof link === 'string' ? JSON.parse(link) : link;
+      response += `• [${linkObj.label}](${linkObj.url})\n`;
     });
   }
   
