@@ -774,7 +774,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                       <div key={r.id} className="rounded-lg border border-border p-3">
                         <p className="text-sm leading-relaxed">{r.comment}</p>
                         {r.photo_url && (
-                          <SafeImage src={r.photo_url} alt={`Review photo for ${recipe.title}`} width={320} height={200} className="mt-2 h-32 w-auto rounded-md object-cover" />
+                          <SafeImage src={r.photo_url} alt={`Review photo for ${recipe.title}`} aspectRatio="4 / 3" fit="cover" className="mt-2 rounded-md" />
                         )}
                         <p className="mt-1 text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString()}</p>
                       </div>
