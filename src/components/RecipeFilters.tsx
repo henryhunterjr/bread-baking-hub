@@ -78,6 +78,7 @@ export const RecipeFilters = ({ recipes = [], onFilter }: RecipeFiltersProps) =>
                     selectedTags
                   });
                 }}
+                aria-label="Search recipes"
                 className="pl-10"
               />
             </div>

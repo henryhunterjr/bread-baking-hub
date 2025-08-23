@@ -181,7 +181,7 @@ const Blog = () => {
                 fit="cover"
                 className="w-full rounded-2xl shadow-warm"
                 loading="eager"
-                fetchPriority="high"
+                fetchpriority="high"
               />
             </div>
           </section>

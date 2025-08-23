@@ -425,6 +425,7 @@ const BreadGlossary = () => {
                   placeholder="Search terms and definitions..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  aria-label="Search terms and definitions"
                   className="pl-10"
                 />
               </div>

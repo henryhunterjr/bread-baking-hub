@@ -118,12 +118,14 @@ const EnhancedNewsletterSignup = ({
             value={formData.name}
             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
             disabled={isSubmitting}
+            aria-label="Your name"
             required
           />
           <Input
             type="email"
             placeholder="Your email address"
             value={formData.email}
+            aria-label="Your email address"
             onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
             disabled={isSubmitting}
             required
@@ -179,6 +181,7 @@ const EnhancedNewsletterSignup = ({
             value={formData.name}
             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
             disabled={isSubmitting}
+            aria-label="Your name"
             required
           />
           
@@ -188,6 +191,7 @@ const EnhancedNewsletterSignup = ({
             value={formData.email}
             onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
             disabled={isSubmitting}
+            aria-label="Your email address"
             required
           />
           

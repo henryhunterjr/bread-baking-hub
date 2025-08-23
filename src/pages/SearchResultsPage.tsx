@@ -354,6 +354,7 @@ const SearchResultsPage = () => {
                 placeholder="Search recipes, articles, and glossary..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                aria-label="Search recipes, articles, and glossary"
                 className="pl-10"
               />
             </div>

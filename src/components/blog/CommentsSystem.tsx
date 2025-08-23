@@ -142,6 +142,7 @@ const CommentsSystem = ({ postId, postTitle, enabled = false }: CommentsSystemPr
                 placeholder="Your Name"
                 value={newComment.author_name}
                 onChange={(e) => setNewComment(prev => ({ ...prev, author_name: e.target.value }))}
+                aria-label="Your name"
                 required
               />
               <Input
@@ -149,6 +150,7 @@ const CommentsSystem = ({ postId, postTitle, enabled = false }: CommentsSystemPr
                 placeholder="Your Email"
                 value={newComment.author_email}
                 onChange={(e) => setNewComment(prev => ({ ...prev, author_email: e.target.value }))}
+                aria-label="Your email address"
                 required
               />
             </div>

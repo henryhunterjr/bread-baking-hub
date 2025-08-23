@@ -71,7 +71,7 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
               alt="Baking Great Bread At Home Blog"
               aspectRatio="16 / 9"
               loading="eager"
-              fetchPriority="high"
+              fetchpriority="high"
               className="w-full object-cover rounded-lg"
             />
           ) : (
@@ -80,7 +80,7 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
               alt="Baking Great At Home Blog"
               aspectRatio="16 / 9"
               loading="eager"
-              fetchPriority="high"
+              fetchpriority="high"
               className="w-full object-cover rounded-lg"
             />
           )}
@@ -95,7 +95,7 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
                 alt={post.imageAlt || post.title}
                 aspectRatio="16 / 9"
                 loading="eager"
-                fetchPriority="high"
+                fetchpriority="high"
                 className="w-full object-cover"
               />
             </div>

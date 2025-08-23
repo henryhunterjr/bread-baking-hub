@@ -66,7 +66,7 @@ const Header = () => {
                  height={48}
                  fit="cover"
                  loading="eager"
-                 fetchPriority="high"
+                 fetchpriority="high"
                  className="w-12 h-12 rounded-full shadow-lg border-2 border-white/20"
                  onError={(e) => {
                    e.currentTarget.src = '/placeholder.svg';

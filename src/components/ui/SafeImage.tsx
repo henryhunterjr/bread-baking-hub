@@ -4,7 +4,7 @@ type Props = React.ImgHTMLAttributes<HTMLImageElement> & {
   width?: number;
   height?: number;
   aspectRatio?: `${number} / ${number}`;
-  fetchPriority?: 'high' | 'low' | 'auto';
+  fetchpriority?: 'high' | 'low' | 'auto';
   fit?: 'cover' | 'contain' | 'none';
 };
 
@@ -14,7 +14,7 @@ export default function SafeImage({
   aspectRatio,
   loading = 'lazy',
   decoding = 'async',
-  fetchPriority = 'auto',
+  fetchpriority = 'auto',
   fit = 'cover',
   style,
   ...rest
@@ -33,7 +33,7 @@ export default function SafeImage({
       {...rest}
       loading={loading}
       decoding={decoding as any}
-      {...(fetchPriority !== 'auto' && { fetchPriority })}
+      {...(fetchpriority !== 'auto' && { fetchpriority })}
       width={onlyW ? width : w}
       height={onlyH ? height : h}
       style={styleWithAR}
