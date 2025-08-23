@@ -1,14 +1,18 @@
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 import { Badge } from '@/components/ui/badge';
 import { Clock, ChefHat, Users } from 'lucide-react';
+import { SaveRecipeButton } from '@/components/SaveRecipeButton';
+import { RecipeActions } from '@/components/RecipeActions';
 
 interface SimpleRecipeDisplayProps {
   recipe: any;
   imageUrl?: string;
   title: string;
+  recipeId?: string;
+  slug?: string;
 }
 
-export const SimpleRecipeDisplay = ({ recipe, imageUrl, title }: SimpleRecipeDisplayProps) => {
+export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }: SimpleRecipeDisplayProps) => {
   if (!recipe) return null;
 
   return (
@@ -133,6 +137,22 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title }: SimpleRecipeDis
           <p className="text-muted-foreground whitespace-pre-wrap">{recipe.notes}</p>
         </div>
       )}
+
+      {/* Recipe Actions */}
+      <div className="flex flex-wrap gap-4 pt-6 border-t">
+        {recipeId && (
+          <SaveRecipeButton recipeId={recipeId} />
+        )}
+        {slug && (
+          <RecipeActions 
+            recipe={{ 
+              title, 
+              data: recipe,
+              slug 
+            }} 
+          />
+        )}
+      </div>
     </div>
   );
 };

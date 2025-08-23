@@ -104,8 +104,11 @@ const Header = () => {
                 
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
-                    <Link to="/books" className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors">
-                      Library
+                    <Link 
+                      to={user ? "/my-recipes" : "/books"} 
+                      className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors"
+                    >
+                      {user ? "My Library" : "Library"}
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
@@ -265,8 +268,12 @@ const Header = () => {
               <Link to="/vitale-starter" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Vitale Starter
               </Link>
-              <Link to="/books" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
-                Library
+              <Link 
+                to={user ? "/my-recipes" : "/books"} 
+                className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" 
+                onClick={closeMenu}
+              >
+                {user ? "My Library" : "Library"}
               </Link>
               <Link to="/glossary" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Glossary

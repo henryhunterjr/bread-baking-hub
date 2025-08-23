@@ -98,6 +98,8 @@ const PublicRecipe = () => {
               recipe={recipe.data} 
               imageUrl={recipe.image_url}
               title={recipe.title}
+              recipeId={recipe.id}
+              slug={recipe.slug}
             />
           </div>
 

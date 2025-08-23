@@ -452,6 +452,39 @@ export type Database = {
         }
         Relationships: []
       }
+      error_logs: {
+        Row: {
+          error_message: string | null
+          error_stack: string | null
+          error_type: string | null
+          function_name: string
+          id: string
+          request_payload: Json | null
+          severity: string | null
+          timestamp: string | null
+        }
+        Insert: {
+          error_message?: string | null
+          error_stack?: string | null
+          error_type?: string | null
+          function_name: string
+          id?: string
+          request_payload?: Json | null
+          severity?: string | null
+          timestamp?: string | null
+        }
+        Update: {
+          error_message?: string | null
+          error_stack?: string | null
+          error_type?: string | null
+          function_name?: string
+          id?: string
+          request_payload?: Json | null
+          severity?: string | null
+          timestamp?: string | null
+        }
+        Relationships: []
+      }
       goal_events: {
         Row: {
           created_at: string
@@ -1286,6 +1319,38 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      user_recipes: {
+        Row: {
+          created_at: string | null
+          id: string
+          recipe_id: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          recipe_id: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          recipe_id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_recipes_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {

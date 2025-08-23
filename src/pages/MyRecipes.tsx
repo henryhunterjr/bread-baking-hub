@@ -1,61 +1,235 @@
-import { Helmet } from 'react-helmet-async';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import ComingSoonBlock from '@/components/ComingSoonBlock';
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate, Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { SafeImage } from '@/components/ui/SafeImage';
+import { Search, Star, Eye, Trash2, ExternalLink } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { getRecipeImage } from '@/utils/recipeImageMapping';
+
+interface UserRecipe {
+  id: string;
+  created_at: string;
+  recipe: {
+    id: string;
+    title: string;
+    slug: string;
+    image_url?: string;
+    tags?: string[];
+    data: any;
+  };
+}
 
 const MyRecipes = () => {
-  const featureList = [
-    "Save and organize your personal recipe collection",
-    "Upload family recipes from PDFs or photos", 
-    "Create and edit custom recipes with our workspace",
-    "Save favorite blog posts and recipes to your collection",
-    "Private, secure storage - only you can see your recipes",
-    "Smart tagging and folder organization",
-    "AI-powered recipe assistance from Crusty"
-  ];
+  const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
+  const [recipes, setRecipes] = useState<UserRecipe[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/auth');
+      return;
+    }
+
+    if (user) {
+      fetchMyRecipes();
+    }
+  }, [user, authLoading, navigate]);
+
+  const fetchMyRecipes = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('user_recipes')
+        .select(`
+          id,
+          created_at,
+          recipe:recipes(
+            id,
+            title,
+            slug,
+            image_url,
+            tags,
+            data
+          )
+        `)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setRecipes(data || []);
+    } catch (error) {
+      console.error('Error fetching my recipes:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load your recipes. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeFromLibrary = async (userRecipeId: string) => {
+    try {
+      const { error } = await supabase
+        .from('user_recipes')
+        .delete()
+        .eq('id', userRecipeId);
+
+      if (error) throw error;
+
+      setRecipes(prev => prev.filter(r => r.id !== userRecipeId));
+      toast({
+        title: "Removed from library",
+        description: "Recipe has been removed from your library.",
+      });
+    } catch (error) {
+      console.error('Error removing recipe:', error);
+      toast({
+        title: "Error",
+        description: "Failed to remove recipe. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const filteredRecipes = recipes.filter(userRecipe =>
+    userRecipe.recipe?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    userRecipe.recipe?.tags?.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
+  if (authLoading || loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading your recipes...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <Helmet>
-        <title>My Recipes - Personal Collection | Baking Great Bread at Home</title>
-        <meta name="description" content="Your personal recipe collection and workspace. Save, organize, and create all your favorite bread recipes in one secure location." />
-        <link rel="canonical" href="https://the-bakers-bench.lovable.app/my-recipes" />
-        
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="My Recipes - Personal Collection | Baking Great Bread at Home" />
-        <meta property="og:description" content="Your personal recipe collection and workspace. Save, organize, and create all your favorite bread recipes in one secure location." />
-        <meta property="og:url" content="https://the-bakers-bench.lovable.app/my-recipes" />
-        <meta property="og:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="My Recipes - Personal recipe collection and workspace" />
-        <meta property="og:site_name" content="Baking Great Bread at Home" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="My Recipes - Personal Collection | Baking Great Bread at Home" />
-        <meta name="twitter:description" content="Your personal recipe collection and workspace. Save, organize, and create all your favorite bread recipes in one secure location." />
-        <meta name="twitter:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png" />
-        <meta name="twitter:image:alt" content="My Recipes - Personal recipe collection and workspace" />
-      </Helmet>
-      
-      <div className="bg-background text-foreground min-h-screen">
-        <Header />
-      <main className="pt-20">
-        <ComingSoonBlock 
-          title="My Recipes"
-          description="Your personal recipe collection and workspace is coming soon! This will be your hub for saving, organizing, and creating all your favorite bread recipes."
-          subtitle=""
-          featureList={featureList}
-          showNavigation={true}
-          showNotifyButton={false}
-          backgroundImage="/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png"
-        />
-        </main>
-        <Footer />
+    <main className="min-h-screen bg-background" role="main">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-foreground mb-2">My Recipe Library</h1>
+          <p className="text-muted-foreground">Your saved recipes from across the site</p>
+        </div>
+
+        {/* Search */}
+        <div className="mb-6">
+          <div className="relative max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+            <Input
+              placeholder="Search your recipes..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+        </div>
+
+        {filteredRecipes.length === 0 ? (
+          <div className="text-center py-12">
+            <div className="mb-4">
+              <Star className="mx-auto w-12 h-12 text-muted-foreground" />
+            </div>
+            <h3 className="text-lg font-medium text-foreground mb-2">
+              {searchQuery ? 'No recipes found' : 'No saved recipes yet'}
+            </h3>
+            <p className="text-muted-foreground mb-4">
+              {searchQuery 
+                ? 'Try adjusting your search terms'
+                : 'Save recipes from the site to see them here'
+              }
+            </p>
+            {!searchQuery && (
+              <Button asChild>
+                <Link to="/recipes">Browse Recipes</Link>
+              </Button>
+            )}
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {filteredRecipes.map((userRecipe) => {
+              const recipe = userRecipe.recipe;
+              if (!recipe) return null;
+
+              const imageUrl = getRecipeImage(recipe.slug, recipe.image_url);
+              const excerpt = recipe.data?.description || recipe.data?.introduction || '';
+
+              return (
+                <Card key={userRecipe.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="aspect-video relative">
+                    <SafeImage
+                      src={imageUrl}
+                      alt={recipe.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg line-clamp-2">
+                      {recipe.title}
+                    </CardTitle>
+                    {excerpt && (
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {excerpt}
+                      </p>
+                    )}
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    {recipe.tags && recipe.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {recipe.tags.slice(0, 3).map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2 py-1 bg-accent text-accent-foreground text-xs rounded-full"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                        {recipe.tags.length > 3 && (
+                          <span className="px-2 py-1 bg-accent text-accent-foreground text-xs rounded-full">
+                            +{recipe.tags.length - 3} more
+                          </span>
+                        )}
+                      </div>
+                    )}
+                    <div className="flex gap-2">
+                      <Button asChild size="sm" className="flex-1">
+                        <Link to={`/recipe/${recipe.slug}`}>
+                          <Eye className="w-4 h-4 mr-1" />
+                          View Recipe
+                        </Link>
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => removeFromLibrary(userRecipe.id)}
+                        className="px-2"
+                        aria-label="Remove from library"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+
+        <div className="mt-8 text-center text-sm text-muted-foreground">
+          Saved {filteredRecipes.length} recipe{filteredRecipes.length !== 1 ? 's' : ''}
+        </div>
       </div>
-    </>
+    </main>
   );
 };
 
