@@ -82,7 +82,7 @@ const LoafAndLieSpotlight = ({ onPreview, onAudio }: LoafAndLieSpotlightProps) =
                   className="bg-amber-600 hover:bg-amber-700 text-white border-amber-500"
                 >
                   <Play className="mr-2 h-5 w-5" />
-                  Listen to Excerpt
+                  Watch the Trailer
                 </Button>
               )}
               

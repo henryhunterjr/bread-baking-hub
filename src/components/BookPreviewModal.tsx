@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Play, X } from "lucide-react";
+import { Play, X, Eye } from "lucide-react";
 import { BookData } from "@/data/books-data";
 import { sanitizeHtml } from "@/utils/sanitize";
 import { ResponsiveImage } from '@/components/ResponsiveImage';
@@ -10,13 +10,15 @@ interface BookPreviewModalProps {
   isPlayingAudio: boolean;
   onClose: () => void;
   onPlayAudio: () => void;
+  onVideoPlay?: (videoUrl: string) => void;
 }
 
 const BookPreviewModal = ({ 
   selectedBook, 
   isPlayingAudio, 
   onClose, 
-  onPlayAudio 
+  onPlayAudio,
+  onVideoPlay
 }: BookPreviewModalProps) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
@@ -78,7 +80,17 @@ const BookPreviewModal = ({
                 variant="default"
               >
                 <Play className="mr-2 h-4 w-4" />
-                Listen to Excerpt
+                {selectedBook.id === 'loaflie' ? 'Watch the Trailer' : 'Listen to Excerpt'}
+              </Button>
+            )}
+            {selectedBook.id === 'loaflie' && selectedBook.videoUrl && onVideoPlay && (
+              <Button 
+                onClick={() => onVideoPlay(selectedBook.videoUrl!)}
+                className="w-full max-w-[200px] mb-4 bg-amber-600 hover:bg-amber-700"
+                variant="default"
+              >
+                <Eye className="mr-2 h-4 w-4" />
+                See the Trailer
               </Button>
             )}
             {selectedBook.sampleUrl && (

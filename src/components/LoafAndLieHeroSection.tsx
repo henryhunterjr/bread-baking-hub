@@ -28,7 +28,7 @@ const LoafAndLieHeroSection = ({ onListen }: LoafAndLieHeroSectionProps) => {
           className="bg-amber-600 hover:bg-amber-700 text-white shadow-lg"
         >
           <Headphones className="mr-2 h-5 w-5" />
-          Listen for Free
+          See the Trailer
         </Button>
         
         <Button 

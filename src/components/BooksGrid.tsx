@@ -26,6 +26,7 @@ interface Book {
   badge?: string;
   featured?: boolean;
   previewContent: string;
+  videoUrl?: string;
 }
 
 const books: Book[] = [
@@ -181,6 +182,7 @@ const books: Book[] = [
     amazonUrl: "#",
     coverGradient: "bg-gradient-to-r from-amber-900 to-yellow-600",
     coverImage: loafLieCover,
+    videoUrl: "https://drive.google.com/file/d/18l7YvjiTul6m6iLuK6QkH1wSkhCy1w0o/preview",
     previewContent: `
       <h2>The Loaf and the LIE - Preview</h2>
       <h3>A History of What We Broke and How We're Taking It Back</h3>
@@ -224,9 +226,10 @@ const books: Book[] = [
 
 interface BooksGridProps {
   onPreview: (bookId: string) => void;
+  onVideoPlay?: (bookId: string, videoUrl: string) => void;
 }
 
-const BooksGrid = memo(({ onPreview }: BooksGridProps) => {
+const BooksGrid = memo(({ onPreview, onVideoPlay }: BooksGridProps) => {
   return (
     <section className="py-16">
       <div className="max-w-7xl mx-auto px-4">
@@ -307,6 +310,16 @@ const BooksGrid = memo(({ onPreview }: BooksGridProps) => {
                     >
                       <Eye className="mr-2 h-4 w-4" />
                       Preview
+                    </Button>
+                  )}
+                  {book.videoUrl && onVideoPlay && (
+                    <Button 
+                      onClick={() => onVideoPlay(book.id, book.videoUrl!)}
+                      size="sm"
+                      className="flex-1 bg-amber-600 hover:bg-amber-700"
+                    >
+                      <Eye className="mr-2 h-4 w-4" />
+                      Watch Trailer
                     </Button>
                   )}
                 </div>

@@ -13,6 +13,7 @@ import LoafAndLieHeroSection from "@/components/LoafAndLieHeroSection";
 import BreadJourneyFeatured from "@/components/BreadJourneyFeatured";
 import BookPreviewModal from "@/components/BookPreviewModal";
 import AudioPlayerModal from "@/components/AudioPlayerModal";
+import VideoPlayerModal from "@/components/VideoPlayerModal";
 import { bookData } from "@/data/books-data";
 import { Helmet } from 'react-helmet-async';
 import { sanitizeStructuredData } from '@/utils/sanitize';
@@ -20,6 +21,7 @@ import { sanitizeStructuredData } from '@/utils/sanitize';
 const Books = () => {
   const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
   const [selectedAudio, setSelectedAudio] = useState<string | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<{url: string, title: string, description: string} | null>(null);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
 
@@ -28,7 +30,28 @@ const Books = () => {
   };
 
   const showAudioPlayer = (slideId: string) => {
-    setSelectedAudio(slideId);
+    const book = bookData[slideId];
+    if (book?.id === 'loaflie' && book?.videoUrl) {
+      // For "The Loaf and the LIE", show video instead of audio
+      setSelectedVideo({
+        url: book.videoUrl,
+        title: book.title,
+        description: book.subtitle
+      });
+    } else {
+      setSelectedAudio(slideId);
+    }
+  };
+
+  const showVideoPlayer = (bookId: string, videoUrl: string) => {
+    const book = bookData[bookId];
+    if (book) {
+      setSelectedVideo({
+        url: videoUrl,
+        title: book.title,
+        description: book.subtitle
+      });
+    }
   };
 
   const closePreview = () => {
@@ -44,14 +67,37 @@ const Books = () => {
     setSelectedAudio(null);
   };
 
+  const closeVideoPlayer = () => {
+    setSelectedVideo(null);
+  };
+
   const selectedBook = selectedPreview ? bookData[selectedPreview] : null;
   const selectedAudioBook = selectedAudio ? bookData[selectedAudio] : null;
 
   const playAudioExcerpt = () => {
-    if (selectedBook?.audioUrl) {
+    if (selectedBook?.id === 'loaflie' && selectedBook?.videoUrl) {
+      // For "The Loaf and the LIE", show video instead of audio
+      setSelectedPreview(null);
+      setSelectedVideo({
+        url: selectedBook.videoUrl,
+        title: selectedBook.title,
+        description: selectedBook.subtitle
+      });
+    } else if (selectedBook?.audioUrl) {
       // Close preview modal and open audio player modal
       setSelectedPreview(null);
       setSelectedAudio(selectedBook.id);
+    }
+  };
+
+  const playVideoFromPreview = (videoUrl: string) => {
+    if (selectedBook) {
+      setSelectedPreview(null);
+      setSelectedVideo({
+        url: videoUrl,
+        title: selectedBook.title,
+        description: selectedBook.subtitle
+      });
     }
   };
 
@@ -202,7 +248,10 @@ const Books = () => {
       <BreadJourneyFeatured onListen={() => showAudioPlayer('journey')} />
 
       {/* Books Grid */}
-      <BooksGrid onPreview={(slideId) => showPreview(slideId)} />
+      <BooksGrid 
+        onPreview={(slideId) => showPreview(slideId)} 
+        onVideoPlay={showVideoPlayer}
+      />
 
       {/* The Loaf and the LIE Spotlight */}
       <LoafAndLieSpotlight 
@@ -238,11 +287,20 @@ const Books = () => {
         isPlayingAudio={isPlayingAudio}
         onClose={closePreview}
         onPlayAudio={playAudioExcerpt}
+        onVideoPlay={playVideoFromPreview}
       />
 
       <AudioPlayerModal 
         selectedBook={selectedAudioBook}
         onClose={closeAudioPlayer}
+      />
+
+      <VideoPlayerModal 
+        isOpen={!!selectedVideo}
+        onClose={closeVideoPlayer}
+        videoUrl={selectedVideo?.url || ''}
+        title={selectedVideo?.title || ''}
+        description={selectedVideo?.description || ''}
       />
 
       </main>

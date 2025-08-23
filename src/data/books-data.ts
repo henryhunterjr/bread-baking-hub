@@ -12,6 +12,7 @@ export interface BookData {
   previewContent: string;
   sampleUrl?: string;
   audioUrl?: string;
+  videoUrl?: string;
 }
 
 export const bookData: Record<string, BookData> = {
@@ -165,6 +166,7 @@ export const bookData: Record<string, BookData> = {
     author: "Henry Hunter",
     description: "What if the bread on your table was never meant to nourish you? In The Loaf and the LIE, Henry Hunter pulls back the curtain on the industrial food machine that replaced ancestral wisdom with shelf-stable profits. Told in gripping, investigative detail with the fire of someone who's spent a lifetime in both the kitchen and the archives, this exposé traces the moment bread became a product—and how we're reclaiming its soul.",
     coverImage: "/lovable-uploads/83cde278-edfc-4a30-98f4-79f37c79346e.png",
+    videoUrl: "https://drive.google.com/file/d/18l7YvjiTul6m6iLuK6QkH1wSkhCy1w0o/preview",
     previewContent: `
       <h2>The Loaf and the LIE - Preview</h2>
       <h3>A History of What We Broke and How We're Taking It Back</h3>
@@ -190,7 +192,7 @@ export const bookData: Record<string, BookData> = {
       
       <p><em>This is not just a book. It's a reckoning.</em></p>
     `,
-    audioUrl: undefined
+    audioUrl: "https://drive.google.com/file/d/18l7YvjiTul6m6iLuK6QkH1wSkhCy1w0o/preview"
   },
   yeast: {
     id: "yeast",
