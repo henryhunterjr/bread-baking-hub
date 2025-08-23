@@ -83,7 +83,7 @@ const BookPreviewModal = ({
                 {selectedBook.id === 'loaflie' ? 'Watch the Trailer' : 'Listen to Excerpt'}
               </Button>
             )}
-            {selectedBook.id === 'loaflie' && selectedBook.videoUrl && onVideoPlay && (
+            {selectedBook.videoUrl && onVideoPlay && (
               <Button 
                 onClick={() => onVideoPlay(selectedBook.videoUrl!)}
                 className="w-full max-w-[200px] mb-4 bg-amber-600 hover:bg-amber-700"

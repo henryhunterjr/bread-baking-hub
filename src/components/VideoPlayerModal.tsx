@@ -19,8 +19,13 @@ const VideoPlayerModal = ({ isOpen, onClose, videoUrl, title, description }: Vid
     return (match && match[2].length === 11) ? match[2] : null;
   };
 
+  const isGoogleDrive = videoUrl.includes('drive.google.com');
   const videoId = extractYouTubeId(videoUrl);
-  const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  const embedUrl = isGoogleDrive 
+    ? videoUrl 
+    : videoId 
+      ? `https://www.youtube.com/embed/${videoId}` 
+      : null;
 
   return (
     <div 
