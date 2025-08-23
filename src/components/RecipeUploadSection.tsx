@@ -7,6 +7,7 @@ import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RecipeImportExport } from '@/components/RecipeImportExport';
+import { RecipeTextInput } from '@/components/RecipeTextInput';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -392,12 +393,26 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
             </TabsContent>
             
             <TabsContent value="manual" className="space-y-6">
-              <RecipeImportExport 
-                onImport={(recipe) => {
-                  console.log('Manual recipe imported:', recipe);
-                  onRecipeFormatted(recipe);
-                }}
-              />
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="recipe-text-input" className="text-base font-semibold">
+                    Paste Recipe Text
+                  </Label>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Copy and paste recipe text from websites, books, or your notes. Include ingredients and method sections.
+                  </p>
+                  <RecipeTextInput onRecipeFormatted={onRecipeFormatted} />
+                </div>
+                
+                <div className="mt-6">
+                  <RecipeImportExport 
+                    onImport={(recipe) => {
+                      console.log('Manual recipe imported:', recipe);
+                      onRecipeFormatted(recipe);
+                    }}
+                  />
+                </div>
+              </div>
             </TabsContent>
           </Tabs>
         </CardContent>

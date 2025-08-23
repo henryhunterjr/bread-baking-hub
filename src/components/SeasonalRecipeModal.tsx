@@ -8,7 +8,7 @@ import { RecipeActions } from '@/components/RecipeActions';
 import { RecipeRating } from '@/components/RecipeRating';
 import { ZoomableImage } from '@/components/ZoomableImage';
 import CookingMode from '@/components/CookingMode';
-import { ScrollDebugPanel } from '@/components/ScrollDebugPanel';
+
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
@@ -16,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { sanitizeStructuredData } from '@/utils/sanitize';
 import { useScrollLock } from '@/hooks/useScrollLock';
 import { SafeImage } from '@/components/ui/SafeImage';
+import { RecipeShareButton } from '@/components/RecipeShareButton';
 
 interface SeasonalRecipeModalProps {
   recipe: SeasonalRecipe | null;
@@ -180,37 +181,11 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     load();
   }, [recipe?.id, user?.id]);
 
-  // Simplified scroll position management
-  const scrollPositionRef = useRef<number>(0);
-  
-  useEffect(() => {
-    if (recipe) {
-      // Opening modal - capture and lock scroll
-      scrollPositionRef.current = window.scrollY;
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollPositionRef.current}px`;
-      document.body.style.width = '100%';
-    }
-    
-    return () => {
-      if (recipe) {
-        // Cleanup on close - restore scroll position
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        window.scrollTo(0, scrollPositionRef.current);
-      }
-    };
-  }, [recipe]);
+  // Use the useScrollLock hook for proper scroll management
+  useScrollLock(!!recipe, 'recipe-modal');
 
   // Simplified close handler
   const handleClose = useCallback(() => {
-    console.log(`🚪 MODAL CLOSE - Starting close process`);
-    console.log(`🚪 Current recipe state:`, recipe);
-    console.log(`🚪 Current scroll position captured:`, scrollPositionRef.current);
-    
     // Reset all local state
     setServings(baseServings);
     setReviewText('');
@@ -218,11 +193,9 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     setSubmittingReview(false);
     setLoadingEngagement(false);
     
-    console.log(`🚪 About to call onClose()`);
-    // Call parent close handler - this will set recipe to null and trigger scroll restoration
+    // Call parent close handler
     onClose();
-    console.log(`🚪 onClose() called`);
-  }, [baseServings, onClose, recipe]);
+  }, [baseServings, onClose]);
 
   // Focus management and DOM cleanup effects
   useEffect(() => {
@@ -397,8 +370,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
 
   return (
     <>
-      <ScrollDebugPanel isOpen={!!recipe} />
-      <Dialog 
+      <Dialog
         open={!!recipe} 
         onOpenChange={(open) => {
           if (!open) {
@@ -535,10 +507,16 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
               </div>
 
               {/* Recipe Actions */}
-              <RecipeActions 
-                recipe={recipe}
-                className="border-t pt-4 no-print"
-              />
+              <div className="border-t pt-4 no-print flex flex-wrap gap-2">
+                <RecipeActions 
+                  recipe={recipe}
+                />
+                <RecipeShareButton 
+                  recipe={recipe}
+                  variant="outline"
+                  size="sm"
+                />
+              </div>
 
               {/* Servings Selector */}
               <div className="mt-4 flex items-center gap-3">

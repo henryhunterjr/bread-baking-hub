@@ -133,9 +133,9 @@ export const GlobalSearch = ({
       let s = 0;
       
       tokens.forEach(t => {
-        if (hayTitle.includes(t)) s += 2;     // Higher score for title matches
-        if (hayExcerpt.includes(t)) s += 1;   // Medium score for excerpt matches
-        if (hayTags.some(tag => tag.includes(t))) s += 1.5; // Good score for tag matches
+        if (hayTitle.includes(t)) s += 2;     // Title matches (+2) - highest priority
+        if (hayTags.some(tag => tag.includes(t))) s += 1.5; // Tag matches (+1.5) - high priority  
+        if (hayExcerpt.includes(t)) s += 1;   // Excerpt matches (+1) - medium priority
       });
       return s;
     };

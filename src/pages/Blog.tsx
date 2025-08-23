@@ -68,16 +68,29 @@ const Blog = () => {
         const response: FetchPostsResponse = await fetchBlogPosts(currentPage, selectedCategory, 9, debouncedSearchQuery);
         setPosts(response.posts);
         setTotalPages(response.totalPages);
+        
+        // Cache posts for offline use
+        if (response.posts.length > 0) {
+          cachePosts(response.posts);
+        }
       } catch (err) {
-        setError('Failed to load blog posts. Please try again later.');
         console.error('Failed to load posts:', err);
+        
+        // Try to use cached posts if available
+        const cachedPosts = getCachedPosts();
+        if (cachedPosts.length > 0) {
+          setPosts(cachedPosts);
+          setError('Using cached posts. Some content may be outdated.');
+        } else {
+          setError('Failed to load blog posts. Please check your connection and try again.');
+        }
       } finally {
         setLoading(false);
       }
     };
 
     loadPosts();
-  }, [currentPage, selectedCategory, debouncedSearchQuery]);
+  }, [currentPage, selectedCategory, debouncedSearchQuery, cachePosts, getCachedPosts]);
 
   // Filter posts by tags
   useEffect(() => {

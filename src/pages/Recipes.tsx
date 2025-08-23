@@ -9,6 +9,8 @@ import { SeasonalFilters } from '@/components/SeasonalFilters';
 import { SeasonalRecipeCard } from '@/components/SeasonalRecipeCard';
 import { useSeasonalRecipes, Season, Category, Difficulty, SeasonalRecipe } from '@/hooks/useSeasonalRecipes';
 import { SeasonalRecipeModal } from '@/components/SeasonalRecipeModal';
+import { RecipeModalUrlHandler } from '@/components/RecipeModalUrlHandler';
+import { RecipeShareButton } from '@/components/RecipeShareButton';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 import { useEffect } from 'react';
@@ -37,6 +39,14 @@ const Recipes = () => {
 
   const handleRecipeClick = (recipe: SeasonalRecipe) => {
     setSelectedRecipe(recipe);
+  };
+
+  const handleRecipeSelect = (recipeSlug: string) => {
+    // Find recipe by slug and open modal
+    const recipe = recipes.find(r => r.slug === recipeSlug) || featuredRecipes.find(r => r.slug === recipeSlug);
+    if (recipe) {
+      setSelectedRecipe(recipe);
+    }
   };
 
   // When rating on a card is clicked, open modal and scroll to reviews
@@ -229,6 +239,9 @@ const Recipes = () => {
         recipe={selectedRecipe}
         onClose={() => setSelectedRecipe(null)}
       />
+      
+      {/* Handle recipe URL parameters */}
+      <RecipeModalUrlHandler onRecipeSelect={handleRecipeSelect} />
     </div>
   );
 };

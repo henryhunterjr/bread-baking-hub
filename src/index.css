@@ -183,6 +183,7 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    scrollbar-gutter: stable; /* Prevent layout shift when scrollbar disappears/appears */
   }
   
   /* Ensure font-display: swap for better loading performance */

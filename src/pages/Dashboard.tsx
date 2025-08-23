@@ -161,9 +161,20 @@ const Dashboard = () => {
   }
 
   const handleSaveDraft = async () => {
+    // Validate required fields
+    if (!postData.title.trim()) {
+      toast({
+        title: "Missing title",
+        description: "Please add a title before saving the draft.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     // Ensure slug is not empty before submitting
-    if (!postData.slug || postData.slug.trim() === '') {
-      postData.slug = postData.title
+    let slug = postData.slug;
+    if (!slug || slug.trim() === '') {
+      slug = postData.title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '')
@@ -174,22 +185,30 @@ const Dashboard = () => {
     try {
       const { data, error } = await supabase.functions.invoke('upsert-post', {
         body: { 
-          postData: { ...postData, isDraft: true },
+          postData: { ...postData, slug, isDraft: true },
           userId: user.id
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Draft save error:', error);
+        throw new Error(error.message || 'Failed to save draft');
+      }
+
+      // Update local state with the saved data including any generated IDs
+      if (data?.post) {
+        setPostData(prev => ({ ...prev, id: data.post.id, slug: data.post.slug }));
+      }
 
       toast({
         title: "Draft saved",
         description: "Your draft has been saved successfully."
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving draft:', error);
       toast({
-        title: "Error",
-        description: "Failed to save draft. Please try again.",
+        title: "Save failed",
+        description: error.message || "Failed to save draft. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -281,26 +300,36 @@ const Dashboard = () => {
       }
       
       if (postData.publishAsNewsletter) {
-        // Queue newsletter
-        const { error: newsletterError } = await supabase.functions.invoke('send-newsletter', {
-          body: {
-            title: postData.title,
-            excerpt: postData.subtitle,
-            content: postData.content,
-            postUrl: `${window.location.origin}/blog/${publishedSlug}`
-          }
-        });
+        // Send newsletter
+        try {
+          const { data: newsletterResult, error: newsletterError } = await supabase.functions.invoke('send-newsletter', {
+            body: {
+              title: postData.title,
+              excerpt: postData.subtitle,
+              content: postData.content,
+              postUrl: `${window.location.origin}/blog/${publishedSlug}`
+            }
+          });
 
-        if (newsletterError) {
-          console.error('Newsletter error:', newsletterError);
+          if (newsletterError) {
+            console.error('Newsletter error:', newsletterError);
+            toast({
+              title: "Blog post published",
+              description: "Post is live, but newsletter failed to send. Check the logs for details.",
+              variant: "destructive"
+            });
+          } else {
+            toast({
+              title: "Published & newsletter sent!",
+              description: `Blog post is live and newsletter sent to subscribers. Check: ${newsletterResult?.message || 'Success'}`
+            });
+          }
+        } catch (newsletterError) {
+          console.error('Newsletter exception:', newsletterError);
           toast({
             title: "Blog post published",
-            description: "Post is live, but newsletter failed to send."
-          });
-        } else {
-          toast({
-            title: "Published & newsletter queued",
-            description: "Your blog post is live and newsletter has been queued."
+            description: "Post is live, but newsletter sending failed.",
+            variant: "destructive"
           });
         }
       } else {
