@@ -63,6 +63,7 @@ const MyFavorites = React.lazy(() => import("./pages/MyFavorites"));
 const MyReviews = React.lazy(() => import("./pages/MyReviews"));
 const SearchResultsPage = React.lazy(() => import("./pages/SearchResultsPage"));
 const RecipePrint = React.lazy(() => import("./pages/print/RecipePrint"));
+const Help = React.lazy(() => import("./pages/Help"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -130,8 +131,9 @@ function App() {
                     <Route path="/legal" element={<Legal />} />
                     <Route path="/recipes/:slug" element={<PublicRecipe />} />
                     <Route path="/r/:slug" element={<PublicRecipe />} />
-                    <Route path="/recipe/:slug" element={<RecipeRedirect />} />
-                    <Route path="/print/recipe/:slug" element={<RecipePrint />} />
+                     <Route path="/recipe/:slug" element={<RecipeRedirect />} />
+                     <Route path="/print/recipe/:slug" element={<RecipePrint />} />
+                     <Route path="/help" element={<Help />} />
                     <Route path="/feed.xml" element={<FeedRedirect />} />
                     <Route path="/sitemap.xml" element={<SitemapRedirect />} />
                     <Route path="/dashboard" element={<Dashboard />} />
