@@ -9,7 +9,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { RecipeUploadSection } from '../components/RecipeUploadSection';
 import { RecipeQuickAccessDrawer } from '../components/RecipeQuickAccessDrawer';
-import { VoiceInterface } from '../components/VoiceInterface';
+
 import { WorkflowProgress } from '../components/workspace/WorkflowProgress';
 import { RecipeDisplaySection } from '../components/workspace/RecipeDisplaySection';
 import { WorkspaceSuccessState } from '../components/workspace/WorkspaceSuccessState';
@@ -102,12 +102,6 @@ const RecipeWorkspace = () => {
       
       <Footer />
       
-      
-      {/* Voice Interface */}
-      <VoiceInterface
-        onSpeakingChange={workspace.setIsSpeaking}
-        recipeContext={workspace.editedRecipe || workspace.formattedRecipe?.recipe}
-      />
       
       {/* Quick Access Drawer */}
       {user && (
