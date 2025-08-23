@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Sparkles, ThumbsUp, ThumbsDown, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
+import { SafeImage } from '@/components/ui/SafeImage';
 
 interface Recipe {
   id: string;
@@ -245,11 +246,13 @@ const AIRecommendations = () => {
 
               {recommendation.recipe.image_url && (
                 <div className="aspect-video overflow-hidden">
-                  <img
-                    src={recommendation.recipe.image_url}
-                    alt={recommendation.recipe.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                  />
+                   <SafeImage
+                     src={recommendation.recipe.image_url}
+                     alt={recommendation.recipe.title}
+                     width={320}
+                     height={200}
+                     className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                   />
                 </div>
               )}
 

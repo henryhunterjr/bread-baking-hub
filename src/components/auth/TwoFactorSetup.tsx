@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { QrCode, Shield, Smartphone, Key } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { SafeImage } from '@/components/ui/SafeImage';
 
 const TwoFactorSetup = () => {
   const { user } = useAuth();
@@ -214,7 +215,7 @@ const TwoFactorSetup = () => {
                 Scan this QR code with your authenticator app
               </p>
               {qrCodeUrl && (
-                <img src={qrCodeUrl} alt="QR Code" className="mx-auto border rounded" />
+                <SafeImage src={qrCodeUrl} alt="QR Code" width={256} height={256} className="mx-auto border rounded" />
               )}
             </div>
             <Button onClick={setupTOTP} disabled={loading} className="w-full">

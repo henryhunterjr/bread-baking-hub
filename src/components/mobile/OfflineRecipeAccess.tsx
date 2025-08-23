@@ -7,6 +7,7 @@ import { Progress } from '@/components/ui/progress';
 import { Download, HardDrive, Wifi, WifiOff, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from '@/hooks/use-toast';
+import { SafeImage } from '@/components/ui/SafeImage';
 
 interface OfflineRecipe {
   id: string;
@@ -257,11 +258,13 @@ const OfflineRecipeAccess = () => {
                 <CardContent className="p-4">
                   <div className="flex items-center gap-4">
                     {recipe.image_url && (
-                      <img
-                        src={recipe.image_url}
-                        alt={recipe.title}
-                        className="w-16 h-16 object-cover rounded"
-                      />
+                       <SafeImage
+                         src={recipe.image_url || '/images/placeholder.png'}
+                         alt={recipe.title}
+                         width={320}
+                         height={200}
+                         className="w-full object-cover rounded"
+                       />
                     )}
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium truncate">{recipe.title}</h4>

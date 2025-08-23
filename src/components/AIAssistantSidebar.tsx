@@ -13,6 +13,7 @@ import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
 import { useTextToSpeech } from '@/hooks/useTextToSpeech';
 import { useToast } from '@/hooks/use-toast';
 import { ChatMessage } from './ChatMessage';
+import { SafeImage } from '@/components/ui/SafeImage';
 
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 
@@ -258,22 +259,24 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
             <div className="flex items-center gap-3">
               {/* Avatar in top-left */}
               <div className={`relative w-12 h-12 transition-all duration-300 ${(isListening || isPlaying) ? 'shadow-lg shadow-primary/30' : ''}`}>
-               <img 
-                 src="/lovable-uploads/976b4e22-6b7f-44b0-bfc3-7643ff24b2bd.png"
-                 alt="👨🏽‍🍳 Krusty"
-                 className={`w-full h-full rounded-full object-cover border-2 border-primary/30 transition-all duration-300 ${
-                   (isListening || isPlaying) ? 'ring-2 ring-primary ring-opacity-50 animate-pulse' : ''
-                 }`}
-                 onError={(e) => {
-                   e.currentTarget.style.display = 'none';
-                   const fallback = document.createElement('div');
-                   fallback.className = `w-full h-full rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-lg font-bold shadow-lg border-2 border-primary/30 transition-all duration-300 ${
-                     (isListening || isPlaying) ? 'ring-2 ring-primary ring-opacity-50 animate-pulse' : ''
-                   }`;
-                   fallback.innerHTML = '👨🏽‍🍳';
-                   e.currentTarget.parentElement?.appendChild(fallback);
-                 }}
-               />
+                <SafeImage
+                  src="/lovable-uploads/976b4e22-6b7f-44b0-bfc3-7643ff24b2bd.png"
+                  alt="👨🏽‍🍳 Krusty"
+                  width={64}
+                  height={64}
+                  className={`rounded-full object-cover border-2 border-primary/30 transition-all duration-300 ${
+                    (isListening || isPlaying) ? 'ring-2 ring-primary ring-opacity-50 animate-pulse' : ''
+                  }`}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    const fallback = document.createElement('div');
+                    fallback.className = `w-full h-full rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-lg font-bold shadow-lg border-2 border-primary/30 transition-all duration-300 ${
+                      (isListening || isPlaying) ? 'ring-2 ring-primary ring-opacity-50 animate-pulse' : ''
+                    }`;
+                    fallback.innerHTML = '👨🏽‍🍳';
+                    e.currentTarget.parentElement?.appendChild(fallback);
+                  }}
+                />
               </div>
               <div>
                 <CardTitle className="text-primary text-lg">

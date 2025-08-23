@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { SkipLink, VisuallyHidden } from './AccessibilityComponents';
 import GlobalSearch from './GlobalSearch';
 import { useScrollLock } from '@/hooks/useScrollLock';
+import { SafeImage } from '@/components/ui/SafeImage';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -45,7 +46,7 @@ const Header = () => {
       <SkipLink href="#navigation">Skip to navigation</SkipLink>
       
       <header 
-        className="shadow-stone relative z-50 border-b border-border/20" 
+        className="shadow-stone relative z-50 border-b border-border/20 h-16 md:h-20" 
         style={{backgroundColor: 'hsl(var(--header-background))'}}
         role="banner"
       >
@@ -58,14 +59,18 @@ const Header = () => {
               className="flex items-center hover:opacity-80 transition-opacity"
               aria-label="Baking Great Bread at Home - Home"
             >
-              <img 
-                src={officialLogo}
-                alt="Baking Great Bread at Home - Official Logo"
-                className="w-12 h-12 rounded-full object-cover shadow-lg border-2 border-white/20"
-                onError={(e) => {
-                  e.currentTarget.src = '/placeholder.svg';
-                }}
-              />
+               <SafeImage
+                 src={officialLogo}
+                 alt="Baking Great Bread at Home - Official Logo"
+                 width={160}
+                 height={40}
+                 loading="eager"
+                 fetchPriority="high"
+                 className="w-12 h-12 rounded-full object-cover shadow-lg border-2 border-white/20"
+                 onError={(e) => {
+                   e.currentTarget.src = '/placeholder.svg';
+                 }}
+               />
             </Link>
           </div>
 

@@ -9,6 +9,7 @@ import SocialShare from './SocialShare';
 import EnhancedNewsletterSignup from '../enhanced/EnhancedNewsletterSignup';
 import { BlogPost } from '@/utils/blogFetcher';
 import { sanitizeHtml } from '@/utils/sanitize';
+import { SafeImage } from '@/components/ui/SafeImage';
 
 interface BlogPostViewProps {
   post: BlogPost;
@@ -65,16 +66,22 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
         {/* Post-Specific Hero Banner */}
         <div className="mb-8">
           {post.title.toLowerCase().includes('kaiser roll') ? (
-            <img
+            <SafeImage
               src="/lovable-uploads/a9ec437e-b37d-4689-8e28-e4e3d5347bdf.png"
               alt="Baking Great Bread At Home Blog"
-              className="w-full h-32 md:h-48 object-cover rounded-lg"
+              aspectRatio="16 / 9"
+              loading="eager"
+              fetchPriority="high"
+              className="w-full object-cover rounded-lg"
             />
           ) : (
-            <img
+            <SafeImage
               src="/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png"
               alt="Baking Great At Home Blog"
-              className="w-full h-32 md:h-48 object-cover rounded-lg"
+              aspectRatio="16 / 9"
+              loading="eager"
+              fetchPriority="high"
+              className="w-full object-cover rounded-lg"
             />
           )}
         </div>
@@ -83,10 +90,13 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
           {/* Featured Image */}
           {post.image && (
             <div className="relative mb-8 rounded-xl overflow-hidden">
-              <img
+              <SafeImage
                 src={post.image}
-                alt={post.imageAlt}
-                className="w-full h-64 md:h-96 object-cover"
+                alt={post.imageAlt || post.title}
+                aspectRatio="16 / 9"
+                loading="eager"
+                fetchPriority="high"
+                className="w-full object-cover"
               />
             </div>
           )}
@@ -156,12 +166,12 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
           {/* Author Bio */}
           <div className="bg-muted/50 rounded-lg p-6 mb-8">
             <div className="flex items-start gap-4">
-              <img
+              <SafeImage
                 src={post.author.avatar}
                 alt={`${post.author.name} avatar`}
-                className="w-16 h-16 rounded-full"
-                loading="lazy"
-                decoding="async"
+                width={64}
+                height={64}
+                className="rounded-full"
               />
               <div>
                 <h3 className="font-semibold text-lg mb-2">About {post.author.name}</h3>

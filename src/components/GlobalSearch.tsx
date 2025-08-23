@@ -9,6 +9,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { logger } from '@/utils/logger';
+import { SafeImage } from '@/components/ui/SafeImage';
 
 interface SearchSuggestion {
   id: string;
@@ -363,11 +364,13 @@ export const GlobalSearch = ({
                     className="w-full p-3 text-left hover:bg-muted transition-colors flex items-start gap-3"
                   >
                     {suggestion.image_url && (
-                      <img 
-                        src={suggestion.image_url} 
-                        alt=""
-                        className="w-12 h-12 rounded object-cover flex-shrink-0"
-                      />
+                       <SafeImage
+                         src={suggestion.image_url || '/images/placeholder.png'}
+                         alt={suggestion.title}
+                         width={48}
+                         height={48}
+                         className="rounded object-cover flex-shrink-0"
+                       />
                     )}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">

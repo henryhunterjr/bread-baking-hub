@@ -184,6 +184,17 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Ensure font-display: swap for better loading performance */
+  @font-face {
+    font-family: 'Playfair Display';
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Inter';
+    font-display: swap;
+  }
 }
 
 /* Print styles for clean PDF/print output */

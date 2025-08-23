@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { SafeImage } from '@/components/ui/SafeImage';
 
 interface ZoomableImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   maxScale?: number;
@@ -9,6 +10,8 @@ export const ZoomableImage: React.FC<ZoomableImageProps> = ({
   maxScale = 3,
   minScale = 1,
   className = '',
+  width,
+  height,
   ...imgProps
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -94,12 +97,13 @@ export const ZoomableImage: React.FC<ZoomableImageProps> = ({
       className={`relative w-full h-full touch-pan-y overflow-hidden bg-black/5 ${className}`}
       style={{ touchAction: 'none' }}
     >
-      <img
+      <SafeImage
         {...imgProps}
+        width={typeof width === 'number' ? width : undefined}
+        height={typeof height === 'number' ? height : undefined}
+        aspectRatio={(!width || !height) ? "4 / 3" : undefined}
         className="w-full h-full object-contain select-none"
         draggable={false}
-        loading={(imgProps as any)?.loading ?? 'lazy'}
-        decoding="async"
         style={{
           transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
           transformOrigin: 'center center',

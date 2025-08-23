@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SafeImage } from "@/components/ui/SafeImage";
 
 interface FavoriteItem {
   created_at: string;
@@ -69,7 +70,7 @@ const MyFavorites = () => {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {it.recipe?.image_url && (
-                      <img src={it.recipe.image_url} alt={it.recipe.title} className="w-full h-40 object-cover rounded" loading="lazy" />
+                      <SafeImage src={it.recipe.image_url} alt={it.recipe.title} aspectRatio="16 / 9" className="w-full object-cover rounded" />
                     )}
                     {it.recipe?.slug && (
                       <Button asChild variant="outline">
