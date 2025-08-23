@@ -17,9 +17,7 @@ import { Analytics } from '@vercel/analytics/react';
 import "@/utils/errorMonitoring";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import DefaultSEO from "./components/DefaultSEO";
-import { PerformanceDebugger } from '@/components/PerformanceMetrics';
-import { RouteCleanupHandler } from "./components/RouteCleanupHandler";
-import { SimpleErrorBoundary } from "./components/SimpleErrorBoundary";
+import { AppErrorBoundary } from "./components/AppErrorBoundary";
 
 // Import Index directly to avoid lazy loading issues on main page
 import Index from "./pages/Index";
@@ -83,10 +81,11 @@ const RecipeRedirect = () => {
 };
 
 function App() {
+  
   const [isAIAssistantOpen, setIsAIAssistantOpen] = React.useState(false);
 
   return (
-    <SimpleErrorBoundary>
+    <AppErrorBoundary>
       <AuthProvider>
           <TooltipProvider>
             <CriticalCSS />
@@ -100,8 +99,7 @@ function App() {
             <OfflineBanner />
             <BackToTop />
             <CriticalResourceLoader>
-            <BrowserRouter>
-              <RouteCleanupHandler />
+              <BrowserRouter>
                 <EnhancedSkipLink />
                 <DefaultSEO />
                 <React.Suspense fallback={<SimpleLoadingSpinner />}>
@@ -158,10 +156,9 @@ function App() {
                 </React.Suspense>
               </BrowserRouter>
             </CriticalResourceLoader>
-            {/* Performance debugger removed to prevent re-render flashing */}
           </TooltipProvider>
       </AuthProvider>
-    </SimpleErrorBoundary>
+    </AppErrorBoundary>
   );
 }
 

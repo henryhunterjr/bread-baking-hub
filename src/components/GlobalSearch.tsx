@@ -388,8 +388,7 @@ export const GlobalSearch = ({
                          alt={suggestion.title}
                          width={48}
                          height={48}
-                         fit="cover"
-                         className="rounded flex-shrink-0"
+                         className="rounded object-cover flex-shrink-0"
                        />
                     )}
                     <div className="flex-1 min-w-0">

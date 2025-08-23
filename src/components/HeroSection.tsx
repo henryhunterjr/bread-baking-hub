@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { OptimizedImage } from '@/components/OptimizedImage';
+import { ResponsiveImage } from './ResponsiveImage';
 import heroBreadImage from '@/assets/hero-bread.jpg';
 
 const HeroSection = () => {
@@ -27,15 +27,12 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="relative">
-            <OptimizedImage
+            <ResponsiveImage
               src="/lovable-uploads/db15ab36-18a2-4103-b9d5-a5e58af2b2a2.png"
               alt="Beautiful artisan bread with perfect crumb structure showing heart-shaped pattern"
-              width={800}
-              height={600}
-              className="rounded-2xl shadow-stone w-full aspect-[4/3] gpu-accelerated"
+              className="rounded-2xl shadow-stone w-full aspect-[4/3]"
               priority={true}
               sizes="(max-width: 768px) 100vw, 50vw"
-              quality={70}
             />
             <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground p-4 rounded-lg shadow-warm" aria-label="Community stats">
               <p className="font-semibold">Join 38,000+ Bakers</p>

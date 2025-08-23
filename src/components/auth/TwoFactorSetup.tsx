@@ -215,7 +215,7 @@ const TwoFactorSetup = () => {
                 Scan this QR code with your authenticator app
               </p>
               {qrCodeUrl && (
-                <SafeImage src={qrCodeUrl} alt="QR Code" width={256} height={256} fit="contain" className="mx-auto border rounded" />
+                <SafeImage src={qrCodeUrl} alt="QR Code" width={256} height={256} className="mx-auto border rounded" />
               )}
             </div>
             <Button onClick={setupTOTP} disabled={loading} className="w-full">

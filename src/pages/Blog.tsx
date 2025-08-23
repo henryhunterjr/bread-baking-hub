@@ -59,54 +59,38 @@ const Blog = () => {
     loadCategories();
   }, []);
 
-  // Load posts with proper cancellation and deduplication
+  // Load posts when page, category, or search changes
   useEffect(() => {
-    let isCancelled = false;
-    
     const loadPosts = async () => {
-      if (loading) return; // Prevent concurrent requests
-      
       try {
         setLoading(true);
         setError(null);
-        
         const response: FetchPostsResponse = await fetchBlogPosts(currentPage, selectedCategory, 9, debouncedSearchQuery);
+        setPosts(response.posts);
+        setTotalPages(response.totalPages);
         
-        if (!isCancelled) {
-          setPosts(response.posts);
-          setTotalPages(response.totalPages);
-          
-          // Cache posts for offline use
-          if (response.posts.length > 0) {
-            cachePosts(response.posts);
-          }
+        // Cache posts for offline use
+        if (response.posts.length > 0) {
+          cachePosts(response.posts);
         }
       } catch (err) {
-        if (!isCancelled) {
-          console.error('Failed to load posts:', err);
-          
-          // Try to use cached posts if available
-          const cachedPosts = getCachedPosts();
-          if (cachedPosts.length > 0) {
-            setPosts(cachedPosts);
-            setError('Using cached posts. Some content may be outdated.');
-          } else {
-            setError('Failed to load blog posts. Please check your connection and try again.');
-          }
+        console.error('Failed to load posts:', err);
+        
+        // Try to use cached posts if available
+        const cachedPosts = getCachedPosts();
+        if (cachedPosts.length > 0) {
+          setPosts(cachedPosts);
+          setError('Using cached posts. Some content may be outdated.');
+        } else {
+          setError('Failed to load blog posts. Please check your connection and try again.');
         }
       } finally {
-        if (!isCancelled) {
-          setLoading(false);
-        }
+        setLoading(false);
       }
     };
 
     loadPosts();
-    
-    return () => {
-      isCancelled = true;
-    };
-  }, [currentPage, selectedCategory, debouncedSearchQuery]); // Removed functions from dependencies
+  }, [currentPage, selectedCategory, debouncedSearchQuery, cachePosts, getCachedPosts]);
 
   // Filter posts by tags
   useEffect(() => {
@@ -194,8 +178,7 @@ const Blog = () => {
                 src={BLOG_HERO}
                 alt="Rustic kitchen scene with wooden cutting board displaying 'Baking Great Bread at Home Blog' text, surrounded by baking ingredients, rolling pin, mixing bowls, and fresh flowers"
                 aspectRatio="16 / 9"
-                fit="cover"
-                className="w-full rounded-2xl shadow-warm"
+                className="w-full object-cover rounded-2xl shadow-warm"
                 loading="eager"
                 fetchPriority="high"
               />

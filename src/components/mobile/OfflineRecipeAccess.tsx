@@ -261,9 +261,9 @@ const OfflineRecipeAccess = () => {
                        <SafeImage
                          src={recipe.image_url || '/images/placeholder.png'}
                          alt={recipe.title}
-                         aspectRatio="4 / 3"
-                         fit="cover"
-                         className="w-full rounded"
+                         width={320}
+                         height={200}
+                         className="w-full object-cover rounded"
                        />
                     )}
                     <div className="flex-1 min-w-0">

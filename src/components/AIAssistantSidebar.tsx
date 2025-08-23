@@ -264,8 +264,7 @@ export const AIAssistantSidebar = ({ recipeContext, isOpen, onToggle }: AIAssist
                   alt="👨🏽‍🍳 Krusty"
                   width={48}
                   height={48}
-                  fit="cover"
-                  className={`rounded-full border-2 border-primary/30 transition-all duration-300 ${
+                  className={`rounded-full object-cover border-2 border-primary/30 transition-all duration-300 ${
                     (isListening || isPlaying) ? 'ring-2 ring-primary ring-opacity-50 animate-pulse' : ''
                   }`}
                   onError={(e) => {

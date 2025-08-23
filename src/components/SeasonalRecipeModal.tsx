@@ -14,7 +14,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeStructuredData } from '@/utils/sanitize';
-import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
+import { useScrollLock } from '@/hooks/useScrollLock';
 import { SafeImage } from '@/components/ui/SafeImage';
 import { RecipeShareButton } from '@/components/RecipeShareButton';
 
@@ -181,8 +181,8 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     load();
   }, [recipe?.id, user?.id]);
 
-  // Use the safe body scroll lock for proper scroll management
-  useBodyScrollLock(!!recipe);
+  // Use the useScrollLock hook for proper scroll management
+  useScrollLock(!!recipe, 'recipe-modal');
 
   // Simplified close handler
   const handleClose = useCallback(() => {
@@ -372,7 +372,11 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
     <>
       <Dialog
         open={!!recipe} 
-        onOpenChange={(open) => !open && handleClose()}
+        onOpenChange={(open) => {
+          if (!open) {
+            handleClose();
+          }
+        }}
       >
         <DialogContent 
           ref={dialogContentRef}
@@ -770,7 +774,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                       <div key={r.id} className="rounded-lg border border-border p-3">
                         <p className="text-sm leading-relaxed">{r.comment}</p>
                         {r.photo_url && (
-                          <SafeImage src={r.photo_url} alt={`Review photo for ${recipe.title}`} aspectRatio="4 / 3" fit="cover" className="mt-2 rounded-md" />
+                          <SafeImage src={r.photo_url} alt={`Review photo for ${recipe.title}`} width={320} height={200} className="mt-2 h-32 w-auto rounded-md object-cover" />
                         )}
                         <p className="mt-1 text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString()}</p>
                       </div>
