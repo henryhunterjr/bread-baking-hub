@@ -99,11 +99,12 @@ export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: V
           variant="hero"
           size="lg"
           className="rounded-full shadow-warm h-16 w-16"
+          aria-label={isLoading ? "Connecting to voice assistant" : "Start voice conversation with Baker's Buddy"}
         >
           {isLoading ? (
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white" aria-hidden="true"></div>
           ) : (
-            <Mic className="h-6 w-6" />
+            <Mic className="h-6 w-6" aria-hidden="true" />
           )}
         </Button>
         <div className="text-center mt-2 text-xs text-muted-foreground">
@@ -115,14 +116,15 @@ export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: V
 
   return (
     <div className="fixed right-4 bottom-4 z-50 flex flex-col items-center gap-2">
-      <div className="bg-primary text-primary-foreground p-3 rounded-full shadow-warm">
-        <Volume2 className="h-6 w-6 animate-pulse" />
+      <div className="bg-primary text-primary-foreground p-3 rounded-full shadow-warm" aria-label="Voice conversation active">
+        <Volume2 className="h-6 w-6 animate-pulse" aria-hidden="true" />
       </div>
       <Button
         onClick={endConversation}
         variant="outline"
         size="sm"
         className="text-xs"
+        aria-label="End voice conversation"
       >
         End Chat
       </Button>
