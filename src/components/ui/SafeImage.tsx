@@ -4,12 +4,14 @@ type Props = Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'fetchpriority'> & 
   aspectRatio?: `${number} / ${number}`;
   fit?: 'cover' | 'contain' | 'none';
   fetchpriority?: 'high' | 'low' | 'auto';
+  crossOrigin?: 'anonymous' | 'use-credentials' | '';
 };
 
 export default function SafeImage({
   aspectRatio,
   fit = 'cover',
   fetchpriority,
+  crossOrigin,
   style,
   ...rest
 }: Props) {
@@ -18,9 +20,11 @@ export default function SafeImage({
     : { objectFit: fit, ...style };
 
   // Don't pass unknown camelCase props; attach lowercase attribute explicitly
-  const lower = fetchpriority ? ({ fetchpriority } as any) : {};
+  const additionalProps: any = {};
+  if (fetchpriority) additionalProps.fetchpriority = fetchpriority;
+  if (crossOrigin) additionalProps.crossOrigin = crossOrigin;
 
-  return <img {...rest} {...lower} style={styleWithAR} />;
+  return <img {...rest} {...additionalProps} style={styleWithAR} />;
 }
 
 export { SafeImage };

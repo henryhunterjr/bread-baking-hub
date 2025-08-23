@@ -62,6 +62,7 @@ const LazyAIAssistantSidebar = React.lazy(() => import("./components/AIAssistant
 const MyFavorites = React.lazy(() => import("./pages/MyFavorites"));
 const MyReviews = React.lazy(() => import("./pages/MyReviews"));
 const SearchResultsPage = React.lazy(() => import("./pages/SearchResultsPage"));
+const RecipePrint = React.lazy(() => import("./pages/print/RecipePrint"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -130,6 +131,7 @@ function App() {
                     <Route path="/recipes/:slug" element={<PublicRecipe />} />
                     <Route path="/r/:slug" element={<PublicRecipe />} />
                     <Route path="/recipe/:slug" element={<RecipeRedirect />} />
+                    <Route path="/print/recipe/:slug" element={<RecipePrint />} />
                     <Route path="/feed.xml" element={<FeedRedirect />} />
                     <Route path="/sitemap.xml" element={<SitemapRedirect />} />
                     <Route path="/dashboard" element={<Dashboard />} />

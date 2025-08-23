@@ -104,6 +104,18 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
     };
 
     try {
+      // Use the new print route for better PDF generation
+      if (recipe.slug) {
+        const printUrl = `/print/recipe/${recipe.slug}`;
+        window.open(printUrl, '_blank', 'noopener');
+        toast({ 
+          title: 'PDF Ready', 
+          description: 'Print page opened. Use your browser\'s print-to-PDF feature.' 
+        });
+        setIsGeneratingPDF(false);
+        return;
+      }
+      
       if (inIframe) {
         await fallback();
         return;

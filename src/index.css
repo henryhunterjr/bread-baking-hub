@@ -176,6 +176,24 @@ All colors MUST be HSL.
   }
 }
 
+/* Print Styles */
+@media print {
+  body { 
+    -webkit-print-color-adjust: exact; 
+    print-color-adjust: exact; 
+  }
+  .no-print { 
+    display: none !important; 
+  }
+  .page-break { 
+    break-after: page; 
+  }
+  html, body { 
+    background: #fff; 
+    color: #111; 
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
