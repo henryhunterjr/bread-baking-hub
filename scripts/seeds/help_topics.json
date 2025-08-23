@@ -1,0 +1,98 @@
+[
+  {
+    "key": "saving-recipes",
+    "title": "Save Recipes to Your Library",
+    "audience": ["all"],
+    "summary": "Save any recipe to your personal library so you can find it fast.",
+    "steps": [
+      "Open a recipe card or the full recipe view.",
+      "Click "Save" (or "Add to My Recipes").",
+      "Choose a collection (optional) and confirm."
+    ],
+    "links": [{"label":"Browse Recipes","url":"/recipes"}]
+  },
+  {
+    "key": "print-pdf",
+    "title": "Print or Save a Recipe as PDF",
+    "audience": ["all"],
+    "summary": "Use the dedicated print route for clean, reliable PDFs.",
+    "steps": [
+      "Open a recipe and click "Save as PDF".",
+      "A new print-friendly page opens.",
+      "Use your browser's print dialog to save as PDF."
+    ],
+    "links": [{"label":"How printing works","url":"/help#print"}]
+  },
+  {
+    "key": "recipe-workspace",
+    "title": "Use the Recipe Workspace",
+    "audience": ["all"],
+    "summary": "Paste or upload a recipe, let AI format it, then edit and save.",
+    "steps": [
+      "Go to the Recipe Workspace.",
+      "Paste text or upload a file and click "Format".",
+      "Review ingredients & method, make edits, then save to recipes."
+    ],
+    "links": [{"label":"Recipe Workspace","url":"/recipe-workspace"}]
+  },
+  {
+    "key": "troubleshooting",
+    "title": "Troubleshoot Dough, Crust & Crumb",
+    "audience": ["all"],
+    "summary": "Diagnose issues and get targeted fixes.",
+    "steps": [
+      "Open the Troubleshooting page.",
+      "Select the symptom and follow the prompts.",
+      "Apply the recommended adjustments."
+    ],
+    "links": [{"label":"Troubleshooting","url":"/troubleshooting"}]
+  },
+  {
+    "key": "glossary",
+    "title": "Glossary & Techniques",
+    "audience": ["all"],
+    "summary": "Look up baking terms and techniques quickly.",
+    "steps": [
+      "Open the Glossary.",
+      "Search or browse terms.",
+      "Open a term to see definitions and related topics."
+    ],
+    "links": [{"label":"Glossary","url":"/glossary"}]
+  },
+  {
+    "key": "monthly-challenge",
+    "title": "Join the Monthly Challenge",
+    "audience": ["all"],
+    "summary": "Bake along with the community and share results.",
+    "steps": [
+      "Go to the Monthly Challenge page.",
+      "Read the brief and required method.",
+      "Bake, then share your outcome!"
+    ],
+    "links": [{"label":"Monthly Challenge","url":"/challenge"}]
+  },
+  {
+    "key": "books",
+    "title": "Books, Previews & Trailers",
+    "audience": ["all"],
+    "summary": "Preview or watch trailers, then buy when ready.",
+    "steps": [
+      "Open the Books page.",
+      "Select a title to see synopsis, preview, or trailer.",
+      "Use Buy/Preview buttons for more."
+    ],
+    "links": [{"label":"Books","url":"/books"}]
+  },
+  {
+    "key": "dashboard-admin",
+    "title": "Admin Dashboard (Henry only)",
+    "audience": ["admin"],
+    "summary": "The dashboard is restricted to Henry's account.",
+    "steps": [
+      "Sign in with the admin account.",
+      "Open the Dashboard route.",
+      "Manage content and site settings."
+    ],
+    "links": [{"label":"Dashboard","url":"/dashboard"}]
+  }
+]
