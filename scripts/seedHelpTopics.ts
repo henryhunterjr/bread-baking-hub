@@ -1,38 +1,24 @@
-import { supabase } from '../src/integrations/supabase/client';
-import helpTopics from './seeds/help_topics.json';
+// ts-node scripts/seedHelpTopics.ts
+import { createClient } from '@supabase/supabase-js';
+import fs from 'node:fs';
 
-export async function seedHelpTopics() {
-  console.log('Seeding help topics...');
-  
-  try {
-    // Clear existing help topics
-    const { error: deleteError } = await supabase
+const SUPABASE_URL = process.env.SUPABASE_URL!;
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+(async () => {
+  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, { auth: { persistSession: false } });
+  const raw = fs.readFileSync('scripts/seeds/help_topics.json', 'utf8');
+  const topics = JSON.parse(raw);
+
+  for (const t of topics) {
+    const { error } = await supabase
       .from('help_topics')
-      .delete()
-      .neq('key', ''); // Delete all rows
-    
-    if (deleteError) {
-      console.error('Error clearing help topics:', deleteError);
-      return;
+      .upsert({ ...t, updated_at: new Date().toISOString() }, { onConflict: 'key' });
+    if (error) {
+      console.error('Upsert help topic failed:', t.key, error.message);
+      process.exitCode = 1;
+    } else {
+      console.log('Upserted help topic:', t.key);
     }
-
-    // Insert new help topics
-    const { error: insertError } = await supabase
-      .from('help_topics')
-      .insert(helpTopics);
-
-    if (insertError) {
-      console.error('Error inserting help topics:', insertError);
-      return;
-    }
-
-    console.log(`Successfully seeded ${helpTopics.length} help topics`);
-  } catch (error) {
-    console.error('Error seeding help topics:', error);
   }
-}
-
-// Run if called directly
-if (import.meta.url.includes('seedHelpTopics')) {
-  seedHelpTopics();
-}
+})();
