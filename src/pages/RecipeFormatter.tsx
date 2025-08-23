@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { RecipeUploadSection } from '../components/RecipeUploadSection';
 import { FormattedRecipeDisplay } from '../components/FormattedRecipeDisplay';
-const LazyAIAssistantSidebar = lazy(() => import('../components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 import { VoiceInterface } from '../components/VoiceInterface';
 
 interface FormattedRecipe {
@@ -28,7 +27,6 @@ interface RecipeWithImage {
 const RecipeFormatter = () => {
   const isMobile = useIsMobile();
   const [formattedRecipe, setFormattedRecipe] = useState<RecipeWithImage | null>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const { toast } = useToast();
 
@@ -51,7 +49,7 @@ const RecipeFormatter = () => {
   return (
     <div className="bg-background text-foreground min-h-screen relative">
       <Header />
-      <main className={`py-20 px-4 transition-all duration-300 ${isSidebarOpen && !isMobile ? 'mr-96' : ''}`}>
+      <main className="py-20 px-4">
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="text-center space-y-4">
             <h1 className="text-3xl sm:text-4xl font-bold text-primary">Upload Your Recipe</h1>
@@ -75,14 +73,6 @@ const RecipeFormatter = () => {
         </div>
       </main>
       <Footer />
-      
-      <Suspense fallback={null}>
-        <LazyAIAssistantSidebar
-          recipeContext={formattedRecipe?.recipe}
-          isOpen={isSidebarOpen}
-          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
-        />
-      </Suspense>
       
       <VoiceInterface
         onSpeakingChange={setIsSpeaking}

@@ -58,7 +58,6 @@ const GithubRoot = React.lazy(() => import("./pages/GithubRoot"));
 const GithubReadme = React.lazy(() => import("./pages/GithubReadme"));
 const GithubWriteTest = React.lazy(() => import("./pages/GithubWriteTest"));
 const GoRedirect = React.lazy(() => import("./pages/GoRedirect"));
-const LazyAIAssistantSidebar = React.lazy(() => import("./components/AIAssistantSidebar").then(m => ({ default: m.AIAssistantSidebar })));
 const MyFavorites = React.lazy(() => import("./pages/MyFavorites"));
 const MyReviews = React.lazy(() => import("./pages/MyReviews"));
 const SearchResultsPage = React.lazy(() => import("./pages/SearchResultsPage"));
@@ -84,8 +83,6 @@ const RecipeRedirect = () => {
 };
 
 function App() {
-  
-  const [isAIAssistantOpen, setIsAIAssistantOpen] = React.useState(false);
 
   return (
     <AppErrorBoundary>
@@ -152,13 +149,6 @@ function App() {
                     <Route path="/go" element={<GoRedirect />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
-                </React.Suspense>
-                
-                <React.Suspense fallback={null}>
-                  <LazyAIAssistantSidebar 
-                    isOpen={isAIAssistantOpen}
-                    onToggle={() => setIsAIAssistantOpen(!isAIAssistantOpen)}
-                  />
                 </React.Suspense>
               </BrowserRouter>
             </CriticalResourceLoader>

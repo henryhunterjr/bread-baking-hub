@@ -19,8 +19,11 @@ const RecommendedTools = React.lazy(() => import("../components/RecommendedTools
 const TestimonialsSection = React.lazy(() => import("../components/TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
 const AuthorBioSection = React.lazy(() => import("../components/AuthorBioSection").then(m => ({ default: m.AuthorBioSection })));
 import { sanitizeStructuredData } from '@/utils/sanitize';
+import { VoiceInterface } from '@/components/VoiceInterface';
+import { useState } from 'react';
 
 const Index = () => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   // Generate organization structured data
   const organizationSchema = {
@@ -172,6 +175,10 @@ const Index = () => {
         </React.Suspense>
       </main>
       <Footer />
+      
+      <VoiceInterface
+        onSpeakingChange={setIsSpeaking}
+      />
     </div>
     </>
   );
