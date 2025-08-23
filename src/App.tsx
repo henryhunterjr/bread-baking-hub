@@ -19,7 +19,7 @@ import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import DefaultSEO from "./components/DefaultSEO";
 import { PerformanceDebugger } from '@/components/PerformanceMetrics';
 import { RouteCleanupHandler } from "./components/RouteCleanupHandler";
-import { AppErrorBoundary } from "./components/AppErrorBoundary";
+import { SimpleErrorBoundary } from "./components/SimpleErrorBoundary";
 
 // Import Index directly to avoid lazy loading issues on main page
 import Index from "./pages/Index";
@@ -86,7 +86,7 @@ function App() {
   const [isAIAssistantOpen, setIsAIAssistantOpen] = React.useState(false);
 
   return (
-    <AppErrorBoundary>
+    <SimpleErrorBoundary>
       <AuthProvider>
           <TooltipProvider>
             <CriticalCSS />
@@ -161,7 +161,7 @@ function App() {
             {/* Performance debugger removed to prevent re-render flashing */}
           </TooltipProvider>
       </AuthProvider>
-    </AppErrorBoundary>
+    </SimpleErrorBoundary>
   );
 }
 
