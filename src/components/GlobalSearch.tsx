@@ -180,61 +180,68 @@ export const GlobalSearch = ({
       try {
         const merged: SearchSuggestion[] = [];
 
-        // Server-side search first
-        const { data: recipes, error: rErr } = await supabase.rpc('search_recipes', {
-          search_query: debouncedQuery,
-          limit_count: 5
-        });
-        if (rErr) logger.warn('search_recipes rpc error', rErr);
+        // Try server-side search first with error handling
+        try {
+          const { data: recipes, error: rErr } = await supabase.rpc('search_recipes', {
+            search_query: debouncedQuery,
+            limit_count: 5
+          });
+          if (rErr) throw rErr;
 
-        if (recipes) {
-          merged.push(...recipes.map((r: any) => ({
-            id: r.id,
-            title: r.title,
-            type: 'recipe' as const,
-            excerpt: r.excerpt ?? '',
-            image_url: r.image_url,
-            url: `/recipes/${r.slug ?? r.id}`,
-            search_rank: r.search_rank ?? 0
-          })));
+          if (recipes) {
+            merged.push(...recipes.map((r: any) => ({
+              id: r.id,
+              title: r.title,
+              type: 'recipe' as const,
+              excerpt: r.excerpt ?? '',
+              image_url: r.image_url,
+              url: `/recipes/${r.slug ?? r.id}`,
+              search_rank: r.search_rank ?? 0
+            })));
+          }
+        } catch (rpcError) {
+          logger.warn('search_recipes RPC failed:', rpcError);
         }
 
-        const { data: posts, error: pErr } = await supabase.rpc('search_blog_posts', {
-          search_query: debouncedQuery,
-          limit_count: 5
-        });
-        if (pErr) logger.warn('search_blog_posts rpc error', pErr);
+        try {
+          const { data: posts, error: pErr } = await supabase.rpc('search_blog_posts', {
+            search_query: debouncedQuery,
+            limit_count: 5
+          });
+          if (pErr) throw pErr;
 
-        if (posts) {
-          merged.push(...posts.map((p: any) => ({
-            id: p.id,
-            title: p.title,
-            type: 'blog_post' as const,
-            excerpt: p.excerpt ?? '',
-            image_url: p.hero_image_url,
-            url: `/blog/${p.slug}`,
-            search_rank: p.search_rank ?? 0
-          })));
+          if (posts) {
+            merged.push(...posts.map((p: any) => ({
+              id: p.id,
+              title: p.title,
+              type: 'blog_post' as const,
+              excerpt: p.excerpt ?? '',
+              image_url: p.hero_image_url,
+              url: `/blog/${p.slug}`,
+              search_rank: p.search_rank ?? 0
+            })));
+          }
+        } catch (rpcError) {
+          logger.warn('search_blog_posts RPC failed:', rpcError);
         }
 
         // Add glossary terms
         const glossaryMatches = searchGlossaryTerms(debouncedQuery);
         merged.push(...glossaryMatches.slice(0, 2));
 
-        // Always fall back to client search if server results are insufficient or empty
+        // Use fallback if server results are insufficient
         let final: SearchSuggestion[];
         if (merged.length < 3) {
-          // Use client filter as primary results when server is empty/insufficient
           const clientResults = clientFilter(debouncedQuery);
           final = clientResults.length > 0 ? clientResults : merged;
         } else {
-          // Use server results when sufficient
           final = merged.sort((a, b) => (b.search_rank ?? 0) - (a.search_rank ?? 0)).slice(0, 8);
         }
 
         if (!cancelled) setSuggestions(final);
       } catch (error) {
         logger.error('Search error:', error);
+        // Fallback to client search on any error
         if (!cancelled) setSuggestions(clientFilter(debouncedQuery));
       } finally {
         if (!cancelled) setIsLoading(false);
