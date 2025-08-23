@@ -49,6 +49,7 @@ export default defineConfig(({ mode }) => ({
   },
 
   build: {
+    assetsInlineLimit: 0, // Prevent image inlining
     rollupOptions: {
       output: {
         manualChunks: {

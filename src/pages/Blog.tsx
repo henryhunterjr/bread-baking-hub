@@ -159,8 +159,9 @@ const Blog = () => {
           {/* Hero Section */}
           <section className="py-20 px-4 bg-gradient-hero min-h-[320px] md:min-h-[420px]">
             <h1 className="sr-only">Baking Great Bread Blog</h1>
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-7xl mx-auto" data-hero-src={BLOG_HERO}>
               <SafeImage
+                key={BLOG_HERO}
                 src={BLOG_HERO}
                 alt="Rustic kitchen scene with wooden cutting board displaying 'Baking Great Bread at Home Blog' text, surrounded by baking ingredients, rolling pin, mixing bowls, and fresh flowers"
                 aspectRatio="16 / 9"
