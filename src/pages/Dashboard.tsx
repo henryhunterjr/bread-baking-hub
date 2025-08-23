@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { useAdminCheck } from '@/hooks/useAdminCheck';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -51,6 +52,7 @@ interface BlogPostData {
 
 const Dashboard = () => {
   const { user, loading } = useAuth();
+  const { isAdmin, loading: adminLoading } = useAdminCheck();
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(() => {
     const newParam = searchParams.get('new');
@@ -149,7 +151,12 @@ const Dashboard = () => {
     return <Navigate to="/auth" replace />;
   }
 
-  if (loading) {
+  // Redirect if not admin
+  if (!adminLoading && user && !isAdmin) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (loading || adminLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
