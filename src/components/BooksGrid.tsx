@@ -257,7 +257,7 @@ const BooksGrid = memo(({ onPreview }: BooksGridProps) => {
                     alt={`${book.title} book cover`}
                     width={380}
                     height={570}
-                    className="w-full h-auto object-contain bg-gradient-to-br from-muted/10 to-muted/20"
+                    className="w-full h-auto object-contain bg-gradient-to-br from-muted/10 to-muted/20 gpu-accelerated"
                     priority={book.featured}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />

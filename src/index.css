@@ -179,38 +179,44 @@ All colors MUST be HSL.
 @layer base {
   * {
     @apply border-border;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     @apply bg-background text-foreground;
     scrollbar-gutter: stable; /* Prevent layout shift when scrollbar disappears/appears */
-  }
-  
-  /* Critical performance optimizations */
-  img {
-    /* Prevent layout shift for images */
-    aspect-ratio: attr(width) / attr(height);
-  }
-  
-  /* Critical resource hints */
-  link[rel="preload"] {
-    /* High priority for critical resources */
-    importance: high;
-  }
-  
-  /* Optimize font loading */
-  @font-face {
-    font-display: swap; /* Prevent invisible text during font swap */
-  }
-  
-  /* Ensure font-display: swap for better loading performance */
-  @font-face {
-    font-family: 'Playfair Display';
     font-display: swap;
   }
   
+  /* Performance optimizations */
+  img {
+    aspect-ratio: attr(width) / attr(height);
+    contain: content; /* CSS containment for performance */
+  }
+  
+  /* GPU acceleration for common elements */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+  
+  /* Prevent forced reflows */
+  .no-reflow {
+    contain: layout style paint;
+  }
+  
+  /* Optimize animations */
+  .animate-transform {
+    will-change: transform;
+  }
+  
+  .animate-opacity {
+    will-change: opacity;
+  }
+  
+  /* Font loading optimization */
   @font-face {
-    font-family: 'Inter';
     font-display: swap;
   }
 }

@@ -32,7 +32,7 @@ export function SafeImage({
       {...rest}
       loading={loading}
       decoding={decoding as any}
-      {...(fetchPriority !== 'auto' && { fetchPriority })}
+      {...(fetchPriority !== 'auto' && { fetchpriority: fetchPriority })}
       width={hasDims ? width : undefined}
       height={hasDims ? height : undefined}
       style={finalStyle}

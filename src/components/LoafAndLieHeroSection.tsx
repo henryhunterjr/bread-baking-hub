@@ -16,7 +16,7 @@ const LoafAndLieHeroSection = ({ onListen }: LoafAndLieHeroSectionProps) => {
         width={1920}
         height={1080}
         priority={true}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover gpu-accelerated"
         sizes="100vw"
       />
       
