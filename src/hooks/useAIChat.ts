@@ -133,12 +133,16 @@ export const useAIChat = ({ recipeContext }: UseAIChatOptions = {}) => {
         return;
       }
 
-      const { data, error } = await supabase.functions.invoke('bakers-helper', {
+      // Get current user for RAG context
+      const { data: userData } = await supabase.auth.getUser();
+      
+      // Use RAG-enabled Krusty for enhanced responses
+      const { data, error } = await supabase.functions.invoke('krusty-rag-concierge', {
         body: {
           message: userMessage.content,
+          userId: userData.user?.id,
           recipeContext,
-          mode,
-          systemMessage: getModeSystemMessage(mode)
+          mode
         }
       });
 

@@ -342,6 +342,86 @@ export type Database = {
           },
         ]
       }
+      content_embeddings: {
+        Row: {
+          chunk_index: number
+          content_id: string
+          created_at: string
+          embedding: string
+          id: string
+          text_chunk: string
+          updated_at: string
+        }
+        Insert: {
+          chunk_index?: number
+          content_id: string
+          created_at?: string
+          embedding: string
+          id?: string
+          text_chunk: string
+          updated_at?: string
+        }
+        Update: {
+          chunk_index?: number
+          content_id?: string
+          created_at?: string
+          embedding?: string
+          id?: string
+          text_chunk?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_embeddings_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "content_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      content_items: {
+        Row: {
+          body_text: string
+          created_at: string
+          id: string
+          metadata: Json | null
+          slug: string
+          summary: string | null
+          tags: string[] | null
+          title: string
+          type: Database["public"]["Enums"]["content_type"]
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          body_text: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          slug: string
+          summary?: string | null
+          tags?: string[] | null
+          title: string
+          type: Database["public"]["Enums"]["content_type"]
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          body_text?: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          slug?: string
+          summary?: string | null
+          tags?: string[] | null
+          title?: string
+          type?: Database["public"]["Enums"]["content_type"]
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
       conversion_events: {
         Row: {
           conversion_type: string
@@ -414,6 +494,42 @@ export type Database = {
           metadata?: Json | null
           session_id?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      help_topics: {
+        Row: {
+          audience: string[] | null
+          created_at: string
+          id: string
+          key: string
+          links: Json | null
+          steps: string[] | null
+          summary: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          audience?: string[] | null
+          created_at?: string
+          id?: string
+          key: string
+          links?: Json | null
+          steps?: string[] | null
+          summary: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          audience?: string[] | null
+          created_at?: string
+          id?: string
+          key?: string
+          links?: Json | null
+          steps?: string[] | null
+          summary?: string
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -1263,6 +1379,10 @@ export type Database = {
         }
         Returns: string
       }
+      binary_quantize: {
+        Args: { "": string } | { "": unknown }
+        Returns: unknown
+      }
       create_secure_submission: {
         Args: {
           p_priority?: string
@@ -1380,12 +1500,77 @@ export type Database = {
         Args: { "": unknown }
         Returns: unknown
       }
+      halfvec_avg: {
+        Args: { "": number[] }
+        Returns: unknown
+      }
+      halfvec_out: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      halfvec_send: {
+        Args: { "": unknown }
+        Returns: string
+      }
+      halfvec_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      hnsw_bit_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnsw_halfvec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnsw_sparsevec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      hnswhandler: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflat_bit_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflat_halfvec_support: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      ivfflathandler: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      l2_norm: {
+        Args: { "": unknown } | { "": unknown }
+        Returns: number
+      }
+      l2_normalize: {
+        Args: { "": string } | { "": unknown } | { "": unknown }
+        Returns: string
+      }
+      match_content_embeddings: {
+        Args: {
+          filter_type?: string
+          match_count?: number
+          query_embedding: string
+        }
+        Returns: {
+          chunk_index: number
+          content_id: string
+          similarity: number
+          text_chunk: string
+        }[]
       }
       search_blog_posts: {
         Args:
@@ -1439,6 +1624,18 @@ export type Database = {
         Args: { "": string }
         Returns: string[]
       }
+      sparsevec_out: {
+        Args: { "": unknown }
+        Returns: unknown
+      }
+      sparsevec_send: {
+        Args: { "": unknown }
+        Returns: string
+      }
+      sparsevec_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
+      }
       store_encrypted_mfa_secret: {
         Args: {
           p_backup_codes?: string[]
@@ -1457,6 +1654,30 @@ export type Database = {
         Args: { p_email: string }
         Returns: Json
       }
+      vector_avg: {
+        Args: { "": number[] }
+        Returns: string
+      }
+      vector_dims: {
+        Args: { "": string } | { "": unknown }
+        Returns: number
+      }
+      vector_norm: {
+        Args: { "": string }
+        Returns: number
+      }
+      vector_out: {
+        Args: { "": string }
+        Returns: unknown
+      }
+      vector_send: {
+        Args: { "": string }
+        Returns: string
+      }
+      vector_typmod_in: {
+        Args: { "": unknown[] }
+        Returns: number
+      }
       verify_backup_code: {
         Args: { p_backup_code: string; p_user_id: string }
         Returns: boolean
@@ -1464,6 +1685,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user" | "qa_reviewer"
+      content_type: "recipe" | "blog" | "glossary" | "help"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1592,6 +1814,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user", "qa_reviewer"],
+      content_type: ["recipe", "blog", "glossary", "help"],
     },
   },
 } as const
