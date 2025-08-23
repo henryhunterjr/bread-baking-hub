@@ -17,6 +17,9 @@ import VideoPlayerModal from "@/components/VideoPlayerModal";
 import { bookData } from "@/data/books-data";
 import { Helmet } from 'react-helmet-async';
 import { sanitizeStructuredData } from '@/utils/sanitize';
+import { Suspense, lazy } from 'react';
+
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 const Books = () => {
   const [selectedPreview, setSelectedPreview] = useState<string | null>(null);
@@ -24,6 +27,7 @@ const Books = () => {
   const [selectedVideo, setSelectedVideo] = useState<{url: string, title: string, description: string} | null>(null);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const showPreview = (slideId: string) => {
     setSelectedPreview(slideId);
@@ -305,6 +309,13 @@ const Books = () => {
 
       </main>
       <Footer />
+      
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
     </div>
     </>
   );

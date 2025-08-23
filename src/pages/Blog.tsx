@@ -20,6 +20,9 @@ import { generateBlogListingSchema } from '@/utils/structuredData';
 import { useBlogCache } from '@/utils/blogCache';
 import { sanitizeStructuredData } from '@/utils/sanitize';
 import { SafeImage } from '@/components/ui/SafeImage';
+import { Suspense, lazy } from 'react';
+
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 const BLOG_HERO =
   "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-blog-recipes-tips-and-expert-guidance/untitled-600-x-300-px-1200-x-630-px-1200-x-600-px-1200-x-500-px-1200-x-450-px.png?v=2025-08-22";
@@ -39,6 +42,7 @@ const Blog = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [useProgressiveLoading] = useState(true);
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const { cachePosts, getCachedPosts, isOnline } = useBlogCache();
 
@@ -318,6 +322,13 @@ const Blog = () => {
           </section>
         </main>
         <Footer />
+        
+        <Suspense fallback={null}>
+          <LazyAIAssistantSidebar
+            isOpen={isSidebarOpen}
+            onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+          />
+        </Suspense>
       </div>
     </>
   );

@@ -12,8 +12,13 @@ import { PurchaseSection } from "../components/vitale/PurchaseSection";
 import { VitaleSEO } from "../components/vitale/VitaleSEO";
 import FoolproofRecipeBlock from "../components/vitale/FoolproofRecipeBlock";
 import VitaleMasteryHero from "../components/vitale/VitaleMasteryHero";
+import { Suspense, lazy, useState } from 'react';
+
+const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 const VitaleStarter = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <div className="bg-background text-foreground">
       <VitaleSEO />
@@ -32,6 +37,13 @@ const VitaleStarter = () => {
         <PurchaseSection />
       </main>
       <Footer />
+      
+      <Suspense fallback={null}>
+        <LazyAIAssistantSidebar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      </Suspense>
     </div>
   );
 };
