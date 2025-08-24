@@ -83,6 +83,27 @@ const RecipePrint = () => {
       marginLeft: 'auto',
       marginRight: 'auto'
     }}>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @media print {
+            body { 
+              background: white !important;
+              -webkit-print-color-adjust: exact;
+              color-adjust: exact;
+            }
+            img { 
+              max-width: 100% !important;
+              page-break-inside: avoid;
+            }
+            h1, h2 { 
+              page-break-after: avoid; 
+            }
+            .page-break { 
+              page-break-before: always; 
+            }
+          }
+        `
+      }} />
       {/* Header */}
       <div style={{ marginBottom: '30px', textAlign: 'center' }}>
         <h1 style={{
@@ -109,9 +130,11 @@ const RecipePrint = () => {
             onError={handleImageError}
             style={{
               maxWidth: '100%',
+              width: '100%',
               height: 'auto',
               borderRadius: '8px',
-              boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+              boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+              pageBreakInside: 'avoid'
             }}
           />
         </div>

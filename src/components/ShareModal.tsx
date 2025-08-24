@@ -3,7 +3,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Copy, Mail, Share2, Check } from 'lucide-react';
+import { Copy, Mail, Share2, Check, QrCode } from 'lucide-react';
+import { copyToClipboard, openEmailClient } from '@/utils/shareRecipe';
 
 interface ShareModalProps {
   isOpen: boolean;
@@ -18,22 +19,10 @@ export const ShareModal = ({ isOpen, onClose, title, url, description }: ShareMo
   const { toast } = useToast();
 
   const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(url);
+    const success = await copyToClipboard(url);
+    if (success) {
       setCopied(true);
-      toast({
-        title: "Link copied!",
-        description: "The link has been copied to your clipboard.",
-      });
-      
       setTimeout(() => setCopied(false), 2000);
-    } catch (error) {
-      console.error('Failed to copy:', error);
-      toast({
-        title: "Copy failed",
-        description: "Please copy the link manually.",
-        variant: "destructive"
-      });
     }
   };
 
@@ -57,18 +46,17 @@ export const ShareModal = ({ isOpen, onClose, title, url, description }: ShareMo
   };
 
   const handleEmailShare = () => {
-    const subject = encodeURIComponent(`Check out: ${title}`);
-    const body = encodeURIComponent(
-      `I thought you might be interested in this recipe:\n\n${title}\n\n${description || ''}\n\n${url}`
-    );
-    const mailtoUrl = `mailto:?subject=${subject}&body=${body}`;
+    const subject = `${title} – Baking Great Bread`;
+    const body = `I thought you might be interested in this recipe:\n\n${title}\n\n${description || ''}\n\nView the recipe: ${url}`;
+    const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
-    try {
-      window.open(mailtoUrl, '_self');
-    } catch (error) {
-      console.error('Email share failed:', error);
-      handleCopyLink(); // Fallback to copy
-    }
+    openEmailClient(mailtoUrl);
+  };
+
+  const generateQRCode = () => {
+    // Simple QR code generation using Google Charts API as fallback
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+    window.open(qrUrl, '_blank');
   };
 
   return (
@@ -123,6 +111,15 @@ export const ShareModal = ({ isOpen, onClose, title, url, description }: ShareMo
             >
               <Mail className="w-4 h-4 mr-2" />
               Share via Email
+            </Button>
+
+            <Button 
+              onClick={generateQRCode} 
+              variant="outline" 
+              className="w-full justify-start"
+            >
+              <QrCode className="w-4 h-4 mr-2" />
+              Generate QR Code
             </Button>
           </div>
 

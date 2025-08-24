@@ -19,6 +19,7 @@ import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import DefaultSEO from "./components/DefaultSEO";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 import RouteCleanupHandler from "./components/RouteCleanupHandler";
+import { ChatProvider } from "./components/ChatProvider";
 
 // Import Index directly to avoid lazy loading issues on main page
 import Index from "./pages/Index";
@@ -63,6 +64,8 @@ const MyReviews = React.lazy(() => import("./pages/MyReviews"));
 const SearchResultsPage = React.lazy(() => import("./pages/SearchResultsPage"));
 const RecipePrint = React.lazy(() => import("./pages/print/RecipePrint"));
 const Help = React.lazy(() => import("./pages/Help"));
+const MyRecipeLibrary = React.lazy(() => import("./pages/MyRecipeLibrary"));
+const PasswordReset = React.lazy(() => import("./pages/PasswordReset"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -86,8 +89,9 @@ function App() {
 
   return (
     <AppErrorBoundary>
-      <AuthProvider>
-          <TooltipProvider>
+      <ChatProvider>
+        <AuthProvider>
+            <TooltipProvider>
             <CriticalCSS />
             <PerformanceOptimizer />
             <AccessibilityEnhancements />
@@ -110,8 +114,10 @@ function App() {
                     <Route path="/recipe-workspace" element={<RecipeWorkspace />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/my-recipes" element={<MyRecipes />} />
+                    <Route path="/my-recipe-library" element={<MyRecipeLibrary />} />
                     <Route path="/my-favorites" element={<MyFavorites />} />
                     <Route path="/my-reviews" element={<MyReviews />} />
+                    <Route path="/password-reset" element={<PasswordReset />} />
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/books" element={<Books />} />
@@ -152,8 +158,9 @@ function App() {
                 </React.Suspense>
               </BrowserRouter>
             </CriticalResourceLoader>
-          </TooltipProvider>
-      </AuthProvider>
+            </TooltipProvider>
+        </AuthProvider>
+      </ChatProvider>
     </AppErrorBoundary>
   );
 }

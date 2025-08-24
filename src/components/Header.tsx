@@ -105,7 +105,7 @@ const Header = () => {
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
                     <Link 
-                      to={user ? "/my-recipes" : "/books"} 
+                      to={user ? "/my-recipe-library" : "/books"} 
                       className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors"
                     >
                       {user ? "My Library" : "Library"}
@@ -271,7 +271,7 @@ const Header = () => {
                 Vitale Starter
               </Link>
               <Link 
-                to={user ? "/my-recipes" : "/books"} 
+                to={user ? "/my-recipe-library" : "/books"} 
                 className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" 
                 onClick={closeMenu}
               >

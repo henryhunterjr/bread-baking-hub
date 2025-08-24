@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { FormattedRecipe, RecipeWithImage, WorkspaceStep } from '@/types/recipe-workspace';
+import { supabase } from '@/integrations/supabase/client';
+
+type WorkspaceState = 'idle' | 'validating' | 'uploading' | 'formatting' | 'editable' | 'saving' | 'saved' | 'error';
 
 export const useRecipeWorkspace = () => {
   const [formattedRecipe, setFormattedRecipe] = useState<RecipeWithImage | null>(null);
@@ -9,20 +12,61 @@ export const useRecipeWorkspace = () => {
   const [currentStep, setCurrentStep] = useState<WorkspaceStep>('upload');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [workspaceState, setWorkspaceState] = useState<WorkspaceState>('idle');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [errorFallback, setErrorFallback] = useState<string>('');
   const { toast } = useToast();
+
+  const formatRecipeWithRetry = async (file: File, maxRetries = 3): Promise<any> => {
+    let lastError: Error | null = null;
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        setWorkspaceState(attempt === 1 ? 'uploading' : 'formatting');
+        
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const { data, error } = await supabase.functions.invoke('format-recipe', {
+          body: formData,
+        });
+
+        if (error) throw error;
+        if (!data?.recipe) throw new Error('No recipe data received');
+
+        return data;
+      } catch (error) {
+        lastError = error as Error;
+        console.error(`Format attempt ${attempt}/${maxRetries} failed:`, error);
+        
+        if (attempt < maxRetries) {
+          // Exponential backoff: 2s, 4s, 8s
+          const delay = Math.pow(2, attempt) * 1000;
+          await new Promise(resolve => setTimeout(resolve, delay));
+        }
+      }
+    }
+    
+    throw lastError;
+  };
 
   const handleRecipeFormatted = (recipe: FormattedRecipe, imageUrl?: string) => {
     setFormattedRecipe({ recipe, imageUrl });
     setEditedRecipe(recipe);
     setRecipeImageUrl(imageUrl || '');
     setCurrentStep('review');
+    setWorkspaceState('editable');
+    setIsProcessing(false);
     toast({
       title: "Success!",
       description: "Your recipe has been formatted successfully.",
     });
   };
 
-  const handleError = (message: string) => {
+  const handleError = (message: string, extractedText?: string) => {
+    setWorkspaceState('error');
+    setIsProcessing(false);
+    setErrorFallback(extractedText || '');
     toast({
       title: "Error",
       description: message,
@@ -82,6 +126,7 @@ export const useRecipeWorkspace = () => {
 
   const handleRecipeSaved = (recipeId: string) => {
     setCurrentStep('save');
+    setWorkspaceState('saved');
     toast({
       title: "Recipe saved!",
       description: "Your recipe has been saved to your collection.",
@@ -114,6 +159,9 @@ export const useRecipeWorkspace = () => {
     setRecipeImageUrl('');
     setCurrentStep('upload');
     setIsEditMode(false);
+    setWorkspaceState('idle');
+    setIsProcessing(false);
+    setErrorFallback('');
   };
 
   return {
@@ -124,6 +172,9 @@ export const useRecipeWorkspace = () => {
     currentStep,
     isSpeaking,
     isEditMode,
+    workspaceState,
+    isProcessing,
+    errorFallback,
     
     // Handlers
     handleRecipeFormatted,
@@ -136,6 +187,9 @@ export const useRecipeWorkspace = () => {
     handleSaveToLibrary,
     handleRecipeSelect,
     handleStartOver,
+    formatRecipeWithRetry,
     setIsSpeaking,
+    setIsProcessing,
+    setWorkspaceState,
   };
 };
