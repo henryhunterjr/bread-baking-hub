@@ -703,6 +703,7 @@ export type Database = {
           created_at: string
           display_name: string | null
           id: string
+          is_admin: boolean | null
           updated_at: string
           user_id: string
         }
@@ -710,6 +711,7 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           id?: string
+          is_admin?: boolean | null
           updated_at?: string
           user_id: string
         }
@@ -717,6 +719,7 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           id?: string
+          is_admin?: boolean | null
           updated_at?: string
           user_id?: string
         }
@@ -1622,6 +1625,10 @@ export type Database = {
       }
       is_admin_user: {
         Args: { user_email: string }
+        Returns: boolean
+      }
+      is_current_user_admin: {
+        Args: Record<PropertyKey, never>
         Returns: boolean
       }
       ivfflat_bit_support: {

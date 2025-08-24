@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Shield, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { reportError } from '@/utils/errorReporter';
 
 interface AdminRouteProps {
   children: React.ReactNode;
@@ -24,16 +25,18 @@ export const AdminRoute = ({ children }: AdminRouteProps) => {
       }
 
       try {
-        const { data, error } = await supabase.rpc('current_user_is_admin');
+        const { data, error } = await supabase.rpc('is_current_user_admin');
         
         if (error) {
           console.error('Error checking admin status:', error);
+          reportError(error, { route: '/dashboard', userId: user.id });
           setIsAdmin(false);
         } else {
-          setIsAdmin(data || false);
+          setIsAdmin(data === true);
         }
       } catch (error) {
         console.error('Error checking admin status:', error);
+        reportError(error as Error, { route: '/dashboard', userId: user.id });
         setIsAdmin(false);
       } finally {
         setLoading(false);
@@ -84,6 +87,14 @@ export const AdminRoute = ({ children }: AdminRouteProps) => {
   }
 
   if (!isAdmin) {
+    // Log unauthorized access attempt
+    if (user) {
+      reportError(new Error('Unauthorized admin access attempt'), { 
+        route: '/dashboard', 
+        userId: user.id 
+      });
+    }
+    
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
@@ -91,7 +102,7 @@ export const AdminRoute = ({ children }: AdminRouteProps) => {
             <Shield className="w-12 h-12 mx-auto mb-4 text-destructive" />
             <CardTitle>Access Denied</CardTitle>
             <CardDescription>
-              You don't have permission to access this page. This area is restricted to administrators only.
+              You don't have permission to access this page. This area is restricted to administrators only. This incident has been logged.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
