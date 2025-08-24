@@ -76,29 +76,53 @@ serve(async (req) => {
       }
     }
 
-    const formData = await req.formData();
-    const file = formData.get('file') as File;
+    // Check request content type and parse accordingly  
+    const contentTypeHeader = req.headers.get('content-type') || '';
+    
+    if (contentTypeHeader.includes('application/json')) {
+      // JSON request - text input
+      try {
+        const jsonBody = await req.json();
+        if (jsonBody.source_type === 'text' && jsonBody.text) {
+          sourceType = 'text';
+          rawText = jsonBody.text;
+          
+          if (!rawText || rawText.trim().length < 10) {
+            return await fail('EMPTY_TEXT', 'Please provide a longer recipe text.');
+          }
+          
+          console.log('Processing text input:', rawText.length, 'characters');
+        } else {
+          return await fail('BAD_REQUEST', 'Invalid JSON request. Expected { source_type: "text", text: "..." }');
+        }
+      } catch (jsonError) {
+        return await fail('INVALID_JSON', 'Invalid JSON request body.');
+      }
+    } else {
+      // FormData request - file input
+      const formData = await req.formData();
+      const file = formData.get('file') as File;
 
-    if (!file) {
-      return await fail('MISSING_FILE', 'No file provided', 400);
-    }
+      if (!file) {
+        return await fail('MISSING_FILE', 'No file provided', 400);
+      }
 
-    // Check file size (limit to 20MB)
-    if (file.size > 20 * 1024 * 1024) {
-      return await fail('FILE_TOO_LARGE', 'File too large. Please use files under 20MB.', 400);
-    }
+      // Check file size (limit to 20MB)
+      if (file.size > 20 * 1024 * 1024) {
+        return await fail('FILE_TOO_LARGE', 'File too large. Please use files under 20MB.', 400);
+      }
 
-    // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
-    if (!allowedTypes.includes(file.type)) {
-      return await fail('INVALID_FILE_TYPE', 'Unsupported file type. Please upload JPG, PNG, or PDF.', 400);
-    }
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+      if (!allowedTypes.includes(file.type)) {
+        return await fail('INVALID_FILE_TYPE', 'Unsupported file type. Please upload JPG, PNG, or PDF.', 400);
+      }
 
-    // Content-Type detection and routing
-    const contentType = file.type;
-    sourceType = contentType === 'application/pdf' ? 'pdf' : contentType.startsWith('image/') ? 'image' : 'unknown';
+      // Content-Type detection and routing
+      const contentType = file.type;
+      sourceType = contentType === 'application/pdf' ? 'pdf' : contentType.startsWith('image/') ? 'image' : 'unknown';
 
-    if (contentType === 'application/pdf') {
+      if (contentType === 'application/pdf') {
       // PDF text extraction path
       console.log('Processing PDF file for text extraction...');
       
@@ -324,6 +348,107 @@ serve(async (req) => {
 
     } else {
       return await fail('UNSUPPORTED_FILE_TYPE', 'Unsupported content type. Please upload JPG, PNG, or PDF files.');
+    }
+    }
+
+    // Text processing path (for JSON requests)
+    if (sourceType === 'text' && rawText) {
+      console.log('Processing text input with OpenAI...');
+      
+      try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${OPENAI_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'gpt-4o-mini',
+            messages: [
+              {
+                role: 'system',
+                content: 'You are an expert recipe formatter. Normalize the following recipe text into JSON with these exact keys: title, introduction, prep_time, cook_time, total_time, servings, course, cuisine, equipment, ingredients, method, tips, troubleshooting. Structure requirements: ingredients[] must include {item, amount_metric, amount_volume, note?}, method[] must include {step, instruction}, tips[] is string array, troubleshooting[] contains {issue, solution} objects. Preserve units and be precise. Output ONLY valid JSON.'
+              },
+              {
+                role: 'user',
+                content: `Please format this recipe text into the specified JSON structure:\n\n${rawText}`
+              }
+            ],
+            max_tokens: 2000,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.text();
+          console.error('OpenAI API error (text):', { status: response.status, statusText: response.statusText, error: errorData });
+          
+          // Log to error_logs
+          try {
+            await supabase.from('error_logs').insert({
+              function_name: 'format-recipe',
+              error_type: 'OpenAI_API_Error',
+              error_message: `OpenAI API failed: ${response.status} ${response.statusText}`,
+              error_stack: errorData,
+              request_payload: {
+                source_type: 'text',
+                text_length: rawText.length,
+                user_id: userId,
+                model: 'gpt-4o-mini',
+                path: 'text'
+              },
+              timestamp: new Date().toISOString(),
+              severity: 'error'
+            });
+          } catch {}
+
+          return await fail('OPENAI_API_ERROR', 'We can\'t reach the formatter right now. Please retry.');
+        }
+
+        const data = await response.json();
+        const recipeText = data.choices[0]?.message?.content;
+        
+        if (!recipeText) {
+          return await fail('EMPTY_RESPONSE', 'No response from formatting service. Please retry.');
+        }
+        
+        // Parse and return JSON
+        let cleanedText = recipeText.trim();
+        if (cleanedText.startsWith('```json')) {
+          cleanedText = cleanedText.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+        } else if (cleanedText.startsWith('```')) {
+          cleanedText = cleanedText.replace(/^```\s*/, '').replace(/\s*```$/, '');
+        }
+        
+        try {
+          const recipe = JSON.parse(cleanedText);
+          console.log('Successfully parsed text recipe:', recipe.title);
+          
+          // Log success
+          try {
+            await supabase.from('format_jobs').insert({
+              user_id: userId,
+              source_type: 'text',
+              raw_text: rawText,
+              status: 'success',
+            });
+          } catch {}
+          
+          return new Response(JSON.stringify({ 
+            ok: true,
+            recipe, 
+            source: 'text_processing'
+          }), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
+        } catch (parseError) {
+          console.error('JSON parse error:', parseError);
+          return await fail('JSON_PARSE_ERROR', 'Failed to parse recipe format. Please try again.');
+        }
+
+      } catch (textError) {
+        console.error('Text processing error:', textError);
+        return await fail('TEXT_PROCESSING_ERROR', 'Unable to process this text. Please try again.');
+      }
     }
 
   } catch (error) {

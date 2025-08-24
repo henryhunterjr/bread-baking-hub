@@ -17,6 +17,7 @@ import type { FormattedRecipe } from '@/types/recipe-workspace';
 import imageCompression from 'browser-image-compression';
 import { useNavigate } from 'react-router-dom';
 import { logger } from '@/utils/logger';
+import { recipeApiClient } from '@/utils/recipeApiClient';
 
 interface RecipeUploadSectionProps {
   onRecipeFormatted: (recipe: FormattedRecipe, imageUrl?: string) => void;
@@ -126,25 +127,21 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
 
       setUploadProgress(40);
       
-      // Call format-recipe edge function with proper authorization
-      const formatResp = await fetch('https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/format-recipe', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeWNrc2t1Y25lbGp2dXF6cnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NDI0MTUsImV4cCI6MjA1MjMxODQxNX0.-Bx7Y0d_aMcHakE27Z5QKriY6KPpG1m8n0uuLaamFfY'}`
-        },
-        body: formData,
+      // Use API client for file processing 
+      const source_type = selectedFile.type === 'application/pdf' ? 'pdf' as const : 'image' as const;
+      const result = await recipeApiClient.formatRecipe({
+        source_type,
+        file: selectedFile
       });
 
       setUploadProgress(60);
 
-      if (!formatResp.ok) {
-        const errJson = await formatResp.json().catch(() => ({}));
-        
+      if (!result.ok) {
         // Handle specific error codes with user-friendly messages
-        let userMessage = '';
+        let userMessage = result.message || 'Unknown error occurred';
         let shouldRetry = true;
         
-        switch (errJson?.code) {
+        switch (result.code) {
           case 'NO_TEXT_IN_PDF':
             userMessage = 'This PDF appears to be scanned or image-based. Try converting it to images (JPG/PNG) and upload those instead, or enable OCR mode if available.';
             shouldRetry = false;
@@ -158,18 +155,10 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
             userMessage = 'Unable to process this PDF. Please try converting to images or use a different file.';
             shouldRetry = false;
             break;
-          default:
-            userMessage = errJson?.error || errJson?.message || `We can't reach the formatter right now. Please retry.`;
-            shouldRetry = true;
         }
         
         // Log the detailed error for debugging (keep for troubleshooting)
-        logger.error('Format recipe error:', {
-          status: formatResp.status,
-          statusText: formatResp.statusText,
-          error: errJson,
-          headers: Object.fromEntries(formatResp.headers.entries())
-        });
+        logger.error('Format recipe error:', result);
         
         setServerError(userMessage);
         toast({
@@ -177,12 +166,21 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
           description: userMessage,
           variant: 'destructive',
         });
+        
+        // Auto-save draft for files
+        try {
+          await recipeApiClient.saveDraft({
+            source: 'file',
+            raw_text: `File: ${selectedFile.name} (${selectedFile.type})`
+          });
+        } catch {}
+        
         throw new Error(userMessage);
       }
 
       setUploadProgress(80);
 
-      const data = await formatResp.json() as any;
+      const data = { recipe: result.recipe };
       
       let imageUrl = null;
       

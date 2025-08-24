@@ -7,6 +7,7 @@ import { AlertCircle, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { FormattedRecipe } from '@/types/recipe-workspace';
 import { logger } from '@/utils/logger';
+import { recipeApiClient } from '@/utils/recipeApiClient';
 
 interface RecipeTextInputProps {
   onRecipeFormatted: (recipe: FormattedRecipe, imageUrl?: string) => void;
@@ -36,46 +37,42 @@ export const RecipeTextInput = ({ onRecipeFormatted }: RecipeTextInputProps) => 
     try {
       setProgress(20);
       
-      // Create a text file blob to send to the format-recipe function
-      const textBlob = new Blob([recipeText], { type: 'text/plain' });
-      const formData = new FormData();
-      formData.append('file', textBlob, 'recipe.txt');
-
-      setProgress(40);
-
       toast({
         title: "Processing...",
         description: "Formatting your recipe text with AI..."
       });
 
-      const response = await fetch('https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/format-recipe', {
-        method: 'POST',
-        body: formData,
+      setProgress(40);
+
+      // Use the API client for text processing (no file/MIME handling)
+      const result = await recipeApiClient.formatRecipe({
+        source_type: 'text',
+        text: recipeText.trim()
       });
 
       setProgress(70);
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
+      if (!result.ok) {
+        // Show user-friendly error message and auto-save draft
+        toast({
+          title: "Processing failed",
+          description: result.message,
+          variant: "destructive"
+        });
         
-        // Handle specific error codes with user-friendly messages
-        let userMessage = '';
-        switch (errorData?.code) {
-          case 'MISSING_OPENAI_KEY':
-          case 'openai_auth_error':
-            userMessage = 'We can\'t reach the formatter right now. Please try again shortly.';
-            break;
-          default:
-            userMessage = errorData?.error || errorData?.message || `Failed to process recipe (${response.status})`;
-        }
+        // Auto-save the text as a draft so user never loses work
+        await recipeApiClient.saveDraft({
+          source: 'text',
+          raw_text: recipeText
+        });
         
-        throw new Error(userMessage);
+        setError(result.message || 'Failed to process recipe text');
+        return;
       }
 
-      const data = await response.json();
       setProgress(100);
 
-      if (!data.recipe) {
+      if (!result.recipe) {
         throw new Error('No recipe data returned from processing');
       }
 
@@ -84,7 +81,8 @@ export const RecipeTextInput = ({ onRecipeFormatted }: RecipeTextInputProps) => 
         description: "Recipe text processed successfully"
       });
 
-      onRecipeFormatted(data.recipe);
+      // Show "Review recipe" modal and save draft immediately
+      onRecipeFormatted(result.recipe);
       setRecipeText(''); // Clear the input
     } catch (error: any) {
       logger.error('Error processing recipe text:', error);
@@ -95,6 +93,14 @@ export const RecipeTextInput = ({ onRecipeFormatted }: RecipeTextInputProps) => 
         description: errorMessage,
         variant: "destructive"
       });
+      
+      // Auto-save draft on any error
+      try {
+        await recipeApiClient.saveDraft({
+          source: 'text',
+          raw_text: recipeText
+        });
+      } catch {}
     } finally {
       setIsProcessing(false);
       setProgress(0);

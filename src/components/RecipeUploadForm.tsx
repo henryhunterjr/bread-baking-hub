@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { recipeApiClient } from '@/utils/recipeApiClient';
 
 export default function RecipeUploadForm({ onSuccess }: { onSuccess: (data: any) => void }) {
   const [file, setFile] = useState<File | null>(null);
@@ -13,25 +13,37 @@ export default function RecipeUploadForm({ onSuccess }: { onSuccess: (data: any)
     setLoading(true);
     setError(null);
 
-    const formData = new FormData();
-    formData.append('file', file);
-
     try {
-      const { data, error } = await supabase.functions.invoke('format-recipe', { body: formData });
-      if (error) throw new Error(error.message);
-      if (data?.recipe) onSuccess(data.recipe);
-      else throw new Error('No recipe returned.');
-    } catch (err: any) {
-      // Handle specific error codes with user-friendly messages
-      let userMessage = '';
-      if (err?.message?.includes('NO_TEXT_IN_PDF')) {
-        userMessage = 'This PDF appears to be scanned. Try converting to images or enable OCR mode.';
-      } else if (err?.message?.includes('MISSING_OPENAI_KEY') || err?.message?.includes('openai_auth_error')) {
-        userMessage = 'We can\'t reach the formatter right now. Please try again shortly.';
-      } else {
-        userMessage = err?.message || 'Failed to process recipe.';
-      }
+      // Determine source type from file type
+      const source_type = file.type === 'application/pdf' ? 'pdf' as const : 'image' as const;
       
+      const result = await recipeApiClient.formatRecipe({
+        source_type,
+        file
+      });
+
+      if (!result.ok) {
+        // Show error and save draft
+        setError(result.message || 'Failed to process recipe');
+        
+        // For files, we can't save meaningful text draft, but we log the attempt
+        try {
+          await recipeApiClient.saveDraft({
+            source: 'file',
+            raw_text: `File: ${file.name} (${file.type})`
+          });
+        } catch {}
+        
+        return;
+      }
+
+      if (result.recipe) {
+        onSuccess(result.recipe);
+      } else {
+        throw new Error('No recipe returned.');
+      }
+    } catch (err: any) {
+      const userMessage = err?.message || 'Failed to process recipe.';
       setError(userMessage);
       console.error(err);
     } finally {
