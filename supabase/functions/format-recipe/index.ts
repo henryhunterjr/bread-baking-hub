@@ -112,23 +112,18 @@ serve(async (req) => {
 
     // Handle both PDF and image files
     if (file.type === 'application/pdf') {
-      try {
-        console.log('Processing PDF file...');
-        const arrayBuffer = await file.arrayBuffer();
-        const uint8Array = new Uint8Array(arrayBuffer);
-        base64 = encodeBase64(uint8Array);
-        mimeType = 'application/pdf';
-        console.log('Successfully processed PDF file');
-      } catch (pdfError) {
-        console.error('PDF processing error:', pdfError);
-        return new Response(
-          JSON.stringify({ error: 'Unable to process PDF. Please try again or upload an image instead.', code: 'pdf_processing_error' }),
-          { 
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-            status: 400 
-          }
-        );
-      }
+      // PDF files are not supported by OpenAI's vision API
+      return new Response(
+        JSON.stringify({ 
+          error: 'PDF files are not supported. Please convert your PDF to images (JPG or PNG) and upload those instead. You can take screenshots of each page or use a PDF-to-image converter.', 
+          code: 'pdf_not_supported',
+          suggestion: 'Convert PDF pages to images and upload them individually'
+        }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400 
+        }
+      );
     } else {
       // Handle regular image files
       console.log('Processing image file...');
@@ -147,24 +142,35 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
-        messages: [
-          {
-            role: 'system',
-            content: 'You are an expert recipe formatter. When given a handwritten or scanned recipe image, extract the full recipe details and return it in JSON format with these exact keys: title, introduction, prep_time, cook_time, total_time, servings, course, cuisine, equipment, ingredients, method, tips, troubleshooting. Structure requirements: ingredients[] must include {item, amount_metric, amount_volume, note?}, method[] must include {step, instruction}, tips[] is string array, troubleshooting[] contains {issue, solution} objects. Focus on clarity and completeness. If any data is missing, reconstruct or infer it based on the recipe context. Output ONLY valid JSON.'
-          },
-          {
-            role: 'user',
-            content: [
+        model: mimeType === 'application/pdf' ? 'gpt-4o' : 'gpt-4o',
+        messages: mimeType === 'application/pdf' 
+          ? [
               {
-                type: 'image_url',
-                image_url: { 
-                  url: `data:${mimeType};base64,${base64}` 
-                },
+                role: 'system',
+                content: 'You are an expert recipe formatter. The user has uploaded a PDF file containing a recipe. Since you cannot directly view PDFs, please inform the user that PDF processing requires image conversion. Ask them to either: 1) Convert the PDF pages to images (JPG/PNG) and upload those instead, or 2) Take screenshots of the recipe pages and upload those images. Explain this limitation clearly and provide helpful guidance.'
+              },
+              {
+                role: 'user',
+                content: 'I uploaded a PDF file containing a recipe. Please help me understand how to proceed.'
+              }
+            ]
+          : [
+              {
+                role: 'system',
+                content: 'You are an expert recipe formatter. When given a handwritten or scanned recipe image, extract the full recipe details and return it in JSON format with these exact keys: title, introduction, prep_time, cook_time, total_time, servings, course, cuisine, equipment, ingredients, method, tips, troubleshooting. Structure requirements: ingredients[] must include {item, amount_metric, amount_volume, note?}, method[] must include {step, instruction}, tips[] is string array, troubleshooting[] contains {issue, solution} objects. Focus on clarity and completeness. If any data is missing, reconstruct or infer it based on the recipe context. Output ONLY valid JSON.'
+              },
+              {
+                role: 'user',
+                content: [
+                  {
+                    type: 'image_url',
+                    image_url: { 
+                      url: `data:${mimeType};base64,${base64}` 
+                    },
+                  },
+                ],
               },
             ],
-          },
-        ],
         max_tokens: 2000,
       }),
     });
