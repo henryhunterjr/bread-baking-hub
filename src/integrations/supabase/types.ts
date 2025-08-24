@@ -377,7 +377,13 @@ export type Database = {
       content_items: {
         Row: {
           body_text: string | null
+          difficulty: string | null
+          excerpt: string | null
           id: string
+          indexed_at: string | null
+          ingredients: string[] | null
+          method_steps: string[] | null
+          prep_time: string | null
           slug: string
           summary: string | null
           tags: string[] | null
@@ -388,7 +394,13 @@ export type Database = {
         }
         Insert: {
           body_text?: string | null
+          difficulty?: string | null
+          excerpt?: string | null
           id?: string
+          indexed_at?: string | null
+          ingredients?: string[] | null
+          method_steps?: string[] | null
+          prep_time?: string | null
           slug: string
           summary?: string | null
           tags?: string[] | null
@@ -399,7 +411,13 @@ export type Database = {
         }
         Update: {
           body_text?: string | null
+          difficulty?: string | null
+          excerpt?: string | null
           id?: string
+          indexed_at?: string | null
+          ingredients?: string[] | null
+          method_steps?: string[] | null
+          prep_time?: string | null
           slug?: string
           summary?: string | null
           tags?: string[] | null
@@ -1702,6 +1720,23 @@ export type Database = {
           slug: string
           tags: string[]
           title: string
+        }[]
+      }
+      search_site_content: {
+        Args: {
+          content_types?: string[]
+          max_results?: number
+          query_text: string
+          similarity_threshold?: number
+        }
+        Returns: {
+          content_type: string
+          excerpt: string
+          metadata: Json
+          similarity_score: number
+          slug: string
+          title: string
+          url: string
         }[]
       }
       set_limit: {

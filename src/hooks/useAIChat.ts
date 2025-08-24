@@ -137,12 +137,12 @@ export const useAIChat = ({ recipeContext }: UseAIChatOptions = {}) => {
       const { data: userData } = await supabase.auth.getUser();
       
       // Use RAG-enabled Krusty for enhanced responses
-      const { data, error } = await supabase.functions.invoke('krusty-rag-concierge', {
+      const { data, error } = await supabase.functions.invoke('krusty-rag', {
         body: {
-          message: userMessage.content,
-          userId: userData.user?.id,
-          recipeContext,
-          mode
+          messages: messages.map(m => ({ role: m.role, content: m.content })),
+          user_message: userMessage.content,
+          recipe_context: recipeContext,
+          mode: mode
         }
       });
 
@@ -151,8 +151,14 @@ export const useAIChat = ({ recipeContext }: UseAIChatOptions = {}) => {
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: data.response,
-        timestamp: new Date()
+        content: data.message,
+        timestamp: new Date(),
+        cards: data.search_results?.map((result: any) => ({
+          id: result.content_type + result.slug,
+          title: result.title,
+          excerpt: result.excerpt || '',
+          url: result.url
+        }))
       };
 
       setMessages(prev => [...prev, assistantMessage]);
