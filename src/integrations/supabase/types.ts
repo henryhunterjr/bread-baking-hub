@@ -521,6 +521,39 @@ export type Database = {
         }
         Relationships: []
       }
+      format_jobs: {
+        Row: {
+          created_at: string | null
+          error_code: string | null
+          error_detail: string | null
+          id: string
+          raw_text: string | null
+          source_type: string | null
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          error_code?: string | null
+          error_detail?: string | null
+          id?: string
+          raw_text?: string | null
+          source_type?: string | null
+          status: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          error_code?: string | null
+          error_detail?: string | null
+          id?: string
+          raw_text?: string | null
+          source_type?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       goal_events: {
         Row: {
           created_at: string
