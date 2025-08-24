@@ -24,7 +24,7 @@ export const useNetworkStatus = () => {
 
       try {
         // Try to fetch a small resource to verify actual connectivity
-        const response = await fetch('/favicon.ico', { 
+        const response = await fetch('/placeholder.svg', { 
           method: 'HEAD',
           cache: 'no-cache'
         });

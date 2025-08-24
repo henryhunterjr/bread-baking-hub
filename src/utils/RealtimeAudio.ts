@@ -87,43 +87,43 @@ class AudioQueue {
   }
 
   async addToQueue(audioData: Uint8Array) {
-    console.log('🎵 Adding audio to queue, length:', audioData.length);
+    if (import.meta.env.DEV) console.log('🎵 Adding audio to queue, length:', audioData.length);
     this.queue.push(audioData);
     if (!this.isPlaying) {
-      console.log('🎵 Starting audio playback');
+      if (import.meta.env.DEV) console.log('🎵 Starting audio playback');
       await this.playNext();
     } else {
-      console.log('🎵 Audio already playing, queued for later');
+      if (import.meta.env.DEV) console.log('🎵 Audio already playing, queued for later');
     }
   }
 
   private async playNext() {
     if (this.queue.length === 0) {
-      console.log('🎵 Audio queue empty, stopping playback');
+      if (import.meta.env.DEV) console.log('🎵 Audio queue empty, stopping playback');
       this.isPlaying = false;
       return;
     }
 
     this.isPlaying = true;
     const audioData = this.queue.shift()!;
-    console.log('🎵 Processing next audio chunk, size:', audioData.length);
+    if (import.meta.env.DEV) console.log('🎵 Processing next audio chunk, size:', audioData.length);
 
     try {
-      console.log('🎵 Creating WAV from PCM data...');
+      if (import.meta.env.DEV) console.log('🎵 Creating WAV from PCM data...');
       const wavData = this.createWavFromPCM(audioData);
-      console.log('🎵 WAV created, size:', wavData.length);
+      if (import.meta.env.DEV) console.log('🎵 WAV created, size:', wavData.length);
       
-      console.log('🎵 Decoding audio data...');
+      if (import.meta.env.DEV) console.log('🎵 Decoding audio data...');
       const audioBuffer = await this.audioContext.decodeAudioData(wavData.buffer);
-      console.log('🎵 Audio decoded successfully, duration:', audioBuffer.duration);
+      if (import.meta.env.DEV) console.log('🎵 Audio decoded successfully, duration:', audioBuffer.duration);
       
       const source = this.audioContext.createBufferSource();
       source.buffer = audioBuffer;
       source.connect(this.audioContext.destination);
       
-      console.log('🎵 Playing audio chunk...');
+      if (import.meta.env.DEV) console.log('🎵 Playing audio chunk...');
       source.onended = () => {
-        console.log('🎵 Audio chunk finished playing');
+        if (import.meta.env.DEV) console.log('🎵 Audio chunk finished playing');
         this.playNext();
       };
       source.start(0);
@@ -134,7 +134,7 @@ class AudioQueue {
   }
 
   private createWavFromPCM(pcmData: Uint8Array): Uint8Array {
-    console.log('Creating WAV from PCM data, length:', pcmData.length);
+    if (import.meta.env.DEV) console.log('Creating WAV from PCM data, length:', pcmData.length);
     
     // Convert bytes to 16-bit samples (little endian)
     const int16Data = new Int16Array(pcmData.length / 2);
@@ -177,7 +177,7 @@ class AudioQueue {
     wavArray.set(new Uint8Array(wavHeader), 0);
     wavArray.set(new Uint8Array(int16Data.buffer), wavHeader.byteLength);
     
-    console.log('WAV created, total length:', wavArray.length);
+    if (import.meta.env.DEV) console.log('WAV created, total length:', wavArray.length);
     return wavArray;
   }
 }
@@ -214,15 +214,15 @@ export class RealtimeChat {
       this.ws = new WebSocket(`wss://${projectRef}.functions.supabase.co/functions/v1/realtime-chat`);
 
       this.ws.onopen = () => {
-        console.log('✅ Connected to realtime chat WebSocket');
+        if (import.meta.env.DEV) console.log('✅ Connected to realtime chat WebSocket');
       };
 
       this.ws.onmessage = async (event) => {
         const data = JSON.parse(event.data);
-        console.log('📨 Received message type:', data.type, data);
+        if (import.meta.env.DEV) console.log('📨 Received message type:', data.type, data);
         
         if (data.type === 'response.audio.delta') {
-          console.log('🎵 Audio delta received, length:', data.delta.length);
+          if (import.meta.env.DEV) console.log('🎵 Audio delta received, length:', data.delta.length);
           try {
             // Convert base64 to Uint8Array
             const binaryString = atob(data.delta);
@@ -230,34 +230,34 @@ export class RealtimeChat {
             for (let i = 0; i < binaryString.length; i++) {
               bytes[i] = binaryString.charCodeAt(i);
             }
-            console.log('🎵 Playing audio chunk, bytes:', bytes.length);
+            if (import.meta.env.DEV) console.log('🎵 Playing audio chunk, bytes:', bytes.length);
             if (this.audioContext) {
               await playAudioData(this.audioContext, bytes);
-              console.log('🎵 Audio playback initiated successfully');
+              if (import.meta.env.DEV) console.log('🎵 Audio playback initiated successfully');
             }
             this.onSpeakingChange(true);
           } catch (error) {
             console.error('❌ Error processing audio delta:', error);
           }
         } else if (data.type === 'response.audio.done') {
-          console.log('🔇 Audio response done');
+          if (import.meta.env.DEV) console.log('🔇 Audio response done');
           this.onSpeakingChange(false);
         } else if (data.type === 'response.audio_transcript.delta') {
-          console.log('📝 Transcript delta:', data.delta);
+          if (import.meta.env.DEV) console.log('📝 Transcript delta:', data.delta);
           this.onMessage({
             type: 'transcript_delta',
             text: data.delta
           });
         } else if (data.type === 'input_audio_buffer.speech_started') {
-          console.log('🎤 Speech started detected');
+          if (import.meta.env.DEV) console.log('🎤 Speech started detected');
         } else if (data.type === 'input_audio_buffer.speech_stopped') {
-          console.log('🔇 Speech stopped detected');
+          if (import.meta.env.DEV) console.log('🔇 Speech stopped detected');
         } else if (data.type === 'session.created') {
-          console.log('✅ Session created successfully');
+          if (import.meta.env.DEV) console.log('✅ Session created successfully');
         } else if (data.type === 'session.updated') {
-          console.log('✅ Session updated successfully');  
+          if (import.meta.env.DEV) console.log('✅ Session updated successfully');  
         } else {
-          console.log('📨 Other message type:', data.type, data);
+          if (import.meta.env.DEV) console.log('📨 Other message type:', data.type, data);
         }
       };
 
@@ -266,7 +266,7 @@ export class RealtimeChat {
       };
 
       this.ws.onclose = () => {
-        console.log('WebSocket closed');
+        if (import.meta.env.DEV) console.log('WebSocket closed');
         this.onSpeakingChange(false);
       };
 
@@ -281,7 +281,7 @@ export class RealtimeChat {
       });
 
       await this.recorder.start();
-      console.log('Realtime chat initialized');
+      if (import.meta.env.DEV) console.log('Realtime chat initialized');
 
     } catch (error) {
       console.error('Error initializing chat:', error);

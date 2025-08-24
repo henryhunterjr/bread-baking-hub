@@ -62,7 +62,7 @@ function normalizeText(html: string): string {
 
 // Ingest a single content item
 export async function ingestContentItem(item: ContentItem): Promise<void> {
-  console.log('Ingesting content item:', item.title);
+  if (import.meta.env.DEV) console.log('Ingesting content item:', item.title);
   
   try {
     // Upsert content item
@@ -112,7 +112,7 @@ export async function ingestContentItem(item: ContentItem): Promise<void> {
 
     if (embeddingError) throw embeddingError;
 
-    console.log(`Successfully ingested ${item.title} with ${chunks.length} chunks`);
+    if (import.meta.env.DEV) console.log(`Successfully ingested ${item.title} with ${chunks.length} chunks`);
   } catch (error) {
     console.error('Error ingesting content item:', error);
     throw error;
@@ -121,7 +121,7 @@ export async function ingestContentItem(item: ContentItem): Promise<void> {
 
 // Ingest recipes from the database
 export async function ingestRecipes(): Promise<void> {
-  console.log('Ingesting recipes...');
+  if (import.meta.env.DEV) console.log('Ingesting recipes...');
   
   const { data: recipes, error } = await supabase
     .from('recipes')
@@ -173,7 +173,7 @@ export async function ingestRecipes(): Promise<void> {
 
 // Ingest blog posts
 export async function ingestBlogPosts(): Promise<void> {
-  console.log('Ingesting blog posts...');
+  if (import.meta.env.DEV) console.log('Ingesting blog posts...');
   
   const { data: posts, error } = await supabase
     .from('blog_posts')
@@ -205,7 +205,7 @@ export async function ingestBlogPosts(): Promise<void> {
 
 // Ingest help topics
 export async function ingestHelpTopics(): Promise<void> {
-  console.log('Ingesting help topics...');
+  if (import.meta.env.DEV) console.log('Ingesting help topics...');
   
   const { data: topics, error } = await supabase
     .from('help_topics')
@@ -236,14 +236,14 @@ export async function ingestHelpTopics(): Promise<void> {
 
 // Full content ingestion
 export async function ingestAllContent(): Promise<void> {
-  console.log('Starting full content ingestion...');
+  if (import.meta.env.DEV) console.log('Starting full content ingestion...');
   
   try {
     await ingestRecipes();
     await ingestBlogPosts();
     await ingestHelpTopics();
     
-    console.log('Content ingestion completed successfully!');
+    if (import.meta.env.DEV) console.log('Content ingestion completed successfully!');
   } catch (error) {
     console.error('Content ingestion failed:', error);
     throw error;

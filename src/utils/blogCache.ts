@@ -49,7 +49,7 @@ export class BlogCacheManager {
       // Cache post images
       await this.cacheImages(postsToCache);
       
-      console.log(`Cached ${postsToCache.length} blog posts`);
+      if (import.meta.env.DEV) console.log(`Cached ${postsToCache.length} blog posts`);
     } catch (error) {
       console.error('Failed to cache blog posts:', error);
     }
@@ -135,7 +135,7 @@ export class BlogCacheManager {
   async clearCache(): Promise<void> {
     try {
       await caches.delete(CACHE_NAME);
-      console.log('Blog cache cleared');
+      if (import.meta.env.DEV) console.log('Blog cache cleared');
     } catch (error) {
       console.error('Failed to clear cache:', error);
     }

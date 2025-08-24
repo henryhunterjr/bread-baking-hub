@@ -192,6 +192,7 @@ const Blog = () => {
                 className="w-full rounded-2xl shadow-warm"
                 loading="eager"
                 fetchpriority="high"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
               />
             </div>
           </section>

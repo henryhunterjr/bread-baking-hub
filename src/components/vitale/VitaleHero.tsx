@@ -20,7 +20,6 @@ export const VitaleHero = () => {
                 src="/lovable-uploads/fff984e8-765a-4f2a-94dc-c79799d4b371.png"
                 alt="Vitale Logo"
                 className="h-40 md:h-48"
-                loading="eager"
               />
             </div>
             <div className="space-y-4">
@@ -74,7 +73,7 @@ export const VitaleHero = () => {
                 src="/lovable-uploads/24966444-25da-4770-ba7a-701e9c733a89.png"
                 alt="Beautiful sourdough bread made with Vitale starter - perfect crumb structure"
                 className="rounded-2xl shadow-warm w-full"
-                loading="eager"
+                
               />
               <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm">
                 Made with Vitale

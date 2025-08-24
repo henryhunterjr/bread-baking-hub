@@ -87,7 +87,7 @@ export function mergeProducts(existingProducts: Product[], newProducts: Product[
     }
   });
   
-  console.log(`Product merge complete: ${addedCount} added, ${updatedCount} updated`);
+  if (import.meta.env.DEV) console.log(`Product merge complete: ${addedCount} added, ${updatedCount} updated`);
   return mergedProducts;
 }
 

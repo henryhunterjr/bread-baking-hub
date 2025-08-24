@@ -70,8 +70,6 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
               src="/lovable-uploads/a9ec437e-b37d-4689-8e28-e4e3d5347bdf.png"
               alt="Baking Great Bread At Home Blog"
               aspectRatio="16 / 9"
-              loading="eager"
-              fetchpriority="high"
               className="w-full object-cover rounded-lg"
             />
           ) : (
@@ -79,8 +77,6 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
               src="/lovable-uploads/bd157eb8-d847-4f54-913a-8483144ecb46.png"
               alt="Baking Great At Home Blog"
               aspectRatio="16 / 9"
-              loading="eager"
-              fetchpriority="high"
               className="w-full object-cover rounded-lg"
             />
           )}
@@ -94,8 +90,6 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
                 src={post.image}
                 alt={post.imageAlt || post.title}
                 aspectRatio="16 / 9"
-                loading="eager"
-                fetchpriority="high"
                 className="w-full object-cover"
               />
             </div>

@@ -44,9 +44,7 @@ export const CriticalResourceLoader = ({ children }: CriticalResourceLoaderProps
     // Preload hero images for better LCP
     const preloadHeroImages = () => {
       const heroImages = [
-        '/lovable-uploads/6ed25ae6-4928-46c6-9fe0-fa7af97ffa2d.png',
-        'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/logo-primary.png',
-        '/hero/fallback.jpg'
+        '/lovable-uploads/6ed25ae6-4928-46c6-9fe0-fa7af97ffa2d.png'
       ];
 
       heroImages.forEach(src => {

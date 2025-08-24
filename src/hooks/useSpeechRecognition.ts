@@ -106,11 +106,11 @@ export const useSpeechRecognition = (options: UseSpeechRecognitionOptions = {}) 
         switch (event.error) {
           case 'no-speech':
             // This is normal - user just wasn't speaking, don't show error
-            console.log('No speech detected, continuing to listen...');
+            if (import.meta.env.DEV) console.log('No speech detected, continuing to listen...');
             break;
           case 'aborted':
             // User manually stopped, don't show error
-            console.log('Speech recognition aborted by user');
+            if (import.meta.env.DEV) console.log('Speech recognition aborted by user');
             break;
           case 'audio-capture':
             console.error('Microphone access error:', event.error);

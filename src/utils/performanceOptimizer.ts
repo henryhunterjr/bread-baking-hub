@@ -173,8 +173,7 @@ export class PerformanceOptimizer {
     
     // Preload critical hero images for LCP optimization
     const criticalImages = [
-      '/lovable-uploads/6ed25ae6-4928-46c6-9fe0-fa7af97ffa2d.png', // Hero image
-      'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/logo-primary.png'
+      '/lovable-uploads/6ed25ae6-4928-46c6-9fe0-fa7af97ffa2d.png' // Hero image
     ];
     
     criticalImages.forEach(src => {

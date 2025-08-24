@@ -164,7 +164,7 @@ export const fetchBlogPosts = async (
       url += `&search=${encodeURIComponent(searchQuery)}`;
     }
     
-    console.log('Fetching blog posts via proxy:', url);
+    if (import.meta.env.DEV) console.log('Fetching blog posts via proxy:', url);
     
     const fetchPromise = fetch(url, {
       method: 'GET',
@@ -252,7 +252,7 @@ export const fetchCategories = async (force: boolean = false): Promise<WordPress
   
   try {
     const url = `${BLOG_PROXY_URL}?endpoint=categories`;
-    console.log('Fetching categories via proxy:', url);
+    if (import.meta.env.DEV) console.log('Fetching categories via proxy:', url);
     
     const fetchPromise = fetch(url, {
       method: 'GET',
