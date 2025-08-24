@@ -266,8 +266,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
             setServerError(msg);
             toast({ title: 'Save failed', description: msg, variant: 'destructive' });
           } else {
-            toast({ title: 'Recipe saved!', description: 'Redirecting to your recipes...', variant: 'default' });
-            navigate('/recipes');
+            toast({ title: 'Recipe saved!', description: 'Recipe saved successfully!', variant: 'default' });
           }
         } catch (saveError) {
           logger.error('Error saving recipe:', saveError);

@@ -53,10 +53,23 @@ export const RecipeTextInput = ({ onRecipeFormatted }: RecipeTextInputProps) => 
       setProgress(70);
 
       if (!result.ok) {
-        // Show user-friendly error message and auto-save draft
+        // Show user-friendly error message based on error code
+        let userMessage = result.message || 'We couldn\'t format that yet. Your draft was saved.';
+        
+        switch (result.code) {
+          case 'EMPTY_TEXT':
+            userMessage = 'Please paste a longer recipe.';
+            break;
+          case 'NO_TEXT_IN_PDF':
+            userMessage = 'This looks like a scanned PDF. Use OCR mode or upload JPG/PNG pages.';
+            break;
+          default:
+            userMessage = 'We couldn\'t format that yet. Your draft was saved.';
+        }
+        
         toast({
           title: "Processing failed",
-          description: result.message,
+          description: userMessage,
           variant: "destructive"
         });
         

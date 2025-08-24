@@ -18,6 +18,7 @@ const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSideba
 const MyRecipes = () => {
   const { user } = useAuth();
   const { userRecipes, favorites, loading, getMyRecipes, getMyFavorites } = useUserRecipes();
+  const [combinedRecipes, setCombinedRecipes] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState('all');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -27,6 +28,22 @@ const MyRecipes = () => {
       getMyFavorites();
     }
   }, [user]);
+
+  // Combine user recipes and favorites for the "All Recipes" view
+  useEffect(() => {
+    const mine = userRecipes || [];
+    const favs = favorites || [];
+    
+    // Create a Map to merge created recipes with favorited status
+    const map = new Map(mine.map(r => [r.id, { ...r, isFavorite: false }]));
+    
+    // Add favorited recipes, marking them as favorites
+    for (const r of favs) {
+      map.set(r.id, { ...r, isFavorite: true });
+    }
+    
+    setCombinedRecipes(Array.from(map.values()));
+  }, [userRecipes, favorites]);
 
   if (!user) {
     return (
@@ -81,7 +98,7 @@ const MyRecipes = () => {
               <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto">
                 <TabsTrigger value="all" className="flex items-center gap-2">
                   <BookOpen className="h-4 w-4" />
-                  All Recipes ({userRecipes.length})
+                  All Recipes ({combinedRecipes.length})
                 </TabsTrigger>
                 <TabsTrigger value="favorites" className="flex items-center gap-2">
                   <Heart className="h-4 w-4" />
@@ -95,17 +112,27 @@ const MyRecipes = () => {
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
                     <span className="ml-2 text-muted-foreground">Loading your recipes...</span>
                   </div>
-                ) : userRecipes.length > 0 ? (
+                ) : combinedRecipes.length > 0 ? (
                   <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {userRecipes.map((userRecipe) => (
+                    {combinedRecipes.map((userRecipe) => (
                       <Card key={userRecipe.id} className="shadow-warm hover:shadow-lg transition-shadow">
                         <CardHeader>
-                          <CardTitle className="text-lg">{userRecipe.title}</CardTitle>
+                          <CardTitle className="text-lg flex items-center gap-2">
+                            {userRecipe.isFavorite && (
+                              <Heart className="h-4 w-4 fill-red-500 text-red-500" />
+                            )}
+                            {userRecipe.title}
+                          </CardTitle>
                           <CardDescription>
-                            Saved {new Date(userRecipe.created_at).toLocaleDateString()}
+                            {userRecipe.isFavorite ? 'Favorited' : 'Saved'} {new Date(userRecipe.created_at).toLocaleDateString()}
                             {userRecipe.folder && (
                               <Badge variant="secondary" className="ml-2">
                                 {userRecipe.folder}
+                              </Badge>
+                            )}
+                            {userRecipe.isFavorite && (
+                              <Badge variant="outline" className="ml-2 border-red-200 text-red-600">
+                                Favorite
                               </Badge>
                             )}
                           </CardDescription>
