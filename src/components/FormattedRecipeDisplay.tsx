@@ -49,10 +49,14 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
       .replace(/¼/g, '1/4')
       .replace(/¾/g, '3/4');
 
-  const parseQuantity = (input: string): { qty: number | null; rest: string } => {
-    const str = normalizeFractions(input.trim());
+  const parseQuantity = (input: string | number | any): { qty: number | null; rest: string } => {
+    // Convert input to string and handle non-string inputs
+    const inputStr = typeof input === 'string' ? input : String(input || '');
+    if (!inputStr) return { qty: null, rest: '' };
+    
+    const str = normalizeFractions(inputStr.trim());
     const match = str.match(/^((\d+\s+\d+\/\d+)|(\d+\/\d+)|(\d+(?:\.\d+)?))/);
-    if (!match) return { qty: null, rest: input };
+    if (!match) return { qty: null, rest: inputStr };
     const raw = match[1];
     let qty = 0;
     if (raw.includes(' ')) {
@@ -65,7 +69,7 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
     } else {
       qty = Number(raw);
     }
-    const rest = input.slice(match[0].length);
+    const rest = inputStr.slice(match[0].length);
     return { qty, rest };
   };
 
