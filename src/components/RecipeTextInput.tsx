@@ -57,7 +57,19 @@ export const RecipeTextInput = ({ onRecipeFormatted }: RecipeTextInputProps) => 
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData?.error || `Failed to process recipe (${response.status})`);
+        
+        // Handle specific error codes with user-friendly messages
+        let userMessage = '';
+        switch (errorData?.code) {
+          case 'MISSING_OPENAI_KEY':
+          case 'openai_auth_error':
+            userMessage = 'We can\'t reach the formatter right now. Please try again shortly.';
+            break;
+          default:
+            userMessage = errorData?.error || errorData?.message || `Failed to process recipe (${response.status})`;
+        }
+        
+        throw new Error(userMessage);
       }
 
       const data = await response.json();

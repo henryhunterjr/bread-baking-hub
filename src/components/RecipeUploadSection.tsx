@@ -139,9 +139,31 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
 
       if (!formatResp.ok) {
         const errJson = await formatResp.json().catch(() => ({}));
-        const errorMessage = errJson?.error || errJson?.message || `Failed to format recipe (${formatResp.status})`;
         
-        // Log the detailed error for debugging
+        // Handle specific error codes with user-friendly messages
+        let userMessage = '';
+        let shouldRetry = true;
+        
+        switch (errJson?.code) {
+          case 'NO_TEXT_IN_PDF':
+            userMessage = 'This PDF appears to be scanned or image-based. Try converting it to images (JPG/PNG) and upload those instead, or enable OCR mode if available.';
+            shouldRetry = false;
+            break;
+          case 'MISSING_OPENAI_KEY':
+          case 'openai_auth_error':
+            userMessage = 'We can\'t reach the formatter right now. Please try again shortly.';
+            shouldRetry = true;
+            break;
+          case 'pdf_processing_error':
+            userMessage = 'Unable to process this PDF. Please try converting to images or use a different file.';
+            shouldRetry = false;
+            break;
+          default:
+            userMessage = errJson?.error || errJson?.message || `We can't reach the formatter right now. Please retry.`;
+            shouldRetry = true;
+        }
+        
+        // Log the detailed error for debugging (keep for troubleshooting)
         logger.error('Format recipe error:', {
           status: formatResp.status,
           statusText: formatResp.statusText,
@@ -149,13 +171,13 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
           headers: Object.fromEntries(formatResp.headers.entries())
         });
         
-        setServerError(errorMessage);
+        setServerError(userMessage);
         toast({
-          title: 'Upload Failed',
-          description: errorMessage,
+          title: shouldRetry ? 'Temporary Issue' : 'File Issue',
+          description: userMessage,
           variant: 'destructive',
         });
-        throw new Error(errorMessage);
+        throw new Error(userMessage);
       }
 
       setUploadProgress(80);

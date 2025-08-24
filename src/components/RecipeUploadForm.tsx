@@ -22,7 +22,17 @@ export default function RecipeUploadForm({ onSuccess }: { onSuccess: (data: any)
       if (data?.recipe) onSuccess(data.recipe);
       else throw new Error('No recipe returned.');
     } catch (err: any) {
-      setError(err?.message || 'Failed to process recipe.');
+      // Handle specific error codes with user-friendly messages
+      let userMessage = '';
+      if (err?.message?.includes('NO_TEXT_IN_PDF')) {
+        userMessage = 'This PDF appears to be scanned. Try converting to images or enable OCR mode.';
+      } else if (err?.message?.includes('MISSING_OPENAI_KEY') || err?.message?.includes('openai_auth_error')) {
+        userMessage = 'We can\'t reach the formatter right now. Please try again shortly.';
+      } else {
+        userMessage = err?.message || 'Failed to process recipe.';
+      }
+      
+      setError(userMessage);
       console.error(err);
     } finally {
       setLoading(false);
