@@ -26,6 +26,13 @@ serve(async (req) => {
       );
     }
 
+    // Debug: Log if API key is present (without exposing the key)
+    console.log('OpenAI API Key status:', { 
+      hasKey: !!openAIApiKey, 
+      keyLength: openAIApiKey?.length || 0,
+      keyPrefix: openAIApiKey?.substring(0, 3) || 'none'
+    });
+
     if (!Deno.env.get('SUPABASE_URL') || !Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')) {
       console.error('Missing Supabase configuration');
       return new Response(
