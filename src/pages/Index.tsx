@@ -127,6 +127,13 @@ const Index = () => {
       
     <div className="bg-background text-foreground">
       <Header />
+      <nav aria-label="Main navigation" className="sr-only">
+        <ul>
+          <li><a href="#main-content">Skip to main content</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/recipes">Recipes</a></li>
+        </ul>
+      </nav>
       <main id="main-content" role="main" tabIndex={-1}>
         <HeroSection />
         <React.Suspense fallback={null}>

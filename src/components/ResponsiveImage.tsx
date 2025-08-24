@@ -145,7 +145,11 @@ export const ResponsiveImage = ({
           height={height}
           loading={priority ? 'eager' : loading}
           decoding="async"
-          {...(priority && { fetchPriority: 'high' })}
+          ref={(el) => {
+            if (el && priority) {
+              el.setAttribute('fetchpriority', 'high');
+            }
+          }}
           className={`w-full h-full object-cover transition-opacity duration-300 ${
             imageLoaded ? 'opacity-100' : 'opacity-0'
           }`}

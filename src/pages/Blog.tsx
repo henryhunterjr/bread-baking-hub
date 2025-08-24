@@ -172,7 +172,13 @@ const Blog = () => {
 
       <div className="bg-background text-foreground min-h-screen">
         <Header />
-        <main>
+        <main id="main-content" role="main">
+          <nav aria-label="Breadcrumb" className="sr-only">
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li aria-current="page">Blog</li>
+            </ul>
+          </nav>
           {/* Hero Section */}
           <section className="py-20 px-4 bg-gradient-hero min-h-[320px] md:min-h-[420px]">
             <h1 className="sr-only">Baking Great Bread Blog</h1>

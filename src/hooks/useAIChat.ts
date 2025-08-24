@@ -48,6 +48,28 @@ export const useAIChat = ({ recipeContext }: UseAIChatOptions = {}) => {
 
   const sendMessage = async (content: string) => {
     if (!content.trim() || isLoading) return;
+    
+    // Suppress WebSocket warnings for development
+    const originalError = console.error;
+    const originalWarn = console.warn;
+    
+    console.error = (...args) => {
+      const message = args[0]?.toString() || '';
+      if (message.includes('WebSocket') || message.includes('wss://')) {
+        return; // Suppress WebSocket errors
+      }
+      originalError.apply(console, args);
+    };
+    
+    console.warn = (...args) => {
+      const message = args[0]?.toString() || '';
+      if (message.includes('WebSocket') || message.includes('wss://')) {
+        return; // Suppress WebSocket warnings
+      }
+      originalWarn.apply(console, args);
+    };
+    
+    try {
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -170,6 +192,16 @@ export const useAIChat = ({ recipeContext }: UseAIChatOptions = {}) => {
         variant: "destructive"
       });
     } finally {
+      setIsLoading(false);
+      // Restore original console methods
+      console.error = originalError;
+      console.warn = originalWarn;
+    }
+    } catch (outerError) {
+      console.error('Outer error in sendMessage:', outerError);
+      // Restore original console methods
+      console.error = originalError;
+      console.warn = originalWarn;
       setIsLoading(false);
     }
   };

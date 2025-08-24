@@ -5,6 +5,10 @@ import { HelmetProvider } from 'react-helmet-async'
 import { registerSW } from 'virtual:pwa-register'
 import App from './App.tsx'
 import './index.css'
+import { installImageErrorHandler } from './utils/imageErrorHandler'
+
+// Install global image error handler
+installImageErrorHandler();
 
 const queryClient = new QueryClient({
   defaultOptions: {

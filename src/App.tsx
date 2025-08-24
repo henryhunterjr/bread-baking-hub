@@ -20,6 +20,7 @@ import DefaultSEO from "./components/DefaultSEO";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 import RouteCleanupHandler from "./components/RouteCleanupHandler";
 import { ChatProvider } from "./components/ChatProvider";
+import { AccessibilityProvider } from "./components/AccessibilityProvider";
 
 // Import Index directly to avoid lazy loading issues on main page
 import Index from "./pages/Index";
@@ -89,8 +90,9 @@ function App() {
 
   return (
     <AppErrorBoundary>
-      <ChatProvider>
-        <AuthProvider>
+      <AccessibilityProvider>
+        <ChatProvider>
+          <AuthProvider>
             <TooltipProvider>
             <CriticalCSS />
             <PerformanceOptimizer />
@@ -159,8 +161,9 @@ function App() {
               </BrowserRouter>
             </CriticalResourceLoader>
             </TooltipProvider>
-        </AuthProvider>
-      </ChatProvider>
+          </AuthProvider>
+        </ChatProvider>
+      </AccessibilityProvider>
     </AppErrorBoundary>
   );
 }

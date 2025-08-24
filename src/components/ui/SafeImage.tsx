@@ -20,11 +20,21 @@ export default function SafeImage({
     : { objectFit: fit, ...style };
 
   // Don't pass unknown camelCase props; attach lowercase attribute explicitly
+  const imgRef = React.useRef<HTMLImageElement>(null);
+  
+  React.useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
+    
+    if (fetchpriority) {
+      img.setAttribute('fetchpriority', fetchpriority);
+    }
+  }, [fetchpriority]);
+
   const additionalProps: any = {};
-  if (fetchpriority) additionalProps.fetchpriority = fetchpriority;
   if (crossOrigin) additionalProps.crossOrigin = crossOrigin;
 
-  return <img {...rest} {...additionalProps} style={styleWithAR} />;
+  return <img ref={imgRef} {...rest} {...additionalProps} style={styleWithAR} />;
 }
 
 export { SafeImage };
