@@ -34,7 +34,7 @@ const ProgressiveLoading = ({
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
-  const scrollPositionRef = useRef<number>(0);
+  const isFirstRender = useRef(true);
 
   // Filter posts by tags locally
   const filteredPosts = selectedTags.length === 0 
@@ -43,24 +43,20 @@ const ProgressiveLoading = ({
         selectedTags.every(tag => post.tags.includes(tag))
       );
 
-  // Reset when filters change (preserve scroll position)
+  // Reset when filters change - don't restore scroll position for infinite scroll
   useEffect(() => {
-    // Save current scroll position
-    scrollPositionRef.current = window.scrollY;
-    
     setAllPosts(initialPosts);
     setCurrentPage(initialPage);
     setHasMore(initialPage < totalPages);
     setError(null);
-    
-    // Restore scroll position on next frame to prevent jump
-    requestAnimationFrame(() => {
-      window.scrollTo(0, scrollPositionRef.current);
-    });
   }, [initialPosts, initialPage, totalPages, selectedCategory, searchQuery]);
 
-  // Update parent with filtered posts
+  // Update parent with filtered posts (prevent first render flash)
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     onPostsUpdate(filteredPosts);
   }, [filteredPosts, onPostsUpdate]);
 
@@ -114,20 +110,25 @@ const ProgressiveLoading = ({
     }
   }, [currentPage, hasMore, isLoading, selectedCategory, searchQuery]);
 
-  // Intersection Observer for infinite scroll (stable observer)
+  // Intersection Observer for infinite scroll (prevent multiple triggers)
   useEffect(() => {
     if (!loadMoreRef.current) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
+        // Add debouncing to prevent rapid triggers
         if (entry.isIntersecting && hasMore && !isLoading) {
-          loadMorePosts();
+          setTimeout(() => {
+            if (hasMore && !isLoading) {
+              loadMorePosts();
+            }
+          }, 100);
         }
       },
       {
         threshold: 0.1,
-        rootMargin: '200px' // Start loading earlier to prevent gaps
+        rootMargin: '100px' // Smaller margin to prevent early triggers
       }
     );
 
@@ -140,12 +141,7 @@ const ProgressiveLoading = ({
         abortControllerRef.current.abort();
       }
     };
-  }, []); // Empty deps to prevent recreation
-
-  // Update observer behavior when state changes
-  useEffect(() => {
-    // Observer logic is handled in the callback itself
-  }, [hasMore, isLoading, loadMorePosts]);
+  }, []); // Keep empty deps array for stable observer
 
   return (
     <div className={className}>

@@ -96,8 +96,10 @@ const Blog = () => {
     loadPosts();
   }, [currentPage, selectedCategory, debouncedSearchQuery, cachePosts, getCachedPosts]);
 
-  // Filter posts by tags
+  // Filter posts by tags (only when posts exist)
   useEffect(() => {
+    if (posts.length === 0) return; // Don't filter empty posts
+    
     if (selectedTags.length === 0) {
       setFilteredPosts(posts);
     } else {
