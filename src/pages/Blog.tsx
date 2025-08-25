@@ -126,8 +126,7 @@ const Blog = () => {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    // Scroll to top of blog section instead of window top
-    document.getElementById('blog-section')?.scrollIntoView({ behavior: 'smooth' });
+    // Don't scroll on page change to prevent jumping during infinite scroll
   };
 
 
@@ -198,7 +197,7 @@ const Blog = () => {
           </section>
 
           {/* Blog Posts Section */}
-          <section className="py-20 px-4">
+          <section id="blog-section" className="py-20 px-4">
             {/* Offline Banner */}
             <OfflineBanner 
               onRetry={() => window.location.reload()}

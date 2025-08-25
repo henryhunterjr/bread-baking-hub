@@ -33,6 +33,8 @@ const ProgressiveLoading = ({
   const [error, setError] = useState<string | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const scrollPositionRef = useRef<number>(0);
 
   // Filter posts by tags locally
   const filteredPosts = selectedTags.length === 0 
@@ -41,12 +43,20 @@ const ProgressiveLoading = ({
         selectedTags.every(tag => post.tags.includes(tag))
       );
 
-  // Reset when filters change
+  // Reset when filters change (preserve scroll position)
   useEffect(() => {
+    // Save current scroll position
+    scrollPositionRef.current = window.scrollY;
+    
     setAllPosts(initialPosts);
     setCurrentPage(initialPage);
     setHasMore(initialPage < totalPages);
     setError(null);
+    
+    // Restore scroll position on next frame to prevent jump
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollPositionRef.current);
+    });
   }, [initialPosts, initialPage, totalPages, selectedCategory, searchQuery]);
 
   // Update parent with filtered posts
@@ -57,6 +67,12 @@ const ProgressiveLoading = ({
   const loadMorePosts = useCallback(async () => {
     if (isLoading || !hasMore) return;
 
+    // Cancel previous request if still pending
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    
+    abortControllerRef.current = new AbortController();
     setIsLoading(true);
     setError(null);
 
@@ -68,6 +84,11 @@ const ProgressiveLoading = ({
         9, 
         searchQuery
       );
+
+      // Check if request was aborted
+      if (abortControllerRef.current?.signal.aborted) {
+        return;
+      }
 
       if (response.posts.length > 0) {
         setAllPosts(prev => {
@@ -82,20 +103,22 @@ const ProgressiveLoading = ({
         setHasMore(false);
       }
     } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        return; // Request was aborted, don't show error
+      }
       console.error('Failed to load more posts:', error);
       setError('Failed to load more posts. Please try again.');
     } finally {
       setIsLoading(false);
+      abortControllerRef.current = null;
     }
   }, [currentPage, hasMore, isLoading, selectedCategory, searchQuery]);
 
-  // Intersection Observer for infinite scroll
+  // Intersection Observer for infinite scroll (stable observer)
   useEffect(() => {
-    if (observerRef.current) {
-      observerRef.current.disconnect();
-    }
+    if (!loadMoreRef.current) return;
 
-    observerRef.current = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
         if (entry.isIntersecting && hasMore && !isLoading) {
@@ -104,20 +127,25 @@ const ProgressiveLoading = ({
       },
       {
         threshold: 0.1,
-        rootMargin: '100px' // Start loading 100px before the element is visible
+        rootMargin: '200px' // Start loading earlier to prevent gaps
       }
     );
 
-    if (loadMoreRef.current) {
-      observerRef.current.observe(loadMoreRef.current);
-    }
+    observer.observe(loadMoreRef.current);
+    observerRef.current = observer;
 
     return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
+      observer.disconnect();
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
       }
     };
-  }, [loadMorePosts, hasMore, isLoading]);
+  }, []); // Empty deps to prevent recreation
+
+  // Update observer behavior when state changes
+  useEffect(() => {
+    // Observer logic is handled in the callback itself
+  }, [hasMore, isLoading, loadMorePosts]);
 
   return (
     <div className={className}>

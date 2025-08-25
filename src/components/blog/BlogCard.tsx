@@ -38,18 +38,20 @@ const BlogCard = ({ post, categories = [], enableSEO = false }: BlogCardProps) =
         rel="noopener noreferrer"
       >
         <div className="relative overflow-hidden">
-          {post.image ? (
-            <ResponsiveImage 
-              src={post.image} 
-              alt={post.imageAlt || `Featured image for ${post.title}`}
-              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-              loading="lazy"
-            />
-          ) : null}
-          <div 
-            className={`w-full h-48 bg-muted flex items-center justify-center ${post.image ? 'hidden' : ''}`}
-          >
-            <span className="text-muted-foreground">No Image</span>
+          <div className="w-full h-48 bg-muted">
+            {post.image ? (
+              <ResponsiveImage 
+                src={post.image} 
+                alt={post.imageAlt || `Featured image for ${post.title}`}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+                aspectRatio="16/9"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <span className="text-muted-foreground">No Image</span>
+              </div>
+            )}
           </div>
           <div className="absolute top-4 right-4 bg-black/70 text-foreground px-2 py-1 rounded text-sm">
             {post.readTime}
