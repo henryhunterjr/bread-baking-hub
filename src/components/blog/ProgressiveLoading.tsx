@@ -110,29 +110,24 @@ const ProgressiveLoading = ({
     }
   }, [currentPage, hasMore, isLoading, selectedCategory, searchQuery]);
 
-  // Intersection Observer for infinite scroll (prevent multiple triggers)
+  // Intersection Observer for infinite scroll with stable callback
+  const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
+    const [entry] = entries;
+    if (entry.isIntersecting && hasMore && !isLoading) {
+      loadMorePosts();
+    }
+  }, [hasMore, isLoading, loadMorePosts]);
+
   useEffect(() => {
     if (!loadMoreRef.current) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        // Add debouncing to prevent rapid triggers
-        if (entry.isIntersecting && hasMore && !isLoading) {
-          setTimeout(() => {
-            if (hasMore && !isLoading) {
-              loadMorePosts();
-            }
-          }, 100);
-        }
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '100px' // Smaller margin to prevent early triggers
-      }
-    );
+    const observer = new IntersectionObserver(observerCallback, {
+      threshold: 0.1,
+      rootMargin: '50px'
+    });
 
-    observer.observe(loadMoreRef.current);
+    const currentRef = loadMoreRef.current;
+    observer.observe(currentRef);
     observerRef.current = observer;
 
     return () => {
@@ -141,7 +136,7 @@ const ProgressiveLoading = ({
         abortControllerRef.current.abort();
       }
     };
-  }, [hasMore, isLoading, loadMorePosts]); // Include dependencies so observer updates when state changes
+  }, [observerCallback]);
 
   return (
     <div className={className}>
