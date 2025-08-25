@@ -103,10 +103,10 @@ const Header = () => {
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild>
                     <Link 
-                      to={user ? "/my-recipe-library" : "/books"} 
+                      to="/books" 
                       className="text-header-foreground hover:text-primary px-2 py-2 rounded-md text-sm font-medium transition-colors"
                     >
-                      {user ? "My Library" : "Library"}
+                      Library
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
@@ -269,11 +269,11 @@ const Header = () => {
                 Vitale Starter
               </Link>
               <Link 
-                to={user ? "/my-recipe-library" : "/books"} 
+                to="/books" 
                 className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" 
                 onClick={closeMenu}
               >
-                {user ? "My Library" : "Library"}
+                Library
               </Link>
               <Link to="/glossary" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Glossary
