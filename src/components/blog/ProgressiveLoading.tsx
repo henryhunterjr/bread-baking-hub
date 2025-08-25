@@ -141,7 +141,7 @@ const ProgressiveLoading = ({
         abortControllerRef.current.abort();
       }
     };
-  }, []); // Keep empty deps array for stable observer
+  }, [hasMore, isLoading, loadMorePosts]); // Include dependencies so observer updates when state changes
 
   return (
     <div className={className}>
