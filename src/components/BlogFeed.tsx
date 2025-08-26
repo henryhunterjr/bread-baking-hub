@@ -66,7 +66,7 @@ const BlogFeed = ({ selectedCategory, searchQuery, selectedTags = [] }: BlogFeed
         searchQuery
       );
 
-      if (abortControllerRef.current.signal.aborted) return;
+      if (abortControllerRef.current?.signal.aborted) return;
 
       if (page === 1) {
         setPosts(response.posts);
