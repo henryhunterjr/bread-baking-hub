@@ -53,10 +53,26 @@ const PublicRecipe = () => {
         <title>{`${recipe.title} | Baking Great Bread`}</title>
         <meta name="description" content={(recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`} />
         <link rel="canonical" href={`https://bread-baking-hub.vercel.app/r/${slug}`} />
+        
+        {/* Open Graph for social sharing */}
         <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://bread-baking-hub.vercel.app/r/${slug}`} />
         <meta property="og:title" content={`${recipe.title} | Baking Great Bread`} />
         <meta property="og:description" content={(recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`} />
         <meta property="og:image" content={recipe.image_url || 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/default-recipe.jpg'} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={`${recipe.title} recipe cover image`} />
+        <meta property="og:site_name" content="Baking Great Bread" />
+        <meta property="article:author" content="Henry Hunter" />
+        <meta property="article:published_time" content={recipe.created_at} />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${recipe.title} | Baking Great Bread`} />
+        <meta name="twitter:description" content={(recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`} />
+        <meta name="twitter:image" content={recipe.image_url || 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/default-recipe.jpg'} />
+        <meta name="twitter:image:alt" content={`${recipe.title} recipe cover image`} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",

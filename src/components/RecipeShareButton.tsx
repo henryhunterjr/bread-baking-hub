@@ -25,11 +25,11 @@ export const RecipeShareButton = ({
 
   const getRecipeUrl = () => {
     const baseUrl = window.location.origin;
-    // Create clean recipe-specific URL that opens directly to the modal
+    // Use canonical recipe URL for proper social sharing
     if (recipe.slug) {
-      return `${baseUrl}/recipes?recipe=${recipe.slug}`;
+      return `${baseUrl}/r/${recipe.slug}`;
     }
-    return `${baseUrl}/recipes?recipe=${recipe.id}`;
+    return `${baseUrl}/r/${recipe.id}`;
   };
 
   const handleShare = async () => {
