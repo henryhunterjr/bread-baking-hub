@@ -65,7 +65,7 @@ export const useTextToSpeech = () => {
       const { data, error } = await supabase.functions.invoke('text-to-speech', {
         body: { 
           text,
-          voiceId: 'VQWIG7jHNSEv826utbm8' // User's custom voice
+          voiceId: 'wAGzRVkxKEs8La0lmdrE' // User's preferred custom voice
         }
       });
 
