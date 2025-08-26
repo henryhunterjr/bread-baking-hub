@@ -823,16 +823,103 @@ export const useSeasonalRecipes = () => {
     ensureRyeBoule();
   }, [loading, recipes]);
 
+  // Enhanced search function with fuzzy matching and intelligent ranking
+  const searchRecipes = (recipes: SeasonalRecipe[], query: string) => {
+    if (!query.trim()) return recipes;
+    
+    const searchTerms = query.toLowerCase().trim().split(/\s+/);
+    
+    const scoreRecipe = (recipe: SeasonalRecipe): number => {
+      let score = 0;
+      const title = recipe.title.toLowerCase();
+      const tags = recipe.tags?.join(' ').toLowerCase() || '';
+      const ingredients = recipe.data.ingredients.join(' ').toLowerCase();
+      const method = recipe.data.method.join(' ').toLowerCase();
+      const notes = recipe.data.notes.toLowerCase();
+      const categories = recipe.data.category.join(' ').toLowerCase();
+      const occasions = recipe.data.occasion.join(' ').toLowerCase();
+      
+      searchTerms.forEach(term => {
+        // Exact title match (highest priority)
+        if (title.includes(term)) {
+          score += title === term ? 100 : title.startsWith(term) ? 50 : 25;
+        }
+        
+        // Tag matches (high priority)
+        if (tags.includes(term)) {
+          score += 20;
+        }
+        
+        // Category matches
+        if (categories.includes(term)) {
+          score += 15;
+        }
+        
+        // Occasion matches
+        if (occasions.includes(term)) {
+          score += 10;
+        }
+        
+        // Ingredient matches
+        if (ingredients.includes(term)) {
+          score += 8;
+        }
+        
+        // Method/instructions matches
+        if (method.includes(term)) {
+          score += 5;
+        }
+        
+        // Notes matches
+        if (notes.includes(term)) {
+          score += 3;
+        }
+        
+        // Fuzzy matching for common terms
+        const fuzzyMatches: Record<string, string[]> = {
+          'cinnamon': ['cinnamon', 'spice', 'sweet'],
+          'sourdough': ['sourdough', 'starter', 'fermented', 'wild yeast'],
+          'whole wheat': ['whole wheat', 'whole grain', 'healthy', 'nutritious'],
+          'holiday': ['holiday', 'christmas', 'festive', 'celebration'],
+          'quick': ['quick', 'fast', 'easy', 'simple'],
+          'bread': ['bread', 'loaf', 'roll', 'bun'],
+          'enriched': ['enriched', 'butter', 'egg', 'milk', 'rich'],
+          'artisan': ['artisan', 'rustic', 'traditional', 'craft']
+        };
+        
+        Object.entries(fuzzyMatches).forEach(([key, synonyms]) => {
+          if (term.includes(key) || synonyms.some(syn => term.includes(syn))) {
+            synonyms.forEach(synonym => {
+              if (title.includes(synonym) || tags.includes(synonym) || 
+                  ingredients.includes(synonym) || categories.includes(synonym)) {
+                score += 2;
+              }
+            });
+          }
+        });
+      });
+      
+      return score;
+    };
+    
+    return recipes
+      .map(recipe => ({ recipe, score: scoreRecipe(recipe) }))
+      .filter(({ score }) => score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map(({ recipe }) => recipe);
+  };
+
   // Filter recipes based on current filters
   const filteredRecipes = recipes.filter(recipe => {
     if (selectedSeason !== 'All' && recipe.data.season !== selectedSeason) return false;
     if (selectedCategory !== 'All' && !recipe.data.category.includes(selectedCategory)) return false;
     if (selectedDifficulty !== 'All' && recipe.data.difficulty !== selectedDifficulty) return false;
-    if (searchQuery && !recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
-        !recipe.data.ingredients.some(ing => ing.toLowerCase().includes(searchQuery.toLowerCase()))) return false;
     
     return true;
   });
+
+  // Apply search with intelligent ranking
+  const finalRecipes = searchQuery ? searchRecipes(filteredRecipes, searchQuery) : filteredRecipes;
 
   // Get featured recipes (current season + upcoming holidays)
   const getFeaturedRecipes = () => {
@@ -865,7 +952,7 @@ export const useSeasonalRecipes = () => {
   };
 
   return {
-    recipes: filteredRecipes,
+    recipes: finalRecipes,
     allRecipes: recipes,
     loading,
     currentSeason,

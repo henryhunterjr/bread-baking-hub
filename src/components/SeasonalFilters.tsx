@@ -60,26 +60,35 @@ export const SeasonalFilters = ({
   };
 
   return (
-    <div className="space-y-4">
-      {/* Search Bar */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
-        <Input
-          placeholder={getSeasonalPlaceholder(currentSeason)}
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className="pl-10 pr-10 h-12 text-lg"
-        />
-        {searchQuery && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="absolute right-2 top-1/2 transform -translate-y-1/2"
-            onClick={() => onSearchChange('')}
-          >
-            <X className="w-4 h-4" />
-          </Button>
-        )}
+    <div className="space-y-6">
+      {/* Enhanced Search Bar - More Prominent */}
+      <div className="relative bg-card rounded-xl border-2 border-primary/20 p-4 shadow-lg">
+        <div className="text-center mb-4">
+          <h3 className="text-lg font-semibold text-foreground mb-1">Find Your Perfect Recipe</h3>
+          <p className="text-sm text-muted-foreground">Search by name, ingredients, or description</p>
+        </div>
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary w-6 h-6" />
+          <Input
+            placeholder={getSeasonalPlaceholder(currentSeason)}
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="pl-12 pr-12 h-14 text-lg font-medium border-2 border-primary/30 focus:border-primary bg-background/50 backdrop-blur-sm"
+          />
+          {searchQuery && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 hover:bg-primary/10"
+              onClick={() => onSearchChange('')}
+            >
+              <X className="w-5 h-5" />
+            </Button>
+          )}
+        </div>
+        <div className="mt-3 text-xs text-muted-foreground text-center">
+          Try searching for "cinnamon", "sourdough", "whole wheat", or "holiday bread"
+        </div>
       </div>
 
       {/* Filter Controls */}
