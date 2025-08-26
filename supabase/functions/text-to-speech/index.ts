@@ -31,7 +31,7 @@ serve(async (req) => {
     console.log('ElevenLabs API key found');
 
     // Use user's custom voice as default, with Aria as fallback
-    const voiceId = overrideVoiceId || '9BWtsMINqrJLrRacOk9x' // Aria voice as default
+    const voiceId = overrideVoiceId || 'wAGzRVkxKEs8La0lmdrE' // User's preferred custom voice
     console.log('Using voice ID:', voiceId);
 
     // Generate speech using ElevenLabs with explicit-voice handling and graceful fallback
