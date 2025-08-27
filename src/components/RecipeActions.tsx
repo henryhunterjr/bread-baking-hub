@@ -214,13 +214,14 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
   return (
     <div className={`flex flex-wrap gap-2 no-print ${className}`}>
       <Button
-        onClick={() => window.open(`/print/recipe/${recipe.slug}`, '_blank')}
+        onClick={handleDownloadPDF}
         variant="outline"
         size="sm"
+        disabled={isGeneratingPDF}
         className="flex items-center gap-2 h-11"
       >
         <Download className="h-4 w-4" />
-        Save as PDF
+        {isGeneratingPDF ? 'Generating...' : 'Save as PDF'}
       </Button>
       
       <Button

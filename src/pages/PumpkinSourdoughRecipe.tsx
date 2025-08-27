@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { RecipeActions } from '@/components/RecipeActions';
 import heroImage from '@/assets/recipes/pumpkin-sourdough-hero.jpg';
 import mixingImage from '@/assets/recipes/pumpkin-sourdough-mixing.jpg';
 import twineSetupImage from '@/assets/recipes/pumpkin-sourdough-twine-setup.jpg';
@@ -138,6 +139,38 @@ export default function PumpkinSourdoughRecipe() {
             </div>
           </div>
         </section>
+
+        {/* Recipe Actions Bar */}
+        <div className="sticky top-0 z-20 bg-background/80 backdrop-blur-sm border-b">
+          <div className="max-w-4xl mx-auto px-4 py-3">
+            <RecipeActions 
+              recipe={{
+                title: recipeData.title,
+                slug: 'pumpkin-shaped-sourdough-loaf',
+                data: {
+                  ingredients: recipeData.ingredients,
+                  method: recipeData.instructions.map(step => 
+                    typeof step === 'string' ? step : `${step.name}: ${step.text}`
+                  ),
+                  prepTime: '30 minutes',
+                  bakeTime: '45 minutes',
+                  yield: recipeData.yield,
+                  equipment: [
+                    "4–5 qt Dutch oven",
+                    "Food-safe cotton kitchen twine (4–6 strands)", 
+                    "Round banneton, well floured",
+                    "Parchment paper",
+                    "Lame or razor",
+                    "Large bowl or tub",
+                    "Digital scale",
+                    "Cinnamon stick (stem)"
+                  ],
+                  notes: "Baker's math (effective): Treat pumpkin as 85% water. With 150 g water, effective hydration is ~75%. Increase toward 170 g only if dough is tight. This keeps the twine-tied loaf from spreading."
+                }
+              }}
+            />
+          </div>
+        </div>
 
         {/* Recipe Content */}
         <div className="max-w-4xl mx-auto px-4 py-8">
