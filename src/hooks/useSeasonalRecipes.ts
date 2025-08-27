@@ -830,6 +830,8 @@ export const useSeasonalRecipes = () => {
       if (loading) return;
       const targetSlug = 'pumpkin-shaped-sourdough-loaf';
       if (recipes.some(r => r.slug === targetSlug)) return;
+      
+      console.log('🎃 Creating Pumpkin Shaped Sourdough Loaf...');
       try {
         const data: SeasonalRecipeData = {
           season: 'Fall',
@@ -878,6 +880,8 @@ export const useSeasonalRecipes = () => {
         };
 
         const imageUrl = getRecipeImage(targetSlug, undefined);
+        console.log('🎃 Pumpkin recipe imageUrl:', imageUrl);
+        
         const { data: res, error } = await supabase.functions.invoke('upsert-recipe', {
           body: {
             title: 'Pumpkin Shaped Sourdough Loaf',
@@ -889,10 +893,14 @@ export const useSeasonalRecipes = () => {
             isPublic: true,
           },
         });
+        
+        console.log('🎃 Upsert response:', { res, error });
         if (error) {
-          console.error('Failed to upsert Pumpkin Shaped Sourdough Loaf:', error);
+          console.error('🎃 Failed to upsert Pumpkin Shaped Sourdough Loaf:', error);
           return;
         }
+        
+        console.log('🎃 Successfully created pumpkin recipe:', res);
         const created = res?.data;
         const newRecipe: SeasonalRecipe = {
           id: created?.id || crypto.randomUUID(),
@@ -906,8 +914,9 @@ export const useSeasonalRecipes = () => {
           data,
         };
         setRecipes(prev => [newRecipe, ...prev]);
+        console.log('🎃 Added pumpkin recipe to state');
       } catch (e) {
-        console.error('ensurePumpkinSourdough error', e);
+        console.error('🎃 ensurePumpkinSourdough error', e);
       }
     };
     ensurePumpkinSourdough();

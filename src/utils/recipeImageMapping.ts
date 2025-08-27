@@ -63,7 +63,7 @@ export const recipeImageMapping: Record<string, string> = {
   "zucchini-bread": "/lovable-uploads/a11398e3-4f1b-4dc6-b30e-c9aa076af2cb.png",
   "henrys-perfect-banana-nut-bread": "/lovable-uploads/bec877a1-0c80-40fe-b8e8-d7ecc9392c6c.png",
   "henrys-perfect-cinnamon-swirl-bread": "/lovable-uploads/43372cab-5967-486d-a367-8f8f7ad9eca9.png",
-  "pumpkin-shaped-sourdough-loaf": "/src/assets/recipes/pumpkin-sourdough-hero.jpg",
+  "pumpkin-shaped-sourdough-loaf": "/lovable-uploads/46c5de6f-c603-4f84-85ec-bb53a2781939.png",
   "stollen": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/stollen-1500-58a70c393df78c345b67af14.jpg",
   "mocha-angel-pie": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/d42ac36a6091c134254580b5fdc6fbdb.jpg",
   "cardamom-cinnamon-rolls-yudane": "/lovable-uploads/7baba166-3864-4e61-aacb-d26d3b0db10b.png",
