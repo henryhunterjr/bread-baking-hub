@@ -644,7 +644,7 @@ export const useSeasonalRecipes = () => {
     ensureMarbledSourdough();
   }, [loading, recipes]);
 
-  // One-time ensure Henry's Perfect Cinnamon Swirl Bread is present
+  // One-time ensure Henry's Perfect Cinnamon Swirl Bread is present  
   useEffect(() => {
     const ensureCinnamonSwirl = async () => {
       if (loading) return;
@@ -654,7 +654,7 @@ export const useSeasonalRecipes = () => {
         const data: SeasonalRecipeData = {
           season: 'Fall',
           holidays: [],
-          featuredDates: { start: '09-01', end: '11-30' },
+          featuredDates: { start: '01-01', end: '01-01' }, // Not featured - invalid date range
           category: ['yeast bread', 'enriched'],
           occasion: ['breakfast', 'brunch', 'tea time'],
           prepTime: '30 min active, ~3 hrs rising',
@@ -822,6 +822,95 @@ export const useSeasonalRecipes = () => {
       }
     };
     ensureRyeBoule();
+  }, [loading, recipes]);
+
+  // One-time ensure Pumpkin Shaped Sourdough Loaf is present
+  useEffect(() => {
+    const ensurePumpkinSourdough = async () => {
+      if (loading) return;
+      const targetSlug = 'pumpkin-shaped-sourdough-loaf';
+      if (recipes.some(r => r.slug === targetSlug)) return;
+      try {
+        const data: SeasonalRecipeData = {
+          season: 'Fall',
+          holidays: ['Halloween', 'Thanksgiving'],
+          featuredDates: { start: '08-15', end: '12-01' }, // Featured for fall season
+          category: ['sourdough', 'holiday bread'],
+          occasion: ['holiday centerpiece', 'thanksgiving', 'fall celebration'],
+          prepTime: '30 minutes active',
+          bakeTime: '45 minutes',
+          totalTime: '6-20 hours (including fermentation)',
+          difficulty: 'intermediate',
+          yield: '1 loaf (8–10 slices)',
+          ingredients: [
+            '350 g bread flour (about 2 3/4–3 cups)',
+            '100 g whole wheat flour (about 3/4–1 cup)',
+            '150 g active sourdough starter, 100% hydration (about 2/3 cup)',
+            '200 g pumpkin purée, unsweetened (about 3/4 cup + 1 tbsp)',
+            '150–170 g water to start (about 2/3–3/4 cup)',
+            '9 g fine sea salt (about 1 1/2 tsp)',
+            '1–2 tsp pumpkin pie spice or cinnamon (optional)',
+            '4–6 strands food-safe cotton kitchen twine',
+            '1 cinnamon stick (for stem)'
+          ],
+          method: [
+            'Mix & Autolyse: Whisk pumpkin purée and water (start at 150 g) until smooth, then mix in the starter. Add both flours and mix until no dry bits remain. Rest 30–40 minutes.',
+            'Add Salt: Sprinkle in salt (and spice if using). Pinch and fold to incorporate until even.',
+            'Bulk Fermentation: 3–4 hours at 75°F/24°C. Do 3–4 coil folds in the first 2 hours. Dough should be smoother and ~50% bigger.',
+            'Prepare for Shaping: Cut 4–6 lengths of food-safe twine. Lay them in a star pattern on parchment. Flour the surface and banneton.',
+            'Shape & Tie: Preshape a tight round. Rest 10–15 minutes. Final shape into a very tight boule. Place seam side down on the twine star. Tie each strand up and over, meeting on top. Tie gently so the dough can expand.',
+            'Proof: Into the floured banneton seam down. Cover. Proof 2–4 hours at room temp or cold proof 8–12 hours at 38–40°F. The dough should pass a gentle poke test.',
+            'Score: Turn out onto parchment. Dust lightly with flour. Score small leaf shapes between twine lines if desired.',
+            'Bake: Preheat Dutch oven to 475°F/245°C. Load loaf. Bake 20 minutes covered. Uncover, lower to 450°F/230°C, bake 20–25 minutes to deep golden. Internal temp ~208–210°F/98–99°C.',
+            'Finish: Remove twine while warm. Insert a cinnamon stick in the center as the stem. Cool fully before slicing.'
+          ],
+          notes: 'If dough feels slack, keep water at 150 g, add an extra coil fold, and extend cold proof. Dust with flour before baking for bold segment contrast. Twine should be food-safe cotton. Remove before serving.',
+          equipment: [
+            '4–5 qt Dutch oven',
+            'Food-safe cotton kitchen twine (4–6 strands)',
+            'Round banneton, well floured',
+            'Parchment paper',
+            'Lame or razor',
+            'Large bowl or tub',
+            'Digital scale',
+            'Cinnamon stick (stem)'
+          ],
+        };
+
+        const imageUrl = getRecipeImage(targetSlug, undefined);
+        const { data: res, error } = await supabase.functions.invoke('upsert-recipe', {
+          body: {
+            title: 'Pumpkin Shaped Sourdough Loaf',
+            slug: targetSlug,
+            data,
+            imageUrl,
+            tags: ['sourdough', 'pumpkin', 'fall', 'decorative', 'holiday', 'bread'],
+            folder: 'Seasonal',
+            isPublic: true,
+          },
+        });
+        if (error) {
+          console.error('Failed to upsert Pumpkin Shaped Sourdough Loaf:', error);
+          return;
+        }
+        const created = res?.data;
+        const newRecipe: SeasonalRecipe = {
+          id: created?.id || crypto.randomUUID(),
+          title: 'Pumpkin Shaped Sourdough Loaf',
+          slug: targetSlug,
+          folder: 'Seasonal',
+          tags: ['sourdough', 'pumpkin', 'fall', 'decorative', 'holiday', 'bread'],
+          is_public: true,
+          image_url: imageUrl,
+          created_at: created?.created_at || new Date().toISOString(),
+          data,
+        };
+        setRecipes(prev => [newRecipe, ...prev]);
+      } catch (e) {
+        console.error('ensurePumpkinSourdough error', e);
+      }
+    };
+    ensurePumpkinSourdough();
   }, [loading, recipes]);
 
   // Enhanced search function with fuzzy matching and intelligent ranking
