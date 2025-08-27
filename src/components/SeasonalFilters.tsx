@@ -2,20 +2,9 @@ import { Search, Filter, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Season, Category, Difficulty, getCurrentSeason } from '@/hooks/useSeasonalRecipes';
-
 interface SeasonalFiltersProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
@@ -27,17 +16,15 @@ interface SeasonalFiltersProps {
   onDifficultyChange: (difficulty: Difficulty | 'All') => void;
   resultCount: number;
 }
-
 const getSeasonalPlaceholder = (season: Season) => {
   const seasonalPlaceholders = {
     Winter: "Search for hearty winter breads...",
     Spring: "Find fresh spring recipes...",
     Summer: "Discover light summer breads...",
-    Fall: "Explore harvest season favorites...",
+    Fall: "Explore harvest season favorites..."
   };
   return seasonalPlaceholders[season];
 };
-
 export const SeasonalFilters = ({
   searchQuery,
   onSearchChange,
@@ -47,44 +34,29 @@ export const SeasonalFilters = ({
   onCategoryChange,
   selectedDifficulty,
   onDifficultyChange,
-  resultCount,
+  resultCount
 }: SeasonalFiltersProps) => {
   const currentSeason = getCurrentSeason();
   const hasActiveFilters = selectedSeason !== 'All' || selectedCategory !== 'All' || selectedDifficulty !== 'All' || searchQuery;
-
   const clearAllFilters = () => {
     onSearchChange('');
     onSeasonChange('All');
     onCategoryChange('All');
     onDifficultyChange('All');
   };
-
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       {/* Enhanced Search Bar - More Prominent */}
       <div className="relative bg-gradient-to-br from-amber-400 to-yellow-500 rounded-xl border-2 border-amber-300 p-4 shadow-xl">
         <div className="text-center mb-4">
-          <h3 className="text-lg font-bold text-slate-900 mb-1">Find Your Perfect Recipe</h3>
-          <p className="text-sm text-slate-800">Search by name, ingredients, or description</p>
+          <h3 className="font-bold text-slate-900 mb-1 text-4xl">Find Your Perfect Recipe</h3>
+          <p className="text-slate-800 text-xl font-semibold text-center">Search by name, ingredients, or description</p>
         </div>
         <div className="relative">
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-800 w-6 h-6" />
-          <Input
-            placeholder={getSeasonalPlaceholder(currentSeason)}
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-12 pr-12 h-14 text-lg font-medium border-2 border-slate-800/20 focus:border-slate-800 bg-white/90 backdrop-blur-sm text-slate-900 placeholder:text-slate-600"
-          />
-          {searchQuery && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 hover:bg-primary/10"
-              onClick={() => onSearchChange('')}
-            >
+          <Input placeholder={getSeasonalPlaceholder(currentSeason)} value={searchQuery} onChange={e => onSearchChange(e.target.value)} className="pl-12 pr-12 h-14 text-lg font-medium border-2 border-slate-800/20 focus:border-slate-800 bg-white/90 backdrop-blur-sm text-slate-900 placeholder:text-slate-600" />
+          {searchQuery && <Button variant="ghost" size="sm" className="absolute right-2 top-1/2 transform -translate-y-1/2 hover:bg-primary/10" onClick={() => onSearchChange('')}>
               <X className="w-5 h-5" />
-            </Button>
-          )}
+            </Button>}
         </div>
         <div className="mt-3 text-xs text-muted-foreground text-center">
           Try searching for "cinnamon", "sourdough", "whole wheat", or "holiday bread"
@@ -94,7 +66,7 @@ export const SeasonalFilters = ({
       {/* Filter Controls */}
       <div className="flex flex-wrap items-center gap-3">
         {/* Season Filter */}
-        <Select value={selectedSeason} onValueChange={(value) => onSeasonChange(value as Season | 'All')}>
+        <Select value={selectedSeason} onValueChange={value => onSeasonChange(value as Season | 'All')}>
           <SelectTrigger className="w-32">
             <SelectValue placeholder="Season" />
           </SelectTrigger>
@@ -108,7 +80,7 @@ export const SeasonalFilters = ({
         </Select>
 
         {/* Category Filter */}
-        <Select value={selectedCategory} onValueChange={(value) => onCategoryChange(value as Category | 'All')}>
+        <Select value={selectedCategory} onValueChange={value => onCategoryChange(value as Category | 'All')}>
           <SelectTrigger className="w-40">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
@@ -124,7 +96,7 @@ export const SeasonalFilters = ({
         </Select>
 
         {/* Difficulty Filter */}
-        <Select value={selectedDifficulty} onValueChange={(value) => onDifficultyChange(value as Difficulty | 'All')}>
+        <Select value={selectedDifficulty} onValueChange={value => onDifficultyChange(value as Difficulty | 'All')}>
           <SelectTrigger className="w-36">
             <SelectValue placeholder="Difficulty" />
           </SelectTrigger>
@@ -154,60 +126,36 @@ export const SeasonalFilters = ({
         </Popover>
 
         {/* Clear Filters */}
-        {hasActiveFilters && (
-          <Button variant="ghost" size="sm" onClick={clearAllFilters}>
+        {hasActiveFilters && <Button variant="ghost" size="sm" onClick={clearAllFilters}>
             <X className="w-4 h-4 mr-1" />
             Clear All
-          </Button>
-        )}
+          </Button>}
       </div>
 
       {/* Active Filters & Results */}
       <div className="flex flex-wrap items-center gap-2">
-        {selectedSeason !== 'All' && (
-          <Badge variant="secondary">
+        {selectedSeason !== 'All' && <Badge variant="secondary">
             Season: {selectedSeason}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-auto p-0 ml-1"
-              onClick={() => onSeasonChange('All')}
-            >
+            <Button variant="ghost" size="sm" className="h-auto p-0 ml-1" onClick={() => onSeasonChange('All')}>
               <X className="w-3 h-3" />
             </Button>
-          </Badge>
-        )}
-        {selectedCategory !== 'All' && (
-          <Badge variant="secondary">
+          </Badge>}
+        {selectedCategory !== 'All' && <Badge variant="secondary">
             Category: {selectedCategory}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-auto p-0 ml-1"
-              onClick={() => onCategoryChange('All')}
-            >
+            <Button variant="ghost" size="sm" className="h-auto p-0 ml-1" onClick={() => onCategoryChange('All')}>
               <X className="w-3 h-3" />
             </Button>
-          </Badge>
-        )}
-        {selectedDifficulty !== 'All' && (
-          <Badge variant="secondary">
+          </Badge>}
+        {selectedDifficulty !== 'All' && <Badge variant="secondary">
             Difficulty: {selectedDifficulty}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-auto p-0 ml-1"
-              onClick={() => onDifficultyChange('All')}
-            >
+            <Button variant="ghost" size="sm" className="h-auto p-0 ml-1" onClick={() => onDifficultyChange('All')}>
               <X className="w-3 h-3" />
             </Button>
-          </Badge>
-        )}
+          </Badge>}
         
         <div className="ml-auto text-sm text-muted-foreground">
           {resultCount} recipe{resultCount !== 1 ? 's' : ''} found
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
