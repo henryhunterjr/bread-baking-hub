@@ -281,15 +281,22 @@ export const BlogImageUploader = () => {
                 loading="lazy"
                 decoding="async"
               />
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-sm text-muted-foreground">
-                  {uploadedImage.filename} • {Math.round(uploadedImage.fileSize / 1024)}KB
-                  {uploadedImage.dimensions && (
-                    <> • {uploadedImage.dimensions.width}×{uploadedImage.dimensions.height}</>
-                  )}
-                </span>
-                <Button variant="ghost" size="sm" onClick={resetUpload}>
-                  <X className="w-4 h-4" />
+              <div className="text-center space-y-3">
+                <div className="flex items-center justify-center gap-2">
+                  <span className="text-sm text-muted-foreground">
+                    {uploadedImage.filename} • {Math.round(uploadedImage.fileSize / 1024)}KB
+                    {uploadedImage.dimensions && (
+                      <> • {uploadedImage.dimensions.width}×{uploadedImage.dimensions.height}</>
+                    )}
+                  </span>
+                </div>
+                <Button 
+                  variant="outline" 
+                  onClick={resetUpload}
+                  className="touch-manipulation"
+                >
+                  <Upload className="w-4 h-4 mr-2" />
+                  Upload Another Image
                 </Button>
               </div>
             </div>
