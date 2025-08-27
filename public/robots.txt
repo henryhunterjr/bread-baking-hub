@@ -13,5 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://bread-baking-hub.vercel.app/sitemap.xml
-Sitemap: https://ojyckskucneljvuqzrsw.functions.supabase.co/sitemap
+Sitemap: https://the-bakers-bench.lovable.app/sitemap.xml
