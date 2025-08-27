@@ -15,6 +15,12 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 const officialLogo = '/lovable-uploads/82d8e259-f73d-4691-958e-1dd4d0bf240d.png';
 
 const Header = () => {
@@ -136,39 +142,44 @@ const Header = () => {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-header-foreground hover:text-primary text-sm font-medium px-2">
-                    More
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent className="absolute left-0 top-full mt-1 bg-background border border-border shadow-lg rounded-md z-50">
-                    <div className="w-48 p-2">
-                      <NavigationMenuLink asChild>
-                        <Link to="/glossary" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button 
+                        variant="ghost" 
+                        className="text-header-foreground hover:text-primary text-sm font-medium px-2 py-2 h-auto"
+                      >
+                        More
+                        <ChevronDown className="ml-1 h-3 w-3" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" side="bottom" className="w-48">
+                      <DropdownMenuItem asChild>
+                        <Link to="/glossary" className="w-full cursor-pointer">
                           Glossary
                         </Link>
-                      </NavigationMenuLink>
-                       <NavigationMenuLink asChild>
-                          <Link to="/troubleshooting" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                            Troubleshooting
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link to="/help" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                            Help
-                          </Link>
-                        </NavigationMenuLink>
-                      <NavigationMenuLink asChild>
-                        <Link to="/community" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link to="/troubleshooting" className="w-full cursor-pointer">
+                          Troubleshooting
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link to="/help" className="w-full cursor-pointer">
+                          Help
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link to="/community" className="w-full cursor-pointer">
                           Community
                         </Link>
-                      </NavigationMenuLink>
-                      <div className="border-t border-border my-1"></div>
-                      <NavigationMenuLink asChild>
-                        <Link to="/legal" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link to="/legal" className="w-full cursor-pointer">
                           Legal Information
                         </Link>
-                      </NavigationMenuLink>
-                    </div>
-                  </NavigationMenuContent>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
@@ -177,46 +188,42 @@ const Header = () => {
           {/* User Actions - Far Right */}
           <div className="hidden md:flex items-center flex-shrink-0">
             {user ? (
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className="text-header-foreground hover:text-primary text-xs font-medium px-1">
-                      Account
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent className="absolute right-0 top-full mt-1 bg-background border border-border shadow-lg rounded-md z-50">
-                      <div className="w-36 p-2">
-                        <NavigationMenuLink asChild>
-                          <Link to="/my-recipes" className="block px-2 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                            My Recipes
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link to="/my-favorites" className="block px-2 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                            Favorites
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link to="/my-reviews" className="block px-2 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                            Reviews
-                          </Link>
-                        </NavigationMenuLink>
-                        <NavigationMenuLink asChild>
-                          <Link to="/dashboard" className="block px-2 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
-                            Dashboard
-                          </Link>
-                        </NavigationMenuLink>
-                        <div className="border-t border-border my-1"></div>
-                        <button
-                          onClick={signOut}
-                          className="block w-full text-left px-2 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors"
-                        >
-                          Logout
-                        </button>
-                      </div>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="text-header-foreground hover:text-primary text-xs font-medium px-1 py-2 h-auto"
+                  >
+                    Account
+                    <ChevronDown className="ml-1 h-3 w-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" side="bottom" className="w-36">
+                  <DropdownMenuItem asChild>
+                    <Link to="/my-recipes" className="w-full cursor-pointer">
+                      My Recipes
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/my-favorites" className="w-full cursor-pointer">
+                      Favorites
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/my-reviews" className="w-full cursor-pointer">
+                      Reviews
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/dashboard" className="w-full cursor-pointer">
+                      Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={signOut}>
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <Button variant="warm" size="sm" asChild>
                 <Link to="/auth">Login</Link>
