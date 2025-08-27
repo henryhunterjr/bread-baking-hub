@@ -1702,7 +1702,7 @@ export type Database = {
         Returns: unknown
       }
       is_admin_user: {
-        Args: { user_email: string }
+        Args: { user_email: string } | { user_id: string }
         Returns: boolean
       }
       is_current_user_admin: {
