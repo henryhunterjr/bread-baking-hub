@@ -67,6 +67,7 @@ const RecipePrint = React.lazy(() => import("./pages/print/RecipePrint"));
 const Help = React.lazy(() => import("./pages/Help"));
 const MyRecipeLibrary = React.lazy(() => import("./pages/MyRecipeLibrary"));
 const PasswordReset = React.lazy(() => import("./pages/PasswordReset"));
+const PumpkinSourdoughRecipe = React.lazy(() => import("./pages/PumpkinSourdoughRecipe"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -134,6 +135,7 @@ function App() {
                     <Route path="/troubleshooting" element={<TroubleshootingPage />} />
                     <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
                     <Route path="/legal" element={<Legal />} />
+                    <Route path="/recipes/pumpkin-shaped-sourdough-loaf" element={<PumpkinSourdoughRecipe />} />
                     <Route path="/recipes/:slug" element={<PublicRecipe />} />
                     <Route path="/r/:slug" element={<PublicRecipe />} />
                      <Route path="/recipe/:slug" element={<RecipeRedirect />} />
