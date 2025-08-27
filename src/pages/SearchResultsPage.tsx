@@ -15,6 +15,7 @@ import Footer from '@/components/Footer';
 import { supabase } from '@/integrations/supabase/client';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 import { logger } from '@/utils/logger';
+import { useAuth } from '@/hooks/useAuth';
 
 // Helper functions for tokenized client-side search
 const tokenize = (q: string) => q.toLowerCase().trim().split(/\s+/).filter(Boolean);
@@ -85,6 +86,7 @@ interface SearchFilters {
 }
 
 const SearchResultsPage = () => {
+  const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('q') || '');
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -277,15 +279,25 @@ const SearchResultsPage = () => {
       setResults(allResults);
       setTotalResults(allResults.length);
 
-      // Log search analytics
+      // Log search analytics (only for admin users)
       try {
-        await supabase.from('search_analytics').insert({
-          search_query: query,
-          search_type: 'advanced',
-          results_count: allResults.length,
-          filters_applied: JSON.stringify(filters),
-          search_context: 'search_page'
-        });
+        if (user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('is_admin')
+            .eq('user_id', user.id)
+            .single();
+            
+          if (profile?.is_admin) {
+            await supabase.from('search_analytics').insert({
+              search_query: query,
+              search_type: 'advanced',
+              results_count: allResults.length,
+              filters_applied: JSON.stringify(filters),
+              search_context: 'search_page'
+            });
+          }
+        }
       } catch (error) {
         logger.warn('Failed to log search analytics:', error);
       }

@@ -10,6 +10,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
 import { logger } from '@/utils/logger';
 import { SafeImage } from '@/components/ui/SafeImage';
+import { useAuth } from '@/hooks/useAuth';
 
 interface SearchSuggestion {
   id: string;
@@ -34,6 +35,7 @@ export const GlobalSearch = ({
   showFilters = true,
   className = ""
 }: GlobalSearchProps) => {
+  const { user } = useAuth();
   const [query, setQuery] = React.useState('');
   const [suggestions, setSuggestions] = React.useState<SearchSuggestion[]>([]);
   const [recentSearches, setRecentSearches] = React.useState<string[]>([]);
@@ -92,10 +94,21 @@ export const GlobalSearch = ({
     return () => { cancelled = true; };
   }, []);
 
-  // Load popular searches
+  // Load popular searches - only for admin users
   React.useEffect(() => {
     const loadPopularSearches = async () => {
       try {
+        // Check if user is admin before attempting to query search_analytics
+        if (!user) return;
+        
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('is_admin')
+          .eq('user_id', user.id)
+          .single();
+          
+        if (!profile?.is_admin) return;
+        
         const { data } = await supabase
           .from('search_analytics')
           .select('search_query')
@@ -113,8 +126,22 @@ export const GlobalSearch = ({
     };
 
     loadPopularSearches();
-  }, []);
+  }, [user]);
 
+  // Helper function to check if user is admin
+  const isUserAdmin = React.useCallback(async () => {
+    if (!user) return false;
+    try {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('is_admin')
+        .eq('user_id', user.id)
+        .single();
+      return profile?.is_admin || false;
+    } catch {
+      return false;
+    }
+  }, [user]);
   // Client-side fallback search
   const clientFilter = React.useCallback((q: string) => {
     if (!q.trim()) return [];
@@ -284,15 +311,18 @@ export const GlobalSearch = ({
     setRecentSearches(updated);
     localStorage.setItem('recent-searches', JSON.stringify(updated));
 
-    // Log search analytics
+    // Log search analytics (only for admin users)
     try {
-      await supabase.from('search_analytics').insert({
-        search_query: searchQuery,
-        search_type: 'global',
-        results_count: suggestions.length,
-        filters_applied: JSON.stringify({ filters: selectedFilters }),
-        search_context: window.location.pathname
-      });
+      const adminCheck = await isUserAdmin();
+      if (adminCheck) {
+        await supabase.from('search_analytics').insert({
+          search_query: searchQuery,
+          search_type: 'global',
+          results_count: suggestions.length,
+          filters_applied: JSON.stringify({ filters: selectedFilters }),
+          search_context: window.location.pathname
+        });
+      }
     } catch (error) {
       logger.warn('Failed to log search analytics:', error);
     }
@@ -300,18 +330,21 @@ export const GlobalSearch = ({
     // Navigate to search results page using React Router
     navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
     setIsOpen(false);
-  }, [recentSearches, suggestions.length, selectedFilters, navigate]);
+  }, [recentSearches, suggestions.length, selectedFilters, navigate, isUserAdmin]);
 
   const handleSuggestionClick = React.useCallback(async (suggestion: SearchSuggestion) => {
-    // Log click analytics
+    // Log click analytics (only for admin users)
     try {
-      await supabase.from('search_analytics').insert({
-        search_query: query,
-        search_type: 'global',
-        clicked_result_id: suggestion.id,
-        clicked_result_type: suggestion.type,
-        search_context: window.location.pathname
-      });
+      const adminCheck = await isUserAdmin();
+      if (adminCheck) {
+        await supabase.from('search_analytics').insert({
+          search_query: query,
+          search_type: 'global',
+          clicked_result_id: suggestion.id,
+          clicked_result_type: suggestion.type,
+          search_context: window.location.pathname
+        });
+      }
     } catch (error) {
       logger.warn('Failed to log click analytics:', error);
     }
@@ -322,7 +355,7 @@ export const GlobalSearch = ({
       navigate(suggestion.url);
     }
     setIsOpen(false);
-  }, [query, onResultClick, navigate]);
+  }, [query, onResultClick, navigate, isUserAdmin]);
 
   const clearSearch = () => {
     setQuery('');
