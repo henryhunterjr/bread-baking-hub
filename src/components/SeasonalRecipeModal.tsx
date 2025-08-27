@@ -515,9 +515,19 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
 
               {/* Recipe Actions */}
               <div className="border-t pt-4 no-print flex flex-wrap gap-2">
-                <RecipeActions 
-                  recipe={recipe}
-                />
+                {recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? (
+                  <Button 
+                    onClick={() => window.open('/recipes/pumpkin-shaped-sourdough-loaf', '_blank')}
+                    variant="outline"
+                    className="flex-1"
+                  >
+                    View Full Recipe
+                  </Button>
+                ) : (
+                  <RecipeActions 
+                    recipe={recipe}
+                  />
+                )}
                 <RecipeShareButton 
                   recipe={recipe}
                   variant="outline"
@@ -795,10 +805,20 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
           {/* Mobile footer with main actions */}
           <div className="sm:hidden border-t bg-background/95 backdrop-blur p-3 no-print">
             <div className="flex gap-2">
-              <RecipeActions 
-                recipe={recipe} 
-                className="flex-1"
-              />
+              {recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? (
+                <Button 
+                  onClick={() => window.open('/recipes/pumpkin-shaped-sourdough-loaf', '_blank')}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  View Full Recipe
+                </Button>
+              ) : (
+                <RecipeActions 
+                  recipe={recipe} 
+                  className="flex-1"
+                />
+              )}
             </div>
           </div>
         </DialogContent>
