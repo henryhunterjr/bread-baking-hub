@@ -19,8 +19,22 @@ const VideoPlayerModal = ({ isOpen, onClose, videoUrl, title, description }: Vid
     return (match && match[2].length === 11) ? match[2] : null;
   };
 
-  const videoId = extractYouTubeId(videoUrl);
-  const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  // Extract Google Drive video ID from URL
+  const extractGoogleDriveId = (url: string) => {
+    const regExp = /\/file\/d\/([a-zA-Z0-9_-]+)/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
+  };
+
+  const youtubeId = extractYouTubeId(videoUrl);
+  const googleDriveId = extractGoogleDriveId(videoUrl);
+  
+  let embedUrl = null;
+  if (youtubeId) {
+    embedUrl = `https://www.youtube.com/embed/${youtubeId}`;
+  } else if (googleDriveId) {
+    embedUrl = `https://drive.google.com/file/d/${googleDriveId}/preview`;
+  }
 
   return (
     <div 
@@ -56,7 +70,8 @@ const VideoPlayerModal = ({ isOpen, onClose, videoUrl, title, description }: Vid
                   title={title}
                   className="absolute top-0 left-0 w-full h-full"
                   allowFullScreen
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  sandbox="allow-scripts allow-same-origin allow-presentation"
                 />
               </div>
             ) : (
