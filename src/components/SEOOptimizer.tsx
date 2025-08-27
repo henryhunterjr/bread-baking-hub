@@ -23,8 +23,8 @@ export const SEOOptimizer = ({
   const defaultData = {
     title: 'Baking Great Bread - Master Artisan Bread Baking at Home',
     description: 'Learn professional bread baking techniques with expert guidance from Henry Hunter. Troubleshooting guides, recipes, and community support for perfect artisan bread.',
-    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif',
-    url: 'https://bread-baking-hub.vercel.app'
+    image: 'https://the-bakers-bench.lovable.app/lovable-uploads/46c5de6f-c603-4f84-85ec-bb53a2781939.png?v=20250827-1',
+    url: 'https://the-bakers-bench.lovable.app'
   };
 
   const seoTitle = title ? `${title} | ${defaultData.title}` : defaultData.title;
