@@ -76,18 +76,18 @@ const Recipes = () => {
         <meta property="og:title" content="Recipes | Baking Great Bread at Home" />
         <meta property="og:description" content="Discover our collection of tried and true bread recipes, from classic sourdough to seasonal specialties. Perfect for home bakers of all skill levels." />
         <meta property="og:url" content="https://the-bakers-bench.lovable.app/recipes" />
-        <meta property="og:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/218723c3-e566-4b81-a9e5-a341a5e61037.png" />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/bread-recipes-baking-great-bread-at-home-the-bakers-bench/the-bakers-bench2.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Baking Great Bread at Home Recipes - Tried and True Favorites" />
+        <meta property="og:image:alt" content="Freshly baked artisan sourdough loaf on wooden cutting board next to open recipe book in warm kitchen setting - The Baker's Bench Recipes" />
         <meta property="og:site_name" content="Baking Great Bread at Home" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Recipes | Baking Great Bread at Home" />
         <meta name="twitter:description" content="Discover our collection of tried and true bread recipes, from classic sourdough to seasonal specialties. Perfect for home bakers of all skill levels." />
-        <meta name="twitter:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/218723c3-e566-4b81-a9e5-a341a5e61037.png" />
-        <meta name="twitter:image:alt" content="Baking Great Bread at Home Recipes - Tried and True Favorites" />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/bread-recipes-baking-great-bread-at-home-the-bakers-bench/the-bakers-bench2.png" />
+        <meta name="twitter:image:alt" content="Freshly baked artisan sourdough loaf on wooden cutting board next to open recipe book in warm kitchen setting - The Baker's Bench Recipes" />
       </Helmet>
       
       <main id="main-content" role="main" tabIndex={-1}>
