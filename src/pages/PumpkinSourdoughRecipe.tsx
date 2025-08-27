@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { RecipeActions } from '@/components/RecipeActions';
 import heroImage from '@/assets/recipes/pumpkin-sourdough-hero.jpg';
+import socialImage from '@/assets/social/pumpkin-sourdough-social.jpg';
 import mixingImage from '@/assets/recipes/pumpkin-sourdough-mixing.jpg';
 import twineSetupImage from '@/assets/recipes/pumpkin-sourdough-twine-setup.jpg';
 import bannetonImage from '@/assets/recipes/pumpkin-sourdough-banneton.jpg';
@@ -108,7 +109,7 @@ export default function PumpkinSourdoughRecipe() {
         <meta property="og:type" content="article" />
         <meta property="og:title" content={recipeData.title} />
         <meta property="og:description" content={recipeData.description} />
-        <meta property="og:image" content={heroImage} />
+        <meta property="og:image" content={socialImage} />
         <meta property="og:url" content="https://bread-baking-hub.vercel.app/recipes/pumpkin-shaped-sourdough-loaf" />
         <meta property="og:site_name" content="Baking Great Bread" />
         
@@ -116,7 +117,7 @@ export default function PumpkinSourdoughRecipe() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={recipeData.title} />
         <meta name="twitter:description" content="Tie it, bake it, crown it. The perfect fall showstopper." />
-        <meta name="twitter:image" content={heroImage} />
+        <meta name="twitter:image" content={socialImage} />
         
         {/* JSON-LD Structured Data */}
         <script type="application/ld+json">
