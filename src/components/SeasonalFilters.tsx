@@ -62,18 +62,18 @@ export const SeasonalFilters = ({
   return (
     <div className="space-y-6">
       {/* Enhanced Search Bar - More Prominent */}
-      <div className="relative bg-card rounded-xl border-2 border-primary/20 p-4 shadow-lg">
+      <div className="relative bg-gradient-to-br from-amber-400 to-yellow-500 rounded-xl border-2 border-amber-300 p-4 shadow-xl">
         <div className="text-center mb-4">
-          <h3 className="text-lg font-semibold text-foreground mb-1">Find Your Perfect Recipe</h3>
-          <p className="text-sm text-muted-foreground">Search by name, ingredients, or description</p>
+          <h3 className="text-lg font-bold text-slate-900 mb-1">Find Your Perfect Recipe</h3>
+          <p className="text-sm text-slate-800">Search by name, ingredients, or description</p>
         </div>
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary w-6 h-6" />
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-800 w-6 h-6" />
           <Input
             placeholder={getSeasonalPlaceholder(currentSeason)}
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-12 pr-12 h-14 text-lg font-medium border-2 border-primary/30 focus:border-primary bg-background/50 backdrop-blur-sm"
+            className="pl-12 pr-12 h-14 text-lg font-medium border-2 border-slate-800/20 focus:border-slate-800 bg-white/90 backdrop-blur-sm text-slate-900 placeholder:text-slate-600"
           />
           {searchQuery && (
             <Button
