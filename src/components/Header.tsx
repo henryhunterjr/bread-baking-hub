@@ -139,7 +139,7 @@ const Header = () => {
                   <NavigationMenuTrigger className="text-header-foreground hover:text-primary text-sm font-medium px-2">
                     More
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent>
+                  <NavigationMenuContent className="left-0">
                     <div className="w-48 p-2">
                       <NavigationMenuLink asChild>
                         <Link to="/glossary" className="block px-3 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
@@ -183,7 +183,7 @@ const Header = () => {
                     <NavigationMenuTrigger className="text-header-foreground hover:text-primary text-xs font-medium px-1">
                       Account
                     </NavigationMenuTrigger>
-                    <NavigationMenuContent>
+                    <NavigationMenuContent className="right-0">
                       <div className="w-36 p-2">
                         <NavigationMenuLink asChild>
                           <Link to="/my-recipes" className="block px-2 py-2 text-sm font-medium text-header-foreground hover:text-primary hover:bg-accent rounded-md transition-colors">
