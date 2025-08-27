@@ -137,6 +137,7 @@ function App() {
                     <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
                     <Route path="/legal" element={<Legal />} />
                      <Route path="/recipes/pumpkin-shaped-sourdough-loaf" element={<PumpkinSourdoughRecipe />} />
+                     <Route path="/r/pumpkin-shaped-sourdough-loaf" element={<PumpkinSourdoughRecipe />} />
                      <Route path="/recipes/:slug" element={<PublicRecipe />} />
                      <Route path="/r/:slug" element={<PublicRecipe />} />
                       <Route path="/recipe/:slug" element={<RecipeRedirect />} />
