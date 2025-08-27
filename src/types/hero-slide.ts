@@ -7,6 +7,7 @@ export interface HeroSlide {
   overlayPosition: "left" | "right";
   amazonUrl?: string;
   landingPageUrl?: string;
+  videoUrl?: string;
   previewContent: string;
 }
 

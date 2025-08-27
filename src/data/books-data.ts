@@ -57,6 +57,7 @@ export const bookData: Record<string, BookData> = {
     author: "Henry Hunter",
     description: "Forget the sourdough snobbery—this book is for real bakers who want great bread without the stress. Whether you're just getting started or tired of conflicting advice, Sourdough for the Rest of Us breaks down the process in plain, no-nonsense terms so you can bake with confidence.",
     coverImage: sourdoughCover,
+    videoUrl: "https://drive.google.com/file/d/16k5bvqiZ6prA180ZbE3VvEZeyhnqftXq/view?usp=sharing",
     previewContent: `
       <h2>Sourdough for the Rest of Us - Preview</h2>
       <h3>Chapter 1: Your Sourdough Starter - The Drama Queen of the Kitchen</h3>

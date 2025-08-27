@@ -46,6 +46,7 @@ export const heroSlides: HeroSlide[] = [
     backgroundImage: heroSourdoughRest,
     overlayPosition: "right",
     amazonUrl: "https://a.co/d/7Q86sEr",
+    videoUrl: "https://drive.google.com/file/d/16k5bvqiZ6prA180ZbE3VvEZeyhnqftXq/view?usp=sharing",
     previewContent: `
       <h2>Sourdough for the Rest of Us - Preview</h2>
       <h3>Chapter 1: Your Sourdough Starter - The Drama Queen of the Kitchen</h3>
