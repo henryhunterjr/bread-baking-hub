@@ -72,6 +72,7 @@ const Recipes = () => {
         <link rel="canonical" href="https://the-bakers-bench.lovable.app/recipes" />
         
         {/* Open Graph / Facebook */}
+        <meta property="fb:app_id" content="1234567890123456" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Recipes | Baking Great Bread at Home" />
         <meta property="og:description" content="Discover our collection of tried and true bread recipes, from classic sourdough to seasonal specialties. Perfect for home bakers of all skill levels." />
