@@ -6,6 +6,7 @@ import { SeasonalRecipe, Season, getSeasonalColors } from '@/hooks/useSeasonalRe
 import { getRecipeImage } from '@/utils/recipeImageMapping';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { RecipeShareButton } from '@/components/RecipeShareButton';
 
 interface SeasonalRecipeCardProps {
   recipe: SeasonalRecipe;
@@ -178,6 +179,16 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
               </div>
             </div>
           )}
+
+          {/* Share Button */}
+          <div className="pt-2 border-t">
+            <RecipeShareButton 
+              recipe={recipe}
+              variant="ghost"
+              size="sm"
+              className="w-full"
+            />
+          </div>
         </CardContent>
       </Card>
     </motion.div>

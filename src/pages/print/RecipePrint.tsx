@@ -230,12 +230,29 @@ const RecipePrint = () => {
             Method
           </h2>
           <ol style={{ margin: '0', paddingLeft: '20px' }}>
-            {data.method.map((step: string, index: number) => (
+            {data.method.map((step: any, index: number) => (
               <li key={index} style={{
                 marginBottom: '15px',
                 lineHeight: '1.6'
               }}>
-                {step}
+                {typeof step === 'string' ? step : step.instruction || step.step || step}
+                {typeof step === 'object' && step.image && (
+                  <div style={{ marginTop: '10px' }}>
+                    <SafeImage
+                      src={step.image}
+                      alt={`Step ${index + 1} illustration`}
+                      style={{
+                        maxWidth: '100%',
+                        width: '300px',
+                        height: 'auto',
+                        borderRadius: '8px',
+                        display: 'block'
+                      }}
+                      onLoad={handleImageLoad}
+                      onError={handleImageError}
+                    />
+                  </div>
+                )}
               </li>
             ))}
           </ol>

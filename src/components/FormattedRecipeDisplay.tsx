@@ -215,31 +215,43 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
         </Card>
       </div>
 
-      <Card className="shadow-warm">
-        <CardHeader>
-          <CardTitle className="text-primary">Method</CardTitle>
+        <Card className="shadow-warm">
+          <CardHeader>
+            <CardTitle className="text-primary">Method</CardTitle>
         </CardHeader>
         <CardContent>
           <ol className="space-y-3">
-            {isNewMethodFormat ? (
-              (recipe.method as Array<{step: number; instruction: string}>)?.map((methodStep, index) => (
-                <li key={index} className="flex items-start space-x-3">
-                  <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-semibold flex-shrink-0 mt-0.5">
-                    {methodStep.step}
-                  </span>
-                  <span className="leading-relaxed">{methodStep.instruction}</span>
-                </li>
-              )) || []
-            ) : (
-              (recipe.method as string[])?.map((step, index) => (
-                <li key={index} className="flex items-start space-x-3">
-                  <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-semibold flex-shrink-0 mt-0.5">
-                    {index + 1}
-                  </span>
-                  <span className="leading-relaxed">{step}</span>
-                </li>
-              )) || []
-            )}
+             {isNewMethodFormat ? (
+               (recipe.method as Array<{step: number; instruction: string; image?: string}>)?.map((methodStep, index) => (
+                 <li key={index} className="flex flex-col space-y-3">
+                   <div className="flex items-start space-x-3">
+                     <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-semibold flex-shrink-0 mt-0.5">
+                       {methodStep.step}
+                     </span>
+                     <span className="leading-relaxed">{methodStep.instruction}</span>
+                   </div>
+                   {(methodStep as any).image && (
+                     <div className="ml-9">
+                       <ResponsiveImage
+                         src={(methodStep as any).image}
+                         alt={`Step ${methodStep.step || index + 1}: ${methodStep.instruction.substring(0, 50)}...`}
+                         className="w-full max-w-md rounded-lg shadow-md"
+                         loading="lazy"
+                       />
+                     </div>
+                   )}
+                 </li>
+               )) || []
+             ) : (
+               (recipe.method as string[])?.map((step, index) => (
+                 <li key={index} className="flex items-start space-x-3">
+                   <span className="bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center text-sm font-semibold flex-shrink-0 mt-0.5">
+                     {index + 1}
+                   </span>
+                   <span className="leading-relaxed">{step}</span>
+                 </li>
+               )) || []
+             )}
           </ol>
         </CardContent>
       </Card>
