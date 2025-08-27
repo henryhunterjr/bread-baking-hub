@@ -179,7 +179,7 @@ const books: Book[] = [
       "Corporate collusion and marketing manipulation",
       "How real bread is fighting back"
     ],
-    amazonUrl: "#",
+    amazonUrl: "https://a.co/d/1E3objQ",
     coverGradient: "bg-gradient-to-r from-amber-900 to-yellow-600",
     coverImage: loafLieCover,
     videoUrl: "https://drive.google.com/file/d/18l7YvjiTul6m6iLuK6QkH1wSkhCy1w0o/preview",

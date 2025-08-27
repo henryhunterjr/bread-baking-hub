@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Eye, ExternalLink, Play } from "lucide-react";
+import { Eye, ExternalLink, Play, ShoppingCart } from "lucide-react";
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 
 interface LoafAndLieSpotlightProps {
@@ -101,9 +101,9 @@ const LoafAndLieSpotlight = ({ onPreview, onAudio }: LoafAndLieSpotlightProps) =
                 className="border-gray-600 text-gray-200 hover:bg-gray-800"
                 asChild
               >
-                <a href="/go?u=https%3A%2F%2Fhunter53.gumroad.com%2Fl%2Fixsjex" target="_self" rel="noopener noreferrer">
-                  <ExternalLink className="mr-2 h-5 w-5" />
-                  Get the Book
+                <a href="https://a.co/d/1E3objQ" target="_blank" rel="noopener noreferrer">
+                  <ShoppingCart className="mr-2 h-5 w-5" />
+                  Buy on Amazon
                 </a>
               </Button>
             </div>

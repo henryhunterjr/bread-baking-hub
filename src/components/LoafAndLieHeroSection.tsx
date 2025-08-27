@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Headphones, Download } from "lucide-react";
+import { Headphones, ShoppingCart } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
 
 interface LoafAndLieHeroSectionProps {
@@ -37,9 +37,9 @@ const LoafAndLieHeroSection = ({ onListen }: LoafAndLieHeroSectionProps) => {
           className="bg-white/90 hover:bg-white text-gray-900 border-0 shadow-lg"
           asChild
         >
-          <a href="/go?u=https%3A%2F%2Fhunter53.gumroad.com%2Fl%2Fixsjex" target="_self" rel="noopener noreferrer">
-            <Download className="mr-2 h-5 w-5" />
-            Download PDF
+          <a href="https://a.co/d/1E3objQ" target="_blank" rel="noopener noreferrer">
+            <ShoppingCart className="mr-2 h-5 w-5" />
+            Buy on Amazon
           </a>
         </Button>
       </div>
