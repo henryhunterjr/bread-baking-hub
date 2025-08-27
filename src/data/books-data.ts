@@ -257,6 +257,6 @@ export const bookData: Record<string, BookData> = {
       <p><em>[Available now - Visit landing page for more details]</em></p>
     `,
     sampleUrl: "https://read.amazon.com/sample/B0DR2LDDSD?clientId=share",
-    audioUrl: undefined
+    audioUrl: "https://drive.google.com/uc?id=1ZbiumlSUOWOpG6ps0Kt-FXAjMhqMqM9S&export=download"
   }
 };

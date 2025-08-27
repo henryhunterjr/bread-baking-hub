@@ -8,6 +8,7 @@ export interface HeroSlide {
   amazonUrl?: string;
   landingPageUrl?: string;
   videoUrl?: string;
+  audioUrl?: string;
   previewContent: string;
 }
 

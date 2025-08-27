@@ -111,6 +111,7 @@ export const heroSlides: HeroSlide[] = [
     overlayPosition: "left",
     amazonUrl: "https://www.amazon.com/dp/B0DR2LDDSD",
     landingPageUrl: "https://the-watchers-descent.lovable.app/",
+    audioUrl: "https://drive.google.com/uc?id=1ZbiumlSUOWOpG6ps0Kt-FXAjMhqMqM9S&export=download",
     previewContent: `
       <h2>The Watchers' Descent - Preview</h2>
       <h3>A Science Fiction Epic</h3>
