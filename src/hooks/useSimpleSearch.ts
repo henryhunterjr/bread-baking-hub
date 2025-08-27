@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { log } from '@/lib/logger';
 
 interface SearchableItem {
   title: string;
@@ -13,7 +14,7 @@ export const useSimpleSearch = <T extends SearchableItem>(items: T[]) => {
     if (!searchQuery.trim()) return items;
     
     const searchLower = searchQuery.toLowerCase();
-    if (import.meta.env.DEV) console.log('useSimpleSearch filtering with:', searchLower, 'items count:', items.length);
+    if (import.meta.env.DEV) log('useSimpleSearch filtering with:', searchLower, 'items count:', items.length);
     
     const filtered = items.filter(item => {
       const titleMatch = item.title.toLowerCase().includes(searchLower);
@@ -23,12 +24,12 @@ export const useSimpleSearch = <T extends SearchableItem>(items: T[]) => {
       return titleMatch || excerptMatch || tagMatch;
     });
     
-    if (import.meta.env.DEV) console.log('Filtered result count:', filtered.length);
+    if (import.meta.env.DEV) log('Filtered result count:', filtered.length);
     return filtered;
   }, [items, searchQuery]);
 
   const handleSearchChange = (query: string) => {
-    if (import.meta.env.DEV) console.log('Search query changed to:', query);
+    if (import.meta.env.DEV) log('Search query changed to:', query);
     setSearchQuery(query);
   };
 

@@ -14,8 +14,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { supabase } from '@/integrations/supabase/client';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
-import { logger } from '@/utils/logger';
 import { useAuth } from '@/hooks/useAuth';
+import { log, warn, error as logError } from '@/lib/logger';
 
 // Helper functions for tokenized client-side search
 const tokenize = (q: string) => q.toLowerCase().trim().split(/\s+/).filter(Boolean);
@@ -121,7 +121,7 @@ const SearchResultsPage = () => {
           .select('id,title,slug,tags,image_url,data,is_public')
           .eq('is_public', true)
           .limit(100);
-        if (rErr) logger.warn('recipes cache load error', rErr);
+        if (rErr) warn('recipes cache load error', rErr);
 
         // Load basic blog post data for fallback  
         const { data: posts, error: pErr } = await supabase
@@ -130,7 +130,7 @@ const SearchResultsPage = () => {
           .eq('is_draft', false)
           .not('published_at', 'is', null)
           .limit(100);
-        if (pErr) logger.warn('blog_posts cache load error', pErr);
+        if (pErr) warn('blog_posts cache load error', pErr);
 
         if (!cancelled) {
           setClientCache({
@@ -138,10 +138,10 @@ const SearchResultsPage = () => {
             posts: posts ?? []
           });
           // Log preload telemetry
-          logger.log('preload', { posts: (posts ?? []).length, recipes: (recipes ?? []).length });
+          log('preload', { posts: (posts ?? []).length, recipes: (recipes ?? []).length });
         }
       } catch (e) {
-        logger.error('client cache load failed', e);
+        logError('client cache load failed', e);
       }
     };
     loadClientCache();
@@ -181,7 +181,7 @@ const SearchResultsPage = () => {
           });
 
           if (error) {
-            logger.error('Recipe search RPC error:', error);
+            logError('Recipe search RPC error:', error);
             hasErrors = true;
           } else if (recipes) {
             allResults.push(...recipes.map(recipe => ({
@@ -196,7 +196,7 @@ const SearchResultsPage = () => {
             })));
           }
         } catch (error) {
-          logger.error('Recipe search failed:', error);
+          logError('Recipe search failed:', error);
           hasErrors = true;
         }
       }
@@ -211,7 +211,7 @@ const SearchResultsPage = () => {
           });
 
           if (error) {
-            logger.error('Blog search RPC error:', error);
+            logError('Blog search RPC error:', error);
             hasErrors = true;
           } else if (posts) {
             allResults.push(...posts.map(post => ({
@@ -227,7 +227,7 @@ const SearchResultsPage = () => {
             })));
           }
         } catch (error) {
-          logger.error('Blog search failed:', error);
+          logError('Blog search failed:', error);
           hasErrors = true;
         }
       }
@@ -257,7 +257,7 @@ const SearchResultsPage = () => {
       }
 
       // Log search telemetry
-      logger.log('globalSearch', {
+      log('globalSearch', {
         q: query,
         mergedCount,
         localPosts: clientCache.posts.length,
@@ -299,11 +299,11 @@ const SearchResultsPage = () => {
           }
         }
       } catch (error) {
-        logger.warn('Failed to log search analytics:', error);
+        warn('Failed to log search analytics:', error);
       }
 
     } catch (error) {
-      logger.error('Search error:', error);
+      logError('Search error:', error);
       setResults([]);
       setTotalResults(0);
     } finally {

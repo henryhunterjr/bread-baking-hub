@@ -8,9 +8,9 @@ import { Separator } from '@/components/ui/separator';
 import { useDebounce } from '@/hooks/useDebounce';
 import { supabase } from '@/integrations/supabase/client';
 import { useNavigate } from 'react-router-dom';
-import { logger } from '@/utils/logger';
 import { SafeImage } from '@/components/ui/SafeImage';
 import { useAuth } from '@/hooks/useAuth';
+import { log, warn, error } from '@/lib/logger';
 
 interface SearchSuggestion {
   id: string;
@@ -69,14 +69,14 @@ export const GlobalSearch = ({
           .eq('is_draft', false)
           .not('published_at', 'is', null)
           .limit(250);
-        if (pErr) logger.warn('blog_posts preload error', pErr);
+        if (pErr) warn('blog_posts preload error', pErr);
 
         const { data: recipes, error: rErr } = await supabase
           .from('recipes')
           .select('id,title,slug,tags,image_url,data,is_public')
           .eq('is_public', true)
           .limit(250);
-        if (rErr) logger.warn('recipes preload error', rErr);
+        if (rErr) warn('recipes preload error', rErr);
 
         if (!cancelled) {
           setClientCache({
@@ -84,10 +84,10 @@ export const GlobalSearch = ({
             recipes: recipes ?? []
           });
           // Log preload telemetry
-          logger.log('preload', { posts: (posts ?? []).length, recipes: (recipes ?? []).length });
+          log('preload', { posts: (posts ?? []).length, recipes: (recipes ?? []).length });
         }
       } catch (e) {
-        logger.error('preload failed', e);
+        error('preload failed', e);
       }
     };
     loadCache();
@@ -121,7 +121,7 @@ export const GlobalSearch = ({
           setPopularSearches(queries.slice(0, 5));
         }
       } catch (error) {
-        console.error('Error loading popular searches:', error);
+        error('Error loading popular searches:', error);
       }
     };
 
@@ -229,7 +229,7 @@ export const GlobalSearch = ({
             })));
           }
         } catch (rpcError) {
-          logger.warn('search_recipes RPC failed:', rpcError);
+          warn('search_recipes RPC failed:', rpcError);
         }
 
         try {
@@ -251,7 +251,7 @@ export const GlobalSearch = ({
             })));
           }
         } catch (rpcError) {
-          logger.warn('search_blog_posts RPC failed:', rpcError);
+          warn('search_blog_posts RPC failed:', rpcError);
         }
 
         // Add glossary terms
@@ -269,7 +269,7 @@ export const GlobalSearch = ({
         }
         
         // Log search telemetry
-        logger.log('globalSearch', {
+        log('globalSearch', {
           q: debouncedQuery,
           mergedCount,
           localPosts: clientCache.posts.length,
@@ -279,7 +279,7 @@ export const GlobalSearch = ({
 
         if (!cancelled) setSuggestions(final);
       } catch (error) {
-        logger.error('Search error:', error);
+        error('Search error:', error);
         // Fallback to client search on any error
         if (!cancelled) setSuggestions(clientFilter(debouncedQuery));
       } finally {
@@ -326,7 +326,7 @@ export const GlobalSearch = ({
         }
       }
     } catch (error) {
-      logger.warn('Failed to log search analytics:', error);
+      warn('Failed to log search analytics:', error);
     }
 
     // Navigate to search results page using React Router
@@ -350,7 +350,7 @@ export const GlobalSearch = ({
         }
       }
     } catch (error) {
-      logger.warn('Failed to log click analytics:', error);
+      warn('Failed to log click analytics:', error);
     }
 
     if (onResultClick) {

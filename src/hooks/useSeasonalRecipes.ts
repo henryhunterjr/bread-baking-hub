@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { getRecipeImage } from '@/utils/recipeImageMapping';
+import { log, warn, error } from '@/lib/logger';
 
 export type Season = 'Winter' | 'Spring' | 'Summer' | 'Fall';
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
@@ -99,7 +100,7 @@ export const useSeasonalRecipes = () => {
           .eq('folder', 'Seasonal')
           .order('created_at', { ascending: false });
 
-        if (import.meta.env.DEV) console.log('🔍 SEASONAL RECIPES FETCH DEBUG:', {
+        if (import.meta.env.DEV) log('🔍 SEASONAL RECIPES FETCH DEBUG:', {
           total_count: data?.length || 0,
           error: error,
           sample_recipes: data?.slice(0, 3).map(r => ({ slug: r.slug, title: r.title, image_url: r.image_url }))
@@ -133,7 +134,7 @@ export const useSeasonalRecipes = () => {
                 body: { slugs: dupSlugs }
               });
             } catch (e) {
-              console.warn('Duplicate cleanup invoke failed', e);
+              warn('Duplicate cleanup invoke failed', e);
             }
           }
 

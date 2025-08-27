@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useNetworkStatus } from '@/hooks/useNetworkStatus';
 import { RealtimeChat } from '@/utils/RealtimeAudio';
+import { log, warn, error } from '@/lib/logger';
 import type { VoiceMessage } from '@/types';
 import type { FormattedRecipe } from '@/types/recipe-workspace';
 
@@ -22,18 +23,18 @@ export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: V
   const chatRef = useRef<RealtimeChat | null>(null);
 
   const handleMessage = (message: VoiceMessage | string) => {
-    console.log('Voice interface received message:', message);
+    log('Voice interface received message:', message);
     onMessage?.(message);
   };
 
   const startConversation = async () => {
     setIsLoading(true);
     try {
-      console.log('🎤 Starting voice conversation...');
+      log('🎤 Starting voice conversation...');
       
       // Request microphone permission first
       await navigator.mediaDevices.getUserMedia({ audio: true });
-      console.log('🎤 Microphone access granted');
+      log('🎤 Microphone access granted');
       
       // Create and start the realtime chat
       chatRef.current = new RealtimeChat(handleMessage, onSpeakingChange);
@@ -43,13 +44,13 @@ export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: V
       const testAudio = new AudioContext();
       if (testAudio.state === 'suspended') {
         await testAudio.resume();
-        console.log('🔊 Audio context resumed after user interaction');
+        log('🔊 Audio context resumed after user interaction');
       }
       await testAudio.close();
       
       setIsConnected(true);
       
-      console.log('✅ Voice conversation ready');
+      log('✅ Voice conversation ready');
       toast({
         title: "Connected!",
         description: "Baker's Buddy is ready to chat. Start speaking!",
@@ -62,7 +63,7 @@ export const VoiceInterface = ({ onSpeakingChange, onMessage, recipeContext }: V
         }, 1000);
       }
     } catch (error) {
-      console.error('Error starting conversation:', error);
+      error('Error starting conversation:', error);
       toast({
         title: "Connection Error",
         description: error instanceof Error ? error.message : 'Failed to start voice conversation',
