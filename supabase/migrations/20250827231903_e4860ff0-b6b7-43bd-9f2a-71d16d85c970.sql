@@ -1,0 +1,1 @@
+DELETE FROM recipes WHERE slug = 'pumpkin-sourdough' AND title = 'Pumpkin Sourdough';
