@@ -660,18 +660,21 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                     // Handle both string and object step formats with proper type guards
                     const stepText = typeof step === 'string' 
                       ? step 
-                      : (step && typeof step === 'object' && (step.instruction || step.step)) 
-                        ? (step.instruction || step.step)
+                      : (step && typeof step === 'object') 
+                        ? (step.text || step.instruction || step.step || '')
                         : '';
                     const stepImage = (typeof step === 'object' && step && step.image) ? step.image : null;
+                    const stepName = (typeof step === 'object' && step && step.name) ? step.name : null;
                     
-                    // Enhanced step descriptions for better guidance
-                    const enhancedStep = stepText
-                      .replace(/Mix/g, 'Mix together carefully')
-                      .replace(/Knead/g, 'Knead the dough (fold and push with the heel of your hand)')
-                      .replace(/Rise/g, 'Let the dough rise in a warm, draft-free place')
-                      .replace(/Bake/g, 'Bake in the preheated oven')
-                      .replace(/(\d+)°F/g, '$1°F (ask an adult to help with the oven)');
+                    // Enhanced step descriptions for better guidance - only apply if stepText is a string
+                    const enhancedStep = stepText && typeof stepText === 'string'
+                      ? stepText
+                          .replace(/Mix/g, 'Mix together carefully')
+                          .replace(/Knead/g, 'Knead the dough (fold and push with the heel of your hand)')
+                          .replace(/Rise/g, 'Let the dough rise in a warm, draft-free place')
+                          .replace(/Bake/g, 'Bake in the preheated oven')
+                          .replace(/(\d+)°F/g, '$1°F (ask an adult to help with the oven)')
+                      : stepText;
                     
                     return (
                       <li key={index} className="flex gap-4" role="listitem">
@@ -682,8 +685,8 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                           {index + 1}
                         </span>
                         <div className="flex-1 pt-1">
-                          {typeof step === 'object' && step && step.step && (
-                            <div className="text-sm font-medium text-primary mb-1">{step.step}</div>
+                          {stepName && (
+                            <div className="text-sm font-medium text-primary mb-1">{stepName}</div>
                           )}
                           <div className="text-base leading-relaxed">{enhancedStep}</div>
                           {stepImage && (
@@ -697,17 +700,17 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                               />
                             </div>
                           )}
-                          {stepText.includes('temperature') && (
+                          {stepText && typeof stepText === 'string' && stepText.includes('temperature') && (
                             <div className="mt-2 text-sm text-muted-foreground italic">
                               💡 Tip: Use an oven thermometer to check accuracy
                             </div>
                           )}
-                          {stepText.includes('knead') && (
+                          {stepText && typeof stepText === 'string' && stepText.includes('knead') && (
                             <div className="mt-2 text-sm text-muted-foreground italic">
                               💡 Tip: The dough should feel smooth and elastic when ready
                             </div>
                           )}
-                          {stepText.includes('rise') && (
+                          {stepText && typeof stepText === 'string' && stepText.includes('rise') && (
                             <div className="mt-2 text-sm text-muted-foreground italic">
                               💡 Tip: Dough has risen enough when you can poke it gently and it springs back slowly
                             </div>
