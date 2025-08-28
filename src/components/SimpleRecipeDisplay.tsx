@@ -108,9 +108,30 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
                 <span className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium">
                   {index + 1}
                 </span>
-                <span className="pt-1">
-                  {typeof step === 'string' ? step : step.instruction || step.step || JSON.stringify(step)}
-                </span>
+                <div className="pt-1 flex-1">
+                  {typeof step === 'string' ? (
+                    <span>{step}</span>
+                  ) : (
+                    <div className="space-y-2">
+                      {step.step && (
+                        <h4 className="font-medium text-base">{step.step}</h4>
+                      )}
+                      {step.instruction && (
+                        <p>{step.instruction}</p>
+                      )}
+                      {step.image && (
+                        <div className="mt-3">
+                          <ResponsiveImage
+                            src={step.image}
+                            alt={`Step ${index + 1} illustration`}
+                            className="w-full max-w-md h-48 object-cover rounded-lg"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               </li>
             ))}
           </ol>
