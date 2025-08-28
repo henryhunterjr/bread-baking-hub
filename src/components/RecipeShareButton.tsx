@@ -24,7 +24,7 @@ export const RecipeShareButton = ({
   const { toast } = useToast();
 
   const getRecipeUrl = () => {
-    const baseUrl = window.location.origin;
+    const baseUrl = 'https://bread-baking-hub.vercel.app';
     // Use canonical recipe URL for proper social sharing
     if (recipe.slug) {
       return `${baseUrl}/recipes/${recipe.slug}`;

@@ -8,13 +8,13 @@ export interface ShareableRecipe {
 }
 
 export const shareRecipe = async (recipe: ShareableRecipe) => {
-  const baseUrl = window.location.origin;
+  const baseUrl = 'https://bread-baking-hub.vercel.app';
   const recipeUrl = recipe.slug 
     ? `${baseUrl}/recipes/${recipe.slug}` 
-    : `${baseUrl}/recipe/${recipe.id}`;
+    : `${baseUrl}/recipes/${recipe.id}`;
     
-  const subject = `${recipe.title} – Baking Great Bread`;
-  const body = `I thought you might enjoy this recipe from Baking Great Bread:\n\n${recipe.title}\n\n${recipe.description || 'A wonderful bread recipe to try!'}\n\nView the recipe: ${recipeUrl}`;
+  const subject = `Recipe: ${recipe.title}`;
+  const body = `I found this fantastic fall recipe!\n\nCheck out the ${recipe.title} here: ${recipeUrl}`;
 
   // Try native share first (mobile devices)
   if (navigator.share && navigator.canShare) {

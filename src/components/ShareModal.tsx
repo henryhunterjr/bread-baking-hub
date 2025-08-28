@@ -50,7 +50,20 @@ export const ShareModal = ({ isOpen, onClose, title, url, description }: ShareMo
     const body = `I found this fantastic fall recipe!\n\nCheck out the ${title} here: ${url}`;
     const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
-    openEmailClient(mailtoUrl);
+    try {
+      window.location.href = mailtoUrl;
+      toast({
+        title: "Email client opened",
+        description: "Your email client should open with the recipe details."
+      });
+    } catch (error) {
+      console.error('Email share failed:', error);
+      toast({
+        title: "Email failed", 
+        description: "Please copy the link manually and share via email.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleFacebookShare = () => {

@@ -67,8 +67,6 @@ const RecipePrint = React.lazy(() => import("./pages/print/RecipePrint"));
 const Help = React.lazy(() => import("./pages/Help"));
 const MyRecipeLibrary = React.lazy(() => import("./pages/MyRecipeLibrary"));
 const PasswordReset = React.lazy(() => import("./pages/PasswordReset"));
-const PumpkinSourdoughRecipe = React.lazy(() => import("./pages/PumpkinSourdoughRecipe"));
-const PumpkinSourdoughPrint = React.lazy(() => import("./pages/print/PumpkinSourdoughPrint"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -136,13 +134,17 @@ function App() {
                     <Route path="/troubleshooting" element={<TroubleshootingPage />} />
                     <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
                     <Route path="/legal" element={<Legal />} />
-                     <Route path="/recipes/pumpkin-shaped-sourdough-loaf" element={<PumpkinSourdoughRecipe />} />
-                     <Route path="/r/pumpkin-shaped-sourdough-loaf" element={<PumpkinSourdoughRecipe />} />
+                     {/* Legacy static pumpkin route - redirect to database version */}
+                     <Route path="/pumpkin-shaped-sourdough-loaf" element={<Navigate to="/recipes/pumpkin-shaped-sourdough-loaf" replace />} />
+                     
+                     {/* Database-driven public recipes */}
                      <Route path="/recipes/:slug" element={<PublicRecipe />} />
-                     <Route path="/r/:slug" element={<PublicRecipe />} />
-                      <Route path="/recipe/:slug" element={<RecipeRedirect />} />
-                      <Route path="/print/recipe/pumpkin-shaped-sourdough-loaf" element={<PumpkinSourdoughPrint />} />
-                      <Route path="/print/recipe/:slug" element={<RecipePrint />} />
+                     <Route path="/r/:slug" element={<RecipeRedirect />} />
+                     <Route path="/recipe/:slug" element={<RecipeRedirect />} />
+                     
+                     {/* Print routes */}
+                     <Route path="/print/:slug" element={<RecipePrint />} />
+                     <Route path="/print/recipe/:slug" element={<RecipePrint />} />
                      <Route path="/help" element={<Help />} />
                     <Route path="/feed.xml" element={<FeedRedirect />} />
                     <Route path="/sitemap.xml" element={<SitemapRedirect />} />

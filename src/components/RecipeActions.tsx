@@ -38,6 +38,17 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
   const [shareUrl, setShareUrl] = useState('');
 
   const handlePrint = () => {
+    // Use dedicated print page if recipe has a slug
+    if (recipe.slug) {
+      window.open(`/print/${recipe.slug}`, '_blank', 'noopener');
+      toast({
+        title: "Print Page Opened",
+        description: "Print page opened in new tab",
+      });
+      return;
+    }
+
+    // Fallback to inline print for recipes without slugs
     const printContent = generatePrintableHTML(recipe);
 
     // Try popup window first
@@ -107,18 +118,9 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
     };
 
     try {
-      // Use the new print route for better PDF generation
-      if (recipe.slug === 'pumpkin-shaped-sourdough-loaf') {
-        const printUrl = `/print/recipe/pumpkin-shaped-sourdough-loaf`;
-        window.open(printUrl, '_blank', 'noopener');
-        toast({ 
-          title: 'PDF Ready', 
-          description: 'Print page opened. Use your browser\'s print-to-PDF feature.' 
-        });
-        setIsGeneratingPDF(false);
-        return;
-      } else if (recipe.slug) {
-        const printUrl = `/print/recipe/${recipe.slug}`;
+      // Use the print route for better PDF generation
+      if (recipe.slug) {
+        const printUrl = `/print/${recipe.slug}`;
         window.open(printUrl, '_blank', 'noopener');
         toast({ 
           title: 'PDF Ready', 
@@ -161,8 +163,9 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
 
   const handleEmailRecipe = async () => {
     const subject = `Recipe: ${recipe.title}`;
-    const recipeUrl = recipe.slug === 'pumpkin-shaped-sourdough-loaf' 
-      ? `${window.location.origin}/recipes/pumpkin-shaped-sourdough-loaf`
+    const baseUrl = 'https://bread-baking-hub.vercel.app';
+    const recipeUrl = recipe.slug 
+      ? `${baseUrl}/recipes/${recipe.slug}`
       : window.location.href;
     const bodyText = `I found this fantastic fall recipe!\n\nCheck out the ${recipe.title} here: ${recipeUrl}`;
     const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
@@ -187,10 +190,10 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
 
   const handleShare = async () => {
     // Generate the correct URL for the individual recipe page
-    const baseUrl = window.location.origin;
-    const recipeUrl = recipe.slug === 'pumpkin-shaped-sourdough-loaf' 
-      ? `${baseUrl}/recipes/pumpkin-shaped-sourdough-loaf`
-      : recipe.slug ? `${baseUrl}/recipes/${recipe.slug}` : window.location.href;
+    const baseUrl = 'https://bread-baking-hub.vercel.app';
+    const recipeUrl = recipe.slug 
+      ? `${baseUrl}/recipes/${recipe.slug}` 
+      : window.location.href;
     
     setShareUrl(recipeUrl);
     setShowShareModal(true);
