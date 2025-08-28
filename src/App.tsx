@@ -126,8 +126,9 @@ function App() {
                     <Route path="/my-favorites" element={<MyFavorites />} />
                     <Route path="/my-reviews" element={<MyReviews />} />
                     <Route path="/password-reset" element={<PasswordReset />} />
-                    <Route path="/blog" element={<Blog />} />
-                    <Route path="/about" element={<About />} />
+                     <Route path="/blog" element={<Blog />} />
+                     <Route path="/blog/:slug" element={<BlogPost />} />
+                     <Route path="/about" element={<About />} />
                     <Route path="/books" element={<Books />} />
                     <Route path="/recipes" element={<Recipes />} />
                     <Route path="/vitale-starter" element={<VitaleStarter />} />
