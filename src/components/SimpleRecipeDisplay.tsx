@@ -103,12 +103,14 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
         <div>
           <h3 className="text-xl font-semibold mb-4">Instructions</h3>
           <ol className="space-y-4">
-            {recipe.method.map((step: string, index: number) => (
+            {recipe.method.map((step: any, index: number) => (
               <li key={index} className="flex gap-3">
                 <span className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium">
                   {index + 1}
                 </span>
-                <span className="pt-1">{step}</span>
+                <span className="pt-1">
+                  {typeof step === 'string' ? step : step.instruction || step.step || JSON.stringify(step)}
+                </span>
               </li>
             ))}
           </ol>

@@ -293,9 +293,17 @@ const RecipePrint = () => {
         fontSize: '12px',
         color: '#666'
       }}>
-        <p style={{ margin: '0' }}>
+        <p style={{ margin: '0 0 10px 0' }}>
           Recipe from <strong>Baking Great Bread</strong> by Henry Hunter<br />
           Visit us at bread-baking-hub.vercel.app for more great recipes
+        </p>
+        <p style={{ margin: '0', fontSize: '10px' }}>
+          <a 
+            href={`https://bread-baking-hub.vercel.app/recipes/${recipe.slug}`}
+            style={{ color: '#2D5016', textDecoration: 'none' }}
+          >
+            View recipe online: https://bread-baking-hub.vercel.app/recipes/{recipe.slug}
+          </a>
         </p>
       </div>
     </div>

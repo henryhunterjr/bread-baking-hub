@@ -59,7 +59,7 @@ const PublicRecipe = () => {
         <meta property="og:url" content={`https://bread-baking-hub.vercel.app/recipes/${slug}`} />
         <meta property="og:title" content={recipe.title} />
         <meta property="og:description" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Festive pumpkin sourdough tied with twine and finished with a cinnamon stick stem.' : ((recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`)} />
-        <meta property="og:image" content={recipe.image_url || 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/default-recipe.jpg'} />
+        <meta property="og:image" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/pumpkin-shaped-sourdough-loaf/harvest-is-near-1200-x-675-px.png' : (recipe.image_url || 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/default-recipe.jpg')} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? '675' : '630'} />
         <meta property="og:image:alt" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Two golden sourdough loaves on a wooden board, with a sprig of fresh rosemary and a rustic kitchen towel in the background.' : `${recipe.title} recipe cover image`} />
@@ -71,7 +71,7 @@ const PublicRecipe = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={recipe.title} />
         <meta name="twitter:description" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Festive pumpkin sourdough tied with twine and finished with a cinnamon stick stem.' : ((recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`)} />
-        <meta name="twitter:image" content={recipe.image_url || 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/default-recipe.jpg'} />
+        <meta name="twitter:image" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/pumpkin-shaped-sourdough-loaf/harvest-is-near-1200-x-675-px.png' : (recipe.image_url || 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/default-recipe.jpg')} />
         <meta name="twitter:image:alt" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Two golden sourdough loaves on a wooden board, with a sprig of fresh rosemary and a rustic kitchen towel in the background.' : `${recipe.title} recipe cover image`} />
         <script type="application/ld+json">
           {JSON.stringify({
