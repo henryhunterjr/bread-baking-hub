@@ -102,11 +102,8 @@ const Recipes = () => {
         </div>
 
         {/* Content Below Hero */}
-        <div className="bg-background py-12">
+        <div className="bg-background py-8">
           <div className="max-w-4xl mx-auto px-4 text-center">
-            <div className="inline-block bg-amber-100 text-amber-800 px-4 py-2 rounded-full text-sm font-medium mb-6">
-              Coming December 25th
-            </div>
             <h1 className="text-4xl font-bold text-foreground mb-6">
               Sourdough for the Rest of Us
             </h1>
