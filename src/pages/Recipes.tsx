@@ -91,47 +91,42 @@ const Recipes = () => {
       </Helmet>
       
       <main id="main-content" role="main" tabIndex={-1}>
-        {/* Hero Section with Book Card */}
+        {/* Hero Section */}
         <div className="relative h-[600px] overflow-hidden">
           <ResponsiveImage 
             src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/sourdough-for-the-rest-of-us/sound-note-for-the-rest-of-us-1200-x-675-px-1200-x-675-px-1200-x-400-px.png"
             alt="Sourdough for the Rest of Us"
-            className="w-full h-full object-cover object-right"
+            className="w-full h-full object-cover"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
-          
-          {/* Book Description Card */}
-          <div className="absolute left-8 top-1/2 transform -translate-y-1/2 max-w-md">
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl">
-              <div className="text-center mb-4">
-                <div className="inline-block bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium mb-3">
-                  Coming December 25th
-                </div>
-              </div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                Sourdough for the Rest of Us
-              </h1>
-              <p className="text-lg text-gray-700 mb-4">
-                Skip the intimidation. This isn't about perfect Instagram loaves or complex schedules that don't fit real life.
-              </p>
-              <p className="text-lg text-gray-700 mb-4">
-                No fancy equipment. No rigid timelines. Just practical techniques that turn flour, water, and time into something your family will ask for again and again.
-              </p>
-              <div className="border-t pt-4">
-                <p className="text-lg font-medium text-gray-900 mb-4">
-                  Ready to make sourdough work for you?
-                </p>
-                <a 
-                  href="https://a.co/d/i5p2huV"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200"
-                >
-                  Get Your Copy
-                </a>
-              </div>
+        </div>
+
+        {/* Content Below Hero */}
+        <div className="bg-background py-12">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <div className="inline-block bg-amber-100 text-amber-800 px-4 py-2 rounded-full text-sm font-medium mb-6">
+              Coming December 25th
             </div>
+            <h1 className="text-4xl font-bold text-foreground mb-6">
+              Sourdough for the Rest of Us
+            </h1>
+            <p className="text-xl text-muted-foreground mb-4 max-w-3xl mx-auto">
+              Skip the intimidation. This isn't about perfect Instagram loaves or complex schedules that don't fit real life.
+            </p>
+            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+              No fancy equipment. No rigid timelines. Just practical techniques that turn flour, water, and time into something your family will ask for again and again.
+            </p>
+            <p className="text-2xl font-semibold text-foreground mb-8">
+              Ready to make sourdough work for you?
+            </p>
+            <a 
+              href="https://a.co/d/i5p2huV"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-200 text-lg"
+            >
+              Get Your Copy
+            </a>
           </div>
         </div>
 
