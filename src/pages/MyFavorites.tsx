@@ -77,7 +77,7 @@ const MyFavorites = () => {
                     )}
                     {it.recipe?.slug && (
                       <Button asChild variant="outline">
-                        <a href={`/r/${it.recipe.slug}`}>Open Recipe</a>
+                        <a href={`/recipes/${it.recipe.slug}`}>Open Recipe</a>
                       </Button>
                     )}
                   </CardContent>

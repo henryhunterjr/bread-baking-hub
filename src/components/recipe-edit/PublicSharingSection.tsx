@@ -71,7 +71,7 @@ export const PublicSharingSection = ({
   const copyToClipboard = async () => {
     if (!slug) return;
     
-    const url = `${window.location.origin}/r/${slug}`;
+    const url = `${window.location.origin}/recipes/${slug}`;
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
@@ -89,7 +89,7 @@ export const PublicSharingSection = ({
     }
   };
 
-  const shareUrl = slug ? `${window.location.origin}/r/${slug}` : '';
+  const shareUrl = slug ? `${window.location.origin}/recipes/${slug}` : '';
 
   return (
     <Collapsible open={isOpen} onOpenChange={onToggle}>

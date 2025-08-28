@@ -38,7 +38,7 @@ export const generateSitemap = async (): Promise<string> => {
     if (publicRecipes) {
       publicRecipes.forEach(recipe => {
         entries.push({
-          url: `/r/${recipe.slug}`,
+          url: `/recipes/${recipe.slug}`,
           lastmod: recipe.created_at,
           changefreq: 'monthly',
           priority: 0.6

@@ -78,7 +78,7 @@ const MyReviews = () => {
                       <SafeImage src={it.photo_url} alt={`Review photo for ${it.recipe?.title || 'recipe'}`} width={320} height={200} fit="cover" className="h-40 w-auto rounded" />
                     )}
                     {it.recipe?.slug && (
-                      <a href={`/r/${it.recipe.slug}`} className="text-primary underline text-sm">Open Recipe →</a>
+                      <a href={`/recipes/${it.recipe.slug}`} className="text-primary underline text-sm">Open Recipe →</a>
                     )}
                     <p className="text-xs text-muted-foreground">{new Date(it.created_at).toLocaleString()}</p>
                   </CardContent>

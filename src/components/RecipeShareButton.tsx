@@ -27,9 +27,9 @@ export const RecipeShareButton = ({
     const baseUrl = window.location.origin;
     // Use canonical recipe URL for proper social sharing
     if (recipe.slug) {
-      return `${baseUrl}/r/${recipe.slug}`;
+      return `${baseUrl}/recipes/${recipe.slug}`;
     }
-    return `${baseUrl}/r/${recipe.id}`;
+    return `${baseUrl}/recipes/${recipe.id}`;
   };
 
   const handleShare = async () => {

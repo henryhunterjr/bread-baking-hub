@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Printer, Download, Mail, Share } from 'lucide-react';
+import { ShareModal } from '@/components/ShareModal';
 import html2pdf from 'html2pdf.js';
 
 type PrintableRecipeData = {
@@ -33,6 +34,8 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
   const [showEmailFallback, setShowEmailFallback] = useState(false);
   const [mailtoHref, setMailtoHref] = useState('');
   const [emailContent, setEmailContent] = useState('');
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareUrl, setShareUrl] = useState('');
 
   const handlePrint = () => {
     const printContent = generatePrintableHTML(recipe);
@@ -158,66 +161,39 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
 
   const handleEmailRecipe = async () => {
     const subject = `Recipe: ${recipe.title}`;
-    const bodyText = generateEmailBody(recipe);
+    const recipeUrl = recipe.slug === 'pumpkin-shaped-sourdough-loaf' 
+      ? `${window.location.origin}/recipes/pumpkin-shaped-sourdough-loaf`
+      : window.location.href;
+    const bodyText = `I found this fantastic fall recipe!\n\nCheck out the ${recipe.title} here: ${recipeUrl}`;
     const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
 
-    if (navigator.share && typeof navigator.share === 'function') {
-      try {
-        await navigator.share({ title: recipe.title, text: bodyText, url: window.location.href });
-        return;
-      } catch (_) {
-        // fall through to fallback UI
-      }
+    // Try opening email client directly
+    try {
+      window.open(mailtoLink, '_self');
+      toast({ 
+        title: 'Email Recipe', 
+        description: 'Your email client should open with the recipe details.' 
+      });
+      return;
+    } catch (error) {
+      console.error('Email client failed:', error);
     }
 
+    // Fallback UI if email client doesn't work
     setMailtoHref(mailtoLink);
     setEmailContent(bodyText);
     setShowEmailFallback(true);
-
-    try {
-      await navigator.clipboard.writeText(bodyText);
-      toast({ title: 'Copied!', description: 'Email content copied. Paste into your mail app.' });
-    } catch (err) {
-      // ignore
-    }
   };
 
   const handleShare = async () => {
     // Generate the correct URL for the individual recipe page
     const baseUrl = window.location.origin;
-    const recipeUrl = recipe.slug ? `${baseUrl}/recipes/${recipe.slug}` : window.location.href;
+    const recipeUrl = recipe.slug === 'pumpkin-shaped-sourdough-loaf' 
+      ? `${baseUrl}/recipes/pumpkin-shaped-sourdough-loaf`
+      : recipe.slug ? `${baseUrl}/recipes/${recipe.slug}` : window.location.href;
     
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: recipe.title,
-          text: `Check out this recipe: ${recipe.title}`,
-          url: recipeUrl,
-        });
-        
-        toast({
-          title: "Recipe Shared",
-          description: "Recipe shared successfully",
-        });
-      } catch (error) {
-        // User cancelled sharing
-      }
-    } else {
-      // Fallback to clipboard
-      try {
-        await navigator.clipboard.writeText(recipeUrl);
-        toast({
-          title: "Link Copied",  
-          description: "Recipe link copied to clipboard",
-        });
-      } catch (error) {
-        toast({
-          title: "Share Error",
-          description: "Unable to share recipe link",
-          variant: "destructive",
-        });
-      }
-    }
+    setShareUrl(recipeUrl);
+    setShowShareModal(true);
   };
 
   return (
@@ -272,6 +248,14 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
           </div>
         </div>
       )}
+      
+      <ShareModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        title={recipe.title}
+        url={shareUrl}
+        description="Festive pumpkin sourdough tied with twine and finished with a cinnamon stick stem."
+      />
     </div>
   );
 };

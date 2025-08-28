@@ -52,11 +52,11 @@ const PublicRecipe = () => {
       <Helmet>
         <title>{`${recipe.title} | Baking Great Bread`}</title>
         <meta name="description" content={(recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`} />
-        <link rel="canonical" href={`https://bread-baking-hub.vercel.app/r/${slug}`} />
+        <link rel="canonical" href={`https://bread-baking-hub.vercel.app/recipes/${slug}`} />
         
         {/* Open Graph for social sharing */}
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://bread-baking-hub.vercel.app/r/${slug}`} />
+        <meta property="og:url" content={`https://bread-baking-hub.vercel.app/recipes/${slug}`} />
         <meta property="og:title" content={`${recipe.title} | Baking Great Bread`} />
         <meta property="og:description" content={(recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`} />
         <meta property="og:image" content={recipe.image_url || 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/default-recipe.jpg'} />

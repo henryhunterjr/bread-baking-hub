@@ -108,16 +108,20 @@ export default function PumpkinSourdoughRecipe() {
         {/* Open Graph */}
         <meta property="og:type" content="article" />
         <meta property="og:title" content={recipeData.title} />
-        <meta property="og:description" content={recipeData.description} />
-        <meta property="og:image" content={socialImage} />
+        <meta property="og:description" content="Festive pumpkin sourdough tied with twine and finished with a cinnamon stick stem." />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/pumpkin-shaped-sourdough-loaf/harvest-is-near-1200-x-675-px.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="675" />
+        <meta property="og:image:alt" content="Pumpkin Shaped Sourdough Loaf recipe" />
         <meta property="og:url" content="https://bread-baking-hub.vercel.app/recipes/pumpkin-shaped-sourdough-loaf" />
-        <meta property="og:site_name" content="Baking Great Bread" />
+        <meta property="og:site_name" content="Baking Great Bread at Home" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={recipeData.title} />
-        <meta name="twitter:description" content="Tie it, bake it, crown it. The perfect fall showstopper." />
-        <meta name="twitter:image" content={socialImage} />
+        <meta name="twitter:description" content="Festive pumpkin sourdough tied with twine and finished with a cinnamon stick stem." />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/pumpkin-shaped-sourdough-loaf/harvest-is-near-1200-x-675-px.png" />
+        <meta name="twitter:image:alt" content="Pumpkin Shaped Sourdough Loaf recipe" />
         
         {/* JSON-LD Structured Data */}
         <script type="application/ld+json">

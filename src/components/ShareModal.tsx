@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Copy, Mail, Share2, Check, QrCode } from 'lucide-react';
+import { Copy, Mail, Share2, Check, QrCode, MessageCircle } from 'lucide-react';
 import { copyToClipboard, openEmailClient } from '@/utils/shareRecipe';
 
 interface ShareModalProps {
@@ -46,11 +46,21 @@ export const ShareModal = ({ isOpen, onClose, title, url, description }: ShareMo
   };
 
   const handleEmailShare = () => {
-    const subject = `${title} – Baking Great Bread`;
-    const body = `I thought you might be interested in this recipe:\n\n${title}\n\n${description || ''}\n\nView the recipe: ${url}`;
+    const subject = `Recipe: ${title}`;
+    const body = `I found this fantastic fall recipe!\n\nCheck out the ${title} here: ${url}`;
     const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
     openEmailClient(mailtoUrl);
+  };
+
+  const handleFacebookShare = () => {
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+    window.open(facebookUrl, '_blank', 'width=600,height=400');
+  };
+
+  const handleMessengerShare = () => {
+    const messengerUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(url)}&app_id=YOUR_APP_ID&redirect_uri=${encodeURIComponent(url)}`;
+    window.open(messengerUrl, '_blank', 'width=600,height=400');
   };
 
   const generateQRCode = () => {
@@ -84,6 +94,7 @@ export const ShareModal = ({ isOpen, onClose, title, url, description }: ShareMo
               size="sm"
               onClick={handleCopyLink}
               className="shrink-0"
+              aria-label={copied ? "Link copied" : "Copy link to clipboard"}
             >
               {copied ? (
                 <Check className="w-4 h-4" />
@@ -95,28 +106,55 @@ export const ShareModal = ({ isOpen, onClose, title, url, description }: ShareMo
 
           {/* Share Options */}
           <div className="grid grid-cols-1 gap-3">
-            <Button 
-              onClick={handleNativeShare} 
-              variant="outline" 
-              className="w-full justify-start"
-            >
-              <Share2 className="w-4 h-4 mr-2" />
-              {navigator.share ? 'Share' : 'Copy Link'}
-            </Button>
+            {navigator.share ? (
+              <Button 
+                onClick={handleNativeShare} 
+                variant="outline" 
+                className="w-full justify-start"
+                aria-label="Share recipe using device's share feature"
+              >
+                <Share2 className="w-4 h-4 mr-2" />
+                Share
+              </Button>
+            ) : (
+              <>
+                <Button 
+                  onClick={handleFacebookShare} 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  aria-label="Share recipe on Facebook"
+                >
+                  <Share2 className="w-4 h-4 mr-2" />
+                  Share on Facebook
+                </Button>
+                
+                <Button 
+                  onClick={handleMessengerShare} 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  aria-label="Share recipe on Messenger"
+                >
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Share on Messenger
+                </Button>
+              </>
+            )}
             
             <Button 
               onClick={handleEmailShare} 
               variant="outline" 
               className="w-full justify-start"
+              aria-label="Email recipe to someone"
             >
               <Mail className="w-4 h-4 mr-2" />
-              Share via Email
+              Email Recipe
             </Button>
 
             <Button 
               onClick={generateQRCode} 
               variant="outline" 
               className="w-full justify-start"
+              aria-label="Generate QR code for recipe URL"
             >
               <QrCode className="w-4 h-4 mr-2" />
               Generate QR Code

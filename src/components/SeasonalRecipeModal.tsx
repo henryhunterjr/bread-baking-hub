@@ -518,7 +518,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                 {recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? (
                   <div className="flex flex-wrap gap-2 w-full">
                     <Button 
-                      onClick={() => window.open('/r/pumpkin-shaped-sourdough-loaf', '_blank')}
+                      onClick={() => window.open('/recipes/pumpkin-shaped-sourdough-loaf', '_blank')}
                       variant="hero"
                       className="flex-1 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-slate-900 font-semibold shadow-lg hover:shadow-amber-500/25 transition-all duration-300"
                     >
@@ -839,7 +839,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
               {recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? (
                 <div className="flex gap-2 w-full">
                   <Button 
-                    onClick={() => window.open('/r/pumpkin-shaped-sourdough-loaf', '_blank')}
+                    onClick={() => window.open('/recipes/pumpkin-shaped-sourdough-loaf', '_blank')}
                     variant="hero"
                     className="flex-1 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-slate-900 font-semibold shadow-lg hover:shadow-amber-500/25 transition-all duration-300"
                   >
