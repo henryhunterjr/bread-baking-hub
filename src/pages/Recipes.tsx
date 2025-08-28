@@ -132,11 +132,12 @@ const Recipes = () => {
 
         <div className="max-w-7xl mx-auto px-4 py-8">
           {/* Find Your Perfect Recipe Search */}
-          <motion.div
+          <div className="border-t border-border/50 pt-8">
+            <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-12"
+            className="mb-8"
           >
             <SeasonalFilters
               searchQuery={searchQuery}
@@ -149,7 +150,8 @@ const Recipes = () => {
               onDifficultyChange={setSelectedDifficulty}
               resultCount={recipes.length}
             />
-          </motion.div>
+            </motion.div>
+          </div>
           {/* Featured Recipes Section */}
           {!loading && featuredRecipes.length > 0 && (
             <FeaturedRecipes 
