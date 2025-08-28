@@ -56,7 +56,7 @@ const PublicRecipe = () => {
         
         {/* Open Graph for social sharing */}
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://bread-baking-hub.vercel.app/recipes/${slug}`} />
+        <meta property="og:url" content={`https://bread-baking-hub.vercel.app/recipes/${slug}?v=2`} />
         <meta property="og:title" content={recipe.title} />
         <meta property="og:description" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Festive pumpkin sourdough tied with twine and finished with a cinnamon stick stem.' : ((recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`)} />
         <meta property="og:image" content={(recipe.data as any)?.social_image_url || recipe.image_url || 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/default-recipe.jpg'} />
