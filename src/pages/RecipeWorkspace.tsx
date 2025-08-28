@@ -69,14 +69,19 @@ const RecipeWorkspace = () => {
           <WorkflowProgress 
             currentStep={workspace.currentStep} 
             onStepClick={(step) => {
-              // Allow navigation to previous steps or current step
               const steps: ('upload' | 'review' | 'edit' | 'save')[] = ['upload', 'review', 'edit', 'save'];
               const currentIndex = steps.indexOf(workspace.currentStep);
               const targetIndex = steps.indexOf(step);
               
               if (targetIndex <= currentIndex) {
-                // Enable step navigation logic here if needed
-                console.log(`Navigate to step: ${step}`);
+                // Navigate to the selected step
+                if (step === 'upload') {
+                  workspace.handleStartOver();
+                } else if (step === 'review' && workspace.formattedRecipe) {
+                  workspace.setIsEditMode(false);
+                } else if (step === 'edit' && workspace.formattedRecipe) {
+                  workspace.setIsEditMode(true);
+                }
               }
             }}
           />

@@ -191,5 +191,6 @@ export const useRecipeWorkspace = () => {
     setIsSpeaking,
     setIsProcessing,
     setWorkspaceState,
+    setIsEditMode,
   };
 };

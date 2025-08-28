@@ -366,7 +366,7 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
                       type="file"
                       accept="image/jpeg,image/jpg,image/png,application/pdf"
                       onChange={handleFileChange}
-                      className="cursor-pointer touch-manipulation file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+                      className="cursor-pointer touch-manipulation file:mr-2 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-base file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 file:min-w-[140px] h-12"
                       disabled={isLoading}
                     />
                   </div>
