@@ -58,7 +58,7 @@ export const SeasonalFilters = ({
               <X className="w-5 h-5" />
             </Button>}
         </div>
-        <div className="mt-3 text-xs text-muted-foreground text-center">
+        <div className="mt-3 text-sm font-medium text-amber-100 text-center">
           Try searching for "cinnamon", "sourdough", "whole wheat", or "holiday bread"
         </div>
       </div>
