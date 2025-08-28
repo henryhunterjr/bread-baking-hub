@@ -127,6 +127,12 @@ export const RecommendedProductsSection = ({
                     placeholder="Search available products..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && availableProducts.length > 0) {
+                        onQuickAdd(availableProducts[0].id);
+                        setSearchTerm('');
+                      }
+                    }}
                     className="w-full"
                   />
                   

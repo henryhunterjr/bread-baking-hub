@@ -28,7 +28,7 @@ export const RecipeQuickAccessDrawer = ({ onRecipeSelect }: RecipeQuickAccessDra
           <SheetTrigger asChild>
             <Button
               variant="outline"
-              className="w-full bg-background/95 backdrop-blur-sm shadow-warm touch-manipulation"
+              className="w-full bg-primary/20 text-primary border-primary/30 backdrop-blur-sm shadow-warm touch-manipulation hover:bg-primary/30 hover:text-primary transition-all"
             >
               <Clock className="h-4 w-4 mr-2" />
               Recent Recipes ({recentRecipes.length})

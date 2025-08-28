@@ -1,9 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Upload, ChefHat, Edit, Save } from 'lucide-react';
 import { WorkspaceStep } from '@/types/recipe-workspace';
 
 interface WorkflowProgressProps {
   currentStep: WorkspaceStep;
+  onStepClick?: (step: WorkspaceStep) => void;
 }
 
 const getStepIcon = (step: WorkspaceStep) => {
@@ -24,8 +26,14 @@ const getStepTitle = (step: WorkspaceStep) => {
   }
 };
 
-export const WorkflowProgress = ({ currentStep }: WorkflowProgressProps) => {
+export const WorkflowProgress = ({ currentStep, onStepClick }: WorkflowProgressProps) => {
   const steps: WorkspaceStep[] = ['upload', 'review', 'edit', 'save'];
+
+  const isStepAccessible = (step: WorkspaceStep): boolean => {
+    const currentIndex = steps.indexOf(currentStep);
+    const stepIndex = steps.indexOf(step);
+    return stepIndex <= currentIndex;
+  };
 
   return (
     <Card className="shadow-warm">
@@ -34,24 +42,35 @@ export const WorkflowProgress = ({ currentStep }: WorkflowProgressProps) => {
       </CardHeader>
       <CardContent>
         <div className="flex justify-between items-center">
-          {steps.map((step, index) => (
-            <div key={step} className="flex flex-col items-center">
-              <div className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-colors ${
-                currentStep === step 
-                  ? 'bg-primary text-primary-foreground border-primary' 
-                  : index < steps.indexOf(currentStep)
-                  ? 'bg-primary/20 text-primary border-primary'
-                  : 'bg-muted text-muted-foreground border-muted-foreground'
-              }`}>
-                {getStepIcon(step)}
+          {steps.map((step, index) => {
+            const isActive = currentStep === step;
+            const isCompleted = index < steps.indexOf(currentStep);
+            const isAccessible = isStepAccessible(step);
+
+            return (
+              <div key={step} className="flex flex-col items-center">
+                <Button
+                  variant="ghost"
+                  disabled={!isAccessible || !onStepClick}
+                  onClick={() => isAccessible && onStepClick?.(step)}
+                  className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-colors p-0 hover:scale-105 ${
+                    isActive
+                      ? 'bg-primary text-primary-foreground border-primary hover:bg-primary/90' 
+                      : isCompleted
+                      ? 'bg-primary/20 text-primary border-primary hover:bg-primary/30'
+                      : 'bg-muted text-muted-foreground border-muted-foreground hover:bg-muted/80'
+                  } ${isAccessible && onStepClick ? 'cursor-pointer' : 'cursor-default'}`}
+                >
+                  {getStepIcon(step)}
+                </Button>
+                <span className={`text-sm mt-2 font-medium ${
+                  isActive ? 'text-primary' : 'text-muted-foreground'
+                }`}>
+                  {getStepTitle(step)}
+                </span>
               </div>
-              <span className={`text-sm mt-2 font-medium ${
-                currentStep === step ? 'text-primary' : 'text-muted-foreground'
-              }`}>
-                {getStepTitle(step)}
-              </span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </CardContent>
     </Card>

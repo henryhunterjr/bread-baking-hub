@@ -66,7 +66,20 @@ const RecipeWorkspace = () => {
           />
 
           {/* Progress Steps */}
-          <WorkflowProgress currentStep={workspace.currentStep} />
+          <WorkflowProgress 
+            currentStep={workspace.currentStep} 
+            onStepClick={(step) => {
+              // Allow navigation to previous steps or current step
+              const steps: ('upload' | 'review' | 'edit' | 'save')[] = ['upload', 'review', 'edit', 'save'];
+              const currentIndex = steps.indexOf(workspace.currentStep);
+              const targetIndex = steps.indexOf(step);
+              
+              if (targetIndex <= currentIndex) {
+                // Enable step navigation logic here if needed
+                console.log(`Navigate to step: ${step}`);
+              }
+            }}
+          />
 
           {/* Upload Section */}
           {workspace.currentStep === 'upload' && (
@@ -93,6 +106,13 @@ const RecipeWorkspace = () => {
             />
           )}
 
+          {/* Quick Access Drawer - Moved up from footer */}
+          {user && (
+            <div className="mt-8">
+              <RecipeQuickAccessDrawer onRecipeSelect={workspace.handleRecipeSelect} />
+            </div>
+          )}
+
           {/* Success State */}
           {workspace.currentStep === 'save' && (
             <WorkspaceSuccessState onStartOver={workspace.handleStartOver} />
@@ -101,12 +121,6 @@ const RecipeWorkspace = () => {
       </main>
       
       <Footer />
-      
-      
-      {/* Quick Access Drawer */}
-      {user && (
-        <RecipeQuickAccessDrawer onRecipeSelect={workspace.handleRecipeSelect} />
-      )}
       
       {/* Krusty AI Assistant */}
       <Suspense fallback={null}>
