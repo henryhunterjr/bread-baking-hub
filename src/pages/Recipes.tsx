@@ -67,14 +67,14 @@ const Recipes = () => {
     <div className="bg-background text-foreground min-h-screen">
       <Header />
       <Helmet>
-        <title>Recipes | Baking Great Bread at Home</title>
-        <meta name="description" content="Discover our collection of tried and true bread recipes, from classic sourdough to seasonal specialties. Perfect for home bakers of all skill levels." />
+        <title>Recipes | Sourdough for the Rest of Us</title>
+        <meta name="description" content="Skip the intimidation. Practical sourdough techniques that turn flour, water, and time into something your family will ask for again and again." />
         <link rel="canonical" href="https://the-bakers-bench.lovable.app/recipes" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Recipes | Baking Great Bread at Home" />
-        <meta property="og:description" content="Discover our collection of tried and true bread recipes, from classic sourdough to seasonal specialties. Perfect for home bakers of all skill levels." />
+        <meta property="og:title" content="Recipes | Sourdough for the Rest of Us" />
+        <meta property="og:description" content="Skip the intimidation. Practical sourdough techniques that turn flour, water, and time into something your family will ask for again and again." />
         <meta property="og:url" content="https://the-bakers-bench.lovable.app/recipes" />
         <meta property="og:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/46c5de6f-c603-4f84-85ec-bb53a2781939.png" />
         <meta property="og:image:width" content="1200" />
@@ -84,8 +84,8 @@ const Recipes = () => {
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Recipes | Baking Great Bread at Home" />
-        <meta name="twitter:description" content="Discover our collection of tried and true bread recipes, from classic sourdough to seasonal specialties. Perfect for home bakers of all skill levels." />
+        <meta name="twitter:title" content="Recipes | Sourdough for the Rest of Us" />
+        <meta name="twitter:description" content="Skip the intimidation. Practical sourdough techniques that turn flour, water, and time into something your family will ask for again and again." />
         <meta name="twitter:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/46c5de6f-c603-4f84-85ec-bb53a2781939.png" />
         <meta name="twitter:image:alt" content="Freshly baked artisan sourdough loaf on wooden cutting board next to open recipe book in warm kitchen setting - The Baker's Bench Recipes" />
       </Helmet>
@@ -94,8 +94,8 @@ const Recipes = () => {
         {/* Hero Section with Book Card */}
         <div className="relative h-[600px] overflow-hidden">
           <ResponsiveImage 
-            src="/lovable-uploads/fc6b2aed-f1bf-4707-8c25-728a6dffa9ad.png"
-            alt="Baking Great Bread at Home: A Journey Through the Seasons"
+            src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/sourdough-for-the-rest-of-us/sound-note-for-the-rest-of-us-1200-x-675-px-1200-x-675-px-1200-x-400-px.png"
+            alt="Sourdough for the Rest of Us"
             className="w-full h-full object-cover object-right"
             loading="lazy"
           />
@@ -104,76 +104,44 @@ const Recipes = () => {
           {/* Book Description Card */}
           <div className="absolute left-8 top-1/2 transform -translate-y-1/2 max-w-md">
             <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Baking Great Bread at Home
+              <div className="text-center mb-4">
+                <div className="inline-block bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                  Coming December 25th
+                </div>
+              </div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">
+                Sourdough for the Rest of Us
               </h1>
-              <p className="text-xl text-gray-700 mb-4 italic">
-                A Journey through the Seasons
+              <p className="text-lg text-gray-700 mb-4">
+                Skip the intimidation. This isn't about perfect Instagram loaves or complex schedules that don't fit real life.
               </p>
-              <p className="text-lg text-gray-600 mb-6">
-                By Henry Hunter
+              <p className="text-lg text-gray-700 mb-4">
+                No fancy equipment. No rigid timelines. Just practical techniques that turn flour, water, and time into something your family will ask for again and again.
               </p>
-              <div className="border-t pt-6">
-                <p className="text-xl font-medium text-gray-900 leading-relaxed">
-                  What if this year you didn't just bake bread - You became a Baker
+              <div className="border-t pt-4">
+                <p className="text-lg font-medium text-gray-900 mb-4">
+                  Ready to make sourdough work for you?
                 </p>
+                <a 
+                  href="https://a.co/d/i5p2huV"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200"
+                >
+                  Get Your Copy
+                </a>
               </div>
             </div>
           </div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 py-8">
-          {/* Introduction Card */}
+          {/* Find Your Perfect Recipe Search */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="mb-12"
-          >
-            <div className="bg-card border rounded-2xl p-8 shadow-warm">
-              <div className="text-center mb-6">
-                <div className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
-                  COMING DECEMBER 2025
-                </div>
-                <h2 className="text-3xl font-bold mb-4">Baking Great Bread at Home: A Journey Through the Seasons</h2>
-              </div>
-              <div className="prose prose-lg max-w-4xl mx-auto text-muted-foreground">
-                <p className="text-lg mb-4">
-                  This recipe collection offers you a preview of what's to come in my upcoming cookbook—a year-long adventure through the art of breadmaking, with recipes that respond to the rhythms of nature and the celebrations that mark our days.
-                </p>
-                <p className="text-xl font-medium text-foreground mb-4">
-                  What if this year, you didn't just bake bread—you became a baker?
-                </p>
-                <p className="mb-4">
-                  Through winter's hearth breads, spring's delicate enriched doughs, summer's quick flatbreads, and fall's harvest loaves, you'll build a real relationship with flour, fermentation, and flavor. Each recipe here is tied to its season, teaching you not just what to bake, but when and why.
-                </p>
-                <p className="mb-4">
-                  This isn't just a cookbook preview. It's an invitation to join thousands of bakers worldwide who are discovering that bread is more than food—it's a language of care, a connection to history, and a reflection of the world around us.
-                </p>
-                <p className="text-lg font-medium text-foreground">
-                  Explore these seasonal recipes now, save your favorites, and get ready for the full journey coming December 2025.
-                </p>
-                <div className="mt-6 pt-6 border-t text-center">
-                  <p className="font-medium text-foreground">- Henry Hunter</p>
-                  <p className="text-sm">Founder, Baking Great Bread at Home</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-          {/* Featured Recipes Section */}
-          {!loading && featuredRecipes.length > 0 && (
-            <FeaturedRecipes 
-              featuredRecipes={featuredRecipes}
-              onRecipeClick={handleRecipeClick}
-            />
-          )}
-
-          {/* Filters */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-8"
           >
             <SeasonalFilters
               searchQuery={searchQuery}
@@ -187,6 +155,14 @@ const Recipes = () => {
               resultCount={recipes.length}
             />
           </motion.div>
+          {/* Featured Recipes Section */}
+          {!loading && featuredRecipes.length > 0 && (
+            <FeaturedRecipes 
+              featuredRecipes={featuredRecipes}
+              onRecipeClick={handleRecipeClick}
+            />
+          )}
+
 
           {/* Recipe Grid */}
           {loading ? (
