@@ -18,13 +18,30 @@ const PodcastSection = React.lazy(() => import("../components/PodcastSection"));
 const RecommendedTools = React.lazy(() => import("../components/RecommendedTools"));
 const TestimonialsSection = React.lazy(() => import("../components/TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
 const AuthorBioSection = React.lazy(() => import("../components/AuthorBioSection").then(m => ({ default: m.AuthorBioSection })));
+const FeaturedRecipes = React.lazy(() => import("../components/FeaturedRecipes").then(m => ({ default: m.FeaturedRecipes })));
+const SeasonalFilters = React.lazy(() => import("../components/SeasonalFilters").then(m => ({ default: m.SeasonalFilters })));
 import { sanitizeStructuredData } from '@/utils/sanitize';
 import { useState, Suspense, lazy } from 'react';
+import { useSeasonalRecipes } from '@/hooks/useSeasonalRecipes';
 
 const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
+  // Add seasonal recipes functionality for search and featured recipes
+  const {
+    recipes,
+    featuredRecipes,
+    selectedSeason,
+    setSelectedSeason,
+    selectedCategory,
+    setSelectedCategory,
+    selectedDifficulty,
+    setSelectedDifficulty,
+    searchQuery,
+    setSearchQuery,
+  } = useSeasonalRecipes();
 
   // Generate organization structured data
   const organizationSchema = {
@@ -145,6 +162,37 @@ const Index = () => {
         <React.Suspense fallback={null}>
           <AboutHenry />
         </React.Suspense>
+        
+        {/* Recipe Search Section */}
+        <React.Suspense fallback={null}>
+          <div className="py-12 px-4 bg-background">
+            <div className="max-w-4xl mx-auto">
+              <SeasonalFilters
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                selectedSeason={selectedSeason}
+                onSeasonChange={setSelectedSeason}
+                selectedCategory={selectedCategory}
+                onCategoryChange={setSelectedCategory}
+                selectedDifficulty={selectedDifficulty}
+                onDifficultyChange={setSelectedDifficulty}
+                resultCount={recipes.length}
+              />
+            </div>
+          </div>
+        </React.Suspense>
+        
+        {/* Featured Recipes - "Baking now" Section */}
+        <React.Suspense fallback={null}>
+          <FeaturedRecipes 
+            featuredRecipes={featuredRecipes}
+            onRecipeClick={(recipe) => {
+              // Navigate to recipe page
+              window.location.href = `/recipes/${recipe.slug}`;
+            }}
+          />
+        </React.Suspense>
+        
         <React.Suspense fallback={null}>
           <PodcastSection />
         </React.Suspense>
