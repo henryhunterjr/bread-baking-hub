@@ -83,6 +83,12 @@ const SitemapRedirect = () => {
 // Recipe redirect component for backward compatibility
 const RecipeRedirect = () => {
   const { slug } = useParams<{ slug: string }>();
+  
+  // Handle the pumpkin recipe URL change
+  if (slug === 'pumpkin-shaped-sourdough-loaf') {
+    return <Navigate to="/recipes/festive-pumpkin-sourdough-loaf" replace />;
+  }
+  
   return <Navigate to={`/recipes/${slug}`} replace />;
 };
 
@@ -134,8 +140,8 @@ function App() {
                     <Route path="/troubleshooting" element={<TroubleshootingPage />} />
                     <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
                     <Route path="/legal" element={<Legal />} />
-                     {/* Legacy static pumpkin route - redirect to database version */}
-                     <Route path="/pumpkin-shaped-sourdough-loaf" element={<Navigate to="/recipes/pumpkin-shaped-sourdough-loaf" replace />} />
+                     {/* Legacy static pumpkin route - redirect to new URL */}
+                     <Route path="/pumpkin-shaped-sourdough-loaf" element={<Navigate to="/recipes/festive-pumpkin-sourdough-loaf" replace />} />
                      
                      {/* Database-driven public recipes */}
                      <Route path="/recipes/:slug" element={<PublicRecipe />} />
