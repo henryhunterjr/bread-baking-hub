@@ -704,6 +704,65 @@ const PostForm = ({ postData, setPostData, onImageUpload, showNewsletterToggle }
         />
       </div>
 
+      {/* Hero Image - Top of post and newsletter */}
+      <div>
+        <Label htmlFor="hero-image" className="text-sm font-medium">
+          Hero Image
+        </Label>
+        <p className="text-xs text-muted-foreground mb-2">
+          Large banner image displayed at the top of the post and newsletter
+        </p>
+        <div className="mt-1 flex items-center gap-4">
+          <Button
+            variant="outline"
+            size="sm"
+            asChild
+            className="cursor-pointer"
+          >
+            <label htmlFor="hero-image-upload">
+              <Upload className="w-4 h-4 mr-2" />
+              Upload Hero Image
+              <input
+                id="hero-image-upload"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) onImageUpload(file, 'hero');
+                }}
+              />
+            </label>
+          </Button>
+          {postData.heroImageUrl && (
+            <div className="flex items-center gap-2">
+              <img
+                src={postData.heroImageUrl}
+                alt="Hero image preview"
+                className="w-20 h-20 object-cover rounded border"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="text-xs text-muted-foreground">
+                <p>✓ Hero image set</p>
+                <p>Top banner for post</p>
+              </div>
+            </div>
+          )}
+        </div>
+        {!postData.heroImageUrl && (
+          <div className="mt-2 p-3 bg-muted/50 rounded-lg border-2 border-dashed border-muted-foreground/25">
+            <div className="text-center">
+              <ImageIcon className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+              <p className="text-sm text-muted-foreground">No hero image</p>
+              <p className="text-xs text-muted-foreground">
+                Upload a banner image for the top of your post
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Inline Thumbnail - First image in post body */}
       <div>
         <Label htmlFor="inline-image" className="text-sm font-medium">
