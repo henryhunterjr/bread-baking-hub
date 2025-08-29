@@ -34,6 +34,16 @@ const getDifficultyDots = (difficulty: string) => {
 };
 
 export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: SeasonalRecipeCardProps) => {
+  // Debug logging
+  if (import.meta.env.DEV) {
+    console.log('SeasonalRecipeCard rendering:', { 
+      title: recipe.title, 
+      data: recipe.data,
+      prepTime: recipe.data?.prepTime,
+      bakeTime: recipe.data?.bakeTime 
+    });
+  }
+  
   const season = recipe.data.season as Season;
   const colors = getSeasonalColors(season) || getSeasonalColors('Winter'); // fallback to Winter
   const SeasonIcon = seasonIcons[season] || seasonIcons.Winter; // fallback to Winter icon
@@ -145,12 +155,12 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
 
           {/* Categories */}
           <div className="flex flex-wrap gap-1">
-            {recipe.data.category.slice(0, 2).map((cat) => (
+            {recipe.data.category?.slice(0, 2).map((cat) => (
               <Badge key={cat} variant="outline" className="text-xs">
                 {cat}
               </Badge>
-            ))}
-            {recipe.data.category.length > 2 && (
+            )) || null}
+            {recipe.data.category && recipe.data.category.length > 2 && (
               <Badge variant="outline" className="text-xs">
                 +{recipe.data.category.length - 2}
               </Badge>
@@ -162,12 +172,12 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
             {/* Yield */}
             <div className="flex items-center gap-1 text-sm text-muted-foreground">
               <Users className="w-4 h-4" />
-              {recipe.data.yield}
+              {recipe.data.yield || 'N/A'}
             </div>
 
             {/* Difficulty Dots */}
             <div className="flex items-center gap-1">
-              {getDifficultyDots(recipe.data.difficulty)}
+              {getDifficultyDots(recipe.data.difficulty || 'beginner')}
             </div>
           </div>
 
