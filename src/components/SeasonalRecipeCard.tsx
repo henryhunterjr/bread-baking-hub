@@ -135,11 +135,11 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
           <div className="flex flex-wrap gap-2 text-xs">
             <div className="flex items-center gap-1 px-2 py-1 bg-muted rounded-full">
               <Clock className="w-3 h-3" />
-              <span>Prep: {recipe.data.prepTime.replace('0 hours ', '')}</span>
+              <span>Prep: {recipe.data.prepTime?.replace('0 hours ', '') || 'N/A'}</span>
             </div>
             <div className="flex items-center gap-1 px-2 py-1 bg-muted rounded-full">
               <ChefHat className="w-3 h-3" />
-              <span>Bake: {recipe.data.bakeTime.replace('0 hours ', '')}</span>
+              <span>Bake: {recipe.data.bakeTime?.replace('0 hours ', '') || 'N/A'}</span>
             </div>
           </div>
 
