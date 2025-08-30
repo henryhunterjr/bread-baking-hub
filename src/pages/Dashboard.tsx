@@ -35,6 +35,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Tables } from '@/integrations/supabase/types';
 import AdminSubscribers from '@/components/admin/AdminSubscribers';
 import AdminRecipes from '@/components/admin/AdminRecipes';
+import { RecipeToNewsletterConverter } from '@/components/newsletter/RecipeToNewsletterConverter';
 
 interface BlogPostData {
   id?: string;
@@ -539,15 +540,29 @@ const Dashboard = () => {
             </TabsContent>
 
             <TabsContent value="newsletter" className="space-y-6">
-              <NewsletterTab 
-                postData={postData}
-                setPostData={setPostData}
-                onImageUpload={handleImageUpload}
-                onSaveDraft={handleSaveDraft}
-                onPublish={handlePublish}
-                isSavingDraft={isSavingDraft}
-                isPublishing={isPublishing}
-              />
+              <div className="space-y-8">
+                <RecipeToNewsletterConverter 
+                  onNewsletterCreated={() => {
+                    toast({
+                      title: "Newsletter Ready",
+                      description: "Check the drafts in your posts to review and publish.",
+                    });
+                  }}
+                />
+                
+                <div className="border-t pt-8">
+                  <h3 className="text-lg font-semibold mb-4">Manual Newsletter Creation</h3>
+                  <NewsletterTab 
+                    postData={postData}
+                    setPostData={setPostData}
+                    onImageUpload={handleImageUpload}
+                    onSaveDraft={handleSaveDraft}
+                    onPublish={handlePublish}
+                    isSavingDraft={isSavingDraft}
+                    isPublishing={isPublishing}
+                  />
+                </div>
+              </div>
             </TabsContent>
 
             <TabsContent value="recipes" className="space-y-6">
