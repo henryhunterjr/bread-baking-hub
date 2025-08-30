@@ -12,6 +12,7 @@ import { detectSymptoms } from '@/utils/SymptomMatcher';
 import symptomsData from '@/data/symptoms.json';
 import { format } from 'date-fns';
 import { Suspense, lazy } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
@@ -83,8 +84,34 @@ export default function TroubleshootingPage() {
   }
 
   return (
-    <div className="bg-background text-foreground min-h-screen">
-      <Header />
+    <>
+      <Helmet>
+        <title>Troubleshooting | Baking Great Bread at Home</title>
+        <meta name="description" content="Professional bread troubleshooting tool with step-by-step diagnosis. Solve sourdough, yeasted, and quick bread problems with expert guidance and visual examples." />
+        <meta name="keywords" content="bread troubleshooting, sourdough problems, bread baking help, crust and crumb, bread diagnosis" />
+        <link rel="canonical" href="https://bread-baking-hub.vercel.app/troubleshooting" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Troubleshooting | Baking Great Bread at Home" />
+        <meta property="og:description" content="Professional bread troubleshooting tool with step-by-step diagnosis. Solve sourdough, yeasted, and quick bread problems with expert guidance and visual examples." />
+        <meta property="og:url" content="https://bread-baking-hub.vercel.app/troubleshooting" />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/troubleshooting-solve-your-bread-baking-challenges-and-problems/troubleshooting.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Troubleshooting bread baking problems - diagnostic tools and solutions" />
+        <meta property="og:site_name" content="Baking Great Bread at Home" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Troubleshooting | Baking Great Bread at Home" />
+        <meta name="twitter:description" content="Professional bread troubleshooting tool with step-by-step diagnosis. Solve bread problems with expert guidance." />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/troubleshooting-solve-your-bread-baking-challenges-and-problems/troubleshooting.png" />
+        <meta name="twitter:image:alt" content="Troubleshooting bread baking problems - diagnostic tools and solutions" />
+      </Helmet>
+      
+      <div className="bg-background text-foreground min-h-screen">
+        <Header />
       <Hero 
         imageSrc="/lovable-uploads/929d8961-290b-4bf6-a6a1-16fee8b2a307.png"
         imageAlt="Troubleshooting - Bread baking tools and ingredients on wooden surface"
@@ -143,6 +170,7 @@ export default function TroubleshootingPage() {
           onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
         />
       </Suspense>
-    </div>
+      </div>
+    </>
   );
 }

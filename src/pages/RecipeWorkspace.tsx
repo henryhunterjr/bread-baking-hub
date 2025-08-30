@@ -28,14 +28,14 @@ const RecipeWorkspace = () => {
       <Helmet>
         <title>Recipe Workspace | Baking Great Bread at Home</title>
         <meta name="description" content="Your complete recipe creation studio. Upload, format, edit, and save your recipes with AI assistance. Create professional recipe cards and organize your baking collection." />
-        <link rel="canonical" href="https://the-bakers-bench.lovable.app/workspace" />
+        <link rel="canonical" href="https://bread-baking-hub.vercel.app/recipe-workspace" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Recipe Workspace | Baking Great Bread at Home" />
         <meta property="og:description" content="Your complete recipe creation studio. Upload, format, edit, and save your recipes with AI assistance. Create professional recipe cards and organize your baking collection." />
-        <meta property="og:url" content="https://the-bakers-bench.lovable.app/workspace" />
-        <meta property="og:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/7c954928-23fe-4169-bec1-ffa0629d80f2.png" />
+        <meta property="og:url" content="https://bread-baking-hub.vercel.app/recipe-workspace" />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/recipe-work-space-ai-powered-recipe-creation-and-formatting-studio/sunday-fun-day-1200-x-630-px.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Recipe workspace - kitchen counter with tablet, notebook, and baking tools" />
@@ -45,7 +45,7 @@ const RecipeWorkspace = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Recipe Workspace | Baking Great Bread at Home" />
         <meta name="twitter:description" content="Your complete recipe creation studio. Upload, format, edit, and save your recipes with AI assistance. Create professional recipe cards and organize your baking collection." />
-        <meta name="twitter:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/7c954928-23fe-4169-bec1-ffa0629d80f2.png" />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/recipe-work-space-ai-powered-recipe-creation-and-formatting-studio/sunday-fun-day-1200-x-630-px.png" />
         <meta name="twitter:image:alt" content="Recipe workspace - kitchen counter with tablet, notebook, and baking tools" />
       </Helmet>
       

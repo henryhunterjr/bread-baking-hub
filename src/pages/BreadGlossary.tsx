@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
 import { Search, Heart, Plus, X, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Hero } from '@/components/ui/Hero';
+import { Helmet } from 'react-helmet-async';
 
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -400,9 +401,35 @@ const BreadGlossary = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      {/* Hero Section */}
+    <>
+      <Helmet>
+        <title>Glossary | Baking Great Bread at Home</title>
+        <meta name="description" content="Comprehensive guide to bread baking terminology. Master the language of bread making with definitions of techniques, tools, and processes from beginner to advanced." />
+        <meta name="keywords" content="bread baking glossary, baking terminology, sourdough terms, bread making definitions, baking techniques explained" />
+        <link rel="canonical" href="https://bread-baking-hub.vercel.app/glossary" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Glossary | Baking Great Bread at Home" />
+        <meta property="og:description" content="Comprehensive guide to bread baking terminology. Master the language of bread making with definitions of techniques, tools, and processes." />
+        <meta property="og:url" content="https://bread-baking-hub.vercel.app/glossary" />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/glossary-comprehensive-guide-to-bread-baking-terminology/a-social-media-thumbnail-1200x630-pixelslylw5ur6td2zimxwbcfkzgggzrg2opro-rpmbfjdtrga.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Bread baking glossary - comprehensive terminology guide" />
+        <meta property="og:site_name" content="Baking Great Bread at Home" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Glossary | Baking Great Bread at Home" />
+        <meta name="twitter:description" content="Comprehensive guide to bread baking terminology. Master the language of bread making with definitions and techniques." />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/glossary-comprehensive-guide-to-bread-baking-terminology/a-social-media-thumbnail-1200x630-pixelslylw5ur6td2zimxwbcfkzgggzrg2opro-rpmbfjdtrga.png" />
+        <meta name="twitter:image:alt" content="Bread baking glossary - comprehensive terminology guide" />
+      </Helmet>
+      
+      <div className="min-h-screen bg-background">
+        <Header />
+        {/* Hero Section */}
       <Hero 
         imageSrc="/lovable-uploads/1a955074-3f70-4ec7-803e-f2d08223022b.png"
         imageAlt="Bread Glossary - Wooden letter blocks spelling GLOSSARY"
@@ -686,7 +713,8 @@ const BreadGlossary = () => {
           onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
         />
       </Suspense>
-    </div>
+      </div>
+    </>
   );
 };
 
