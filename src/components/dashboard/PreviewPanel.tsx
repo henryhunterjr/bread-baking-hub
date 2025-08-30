@@ -116,8 +116,25 @@ const PreviewPanel = ({ postData, isNewsletter = false }: PreviewPanelProps) => 
 
             {/* Content */}
             {postData.content && (
-              <div className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-serif prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-li:text-foreground">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <div className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-serif prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-li:text-foreground prose-ul:text-foreground prose-ol:text-foreground prose-blockquote:text-foreground">
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({children}) => <h1 className="text-3xl font-bold font-serif text-foreground mb-6 mt-8 leading-tight">{children}</h1>,
+                    h2: ({children}) => <h2 className="text-2xl font-bold font-serif text-foreground mb-4 mt-6 leading-tight">{children}</h2>,
+                    h3: ({children}) => <h3 className="text-xl font-bold font-serif text-foreground mb-3 mt-5 leading-tight">{children}</h3>,
+                    h4: ({children}) => <h4 className="text-lg font-semibold text-foreground mb-2 mt-4">{children}</h4>,
+                    p: ({children}) => <p className="text-foreground mb-4 leading-relaxed">{children}</p>,
+                    ul: ({children}) => <ul className="list-disc pl-6 mb-4 space-y-2 text-foreground">{children}</ul>,
+                    ol: ({children}) => <ol className="list-decimal pl-6 mb-4 space-y-2 text-foreground">{children}</ol>,
+                    li: ({children}) => <li className="text-foreground leading-relaxed">{children}</li>,
+                    strong: ({children}) => <strong className="font-semibold text-foreground">{children}</strong>,
+                    em: ({children}) => <em className="italic text-foreground">{children}</em>,
+                    blockquote: ({children}) => <blockquote className="border-l-4 border-primary pl-4 py-2 my-4 bg-muted/20 text-foreground italic">{children}</blockquote>,
+                    code: ({children}) => <code className="bg-muted px-2 py-1 rounded text-sm font-mono text-foreground">{children}</code>,
+                    pre: ({children}) => <pre className="bg-muted p-4 rounded-lg overflow-x-auto my-4">{children}</pre>
+                  }}
+                >
                   {postData.content}
                 </ReactMarkdown>
               </div>
