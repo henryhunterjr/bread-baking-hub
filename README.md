@@ -50,6 +50,79 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
+## Social Media Meta Tags System
+
+This project includes a robust system for generating correct Open Graph and Twitter Card meta tags for all pages.
+
+### Meta Tag Verification
+
+To manually verify meta tags are correct:
+
+```sh
+# Build the project first
+npm run build
+
+# Run verification script
+npm run verify:meta
+```
+
+The verification script checks for:
+- Missing required tags (og:title, og:image, og:url, og:description)
+- Forbidden domains (old domains that should not appear)
+- Relative URLs (all image/url tags must be absolute)
+- Provides a summary report of all routes and their og:image URLs
+
+### Recipe-Only Builds
+
+To regenerate only recipe-related routes without touching other pages:
+
+```sh
+npm run build:recipes
+```
+
+### Testing Social Media Previews
+
+Quick test commands to verify Open Graph images:
+
+```sh
+# Check homepage
+curl -s https://bread-baking-hub.vercel.app/ | grep -i "og:image"
+
+# Check blog page
+curl -s https://bread-baking-hub.vercel.app/blog/ | grep -i "og:image"
+
+# Check recipes page
+curl -s https://bread-baking-hub.vercel.app/recipes/ | grep -i "og:image"
+```
+
+### Rollback Instructions
+
+If a deployment has incorrect meta tags:
+
+1. **In Vercel Dashboard:**
+   - Go to your project dashboard
+   - Click on "Deployments" tab
+   - Find the last working deployment
+   - Click the "..." menu and select "Promote to Production"
+
+2. **Via Vercel CLI:**
+   ```sh
+   # Install Vercel CLI if needed
+   npm i -g vercel
+
+   # Login and select project
+   vercel login
+   vercel
+
+   # Rollback to specific deployment
+   vercel rollback [deployment-url]
+   ```
+
+3. **Quick verification after rollback:**
+   - Test URLs in [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/)
+   - Test URLs in [X Card Validator](https://cards-dev.twitter.com/validator)
+   - Run `npm run verify:meta` locally to ensure the fix
+
 ## What technologies are used for this project?
 
 This project is built with:

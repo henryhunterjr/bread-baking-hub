@@ -3,6 +3,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
+// Parse command line arguments
+const args = process.argv.slice(2);
+const isRecipesOnly = args.includes('--recipes-only');
+
 // Add __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -60,7 +64,7 @@ const routeMetaData = {
 };
 
 // Routes to generate static files for
-const routesToGenerate = [
+const allRoutes = [
   '/',
   '/blog',
   '/recipes',
@@ -71,6 +75,11 @@ const routesToGenerate = [
   '/books',
   '/vitale-starter'
 ];
+
+// Filter routes based on CLI flags
+const routesToGenerate = isRecipesOnly 
+  ? allRoutes.filter(route => route.includes('recipe'))
+  : allRoutes;
 
 function generateHtmlForRoute(route, templateContent) {
   const metaData = routeMetaData[route] || routeMetaData['/'];
@@ -86,6 +95,27 @@ function generateHtmlForRoute(route, templateContent) {
 function createDirectory(dirPath) {
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
+  }
+}
+
+function printBuildReport() {
+  console.log('\n📋 BUILD REPORT - GENERATED ROUTES');
+  console.log(''.padEnd(80, '='));
+  console.log('Route'.padEnd(25) + 'OG Image');
+  console.log(''.padEnd(80, '-'));
+  
+  routesToGenerate.forEach(route => {
+    const metaData = routeMetaData[route] || routeMetaData['/'];
+    const routeDisplay = route === '/' ? '/index.html' : `${route}/index.html`;
+    const imageUrl = metaData.image.slice(0, 50) + (metaData.image.length > 50 ? '...' : '');
+    console.log(routeDisplay.padEnd(25) + imageUrl);
+  });
+  
+  console.log(''.padEnd(80, '='));
+  console.log(`✅ Generated ${routesToGenerate.length} route(s) with correct meta tags`);
+  
+  if (isRecipesOnly) {
+    console.log('🎯 Recipes-only mode: Only recipe-related routes were regenerated');
   }
 }
 
@@ -145,6 +175,9 @@ function buildWithMeta() {
     console.log('🎉 Static HTML generation complete!');
     console.log('📱 Each route now has proper Open Graph meta tags for social media sharing.');
     console.log(`📊 Total routes processed: ${routesToGenerate.length}`);
+    
+    // Print build report
+    printBuildReport();
     
   } catch (error) {
     console.error('❌ Build script failed:', error.message);
