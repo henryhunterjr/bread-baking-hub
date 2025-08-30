@@ -88,7 +88,8 @@ export const recipeImageMapping: Record<string, string> = {
   
   // HOLIDAY BREADS
   "hanukkah-challah": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg",
-  "special-round-challah": "/lovable-uploads/39d28f2a-71e4-4711-8c5e-6d0542d82c1b.png",
+  "special-round-challah": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg",
+  "henrys-round-challah-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg",
   "easter-paska": "/lovable-uploads/6eded5fa-0dd5-4b7b-b7fc-108afbc3f96e.png",
   "holiday-star-cinnamon-bread": "/lovable-uploads/d7809864-6aac-432c-98e6-a38878473e1b.png"
 };
