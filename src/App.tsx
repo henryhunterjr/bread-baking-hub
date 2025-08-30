@@ -67,6 +67,7 @@ const RecipePrint = React.lazy(() => import("./pages/print/RecipePrint"));
 const Help = React.lazy(() => import("./pages/Help"));
 const MyRecipeLibrary = React.lazy(() => import("./pages/MyRecipeLibrary"));
 const PasswordReset = React.lazy(() => import("./pages/PasswordReset"));
+const NewsletterPreview = React.lazy(() => import("./pages/NewsletterPreview"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -132,7 +133,8 @@ function App() {
                     <Route path="/books" element={<Books />} />
                     <Route path="/recipes" element={<Recipes />} />
                     <Route path="/vitale-starter" element={<VitaleStarter />} />
-                    <Route path="/preview/vitale-sourdough-mastery" element={<VitalePreview />} />
+                     <Route path="/preview/vitale-sourdough-mastery" element={<VitalePreview />} />
+                     <Route path="/newsletter-preview/:id" element={<NewsletterPreview />} />
                     <Route path="/kaiser-rolls" element={<KaiserRolls />} />
                     <Route path="/henrys-foolproof-recipe" element={<HenrysFoolproofRecipe />} />
                     <Route path="/glossary" element={<BreadGlossary />} />
