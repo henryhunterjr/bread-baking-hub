@@ -615,7 +615,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
               <div>
                 <h3 className="font-medium mb-2">Categories</h3>
                 <div className="flex flex-wrap gap-2">
-                  {recipe.data.category?.map((cat) => (
+                  {recipe.data?.category?.map((cat) => (
                     <Badge key={cat} variant="outline">{cat}</Badge>
                   )) || <span className="text-sm text-muted-foreground">No categories</span>}
                 </div>
@@ -624,9 +624,9 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
               {/* Ingredients */}
               <section aria-labelledby="ingredients-heading">
                 <h3 id="ingredients-heading" className="text-lg font-semibold mb-3">Ingredients</h3>
-                <p className="text-sm text-muted-foreground mb-4">(Yields {recipe.data.yield})</p>
+                <p className="text-sm text-muted-foreground mb-4">(Yields {recipe.data?.yield})</p>
                 <div className="space-y-3" role="list" aria-label="Recipe ingredients">
-                  {recipe.data.ingredients?.map((ingredient, index) => {
+                  {recipe.data?.ingredients?.map((ingredient, index) => {
                     // Parse ingredient string to extract name, metric, and volume measurements
                     const parts = ingredient.split(':');
                     const ingredientName = parts[0]?.trim() || ingredient;
@@ -662,7 +662,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                   </p>
                 </div>
                 <ol className="space-y-4" role="list" aria-label="Recipe instructions">
-                  {recipe.data.method?.map((step: any, index) => {
+                  {recipe.data?.method?.map((step: any, index) => {
                     // Handle both string and object step formats with proper type guards
                     const stepText = typeof step === 'string' 
                       ? step 
@@ -733,7 +733,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                 <div>
                   <h3 className="text-lg font-semibold mb-3">Equipment</h3>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    {recipe.data.equipment?.map((item, index) => (
+                    {recipe.data?.equipment?.map((item, index) => (
                       <li key={index} className="flex items-center gap-2">
                         <span className="w-1.5 h-1.5 bg-muted-foreground rounded-full" />
                         <span className="text-sm">{item}</span>
@@ -756,7 +756,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                 <div className="p-4 bg-accent/10 rounded-lg">
                   <h3 className="font-medium mb-2">Perfect For</h3>
                   <div className="flex flex-wrap gap-2">
-                    {recipe.data.holidays?.map((holiday) => (
+                    {recipe.data?.holidays?.map((holiday) => (
                       <Badge key={holiday} variant="secondary">{holiday}</Badge>
                     ))}
                   </div>

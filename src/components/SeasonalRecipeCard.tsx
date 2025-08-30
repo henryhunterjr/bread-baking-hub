@@ -145,22 +145,22 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
           <div className="flex flex-wrap gap-2 text-xs">
             <div className="flex items-center gap-1 px-2 py-1 bg-muted rounded-full">
               <Clock className="w-3 h-3" />
-              <span>Prep: {recipe.data.prepTime?.replace('0 hours ', '') || 'N/A'}</span>
+              <span>Prep: {recipe.data?.prepTime?.replace('0 hours ', '') || 'N/A'}</span>
             </div>
             <div className="flex items-center gap-1 px-2 py-1 bg-muted rounded-full">
               <ChefHat className="w-3 h-3" />
-              <span>Bake: {recipe.data.bakeTime?.replace('0 hours ', '') || 'N/A'}</span>
+              <span>Bake: {recipe.data?.bakeTime?.replace('0 hours ', '') || 'N/A'}</span>
             </div>
           </div>
 
           {/* Categories */}
           <div className="flex flex-wrap gap-1">
-            {recipe.data.category?.slice(0, 2).map((cat) => (
+            {recipe.data?.category?.slice(0, 2).map((cat) => (
               <Badge key={cat} variant="outline" className="text-xs">
                 {cat}
               </Badge>
             )) || null}
-            {recipe.data.category && recipe.data.category.length > 2 && (
+            {recipe.data?.category && recipe.data.category.length > 2 && (
               <Badge variant="outline" className="text-xs">
                 +{recipe.data.category.length - 2}
               </Badge>
@@ -172,17 +172,17 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
             {/* Yield */}
             <div className="flex items-center gap-1 text-sm text-muted-foreground">
               <Users className="w-4 h-4" />
-              {recipe.data.yield || 'N/A'}
+              {recipe.data?.yield || 'N/A'}
             </div>
 
             {/* Difficulty Dots */}
             <div className="flex items-center gap-1">
-              {getDifficultyDots(recipe.data.difficulty || 'beginner')}
+              {getDifficultyDots(recipe.data?.difficulty || 'beginner')}
             </div>
           </div>
 
           {/* Holiday indicator */}
-          {recipe.data.holidays && recipe.data.holidays.length > 0 && (
+          {recipe.data?.holidays && recipe.data.holidays.length > 0 && (
             <div className="pt-2 border-t">
               <div className="text-xs text-muted-foreground">
                 Perfect for: {recipe.data.holidays.join(', ')}
