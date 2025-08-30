@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Globe } from 'lucide-react';
+import { getRecipeImage } from '@/utils/recipeImageMapping';
 
 const PublicRecipe = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -47,6 +48,9 @@ const PublicRecipe = () => {
     );
   }
 
+  // Get the correct social image using the mapping system
+  const socialImageUrl = getRecipeImage(recipe.slug, (recipe.data as any)?.social_image_url || recipe.image_url);
+
   return (
     <div className="bg-background text-foreground min-h-screen">
       <Helmet>
@@ -59,7 +63,7 @@ const PublicRecipe = () => {
         <meta property="og:url" content={`https://bread-baking-hub.vercel.app/recipes/${slug}?v=2`} />
         <meta property="og:title" content={recipe.title} />
         <meta property="og:description" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Festive pumpkin sourdough tied with twine and finished with a cinnamon stick stem.' : ((recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`)} />
-        <meta property="og:image" content={(recipe.data as any)?.social_image_url || recipe.image_url || 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/default-recipe.jpg'} />
+        <meta property="og:image" content={socialImageUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="675" />
         <meta property="og:image:alt" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Festive pumpkin-shaped sourdough loaf tied with twine and finished with a cinnamon stick stem' : `${recipe.title} recipe cover image`} />
@@ -71,7 +75,7 @@ const PublicRecipe = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={recipe.title} />
         <meta name="twitter:description" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Festive pumpkin sourdough tied with twine and finished with a cinnamon stick stem.' : ((recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`)} />
-        <meta name="twitter:image" content={(recipe.data as any)?.social_image_url || recipe.image_url || 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/hero-images/default-recipe.jpg'} />
+        <meta name="twitter:image" content={socialImageUrl} />
         <meta name="twitter:image:alt" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Festive pumpkin-shaped sourdough loaf tied with twine and finished with a cinnamon stick stem' : `${recipe.title} recipe cover image`} />
         <script type="application/ld+json">
           {JSON.stringify({
