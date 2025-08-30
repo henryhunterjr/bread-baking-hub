@@ -55,7 +55,9 @@ export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl }: Bl
       <meta property="og:description" content={cleanDescription} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content="Baking Great Bread" />
-      {finalImageUrl && <meta property="og:image" content={finalImageUrl} />}
+      {finalImageUrl && <meta property="og:image" content={`${finalImageUrl}?v=${Date.now()}`} />}
+      {finalImageUrl && <meta property="og:image:width" content="1200" />}
+      {finalImageUrl && <meta property="og:image:height" content="630" />}
       {finalImageUrl && <meta property="og:image:alt" content={post.imageAlt} />}
       <meta property="article:published_time" content={publishedDate} />
       <meta property="article:modified_time" content={modifiedDate} />
@@ -69,7 +71,7 @@ export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl }: Bl
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={post.title} />
       <meta name="twitter:description" content={cleanDescription} />
-      {finalImageUrl && <meta name="twitter:image" content={finalImageUrl} />}
+      {finalImageUrl && <meta name="twitter:image" content={`${finalImageUrl}?v=${Date.now()}`} />}
       {finalImageUrl && <meta name="twitter:image:alt" content={post.imageAlt} />}
       
       {/* Additional meta tags */}
