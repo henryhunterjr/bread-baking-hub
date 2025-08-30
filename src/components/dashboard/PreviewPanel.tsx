@@ -116,23 +116,37 @@ const PreviewPanel = ({ postData, isNewsletter = false }: PreviewPanelProps) => 
 
             {/* Content */}
             {postData.content && (
-              <div className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-serif prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-li:text-foreground prose-ul:text-foreground prose-ol:text-foreground prose-blockquote:text-foreground">
+              <div className="prose prose-lg max-w-none dark:prose-invert">
                 <ReactMarkdown 
                   remarkPlugins={[remarkGfm]}
+                  skipHtml={false}
                   components={{
-                    h1: ({children}) => <h1 className="text-3xl font-bold font-serif text-foreground mb-6 mt-8 leading-tight">{children}</h1>,
-                    h2: ({children}) => <h2 className="text-2xl font-bold font-serif text-foreground mb-4 mt-6 leading-tight">{children}</h2>,
-                    h3: ({children}) => <h3 className="text-xl font-bold font-serif text-foreground mb-3 mt-5 leading-tight">{children}</h3>,
-                    h4: ({children}) => <h4 className="text-lg font-semibold text-foreground mb-2 mt-4">{children}</h4>,
-                    p: ({children}) => <p className="text-foreground mb-4 leading-relaxed">{children}</p>,
-                    ul: ({children}) => <ul className="list-disc pl-6 mb-4 space-y-2 text-foreground">{children}</ul>,
-                    ol: ({children}) => <ol className="list-decimal pl-6 mb-4 space-y-2 text-foreground">{children}</ol>,
-                    li: ({children}) => <li className="text-foreground leading-relaxed">{children}</li>,
+                    h1: ({children}) => <h1 className="text-2xl md:text-3xl font-bold font-serif text-foreground mb-4 mt-6 leading-tight">{children}</h1>,
+                    h2: ({children}) => <h2 className="text-xl md:text-2xl font-bold font-serif text-foreground mb-3 mt-5 leading-tight">{children}</h2>,
+                    h3: ({children}) => <h3 className="text-lg md:text-xl font-bold font-serif text-foreground mb-2 mt-4 leading-tight">{children}</h3>,
+                    h4: ({children}) => <h4 className="text-base md:text-lg font-semibold text-foreground mb-2 mt-3">{children}</h4>,
+                    h5: ({children}) => <h5 className="text-base font-semibold text-foreground mb-2 mt-3">{children}</h5>,
+                    h6: ({children}) => <h6 className="text-sm font-semibold text-foreground mb-2 mt-3">{children}</h6>,
+                    p: ({children}) => <p className="text-foreground mb-4 leading-relaxed text-sm md:text-base">{children}</p>,
+                    ul: ({children}) => <ul className="list-disc pl-4 md:pl-6 mb-4 space-y-1 text-foreground">{children}</ul>,
+                    ol: ({children}) => <ol className="list-decimal pl-4 md:pl-6 mb-4 space-y-1 text-foreground">{children}</ol>,
+                    li: ({children}) => <li className="text-foreground leading-relaxed text-sm md:text-base">{children}</li>,
                     strong: ({children}) => <strong className="font-semibold text-foreground">{children}</strong>,
                     em: ({children}) => <em className="italic text-foreground">{children}</em>,
+                    a: ({href, children}) => <a href={href} className="text-primary underline hover:text-primary/80 transition-colors" target="_blank" rel="noopener noreferrer">{children}</a>,
                     blockquote: ({children}) => <blockquote className="border-l-4 border-primary pl-4 py-2 my-4 bg-muted/20 text-foreground italic">{children}</blockquote>,
-                    code: ({children}) => <code className="bg-muted px-2 py-1 rounded text-sm font-mono text-foreground">{children}</code>,
-                    pre: ({children}) => <pre className="bg-muted p-4 rounded-lg overflow-x-auto my-4">{children}</pre>
+                    code: ({children}) => <code className="bg-muted px-2 py-1 rounded text-xs md:text-sm font-mono text-foreground">{children}</code>,
+                    pre: ({children}) => <pre className="bg-muted p-3 md:p-4 rounded-lg overflow-x-auto my-4 text-xs md:text-sm">{children}</pre>,
+                    img: ({src, alt}) => (
+                      <div className="my-4 rounded-lg overflow-hidden">
+                        <ResponsiveImage 
+                          src={src || ''} 
+                          alt={alt || ''} 
+                          className="w-full h-auto object-cover" 
+                          loading="lazy" 
+                        />
+                      </div>
+                    )
                   }}
                 >
                   {postData.content}
