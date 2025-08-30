@@ -14,7 +14,6 @@ export const AccessibilityProvider: React.FC<AccessibilityProviderProps> = ({ ch
       
       // Suppress specific accessibility warnings that are known and being addressed
       if (
-        message.includes('accessible-name') ||
         message.includes('Page missing main landmark') ||
         message.includes('Page missing navigation landmark')
       ) {

@@ -53,8 +53,20 @@ export const SeasonalFilters = ({
         </div>
         <div className="relative">
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-700 w-6 h-6" />
-          <Input placeholder={getSeasonalPlaceholder(currentSeason)} value={searchQuery} onChange={e => onSearchChange(e.target.value)} className="pl-12 pr-12 h-14 text-lg font-medium border-2 border-amber-200 focus:border-amber-300 bg-white/95 backdrop-blur-sm text-slate-900 placeholder:text-slate-600" />
-          {searchQuery && <Button variant="ghost" size="sm" className="absolute right-2 top-1/2 transform -translate-y-1/2 hover:bg-primary/10" onClick={() => onSearchChange('')}>
+          <Input 
+            placeholder={getSeasonalPlaceholder(currentSeason)} 
+            value={searchQuery} 
+            onChange={e => onSearchChange(e.target.value)} 
+            className="pl-12 pr-12 h-14 text-lg font-medium border-2 border-amber-200 focus:border-amber-300 bg-white/95 backdrop-blur-sm text-slate-900 placeholder:text-slate-600"
+            aria-label="Search recipes by name, ingredients, or description"
+          />
+          {searchQuery && <Button 
+            variant="ghost" 
+            size="sm" 
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 hover:bg-primary/10" 
+            onClick={() => onSearchChange('')}
+            aria-label="Clear search"
+          >
               <X className="w-5 h-5" />
             </Button>}
         </div>
@@ -111,7 +123,7 @@ export const SeasonalFilters = ({
         {/* Advanced Filters Popover */}
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" size="icon">
+            <Button variant="outline" size="icon" aria-label="Open advanced filters">
               <Filter className="w-4 h-4" />
             </Button>
           </PopoverTrigger>
@@ -126,7 +138,7 @@ export const SeasonalFilters = ({
         </Popover>
 
         {/* Clear Filters */}
-        {hasActiveFilters && <Button variant="ghost" size="sm" onClick={clearAllFilters}>
+        {hasActiveFilters && <Button variant="ghost" size="sm" onClick={clearAllFilters} aria-label="Clear all filters">
             <X className="w-4 h-4 mr-1" />
             Clear All
           </Button>}
@@ -136,19 +148,19 @@ export const SeasonalFilters = ({
       <div className="flex flex-wrap items-center gap-2">
         {selectedSeason !== 'All' && <Badge variant="secondary">
             Season: {selectedSeason}
-            <Button variant="ghost" size="sm" className="h-auto p-0 ml-1" onClick={() => onSeasonChange('All')}>
+            <Button variant="ghost" size="sm" className="h-auto p-0 ml-1" onClick={() => onSeasonChange('All')} aria-label="Remove season filter">
               <X className="w-3 h-3" />
             </Button>
           </Badge>}
         {selectedCategory !== 'All' && <Badge variant="secondary">
             Category: {selectedCategory}
-            <Button variant="ghost" size="sm" className="h-auto p-0 ml-1" onClick={() => onCategoryChange('All')}>
+            <Button variant="ghost" size="sm" className="h-auto p-0 ml-1" onClick={() => onCategoryChange('All')} aria-label="Remove category filter">
               <X className="w-3 h-3" />
             </Button>
           </Badge>}
         {selectedDifficulty !== 'All' && <Badge variant="secondary">
             Difficulty: {selectedDifficulty}
-            <Button variant="ghost" size="sm" className="h-auto p-0 ml-1" onClick={() => onDifficultyChange('All')}>
+            <Button variant="ghost" size="sm" className="h-auto p-0 ml-1" onClick={() => onDifficultyChange('All')} aria-label="Remove difficulty filter">
               <X className="w-3 h-3" />
             </Button>
           </Badge>}

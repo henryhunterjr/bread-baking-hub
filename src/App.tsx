@@ -111,7 +111,7 @@ function App() {
             <OfflineBanner />
             <BackToTop />
             <CriticalResourceLoader>
-              <BrowserRouter>
+              <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
                 <RouteCleanupHandler />
                 <EnhancedSkipLink />
                 <DefaultSEO />

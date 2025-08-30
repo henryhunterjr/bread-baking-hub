@@ -388,11 +388,13 @@ export const GlobalSearch = ({
             }
           }}
           className="pl-10 pr-10"
+          aria-label="Global search input"
         />
         {query && (
           <button
             onClick={clearSearch}
             className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground hover:text-foreground"
+            aria-label="Clear search"
           >
             <X className="h-4 w-4" />
           </button>

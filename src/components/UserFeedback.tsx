@@ -149,6 +149,7 @@ export const UserFeedback: React.FC<UserFeedbackProps> = ({
                     : 'text-gray-300 hover:text-gray-400'
                 }`}
                 type="button"
+                aria-label={`Rate ${star} out of 5 stars`}
               >
                 <Star className={`h-8 w-8 ${star <= rating ? 'fill-current' : ''}`} />
               </button>
