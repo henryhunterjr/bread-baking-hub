@@ -1,0 +1,31 @@
+INSERT INTO blog_posts (
+  slug, 
+  title, 
+  excerpt, 
+  content, 
+  image, 
+  social_image_url,
+  date, 
+  modified, 
+  author_name, 
+  author_avatar, 
+  author_description, 
+  tags, 
+  read_time, 
+  link
+) VALUES (
+  'bacon-long-hala',
+  'Bacon Long Hala',
+  'A savory twist on traditional challah bread featuring crispy bacon woven into a long braided loaf.',
+  'A savory twist on traditional challah bread featuring crispy bacon woven into a long braided loaf.',
+  'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/classic-challah-bread-recipe-traditional-six-strand-braid/a-still-life-photograph-capturing-a-beauepijgalorrus84tasukdfqt6w5xxihsb-2aosv7-pvng.png',
+  'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/classic-challah-bread-recipe-traditional-six-strand-braid/a-still-life-photograph-capturing-a-beauepijgalorrus84tasukdfqt6w5xxihsb-2aosv7-pvng.png',
+  now(),
+  now(),
+  'Henry Hunter',
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+  'Master baker and bread enthusiast with over 20 years of experience.',
+  ARRAY['challah', 'bacon', 'savory bread', 'braided bread'],
+  '8 min read',
+  'https://bread-baking-hub.vercel.app/blog/bacon-long-hala'
+);
