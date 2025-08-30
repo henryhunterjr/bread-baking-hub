@@ -13,49 +13,49 @@ const BASE_URL = 'https://bread-baking-hub.vercel.app';
 // Meta data for each route
 const routeMetaData = {
   '/': {
-    title: 'Baking Great Bread at Home - Learn Artisan Bread Making Techniques',
-    description: 'Master the art of artisan bread making...',
-    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-learn-artisan-bread-making-techniques/a-striking-social-media-thumbnail-advertdfs6eor0shwsglim6-mjqqx5wemn1ftju8rabqm0fmqg.png'
+    title: 'Baking Great Bread - Master Baker Henry Hunter\'s Expert Guidance',
+    description: 'Master the art of bread baking with expert recipes, troubleshooting guides, and a vibrant community led by Henry Hunter.',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-join-our-supportive-baking-community/a-warm-inviting-lifestyle-photograph-sho9sttfiagry2spdvvrlstkqbrxrfijer9-kofpmfryhtg.png'
   },
   '/recipes': {
-    title: 'Recipes - Delicious Home Cooking Ideas',
-    description: 'Explore our collection of tested recipes...',
-    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/recipes-delicious-home-cooking-ideas/recipes-thumbnail.png'
+    title: 'Bread Recipes - Baking Great Bread at Home | The Baker\'s Bench',
+    description: 'Discover tested bread recipes from sourdough to sandwich loaves. Master artisan baking with Henry Hunter\'s expert guidance and detailed instructions.',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/bread-recipes-baking-great-bread-at-home-the-bakers-bench/the-bakers-bench2.png'
   },
   '/blog': {
-    title: 'Baking Great Bread at Home - Blog',
-    description: 'Read our latest articles on bread baking...',
-    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-blog/scoring-1200-x-250-px-1280-x-720-px.png'
+    title: 'Baking Great Bread at Home - Blog, Recipes, Tips and Expert Guidance',
+    description: 'Read our latest articles on bread baking techniques, troubleshooting guides, and expert tips from Henry Hunter to master artisan bread making.',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-blog-recipes-tips-and-expert-guidance/untitled-600-x-300-px-1200-x-630-px-1200-x-600-px-1200-x-500-px-1200-x-450-px.png'
   },
   '/recipe-workspace': {
-    title: 'Recipe Work Space - AI-Powered Recipe Creation',
-    description: 'Create and format recipes with our AI-powered studio...',
+    title: 'Recipe Work Space - AI-Powered Recipe Creation and Formatting Studio',
+    description: 'Create and format recipes with our AI-powered studio. Transform your baking ideas into professional recipe cards with expert guidance.',
     image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/recipe-work-space-ai-powered-recipe-creation-and-formatting-studio/sunday-fun-day-1200-x-630-px.png'
   },
-  '/vitale-starter': {
-    title: 'Vitale - Dehydrated Sourdough Starter',
-    description: 'Baking bread in just 3 days with Vitale...',
-    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/vitale-dehydrated-sourdough-starter-baking-bread-in-just-3-days/vitale-thumbnail.png'
+  '/troubleshooting': {
+    title: 'Troubleshooting - Solve Your Bread Baking Challenges and Problems',
+    description: 'Find solutions to common bread baking problems with our comprehensive troubleshooting guide. Expert diagnosis and fixes for perfect bread every time.',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/troubleshooting-solve-your-bread-baking-challenges-and-problems/troubleshooting.png'
   },
   '/glossary': {
     title: 'Glossary - Comprehensive Guide to Bread Baking Terminology',
-    description: 'Learn the language of bread baking...',
+    description: 'Learn the language of bread baking with our comprehensive glossary. Master essential terms and techniques for successful artisan bread making.',
     image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/glossary-comprehensive-guide-to-bread-baking-terminology/a-social-media-thumbnail-1200x630-pixelslylw5ur6td2zimxwbcfkzgggzrg2opro-rpmbfjdtrga.png'
   },
-  '/community': {
-    title: 'Baking Great Bread at Home - Join Our Supportive Baking Community',
-    description: 'Connect with fellow bakers...',
-    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-join-our-supportive-baking-community/a-warm-inviting-lifestyle-photograph-sho9sttfiagry2spdvvrlstkqbrxrfijer9-kofpmfryhtg.png'
-  },
-  '/troubleshooting': {
-    title: 'Troubleshooting - Solve Your Bread Baking Challenges',
-    description: 'Find solutions to common bread baking problems...',
-    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/troubleshooting-solve-your-bread-baking-challenges-and-problems/troubleshooting.png'
+  '/library': {
+    title: 'The Library - Bread Baking Books and Resources Collection',
+    description: 'Explore curated bread baking books and resources. Build your knowledge with expert recommendations from Henry Hunter\'s personal library.',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/the-library-bread-baking-books-and-resources-collection/the-library.png'
   },
   '/books': {
     title: 'The Library - Bread Baking Books and Resources Collection',
-    description: 'Your personal recipe collection...',
+    description: 'Explore curated bread baking books and resources. Build your knowledge with expert recommendations from Henry Hunter\'s personal library.',
     image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/the-library-bread-baking-books-and-resources-collection/the-library.png'
+  },
+  '/vitale-starter': {
+    title: 'Vitale Sourdough Starter - Baking Bread in 3 Days | Baking Great Bread',
+    description: 'Get Vitale starter - baking bread in just 3 days. $14 sachet builds two starters. Professionally dehydrated, monthly tested, guaranteed to work.',
+    image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/vitale-dehydrated-sourdough-starter-baking-bread-in-just-3-days/vitale-thumbnail.png'
   }
 };
 
@@ -65,11 +65,11 @@ const routesToGenerate = [
   '/blog',
   '/recipes',
   '/recipe-workspace',
-  '/vitale-starter',
-  '/glossary',
-  '/community',
   '/troubleshooting',
-  '/books'
+  '/glossary',
+  '/library',
+  '/books',
+  '/vitale-starter'
 ];
 
 function generateHtmlForRoute(route, templateContent) {
