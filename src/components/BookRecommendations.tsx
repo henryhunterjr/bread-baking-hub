@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { BookCoverImage } from '@/components/ui/OptimizedImage';
 import { Star, BookOpen, Target, Award, TrendingUp } from 'lucide-react';
 
 interface Book {
@@ -196,12 +197,10 @@ export const BookRecommendations = ({
               onClick={() => onSelectBook(book.id)}
             >
               <div className="aspect-[2/3] bg-gradient-to-br from-muted/20 to-muted/40 rounded-lg overflow-hidden mb-2 group-hover:shadow-lg transition-all duration-200">
-                <img
+                <BookCoverImage
                   src={book.coverImage || `/api/placeholder/200/300`}
-                  alt={book.title}
+                  title={book.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                  loading="lazy"
-                  decoding="async"
                 />
               </div>
               

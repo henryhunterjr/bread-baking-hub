@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { SeasonalRecipe, Season, getSeasonalColors } from '@/hooks/useSeasonalRecipes';
 import { getRecipeImage } from '@/utils/recipeImageMapping';
+import { RecipeCardImage } from '@/components/ui/OptimizedImage';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { RecipeShareButton } from '@/components/RecipeShareButton';
@@ -82,20 +83,10 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
       >
         {/* Hero Image */}
         <div className="relative h-48 overflow-hidden">
-          <img
+          <RecipeCardImage
             src={getRecipeImage(recipe.slug, recipe.image_url)}
             alt={recipe.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            loading="lazy"
-            decoding="async"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw"
-            onError={(e) => {
-              if (import.meta.env.DEV) console.error("Image failed to load for:", recipe.slug, "URL:", e.currentTarget.src);
-              const fallback = getRecipeImage(recipe.slug, undefined);
-              if (e.currentTarget.src !== fallback) {
-                e.currentTarget.src = fallback;
-              }
-            }}
           />
 
           {/* Rating overlay */}

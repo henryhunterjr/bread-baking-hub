@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { BookCoverImage } from '@/components/ui/OptimizedImage';
 
 // Import all book covers
 import sourdoughCover from "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png";
@@ -76,8 +77,9 @@ const BookshelfDisplay = ({ onPreview }: BookshelfDisplayProps) => {
                     }}
                     onClick={() => onPreview(book.id)}
                   >
-                    <img
+                    <BookCoverImage
                       src={book.cover}
+                      title={book.title}
                       alt={book.title}
                       className="h-40 w-auto object-cover rounded shadow-lg border border-gray-300 group-hover:shadow-2xl group-hover:brightness-110"
                       style={{
@@ -112,8 +114,9 @@ const BookshelfDisplay = ({ onPreview }: BookshelfDisplayProps) => {
                     }}
                     onClick={() => onPreview(book.id)}
                   >
-                    <img
+                    <BookCoverImage
                       src={book.cover}
+                      title={book.title}
                       alt={book.title}
                       className="h-40 w-auto object-cover rounded shadow-lg border border-gray-300 group-hover:shadow-2xl group-hover:brightness-110"
                       style={{

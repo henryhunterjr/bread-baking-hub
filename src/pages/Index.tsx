@@ -23,11 +23,21 @@ const SeasonalFilters = React.lazy(() => import("../components/SeasonalFilters")
 import { sanitizeStructuredData } from '@/utils/sanitize';
 import { useState, Suspense, lazy } from 'react';
 import { useSeasonalRecipes } from '@/hooks/useSeasonalRecipes';
+import { useImageOptimization, CRITICAL_IMAGES } from '@/hooks/useImageOptimization';
+import { ImagePreloader } from '@/components/ui/PerformanceCriticalImage';
 
 const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
+  // Initialize image optimization
+  const { preloadCriticalImages } = useImageOptimization();
+  
+  // Preload critical images for LCP optimization
+  React.useEffect(() => {
+    preloadCriticalImages(CRITICAL_IMAGES);
+  }, [preloadCriticalImages]);
   
   // Add seasonal recipes functionality for search and featured recipes
   const {
@@ -152,6 +162,7 @@ const Index = () => {
         </ul>
       </nav>
       <main id="main-content" role="main" tabIndex={-1}>
+        <ImagePreloader images={CRITICAL_IMAGES} />
         <HeroSection />
         <React.Suspense fallback={null}>
           <SocialProofBanner />
