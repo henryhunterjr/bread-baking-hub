@@ -79,7 +79,7 @@ const Recipes = () => {
         <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/bread-recipes-baking-great-bread-at-home-the-bakers-bench/the-bakers-bench2.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Freshly baked artisan sourdough loaf on wooden cutting board next to open recipe book in warm kitchen setting - The Baker's Bench Recipes" />
+        <meta property="og:image:alt" content="Fresh bread recipes collection with artisan loaves and baking tools - The Baker's Bench Recipe Hub" />
         <meta property="og:site_name" content="Baking Great Bread at Home" />
         
         {/* Twitter Card */}
@@ -87,15 +87,15 @@ const Recipes = () => {
         <meta name="twitter:title" content="Recipes | Sourdough for the Rest of Us" />
         <meta name="twitter:description" content="Skip the intimidation. Practical sourdough techniques that turn flour, water, and time into something your family will ask for again and again." />
         <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/bread-recipes-baking-great-bread-at-home-the-bakers-bench/the-bakers-bench2.png" />
-        <meta name="twitter:image:alt" content="Freshly baked artisan sourdough loaf on wooden cutting board next to open recipe book in warm kitchen setting - The Baker's Bench Recipes" />
+        <meta name="twitter:image:alt" content="Fresh bread recipes collection with artisan loaves and baking tools - The Baker's Bench Recipe Hub" />
       </Helmet>
       
       <main id="main-content" role="main" tabIndex={-1}>
         {/* Hero Section */}
         <div className="relative h-[600px] overflow-hidden">
           <ResponsiveImage 
-            src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/sourdough-for-the-rest-of-us/sound-note-for-the-rest-of-us-1200-x-675-px-1200-x-675-px-1200-x-400-px.png"
-            alt="Sourdough for the Rest of Us"
+            src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/bread-recipes-baking-great-bread-at-home-the-bakers-bench/the-bakers-bench2.png"
+            alt="Fresh bread recipes collection with artisan loaves and baking tools - The Baker's Bench Recipe Hub"
             className="w-full h-full object-cover"
             loading="lazy"
           />
@@ -169,8 +169,8 @@ const Recipes = () => {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {recipes.map((recipe, index) => {
-                // Insert book section after 5th recipe (index 4)
-                if (index === 4) {
+                // Insert book section after 6th recipe (index 5) - moved down for better flow
+                if (index === 5) {
                   return (
                     <>
                       <motion.div
@@ -185,35 +185,42 @@ const Recipes = () => {
                         />
                       </motion.div>
                       
-                      {/* Book Section - spans full width */}
+                      {/* Compact Book Section */}
                       <motion.div
                         key="book-section"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.05 * (index + 1) }}
-                        className="col-span-full bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 rounded-2xl p-8 my-8 border border-amber-200/30 dark:border-amber-800/30"
+                        className="col-span-full bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 rounded-xl p-6 my-6 border border-amber-200/30 dark:border-amber-800/30"
                       >
-                        <div className="max-w-4xl mx-auto text-center">
-                          <h2 className="text-3xl font-bold text-foreground mb-6">
-                            Sourdough for the Rest of Us
-                          </h2>
-                          <p className="text-lg text-muted-foreground mb-4 max-w-2xl mx-auto">
-                            Skip the intimidation. This isn't about perfect Instagram loaves or complex schedules that don't fit real life.
-                          </p>
-                          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-                            No fancy equipment. No rigid timelines. Just practical techniques that turn flour, water, and time into something your family will ask for again and again.
-                          </p>
-                          <p className="text-xl font-semibold text-foreground mb-6">
-                            Ready to make sourdough work for you?
-                          </p>
-                          <a 
-                            href="https://a.co/d/i5p2huV"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-200 text-lg"
-                          >
-                            Get Your Copy
-                          </a>
+                        <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center gap-6">
+                          {/* Book Image */}
+                          <div className="flex-shrink-0">
+                            <ResponsiveImage 
+                              src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/sourdough-for-the-rest-of-us/sound-note-for-the-rest-of-us-1200-x-675-px-1200-x-675-px-1200-x-400-px.png"
+                              alt="Sourdough for the Rest of Us book cover"
+                              className="w-32 h-auto rounded-lg shadow-md"
+                              loading="lazy"
+                            />
+                          </div>
+                          
+                          {/* Content */}
+                          <div className="flex-1 text-center md:text-left">
+                            <h2 className="text-2xl font-bold text-foreground mb-3">
+                              Get the Intuition
+                            </h2>
+                            <p className="text-base text-muted-foreground mb-4">
+                              Skip the intimidation. Practical techniques that turn flour, water, and time into something your family will ask for again and again.
+                            </p>
+                            <a 
+                              href="https://a.co/d/i5p2huV"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200"
+                            >
+                              Get Your Copy
+                            </a>
+                          </div>
                         </div>
                       </motion.div>
                     </>
