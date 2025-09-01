@@ -101,36 +101,18 @@ const Recipes = () => {
           />
         </div>
 
-        {/* Content Below Hero */}
-        <div className="bg-background py-8">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h1 className="text-4xl font-bold text-foreground mb-6">
-              Sourdough for the Rest of Us
-            </h1>
-            <p className="text-xl text-muted-foreground mb-4 max-w-3xl mx-auto">
-              Skip the intimidation. This isn't about perfect Instagram loaves or complex schedules that don't fit real life.
-            </p>
-            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              No fancy equipment. No rigid timelines. Just practical techniques that turn flour, water, and time into something your family will ask for again and again.
-            </p>
-            <p className="text-2xl font-semibold text-foreground mb-8">
-              Ready to make sourdough work for you?
-            </p>
-            <a 
-              href="https://a.co/d/i5p2huV"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-200 text-lg"
-            >
-              Get Your Copy
-            </a>
-          </div>
-        </div>
-
         <div className="max-w-7xl mx-auto px-4 py-8">
           {/* Find Your Perfect Recipe Search */}
-          <div className="border-t border-border/50 pt-8">
-            <motion.div
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-foreground mb-6">
+              Start Baking Now
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Jump right into your next favorite recipe. No intimidation, just great bread.
+            </p>
+          </div>
+
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -147,8 +129,8 @@ const Recipes = () => {
               onDifficultyChange={setSelectedDifficulty}
               resultCount={recipes.length}
             />
-            </motion.div>
-          </div>
+          </motion.div>
+
           {/* Featured Recipes Section */}
           {!loading && featuredRecipes.length > 0 && (
             <FeaturedRecipes 
@@ -157,8 +139,7 @@ const Recipes = () => {
             />
           )}
 
-
-          {/* Recipe Grid */}
+          {/* Recipe Grid with Book Section Inserted */}
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(9)].map((_, i) => (
@@ -187,19 +168,72 @@ const Recipes = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
-              {recipes.map((recipe, index) => (
-                <motion.div
-                  key={recipe.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.05 * index }}
-                >
-                  <SeasonalRecipeCard 
-                    recipe={recipe} 
-                    onRecipeClick={handleRecipeClick}
-                  />
-                </motion.div>
-              ))}
+              {recipes.map((recipe, index) => {
+                // Insert book section after 5th recipe (index 4)
+                if (index === 4) {
+                  return (
+                    <>
+                      <motion.div
+                        key={recipe.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.05 * index }}
+                      >
+                        <SeasonalRecipeCard 
+                          recipe={recipe} 
+                          onRecipeClick={handleRecipeClick}
+                        />
+                      </motion.div>
+                      
+                      {/* Book Section - spans full width */}
+                      <motion.div
+                        key="book-section"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.05 * (index + 1) }}
+                        className="col-span-full bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 rounded-2xl p-8 my-8 border border-amber-200/30 dark:border-amber-800/30"
+                      >
+                        <div className="max-w-4xl mx-auto text-center">
+                          <h2 className="text-3xl font-bold text-foreground mb-6">
+                            Sourdough for the Rest of Us
+                          </h2>
+                          <p className="text-lg text-muted-foreground mb-4 max-w-2xl mx-auto">
+                            Skip the intimidation. This isn't about perfect Instagram loaves or complex schedules that don't fit real life.
+                          </p>
+                          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+                            No fancy equipment. No rigid timelines. Just practical techniques that turn flour, water, and time into something your family will ask for again and again.
+                          </p>
+                          <p className="text-xl font-semibold text-foreground mb-6">
+                            Ready to make sourdough work for you?
+                          </p>
+                          <a 
+                            href="https://a.co/d/i5p2huV"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-200 text-lg"
+                          >
+                            Get Your Copy
+                          </a>
+                        </div>
+                      </motion.div>
+                    </>
+                  );
+                }
+                
+                return (
+                  <motion.div
+                    key={recipe.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.05 * index }}
+                  >
+                    <SeasonalRecipeCard 
+                      recipe={recipe} 
+                      onRecipeClick={handleRecipeClick}
+                    />
+                  </motion.div>
+                );
+              })}
             </motion.div>
           )}
         </div>
