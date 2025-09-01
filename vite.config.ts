@@ -53,10 +53,10 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          // ❌ removed: vendor chunk that previously split react/react-dom/react-router-dom
-          // Keep the rest of your chunking as-is:
+          // Core vendor chunk
+          vendor: ["react", "react-dom", "react-router-dom"],
 
-          // UI Components
+          // UI Components - split heavy UI libraries
           ui: [
             "@radix-ui/react-dialog",
             "@radix-ui/react-dropdown-menu",
@@ -74,24 +74,24 @@ export default defineConfig(({ mode }) => ({
           // Data & Query
           data: ["@tanstack/react-query", "@supabase/supabase-js"],
 
-          // Rich Content
+          // Rich Content - lazy loaded
           editor: ["@uiw/react-md-editor", "react-markdown", "remark-gfm"],
 
-          // Charts & Visualization
+          // Charts & Visualization - lazy loaded
           charts: ["recharts"],
 
-          // Heavy Libraries (lazy-loaded)
+          // Heavy Libraries - lazy loaded
           compression: ["browser-image-compression"],
           pdf: ["html2pdf.js"],
 
-          // Framer Motion (animation heavy)
+          // Framer Motion - lazy loaded
           animation: ["framer-motion"],
         },
       },
     },
 
     // Enhanced production optimization
-    minify: "esbuild",
+    minify: "terser", // Switch to Terser for better compression
     sourcemap: false,
     chunkSizeWarningLimit: 500,
     cssCodeSplit: true,
@@ -101,6 +101,15 @@ export default defineConfig(({ mode }) => ({
       moduleSideEffects: false,
       propertyReadSideEffects: false,
       unknownGlobalSideEffects: false,
+    },
+
+    // Compression settings
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console.log in production
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info'],
+      },
     },
   },
 
