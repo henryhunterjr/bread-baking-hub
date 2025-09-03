@@ -12,6 +12,7 @@ export interface FormattedRecipe {
   method: any;
   tips: string[];
   troubleshooting: any;
+  tags?: string[];
 }
 
 export interface RecipeWithImage {

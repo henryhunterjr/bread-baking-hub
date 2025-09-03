@@ -243,9 +243,15 @@ export const RecipeUploadSection = ({ onRecipeFormatted, onError }: RecipeUpload
             }
           }
           
+          // Use AI-generated tags from the recipe, fallback to course/cuisine
           const tags: string[] = [];
-          if (data.recipe.course) tags.push(String(data.recipe.course));
-          if (data.recipe.cuisine) tags.push(String(data.recipe.cuisine));
+          if (data.recipe.tags && Array.isArray(data.recipe.tags)) {
+            tags.push(...data.recipe.tags);
+          } else {
+            // Fallback to course/cuisine if no AI-generated tags
+            if (data.recipe.course) tags.push(String(data.recipe.course));
+            if (data.recipe.cuisine) tags.push(String(data.recipe.cuisine));
+          }
 
           const { data: upsertData, error: upsertError } = await supabase.functions.invoke('upsert-recipe', {
             body: {
