@@ -32,6 +32,7 @@ const HeroSection = () => {
               alt="Beautiful artisan bread with perfect crumb structure showing heart-shaped pattern"
               className="rounded-2xl shadow-stone w-full aspect-[4/3]"
               priority={true}
+              loading="eager"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
             <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground p-4 rounded-lg shadow-warm" aria-label="Community stats">

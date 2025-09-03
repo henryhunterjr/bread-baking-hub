@@ -20,12 +20,32 @@
     <link rel="dns-prefetch" href="//vercel.app">
     <link rel="dns-prefetch" href="//lovable.app">
 
-    <!-- Preload only critical fonts (above fold only) -->
-    <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v35/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvXDXbtM.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyeMZhrib2Bg-4.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Preload critical hero image for LCP -->
+    <link rel="preload" as="image" 
+          href="/lovable-uploads/db15ab36-18a2-4103-b9d5-a5e58af2b2a2.png"
+          fetchpriority="high">
+
+    <!-- Self-hosted font preloads -->
+    <link rel="preload" href="/fonts/Inter-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/PlayfairDisplay-regular.woff2" as="font" type="font/woff2" crossorigin>
     
-    <!-- Optimized Google Fonts - only weights used above fold -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500&display=swap">
+    <!-- Self-hosted font definitions -->
+    <style>
+      @font-face {
+        font-family: 'Inter';
+        src: url('/fonts/Inter-regular.woff2') format('woff2');
+        font-display: swap;
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Playfair Display';
+        src: url('/fonts/PlayfairDisplay-regular.woff2') format('woff2');
+        font-display: swap;
+        font-weight: 400;
+        font-style: normal;
+      }
+    </style>
 
     <!-- Dynamic Open Graph Meta Tags -->
     <meta property="og:type" content="website" />
