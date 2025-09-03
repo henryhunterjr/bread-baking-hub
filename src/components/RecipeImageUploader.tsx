@@ -45,37 +45,43 @@ export const RecipeImageUploader = ({
   };
 
   const handleUpload = async () => {
-    if (!selectedFile || !user) return;
+    if (!selectedFile) return;
 
     setIsUploading(true);
     setUploadProgress(0);
 
     try {
-      const fileExt = selectedFile.name.split('.').pop();
-      const fileName = `${user.id}/${Date.now()}_recipe.${fileExt}`;
+      // Create form data for edge function upload
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('recipeSlug', recipeId || `recipe-${Date.now()}`);
 
       // Simulate progress for better UX
       const progressInterval = setInterval(() => {
         setUploadProgress(prev => Math.min(prev + 10, 90));
       }, 100);
 
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('recipe-uploads')
-        .upload(fileName, selectedFile);
+      // Use the upload edge function (same as recipe upload flow)
+      const response = await fetch('https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/upload-recipe-image', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`,
+        },
+      });
 
       clearInterval(progressInterval);
 
-      if (uploadError) {
-        throw uploadError;
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || result.details || `Upload failed (${response.status})`);
       }
 
-      // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('recipe-uploads')
-        .getPublicUrl(uploadData.path);
-
+      const imageUrl = result.uploadedUrl || result.imageUrl;
+      
       setUploadProgress(100);
-      onImageUploaded(publicUrl);
+      onImageUploaded(imageUrl);
       setSelectedFile(null);
 
       toast({
@@ -83,11 +89,11 @@ export const RecipeImageUploader = ({
         description: "Recipe image uploaded successfully!",
       });
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error uploading image:', error);
       toast({
         title: "Upload failed",
-        description: "Failed to upload image. Please try again.",
+        description: error.message || "Failed to upload image. Please try again.",
         variant: "destructive",
       });
     } finally {
