@@ -1539,38 +1539,6 @@ export type Database = {
           title: string | null
           updated_at: string | null
         }
-        Insert: {
-          author_display_name?: never
-          content?: string | null
-          created_at?: string | null
-          excerpt?: never
-          hero_image_url?: string | null
-          id?: string | null
-          inline_image_url?: string | null
-          published_at?: string | null
-          slug?: string | null
-          social_image_url?: string | null
-          subtitle?: string | null
-          tags?: string[] | null
-          title?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          author_display_name?: never
-          content?: string | null
-          created_at?: string | null
-          excerpt?: never
-          hero_image_url?: string | null
-          id?: string | null
-          inline_image_url?: string | null
-          published_at?: string | null
-          slug?: string | null
-          social_image_url?: string | null
-          subtitle?: string | null
-          tags?: string[] | null
-          title?: string | null
-          updated_at?: string | null
-        }
         Relationships: []
       }
     }
