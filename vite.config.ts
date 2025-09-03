@@ -103,12 +103,17 @@ export default defineConfig(({ mode }) => ({
       unknownGlobalSideEffects: false,
     },
 
-    // Compression settings
+    // Enhanced compression settings
     terserOptions: {
       compress: {
         drop_console: true, // Remove console.log in production
         drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info'],
+        pure_funcs: ['console.log', 'console.info', 'console.warn'],
+        unused: true, // Remove unused code
+        dead_code: true, // Remove dead code
+      },
+      mangle: {
+        safari10: true, // Fix Safari 10 issues
       },
     },
   },
