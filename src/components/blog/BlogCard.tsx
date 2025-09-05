@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { BlogPost } from '@/utils/blogFetcher';
 import { trackBlogClick } from '@/utils/blogEvents';
 import BlogPostMeta from './BlogPostMeta';
@@ -30,12 +31,10 @@ const BlogCard = ({ post, categories = [], enableSEO = false }: BlogCardProps) =
   return (
     <article className="bg-card rounded-xl overflow-hidden shadow-stone hover:shadow-warm transition-all duration-300 group">
       {enableSEO && <BlogPostSEO post={post} />}
-      <a 
-        href={post.link}
+      <Link 
+        to={post.link}
         onClick={handlePostClick}
         className="block"
-        target="_blank"
-        rel="noopener noreferrer"
       >
         <div className="relative overflow-hidden">
           <div className="w-full h-48 bg-muted">
@@ -57,19 +56,17 @@ const BlogCard = ({ post, categories = [], enableSEO = false }: BlogCardProps) =
             {post.readTime}
           </div>
         </div>
-      </a>
+      </Link>
       <div className="p-6 space-y-4">
-        <a 
-          href={post.link}
+        <Link 
+          to={post.link}
           onClick={handlePostClick}
           className="block"
-          target="_blank"
-          rel="noopener noreferrer"
         >
           <h3 className="text-xl font-bold text-card-foreground line-clamp-2 group-hover:text-primary transition-colors">
             {post.title}
           </h3>
-        </a>
+        </Link>
         
         <BlogPostMeta 
           post={post} 
@@ -82,16 +79,14 @@ const BlogCard = ({ post, categories = [], enableSEO = false }: BlogCardProps) =
         <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
         
         <div className="flex items-center justify-between">
-          <a 
-            href={`/go?u=${encodeURIComponent(post.link)}`}
+          <Link 
+            to={post.link}
             onClick={handlePostClick}
             className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors group-hover:underline"
-            target="_self"
-            rel="noopener noreferrer"
           >
             Read More
             <ArrowRight className="ml-1 w-4 h-4" />
-          </a>
+          </Link>
           
           <SocialShare
             url={post.link}

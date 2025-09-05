@@ -299,11 +299,13 @@ const BlogPost = () => {
         const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase();
         console.log('🔍 Normalized slug:', normalizedSlug);
         
-        // Try Supabase first - liberal fetch, validate in JS
+        // Try Supabase first - use both exact slug and normalized slug for better matching
         const { data: supabasePost, error: supabaseError } = await supabase
           .from('blog_posts')
           .select('*')
-          .eq('slug', normalizedSlug)
+          .or(`slug.eq.${slug},slug.eq.${normalizedSlug}`)
+          .is('is_draft', false)
+          .not('published_at', 'is', null)
           .maybeSingle();
 
         console.log('📊 Supabase query result:', {
@@ -311,21 +313,19 @@ const BlogPost = () => {
           error: supabaseError?.message,
           title: supabasePost?.title,
           isDraft: supabasePost?.is_draft,
-          publishedAt: supabasePost?.published_at
+          publishedAt: supabasePost?.published_at,
+          slug: supabasePost?.slug
         });
 
-        // Guard in JS (instead of SQL filters)
-        const isPublishable = !!supabasePost && 
-          supabasePost.is_draft === false && 
-          !!supabasePost.published_at;
-
-        if (isPublishable) {
+        // Post should already be filtered by SQL query, but double-check
+        if (supabasePost) {
           console.info('BLOG_DETAIL', { 
             slug: normalizedSlug, 
             uaType: 'human', 
             used: 'supabase', 
             status: 200, 
-            note: `Found published post: ${supabasePost.title}`
+            note: `Found published post: ${supabasePost.title}`,
+            actualSlug: supabasePost.slug
           });
           
           // Convert Supabase post to BlogPost format
@@ -374,16 +374,8 @@ const BlogPost = () => {
           return;
         }
 
-        // If we reach here, either no Supabase post found or not publishable
-        if (supabasePost && !isPublishable) {
-          console.info('BLOG_DETAIL', { 
-            slug: normalizedSlug, 
-            uaType: 'human', 
-            used: 'none', 
-            status: 'draft', 
-            note: 'Supabase post found but not publishable (draft or no publish date)'
-          });
-        } else if (supabaseError) {
+        // If we reach here, no Supabase post found or query error
+        if (supabaseError) {
           console.info('BLOG_DETAIL', { 
             slug: normalizedSlug, 
             uaType: 'human', 
@@ -397,7 +389,7 @@ const BlogPost = () => {
             uaType: 'human', 
             used: 'none', 
             status: 'not-found', 
-            note: 'No Supabase post found for slug'
+            note: 'No published Supabase post found for slug'
           });
         }
 
