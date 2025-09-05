@@ -1,15 +1,25 @@
 import { NextRequest } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 import { renderOgHtml } from '../../src/server/og-template';
 import { 
   isBotRequest, 
   botHeaders, 
+  baseHeaders,
   humanRedirectHeaders, 
   absoluteUrl, 
   resolveSocialImage,
-  supabase,
   stripHtml,
-  decodeEntities
+  decodeEntities,
+  defaultOgForHome
 } from '../_shared';
+
+// Lazy-init Supabase to prevent crashes on missing env vars
+function getSupabase() {
+  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
+  const key = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
+  if (!url || !key) return null;
+  return createClient(url, key);
+}
 
 export default async function handler(req: NextRequest) {
   const { pathname } = new URL(req.url);
@@ -18,8 +28,24 @@ export default async function handler(req: NextRequest) {
   
   const userAgent = req.headers.get('user-agent');
   const isBot = isBotRequest(userAgent);
+  const supabase = getSupabase();
   
   console.info(JSON.stringify({ route: 'share', slug, isBot, status: 'processing' }));
+  
+  // If no Supabase env vars, never crash
+  if (!supabase) {
+    if (!isBot) {
+      return new Response(null, { 
+        status: 301, 
+        headers: humanRedirectHeaders(absoluteUrl(`/blog/${slug}`))
+      });
+    }
+    // Bot fallback: minimal OG so validators don't 500
+    return new Response(renderOgHtml(defaultOgForHome()), {
+      status: 200,
+      headers: baseHeaders({ bot: true }),
+    });
+  }
   
   // Handle empty slug
   if (!slug) {
@@ -29,12 +55,7 @@ export default async function handler(req: NextRequest) {
         headers: humanRedirectHeaders(absoluteUrl('/'))
       });
     }
-    const html = renderOgHtml({
-      title: 'Baking Great Bread',
-      description: 'Master the art of bread baking with expert recipes, troubleshooting guides, and a vibrant community.',
-      canonical: absoluteUrl('/'),
-      image: { url: absoluteUrl('/og/default.jpg'), width: 1200, height: 630, alt: 'Baking Great Bread' }
-    });
+    const html = renderOgHtml(defaultOgForHome());
     return new Response(html, { status: 200, headers: botHeaders() });
   }
   
@@ -67,14 +88,15 @@ export default async function handler(req: NextRequest) {
   }
   
   try {
-    // Try to fetch from Supabase first (our main content source)
+    // Try to fetch from Supabase first with liberal query but validate in JS
     const { data: supabasePost } = await supabase
       .from('blog_posts')
       .select('*')
       .eq('slug', slug)
-      .single();
+      .maybeSingle();
     
-    if (supabasePost) {
+    // Validate in JS - only show published posts
+    if (supabasePost && !supabasePost.is_draft && supabasePost.published_at) {
       const title = `${supabasePost.title} | Baking Great Bread`;
       const description = supabasePost.excerpt || supabasePost.meta_description || 'Master the art of bread baking with expert recipes and techniques.';
       const canonical = absoluteUrl(`/blog/${slug}`);
@@ -106,7 +128,8 @@ export default async function handler(req: NextRequest) {
     
     
     // Fallback to WordPress proxy if not found in Supabase
-    const wpResponse = await fetch(`https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/blog-proxy?endpoint=posts&slug=${slug}&_embed=true`);
+    const baseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://ojyckskucneljvuqzrsw.supabase.co';
+    const wpResponse = await fetch(`${baseUrl}/functions/v1/blog-proxy?endpoint=posts&slug=${slug}&_embed=true`);
     
     if (wpResponse.ok) {
       const wpPosts = await wpResponse.json();
@@ -146,36 +169,14 @@ export default async function handler(req: NextRequest) {
     }
     
     // Fallback for unknown posts (404)
-    const html = renderOgHtml({
-      title: 'Baking Great Bread',
-      description: 'Master the art of bread baking with expert recipes, troubleshooting guides, and a vibrant community led by Henry Hunter.',
-      canonical: absoluteUrl('/'),
-      image: {
-        url: absoluteUrl('/og/default.jpg'),
-        width: 1200,
-        height: 630,
-        alt: 'Baking Great Bread - Master the Art of Bread Making'
-      }
-    });
-    
+    const html = renderOgHtml(defaultOgForHome());
     return new Response(html, { status: 404, headers: botHeaders() });
     
   } catch (error) {
     console.error('Error in share handler:', error);
     
     // Error fallback
-    const html = renderOgHtml({
-      title: 'Baking Great Bread',
-      description: 'Master the art of bread baking with expert recipes, troubleshooting guides, and a vibrant community led by Henry Hunter.',
-      canonical: absoluteUrl('/'),
-      image: {
-        url: absoluteUrl('/og/default.jpg'),
-        width: 1200,
-        height: 630,
-        alt: 'Baking Great Bread - Master the Art of Bread Making'
-      }
-    });
-    
+    const html = renderOgHtml(defaultOgForHome());
     return new Response(html, { status: 500, headers: botHeaders() });
   }
 }

@@ -1,10 +1,13 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ojyckskucneljvuqzrsw.supabase.co';
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY!;
-
-export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Lazy-init Supabase to prevent crashes on missing env vars
+function getSupabase() {
+  const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
+  const key = process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
+  if (!url || !key) return null;
+  return createClient(url, key);
+}
 
 // Comprehensive bot user agents for social media crawlers
 const BOT_USER_AGENTS = [
@@ -33,14 +36,18 @@ export function isBotRequest(userAgent: string | null): boolean {
   return BOT_USER_AGENTS.some(bot => normalizedUA.includes(bot));
 }
 
-// Header helpers for consistent responses
-export function botHeaders() {
+// Centralized headers with proper status handling
+export function baseHeaders({ bot = false } = {}) {
   return {
     'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800',
+    'Cache-Control': 'public, max-age=0, s-maxage=86400',
     'Vary': 'User-Agent',
-    'X-Robots-Tag': 'noindex'
+    'X-Robots-Tag': bot ? 'noindex' : 'all',
   };
+}
+
+export function botHeaders() {
+  return baseHeaders({ bot: true });
 }
 
 export function humanRedirectHeaders(location: string) {
@@ -56,6 +63,7 @@ export function absoluteUrl(pathOrUrl: string): string {
   if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
   
   const base = process.env.SITE_URL ||
+               process.env.VITE_SITE_URL ||
                process.env.NEXT_PUBLIC_SITE_URL ||
                (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
                'https://bakinggreatbread.com';
@@ -72,15 +80,20 @@ export function resolveSocialImage(
   heroImageUrl?: string,
   updatedAt?: string
 ): string {
-  // Use the unified resolver
-  const { resolveSocialImage: unifiedResolver } = require('../src/utils/resolveSocialImage');
-  
-  return unifiedResolver({
-    social: socialImageUrl,
-    inline: inlineImageUrl,
-    hero: heroImageUrl,
-    updatedAt
-  });
+  const chosen = socialImageUrl || inlineImageUrl || heroImageUrl || '/og/default.jpg';
+  const absolute = absoluteUrl(chosen); // never double-prefix
+  const v = updatedAt ? `?v=${Math.floor(new Date(updatedAt).getTime()/1000)}` : '';
+  return absolute + v;
+}
+
+// Default OG data for fallbacks
+export function defaultOgForHome() {
+  return {
+    title: 'Baking Great Bread',
+    description: 'Master the art of bread baking with expert recipes, troubleshooting guides, and a vibrant community.',
+    canonical: absoluteUrl('/'),
+    image: { url: absoluteUrl('/og/default.jpg'), width: 1200, height: 630, alt: 'Baking Great Bread' }
+  };
 }
 
 export function stripHtml(s: string): string {
@@ -112,6 +125,8 @@ export interface OgPostData {
 }
 
 export async function resolvePostBySlug(slug: string): Promise<OgPostData | null> {
+  const supabase = getSupabase();
+  
   try {
     // Handle test post
     if (slug === 'test-post') {
@@ -131,43 +146,50 @@ export async function resolvePostBySlug(slug: string): Promise<OgPostData | null
       };
     }
     
-    // Try Supabase first
-    const { data: supabasePost } = await supabase
-      .from('blog_posts')
-      .select('*')
-      .eq('slug', slug)
-      .single();
-    
-    if (supabasePost) {
-      const title = `${supabasePost.title} | Baking Great Bread`;
-      const description = supabasePost.subtitle || 'Master the art of bread baking with expert recipes and techniques.';
-      const canonical = absoluteUrl(`/blog/${slug}`);
+    // If no Supabase client, skip to WordPress fallback
+    if (!supabase) {
+      console.warn('No Supabase client available, skipping to WordPress fallback');
+    } else {
+      // Try Supabase first with liberal query but validate in JS
+      const { data: supabasePost } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('slug', slug)
+        .maybeSingle();
       
-      const imageUrl = resolveSocialImage(
-        supabasePost.social_image_url,
-        supabasePost.inline_image_url,
-        supabasePost.hero_image_url,
-        supabasePost.updated_at
-      );
-      
-      return {
-        title,
-        description,
-        canonical,
-        image: {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: supabasePost.title
-        },
-        type: 'article',
-        publishedAt: supabasePost.published_at,
-        modifiedAt: supabasePost.updated_at
-      };
+      // Validate in JS - only show published posts
+      if (supabasePost && !supabasePost.is_draft && supabasePost.published_at) {
+        const title = `${supabasePost.title} | Baking Great Bread`;
+        const description = supabasePost.subtitle || 'Master the art of bread baking with expert recipes and techniques.';
+        const canonical = absoluteUrl(`/blog/${slug}`);
+        
+        const imageUrl = resolveSocialImage(
+          supabasePost.social_image_url,
+          supabasePost.inline_image_url,
+          supabasePost.hero_image_url,
+          supabasePost.updated_at
+        );
+        
+        return {
+          title,
+          description,
+          canonical,
+          image: {
+            url: imageUrl,
+            width: 1200,
+            height: 630,
+            alt: supabasePost.title
+          },
+          type: 'article',
+          publishedAt: supabasePost.published_at,
+          modifiedAt: supabasePost.updated_at
+        };
+      }
     }
     
     // Fallback to WordPress proxy
-    const wpResponse = await fetch(`${SUPABASE_URL}/functions/v1/blog-proxy?endpoint=posts&slug=${slug}&_embed=true`);
+    const baseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://ojyckskucneljvuqzrsw.supabase.co';
+    const wpResponse = await fetch(`${baseUrl}/functions/v1/blog-proxy?endpoint=posts&slug=${slug}&_embed=true`);
     
     if (wpResponse.ok) {
       const wpPosts = await wpResponse.json();

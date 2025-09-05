@@ -19,6 +19,7 @@ function absUrl(pathOrUrl: string): string {
   const base = 
     (typeof window !== 'undefined' ? window.location.origin : '') ||
     process.env.SITE_URL ||
+    process.env.VITE_SITE_URL ||
     process.env.NEXT_PUBLIC_SITE_URL ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
     'https://bakinggreatbread.com';
