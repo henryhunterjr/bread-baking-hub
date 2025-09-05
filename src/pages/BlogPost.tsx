@@ -295,32 +295,18 @@ const BlogPost = () => {
         console.log('Looking for blog post with slug:', slug);
         console.log('Full URL pathname:', window.location.pathname);
         
-        // Find the post in Supabase (dashboard-created posts only)
+        // Direct slug lookup: Supabase first, WordPress fallback
         console.log('Searching for Supabase post with slug:', slug);
         
-        // First try with is_draft = false (published posts)
+        // Normalize slug (lowercase, trim)
+        const normalizedSlug = slug.toLowerCase().trim();
+        
+        // Try Supabase first
         let { data: supabasePost, error: supabaseError } = await supabase
           .from('blog_posts')
           .select('*')
-          .eq('slug', slug)
-          .eq('is_draft', false)
+          .eq('slug', normalizedSlug)
           .single();
-
-        // If not found, try with any draft status (in case it's still marked as draft)
-        if (!supabasePost && supabaseError) {
-          console.log('Post not found with is_draft=false, trying any draft status...');
-          const { data: draftPost, error: draftError } = await supabase
-            .from('blog_posts')
-            .select('*')
-            .eq('slug', slug)
-            .single();
-          
-          if (draftPost) {
-            console.log('Found post with draft status:', draftPost.is_draft);
-            supabasePost = draftPost;
-            supabaseError = draftError;
-          }
-        }
 
         if (supabasePost && !supabaseError) {
           console.log('Found Supabase post:', supabasePost.title, 'Draft status:', supabasePost.is_draft);
@@ -369,7 +355,66 @@ const BlogPost = () => {
           return;
         } else {
           console.log('Supabase query error:', supabaseError);
-          console.log('No Supabase post found with slug:', slug);
+          console.log('No Supabase post found, trying WordPress proxy...');
+          
+          // Fallback to WordPress proxy
+          try {
+            const wpResponse = await fetch(`https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/blog-proxy?endpoint=posts&slug=${normalizedSlug}&_embed=true`);
+            
+            if (wpResponse.ok) {
+              const wpPosts = await wpResponse.json();
+              const wpPost = wpPosts[0];
+              
+              if (wpPost) {
+                console.log('Found WordPress post:', wpPost.title.rendered);
+                
+                // Convert WordPress post to BlogPost format
+                const convertedPost: BlogPost = {
+                  id: wpPost.id,
+                  title: wpPost.title.rendered,
+                  excerpt: wpPost.excerpt.rendered.replace(/<[^>]*>/g, '').slice(0, 160),
+                  author: {
+                    id: 1,
+                    name: 'Henry Hunter',
+                    description: 'Master Baker',
+                    avatar: '/placeholder-avatar.png'
+                  },
+                  date: new Date(wpPost.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  }),
+                  modified: wpPost.modified,
+                  image: wpPost._embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
+                  imageAlt: wpPost._embedded?.['wp:featuredmedia']?.[0]?.alt_text || wpPost.title.rendered,
+                  link: `${window.location.origin}/blog/${normalizedSlug}`,
+                  readTime: `${Math.ceil(wpPost.content.rendered.split(' ').length / 200)} min read`,
+                  categories: wpPost._embedded?.['wp:term']?.[0] || [],
+                  tags: wpPost._embedded?.['wp:term']?.[1] || [],
+                  freshness: {
+                    daysAgo: Math.floor((new Date().getTime() - new Date(wpPost.date).getTime()) / (1000 * 60 * 60 * 24)),
+                    label: 'Recently published'
+                  }
+                };
+                
+                setPost(convertedPost);
+                
+                // Set social image from featured media
+                const featuredMedia = wpPost._embedded?.['wp:featuredmedia']?.[0];
+                const finalSocialImageUrl = getSocialImageUrl(
+                  featuredMedia?.source_url,
+                  undefined,
+                  heroBanner
+                );
+                setSocialImageUrl(finalSocialImageUrl);
+                
+                return;
+              }
+            }
+          } catch (wpError) {
+            console.error('WordPress fallback failed:', wpError);
+          }
+          
           setError('Blog post not found');
         }
       } catch (err) {

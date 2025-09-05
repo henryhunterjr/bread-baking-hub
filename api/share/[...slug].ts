@@ -1,108 +1,15 @@
 import { NextRequest } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { renderOgHtml } from '../../src/server/og-template';
-
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ojyckskucneljvuqzrsw.supabase.co';
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY!;
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-// Comprehensive bot user agents for social media crawlers
-const BOT_USER_AGENTS = [
-  'facebookexternalhit',
-  'facebot',
-  'twitterbot',
-  'linkedinbot',
-  'slackbot-linkexpanding',
-  'slackbot',
-  'discordbot',
-  'whatsapp',
-  'telegrambot',
-  'skypeuripreview',
-  'googlebot',
-  'google-structured-data-testing-tool',
-  'pinterestbot',
-  'redditbot',
-  'applebot',
-  'bingbot',
-  'yandexbot'
-];
-
-function isBotRequest(userAgent: string | null): boolean {
-  if (!userAgent) return false;
-  const normalizedUA = userAgent.toLowerCase();
-  return BOT_USER_AGENTS.some(bot => normalizedUA.includes(bot));
-}
-
-// Header helpers for consistent responses
-function botHeaders() {
-  return {
-    'Content-Type': 'text/html; charset=utf-8',
-    'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800',
-    'Vary': 'User-Agent',
-    'X-Robots-Tag': 'noindex'
-  };
-}
-
-function humanRedirectHeaders(location: string) {
-  return {
-    'Location': location,
-    'Cache-Control': 'public, max-age=0, s-maxage=300',
-    'Vary': 'User-Agent',
-    'Content-Type': 'text/plain; charset=utf-8'
-  };
-}
-
-function absoluteUrl(pathOrUrl: string): string {
-  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
-  
-  const base = process.env.SITE_URL ||
-               process.env.NEXT_PUBLIC_SITE_URL ||
-               (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
-               'https://bread-baking-hub.vercel.app';
-               
-  if (!base) throw new Error('Site URL not configured');
-  
-  const normalizedPath = pathOrUrl.startsWith('/') ? pathOrUrl : `/${pathOrUrl}`;
-  return new URL(normalizedPath, base).toString();
-}
-
-function resolveSocialImage(
-  socialImageUrl?: string,
-  inlineImageUrl?: string,
-  heroImageUrl?: string,
-  updatedAt?: string
-): string {
-  const defaultImage = '/og/default.jpg';
-  const selectedImage = [socialImageUrl, inlineImageUrl, heroImageUrl, defaultImage]
-    .find(Boolean)!
-    .toString()
-    .trim();
-  
-  const absoluteImageUrl = absoluteUrl(selectedImage);
-  
-  // Add stable cache-busting based on updatedAt
-  if (updatedAt) {
-    const timestamp = new Date(updatedAt).getTime();
-    const separator = absoluteImageUrl.includes('?') ? '&' : '?';
-    return `${absoluteImageUrl}${separator}v=${timestamp}`;
-  }
-  
-  return absoluteImageUrl;
-}
-
-function stripHtml(s: string): string {
-  return s.replace(/<[^>]*>/g, '');
-}
-
-function decodeEntities(s: string): string {
-  return s.replace(/&(#\d+|#x[0-9a-f]+|[a-z]+);/gi, (m) => {
-    const txt = new Map([['amp','&'],['lt','<'],['gt','>'],['quot','"'],['apos',"'"]]);
-    if (m.startsWith('&#x')) return String.fromCharCode(parseInt(m.slice(3,-1),16));
-    if (m.startsWith('&#')) return String.fromCharCode(parseInt(m.slice(2,-1),10));
-    return txt.get(m.slice(1,-1)) ?? m;
-  });
-}
+import { 
+  isBotRequest, 
+  botHeaders, 
+  humanRedirectHeaders, 
+  absoluteUrl, 
+  resolveSocialImage,
+  supabase,
+  stripHtml,
+  decodeEntities
+} from '../_shared';
 
 export default async function handler(req: NextRequest) {
   const { pathname } = new URL(req.url);

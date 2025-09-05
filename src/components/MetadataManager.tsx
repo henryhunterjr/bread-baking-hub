@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 import { absoluteUrl, socialImageUrl } from '@/utils/absoluteUrl';
 import { getBestSocialImage, processSocialImage } from '@/utils/socialImageOptimizer';
 import { enableMetadataDebugMode } from '@/utils/metadataDebugger';
@@ -79,6 +80,12 @@ export const MetadataManager: React.FC<MetadataManagerProps> = ({
   recipe,
   debug = false
 }) => {
+  const location = useLocation();
+  
+  // Don't render metadata on /share/* or /blog/* routes when accessed by bots - let server handle it
+  if (location.pathname.startsWith('/share/')) {
+    return null;
+  }
   // Enable debug mode if requested
   React.useEffect(() => {
     if (debug && import.meta.env.DEV) {

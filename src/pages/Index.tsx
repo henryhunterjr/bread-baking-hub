@@ -149,7 +149,6 @@ const Index = () => {
         <link rel="preconnect" href="https://ojyckskucneljvuqzrsw.supabase.co" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://i0.wp.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://secure.gravatar.com" crossOrigin="anonymous" />
-        <link rel="preload" as="image" href="/lovable-uploads/db15ab36-18a2-4103-b9d5-a5e58af2b2a2.png" />
       </Helmet>
       
     <div className="bg-background text-foreground">
