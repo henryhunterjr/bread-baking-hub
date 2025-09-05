@@ -301,12 +301,14 @@ const BlogPost = () => {
         // Normalize slug (lowercase, trim)
         const normalizedSlug = slug.toLowerCase().trim();
         
-        // Try Supabase first
+        // Try Supabase first - filter for published posts only
         let { data: supabasePost, error: supabaseError } = await supabase
           .from('blog_posts')
           .select('*')
           .eq('slug', normalizedSlug)
-          .single();
+          .eq('is_draft', false)
+          .not('published_at', 'is', null)
+          .maybeSingle();
 
         if (supabasePost && !supabaseError) {
           console.log('Found Supabase post:', supabasePost.title, 'Draft status:', supabasePost.is_draft);
