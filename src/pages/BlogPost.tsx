@@ -348,7 +348,9 @@ const BlogPost = () => {
             freshness: {
               daysAgo: Math.floor((new Date().getTime() - new Date(supabasePost.published_at || supabasePost.created_at || '').getTime()) / (1000 * 60 * 60 * 24)),
               label: 'Recently published'
-            }
+            },
+            source: 'supabase',
+            published_at: supabasePost.published_at || supabasePost.created_at || ''
           };
           
           setPost(convertedPost);
@@ -418,7 +420,9 @@ const BlogPost = () => {
                   freshness: {
                     daysAgo: Math.floor((new Date().getTime() - new Date(wpPost.date).getTime()) / (1000 * 60 * 60 * 24)),
                     label: 'Recently published'
-                  }
+                  },
+                  source: 'wordpress',
+                  published_at: wpPost.date
                 };
                 
                 setPost(convertedPost);
