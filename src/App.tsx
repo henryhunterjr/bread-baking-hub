@@ -16,7 +16,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
 import "@/utils/errorMonitoring";
 import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
-import DefaultSEO from "./components/DefaultSEO";
+import MetadataManager from "./components/MetadataManager";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 import RouteCleanupHandler from "./components/RouteCleanupHandler";
 import { ChatProvider } from "./components/ChatProvider";
@@ -115,7 +115,7 @@ function App() {
               <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
                 <RouteCleanupHandler />
                 <EnhancedSkipLink />
-                <DefaultSEO />
+                <MetadataManager />
                 <React.Suspense fallback={<SimpleLoadingSpinner />}>
                   <Routes>
                     <Route path="/" element={<Index />} />

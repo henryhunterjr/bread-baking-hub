@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import BlogPostView from '../components/blog/BlogPostView';
 import BlogPostSEO from '../components/blog/BlogPostSEO';
+import MetadataManager from '@/components/MetadataManager';
 import { LoadingState } from '../components/LoadingState';
 import { fetchBlogPosts, type BlogPost } from '@/utils/blogFetcher';
 import { supabase } from '@/integrations/supabase/client';
@@ -417,10 +418,21 @@ const BlogPost = () => {
 
   return (
     <>
-      <BlogPostSEO 
-        post={post}
-        canonical={`${window.location.origin}/blog/${slug}`}
-        socialImageUrl={socialImageUrl || undefined}
+      <MetadataManager
+        title={post.title}
+        description={post.excerpt}
+        canonical={`/blog/${slug}`}
+        type="article"
+        socialImageUrl={(supabasePost as any)?.social_image_url}
+        inlineImageUrl={(supabasePost as any)?.inline_image_url}
+        heroImageUrl={heroBannerUrl}
+        imageAlt={post.imageAlt}
+        author={post.author.name}
+        publishedAt={supabasePost?.published_at}
+        updatedAt={supabasePost?.updated_at}
+        tags={post.tags}
+        section="Bread Baking"
+        debug={import.meta.env.DEV}
       />
 
       <div className="min-h-screen bg-background">

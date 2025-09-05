@@ -1,4 +1,5 @@
-import { Helmet } from 'react-helmet-async';
+import React from 'react';
+import MetadataManager from '@/components/MetadataManager';
 
 interface RecipeSEOProps {
   title: string;
@@ -29,64 +30,32 @@ export const RecipeSEO = ({
   instructions,
   url
 }: RecipeSEOProps) => {
-  const jsonLd = {
-    "@context": "https://schema.org/",
-    "@type": "Recipe",
-    "name": title,
-    "description": description,
-    "image": [imageUrl],
-    "author": {
-      "@type": "Person",
-      "name": author
-    },
-    "datePublished": datePublished,
-    "cookTime": cookTime,
-    "prepTime": prepTime,
-    "totalTime": totalTime,
-    "recipeCategory": "Bread",
-    "recipeCuisine": "American",
-    "recipeYield": recipeYield,
-    "recipeIngredient": ingredients,
-    "recipeInstructions": instructions.map(instruction => ({
-      "@type": "HowToStep",
-      "text": instruction
-    })),
-    "nutrition": {
-      "@type": "NutritionInformation",
-      "calories": "110 calories per slice"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "1250"
-    }
-  };
-
   return (
-    <Helmet>
-      <title>{title} | Henry Hunter's Baking</title>
-      <meta name="description" content={description} />
-      <meta name="keywords" content="sourdough, bread recipe, baking, Henry Hunter, foolproof recipe" />
-      <link rel="canonical" href={url} />
-      
-      {/* Open Graph */}
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={imageUrl} />
-      <meta property="og:url" content={url} />
-      <meta property="og:type" content="article" />
-      <meta property="og:site_name" content="Henry Hunter's Baking" />
-      
-      {/* Twitter Card */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={imageUrl} />
-      
-      {/* JSON-LD */}
-      <script type="application/ld+json">
-        {JSON.stringify(jsonLd)}
-      </script>
-    </Helmet>
+    <MetadataManager
+      title={title}
+      description={description}
+      canonical={url}
+      socialImageUrl={imageUrl}
+      imageAlt={`${title} recipe`}
+      type="article"
+      author={author}
+      publishedAt={datePublished}
+      keywords="sourdough, bread recipe, baking, Henry Hunter, foolproof recipe"
+      recipe={{
+        ingredients,
+        instructions,
+        prepTime,
+        cookTime,
+        totalTime,
+        recipeYield,
+        nutrition: {
+          calories: "110 calories per slice"
+        },
+        aggregateRating: {
+          ratingValue: "4.8",
+          reviewCount: "1250"
+        }
+      }}
+    />
   );
 };

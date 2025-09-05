@@ -66,14 +66,20 @@ export const getBlogPostHeroImage = (
 export const getSocialImageUrl = (
   socialImageUrl?: string,
   inlineImageUrl?: string,
-  heroBannerUrl?: string
+  heroBannerUrl?: string,
+  updatedAt?: string
 ): string => {
-  console.log('getSocialImageUrl called with:', { socialImageUrl, inlineImageUrl, heroBannerUrl });
+  console.log('getSocialImageUrl called with:', { socialImageUrl, inlineImageUrl, heroBannerUrl, updatedAt });
   
-  const result = socialImageUrl || 
-                 inlineImageUrl || 
-                 heroBannerUrl || 
-                 '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
+  // Import here to avoid circular dependencies
+  const { getBestSocialImage } = require('@/utils/socialImageOptimizer');
+  
+  const result = getBestSocialImage({
+    socialImageUrl,
+    inlineImageUrl,
+    heroImageUrl: heroBannerUrl,
+    updatedAt
+  });
   
   console.log('getSocialImageUrl returning:', result);
   return result;
