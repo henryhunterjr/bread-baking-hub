@@ -1,3 +1,5 @@
+import { NextRequest, NextResponse } from 'next/server';
+
 export default async function handler(req: NextRequest) {
   try {
     // Self-check endpoint for environment variables (booleans only)
