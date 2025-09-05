@@ -299,7 +299,7 @@ const BlogPost = () => {
         const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase();
         console.log('🔍 Normalized slug:', normalizedSlug);
         
-        // Try Supabase first - no filters beyond slug
+        // Try Supabase first - liberal fetch, validate in JS
         const { data: supabasePost, error: supabaseError } = await supabase
           .from('blog_posts')
           .select('*')
@@ -320,7 +320,13 @@ const BlogPost = () => {
           !!supabasePost.published_at;
 
         if (isPublishable) {
-          console.log('✅ Supabase post is publishable, using it:', supabasePost.title);
+          console.info('BLOG_DETAIL', { 
+            slug: normalizedSlug, 
+            uaType: 'human', 
+            used: 'supabase', 
+            status: 200, 
+            note: `Found published post: ${supabasePost.title}`
+          });
           
           // Convert Supabase post to BlogPost format
           const convertedPost: BlogPost = {
@@ -370,11 +376,29 @@ const BlogPost = () => {
 
         // If we reach here, either no Supabase post found or not publishable
         if (supabasePost && !isPublishable) {
-          console.log('⚠️ Supabase post found but not publishable (draft or no publish date)');
+          console.info('BLOG_DETAIL', { 
+            slug: normalizedSlug, 
+            uaType: 'human', 
+            used: 'none', 
+            status: 'draft', 
+            note: 'Supabase post found but not publishable (draft or no publish date)'
+          });
         } else if (supabaseError) {
-          console.log('❌ Supabase query error:', supabaseError.message);
+          console.info('BLOG_DETAIL', { 
+            slug: normalizedSlug, 
+            uaType: 'human', 
+            used: 'none', 
+            status: 'error', 
+            note: `Supabase query error: ${supabaseError.message}`
+          });
         } else {
-          console.log('❌ No Supabase post found for slug');
+          console.info('BLOG_DETAIL', { 
+            slug: normalizedSlug, 
+            uaType: 'human', 
+            used: 'none', 
+            status: 'not-found', 
+            note: 'No Supabase post found for slug'
+          });
         }
 
         // Fallback to WordPress by slug
@@ -392,7 +416,13 @@ const BlogPost = () => {
             const wpPost = wpPosts[0];
             
             if (wpPost) {
-              console.log('✅ WordPress fallback success:', wpPost.title.rendered);
+              console.info('BLOG_DETAIL', { 
+                slug: normalizedSlug, 
+                uaType: 'human', 
+                used: 'wordpress', 
+                status: 200, 
+                note: `WordPress fallback success: ${wpPost.title.rendered}`
+              });
                 
                 // Convert WordPress post to BlogPost format
                 const convertedPost: BlogPost = {
@@ -448,7 +478,13 @@ const BlogPost = () => {
             console.error('❌ WordPress fallback failed:', wpError);
           }
           
-          console.log('💥 Final result: Blog post not found for slug:', normalizedSlug);
+          console.info('BLOG_DETAIL', { 
+            slug: normalizedSlug, 
+            uaType: 'human', 
+            used: 'none', 
+            status: 404, 
+            note: 'Blog post not found in any source'
+          });
           setError(`Blog post not found: ${normalizedSlug}`);
         } catch (err) {
         setError('Failed to load blog post');
