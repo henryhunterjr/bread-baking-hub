@@ -26,6 +26,8 @@ export function renderOgHtml(data: {
   siteName?: string;
   twitterHandle?: string;
   type?: string;
+  publishedAt?: string;  // ISO 8601
+  modifiedAt?: string;   // ISO 8601
 }): string {
   const {
     title,
@@ -34,7 +36,9 @@ export function renderOgHtml(data: {
     image,
     siteName = 'Baking Great Bread',
     twitterHandle = '@henrysbread',
-    type = 'article'
+    type = 'article',
+    publishedAt,
+    modifiedAt
   } = data;
 
   const width = image.width ?? 1200;
@@ -61,6 +65,8 @@ export function renderOgHtml(data: {
 <meta property="og:image:height" content="${height}">
 <meta property="og:image:alt" content="${escapeHtml(alt)}">
 <meta property="og:locale" content="en_US">
+${publishedAt ? `<meta property="article:published_time" content="${publishedAt}">` : ''}
+${modifiedAt ? `<meta property="article:modified_time" content="${modifiedAt}">` : ''}
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">

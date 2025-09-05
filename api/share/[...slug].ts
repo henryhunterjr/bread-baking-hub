@@ -2,8 +2,8 @@ import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { renderOgHtml } from '../../src/server/og-template';
 
-const SUPABASE_URL = 'https://ojyckskucneljvuqzrsw.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeWNrc2t1Y25lbGp2dXF6cnN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY3NDI0MTUsImV4cCI6MjA1MjMxODQxNX0.-Bx7Y0d_aMcHakE27Z5QKriY6KPpG1m8n0uuLaamFfY';
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ojyckskucneljvuqzrsw.supabase.co';
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY!;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -34,10 +34,30 @@ function isBotRequest(userAgent: string | null): boolean {
   return BOT_USER_AGENTS.some(bot => normalizedUA.includes(bot));
 }
 
+// Header helpers for consistent responses
+function botHeaders() {
+  return {
+    'Content-Type': 'text/html; charset=utf-8',
+    'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800',
+    'Vary': 'User-Agent',
+    'X-Robots-Tag': 'noindex'
+  };
+}
+
+function humanRedirectHeaders(location: string) {
+  return {
+    'Location': location,
+    'Cache-Control': 'public, max-age=0, s-maxage=300',
+    'Vary': 'User-Agent',
+    'Content-Type': 'text/plain; charset=utf-8'
+  };
+}
+
 function absoluteUrl(pathOrUrl: string): string {
   if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
   
-  const base = process.env.VITE_SITE_URL || 
+  const base = process.env.SITE_URL ||
+               process.env.NEXT_PUBLIC_SITE_URL ||
                (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
                'https://bread-baking-hub.vercel.app';
                
@@ -53,14 +73,17 @@ function resolveSocialImage(
   heroImageUrl?: string,
   updatedAt?: string
 ): string {
-  const defaultImage = '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
-  const selectedImage = socialImageUrl || inlineImageUrl || heroImageUrl || defaultImage;
+  const defaultImage = '/og/default.jpg';
+  const selectedImage = [socialImageUrl, inlineImageUrl, heroImageUrl, defaultImage]
+    .find(Boolean)!
+    .toString()
+    .trim();
   
   const absoluteImageUrl = absoluteUrl(selectedImage);
   
   // Add stable cache-busting based on updatedAt
   if (updatedAt) {
-    const timestamp = Math.floor(new Date(updatedAt).getTime() / 1000);
+    const timestamp = new Date(updatedAt).getTime();
     const separator = absoluteImageUrl.includes('?') ? '&' : '?';
     return `${absoluteImageUrl}${separator}v=${timestamp}`;
   }
@@ -68,19 +91,53 @@ function resolveSocialImage(
   return absoluteImageUrl;
 }
 
+function stripHtml(s: string): string {
+  return s.replace(/<[^>]*>/g, '');
+}
+
+function decodeEntities(s: string): string {
+  return s.replace(/&(#\d+|#x[0-9a-f]+|[a-z]+);/gi, (m) => {
+    const txt = new Map([['amp','&'],['lt','<'],['gt','>'],['quot','"'],['apos',"'"]]);
+    if (m.startsWith('&#x')) return String.fromCharCode(parseInt(m.slice(3,-1),16));
+    if (m.startsWith('&#')) return String.fromCharCode(parseInt(m.slice(2,-1),10));
+    return txt.get(m.slice(1,-1)) ?? m;
+  });
+}
+
 export default async function handler(req: NextRequest) {
   const { pathname } = new URL(req.url);
-  const slug = pathname.split('/share/')[1]?.replace(/\/$/, '') || '';
+  const raw = pathname.split('/share/')[1]?.replace(/\/$/, '') || '';
+  const slug = decodeURIComponent(raw);
   
   const userAgent = req.headers.get('user-agent');
   const isBot = isBotRequest(userAgent);
   
-  console.log(`Request to /share/${slug} from UA: ${userAgent} (isBot: ${isBot})`);
+  console.info(JSON.stringify({ route: 'share', slug, isBot, status: 'processing' }));
+  
+  // Handle empty slug
+  if (!slug) {
+    if (!isBot) {
+      return new Response(null, { 
+        status: 301, 
+        headers: humanRedirectHeaders(absoluteUrl('/'))
+      });
+    }
+    const html = renderOgHtml({
+      title: 'Baking Great Bread',
+      description: 'Master the art of bread baking with expert recipes, troubleshooting guides, and a vibrant community.',
+      canonical: absoluteUrl('/'),
+      image: { url: absoluteUrl('/og/default.jpg'), width: 1200, height: 630, alt: 'Baking Great Bread' }
+    });
+    return new Response(html, { status: 200, headers: botHeaders() });
+  }
   
   // For human visitors, redirect to the actual blog post
   if (!isBot) {
     const redirectUrl = absoluteUrl(`/blog/${slug}`);
-    return Response.redirect(redirectUrl, 301);
+    return new Response(null, { 
+      status: 301, 
+      headers: humanRedirectHeaders(redirectUrl)
+    });
   }
   
   // Handle test post for validation
@@ -99,12 +156,7 @@ export default async function handler(req: NextRequest) {
       }
     });
     
-    return new Response(html, {
-      headers: {
-        'Content-Type': 'text/html; charset=utf-8',
-        'Cache-Control': 'public, max-age=300', // 5 minutes
-      },
-    });
+    return new Response(html, { status: 200, headers: botHeaders() });
   }
   
   try {
@@ -137,15 +189,12 @@ export default async function handler(req: NextRequest) {
           height: 630,
           alt: supabasePost.title
         },
-        type: 'article'
+        type: 'article',
+        publishedAt: supabasePost.published_at,
+        modifiedAt: supabasePost.updated_at
       });
       
-      return new Response(html, {
-        headers: {
-          'Content-Type': 'text/html; charset=utf-8',
-          'Cache-Control': 'public, max-age=300', // 5 minutes
-        },
-      });
+      return new Response(html, { status: 200, headers: botHeaders() });
     }
     
     
@@ -158,7 +207,8 @@ export default async function handler(req: NextRequest) {
       
       if (wpPost) {
         const title = `${wpPost.title.rendered} | Baking Great Bread`;
-        const description = wpPost.excerpt.rendered.replace(/<[^>]*>/g, '').substring(0, 160);
+        const rawExcerpt = stripHtml(wpPost.excerpt.rendered);
+        const description = decodeEntities(rawExcerpt).slice(0, 160);
         const canonical = absoluteUrl(`/blog/${slug}`);
         
         const featuredMedia = wpPost._embedded?.['wp:featuredmedia']?.[0];
@@ -179,37 +229,29 @@ export default async function handler(req: NextRequest) {
             height: 630,
             alt: featuredMedia?.alt_text || wpPost.title.rendered
           },
-          type: 'article'
+          type: 'article',
+          publishedAt: wpPost.date,
+          modifiedAt: wpPost.modified
         });
         
-        return new Response(html, {
-          headers: {
-            'Content-Type': 'text/html; charset=utf-8',
-            'Cache-Control': 'public, max-age=300', // 5 minutes
-          },
-        });
+        return new Response(html, { status: 200, headers: botHeaders() });
       }
     }
     
-    // Fallback for unknown posts
+    // Fallback for unknown posts (404)
     const html = renderOgHtml({
       title: 'Baking Great Bread',
       description: 'Master the art of bread baking with expert recipes, troubleshooting guides, and a vibrant community led by Henry Hunter.',
       canonical: absoluteUrl('/'),
       image: {
-        url: absoluteUrl('/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png'),
+        url: absoluteUrl('/og/default.jpg'),
         width: 1200,
         height: 630,
         alt: 'Baking Great Bread - Master the Art of Bread Making'
       }
     });
     
-    return new Response(html, {
-      headers: {
-        'Content-Type': 'text/html; charset=utf-8',
-        'Cache-Control': 'public, max-age=300',
-      },
-    });
+    return new Response(html, { status: 404, headers: botHeaders() });
     
   } catch (error) {
     console.error('Error in share handler:', error);
@@ -220,19 +262,14 @@ export default async function handler(req: NextRequest) {
       description: 'Master the art of bread baking with expert recipes, troubleshooting guides, and a vibrant community led by Henry Hunter.',
       canonical: absoluteUrl('/'),
       image: {
-        url: absoluteUrl('/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png'),
+        url: absoluteUrl('/og/default.jpg'),
         width: 1200,
         height: 630,
         alt: 'Baking Great Bread - Master the Art of Bread Making'
       }
     });
     
-    return new Response(html, {
-      headers: {
-        'Content-Type': 'text/html; charset=utf-8',
-        'Cache-Control': 'public, max-age=60', // Shorter cache for errors
-      },
-    });
+    return new Response(html, { status: 500, headers: botHeaders() });
   }
 }
 
