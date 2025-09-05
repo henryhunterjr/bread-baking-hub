@@ -2,15 +2,20 @@ import { Helmet } from 'react-helmet-async';
 import { sanitizeStructuredData } from '@/utils/sanitize';
 import { generateBlogPostingSchema } from '@/utils/structuredData';
 import { BlogPost } from '@/utils/blogFetcher';
+import { resolveSocialImage } from '@/utils/resolveSocialImage';
 
 interface BlogPostSEOProps {
   post: BlogPost;
   fullContent?: string;
   canonical?: string;
+  // Updated to support the new unified resolver
   socialImageUrl?: string;
+  inlineImageUrl?: string;
+  heroImageUrl?: string;
+  updatedAt?: string;
 }
 
-export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl }: BlogPostSEOProps) => {
+export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl, inlineImageUrl, heroImageUrl, updatedAt }: BlogPostSEOProps) => {
   // Create clean description from excerpt, removing any remaining HTML
   const cleanDescription = post.excerpt.replace(/&[^;]+;/g, '').trim();
   
@@ -21,8 +26,13 @@ export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl }: Bl
   const publishedDate = new Date(post.date).toISOString();
   const modifiedDate = new Date(post.modified).toISOString();
   
-  // Use socialImageUrl prop (which contains the social_image_url logic) or fallback to post image
-  const finalImageUrl = socialImageUrl || post.image;
+  // Use unified social image resolver
+  const finalImageUrl = resolveSocialImage({
+    social: socialImageUrl,
+    inline: inlineImageUrl,
+    hero: heroImageUrl || post.image,
+    updatedAt: updatedAt || post.modified
+  });
   
 
   // Generate JSON-LD structured data
@@ -55,7 +65,7 @@ export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl }: Bl
       <meta property="og:description" content={cleanDescription} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content="Baking Great Bread" />
-      {finalImageUrl && <meta property="og:image" content={`${finalImageUrl}?v=${Date.now()}`} />}
+      {finalImageUrl && <meta property="og:image" content={finalImageUrl} />}
       {finalImageUrl && <meta property="og:image:width" content="1200" />}
       {finalImageUrl && <meta property="og:image:height" content="630" />}
       {finalImageUrl && <meta property="og:image:alt" content={post.imageAlt} />}
@@ -71,7 +81,7 @@ export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl }: Bl
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={post.title} />
       <meta name="twitter:description" content={cleanDescription} />
-      {finalImageUrl && <meta name="twitter:image" content={`${finalImageUrl}?v=${Date.now()}`} />}
+      {finalImageUrl && <meta name="twitter:image" content={finalImageUrl} />}
       {finalImageUrl && <meta name="twitter:image:alt" content={post.imageAlt} />}
       
       {/* Additional meta tags */}

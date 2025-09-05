@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { absoluteUrl, socialImageUrl } from '@/utils/absoluteUrl';
 import { getBestSocialImage, processSocialImage } from '@/utils/socialImageOptimizer';
 import { enableMetadataDebugMode } from '@/utils/metadataDebugger';
+import { resolveSocialImage } from '@/utils/resolveSocialImage';
 
 interface MetadataManagerProps {
   // Basic page info
@@ -98,12 +99,11 @@ export const MetadataManager: React.FC<MetadataManagerProps> = ({
   const finalDescription = description || DEFAULTS.description;
   const finalCanonical = canonical ? absoluteUrl(canonical) : absoluteUrl(window.location.pathname);
   
-  // Get the best social image
-  const finalImage = getBestSocialImage({
-    socialImageUrl: socialImage,
-    inlineImageUrl,
-    heroImageUrl,
-    defaultImageUrl: DEFAULTS.image,
+  // Use unified social image resolver
+  const finalImage = resolveSocialImage({
+    social: socialImage,
+    inline: inlineImageUrl,
+    hero: heroImageUrl,
     updatedAt
   });
   

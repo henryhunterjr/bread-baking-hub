@@ -72,22 +72,15 @@ export function resolveSocialImage(
   heroImageUrl?: string,
   updatedAt?: string
 ): string {
-  const defaultImage = '/og/default.jpg';
-  const selectedImage = [socialImageUrl, inlineImageUrl, heroImageUrl, defaultImage]
-    .find(Boolean)!
-    .toString()
-    .trim();
+  // Use the unified resolver
+  const { resolveSocialImage: unifiedResolver } = require('../src/utils/resolveSocialImage');
   
-  const absoluteImageUrl = absoluteUrl(selectedImage);
-  
-  // Add stable cache-busting based on updatedAt
-  if (updatedAt) {
-    const timestamp = new Date(updatedAt).getTime();
-    const separator = absoluteImageUrl.includes('?') ? '&' : '?';
-    return `${absoluteImageUrl}${separator}v=${timestamp}`;
-  }
-  
-  return absoluteImageUrl;
+  return unifiedResolver({
+    social: socialImageUrl,
+    inline: inlineImageUrl,
+    hero: heroImageUrl,
+    updatedAt
+  });
 }
 
 export function stripHtml(s: string): string {
