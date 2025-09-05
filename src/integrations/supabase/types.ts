@@ -1671,6 +1671,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: boolean
       }
+      log_security_event: {
+        Args: { p_event_data?: Json; p_event_type: string; p_user_id?: string }
+        Returns: undefined
+      }
       match_content: {
         Args: {
           filter_type: string
