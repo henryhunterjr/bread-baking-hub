@@ -27,6 +27,7 @@ import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
 import InboxTab from '@/components/dashboard/InboxTab';
 import InboxBadge from '@/components/dashboard/InboxBadge';
 import PostsList from '@/components/dashboard/PostsList';
+import DebugPanel from '@/components/dashboard/DebugPanel';
 import { BlogImageUploader } from '@/components/BlogImageUploader';
 import { BlogImageGrid } from '@/components/BlogImageGrid';
 import { UpdateThumbnail } from '@/components/dashboard/UpdateThumbnail';
@@ -169,8 +170,16 @@ const Dashboard = () => {
   }
 
   const handleSaveDraft = async () => {
+    console.log('💾 SAVE DRAFT: Starting...', { 
+      postData, 
+      userId: user?.id, 
+      hasTitle: !!postData.title?.trim(),
+      titleLength: postData.title?.length 
+    });
+    
     // Validate required fields
     if (!postData.title.trim()) {
+      console.warn('❌ SAVE DRAFT: Missing title');
       toast({
         title: "Missing title",
         description: "Please add a title before saving the draft.",
@@ -189,8 +198,10 @@ const Dashboard = () => {
         .substring(0, 100) || 'untitled-post';
     }
 
+    console.log('💾 SAVE DRAFT: Setting loading state and calling function...', { slug });
     setIsSavingDraft(true);
     try {
+      console.log('📤 SAVE DRAFT: Invoking upsert-post function...');
       const { data, error } = await supabase.functions.invoke('upsert-post', {
         body: { 
           postData: { ...postData, slug, isDraft: true },
@@ -198,28 +209,33 @@ const Dashboard = () => {
         }
       });
 
+      console.log('📥 SAVE DRAFT: Function response:', { data, error });
+
       if (error) {
-        console.error('Draft save error:', error);
+        console.error('❌ SAVE DRAFT: Function error:', error);
         throw new Error(error.message || 'Failed to save draft');
       }
 
       // Update local state with the saved data including any generated IDs
       if (data?.post) {
+        console.log('✅ SAVE DRAFT: Updating local state with saved data:', data.post);
         setPostData(prev => ({ ...prev, id: data.post.id, slug: data.post.slug }));
       }
 
+      console.log('✅ SAVE DRAFT: Success!');
       toast({
         title: "Draft saved",
         description: "Your draft has been saved successfully."
       });
     } catch (error: any) {
-      console.error('Error saving draft:', error);
+      console.error('❌ SAVE DRAFT: Caught error:', error);
       toast({
         title: "Save failed",
         description: error.message || "Failed to save draft. Please try again.",
         variant: "destructive"
       });
     } finally {
+      console.log('💾 SAVE DRAFT: Clearing loading state');
       setIsSavingDraft(false);
     }
   };
@@ -465,7 +481,26 @@ const Dashboard = () => {
             <p className="text-muted-foreground">Create and manage your blog posts and newsletters</p>
           </div>
 
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <Tabs value={activeTab} onValueChange={(value) => {
+            console.log('🎯 TAB CHANGE: Switching from', activeTab, 'to', value);
+            setActiveTab(value);
+            
+            // Clear any existing post data when switching to create tab
+            if (value === 'blog' || value === 'newsletter') {
+              console.log('🔄 TAB CHANGE: Clearing form for new post creation');
+              setPostData({
+                title: '',
+                subtitle: '',
+                content: '',
+                heroImageUrl: '',
+                inlineImageUrl: '',
+                socialImageUrl: '',
+                tags: [],
+                publishAsNewsletter: value === 'newsletter',
+                isDraft: true
+              });
+            }
+          }} className="space-y-6">
             <TabsList className="grid w-full max-w-4xl grid-cols-8">
               <TabsTrigger value="posts" className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
@@ -476,7 +511,9 @@ const Dashboard = () => {
                 Inbox
                 <InboxBadge />
               </TabsTrigger>
-              <TabsTrigger value="blog" className="flex items-center gap-2">
+              <TabsTrigger value="blog" className="flex items-center gap-2" onClick={() => {
+                console.log('🎯 CREATE TAB: Blog create button clicked');
+              }}>
                 <PenTool className="w-4 h-4" />
                 Create
               </TabsTrigger>
@@ -626,7 +663,9 @@ const BlogPostTab = ({
         onChange={(content) => setPostData(prev => ({ ...prev, content }))}
       />
       
-      <PostActions 
+      <DebugPanel />
+      
+      <PostActions
         onSaveDraft={onSaveDraft}
         onPublish={onPublish}
         isSavingDraft={isSavingDraft}
