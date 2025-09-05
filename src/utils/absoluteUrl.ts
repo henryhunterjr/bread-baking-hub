@@ -22,7 +22,7 @@ const getBaseUrl = (): string => {
   }
 
   // Production fallback
-  return 'https://bread-baking-hub.vercel.app';
+  return 'https://bakinggreatbread.com';
 };
 
 /**

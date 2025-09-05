@@ -10,7 +10,7 @@ interface DefaultSEOProps {
 const DEFAULTS = {
   title: 'Baking Great Bread',
   description: 'Master the art of bread baking with expert recipes, troubleshooting guides, and a vibrant community led by Henry Hunter.',
-  url: 'https://bread-baking-hub.vercel.app',
+  url: 'https://bakinggreatbread.com',
   image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif',
 };
 

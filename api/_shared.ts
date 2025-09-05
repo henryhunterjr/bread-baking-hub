@@ -58,7 +58,7 @@ export function absoluteUrl(pathOrUrl: string): string {
   const base = process.env.SITE_URL ||
                process.env.NEXT_PUBLIC_SITE_URL ||
                (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
-               'https://bread-baking-hub.vercel.app';
+               'https://bakinggreatbread.com';
                
   if (!base) throw new Error('Site URL not configured');
   
