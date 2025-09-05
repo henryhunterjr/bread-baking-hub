@@ -20,16 +20,20 @@ export class MobilePerformanceEnhancer {
     this.setupResourceHints();
   }
 
-  // Preload critical images that affect LCP
+  // Preload critical images that affect LCP (disabled - handled by ResponsiveImage priority prop)
   private preloadCriticalImages() {
+    // Hero images are now handled by ResponsiveImage component with priority={true}
+    // This prevents duplicate preload warnings in browser console
+    
+    // Only preload non-hero critical images if needed
     const criticalImages = [
-      '/lovable-uploads/db15ab36-18a2-4103-b9d5-a5e58af2b2a2.png', // Hero
+      // '/lovable-uploads/db15ab36-18a2-4103-b9d5-a5e58af2b2a2.png', // Hero - handled by ResponsiveImage
       '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png'  // Default recipe
     ];
 
     criticalImages.forEach((src, index) => {
       if (!this.preloadedImages.has(src)) {
-        this.preloadImage(src, index < 2 ? 'high' : 'low');
+        this.preloadImage(src, 'low'); // Lower priority since not hero
         this.preloadedImages.add(src);
       }
     });

@@ -118,9 +118,9 @@ export const useImageOptimization = () => {
   };
 };
 
-// Critical images that should be preloaded immediately
+// Critical images that should be preloaded (hero handled by ResponsiveImage)
 export const CRITICAL_IMAGES = [
-  '/lovable-uploads/db15ab36-18a2-4103-b9d5-a5e58af2b2a2.png', // Hero image
+  // '/lovable-uploads/db15ab36-18a2-4103-b9d5-a5e58af2b2a2.png', // Hero - handled by ResponsiveImage
   '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png'  // Default recipe image
 ];
 
