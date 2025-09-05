@@ -295,23 +295,32 @@ const BlogPost = () => {
         console.log('Looking for blog post with slug:', slug);
         console.log('Full URL pathname:', window.location.pathname);
         
-        // Direct slug lookup: Supabase first, WordPress fallback
-        console.log('Searching for Supabase post with slug:', slug);
+        // Normalize slug once (lowercase/trim/decode)
+        const normalizedSlug = decodeURIComponent(slug).trim().toLowerCase();
+        console.log('🔍 Normalized slug:', normalizedSlug);
         
-        // Normalize slug (lowercase, trim)
-        const normalizedSlug = slug.toLowerCase().trim();
-        
-        // Try Supabase first - filter for published posts only
-        let { data: supabasePost, error: supabaseError } = await supabase
+        // Try Supabase first - no filters beyond slug
+        const { data: supabasePost, error: supabaseError } = await supabase
           .from('blog_posts')
           .select('*')
           .eq('slug', normalizedSlug)
-          .eq('is_draft', false)
-          .not('published_at', 'is', null)
           .maybeSingle();
 
-        if (supabasePost && !supabaseError) {
-          console.log('Found Supabase post:', supabasePost.title, 'Draft status:', supabasePost.is_draft);
+        console.log('📊 Supabase query result:', {
+          found: !!supabasePost,
+          error: supabaseError?.message,
+          title: supabasePost?.title,
+          isDraft: supabasePost?.is_draft,
+          publishedAt: supabasePost?.published_at
+        });
+
+        // Guard in JS (instead of SQL filters)
+        const isPublishable = !!supabasePost && 
+          supabasePost.is_draft === false && 
+          !!supabasePost.published_at;
+
+        if (isPublishable) {
+          console.log('✅ Supabase post is publishable, using it:', supabasePost.title);
           
           // Convert Supabase post to BlogPost format
           const convertedPost: BlogPost = {
@@ -355,20 +364,33 @@ const BlogPost = () => {
           console.log('Final social image URL calculated:', finalSocialImageUrl);
           
           return;
+        }
+
+        // If we reach here, either no Supabase post found or not publishable
+        if (supabasePost && !isPublishable) {
+          console.log('⚠️ Supabase post found but not publishable (draft or no publish date)');
+        } else if (supabaseError) {
+          console.log('❌ Supabase query error:', supabaseError.message);
         } else {
-          console.log('Supabase query error:', supabaseError);
-          console.log('No Supabase post found, trying WordPress proxy...');
+          console.log('❌ No Supabase post found for slug');
+        }
+
+        // Fallback to WordPress by slug
+        console.log('🔄 Trying WordPress fallback for slug:', normalizedSlug);
+        try {
+          const wpUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/blog-proxy?endpoint=posts&slug=${normalizedSlug}&_embed=true`;
+          console.log('📡 WordPress API call:', wpUrl);
           
-          // Fallback to WordPress proxy
-          try {
-            const wpResponse = await fetch(`https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/blog-proxy?endpoint=posts&slug=${normalizedSlug}&_embed=true`);
+          const wpResponse = await fetch(wpUrl, { 
+            headers: { 'Accept': 'application/json' }
+          });
+          
+          if (wpResponse.ok) {
+            const wpPosts = await wpResponse.json();
+            const wpPost = wpPosts[0];
             
-            if (wpResponse.ok) {
-              const wpPosts = await wpResponse.json();
-              const wpPost = wpPosts[0];
-              
-              if (wpPost) {
-                console.log('Found WordPress post:', wpPost.title.rendered);
+            if (wpPost) {
+              console.log('✅ WordPress fallback success:', wpPost.title.rendered);
                 
                 // Convert WordPress post to BlogPost format
                 const convertedPost: BlogPost = {
@@ -409,17 +431,22 @@ const BlogPost = () => {
                   heroBanner
                 );
                 setSocialImageUrl(finalSocialImageUrl);
+                console.log('📱 WordPress social image URL:', finalSocialImageUrl);
                 
                 return;
+              } else {
+                console.log('❌ WordPress returned empty result for slug:', normalizedSlug);
               }
+            } else {
+              console.log('❌ WordPress API error:', wpResponse.status, wpResponse.statusText);
             }
           } catch (wpError) {
-            console.error('WordPress fallback failed:', wpError);
+            console.error('❌ WordPress fallback failed:', wpError);
           }
           
-          setError('Blog post not found');
-        }
-      } catch (err) {
+          console.log('💥 Final result: Blog post not found for slug:', normalizedSlug);
+          setError(`Blog post not found: ${normalizedSlug}`);
+        } catch (err) {
         setError('Failed to load blog post');
         console.error('Failed to load post:', err);
       } finally {
