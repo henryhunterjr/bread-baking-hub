@@ -9,6 +9,7 @@ import SocialShare from './SocialShare';
 import EnhancedNewsletterSignup from '../enhanced/EnhancedNewsletterSignup';
 import { BlogPost } from '@/utils/blogFetcher';
 import { sanitizeHtml } from '@/utils/sanitize';
+import { SecureContent } from '@/components/security/SecureContent';
 import { SafeImage } from '@/components/ui/SafeImage';
 
 interface BlogPostViewProps {
@@ -130,9 +131,9 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
                 <div className="h-4 bg-muted rounded animate-pulse w-1/2" />
               </div>
             ) : (
-              <div 
+              <SecureContent 
+                content={content}
                 className="prose-content"
-                dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }}
               />
             )}
           </div>
