@@ -51,6 +51,7 @@ const NotFound = React.lazy(() => import("./pages/NotFound"));
 const SearchTest = React.lazy(() => import("./pages/SearchTest"));
 const InlineSearchTestPage = React.lazy(() => import("./pages/InlineSearchTest"));
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
+const OwnerAnalytics = React.lazy(() => import("./pages/OwnerAnalytics"));
 const Tools = React.lazy(() => import("./pages/Tools"));
 const Guides = React.lazy(() => import("./pages/Guides"));
 const Challenges = React.lazy(() => import("./pages/Challenges"));
@@ -157,7 +158,8 @@ function App() {
                      <Route path="/help" element={<Help />} />
                     <Route path="/feed.xml" element={<FeedRedirect />} />
                     <Route path="/sitemap.xml" element={<SitemapRedirect />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
+                     <Route path="/dashboard" element={<Dashboard />} />
+                     <Route path="/owner/analytics" element={<OwnerAnalytics />} />
                     <Route path="/tools" element={<Tools />} />
                     <Route path="/guides" element={<Guides />} />
                     <Route path="/challenges" element={<Challenges />} />
