@@ -24,12 +24,11 @@ export const RecipeShareButton = ({
   const { toast } = useToast();
 
   const getRecipeUrl = () => {
-    const baseUrl = 'https://bread-baking-hub.vercel.app';
-    // Use canonical recipe URL for proper social sharing
+    // Use Supabase Edge Function for proper OG/social sharing
     if (recipe.slug) {
-      return `${baseUrl}/recipes/${recipe.slug}`;
+      return `https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/og-share/${recipe.slug}`;
     }
-    return `${baseUrl}/recipes/${recipe.id}`;
+    return `https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/og-share/${recipe.id}`;
   };
 
   const handleShare = async () => {

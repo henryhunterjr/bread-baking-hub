@@ -82,6 +82,13 @@ const SitemapRedirect = () => {
   return <div>Redirecting to sitemap...</div>;
 };
 
+// Share redirect component for pretty URLs
+const ShareRedirect = () => {
+  const { slug } = useParams<{ slug: string }>();
+  window.location.href = `https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/og-share/${slug}`;
+  return <div>Redirecting to share...</div>;
+};
+
 // Recipe redirect component for backward compatibility
 const RecipeRedirect = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -156,8 +163,9 @@ function App() {
                      <Route path="/print/:slug" element={<RecipePrint />} />
                      <Route path="/print/recipe/:slug" element={<RecipePrint />} />
                      <Route path="/help" element={<Help />} />
-                    <Route path="/feed.xml" element={<FeedRedirect />} />
-                    <Route path="/sitemap.xml" element={<SitemapRedirect />} />
+                     <Route path="/feed.xml" element={<FeedRedirect />} />
+                     <Route path="/sitemap.xml" element={<SitemapRedirect />} />
+                     <Route path="/share/:slug" element={<ShareRedirect />} />
                      <Route path="/dashboard" element={<Dashboard />} />
                      <Route path="/owner/analytics" element={<OwnerAnalytics />} />
                     <Route path="/tools" element={<Tools />} />
