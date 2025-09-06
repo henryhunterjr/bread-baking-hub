@@ -72,18 +72,22 @@ export default async function handler(req: NextRequest) {
   if (slug === 'test-post') {
     const testImage = 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-09/general/f4e8420f-af34-442d-be96-77ad8c28546f.png';
     
-    const html = renderOgHtml({
+    const testData = {
       title: 'Test Post for Open Graph Validation | Baking Great Bread',
-      description: 'This is a test post to validate Open Graph and Twitter Card functionality for social media sharing.',
+      description: 'This is a test post to validate Open Graph and Twitter Card functionality for social media sharing. Perfect for testing your social media images!',
       canonical: absoluteUrl('/blog/test-post'),
       image: {
         url: testImage,
         width: 1200,
         height: 630,
-        alt: 'Test image for Open Graph validation'
-      }
-    });
+        alt: 'Test image for Open Graph validation - Baking Great Bread'
+      },
+      siteName: 'Baking Great Bread', 
+      twitterHandle: '@henrysbread',
+      type: 'article'
+    };
     
+    const html = renderOgHtml(testData);
     return new Response(html, { status: 200, headers: botHeaders() });
   }
   
@@ -97,8 +101,8 @@ export default async function handler(req: NextRequest) {
     
     // Validate in JS - only show published posts
     if (supabasePost && !supabasePost.is_draft && supabasePost.published_at) {
-      const title = `${supabasePost.title} | Baking Great Bread`;
-      const description = supabasePost.excerpt || supabasePost.meta_description || 'Master the art of bread baking with expert recipes and techniques.';
+      const title = supabasePost.title ? `${supabasePost.title} | Baking Great Bread` : 'Baking Great Bread';
+      const description = supabasePost.excerpt || supabasePost.meta_description || supabasePost.subtitle || 'Master the art of bread baking with expert recipes and techniques.';
       const canonical = absoluteUrl(`/blog/${slug}`);
       
       const imageUrl = resolveSocialImage(
@@ -108,21 +112,24 @@ export default async function handler(req: NextRequest) {
         supabasePost.updated_at
       );
       
-      const html = renderOgHtml({
+      const ogData = {
         title,
-        description,
+        description: description.slice(0, 160), // Ensure proper length
         canonical,
         image: {
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: supabasePost.title
+          alt: supabasePost.title || 'Baking Great Bread'
         },
+        siteName: 'Baking Great Bread',
+        twitterHandle: '@henrysbread',
         type: 'article',
         publishedAt: supabasePost.published_at,
         modifiedAt: supabasePost.updated_at
-      });
+      };
       
+      const html = renderOgHtml(ogData);
       return new Response(html, { status: 200, headers: botHeaders() });
     }
     
