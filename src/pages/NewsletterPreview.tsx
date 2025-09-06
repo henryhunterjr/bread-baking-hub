@@ -25,14 +25,29 @@ const NewsletterPreview = () => {
       if (!id) return;
       
       try {
-        const { data, error } = await supabase
+        // First try with the newsletter flag, then fallback to just the ID
+        let { data, error } = await supabase
           .from('blog_posts')
           .select('*')
           .eq('id', id)
           .eq('publish_as_newsletter', true)
           .single();
 
-        if (error) throw error;
+        // If not found with newsletter flag, try without it
+        if (error && error.code === 'PGRST116') {
+          const { data: fallbackData, error: fallbackError } = await supabase
+            .from('blog_posts')
+            .select('*')
+            .eq('id', id)
+            .single();
+          
+          if (fallbackError) throw fallbackError;
+          data = fallbackData;
+        } else if (error) {
+          throw error;
+        }
+
+        if (!data) throw new Error('Newsletter not found');
 
         setNewsletter({
           title: data.title,
@@ -43,6 +58,7 @@ const NewsletterPreview = () => {
         });
       } catch (error) {
         console.error('Error fetching newsletter:', error);
+        setNewsletter(null);
       } finally {
         setLoading(false);
       }
