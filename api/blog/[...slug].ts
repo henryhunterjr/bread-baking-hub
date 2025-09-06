@@ -150,7 +150,7 @@ export default async function handler(req: NextRequest) {
       });
       
       const title = supabasePost.title ? `${supabasePost.title} | Baking Great Bread` : 'Baking Great Bread';
-      const description = supabasePost.excerpt || supabasePost.meta_description || supabasePost.subtitle || 'Master the art of bread baking with expert recipes and techniques.';
+      const description = supabasePost.subtitle || supabasePost.excerpt || supabasePost.meta_description || 'Master the art of bread baking with expert recipes and techniques.';
       const canonical = absoluteUrl(`/blog/${slug}`);
       
       const imageUrl = resolveSocialImage(
