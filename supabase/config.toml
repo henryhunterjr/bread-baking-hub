@@ -1,5 +1,8 @@
 project_id = "ojyckskucneljvuqzrsw"
 
+[functions.og-share]
+verify_jwt = false
+
 [functions.upload-recipe-image]
 verify_jwt = false
 
