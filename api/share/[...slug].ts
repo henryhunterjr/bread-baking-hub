@@ -105,12 +105,12 @@ export default async function handler(req: NextRequest) {
       const description = supabasePost.subtitle || supabasePost.excerpt || supabasePost.meta_description || 'Master the art of bread baking with expert recipes and techniques.';
       const canonical = absoluteUrl(`/blog/${slug}`);
       
-      const imageUrl = resolveSocialImage(
-        supabasePost.social_image_url,
-        supabasePost.inline_image_url,
-        supabasePost.hero_image_url,
-        supabasePost.updated_at
-      );
+      const imageUrl = resolveSocialImage({
+        social: supabasePost.social_image_url,
+        inline: supabasePost.inline_image_url,
+        hero: supabasePost.hero_image_url,
+        updatedAt: supabasePost.updated_at
+      });
       
       const ogData = {
         title,
@@ -149,12 +149,12 @@ export default async function handler(req: NextRequest) {
         const canonical = absoluteUrl(`/blog/${slug}`);
         
         const featuredMedia = wpPost._embedded?.['wp:featuredmedia']?.[0];
-        const imageUrl = resolveSocialImage(
-          featuredMedia?.source_url,
-          undefined,
-          undefined,
-          wpPost.modified
-        );
+        const imageUrl = resolveSocialImage({
+          social: featuredMedia?.source_url,
+          inline: undefined,
+          hero: undefined,
+          updatedAt: wpPost.modified
+        });
         
         const html = renderOgHtml({
           title,
