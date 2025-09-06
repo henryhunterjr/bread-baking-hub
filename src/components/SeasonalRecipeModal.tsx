@@ -627,15 +627,44 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                 <p className="text-sm text-muted-foreground mb-4">(Yields {recipe.data?.yield})</p>
                 <div className="space-y-3" role="list" aria-label="Recipe ingredients">
                   {recipe.data?.ingredients?.map((ingredient, index) => {
-                    // Parse ingredient string to extract name, metric, and volume measurements
-                    const parts = ingredient.split(':');
-                    const ingredientName = parts[0]?.trim() || ingredient;
-                    const measurements = parts[1]?.trim() || '';
+                    // Handle both string and object format ingredients
+                    let ingredientName: string;
+                    let metric: string = '';
+                    let volume: string = '';
                     
-                    // Try to split measurements by metric and volume
-                    const measurementParts = measurements.split('(');
-                    const metric = measurementParts[0]?.trim() || '';
-                    const volume = measurementParts[1]?.replace(')', '').trim() || '';
+                    if (typeof ingredient === 'string') {
+                      // Legacy string format: "Name : amount (volume)"
+                      const parts = ingredient.split(':');
+                      ingredientName = parts[0]?.trim() || ingredient;
+                      const measurements = parts[1]?.trim() || '';
+                      
+                      // Try to split measurements by metric and volume
+                      const measurementParts = measurements.split('(');
+                      metric = measurementParts[0]?.trim() || '';
+                      volume = measurementParts[1]?.replace(')', '').trim() || '';
+                      
+                      // If no specific metric/volume, use the whole measurements
+                      if (!metric && !volume && measurements) {
+                        metric = measurements;
+                      }
+                    } else if (ingredient && typeof ingredient === 'object') {
+                      // New object format: { item: string, amount_metric: number, amount_volume: number, note: string }
+                      const ing = ingredient as any;
+                      ingredientName = ing.item || '';
+                      
+                      if (ing.amount_metric) {
+                        metric = `${ing.amount_metric}g`;
+                      }
+                      if (ing.amount_volume) {
+                        volume = `${ing.amount_volume} ml`;
+                      }
+                      if (ing.note) {
+                        ingredientName += ` (${ing.note})`;
+                      }
+                    } else {
+                      // Fallback for invalid data
+                      ingredientName = String(ingredient || '');
+                    }
                     
                     return (
                       <div key={index} className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg" role="listitem">
@@ -643,9 +672,6 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
                         <div className="text-right">
                           {metric && <div className="font-semibold">{scaleAmount(metric, factor)}</div>}
                           {volume && <div className="text-sm text-muted-foreground">({scaleAmount(volume, factor)})</div>}
-                          {!metric && !volume && measurements && (
-                            <div className="font-semibold">{scaleAmount(measurements, factor)}</div>
-                          )}
                         </div>
                       </div>
                     );
