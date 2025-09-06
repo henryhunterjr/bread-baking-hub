@@ -115,15 +115,20 @@ export default async function handler(req: NextRequest) {
       const description = supabasePost.subtitle || supabasePost.excerpt || supabasePost.meta_description || 'Master the art of bread baking with expert recipes and techniques.';
       const canonical = absoluteUrl(`/blog/${slug}`);
       
-      // Force the social image URL for this specific post
-      let imageUrl = supabasePost.social_image_url;
-      if (!imageUrl) {
-        imageUrl = resolveSocialImage({
-          social: supabasePost.social_image_url,
-          inline: supabasePost.inline_image_url,
-          hero: supabasePost.hero_image_url,
-          updatedAt: supabasePost.updated_at
-        });
+      // Force the social image URL for specific posts
+      let imageUrl;
+      if (slug === 'sourdough-bread-bowls') {
+        imageUrl = 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-09/general/5713d3eb-9101-4331-8252-4b380d1ad6ae.png';
+      } else {
+        imageUrl = supabasePost.social_image_url;
+        if (!imageUrl) {
+          imageUrl = resolveSocialImage({
+            social: supabasePost.social_image_url,
+            inline: supabasePost.inline_image_url,
+            hero: supabasePost.hero_image_url,
+            updatedAt: supabasePost.updated_at
+          });
+        }
       }
       
       const ogData = {
