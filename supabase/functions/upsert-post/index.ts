@@ -80,13 +80,57 @@ function preparePostRecord(postData: PostData, userId: string, slug?: string): P
   return postRecord;
 }
 
-// Slug generation function
+// Slug generation function with conflict resolution
 function generateSlug(title: string): string {
   return title
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .substring(0, 100) || 'untitled-post';
+}
+
+// Function to find unique slug for user
+async function findUniqueSlug(supabaseClient: any, baseSlug: string, userId: string, excludeId?: string): Promise<string> {
+  let slug = baseSlug;
+  let counter = 1;
+  
+  while (true) {
+    console.log(`🔍 Checking slug availability: "${slug}" for user: ${userId}`);
+    
+    // Check if slug exists for this user
+    let query = supabaseClient
+      .from('blog_posts')
+      .select('id, slug')
+      .eq('user_id', userId)
+      .eq('slug', slug);
+    
+    // Exclude current post if updating
+    if (excludeId) {
+      query = query.neq('id', excludeId);
+    }
+    
+    const { data: existingPosts, error } = await query;
+    
+    if (error) {
+      console.error('❌ Error checking slug uniqueness:', error);
+      throw error;
+    }
+    
+    if (!existingPosts || existingPosts.length === 0) {
+      console.log(`✅ Slug "${slug}" is available`);
+      return slug;
+    }
+    
+    console.log(`⚠️  Slug "${slug}" already exists, trying variation ${counter}`);
+    slug = `${baseSlug}-${counter}`;
+    counter++;
+    
+    // Prevent infinite loops
+    if (counter > 100) {
+      console.error('❌ Too many slug conflicts, using timestamp fallback');
+      return `${baseSlug}-${Date.now()}`;
+    }
+  }
 }
 
 serve(async (req) => {
@@ -145,49 +189,95 @@ serve(async (req) => {
     // Initialize Supabase client
     const supabaseClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    // Generate slug if not provided
-    let slug = postData.slug;
-    if (!slug && postData.title) {
-      slug = generateSlug(postData.title);
-      console.log('🔗 Generated slug from title:', slug);
-    } else if (!slug) {
-      slug = 'untitled-post-' + Date.now();
-      console.log('🔗 Using fallback slug:', slug);
+    // Handle slug generation and uniqueness
+    let finalSlug = postData.slug;
+    
+    if (!finalSlug && postData.title) {
+      const baseSlug = generateSlug(postData.title);
+      console.log('🔗 Generated base slug from title:', baseSlug);
+      
+      // Find unique slug for this user
+      finalSlug = await findUniqueSlug(supabaseClient, baseSlug, userId, postData.id);
+    } else if (!finalSlug) {
+      finalSlug = 'untitled-post-' + Date.now();
+      console.log('🔗 Using timestamp fallback slug:', finalSlug);
+    } else {
+      // User provided slug - ensure it's unique
+      console.log('🔗 User provided slug, checking uniqueness:', finalSlug);
+      finalSlug = await findUniqueSlug(supabaseClient, finalSlug, userId, postData.id);
     }
 
-    // Prepare post record
-    const postRecord = preparePostRecord(postData, userId, slug);
+    console.log('🎯 Final unique slug:', finalSlug);
+
+    // Prepare post record with verified unique slug
+    const postRecord = preparePostRecord(postData, userId, finalSlug);
     postRecord.updated_at = new Date().toISOString();
 
     console.log('💾 Prepared post record:', JSON.stringify(postRecord, null, 2));
 
-    // Upsert the post
-    console.log('📤 Upserting post to database...');
-    const { data, error } = await supabaseClient
-      .from('blog_posts')
-      .upsert(postRecord, { onConflict: 'id' })
-      .select()
-      .single();
+    // Determine if this is an update or insert
+    const isUpdate = postData.id && postData.id.trim() !== '';
+    
+    let data, error;
+    
+    if (isUpdate) {
+      console.log('📤 Updating existing post with ID:', postData.id);
+      // For updates, use the ID to identify the record
+      const { data: updateData, error: updateError } = await supabaseClient
+        .from('blog_posts')
+        .update(postRecord)
+        .eq('id', postData.id)
+        .eq('user_id', userId) // Security: ensure user owns the post
+        .select()
+        .single();
+      
+      data = updateData;
+      error = updateError;
+    } else {
+      console.log('📤 Inserting new post to database...');
+      // For new posts, insert directly
+      const { data: insertData, error: insertError } = await supabaseClient
+        .from('blog_posts')
+        .insert(postRecord)
+        .select()
+        .single();
+      
+      data = insertData;
+      error = insertError;
+    }
 
     if (error) {
-      console.error('❌ Database error:', error);
+      console.error('❌ Database operation failed:', error);
       return new Response(
         JSON.stringify({ 
           error: "Database operation failed", 
           message: error.message,
           code: error.code,
-          details: error.details
+          details: error.details,
+          operation: isUpdate ? 'update' : 'insert'
         }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    console.log('✅ Post upserted successfully:', data);
+    if (!data) {
+      console.error('❌ No data returned from database operation');
+      return new Response(
+        JSON.stringify({ 
+          error: "No data returned from database operation",
+          operation: isUpdate ? 'update' : 'insert'
+        }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    console.log('✅ Post operation successful:', { operation: isUpdate ? 'update' : 'insert', id: data.id, slug: data.slug });
     return new Response(
       JSON.stringify({ 
         success: true, 
         post: data, 
-        slug: data.slug 
+        slug: data.slug,
+        operation: isUpdate ? 'updated' : 'created'
       }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );

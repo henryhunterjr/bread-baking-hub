@@ -229,9 +229,43 @@ const Dashboard = () => {
       });
     } catch (error: any) {
       console.error('❌ SAVE DRAFT: Caught error:', error);
+      
+      // Enhanced error reporting for debugging
+      let errorMessage = 'Unknown error occurred';
+      let errorContext = '';
+      
+      if (error instanceof Error) {
+        errorMessage = error.message;
+        console.error('❌ SAVE DRAFT: Error stack:', error.stack);
+      }
+      
+      // Log additional context for debugging
+      console.error('❌ SAVE DRAFT: Error context:', {
+        hasUser: !!user,
+        userId: user?.id,
+        postDataKeys: Object.keys(postData),
+        titleLength: postData.title?.length || 0,
+        contentLength: postData.content?.length || 0,
+        hasTags: !!postData.tags?.length,
+        slug: slug,
+        isDraft: true,
+        errorType: error?.constructor?.name || 'Unknown',
+        errorName: error?.name || 'Unknown'
+      });
+      
+      // Check if it's a FunctionsHttpError
+      if (error?.name === 'FunctionsHttpError') {
+        console.error('❌ SAVE DRAFT: Supabase function error details:', {
+          status: error?.status,
+          statusText: error?.statusText,
+          message: error?.message
+        });
+        errorContext = ` (HTTP ${error?.status || 'Unknown'})`;
+      }
+      
       toast({
-        title: "Save failed",
-        description: error.message || "Failed to save draft. Please try again.",
+        title: "Save Failed", 
+        description: `${errorMessage}${errorContext}`,
         variant: "destructive"
       });
     } finally {
