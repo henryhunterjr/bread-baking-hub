@@ -151,6 +151,30 @@ export default async function handler(req: NextRequest) {
         subtitle: supabasePost.subtitle
       });
       
+      // Force specific data for sourdough bread bowls post
+      if (slug === 'sourdough-bread-bowls') {
+        const ogData = {
+          title: 'Sourdough Bread Bowls | Baking Great Bread',
+          description: 'Perfect for soup season! These artisan sourdough bread bowls combine crusty exterior with tender, chewy interior. Get the complete recipe and technique.',
+          canonical: absoluteUrl(`/blog/${slug}`),
+          image: {
+            url: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-09/general/5713d3eb-9101-4331-8252-4b380d1ad6ae.png',
+            width: 1200,
+            height: 630,
+            alt: 'Sourdough Bread Bowls'
+          },
+          siteName: 'Baking Great Bread',
+          twitterHandle: '@henrysbread',
+          type: 'article',
+          publishedAt: supabasePost.published_at,
+          modifiedAt: supabasePost.updated_at
+        };
+        
+        const html = renderOgHtml(ogData);
+        return new Response(html, { status: 200, headers: botHeaders() });
+      }
+      
+      // Default handling for other posts
       const title = supabasePost.title || 'Baking Great Bread';
       const description = supabasePost.subtitle || supabasePost.excerpt || supabasePost.meta_description || 'Master the art of bread baking with expert recipes and techniques.';
       const canonical = absoluteUrl(`/blog/${slug}`);
