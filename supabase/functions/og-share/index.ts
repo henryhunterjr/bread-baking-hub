@@ -178,10 +178,29 @@ Deno.serve(async (req) => {
 
     if (sb) {
       console.log(`Fetching post from Supabase: ${slug}`);
-      const { data } = await sb.from("blog_posts").select("*").eq("slug", slug).maybeSingle();
-      if (data && !data.is_draft && data.published_at) {
-        post = data;
-        console.log(`Found Supabase post: ${post.title}`);
+      
+      // Try blog posts first
+      const { data: blogData } = await sb.from("blog_posts").select("*").eq("slug", slug).maybeSingle();
+      if (blogData && !blogData.is_draft && blogData.published_at) {
+        post = blogData;
+        console.log(`Found Supabase blog post: ${post.title}`);
+      }
+      
+      // If no blog post found, try recipes
+      if (!post) {
+        const { data: recipeData } = await sb.from("recipes").select("*").eq("slug", slug).maybeSingle();
+        if (recipeData && recipeData.is_public) {
+          // Convert recipe to post-like structure
+          post = {
+            title: recipeData.title,
+            subtitle: recipeData.data?.introduction?.slice(0, 160) || recipeData.data?.description?.slice(0, 160) || "A delicious bread recipe from Baking Great Bread",
+            updated_at: recipeData.updated_at,
+            published_at: recipeData.created_at,
+            social_image_url: recipeData.image_url,
+            hero_image_url: recipeData.image_url
+          };
+          console.log(`Found Supabase recipe: ${post.title}`);
+        }
       }
     }
 
@@ -226,6 +245,25 @@ Deno.serve(async (req) => {
         },
         type: 'article',
         publishedAt: post?.published_at,
+        modifiedAt: post?.updated_at
+      });
+      return ok(html, 200);
+    }
+
+    // Handle sesame bread recipe variants
+    if (slug === 'sourdough-bread-with-toasted-black-sesame-seeds-1' || slug === 'sourdough-bread-with-toasted-black-sesame-seeds') {
+      const html = renderHtml({
+        title: 'Sourdough Bread with Toasted Black Sesame Seeds | Baking Great Bread',
+        description: 'This isn\'t just bread - it\'s edible art. The nutty, aromatic black sesame seeds create gorgeous speckles throughout the crumb while adding a subtle toasted flavor that pairs beautifully with the tang of well-developed sourdough.',
+        canonical: absoluteUrl(`/recipes`),
+        image: {
+          url: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-09/general/f4e8420f-af34-442d-be96-77ad8c28546f.png',
+          width: 1200,
+          height: 630,
+          alt: 'Sourdough Bread with Toasted Black Sesame Seeds'
+        },
+        type: 'article',
+        publishedAt: post?.published_at || '2025-01-06T12:00:00Z',
         modifiedAt: post?.updated_at
       });
       return ok(html, 200);
