@@ -186,7 +186,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: true, 
-        data: { post: data }, 
+        post: data, 
         slug: data.slug 
       }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }

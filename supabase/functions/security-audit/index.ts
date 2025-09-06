@@ -55,10 +55,17 @@ Deno.serve(async (req) => {
     if (req.method === 'POST') {
       const { event_type, user_id, event_data } = await req.json()
       
-      // Get client IP and user agent
-      const ip_address = req.headers.get('x-forwarded-for') || 
-                        req.headers.get('x-real-ip') || 
-                        'unknown'
+      // Get client IP and user agent - handle comma-separated IPs
+      const forwardedFor = req.headers.get('x-forwarded-for')
+      const realIp = req.headers.get('x-real-ip')
+      
+      // Take the first IP from comma-separated list if multiple IPs exist
+      let ip_address = 'unknown'
+      if (forwardedFor) {
+        ip_address = forwardedFor.split(',')[0].trim()
+      } else if (realIp) {
+        ip_address = realIp.split(',')[0].trim()
+      }
       const user_agent = req.headers.get('user-agent') || 'unknown'
       
       // Log security event

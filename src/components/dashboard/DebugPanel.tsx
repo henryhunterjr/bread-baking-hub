@@ -40,14 +40,28 @@ const DebugPanel = () => {
 
       if (error) {
         console.error('🧪 DEBUG: Function error:', error);
-        throw error;
+        toast({
+          title: "Debug Test Failed",
+          description: `Function error: ${error.message}`,
+          variant: "destructive"
+        });
+        return;
       }
 
-      console.log('✅ DEBUG: Test post created successfully!');
-      toast({
-        title: "Debug Test Successful",
-        description: "Test post created successfully. Check console for details.",
-      });
+      if (data?.post) {
+        console.log('✅ DEBUG: Test post created successfully!', data.post);
+        toast({
+          title: "Debug Test Successful",
+          description: `Test post created! ID: ${data.post.id}`,
+        });
+      } else {
+        console.warn('🧪 DEBUG: No post data in response:', data);
+        toast({
+          title: "Debug Test Warning",
+          description: "Function succeeded but no post data returned",
+          variant: "destructive"
+        });
+      }
 
     } catch (error) {
       console.error('❌ DEBUG: Test failed:', error);
