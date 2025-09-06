@@ -294,14 +294,42 @@ const OwnerAnalytics: React.FC = () => {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="acquisition">Acquisition</TabsTrigger>
             <TabsTrigger value="content">Content</TabsTrigger>
             <TabsTrigger value="search">Search</TabsTrigger>
             <TabsTrigger value="tech">Tech Health</TabsTrigger>
+            <TabsTrigger value="metrics">Success Metrics</TabsTrigger>
             <TabsTrigger value="definitions">Definitions</TabsTrigger>
           </TabsList>
+
+          {/* Success Metrics Tab */}
+          <TabsContent value="metrics" className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-medium">Success Metrics</h3>
+                <p className="text-sm text-muted-foreground">
+                  Key performance indicators for the analytics system
+                </p>
+              </div>
+              <Button
+                onClick={() => window.location.reload()}
+                disabled={isLoading}
+                size="sm"
+                variant="outline"
+              >
+                <RefreshCw className={`mr-2 h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+                Refresh
+              </Button>
+            </div>
+
+            <iframe 
+              src="/api/analytics/success-metrics" 
+              className="w-full h-96 border rounded-lg"
+              title="Success Metrics"
+            />
+          </TabsContent>
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">
