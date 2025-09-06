@@ -146,29 +146,35 @@ export default async function handler(req: NextRequest) {
         uaType: 'bot', 
         used: 'supabase', 
         status: 200, 
-        note: `Found published post: ${supabasePost.title}`
+        note: `Found published post: ${supabasePost.title}`,
+        socialImage: supabasePost.social_image_url,
+        subtitle: supabasePost.subtitle
       });
       
-      const title = supabasePost.title ? `${supabasePost.title} | Baking Great Bread` : 'Baking Great Bread';
+      const title = supabasePost.title || 'Baking Great Bread';
       const description = supabasePost.subtitle || supabasePost.excerpt || supabasePost.meta_description || 'Master the art of bread baking with expert recipes and techniques.';
       const canonical = absoluteUrl(`/blog/${slug}`);
       
-      const imageUrl = resolveSocialImage({
-        social: supabasePost.social_image_url,
-        inline: supabasePost.inline_image_url,
-        hero: supabasePost.hero_image_url,
-        updatedAt: supabasePost.updated_at
-      });
+      // Force the social image URL for this specific post
+      let imageUrl = supabasePost.social_image_url;
+      if (!imageUrl) {
+        imageUrl = resolveSocialImage({
+          social: supabasePost.social_image_url,
+          inline: supabasePost.inline_image_url,
+          hero: supabasePost.hero_image_url,
+          updatedAt: supabasePost.updated_at
+        });
+      }
       
       const ogData = {
-        title,
-        description: description.slice(0, 160), // Ensure proper length
+        title: `${title} | Baking Great Bread`,
+        description: description.slice(0, 160),
         canonical,
         image: {
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: supabasePost.title || 'Baking Great Bread'
+          alt: title
         },
         siteName: 'Baking Great Bread',
         twitterHandle: '@henrysbread',
@@ -176,6 +182,13 @@ export default async function handler(req: NextRequest) {
         publishedAt: supabasePost.published_at,
         modifiedAt: supabasePost.updated_at
       };
+      
+      console.info('BLOG_DETAIL OG_DATA', { 
+        slug, 
+        ogTitle: ogData.title,
+        ogDesc: ogData.description,
+        ogImage: ogData.image.url
+      });
       
       const html = renderOgHtml(ogData);
       return new Response(html, { status: 200, headers: botHeaders() });
