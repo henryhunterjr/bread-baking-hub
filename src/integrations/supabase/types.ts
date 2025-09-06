@@ -1522,6 +1522,42 @@ export type Database = {
       }
     }
     Views: {
+      analytics_daily_metrics: {
+        Row: {
+          avg_pageviews_per_session: number | null
+          avg_session_duration: number | null
+          bounce_rate: number | null
+          bounced_sessions: number | null
+          conversions: number | null
+          errors: number | null
+          metric_date: string | null
+          pageviews: number | null
+          searches: number | null
+          sessions: number | null
+        }
+        Relationships: []
+      }
+      analytics_sessions: {
+        Row: {
+          campaign: string | null
+          country: string | null
+          device: string | null
+          duration_seconds: number | null
+          errors: number | null
+          event_count: number | null
+          is_bounce: boolean | null
+          medium: string | null
+          page_count: number | null
+          pageviews: number | null
+          session_date: string | null
+          session_end: string | null
+          session_hour: string | null
+          session_id: string | null
+          session_start: string | null
+          source: string | null
+        }
+        Relationships: []
+      }
       blog_posts_public: {
         Row: {
           author_display_name: string | null
@@ -1596,6 +1632,10 @@ export type Database = {
           updated_at: string
           user_id: string
         }[]
+      }
+      get_analytics_health_status: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
       }
       get_auth_security_status: {
         Args: Record<PropertyKey, never>

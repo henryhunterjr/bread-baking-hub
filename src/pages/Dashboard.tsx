@@ -19,7 +19,8 @@ import {
   FileText,
   Mail,
   Inbox,
-  Image as ImageIcon
+  Image as ImageIcon,
+  BarChart3
 } from 'lucide-react';
 import ContentEditor from '@/components/dashboard/ContentEditor';
 import PreviewPanel from '@/components/dashboard/PreviewPanel';
@@ -37,6 +38,8 @@ import { Tables } from '@/integrations/supabase/types';
 import AdminSubscribers from '@/components/admin/AdminSubscribers';
 import AdminRecipes from '@/components/admin/AdminRecipes';
 import { RecipeToNewsletterConverter } from '@/components/newsletter/RecipeToNewsletterConverter';
+import AnalyticsOverview from '@/components/AnalyticsOverview';
+import HealthCheck from '@/components/HealthCheck';
 
 interface BlogPostData {
   id?: string;
@@ -535,7 +538,7 @@ const Dashboard = () => {
               });
             }
           }} className="space-y-6">
-            <TabsList className="grid w-full max-w-4xl grid-cols-8">
+            <TabsList className="grid w-full max-w-4xl grid-cols-9">
               <TabsTrigger value="posts" className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
                 All Posts
@@ -566,6 +569,10 @@ const Dashboard = () => {
               <TabsTrigger value="images" className="flex items-center gap-2">
                 <ImageIcon className="w-4 h-4" />
                 Images
+              </TabsTrigger>
+              <TabsTrigger value="analytics" className="flex items-center gap-2">
+                <BarChart3 className="w-4 h-4" />
+                Analytics
               </TabsTrigger>
               <TabsTrigger value="settings" className="flex items-center gap-2">
                 <Settings className="w-4 h-4" />
@@ -651,6 +658,19 @@ const Dashboard = () => {
               />
               <BlogImageUploader />
               <BlogImageGrid />
+            </TabsContent>
+
+            <TabsContent value="analytics" className="space-y-6">
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="lg:col-span-2">
+                    <AnalyticsOverview />
+                  </div>
+                  <div>
+                    <HealthCheck />
+                  </div>
+                </div>
+              </div>
             </TabsContent>
 
             <TabsContent value="settings">
