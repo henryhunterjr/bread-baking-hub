@@ -71,15 +71,26 @@ export const getSocialImageUrl = (
 ): string => {
   console.log('getSocialImageUrl called with:', { socialImageUrl, inlineImageUrl, heroBannerUrl, updatedAt });
   
-  // Import here to avoid circular dependencies
-  const { getBestSocialImage } = require('@/utils/socialImageOptimizer');
+  // Direct implementation to avoid circular dependencies and browser compatibility issues
+  const defaultImageUrl = '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
   
-  const result = getBestSocialImage({
-    socialImageUrl,
-    inlineImageUrl,
-    heroImageUrl: heroBannerUrl,
-    updatedAt
-  });
+  // Priority order for best social image
+  const candidates = [socialImageUrl, inlineImageUrl, heroBannerUrl, defaultImageUrl].filter(Boolean);
+  
+  if (candidates.length === 0) {
+    console.log('getSocialImageUrl returning default:', defaultImageUrl);
+    return defaultImageUrl;
+  }
+
+  // Use the first available image
+  const selectedImage = candidates[0];
+  
+  // Add cache busting if updatedAt is provided
+  let result = selectedImage;
+  if (updatedAt && selectedImage) {
+    const separator = selectedImage.includes('?') ? '&' : '?';
+    result = `${selectedImage}${separator}v=${new Date(updatedAt).getTime()}`;
+  }
   
   console.log('getSocialImageUrl returning:', result);
   return result;
