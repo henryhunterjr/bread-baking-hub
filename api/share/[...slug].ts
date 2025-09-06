@@ -1,13 +1,13 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { renderOgHtml } from '../../src/server/og-template';
+import { resolveSocialImage } from '../../src/utils/resolveSocialImage';
 import { 
   isBotRequest, 
   botHeaders, 
   baseHeaders,
   humanRedirectHeaders, 
   absoluteUrl, 
-  resolveSocialImage,
   stripHtml,
   decodeEntities,
   defaultOgForHome

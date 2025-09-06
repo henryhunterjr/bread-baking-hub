@@ -1,12 +1,12 @@
 import { NextRequest } from 'next/server';
 import { renderOgHtml } from '../../src/server/og-template';
+import { resolveSocialImage } from '../../src/utils/resolveSocialImage';
 import { 
   isBotRequest, 
   botHeaders, 
   baseHeaders,
   humanRedirectHeaders, 
   absoluteUrl, 
-  resolveSocialImage,
   stripHtml,
   decodeEntities,
   defaultOgForHome
@@ -187,10 +187,15 @@ export default async function handler(req: NextRequest) {
         slug, 
         ogTitle: ogData.title,
         ogDesc: ogData.description,
-        ogImage: ogData.image.url
+        ogImage: ogData.image.url,
+        fullOgData: JSON.stringify(ogData)
       });
       
       const html = renderOgHtml(ogData);
+      console.info('BLOG_DETAIL RENDERED_HTML', { 
+        slug, 
+        htmlPreview: html.substring(0, 500)
+      });
       return new Response(html, { status: 200, headers: botHeaders() });
     }
     
