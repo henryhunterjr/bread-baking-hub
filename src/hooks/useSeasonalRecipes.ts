@@ -97,7 +97,6 @@ export const useSeasonalRecipes = () => {
           .from('recipes')
           .select('*')
           .eq('is_public', true)
-          .eq('folder', 'Seasonal')
           .order('created_at', { ascending: false });
 
         if (import.meta.env.DEV) log('🔍 SEASONAL RECIPES FETCH DEBUG:', {
