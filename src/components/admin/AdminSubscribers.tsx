@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,7 +7,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Tables } from '@/integrations/supabase/types';
-import { Download } from 'lucide-react';
+import { Download, Upload } from 'lucide-react';
 
 export type Subscriber = Tables<'newsletter_subscribers'>;
 
@@ -17,6 +17,8 @@ const AdminSubscribers = () => {
   const [savingId, setSavingId] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [onlyActive, setOnlyActive] = useState(false);
+  const [importing, setImporting] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchSubscribers = async () => {
@@ -95,6 +97,115 @@ const AdminSubscribers = () => {
     URL.revokeObjectURL(url);
   };
 
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.name.endsWith('.csv')) {
+      toast({ title: 'Error', description: 'Please select a CSV file', variant: 'destructive' });
+      return;
+    }
+
+    setImporting(true);
+    try {
+      const text = await file.text();
+      const lines = text.trim().split('\n');
+      
+      if (lines.length < 2) {
+        toast({ title: 'Error', description: 'CSV file must have headers and at least one data row', variant: 'destructive' });
+        return;
+      }
+
+      const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim().toLowerCase());
+      const emailIndex = headers.indexOf('email');
+      const nameIndex = headers.indexOf('name');
+      
+      if (emailIndex === -1) {
+        toast({ title: 'Error', description: 'CSV file must have an "email" column', variant: 'destructive' });
+        return;
+      }
+
+      const newSubscribers = [];
+      const errors = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',').map(v => v.replace(/"/g, '').trim());
+        const email = values[emailIndex]?.toLowerCase();
+        const name = nameIndex >= 0 ? values[nameIndex] : null;
+
+        if (!email || !email.includes('@')) {
+          errors.push(`Row ${i + 1}: Invalid email`);
+          continue;
+        }
+
+        newSubscribers.push({ email, name: name || null });
+      }
+
+      if (newSubscribers.length === 0) {
+        toast({ title: 'Error', description: 'No valid subscribers found in CSV', variant: 'destructive' });
+        return;
+      }
+
+      // Use the newsletter subscription function to maintain data integrity
+      let imported = 0;
+      let skipped = 0;
+
+      for (const subscriber of newSubscribers) {
+        try {
+          const { data, error } = await supabase.rpc('subscribe_to_newsletter', {
+            p_email: subscriber.email,
+            p_name: subscriber.name
+          });
+
+          const result = data as { success?: boolean; error?: string } | null;
+          
+          if (result?.success) {
+            imported++;
+          } else if (result?.error?.includes('already subscribed')) {
+            skipped++;
+          } else {
+            errors.push(`${subscriber.email}: ${result?.error || 'Failed to import'}`);
+          }
+        } catch (error) {
+          errors.push(`${subscriber.email}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
+      }
+
+      // Refresh the subscribers list
+      const { data } = await supabase
+        .from('newsletter_subscribers')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (data) setSubscribers(data);
+
+      let message = `Import complete: ${imported} imported`;
+      if (skipped > 0) message += `, ${skipped} already existed`;
+      if (errors.length > 0) message += `, ${errors.length} errors`;
+
+      toast({ 
+        title: 'Import Complete', 
+        description: message,
+        variant: errors.length > 0 ? 'destructive' : 'default'
+      });
+
+      if (errors.length > 0) {
+        console.error('Import errors:', errors);
+      }
+
+    } catch (error) {
+      console.error('Import error:', error);
+      toast({ title: 'Error', description: 'Failed to import CSV file', variant: 'destructive' });
+    } finally {
+      setImporting(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -111,9 +222,20 @@ const AdminSubscribers = () => {
             <span>Active only</span>
             <Switch checked={onlyActive} onCheckedChange={setOnlyActive} />
           </div>
+          <Button variant="outline" onClick={handleImportClick} disabled={importing} aria-label="Import CSV">
+            <Upload className="w-4 h-4 mr-2" /> {importing ? 'Importing...' : 'Import CSV'}
+          </Button>
           <Button variant="outline" onClick={exportCsv} aria-label="Export CSV">
             <Download className="w-4 h-4 mr-2" /> Export CSV
           </Button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".csv"
+            onChange={handleFileImport}
+            className="hidden"
+            aria-label="CSV file input"
+          />
         </div>
       </CardHeader>
       <CardContent>
