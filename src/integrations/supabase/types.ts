@@ -160,6 +160,72 @@ export type Database = {
         }
         Relationships: []
       }
+      app_analytics_events: {
+        Row: {
+          campaign: string | null
+          content_type: string | null
+          country: string | null
+          device: string | null
+          event: string
+          event_id: string
+          id: string
+          medium: string | null
+          meta: Json | null
+          path: string | null
+          referrer: string | null
+          sample_rate: number | null
+          session_id: string | null
+          slug: string | null
+          source: string | null
+          title: string | null
+          ts: string
+          user_id: string | null
+          value_cents: number | null
+        }
+        Insert: {
+          campaign?: string | null
+          content_type?: string | null
+          country?: string | null
+          device?: string | null
+          event: string
+          event_id: string
+          id?: string
+          medium?: string | null
+          meta?: Json | null
+          path?: string | null
+          referrer?: string | null
+          sample_rate?: number | null
+          session_id?: string | null
+          slug?: string | null
+          source?: string | null
+          title?: string | null
+          ts?: string
+          user_id?: string | null
+          value_cents?: number | null
+        }
+        Update: {
+          campaign?: string | null
+          content_type?: string | null
+          country?: string | null
+          device?: string | null
+          event?: string
+          event_id?: string
+          id?: string
+          medium?: string | null
+          meta?: Json | null
+          path?: string | null
+          referrer?: string | null
+          sample_rate?: number | null
+          session_id?: string | null
+          slug?: string | null
+          source?: string | null
+          title?: string | null
+          ts?: string
+          user_id?: string | null
+          value_cents?: number | null
+        }
+        Relationships: []
+      }
       blog_clicks: {
         Row: {
           category_names: string[] | null
@@ -1558,6 +1624,59 @@ export type Database = {
         }
         Relationships: []
       }
+      app_analytics_mv_cwv_by_page_day: {
+        Row: {
+          avg_value: number | null
+          metric_date: string | null
+          metric_name: string | null
+          p75_value: number | null
+          p90_value: number | null
+          path: string | null
+          sample_count: number | null
+        }
+        Relationships: []
+      }
+      app_analytics_mv_errors_by_route_day: {
+        Row: {
+          affected_sessions: number | null
+          error_count: number | null
+          error_type: string | null
+          metric_date: string | null
+          path: string | null
+        }
+        Relationships: []
+      }
+      app_analytics_mv_page_perf_day: {
+        Row: {
+          avg_cls: number | null
+          avg_inp: number | null
+          avg_lcp: number | null
+          metric_date: string | null
+          pageviews: number | null
+          path: string | null
+          unique_sessions: number | null
+        }
+        Relationships: []
+      }
+      app_analytics_mv_sessions_by_source_day: {
+        Row: {
+          events: number | null
+          medium: string | null
+          metric_date: string | null
+          sessions: number | null
+          source: string | null
+        }
+        Relationships: []
+      }
+      app_analytics_mv_subscribers_day: {
+        Row: {
+          actual_subscribers: number | null
+          metric_date: string | null
+          subscribe_attempts: number | null
+          subscribe_views: number | null
+        }
+        Relationships: []
+      }
       blog_posts_public: {
         Row: {
           author_display_name: string | null
@@ -1579,6 +1698,22 @@ export type Database = {
       }
     }
     Functions: {
+      app_analytics_cleanup_old_events: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
+      app_analytics_gdpr_delete_by_session: {
+        Args: { p_session_id: string }
+        Returns: Json
+      }
+      app_analytics_gdpr_delete_by_user: {
+        Args: { p_user_id: string }
+        Returns: Json
+      }
+      app_analytics_refresh_materialized_views: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
       apply_security_hardening: {
         Args: Record<PropertyKey, never>
         Returns: undefined

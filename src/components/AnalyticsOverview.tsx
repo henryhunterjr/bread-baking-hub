@@ -57,11 +57,11 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
       const hoursBack = periods[selectedPeriod].hours;
       const startTime = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();
       
-      // Fetch analytics data
+      // Fetch analytics data from new table
       const { data: events } = await supabase
-        .from('analytics_events')
+        .from('app_analytics_events')
         .select('*')
-        .gte('created_at', startTime);
+        .gte('ts', startTime);
 
       if (events) {
         const calculatedMetrics = calculateMetrics(events);
@@ -78,8 +78,8 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
   const calculateMetrics = (events: any[]): OverviewMetrics => {
     // Group by session for session-based calculations
     const sessionMap = new Map<string, any[]>();
-    const pageviews = events.filter(e => e.event_type === 'page_view');
-    const errors = events.filter(e => e.event_type === 'error_404' || e.event_type === 'error_5xx');
+    const pageviews = events.filter(e => e.event === 'page_view');
+    const errors = events.filter(e => e.event === 'error_404' || e.event === 'error_5xx');
     
     // Group events by session
     events.forEach(event => {
@@ -97,14 +97,14 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
     
     sessionMap.forEach(sessionEvents => {
       const sortedEvents = sessionEvents.sort((a, b) => 
-        new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        new Date(a.ts).getTime() - new Date(b.ts).getTime()
       );
       
       if (sortedEvents.length === 1) {
         bouncedSessions++;
       } else {
-        const duration = new Date(sortedEvents[sortedEvents.length - 1].created_at).getTime() - 
-                        new Date(sortedEvents[0].created_at).getTime();
+        const duration = new Date(sortedEvents[sortedEvents.length - 1].ts).getTime() - 
+                        new Date(sortedEvents[0].ts).getTime();
         totalSessionDuration += duration;
       }
     });
@@ -115,7 +115,7 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
     // Top pages
     const pageMap = new Map<string, number>();
     pageviews.forEach(event => {
-      const path = event.page_url || event.event_data?.path || 'unknown';
+      const path = event.path || 'unknown';
       pageMap.set(path, (pageMap.get(path) || 0) + 1);
     });
     
@@ -128,9 +128,8 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
     const sourceMap = new Map<string, number>();
     sessionMap.forEach(sessionEvents => {
       const firstEvent = sessionEvents[0];
-      const eventData = firstEvent.event_data || {};
-      const source = eventData.source || 
-                    (eventData.referrer ? new URL(eventData.referrer).hostname : 'direct') || 
+      const source = firstEvent.source || 
+                    (firstEvent.referrer ? new URL(firstEvent.referrer).hostname : 'direct') || 
                     'direct';
       sourceMap.set(source, (sourceMap.get(source) || 0) + 1);
     });
@@ -144,7 +143,7 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
       .sort((a, b) => b.sessions - a.sessions);
 
     // Performance and health scoring
-    const performanceEvents = events.filter(e => e.event_type === 'cwv_metric');
+    const performanceEvents = events.filter(e => e.event === 'cwv_metric');
     const performanceScore = calculatePerformanceScore(performanceEvents);
     const healthStatus = calculateHealthStatus(events, errors.length);
 
@@ -153,7 +152,7 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
       sessions,
       bounce_rate: bounceRate,
       avg_session_duration: avgSessionDuration,
-      conversions: events.filter(e => ['subscribe_submit', 'affiliate_click'].includes(e.event_type)).length,
+      conversions: events.filter(e => ['subscribe_submit', 'affiliate_click'].includes(e.event)).length,
       errors: errors.length,
       top_pages: topPages,
       sources,
@@ -166,9 +165,9 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
     if (perfEvents.length === 0) return 'good';
     
     // Simple scoring based on Core Web Vitals
-    const lcpEvents = perfEvents.filter(e => e.event_data?.metric === 'lcp');
+    const lcpEvents = perfEvents.filter(e => e.meta?.metric === 'lcp');
     const avgLcp = lcpEvents.length > 0 
-      ? lcpEvents.reduce((sum, e) => sum + (e.event_data?.value || 0), 0) / lcpEvents.length 
+      ? lcpEvents.reduce((sum, e) => sum + (e.meta?.value || 0), 0) / lcpEvents.length 
       : 0;
     
     if (avgLcp <= 2500) return 'good';

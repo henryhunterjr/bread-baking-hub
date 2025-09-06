@@ -193,11 +193,43 @@ export default async function handler(req: NextRequest) {
       processedEvents.push(enrichedEvent);
     }
 
-    // Batch insert to analytics_events table
+    // Batch insert to app_analytics_events table (new structure)
     if (processedEvents.length > 0) {
+      const mappedEvents = processedEvents.map(event => ({
+        ts: event.created_at,
+        event: event.event_type,
+        event_id: event.event_id,
+        session_id: event.session_id,
+        user_id: event.user_id,
+        path: event.page_url,
+        title: event.event_data.title,
+        slug: event.event_data.slug,
+        content_type: event.event_data.content_type,
+        source: event.event_data.source,
+        medium: event.event_data.medium,
+        campaign: event.event_data.campaign,
+        device: event.event_data.device,
+        country: event.event_data.country,
+        referrer: event.referrer,
+        value_cents: event.event_data.value_cents,
+        sample_rate: 1,
+        meta: {
+          city: event.event_data.city,
+          region: event.event_data.region,
+          client_ts: event.event_data.client_ts,
+          user_agent: event.user_agent,
+          ip_address: event.ip_address,
+          ...Object.fromEntries(
+            Object.entries(event.event_data).filter(([key]) => 
+              !['title', 'slug', 'content_type', 'device', 'source', 'medium', 'campaign', 'value_cents', 'country', 'city', 'region', 'client_ts'].includes(key)
+            )
+          )
+        }
+      }));
+
       const { error } = await supabase
-        .from('analytics_events')
-        .insert(processedEvents);
+        .from('app_analytics_events')
+        .insert(mappedEvents);
 
       if (error) {
         console.error('Supabase insert error:', error);
