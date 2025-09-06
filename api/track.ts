@@ -79,7 +79,11 @@ export default async function handler(req: NextRequest) {
       return new NextResponse(null, { status: 204, headers: corsHeaders });
     }
 
-    // HMAC verification
+    // Parse payload first for HMAC verification
+    const body: EventPayload = await req.json();
+    const bodyString = JSON.stringify(body);
+
+    // HMAC verification with replay protection
     const hmacHeader = req.headers.get('x-analytics-key');
     const timestampHeader = req.headers.get('x-analytics-ts');
     
@@ -90,11 +94,36 @@ export default async function handler(req: NextRequest) {
       });
     }
 
-    // Timestamp validation (5 minute window)
+    // Timestamp validation (5 minute window for replay protection)
     const timestamp = parseInt(timestampHeader);
     const now = Date.now();
     if (now - timestamp > 300000) { // 5 minutes
       return new NextResponse('Request too old', { 
+        status: 401, 
+        headers: corsHeaders 
+      });
+    }
+
+    // Verify HMAC signature
+    try {
+      const crypto = await import('node:crypto');
+      const expectedHmac = crypto
+        .createHmac('sha256', analyticsKey)
+        .update(bodyString + timestampHeader)
+        .digest('hex');
+      
+      if (!crypto.timingSafeEqual(
+        Buffer.from(hmacHeader, 'hex'),
+        Buffer.from(expectedHmac, 'hex')
+      )) {
+        return new NextResponse('Invalid signature', { 
+          status: 401, 
+          headers: corsHeaders 
+        });
+      }
+    } catch (error) {
+      console.error('HMAC verification failed:', error);
+      return new NextResponse('Authentication failed', { 
         status: 401, 
         headers: corsHeaders 
       });
@@ -118,9 +147,7 @@ export default async function handler(req: NextRequest) {
       }
     }
 
-    // Parse payload
-    const body: EventPayload = await req.json();
-    
+    // Validate payload structure
     if (!body.events || !Array.isArray(body.events)) {
       return new NextResponse(null, { status: 204, headers: corsHeaders });
     }
@@ -212,7 +239,9 @@ export default async function handler(req: NextRequest) {
         country: event.event_data.country,
         referrer: event.referrer,
         value_cents: event.event_data.value_cents,
-        sample_rate: 1,
+        sample_rate: globalEntry && globalEntry.count > 1200 
+          ? Math.max(0.33, 1200 / globalEntry.count) 
+          : 1,
         meta: {
           city: event.event_data.city,
           region: event.event_data.region,
