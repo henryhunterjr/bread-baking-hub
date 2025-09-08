@@ -68,7 +68,7 @@ export const SeasonalRecipeModal = ({ recipe, onClose }: SeasonalRecipeModalProp
 
   const season = recipe.data.season;
   const colors = getSeasonalColors(season);
-  const SeasonIcon = seasonIcons[season];
+  const SeasonIcon = seasonIcons[season as Season] || Sun;
 
   // Refs for focus management and DOM cleanup
   const dialogContentRef = useRef<HTMLDivElement>(null);
