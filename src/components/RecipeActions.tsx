@@ -252,7 +252,7 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
         </div>
       )}
       
-      <ShareModal
+      <ImprovedShareModal
         isOpen={showShareModal}
         onClose={() => setShowShareModal(false)}
         title={recipe.title}
