@@ -7,7 +7,6 @@ import { getRecipeImage } from '@/utils/recipeImageMapping';
 import { RecipeActions } from '@/components/RecipeActions';
 import { RecipeRating } from '@/components/RecipeRating';
 import { ZoomableImage } from '@/components/ZoomableImage';
-import CookingMode from '@/components/CookingMode';
 
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
