@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Printer, Download, Mail, Share } from 'lucide-react';
-import { ShareModal } from '@/components/ShareModal';
+import { ImprovedShareModal } from '@/components/ImprovedShareModal';
 import html2pdf from 'html2pdf.js';
 
 type PrintableRecipeData = {

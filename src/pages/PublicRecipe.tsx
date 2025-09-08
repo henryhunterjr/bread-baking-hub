@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { usePublicRecipe } from '@/hooks/usePublicRecipe';
 import { SimpleRecipeDisplay } from '@/components/SimpleRecipeDisplay';
 import Header from '@/components/Header';
@@ -8,7 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Globe } from 'lucide-react';
-import { getRecipeImage } from '@/utils/recipeImageMapping';
+import { EnhancedRecipeSEO } from '@/components/EnhancedRecipeSEO';
+import { mapLegacyToStandard } from '@/types/recipe';
 
 const PublicRecipe = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -48,53 +48,16 @@ const PublicRecipe = () => {
     );
   }
 
-  // Get the correct social image using the mapping system
-  const socialImageUrl = getRecipeImage(recipe.slug, (recipe.data as any)?.social_image_url || recipe.image_url);
+  // Convert legacy recipe to standard format for consistent handling
+  const standardRecipe = mapLegacyToStandard(recipe);
 
   return (
     <div className="bg-background text-foreground min-h-screen">
-      <Helmet>
-        <title>{`${recipe.title} | Baking Great Bread`}</title>
-        <meta name="description" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Festive pumpkin sourdough tied with twine and finished with a cinnamon stick stem.' : ((recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`)} />
-        <link rel="canonical" href={`https://bread-baking-hub.vercel.app/recipes/${slug}`} />
-        
-        {/* Open Graph for social sharing */}
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://bread-baking-hub.vercel.app/recipes/${slug}?v=2`} />
-        <meta property="og:title" content={recipe.title} />
-        <meta property="og:description" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Festive pumpkin sourdough tied with twine and finished with a cinnamon stick stem.' : ((recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`)} />
-        <meta property="og:image" content={`${socialImageUrl}?v=${Date.now()}`} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="675" />
-        <meta property="og:image:alt" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Festive pumpkin-shaped sourdough loaf tied with twine and finished with a cinnamon stick stem' : `${recipe.title} recipe cover image`} />
-        <meta property="og:site_name" content="Baking Great Bread at Home" />
-        <meta property="article:author" content="Henry Hunter" />
-        <meta property="article:published_time" content={recipe.created_at} />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={recipe.title} />
-        <meta name="twitter:description" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Festive pumpkin sourdough tied with twine and finished with a cinnamon stick stem.' : ((recipe.data?.notes as string) || `Recipe: ${recipe.title} by Henry Hunter.`)} />
-        <meta name="twitter:image" content={`${socialImageUrl}?v=${Date.now()}`} />
-        <meta name="twitter:image:alt" content={recipe.slug === 'pumpkin-shaped-sourdough-loaf' ? 'Festive pumpkin-shaped sourdough loaf tied with twine and finished with a cinnamon stick stem' : `${recipe.title} recipe cover image`} />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Recipe",
-            name: recipe.title,
-            image: recipe.image_url ? [recipe.image_url] : undefined,
-            description: (recipe.data?.notes as string) || undefined,
-            author: { "@type": "Person", name: "Henry Hunter" },
-            datePublished: recipe.created_at,
-            recipeIngredient: Array.isArray((recipe.data as any)?.ingredients)
-              ? (recipe.data as any).ingredients
-              : [],
-            recipeInstructions: Array.isArray((recipe.data as any)?.method)
-              ? (recipe.data as any).method.map((m: any) => ({ "@type": "HowToStep", text: m }))
-              : []
-          })}
-        </script>
-      </Helmet>
+      <EnhancedRecipeSEO 
+        recipe={standardRecipe}
+        canonical={`https://bread-baking-hub.vercel.app/recipes/${slug}`}
+        fbAppId={process.env.REACT_APP_FB_APP_ID}
+      />
       <Header />
       <main className="py-20 px-4">
         <div className="max-w-4xl mx-auto space-y-6">
