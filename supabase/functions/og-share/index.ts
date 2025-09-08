@@ -255,7 +255,7 @@ Deno.serve(async (req) => {
       const html = renderHtml({
         title: 'Sourdough Bread with Toasted Black Sesame Seeds | Baking Great Bread',
         description: 'This isn\'t just bread - it\'s edible art. The nutty, aromatic black sesame seeds create gorgeous speckles throughout the crumb while adding a subtle toasted flavor that pairs beautifully with the tang of well-developed sourdough.',
-        canonical: absoluteUrl(`/recipes`),
+        canonical: absoluteUrl(`/recipes/sourdough-bread-with-toasted-black-sesame-seeds-1`),
         image: {
           url: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-09/general/f4e8420f-af34-442d-be96-77ad8c28546f.png',
           width: 1200,
