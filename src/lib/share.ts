@@ -29,6 +29,7 @@ export function openShareLink(url: string, platform: string): void {
   } else if (platform === 'gmail') {
     window.open(url, '_blank', 'noopener,noreferrer');
   } else {
+    // Desktop-safe sharing with proper window features
     window.open(url, '_blank', 'noopener,noreferrer,width=600,height=500');
   }
 }

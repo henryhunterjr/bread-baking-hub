@@ -100,7 +100,7 @@ export const ImprovedShareModal = ({
 
   const handlePrint = () => {
     if (recipeSlug) {
-      window.open(`/print/${recipeSlug}`, '_blank', 'noopener');
+      window.open(`/recipes/${recipeSlug}/print`, '_blank', 'noopener');
       toast({
         title: "Print page opened",
         description: "Use your browser's print function to save as PDF"

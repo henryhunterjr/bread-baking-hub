@@ -144,10 +144,10 @@ Deno.serve(async (req) => {
       return ok(html, 404);
     }
 
-    // Humans → redirect to SPA
+    // Humans → redirect to recipes, not blog
     if (!isBot(ua)) {
-      console.log(`Redirecting human to /blog/${slug}`);
-      return redirect(absoluteUrl(`/blog/${slug}`), 301);
+      console.log(`Redirecting human to /recipes/${slug}`);
+      return redirect(absoluteUrl(`/recipes/${slug}`), 301);
     }
 
     // Bots → fetch post and render
@@ -158,48 +158,43 @@ Deno.serve(async (req) => {
       : null;
 
     let post: any = null;
-
-    // Handle specific test cases
-    if (slug === 'test-post') {
-      const html = renderHtml({
-        title: 'Test Post for Open Graph Validation | Baking Great Bread',
-        description: 'This is a test post to validate Open Graph and Twitter Card functionality for social media sharing. Perfect for testing your social media images!',
-        canonical: absoluteUrl('/blog/test-post'),
-        image: {
-          url: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-09/general/f4e8420f-af34-442d-be96-77ad8c28546f.png',
-          width: 1200,
-          height: 630,
-          alt: 'Test image for Open Graph validation - Baking Great Bread'
-        },
-        type: 'article'
-      });
-      return ok(html, 200);
-    }
+    let isRecipe = false;
 
     if (sb) {
-      console.log(`Fetching post from Supabase: ${slug}`);
+      console.log(`Fetching content from Supabase: ${slug}`);
       
-      // Try blog posts first
-      const { data: blogData } = await sb.from("blog_posts").select("*").eq("slug", slug).maybeSingle();
-      if (blogData && !blogData.is_draft && blogData.published_at) {
-        post = blogData;
-        console.log(`Found Supabase blog post: ${post.title}`);
+      // Try recipes first (primary content type)
+      let recipeData = null;
+      const { data: directRecipe } = await sb.from("recipes").select("*").eq("slug", slug).eq("is_public", true).maybeSingle();
+      
+      // If not found and slug ends with -1, try without the suffix
+      if (!directRecipe && slug.endsWith('-1')) {
+        const baseSlug = slug.slice(0, -2);
+        console.log(`Trying base slug: ${baseSlug}`);
+        const { data: baseRecipe } = await sb.from("recipes").select("*").eq("slug", baseSlug).eq("is_public", true).maybeSingle();
+        recipeData = baseRecipe;
+      } else {
+        recipeData = directRecipe;
       }
       
-      // If no blog post found, try recipes
-      if (!post) {
-        const { data: recipeData } = await sb.from("recipes").select("*").eq("slug", slug).maybeSingle();
-        if (recipeData && recipeData.is_public) {
-          // Convert recipe to post-like structure
-          post = {
-            title: recipeData.title,
-            subtitle: recipeData.data?.introduction?.slice(0, 160) || recipeData.data?.description?.slice(0, 160) || "A delicious bread recipe from Baking Great Bread",
-            updated_at: recipeData.updated_at,
-            published_at: recipeData.created_at,
-            social_image_url: recipeData.image_url,
-            hero_image_url: recipeData.image_url
-          };
-          console.log(`Found Supabase recipe: ${post.title}`);
+      if (recipeData) {
+        isRecipe = true;
+        // Convert recipe to post-like structure for OG tags
+        post = {
+          title: recipeData.title,
+          subtitle: recipeData.data?.seoDescription || recipeData.data?.description?.slice(0, 160) || recipeData.data?.introduction?.slice(0, 160) || "A delicious bread recipe from Baking Great Bread",
+          updated_at: recipeData.updated_at,
+          published_at: recipeData.created_at,
+          social_image_url: recipeData.image_url,
+          hero_image_url: recipeData.image_url
+        };
+        console.log(`Found Supabase recipe: ${post.title}`);
+      } else {
+        // Fallback to blog posts only if no recipe found
+        const { data: blogData } = await sb.from("blog_posts").select("*").eq("slug", slug).maybeSingle();
+        if (blogData && !blogData.is_draft && blogData.published_at) {
+          post = blogData;
+          console.log(`Found Supabase blog post: ${post.title}`);
         }
       }
     }
@@ -231,55 +226,19 @@ Deno.serve(async (req) => {
       }
     }
 
-    // Handle specific posts with hardcoded data
-    if (slug === 'sourdough-bread-bowls') {
-      const html = renderHtml({
-        title: 'Sourdough Bread Bowls | Baking Great Bread',
-        description: 'Perfect for soup season! These artisan sourdough bread bowls combine crusty exterior with tender, chewy interior. Get the complete recipe and technique.',
-        canonical: absoluteUrl(`/blog/${slug}`),
-        image: {
-          url: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-09/general/5713d3eb-9101-4331-8252-4b380d1ad6ae.png',
-          width: 1200,
-          height: 630,
-          alt: 'Sourdough Bread Bowls'
-        },
-        type: 'article',
-        publishedAt: post?.published_at,
-        modifiedAt: post?.updated_at
-      });
-      return ok(html, 200);
-    }
+    // No hardcoded exceptions - use database data only
 
-    // Handle sesame bread recipe variants
-    if (slug === 'sourdough-bread-with-toasted-black-sesame-seeds-1' || slug === 'sourdough-bread-with-toasted-black-sesame-seeds') {
-      const html = renderHtml({
-        title: 'Sourdough Bread with Toasted Black Sesame Seeds | Baking Great Bread',
-        description: 'This isn\'t just bread - it\'s edible art. The nutty, aromatic black sesame seeds create gorgeous speckles throughout the crumb while adding a subtle toasted flavor that pairs beautifully with the tang of well-developed sourdough.',
-        canonical: absoluteUrl(`/recipes/sourdough-bread-with-toasted-black-sesame-seeds-1`),
-        image: {
-          url: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-09/general/f4e8420f-af34-442d-be96-77ad8c28546f.png',
-          width: 1200,
-          height: 630,
-          alt: 'Sourdough Bread with Toasted Black Sesame Seeds'
-        },
-        type: 'article',
-        publishedAt: post?.published_at || '2025-01-06T12:00:00Z',
-        modifiedAt: post?.updated_at
-      });
-      return ok(html, 200);
-    }
-
-    // Compose meta for found posts
+    // Compose meta for found content
     const title = post ? `${post.title} | Baking Great Bread` : "Baking Great Bread";
     const description = (post?.subtitle || post?.excerpt || post?.meta_description || "Master the art of bread baking with expert recipes and techniques.").slice(0, 160);
-    const canonical = absoluteUrl(`/blog/${slug}`);
+    const canonical = absoluteUrl(isRecipe ? `/recipes/${slug}` : `/blog/${slug}`);
 
-    // Resolve image URL
+    // Resolve image URL - ensure public 1200x630 for OG
     let imgUrl = post?.social_image_url || post?.inline_image_url || post?.hero_image_url;
     
-    // Default fallback image
+    // Default fallback image (publicly accessible)
     if (!imgUrl) {
-      imgUrl = "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-09/general/f4e8420f-af34-442d-be96-77ad8c28546f.png";
+      imgUrl = absoluteUrl("/og-default.jpg");
     }
 
     // Ensure absolute URL
@@ -287,9 +246,12 @@ Deno.serve(async (req) => {
       imgUrl = absoluteUrl(imgUrl);
     }
 
-    // Add cache busting if we have updated_at
-    const ts = post?.updated_at ? Math.floor(new Date(post.updated_at).getTime()/1000) : undefined;
-    const finalImg = ts ? `${imgUrl}${imgUrl.includes("?") ? "&" : "?"}v=${ts}` : imgUrl;
+    // No signed URLs for OG images - use public storage URLs only
+    if (imgUrl.includes("token=") || imgUrl.includes("sign=")) {
+      imgUrl = absoluteUrl("/og-default.jpg");
+    }
+
+    const finalImg = imgUrl;
 
     console.log(`Rendering OG for ${slug}: ${title}`);
     console.log(`Using image: ${finalImg}`);

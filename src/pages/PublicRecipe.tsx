@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { Globe } from 'lucide-react';
 import { EnhancedRecipeSEO } from '@/components/EnhancedRecipeSEO';
 import { mapLegacyToStandard } from '@/types/recipe';
+import { normalizeRecipe } from '@/lib/normalizeRecipe';
 
 const PublicRecipe = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -50,6 +51,8 @@ const PublicRecipe = () => {
 
   // Convert legacy recipe to standard format for consistent handling
   const standardRecipe = mapLegacyToStandard(recipe);
+  // Also normalize data to prevent crashes
+  const normalizedRecipe = normalizeRecipe(recipe);
 
   return (
     <div className="bg-background text-foreground min-h-screen">
@@ -78,11 +81,11 @@ const PublicRecipe = () => {
           {/* Recipe Content */}
           <div className="border rounded-lg p-6 bg-card">
             <SimpleRecipeDisplay 
-              recipe={recipe.data} 
-              imageUrl={recipe.image_url}
-              title={recipe.title}
-              recipeId={recipe.id}
-              slug={recipe.slug}
+              recipe={normalizedRecipe.data} 
+              imageUrl={normalizedRecipe.heroImage.url}
+              title={normalizedRecipe.title}
+              recipeId={normalizedRecipe.id}
+              slug={normalizedRecipe.slug}
             />
           </div>
 
