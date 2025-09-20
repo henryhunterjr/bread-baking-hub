@@ -32,14 +32,16 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
       jsdom: path.resolve(__dirname, "./src/shims/empty-module.ts"),
-      // 🔒 Force a single copy of React/ReactDOM
-      react: path.resolve(__dirname, "node_modules/react"),
-      "react-dom": path.resolve(__dirname, "node_modules/react-dom"),
     },
   },
 
   optimizeDeps: {
+    include: ["react", "react-dom", "react/jsx-runtime"],
     exclude: ["jsdom", "canvas", "iconv-lite", "whatwg-encoding", "html-encoding-sniffer"],
+  },
+
+  define: {
+    global: "globalThis",
   },
 
   test: {
