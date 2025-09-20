@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Info, ChevronDown } from 'lucide-react';
@@ -24,14 +24,14 @@ import {
 const officialLogo = '/lovable-uploads/82d8e259-f73d-4691-958e-1dd4d0bf240d.png';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, signOut } = useAuth();
 
   // Use the scroll lock hook for mobile menu
   useScrollLock(isMenuOpen, 'mobile-menu');
 
   // Handle ESC key to close menu
-  React.useEffect(() => {
+  useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isMenuOpen) {
         setIsMenuOpen(false);

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Search, X, Clock, TrendingUp, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -36,21 +36,21 @@ export const GlobalSearch = ({
   className = ""
 }: GlobalSearchProps) => {
   const { user } = useAuth();
-  const [query, setQuery] = React.useState('');
-  const [suggestions, setSuggestions] = React.useState<SearchSuggestion[]>([]);
-  const [recentSearches, setRecentSearches] = React.useState<string[]>([]);
-  const [popularSearches, setPopularSearches] = React.useState<string[]>([]);
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [selectedFilters, setSelectedFilters] = React.useState<string[]>([]);
-  const [clientCache, setClientCache] = React.useState<{posts: any[]; recipes: any[]}>({posts: [], recipes: []});
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [popularSearches, setPopularSearches] = useState<string[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [clientCache, setClientCache] = useState<{posts: any[]; recipes: any[]}>({posts: [], recipes: []});
   
   const debouncedQuery = useDebounce(query, 200);
-  const searchRef = React.useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   
   // Load recent searches from localStorage
-  React.useEffect(() => {
+  useEffect(() => {
     const stored = localStorage.getItem('recent-searches');
     if (stored) {
       setRecentSearches(JSON.parse(stored));
@@ -58,7 +58,7 @@ export const GlobalSearch = ({
   }, []);
 
   // Preload lightweight client cache for fallback search
-  React.useEffect(() => {
+  useEffect(() => {
     let cancelled = false;
     const loadCache = async () => {
       try {
@@ -95,7 +95,7 @@ export const GlobalSearch = ({
   }, []);
 
   // Load popular searches - only for admin users
-  React.useEffect(() => {
+  useEffect(() => {
     const loadPopularSearches = async () => {
       try {
         // Check if user is admin before attempting to query search_analytics
@@ -129,7 +129,7 @@ export const GlobalSearch = ({
   }, [user]);
 
   // Helper function to check if user is admin
-  const isUserAdmin = React.useCallback(async () => {
+  const isUserAdmin = useCallback(async () => {
     if (!user?.id) return false;
     try {
       const { data: profile } = await supabase
@@ -143,7 +143,7 @@ export const GlobalSearch = ({
     }
   }, [user]);
   // Client-side fallback search
-  const clientFilter = React.useCallback((q: string) => {
+  const clientFilter = useCallback((q: string) => {
     if (!q.trim()) return [];
     const tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
     
@@ -197,7 +197,7 @@ export const GlobalSearch = ({
   }, [clientCache]);
 
   // Search suggestions
-  React.useEffect(() => {
+  useEffect(() => {
     if (!debouncedQuery.trim()) {
       setSuggestions([]);
       return;
@@ -292,7 +292,7 @@ export const GlobalSearch = ({
   }, [debouncedQuery, clientFilter]);
 
   // Handle click outside to close
-  React.useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setIsOpen(false);
@@ -303,7 +303,7 @@ export const GlobalSearch = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleSearch = React.useCallback(async (searchQuery: string) => {
+  const handleSearch = useCallback(async (searchQuery: string) => {
     if (!searchQuery.trim()) return;
 
     // Save to recent searches
@@ -334,7 +334,7 @@ export const GlobalSearch = ({
     setIsOpen(false);
   }, [recentSearches, suggestions.length, selectedFilters, navigate, isUserAdmin]);
 
-  const handleSuggestionClick = React.useCallback(async (suggestion: SearchSuggestion) => {
+  const handleSuggestionClick = useCallback(async (suggestion: SearchSuggestion) => {
     // Log click analytics (only for admin users)
     try {
       if (user?.id) {
