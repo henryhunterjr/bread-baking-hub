@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Base URL for the site
-const BASE_URL = 'https://bakinggreatbread.com';
+const BASE_URL = 'https://the-bakers-bench.lovable.app';
 
 // Meta data for each route
 const routeMetaData = {
