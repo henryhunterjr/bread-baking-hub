@@ -235,6 +235,7 @@ export const heroImageMapping: Record<string, string> = {
   // Note: Most entries in this final batch (246-265) have no images (empty values)
   
   // Additional recipe mappings (from database recipes not yet mapped)
+  'caramel-apple-sticky-buns': '/lovable-uploads/bcc3e53d-83a5-4975-b0a2-e75370e9e9c7.png',
   'classic-white-sandwich-bread': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
   'henrys-crusty-white-bread': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
   'no-knead-white-bread': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
@@ -316,7 +317,8 @@ export const getHeroImageBySlug = (slug: string): string | null => {
     'easter-paska': '/lovable-uploads/79f7899f-9604-48d0-bc57-347d69da9f8a.png',
     'stollen': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
     'hanukkah-challah': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
-    'maple-walnut-sticky-buns': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
+  'maple-walnut-sticky-buns': '/lovable-uploads/8953cab1-3f46-4839-b581-3dda74a41269.png',
+    'caramel-apple-sticky-buns': '/lovable-uploads/bcc3e53d-83a5-4975-b0a2-e75370e9e9c7.png',
     
     // Quick breads and baked goods
     'blueberry-lemon-scones': 'https://henrysbreadkitchen.wpcomstaging.com/wp-content/uploads/2024/07/blueberry-white-chocolate-chip-scones.jpg',

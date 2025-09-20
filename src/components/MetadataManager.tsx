@@ -99,12 +99,17 @@ export const MetadataManager: React.FC<MetadataManagerProps> = ({
   const finalDescription = description || DEFAULTS.description;
   const finalCanonical = canonical ? absoluteUrl(canonical) : absoluteUrl(window.location.pathname);
   
-  // Use unified social image resolver
+  // Use unified social image resolver - extract slug from pathname
+  const pathSlug = location.pathname.startsWith('/blog/') ? 
+    location.pathname.replace('/blog/', '') : 
+    location.pathname.replace(/^\//, '');
+  
   const finalImage = resolveSocialImage({
     social: socialImage,
     inline: inlineImageUrl,
     hero: heroImageUrl,
-    updatedAt
+    updatedAt,
+    slug: pathSlug
   });
   
   const finalImageAlt = imageAlt || finalTitle;

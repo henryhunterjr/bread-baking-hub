@@ -255,7 +255,9 @@ const SupabasePostView = ({
               image={getSocialImageUrl(
                 (supabasePost as any).social_image_url,
                 (supabasePost as any).inline_image_url,
-                heroBannerUrl
+                heroBannerUrl,
+                supabasePost.updated_at,
+                supabasePost.slug
               )}
             />
           </div>
@@ -366,7 +368,9 @@ const BlogPost = () => {
           const finalSocialImageUrl = getSocialImageUrl(
             (supabasePost as any).social_image_url,
             (supabasePost as any).inline_image_url,
-            heroBanner
+            heroBanner,
+            supabasePost.updated_at,
+            supabasePost.slug
           );
           setSocialImageUrl(finalSocialImageUrl);
           console.log('Final social image URL calculated:', finalSocialImageUrl);

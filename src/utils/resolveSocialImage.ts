@@ -1,14 +1,17 @@
 /**
  * Unified social image resolver for both SPA and Edge functions
- * Priority: social_image_url → inline_image_url → hero_image_url → default
+ * Priority: social_image_url → hero_mapping → inline_image_url → hero_image_url → default
  * Returns absolute HTTPS URL with cache-busting timestamp
  */
+
+import { getHeroImageBySlug } from './heroImageMapping';
 
 interface SocialImageOptions {
   social?: string | null;
   inline?: string | null;
   hero?: string | null;
   updatedAt?: string | null;
+  slug?: string | null;
 }
 
 // Get absolute URL for both client and server environments
@@ -28,9 +31,15 @@ function absUrl(pathOrUrl: string): string {
   return new URL(normalizedPath, base).toString();
 }
 
-export function resolveSocialImage({ social, inline, hero, updatedAt }: SocialImageOptions): string {
-  // Priority order: social → inline → hero → default
-  const pick = social || inline || hero || '/og/default.jpg';
+export function resolveSocialImage({ social, inline, hero, updatedAt, slug }: SocialImageOptions): string {
+  // Check hero image mapping by slug if provided
+  let mappedHeroImage = null;
+  if (slug) {
+    mappedHeroImage = getHeroImageBySlug(slug);
+  }
+  
+  // Priority order: social → mappedHeroImage → inline → hero → default
+  const pick = social || mappedHeroImage || inline || hero || '/og/default.jpg';
   const absolute = absUrl(pick);
   
   // Add cache-busting timestamp (epoch seconds for smaller URLs)

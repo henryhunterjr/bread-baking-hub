@@ -62,20 +62,28 @@ export const getBlogPostHeroImage = (
   return result;
 };
 
-// Get the best social image for sharing (with fallback chain)
+// Get the best social image for sharing (with fallback chain) including hero image mapping
 export const getSocialImageUrl = (
   socialImageUrl?: string,
   inlineImageUrl?: string,
   heroBannerUrl?: string,
-  updatedAt?: string
+  updatedAt?: string,
+  slug?: string
 ): string => {
-  console.log('getSocialImageUrl called with:', { socialImageUrl, inlineImageUrl, heroBannerUrl, updatedAt });
+  console.log('getSocialImageUrl called with:', { socialImageUrl, inlineImageUrl, heroBannerUrl, updatedAt, slug });
   
   // Direct implementation to avoid circular dependencies and browser compatibility issues
   const defaultImageUrl = '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
   
-  // Priority order for best social image
-  const candidates = [socialImageUrl, inlineImageUrl, heroBannerUrl, defaultImageUrl].filter(Boolean);
+  // Check hero image mapping by slug first if slug is provided
+  let mappedHeroImage = null;
+  if (slug) {
+    mappedHeroImage = getHeroImageBySlug(slug);
+    console.log('Hero image mapping result for slug:', slug, mappedHeroImage);
+  }
+  
+  // Priority order for best social image: socialImageUrl > mappedHeroImage > inlineImageUrl > heroBannerUrl > default
+  const candidates = [socialImageUrl, mappedHeroImage, inlineImageUrl, heroBannerUrl, defaultImageUrl].filter(Boolean);
   
   if (candidates.length === 0) {
     console.log('getSocialImageUrl returning default:', defaultImageUrl);
