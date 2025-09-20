@@ -1,3 +1,5 @@
+// Force React to be available globally first
+import './lib/react-fix';
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
