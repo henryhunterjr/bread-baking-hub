@@ -1,14 +1,14 @@
-import React, { Suspense, lazy } from 'react';
+import { Suspense, lazy, useState, useRef, useEffect, ReactNode, ComponentType, ComponentProps, ReactElement } from 'react';
 import { SkeletonGrid } from './SkeletonLoaders';
 
 // Optimized lazy loading with better error boundaries and loading states
-const createOptimizedLazy = <T extends React.ComponentType<any>>(
+const createOptimizedLazy = <T extends ComponentType<any>>(
   importFn: () => Promise<{ default: T }>,
-  fallback: React.ReactElement = <div className="animate-pulse bg-muted h-32 rounded" />
+  fallback: ReactElement = <div className="animate-pulse bg-muted h-32 rounded" />
 ) => {
   const LazyComponent = lazy(importFn);
   
-  return (props: React.ComponentProps<T>) => (
+  return (props: ComponentProps<T>) => (
     <Suspense fallback={fallback}>
       <LazyComponent {...props} />
     </Suspense>
@@ -41,14 +41,14 @@ export const IntersectionLazyLoader = ({
   fallback = <div className="h-32 bg-muted animate-pulse rounded" />,
   rootMargin = "50px"
 }: {
-  children: React.ReactNode;
-  fallback?: React.ReactNode;
+  children: ReactNode;
+  fallback?: ReactNode;
   rootMargin?: string;
 }) => {
-  const [isVisible, setIsVisible] = React.useState(false);
-  const ref = React.useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

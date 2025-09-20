@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -17,10 +17,10 @@ interface HealthStatus {
   timestamp: string;
 }
 
-export const HealthCheck: React.FC<HealthCheckProps> = ({ className = "" }) => {
-  const [healthStatus, setHealthStatus] = React.useState<HealthStatus | null>(null);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [lastCheck, setLastCheck] = React.useState<Date | null>(null);
+export const HealthCheck = ({ className = "" }: HealthCheckProps) => {
+  const [healthStatus, setHealthStatus] = useState<HealthStatus | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [lastCheck, setLastCheck] = useState<Date | null>(null);
 
   const checkHealth = async () => {
     setIsLoading(true);
@@ -43,7 +43,7 @@ export const HealthCheck: React.FC<HealthCheckProps> = ({ className = "" }) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     checkHealth();
     
     // Auto-refresh every 30 seconds
