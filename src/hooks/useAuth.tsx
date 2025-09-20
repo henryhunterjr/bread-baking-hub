@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
-// Force cache refresh - React hooks import fix
+// Force cache refresh - React hooks import fix - v2
 
 // Define AuthContextType inline to avoid circular imports
 export interface AuthContextType {
