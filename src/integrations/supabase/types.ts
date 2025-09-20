@@ -1875,8 +1875,10 @@ export type Database = {
           excerpt: string
           hero_image_url: string
           id: string
+          published_at: string
           search_rank: number
           slug: string
+          subtitle: string
           tags: string[]
           title: string
         }[]
@@ -1894,6 +1896,7 @@ export type Database = {
             }
           | { limit_count?: number; search_query: string }
         Returns: {
+          created_at: string
           excerpt: string
           id: string
           image_url: string
@@ -1901,6 +1904,7 @@ export type Database = {
           slug: string
           tags: string[]
           title: string
+          user_id: string
         }[]
       }
       search_site_content: {
