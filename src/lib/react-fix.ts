@@ -1,16 +1,32 @@
-// React re-export to ensure consistent React availability
-import React from 'react';
+// Enhanced React bundling fix for consistent availability
+import * as React from 'react';
 
-// Re-export React to ensure it's always available
-export default React;
-
-// Make sure React is globally available for external dependencies
+// Force React to be globally available immediately
 if (typeof window !== 'undefined') {
+  // Set React on window object
   (window as any).React = React;
+  
+  // Set specific React functions
+  (window as any).useState = React.useState;
+  (window as any).useEffect = React.useEffect;
+  (window as any).useContext = React.useContext;
+  (window as any).createContext = React.createContext;
+  (window as any).useCallback = React.useCallback;
+  (window as any).useMemo = React.useMemo;
+  (window as any).useRef = React.useRef;
+  (window as any).Component = React.Component;
+  (window as any).forwardRef = React.forwardRef;
+  (window as any).lazy = React.lazy;
+  (window as any).Suspense = React.Suspense;
 }
 
-// Re-export specific React features that are commonly used
-export {
+// Also set on globalThis for Node environments
+if (typeof globalThis !== 'undefined') {
+  (globalThis as any).React = React;
+}
+
+// Re-export specific functions to avoid TypeScript conflicts
+export const {
   useState,
   useEffect,
   useContext,
@@ -22,4 +38,6 @@ export {
   forwardRef,
   lazy,
   Suspense
-} from 'react';
+} = React;
+
+export default React;

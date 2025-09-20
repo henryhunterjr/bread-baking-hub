@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -31,7 +31,7 @@ export const cleanupAuthState = () => {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 interface AuthProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
@@ -48,18 +48,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setLoading(false);
         
         // Defer any additional data fetching to prevent deadlocks
-        if (event === 'SIGNED_IN' && session?.user) {
+        if (session?.user) {
           setTimeout(() => {
-            // Additional user data fetching can go here
+            // Any profile or additional data fetching can go here
           }, 0);
         }
       }
     );
 
-    // THEN check for existing session
+    // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
+      setLoading(false);
+    }).catch(() => {
       setLoading(false);
     });
 
@@ -67,79 +69,82 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   const signUp = async (email: string, password: string, displayName?: string) => {
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: redirectUrl,
-        data: {
-          display_name: displayName
+    try {
+      setLoading(true);
+      const { error } = await supabase.auth.signUp({ 
+        email, 
+        password,
+        options: {
+          data: {
+            display_name: displayName
+          }
         }
-      }
-    });
-    return { error };
+      });
+      return { error };
+    } catch (error) {
+      console.error('Sign up error:', error);
+      return { error };
+    } finally {
+      setLoading(false);
+    }
   };
 
   const signIn = async (email: string, password: string) => {
     try {
-      // Clean up existing state first
-      cleanupAuthState();
+      setLoading(true);
+      cleanupAuthState(); // Clean up any stale auth state
       
-      // Attempt global sign out to clear any existing session
-      try {
-        await supabase.auth.signOut({ scope: 'global' });
-      } catch (err) {
-        // Continue even if this fails
-      }
-      
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      const { error } = await supabase.auth.signInWithPassword({ 
+        email, 
+        password 
       });
-      
-      if (error) {
-        console.error('Sign in error:', error);
-      }
       
       return { error };
     } catch (error) {
-      console.error('Sign in exception:', error);
+      console.error('Sign in error:', error);
       return { error };
+    } finally {
+      setLoading(false);
     }
   };
 
   const signOut = async () => {
     try {
-      // Clean up auth state first
+      setLoading(true);
+      // Clean up state first
       cleanupAuthState();
-      // Attempt global sign out
-      try {
-        await supabase.auth.signOut({ scope: 'global' });
-      } catch (err) {
-        // Continue even if this fails
+      
+      // Sign out from Supabase
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.warn('Sign out warning:', error);
       }
-      // Force page reload for clean state
-      window.location.href = '/';
+      
+      // Force clear local state regardless of API response
+      setUser(null);
+      setSession(null);
+      
     } catch (error) {
-      console.error('Error signing out:', error);
-      // Force redirect even if sign out fails
-      window.location.href = '/';
+      console.error('Sign out error:', error);
+      // Still clear local state even if API call fails
+      setUser(null);
+      setSession(null);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const value = {
-    user,
-    session,
-    signUp,
-    signIn,
-    signOut,
-    loading,
-  };
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider 
+      value={{ 
+        user, 
+        session, 
+        signUp, 
+        signIn, 
+        signOut, 
+        loading 
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -152,3 +157,5 @@ export const useAuth = () => {
   }
   return context;
 };
+
+export default useAuth;
