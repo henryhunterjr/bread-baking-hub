@@ -1,27 +1,27 @@
-import * as React from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
-const SocialProofBanner = React.lazy(() => import("../components/SocialProofBanner").then(m => ({ default: m.SocialProofBanner })));
-const Testimonials = React.lazy(() => import("../components/Testimonials").then(m => ({ default: m.Testimonials })));
-const AboutHenry = React.lazy(() => import("../components/AboutHenry"));
-const BooksPreview = React.lazy(() => import("../components/BooksPreview"));
-const ToolsResources = React.lazy(() => import("../components/ToolsResources"));
-const FromOvenToMarketHero = React.lazy(() => import("../components/FromOvenToMarketHero").then(m => ({ default: m.FromOvenToMarketHero })));
-const BreadBookHero = React.lazy(() => import("../components/BreadBookHero").then(m => ({ default: m.BreadBookHero })));
-const BakersBench = React.lazy(() => import("../components/BakersBench"));
-const MonthlyChallenge = React.lazy(() => import("../components/MonthlyChallenge"));
-const LatestBlogPosts = React.lazy(() => import("../components/LatestBlogPosts"));
-const CallToAction = React.lazy(() => import("../components/CallToAction"));
-const PodcastSection = React.lazy(() => import("../components/PodcastSection"));
-const RecommendedTools = React.lazy(() => import("../components/RecommendedTools"));
-const TestimonialsSection = React.lazy(() => import("../components/TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
-const AuthorBioSection = React.lazy(() => import("../components/AuthorBioSection").then(m => ({ default: m.AuthorBioSection })));
-const FeaturedRecipes = React.lazy(() => import("../components/FeaturedRecipes").then(m => ({ default: m.FeaturedRecipes })));
-const SeasonalFilters = React.lazy(() => import("../components/SeasonalFilters").then(m => ({ default: m.SeasonalFilters })));
+const SocialProofBanner = lazy(() => import("../components/SocialProofBanner").then(m => ({ default: m.SocialProofBanner })));
+const Testimonials = lazy(() => import("../components/Testimonials").then(m => ({ default: m.Testimonials })));
+const AboutHenry = lazy(() => import("../components/AboutHenry"));
+const BooksPreview = lazy(() => import("../components/BooksPreview"));
+const ToolsResources = lazy(() => import("../components/ToolsResources"));
+const FromOvenToMarketHero = lazy(() => import("../components/FromOvenToMarketHero").then(m => ({ default: m.FromOvenToMarketHero })));
+const BreadBookHero = lazy(() => import("../components/BreadBookHero").then(m => ({ default: m.BreadBookHero })));
+const BakersBench = lazy(() => import("../components/BakersBench"));
+const MonthlyChallenge = lazy(() => import("../components/MonthlyChallenge"));
+const LatestBlogPosts = lazy(() => import("../components/LatestBlogPosts"));
+const CallToAction = lazy(() => import("../components/CallToAction"));
+const PodcastSection = lazy(() => import("../components/PodcastSection"));
+const RecommendedTools = lazy(() => import("../components/RecommendedTools"));
+const TestimonialsSection = lazy(() => import("../components/TestimonialsSection").then(m => ({ default: m.TestimonialsSection })));
+const AuthorBioSection = lazy(() => import("../components/AuthorBioSection").then(m => ({ default: m.AuthorBioSection })));
+const FeaturedRecipes = lazy(() => import("../components/FeaturedRecipes").then(m => ({ default: m.FeaturedRecipes })));
+const SeasonalFilters = lazy(() => import("../components/SeasonalFilters").then(m => ({ default: m.SeasonalFilters })));
 import { sanitizeStructuredData } from '@/utils/sanitize';
-import { useState, Suspense, lazy } from 'react';
+
 import { useSeasonalRecipes } from '@/hooks/useSeasonalRecipes';
 import { useImageOptimization, CRITICAL_IMAGES } from '@/hooks/useImageOptimization';
 import { ImagePreloader } from '@/components/ui/PerformanceCriticalImage';
@@ -163,18 +163,18 @@ const Index = () => {
       <main id="main-content" role="main" tabIndex={-1}>
         <ImagePreloader images={CRITICAL_IMAGES} />
         <HeroSection />
-        <React.Suspense fallback={null}>
+        <Suspense fallback={null}>
           <SocialProofBanner />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <Testimonials className="px-4 mt-6" />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <AboutHenry />
-        </React.Suspense>
+        </Suspense>
         
         {/* Recipe Search Section */}
-        <React.Suspense fallback={null}>
+        <Suspense fallback={null}>
           <div className="py-12 px-4 bg-background">
             <div className="max-w-4xl mx-auto">
               <SeasonalFilters
@@ -190,10 +190,10 @@ const Index = () => {
               />
             </div>
           </div>
-        </React.Suspense>
+        </Suspense>
         
         {/* Featured Recipes - "Baking now" Section */}
-        <React.Suspense fallback={null}>
+        <Suspense fallback={null}>
           <FeaturedRecipes 
             featuredRecipes={featuredRecipes}
             onRecipeClick={(recipe) => {
@@ -201,44 +201,44 @@ const Index = () => {
               window.location.href = `/recipes/${recipe.slug}`;
             }}
           />
-        </React.Suspense>
+        </Suspense>
         
-        <React.Suspense fallback={null}>
+        <Suspense fallback={null}>
           <PodcastSection />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <BooksPreview />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <ToolsResources />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <RecommendedTools />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <TestimonialsSection />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <AuthorBioSection />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <FromOvenToMarketHero />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <BakersBench />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <MonthlyChallenge />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <BreadBookHero />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <LatestBlogPosts />
-        </React.Suspense>
-        <React.Suspense fallback={null}>
+        </Suspense>
+        <Suspense fallback={null}>
           <CallToAction />
-        </React.Suspense>
+        </Suspense>
       </main>
       <Footer />
       
