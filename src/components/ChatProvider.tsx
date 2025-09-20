@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useRef, ReactNode } from 'react';
+import { createContext, useContext, useRef, ReactNode } from 'react';
 
 interface ChatContextType {
   isMounted: boolean;
@@ -16,7 +16,7 @@ interface ChatProviderProps {
   children: ReactNode;
 }
 
-export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
+export const ChatProvider = ({ children }: ChatProviderProps) => {
   const mountedRef = useRef(false);
 
   const mount = () => {
