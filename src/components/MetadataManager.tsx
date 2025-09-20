@@ -97,7 +97,7 @@ export const MetadataManager: React.FC<MetadataManagerProps> = ({
   // Generate final values
   const finalTitle = title ? `${title} | ${DEFAULTS.title}` : DEFAULTS.title;
   const finalDescription = description || DEFAULTS.description;
-  const finalCanonical = canonical ? absoluteUrl(canonical) : absoluteUrl(window.location.pathname);
+  const finalCanonical = canonical ? absoluteUrl(canonical) : absoluteUrl(location.pathname);
   
   // Use unified social image resolver - extract slug from pathname
   const pathSlug = location.pathname.startsWith('/blog/') ? 

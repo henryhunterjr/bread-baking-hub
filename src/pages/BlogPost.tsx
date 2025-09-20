@@ -531,7 +531,7 @@ const BlogPost = () => {
       <MetadataManager
         title={post.title}
         description={post.excerpt}
-        canonical={`/blog/${slug}`}
+        canonical={`/blog/${supabasePost?.slug || slug}`}
         type="article"
         socialImageUrl={(supabasePost as any)?.social_image_url}
         inlineImageUrl={(supabasePost as any)?.inline_image_url}

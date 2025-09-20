@@ -21,8 +21,8 @@ const getBaseUrl = (): string => {
     return window.location.origin;
   }
 
-  // Production fallback
-  return 'https://bakinggreatbread.com';
+  // Production fallback - use the current Lovable deployment URL
+  return 'https://the-bakers-bench.lovable.app';
 };
 
 /**

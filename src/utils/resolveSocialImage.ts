@@ -25,7 +25,7 @@ function absUrl(pathOrUrl: string): string {
     process.env.VITE_SITE_URL ||
     process.env.NEXT_PUBLIC_SITE_URL ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
-    'https://bakinggreatbread.com';
+    'https://the-bakers-bench.lovable.app';
                 
   const normalizedPath = pathOrUrl.startsWith('/') ? pathOrUrl : `/${pathOrUrl}`;
   return new URL(normalizedPath, base).toString();
