@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,16 +18,35 @@ const Auth = () => {
   const { signUp, signIn, user } = useAuth();
   const { toast } = useToast();
 
-  // Redirect if already logged in - but avoid infinite loops
+  // Redirect if already logged in - check for admin status
   useEffect(() => {
-    console.log('Auth page - checking user state:', !!user);
-    if (user && !loading) {
-      console.log('User detected, redirecting to my-recipes');
-      // Use a timeout to avoid immediate redirect loops
-      setTimeout(() => {
-        window.location.href = '/my-recipes';
-      }, 100);
-    }
+    const redirectUser = async () => {
+      if (user && !loading) {
+        console.log('User detected, checking admin status...');
+        
+        try {
+          // Check if user is admin
+          const { data: isAdmin, error } = await supabase.rpc('is_current_user_admin');
+          
+          if (error) {
+            console.error('Error checking admin status:', error);
+            // Default to recipe library if can't check admin status
+            window.location.href = '/my-recipes';
+          } else if (isAdmin) {
+            console.log('Admin user detected, redirecting to dashboard');
+            window.location.href = '/dashboard';
+          } else {
+            console.log('Regular user detected, redirecting to my-recipes');
+            window.location.href = '/my-recipes';
+          }
+        } catch (error) {
+          console.error('Error during redirect:', error);
+          window.location.href = '/my-recipes';
+        }
+      }
+    };
+
+    redirectUser();
   }, [user, loading]);
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -93,10 +113,6 @@ const Auth = () => {
           title: "Success!",
           description: "Redirecting...",
         });
-        // Wait a moment for auth state to update, then redirect
-        setTimeout(() => {
-          window.location.href = '/my-recipes';
-        }, 500);
       }
     } catch (error) {
       console.error('Sign in exception:', error);
