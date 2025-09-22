@@ -54,7 +54,7 @@ export const SEOMetaTags: React.FC<SEOMetaTagsProps> = ({
   recipe,
   breadcrumb
 }) => {
-  const siteUrl = 'https://18b3ac3e-8a37-490b-9d6f-2f54b058b979.lovableproject.com';
+  const siteUrl = 'https://bakinggreatbread.com';
   const fullUrl = url ? `${siteUrl}${url}` : siteUrl;
   const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
 

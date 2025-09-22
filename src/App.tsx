@@ -2,10 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "@/hooks/useAuth";
 import OfflineBanner from "@/components/OfflineBanner";
 import BackToTop from "@/components/BackToTop";
 import { AccessibilityEnhancements, EnhancedSkipLink } from "@/components/AccessibilityEnhancements";
@@ -19,8 +16,6 @@ import { SimpleLoadingSpinner } from "./components/SimpleLoadingSpinner";
 import MetadataManager from "./components/MetadataManager";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 import RouteCleanupHandler from "./components/RouteCleanupHandler";
-import { ChatProvider } from "./components/ChatProvider";
-import { AccessibilityProvider } from "./components/AccessibilityProvider";
 
 // Import Index directly to avoid lazy loading issues on main page
 import Index from "./pages/Index";
@@ -102,94 +97,85 @@ const RecipeRedirect = () => {
 };
 
 function App() {
-
   return (
     <AppErrorBoundary>
-      <AccessibilityProvider>
-        <ChatProvider>
-          <AuthProvider>
-            <TooltipProvider>
-            <CriticalCSS />
-            <PerformanceOptimizer />
-            <AccessibilityEnhancements />
-            <ContentQualityChecker enabled={false} />
-            <SpeedInsights />
-            <Analytics />
-            <Toaster />
-            <Sonner />
-            <OfflineBanner />
-            <BackToTop />
-            <CriticalResourceLoader>
-              <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-                <RouteCleanupHandler />
-                <EnhancedSkipLink />
-                <MetadataManager />
-                <Suspense fallback={<SimpleLoadingSpinner />}>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/recipe-formatter" element={<RecipeFormatter />} />
-                    <Route path="/recipe-workspace" element={<RecipeWorkspace />} />
-                    <Route path="/auth" element={<Auth />} />
-                    <Route path="/my-recipes" element={<MyRecipes />} />
-                    <Route path="/my-recipe-library" element={<MyRecipeLibrary />} />
-                    <Route path="/my-favorites" element={<MyFavorites />} />
-                    <Route path="/my-reviews" element={<MyReviews />} />
-                    <Route path="/password-reset" element={<PasswordReset />} />
-                     <Route path="/blog" element={<Blog />} />
-                     <Route path="/blog/:slug" element={<BlogPost />} />
-                     <Route path="/about" element={<About />} />
-                    <Route path="/books" element={<Books />} />
-                    <Route path="/recipes" element={<Recipes />} />
-                    <Route path="/vitale-starter" element={<VitaleStarter />} />
-                     <Route path="/preview/vitale-sourdough-mastery" element={<VitalePreview />} />
-                     <Route path="/newsletter-preview/:id" element={<NewsletterPreview />} />
-                    <Route path="/kaiser-rolls" element={<KaiserRolls />} />
-                    <Route path="/henrys-foolproof-recipe" element={<HenrysFoolproofRecipe />} />
-                    <Route path="/glossary" element={<BreadGlossary />} />
-                    <Route path="/bread-calculator" element={<BreadCalculator />} />
-                    <Route path="/community" element={<Community />} />
-                    <Route path="/troubleshooting" element={<TroubleshootingPage />} />
-                    <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
-                    <Route path="/legal" element={<Legal />} />
-                     {/* Legacy static pumpkin route - redirect to new URL */}
-                     <Route path="/pumpkin-shaped-sourdough-loaf" element={<Navigate to="/recipes/festive-pumpkin-sourdough-loaf" replace />} />
-                     
-                     {/* Database-driven public recipes */}
-                     <Route path="/recipes/:slug" element={<PublicRecipe />} />
-                     <Route path="/r/:slug" element={<RecipeRedirect />} />
-                     <Route path="/recipe/:slug" element={<RecipeRedirect />} />
-                     
-                     {/* Print routes */}
-                     <Route path="/print/:slug" element={<RecipePrint />} />
-                     <Route path="/print/recipe/:slug" element={<RecipePrint />} />
-                     <Route path="/help" element={<Help />} />
-                     <Route path="/feed.xml" element={<FeedRedirect />} />
-                     <Route path="/sitemap.xml" element={<SitemapRedirect />} />
-                     <Route path="/share/:slug" element={<ShareRedirect />} />
-                     <Route path="/dashboard" element={<Dashboard />} />
-                     <Route path="/owner/analytics" element={<OwnerAnalytics />} />
-                    <Route path="/tools" element={<Tools />} />
-                    <Route path="/guides" element={<Guides />} />
-                    <Route path="/challenges" element={<Challenges />} />
-                    <Route path="/coaching" element={<Coaching />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/search-test" element={<SearchTest />} />
-                    <Route path="/search" element={<SearchResultsPage />} />
-                    <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
-                    <Route path="/offline" element={<OfflineFallback />} />
-                    <Route path="/github-root" element={<GithubRoot />} />
-                    <Route path="/github-readme" element={<GithubReadme />} />
-                    <Route path="/github-write-test" element={<GithubWriteTest />} />
-                    <Route path="/go" element={<GoRedirect />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Suspense>
-              </BrowserRouter>
-            </CriticalResourceLoader>
-            </TooltipProvider>
-          </AuthProvider>
-        </ChatProvider>
-      </AccessibilityProvider>
+      <CriticalCSS />
+      <PerformanceOptimizer />
+      <AccessibilityEnhancements />
+      <ContentQualityChecker enabled={false} />
+      <SpeedInsights />
+      <Analytics />
+      <Toaster />
+      <Sonner />
+      <OfflineBanner />
+      <BackToTop />
+      <CriticalResourceLoader>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <RouteCleanupHandler />
+          <EnhancedSkipLink />
+          <MetadataManager />
+          <Suspense fallback={<SimpleLoadingSpinner />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/recipe-formatter" element={<RecipeFormatter />} />
+              <Route path="/recipe-workspace" element={<RecipeWorkspace />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/my-recipes" element={<MyRecipes />} />
+              <Route path="/my-recipe-library" element={<MyRecipeLibrary />} />
+              <Route path="/my-favorites" element={<MyFavorites />} />
+              <Route path="/my-reviews" element={<MyReviews />} />
+              <Route path="/password-reset" element={<PasswordReset />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/books" element={<Books />} />
+              <Route path="/recipes" element={<Recipes />} />
+              <Route path="/vitale-starter" element={<VitaleStarter />} />
+              <Route path="/preview/vitale-sourdough-mastery" element={<VitalePreview />} />
+              <Route path="/newsletter-preview/:id" element={<NewsletterPreview />} />
+              <Route path="/kaiser-rolls" element={<KaiserRolls />} />
+              <Route path="/henrys-foolproof-recipe" element={<HenrysFoolproofRecipe />} />
+              <Route path="/glossary" element={<BreadGlossary />} />
+              <Route path="/bread-calculator" element={<BreadCalculator />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/troubleshooting" element={<TroubleshootingPage />} />
+              <Route path="/crust-and-crumb" element={<CrustAndCrumb />} />
+              <Route path="/legal" element={<Legal />} />
+              {/* Legacy static pumpkin route - redirect to new URL */}
+              <Route path="/pumpkin-shaped-sourdough-loaf" element={<Navigate to="/recipes/festive-pumpkin-sourdough-loaf" replace />} />
+              
+              {/* Database-driven public recipes */}
+              <Route path="/recipes/:slug" element={<PublicRecipe />} />
+              <Route path="/r/:slug" element={<RecipeRedirect />} />
+              <Route path="/recipe/:slug" element={<RecipeRedirect />} />
+              
+              {/* Print routes */}
+              <Route path="/print/:slug" element={<RecipePrint />} />
+              <Route path="/print/recipe/:slug" element={<RecipePrint />} />
+              <Route path="/help" element={<Help />} />
+              <Route path="/feed.xml" element={<FeedRedirect />} />
+              <Route path="/sitemap.xml" element={<SitemapRedirect />} />
+              <Route path="/share/:slug" element={<ShareRedirect />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/owner/analytics" element={<OwnerAnalytics />} />
+              <Route path="/tools" element={<Tools />} />
+              <Route path="/guides" element={<Guides />} />
+              <Route path="/challenges" element={<Challenges />} />
+              <Route path="/coaching" element={<Coaching />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/search-test" element={<SearchTest />} />
+              <Route path="/search" element={<SearchResultsPage />} />
+              <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
+              <Route path="/offline" element={<OfflineFallback />} />
+              <Route path="/github-root" element={<GithubRoot />} />
+              <Route path="/github-readme" element={<GithubReadme />} />
+              <Route path="/github-write-test" element={<GithubWriteTest />} />
+              <Route path="/go" element={<GoRedirect />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </CriticalResourceLoader>
     </AppErrorBoundary>
   );
 }

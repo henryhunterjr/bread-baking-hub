@@ -15,8 +15,7 @@ interface PerformanceMetric {
 }
 
 class ErrorMonitor {
-  private isProduction = window.location.hostname !== 'localhost' && 
-                        !window.location.hostname.includes('lovableproject.com');
+  private isProduction = window.location.hostname === 'bakinggreatbread.com';
   private performanceObserver: PerformanceObserver | null = null;
 
   init() {

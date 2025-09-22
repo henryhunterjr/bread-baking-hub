@@ -61,10 +61,7 @@ export const installImageErrorHandler = () => {
         typeof arg === 'string' && (
           arg.includes('bakinggreatbread.blog') ||
           arg.includes('secure.gravatar.com') ||
-          arg.includes('googleapis.com') ||
-          arg.includes('firestore.googleapis.com') ||
-          arg.includes('sandbox.lovable.dev') ||
-          arg.includes('lovable-api.com')
+          arg.includes('googleapis.com')
         )
       );
       
