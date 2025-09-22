@@ -1,12 +1,11 @@
-import React from 'react';
-import { useEffect, ReactNode } from 'react';
+import React, { useEffect, ReactNode } from 'react';
 
 interface AccessibilityProviderProps {
   children: ReactNode;
 }
 
 export const AccessibilityProvider = ({ children }: AccessibilityProviderProps) => {
-  useEffect(() => {
+  React.useEffect(() => {
     // Suppress accessibility warnings in development that are being addressed
     const originalWarn = console.warn;
     
