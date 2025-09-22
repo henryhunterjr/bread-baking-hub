@@ -1,25 +1,30 @@
 // Global React fix to ensure React is available for all dependencies
 import React from 'react';
 
-// Ensure React is globally available for all bundled dependencies
-const globalTarget = globalThis as any;
-globalTarget.React = React;
-globalTarget.react = React;
+// Immediately set React globally before any other code runs
+const setReactGlobally = (target: any) => {
+  target.React = React;
+  target.react = React;
+  target.default = React;
+};
 
-// Also set on window for browser environments  
+// Set on multiple global targets to ensure coverage
+setReactGlobally(globalThis);
+
 if (typeof window !== 'undefined') {
-  (window as any).React = React;
-  (window as any).react = React;
+  setReactGlobally(window);
 }
 
-// For webpack and other bundlers
 if (typeof global !== 'undefined') {
-  (global as any).React = React;
-  (global as any).react = React;
+  setReactGlobally(global);
 }
 
-// Force React hooks to be available globally
-Object.assign(globalThis, {
+if (typeof self !== 'undefined') {
+  setReactGlobally(self);
+}
+
+// Force React hooks to be available globally immediately
+const reactExports = {
   React,
   useState: React.useState,
   useEffect: React.useEffect,
@@ -38,7 +43,18 @@ Object.assign(globalThis, {
   Fragment: React.Fragment,
   createElement: React.createElement,
   cloneElement: React.cloneElement,
-});
+};
+
+Object.assign(globalThis, reactExports);
+
+// Also set on window and global for maximum compatibility
+if (typeof window !== 'undefined') {
+  Object.assign(window, reactExports);
+}
+
+if (typeof global !== 'undefined') {
+  Object.assign(global, reactExports);
+}
 
 // Export React as default for imports
 export default React;
