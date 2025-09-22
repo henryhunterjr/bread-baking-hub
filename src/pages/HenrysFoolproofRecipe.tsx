@@ -128,7 +128,7 @@ const HenrysFoolproofRecipe = () => {
   const seoData = {
     title: "Henry's Foolproof Sourdough Loaf",
     description: "A beautifully sliced sourdough loaf with an open crumb structure, golden crust, and airy interior. This simple, reliable, and flavorful sourdough recipe delivers great results every time using proven techniques and 75% hydration.",
-    imageUrl: `${window.location.origin}/lovable-uploads/21d4d7bb-e47a-434d-b2c3-a7c787e13e07.png`,
+    imageUrl: `${window.location.origin}/henrys-foolproof-sourdough-crumb.jpg`,
     author: "Henry Hunter",
     datePublished: "2025-01-29",
     cookTime: "PT45M",
@@ -161,8 +161,8 @@ const HenrysFoolproofRecipe = () => {
             />
 
             <RecipeImage
-              src="/lovable-uploads/21d4d7bb-e47a-434d-b2c3-a7c787e13e07.png"
-              alt="Henry's Foolproof Sourdough Loaf with perfect crumb structure"
+              src="/henrys-foolproof-sourdough-crumb.jpg"
+              alt="Henry's Foolproof Sourdough Loaf with perfect open crumb structure showing beautiful air pockets"
             />
 
             <RecipeMeta
