@@ -4,9 +4,24 @@ import { cn } from "@/lib/utils"
 
 // Safe wrapper for TooltipProvider that handles React availability issues
 const SafeTooltipProvider = ({ children, ...props }: React.ComponentProps<typeof TooltipPrimitive.Provider>) => {
-  // Check if React hooks are available
-  if (!React || !React.useState) {
+  // More aggressive React availability check
+  const ReactCheck = (globalThis as any).React || React;
+  
+  if (!ReactCheck || !ReactCheck.useState || !ReactCheck.useEffect) {
     console.warn('React hooks not available, rendering children without tooltip functionality');
+    return <>{children}</>;
+  }
+
+  // Additional runtime check
+  try {
+    // Test that React hooks work in this context
+    const testState = ReactCheck.useState;
+    if (typeof testState !== 'function') {
+      console.warn('React useState is not a function, skipping TooltipProvider');
+      return <>{children}</>;
+    }
+  } catch (error) {
+    console.warn('React hooks test failed, falling back:', error);
     return <>{children}</>;
   }
 
