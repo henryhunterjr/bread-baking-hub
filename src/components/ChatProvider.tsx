@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef, ReactNode } from 'react';
+import React, { createContext, useContext, useRef, ReactNode } from 'react';
 
 interface ChatContextType {
   isMounted: boolean;
