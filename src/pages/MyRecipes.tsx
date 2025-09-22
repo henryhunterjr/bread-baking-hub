@@ -16,11 +16,14 @@ import { BookOpen, Heart, Plus, Loader2 } from 'lucide-react';
 const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
 const MyRecipes = () => {
-  const { user } = useAuth();
-  const { userRecipes, favorites, loading, getMyRecipes, getMyFavorites } = useUserRecipes();
+  const { user, loading: authLoading } = useAuth();
+  const { userRecipes, favorites, loading: recipesLoading, getMyRecipes, getMyFavorites } = useUserRecipes();
   const [combinedRecipes, setCombinedRecipes] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState('all');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Debug: Log authentication state
+  console.log('MyRecipes - Auth state:', { user: !!user, authLoading, userEmail: user?.email });
 
   useEffect(() => {
     if (user) {
@@ -44,6 +47,32 @@ const MyRecipes = () => {
     
     setCombinedRecipes(Array.from(map.values()));
   }, [userRecipes, favorites]);
+
+  // Show loading while checking authentication
+  if (authLoading) {
+    return (
+      <>
+        <Helmet>
+          <title>My Recipes | Baking Great Bread at Home</title>
+          <meta name="description" content="Loading your personal recipe collection..." />
+        </Helmet>
+        
+        <div className="bg-background text-foreground min-h-screen">
+          <Header />
+          <main className="py-20 px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <BookOpen className="h-16 w-16 mx-auto mb-6 text-primary animate-pulse" />
+              <h1 className="text-3xl font-bold mb-4">My Recipe Library</h1>
+              <p className="text-xl text-muted-foreground mb-8">
+                Loading your recipe library...
+              </p>
+            </div>
+          </main>
+          <Footer />
+        </div>
+      </>
+    );
+  }
 
   if (!user) {
     return (
@@ -107,7 +136,7 @@ const MyRecipes = () => {
               </TabsList>
 
               <TabsContent value="all" className="space-y-6">
-                {loading ? (
+            {recipesLoading ? (
                   <div className="flex items-center justify-center py-12">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
                     <span className="ml-2 text-muted-foreground">Loading your recipes...</span>
@@ -180,7 +209,7 @@ const MyRecipes = () => {
               </TabsContent>
 
               <TabsContent value="favorites" className="space-y-6">
-                {loading ? (
+                {recipesLoading ? (
                   <div className="flex items-center justify-center py-12">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
                     <span className="ml-2 text-muted-foreground">Loading your favorites...</span>

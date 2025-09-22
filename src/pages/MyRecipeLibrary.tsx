@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useUserRecipes } from '@/hooks/useUserRecipes';
 import Header from '@/components/Header';
@@ -13,13 +13,47 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { FavoriteButton } from '@/components/FavoriteButton';
 import { format } from 'date-fns';
+import { checkAuthStatus } from '@/utils/authCheck';
 
 const MyRecipeLibrary = () => {
-  const { user } = useAuth();
-  const { userRecipes: recipes, favorites, loading, removeRecipe: deleteRecipe } = useUserRecipes();
+  const { user, loading } = useAuth();
+  const { userRecipes: recipes, favorites, loading: recipesLoading, removeRecipe: deleteRecipe } = useUserRecipes();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFolder, setSelectedFolder] = useState<string>('');
+  const [authChecked, setAuthChecked] = useState(false);
+  const [fallbackAuth, setFallbackAuth] = useState<{ user: any; isAuthenticated: boolean } | null>(null);
   const navigate = useNavigate();
+
+  // Fallback authentication check if useAuth is not working
+  useEffect(() => {
+    const checkAuth = async () => {
+      if (loading) return; // Wait for useAuth to finish
+      
+      if (!user && !authChecked) {
+        console.log('useAuth returned null user, checking session directly...');
+        const authStatus = await checkAuthStatus();
+        setFallbackAuth(authStatus);
+        setAuthChecked(true);
+      }
+    };
+    
+    checkAuth();
+  }, [user, loading, authChecked]);
+
+  // Use either useAuth user or fallback auth
+  const currentUser = user || fallbackAuth?.user;
+  const isAuthenticated = !!currentUser;
+  const isLoading = loading || (!authChecked && !user);
+
+  // Debug: Log authentication state
+  console.log('MyRecipeLibrary - Auth state:', { 
+    user: !!user, 
+    fallbackUser: !!fallbackAuth?.user,
+    currentUser: !!currentUser,
+    loading, 
+    isAuthenticated,
+    userEmail: currentUser?.email 
+  });
 
   // Filter and search recipes
   const filteredRecipes = useMemo(() => {
@@ -39,7 +73,26 @@ const MyRecipeLibrary = () => {
     return Array.from(folderSet);
   }, [recipes]);
 
-  if (!user) {
+  // Show loading while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="py-20 px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <BookOpen className="w-16 h-16 mx-auto mb-8 text-primary animate-pulse" />
+            <h1 className="text-4xl font-bold mb-4 text-primary">My Recipe Library</h1>
+            <p className="text-xl text-muted-foreground mb-8">
+              Loading your recipe library...
+            </p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-background">
         <Header />
@@ -121,7 +174,7 @@ const MyRecipeLibrary = () => {
                 )}
               </div>
 
-              {loading ? (
+              {recipesLoading ? (
                 <div className="text-center py-12">
                   <BookOpen className="w-8 h-8 animate-pulse mx-auto mb-4 text-primary" />
                   <p className="text-muted-foreground">Loading your recipes...</p>

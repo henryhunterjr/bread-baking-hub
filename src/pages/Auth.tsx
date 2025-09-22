@@ -25,23 +25,33 @@ const Auth = () => {
         console.log('User detected, checking admin status...');
         
         try {
+          // Check where the user was trying to go
+          const redirectPath = localStorage.getItem('redirectAfterAuth');
+          
+          if (redirectPath) {
+            console.log('Redirecting to stored path:', redirectPath);
+            localStorage.removeItem('redirectAfterAuth');
+            window.location.href = redirectPath;
+            return;
+          }
+          
           // Check if user is admin
           const { data: isAdmin, error } = await supabase.rpc('is_current_user_admin');
           
           if (error) {
             console.error('Error checking admin status:', error);
             // Default to recipe library if can't check admin status
-            window.location.href = '/my-recipes';
+            window.location.href = '/my-recipe-library';
           } else if (isAdmin) {
             console.log('Admin user detected, redirecting to dashboard');
             window.location.href = '/dashboard';
           } else {
-            console.log('Regular user detected, redirecting to my-recipes');
-            window.location.href = '/my-recipes';
+            console.log('Regular user detected, redirecting to recipe library');
+            window.location.href = '/my-recipe-library';
           }
         } catch (error) {
           console.error('Error during redirect:', error);
-          window.location.href = '/my-recipes';
+          window.location.href = '/my-recipe-library';
         }
       }
     };

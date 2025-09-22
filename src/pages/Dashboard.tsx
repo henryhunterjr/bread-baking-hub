@@ -40,6 +40,7 @@ import AdminRecipes from '@/components/admin/AdminRecipes';
 import { RecipeToNewsletterConverter } from '@/components/newsletter/RecipeToNewsletterConverter';
 import AnalyticsOverview from '@/components/AnalyticsOverview';
 import HealthCheck from '@/components/HealthCheck';
+import { checkAuthStatus } from '@/utils/authCheck';
 
 interface BlogPostData {
   id?: string;
@@ -59,10 +60,44 @@ const Dashboard = () => {
   const { user, loading } = useAuth();
   const { isAdmin, loading: adminLoading } = useAdminCheck();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [authChecked, setAuthChecked] = useState(false);
+  const [fallbackAuth, setFallbackAuth] = useState<{ user: any; isAuthenticated: boolean } | null>(null);
   const [activeTab, setActiveTab] = useState(() => {
     const newParam = searchParams.get('new');
     if (newParam === 'true') return 'blog';
     return searchParams.get('tab') || 'posts';
+  });
+
+  // Fallback authentication check if useAuth is not working
+  useEffect(() => {
+    const checkAuth = async () => {
+      if (loading) return; // Wait for useAuth to finish
+      
+      if (!user && !authChecked) {
+        console.log('Dashboard: useAuth returned null user, checking session directly...');
+        const authStatus = await checkAuthStatus();
+        setFallbackAuth(authStatus);
+        setAuthChecked(true);
+      }
+    };
+    
+    checkAuth();
+  }, [user, loading, authChecked]);
+
+  // Use either useAuth user or fallback auth
+  const currentUser = user || fallbackAuth?.user;
+  const isAuthenticated = !!currentUser;
+
+  // Debug: Log authentication state
+  console.log('Dashboard - Auth state:', { 
+    user: !!user, 
+    fallbackUser: !!fallbackAuth?.user,
+    currentUser: !!currentUser,
+    loading, 
+    isAuthenticated,
+    isAdmin,
+    adminLoading,
+    userEmail: currentUser?.email 
   });
   const [isPublishing, setIsPublishing] = useState(false);
   const [isSavingDraft, setIsSavingDraft] = useState(false);
@@ -152,12 +187,12 @@ const Dashboard = () => {
   };
 
   // Redirect if not authenticated
-  if (!loading && !user) {
+  if (!loading && !currentUser) {
     return <Navigate to="/auth" replace />;
   }
 
   // Redirect if not admin
-  if (!adminLoading && user && !isAdmin) {
+  if (!adminLoading && currentUser && !isAdmin) {
     return <Navigate to="/" replace />;
   }
 
