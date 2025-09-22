@@ -92,13 +92,39 @@ const NewsletterPreview = () => {
         <div className="bg-section-background text-foreground rounded-lg overflow-hidden">
           {/* Hero Image */}
           {newsletter.heroImageUrl && (
-            <div className="aspect-video relative overflow-hidden">
+            <div className="relative overflow-hidden min-h-[500px] flex items-center">
+              {/* Background Image */}
               <ResponsiveImage
                 src={newsletter.heroImageUrl}
                 alt={newsletter.title}
-                className="w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
               />
+              
+              {/* Overlay Content */}
+              <div className="relative z-10 w-full h-full flex items-center">
+                <div className="max-w-7xl mx-auto px-8 py-16 w-full">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
+                    {/* Left Side - Text Content */}
+                    <div className="text-white">
+                      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white drop-shadow-lg">
+                        FROM BOARDROOM TO BREAD
+                      </h1>
+                      <p className="text-xl md:text-2xl lg:text-3xl font-medium text-amber-300 drop-shadow-md">
+                        Henry Hunter's recipe for resilience
+                      </p>
+                    </div>
+                    
+                    {/* Right Side - Space for the person in the image */}
+                    <div className="hidden lg:block">
+                      {/* This space allows the person in the background image to be visible */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Dark overlay for better text readability */}
+              <div className="absolute inset-0 bg-black/30"></div>
             </div>
           )}
 
