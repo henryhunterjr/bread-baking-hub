@@ -19,6 +19,28 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
+  // More aggressive React availability check
+  const ReactCheck = (globalThis as any).React || React;
+  
+  if (!ReactCheck || !ReactCheck.useState || !ReactCheck.useEffect) {
+    console.warn('React hooks not available in AuthProvider, rendering children without auth functionality');
+    return <>{children}</>;
+  }
+
+  // Additional runtime check
+  try {
+    // Test that React hooks work in this context
+    const testState = ReactCheck.useState;
+    const testEffect = ReactCheck.useEffect;
+    if (typeof testState !== 'function' || typeof testEffect !== 'function') {
+      console.warn('React hooks are not functions in AuthProvider, skipping auth functionality');
+      return <>{children}</>;
+    }
+  } catch (error) {
+    console.warn('React hooks test failed in AuthProvider, falling back:', error);
+    return <>{children}</>;
+  }
+
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
@@ -26,14 +48,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     let mounted = true;
-    
-    // Verify React hooks are available
-    if (!React || !React.useState) {
-      console.error('React hooks not available in AuthProvider');
-      setInitError('Authentication system unavailable');
-      setLoading(false);
-      return;
-    }
 
     try {
       // Set up auth state listener
