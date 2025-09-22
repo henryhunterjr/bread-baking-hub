@@ -1,123 +1,63 @@
 // CRITICAL: Global React fix to ensure React is available for all dependencies
-// This MUST run before any other imports or code
+// This is the MOST AGGRESSIVE fix for React availability issues
 import React from 'react';
 
-// Immediately freeze and lock React to prevent it from being nullified
-Object.defineProperty(React, 'useState', {
-  value: React.useState,
-  writable: false,
-  configurable: false,
-  enumerable: true
-});
+// Immediately create a protected React instance
+const ProtectedReact = React;
 
-// More aggressive global assignment with error handling
-const setReactGlobally = (target: any) => {
+// Nuclear option: Force React to be available on ALL possible global targets
+const globalTargets = [globalThis, window, global, self].filter(Boolean);
+
+globalTargets.forEach(target => {
   if (!target || typeof target !== 'object') return;
   
+  // Define React with maximum protection
   try {
-    // Set multiple variations of React
-    Object.defineProperty(target, 'React', {
-      value: React,
-      writable: false,
-      configurable: false,
-      enumerable: true
-    });
-    
-    Object.defineProperty(target, 'react', {
-      value: React,
-      writable: false,
-      configurable: false,
-      enumerable: true
-    });
-    
-    // Also set as default export pattern
-    if (!target.default || target.default !== React) {
-      Object.defineProperty(target, 'default', {
-        value: React,
+    Object.defineProperties(target, {
+      'React': {
+        value: ProtectedReact,
         writable: false,
         configurable: false,
         enumerable: true
-      });
-    }
+      },
+      'react': {
+        value: ProtectedReact,
+        writable: false,
+        configurable: false,
+        enumerable: true
+      }
+    });
   } catch (e) {
-    // Fallback if property definitions fail
-    target.React = React;
-    target.react = React;
-    target.default = React;
+    // Fallback if defineProperty fails
+    target.React = ProtectedReact;
+    target.react = ProtectedReact;
   }
-};
+});
 
-// Apply to ALL possible global targets immediately
-setReactGlobally(globalThis);
-
+// NUCLEAR OPTION: Override the module resolution for React
 if (typeof window !== 'undefined') {
-  setReactGlobally(window);
+  // Intercept any require/import calls for React
+  const originalDefine = (window as any)?.define;
+  if (originalDefine) {
+    (window as any).define = function(id: string, deps: any, factory: any) {
+      if (id.includes('react') || (deps && deps.includes('react'))) {
+        // Inject our protected React
+        if (typeof factory === 'function') {
+          const originalFactory = factory;
+          factory = function(...args: any[]) {
+            // Ensure React is available in the factory
+            globalThis.React = ProtectedReact;
+            return originalFactory.apply(this, args);
+          };
+        }
+      }
+      return originalDefine.call(this, id, deps, factory);
+    };
+  }
 }
 
-if (typeof global !== 'undefined') {
-  setReactGlobally(global);
-}
-
-if (typeof self !== 'undefined') {
-  setReactGlobally(self);
-}
-
-// Force React hooks to be available globally immediately with protection
-const createProtectedReactExports = () => {
-  const exports = {
-    React,
-    useState: React.useState,
-    useEffect: React.useEffect,
-    useContext: React.useContext,
-    createContext: React.createContext,
-    useRef: React.useRef,
-    useCallback: React.useCallback,
-    useMemo: React.useMemo,
-    useReducer: React.useReducer,
-    useLayoutEffect: React.useLayoutEffect,
-    useImperativeHandle: React.useImperativeHandle,
-    forwardRef: React.forwardRef,
-    memo: React.memo,
-    lazy: React.lazy,
-    Suspense: React.Suspense,
-    Fragment: React.Fragment,
-    createElement: React.createElement,
-    cloneElement: React.cloneElement,
-  };
-
-  // Protect each export from being overwritten
-  Object.keys(exports).forEach(key => {
-    try {
-      Object.defineProperty(globalThis, key, {
-        value: exports[key as keyof typeof exports],
-        writable: false,
-        configurable: false,
-        enumerable: true
-      });
-    } catch (e) {
-      // Fallback assignment if defineProperty fails
-      (globalThis as any)[key] = exports[key as keyof typeof exports];
-    }
-  });
-
-  return exports;
-};
-
-const reactExports = createProtectedReactExports();
-
-// Also set on window and global for maximum compatibility
-if (typeof window !== 'undefined') {
-  Object.assign(window, reactExports);
-}
-
-if (typeof global !== 'undefined') {
-  Object.assign(global, reactExports);
-}
-
-// Export React as default for imports
-export default React;
-
-// Re-export specific hooks and functions
+// Export React to ensure it's available for any import
+export default ProtectedReact;
 export const {
   useState,
   useEffect,
@@ -136,4 +76,4 @@ export const {
   Fragment,
   createElement,
   cloneElement
-} = React;
+} = ProtectedReact;

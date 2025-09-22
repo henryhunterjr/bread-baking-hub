@@ -1,12 +1,23 @@
 // CRITICAL: Ensure React is globally available before ANY other imports
+// Apply fix SYNCHRONOUSLY before any modules load
 import './lib/global-react-fix';
 
-// Additional safety check - verify React is available
-if (typeof globalThis.React === 'undefined' || globalThis.React === null) {
-  console.error('CRITICAL: React not available globally after fix');
-  // Force immediate availability
-  import('./lib/global-react-fix');
-}
+// Force immediate global React check and assignment
+(() => {
+  const ReactCheck = (globalThis as any).React;
+  if (!ReactCheck || !ReactCheck.useState) {
+    console.error('CRITICAL: React not available after global fix!');
+    // Emergency fallback - try to load React directly
+    try {
+      const React = require('react');
+      (globalThis as any).React = React;
+      (globalThis as any).react = React;
+      console.log('Emergency React fallback applied');
+    } catch (e) {
+      console.error('Emergency React fallback failed:', e);
+    }
+  }
+})();
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
