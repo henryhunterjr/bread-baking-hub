@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/safe-tooltip';
 import { 
   Copy, 
   Mail, 
@@ -183,27 +183,25 @@ export const ImprovedShareModal = ({
               readOnly
               className="flex-1 text-sm"
             />
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    size="sm"
-                    onClick={handleCopyLink}
-                    className="shrink-0"
-                    disabled={!url}
-                  >
-                    {copied ? (
-                      <Check className="w-4 h-4" />
-                    ) : (
-                      <Copy className="w-4 h-4" />
-                    )}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  {copied ? "Copied!" : "Copy link"}
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="sm"
+                  onClick={handleCopyLink}
+                  className="shrink-0"
+                  disabled={!url}
+                >
+                  {copied ? (
+                    <Check className="w-4 h-4" />
+                  ) : (
+                    <Copy className="w-4 h-4" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                {copied ? "Copied!" : "Copy link"}
+              </TooltipContent>
+            </Tooltip>
           </div>
 
           {/* Native Share (Mobile) */}
@@ -221,24 +219,22 @@ export const ImprovedShareModal = ({
           {/* Social Share Buttons */}
           <div className="grid grid-cols-2 gap-2">
             {shareButtons.map((button) => (
-              <TooltipProvider key={button.key}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      onClick={() => handleShareClick(button.key)}
-                      variant="outline"
-                      className="justify-start"
-                      disabled={!shareLinks}
-                    >
-                      <button.icon className={`w-4 h-4 mr-2 ${button.color}`} />
-                      {button.label}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    Share on {button.label}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <Tooltip key={button.key}>
+                <TooltipTrigger asChild>
+                  <Button
+                    onClick={() => handleShareClick(button.key)}
+                    variant="outline"
+                    className="justify-start"
+                    disabled={!shareLinks}
+                  >
+                    <button.icon className={`w-4 h-4 mr-2 ${button.color}`} />
+                    {button.label}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  Share on {button.label}
+                </TooltipContent>
+              </Tooltip>
             ))}
           </div>
 

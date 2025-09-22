@@ -3,7 +3,7 @@ import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/safe-tooltip';
 import TroubleshootingTable from '@/components/TroubleshootingTable';
 import TroubleshootingCard from '@/components/TroubleshootingCard';
 import CommunityBridge from '@/components/CommunityBridge';
@@ -37,8 +37,7 @@ export default function TroubleshootingContent({
   toggleCardExpansion 
 }: TroubleshootingContentProps) {
   return (
-    <TooltipProvider>
-      <div>
+    <div>
         {/* View Toggle */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
@@ -145,6 +144,5 @@ export default function TroubleshootingContent({
           )}
         </div>
       </div>
-    </TooltipProvider>
   );
 }
