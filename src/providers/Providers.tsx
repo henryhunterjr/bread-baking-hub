@@ -22,24 +22,10 @@ interface ProvidersProps {
 }
 
 export function Providers({ children }: ProvidersProps) {
-  // Ensure single React instance
-  if (!ensureSingleReactInstance()) {
-    console.error('React instance validation failed');
-    return <>{children}</>;
-  }
-
-  // Runtime guard to ensure all providers are valid React components
-  const providersValid = [
-    validateReactComponent(HelmetProvider, 'HelmetProvider'),
-    validateReactComponent(QueryClientProvider, 'QueryClientProvider'), 
-    validateReactComponent(AccessibilityProvider, 'AccessibilityProvider'),
-    validateReactComponent(ChatProvider, 'ChatProvider'),
-    validateReactComponent(AuthProvider, 'AuthProvider'),
-    validateReactComponent(TooltipProvider, 'TooltipProvider')
-  ].every(Boolean);
-
-  if (!providersValid) {
-    console.error('Provider validation failed, rendering children without providers');
+  // Simplified React check - just ensure React is available
+  const ReactInstance = (globalThis as any).React;
+  if (!ReactInstance || typeof ReactInstance.createElement !== 'function') {
+    console.error('React not available, rendering children only');
     return <>{children}</>;
   }
 

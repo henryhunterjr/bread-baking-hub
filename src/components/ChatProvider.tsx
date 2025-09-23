@@ -21,17 +21,18 @@ interface ChatProviderProps {
 }
 
 export const ChatProvider = ({ children }: ChatProviderProps) => {
-  // Runtime guard to ensure React hooks are available
-  if (!React || !React.useRef || !React.useContext) {
+  // More aggressive React availability check
+  const ReactInstance = (globalThis as any).React || React;
+  
+  if (!ReactInstance || typeof ReactInstance.useRef !== 'function') {
     if (import.meta.env.DEV) {
       console.warn('ChatProvider: React hooks not available, rendering children without chat functionality');
     }
     return <>{children}</>;
   }
 
-  // Additional safety check for hook availability
   try {
-    const mountedRef = useRef(false);
+    const mountedRef = ReactInstance.useRef(false);
 
     const mount = () => {
       if (mountedRef.current) {
