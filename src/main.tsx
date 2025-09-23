@@ -11,18 +11,25 @@ console.log('[react version]', React.version);
 const hook = (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__;
 console.log('[react renderers count]', hook?.renderers?.size ?? 'no devtools hook');
 
-installImageErrorHandler();
+// Prevent duplicate app mounting in iframe
+if ((window as any).__BGB_APP_MOUNTED__) {
+  console.warn('App already mounted; skipping duplicate mount');
+} else {
+  (window as any).__BGB_APP_MOUNTED__ = true;
 
-const root = createRoot(document.getElementById('root')!);
+  installImageErrorHandler();
 
-root.render(
-  <React.StrictMode>
-    <Providers>
-      <App />
-    </Providers>
-  </React.StrictMode>
-);
+  const root = createRoot(document.getElementById('root')!);
 
-if (import.meta.env.PROD && 'serviceWorker' in navigator) {
-  registerSW({ immediate: true, onRegisteredSW: () => console.log('SW registered') });
+  root.render(
+    <React.StrictMode>
+      <Providers>
+        <App />
+      </Providers>
+    </React.StrictMode>
+  );
+
+  if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+    registerSW({ immediate: true, onRegisteredSW: () => console.log('SW registered') });
+  }
 }
