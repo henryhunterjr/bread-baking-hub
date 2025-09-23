@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => ({
   ].filter(Boolean),
 
   resolve: {
-    dedupe: ["react", "react-dom"],
+    dedupe: ["react", "react-dom", "react/jsx-runtime"],
     alias: {
       "@": path.resolve(__dirname, "./src"),
       jsdom: path.resolve(__dirname, "./src/shims/empty-module.ts"),
