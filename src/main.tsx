@@ -6,8 +6,10 @@ import App from './App';
 import './index.css';
 import { installImageErrorHandler } from './utils/imageErrorHandler';
 
-// Add temporary version verification
+// TEMP DIAGNOSTIC - verify single React instance
 console.log('[react version]', React.version);
+const hook = (window as any).__REACT_DEVTOOLS_GLOBAL_HOOK__;
+console.log('[react renderers count]', hook?.renderers?.size ?? 'no devtools hook');
 
 installImageErrorHandler();
 
