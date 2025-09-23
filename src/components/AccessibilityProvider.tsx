@@ -5,28 +5,7 @@ interface AccessibilityProviderProps {
 }
 
 export const AccessibilityProvider = ({ children }: AccessibilityProviderProps) => {
-  // More aggressive React availability check
-  const ReactCheck = (globalThis as any).React || React;
-  
-  if (!ReactCheck || !ReactCheck.useEffect) {
-    console.warn('React hooks not available in AccessibilityProvider, rendering children without accessibility functionality');
-    return <>{children}</>;
-  }
-
-  // Additional runtime check
-  try {
-    // Test that React hooks work in this context
-    const testEffect = ReactCheck.useEffect;
-    if (typeof testEffect !== 'function') {
-      console.warn('React useEffect is not a function in AccessibilityProvider, skipping accessibility functionality');
-      return <>{children}</>;
-    }
-  } catch (error) {
-    console.warn('React hooks test failed in AccessibilityProvider, falling back:', error);
-    return <>{children}</>;
-  }
-
-  React.useEffect(() => {
+  useEffect(() => {
     // Suppress accessibility warnings in development that are being addressed
     const originalWarn = console.warn;
     

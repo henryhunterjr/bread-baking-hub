@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useRef, ReactNode } from 'react';
-import { validateHookContext } from '@/utils/provider-validation';
 
 interface ChatContextType {
   isMounted: boolean;
@@ -13,7 +12,10 @@ const ChatContext = createContext<ChatContextType>({
 
 export const useChatProvider = () => {
   const context = useContext(ChatContext);
-  return validateHookContext('useChatProvider', context);
+  if (context === undefined) {
+    throw new Error('useChatProvider must be used within a ChatProvider');
+  }
+  return context;
 };
 
 interface ChatProviderProps {
@@ -21,43 +23,26 @@ interface ChatProviderProps {
 }
 
 export const ChatProvider = ({ children }: ChatProviderProps) => {
-  // More aggressive React availability check
-  const ReactInstance = (globalThis as any).React || React;
-  
-  if (!ReactInstance || typeof ReactInstance.useRef !== 'function') {
-    if (import.meta.env.DEV) {
-      console.warn('ChatProvider: React hooks not available, rendering children without chat functionality');
-    }
-    return <>{children}</>;
-  }
+  const mountedRef = useRef(false);
 
-  try {
-    const mountedRef = ReactInstance.useRef(false);
-
-    const mount = () => {
-      if (mountedRef.current) {
-        if (import.meta.env.DEV) {
-          console.warn('Chat widget attempted to mount multiple times. Ignoring additional mount attempts.');
-        }
-        return;
+  const mount = () => {
+    if (mountedRef.current) {
+      if (import.meta.env.DEV) {
+        console.warn('Chat widget attempted to mount multiple times. Ignoring additional mount attempts.');
       }
-      mountedRef.current = true;
-    };
-
-    const value: ChatContextType = {
-      isMounted: mountedRef.current,
-      mount
-    };
-
-    return (
-      <ChatContext.Provider value={value}>
-        {children}
-      </ChatContext.Provider>
-    );
-  } catch (error) {
-    if (import.meta.env.DEV) {
-      console.error('ChatProvider: Failed to initialize chat functionality:', error);
+      return;
     }
-    return <>{children}</>;
-  }
+    mountedRef.current = true;
+  };
+
+  const value: ChatContextType = {
+    isMounted: mountedRef.current,
+    mount
+  };
+
+  return (
+    <ChatContext.Provider value={value}>
+      {children}
+    </ChatContext.Provider>
+  );
 };
