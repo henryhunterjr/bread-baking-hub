@@ -58,16 +58,17 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Core vendor chunk
-          vendor: ["react", "react-dom", "react-router-dom"],
-
-          // UI Components - split heavy UI libraries
-          ui: [
+          // Core vendor chunk - keep ALL React-related packages together
+          vendor: [
+            "react", 
+            "react-dom", 
+            "react-router-dom",
             "@radix-ui/react-dialog",
-            "@radix-ui/react-dropdown-menu",
+            "@radix-ui/react-dropdown-menu", 
             "@radix-ui/react-tabs",
             "@radix-ui/react-toast",
             "@radix-ui/react-progress",
+            "@radix-ui/react-tooltip"
           ],
 
           // Utilities
