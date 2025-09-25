@@ -51,6 +51,10 @@ export const useRecipeWorkspace = () => {
   };
 
   const handleRecipeFormatted = (recipe: FormattedRecipe, imageUrl?: string) => {
+    console.log('Recipe formatted:', recipe);
+    console.log('Image URL:', imageUrl);
+    console.log('Recipe ingredients:', recipe.ingredients);
+    
     setFormattedRecipe({ recipe, imageUrl });
     setEditedRecipe(recipe);
     setRecipeImageUrl(imageUrl || '');

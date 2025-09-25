@@ -7,6 +7,7 @@ import html2pdf from 'html2pdf.js';
 import { ProductRecommendations } from './ProductRecommendations';
 import { getRecipeImage } from '@/utils/recipeImageMapping';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
+import { standardizeIngredients, validateRecipeData } from '@/utils/recipeDataUtils';
 interface FormattedRecipe {
   title: string;
   introduction: string;
@@ -41,6 +42,21 @@ interface FormattedRecipeDisplayProps {
 export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: FormattedRecipeDisplayProps) => {
   const printRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState<number>(1);
+
+  // Debug logging to see the actual data structure
+  console.log('FormattedRecipeDisplay - Recipe ingredients:', recipe.ingredients);
+  console.log('FormattedRecipeDisplay - Full recipe:', recipe);
+  console.log('FormattedRecipeDisplay - ImageUrl:', imageUrl);
+  
+  // Validate and standardize the recipe data
+  const isValidRecipe = validateRecipeData(recipe);
+  console.log('Recipe validation result:', isValidRecipe);
+  
+  const standardizedIngredients = useMemo(() => {
+    return standardizeIngredients(recipe.ingredients);
+  }, [recipe.ingredients]);
+  
+  console.log('Standardized ingredients:', standardizedIngredients);
 
   // Helpers for recipe scaling
   const normalizeFractions = (str: string) =>
@@ -89,6 +105,46 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
   const isNewIngredientFormat = Array.isArray(recipe.ingredients);
   const isNewMethodFormat = Array.isArray(recipe.method) && recipe.method.length > 0 && typeof recipe.method[0] === 'object';
   const isNewTroubleshootingFormat = Array.isArray(recipe.troubleshooting) && recipe.troubleshooting.length > 0 && typeof recipe.troubleshooting[0] === 'object';
+
+  // Process ingredients to handle various data formats
+  const processedIngredients = useMemo(() => {
+    console.log('Processing ingredients:', recipe.ingredients);
+    
+    if (!recipe.ingredients) {
+      console.log('No ingredients found');
+      return [];
+    }
+    
+    if (Array.isArray(recipe.ingredients)) {
+      console.log('Ingredients is array:', recipe.ingredients);
+      return recipe.ingredients;
+    }
+    
+    // Handle object format with metric/volume arrays
+    if (typeof recipe.ingredients === 'object' && 'metric' in recipe.ingredients) {
+      console.log('Using metric ingredients:', recipe.ingredients.metric);
+      const metricIngredients = recipe.ingredients.metric || [];
+      const volumeIngredients = recipe.ingredients.volume || [];
+      
+      return metricIngredients.map((item: string, index: number) => ({
+        item: item,
+        amount_metric: item,
+        amount_volume: volumeIngredients[index] || ''
+      }));
+    }
+    
+    // Handle object format where ingredients might be nested
+    if (typeof recipe.ingredients === 'object') {
+      console.log('Ingredients is object, trying to extract values');
+      const values = Object.values(recipe.ingredients);
+      if (values.length > 0 && Array.isArray(values[0])) {
+        return values[0];
+      }
+    }
+    
+    console.log('No valid ingredients format found, returning empty array');
+    return [];
+  }, [recipe.ingredients]);
 
   const handlePrint = () => {
     window.print();
@@ -142,15 +198,32 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
       />
 
       <div ref={printRef} className="print-container">
-      
-        {(imageUrl || recipeData) && (
-          <div className="w-full">
+        {/* Recipe Image */}
+        {imageUrl && (
+          <div className="w-full mb-6">
             <ResponsiveImage
-              src={imageUrl || (recipeData ? getRecipeImage(recipeData.slug || '', recipeData.image_url) : '')}
+              src={imageUrl}
               alt={recipe.title}
-              className="w-full h-64 rounded-lg shadow-warm"
+              className="w-full max-w-md mx-auto rounded-lg shadow-warm"
               loading="lazy"
             />
+          </div>
+        )}
+        {!imageUrl && recipeData && (
+          <div className="w-full mb-6">
+            <ResponsiveImage
+              src={getRecipeImage(recipeData.slug || '', recipeData.image_url)}
+              alt={recipe.title}
+              className="w-full max-w-md mx-auto rounded-lg shadow-warm"
+              loading="lazy"
+            />
+          </div>
+        )}
+        {!imageUrl && !recipeData && (
+          <div className="w-full mb-6 text-center">
+            <div className="w-full max-w-md mx-auto h-48 bg-muted rounded-lg flex items-center justify-center">
+              <p className="text-muted-foreground">No image available</p>
+            </div>
           </div>
         )}
       
@@ -170,20 +243,14 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
-              {isNewIngredientFormat ? (
-                (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>)?.map((ingredient, index) => (
-                  <li key={index} className="flex items-start space-x-2">
-                    <span className="text-primary font-semibold">•</span>
-                    <span>{scaleAmount(ingredient.amount_metric, scale)} {ingredient.item}</span>
-                  </li>
-                )) || []
-              ) : (
-                (recipe.ingredients as {metric: string[]; volume: string[]})?.metric?.map((ingredient, index) => (
-                  <li key={index} className="flex items-start space-x-2">
-                    <span className="text-primary font-semibold">•</span>
-                    <span>{scaleAmount(ingredient, scale)}</span>
-                  </li>
-                )) || []
+              {standardizedIngredients.map((ingredient, index) => (
+                <li key={index} className="flex items-start space-x-2">
+                  <span className="text-primary font-semibold">•</span>
+                  <span>{scaleAmount(ingredient.amount_metric, scale)} {ingredient.item}</span>
+                </li>
+              ))}
+              {standardizedIngredients.length === 0 && (
+                <li className="text-muted-foreground italic">No ingredients found</li>
               )}
             </ul>
           </CardContent>
@@ -195,20 +262,41 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
-              {isNewIngredientFormat ? (
-                (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>)?.map((ingredient, index) => (
+              {processedIngredients.map((ingredient, index) => {
+                // Handle different ingredient formats for volume display
+                let item, volume;
+                
+                if (typeof ingredient === 'string') {
+                  // If ingredient is just a string, display it as is
+                  return (
+                    <li key={index} className="flex items-start space-x-2">
+                      <span className="text-primary font-semibold">•</span>
+                      <span>{scaleAmount(ingredient, scale)}</span>
+                    </li>
+                  );
+                } else if (typeof ingredient === 'object' && ingredient) {
+                  // Extract values from different possible object structures
+                  item = ingredient.item || ingredient.ingredient || ingredient.name || '';
+                  volume = ingredient.amount_volume || ingredient.volume || ingredient.imperial || ingredient.amount_metric || '';
+                  
+                  return (
+                    <li key={index} className="flex items-start space-x-2">
+                      <span className="text-primary font-semibold">•</span>
+                      <span>{scaleAmount(volume, scale)} {item}</span>
+                    </li>
+                  );
+                }
+                
+                // Fallback for unknown formats
+                return (
                   <li key={index} className="flex items-start space-x-2">
                     <span className="text-primary font-semibold">•</span>
-                    <span>{scaleAmount(ingredient.amount_volume, scale)} {ingredient.item}</span>
+                    <span>{String(ingredient)}</span>
                   </li>
-                )) || []
-              ) : (
-                (recipe.ingredients as {metric: string[]; volume: string[]})?.volume?.map((ingredient, index) => (
-                  <li key={index} className="flex items-start space-x-2">
-                    <span className="text-primary font-semibold">•</span>
-                    <span>{scaleAmount(ingredient, scale)}</span>
-                  </li>
-                )) || []
+                );
+              })}
+              {processedIngredients.length === 0 && (
+                <li className="text-muted-foreground italic">No ingredients found</li>
               )}
             </ul>
           </CardContent>
