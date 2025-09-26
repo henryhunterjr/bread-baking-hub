@@ -53,12 +53,24 @@ const PublicRecipe = () => {
   const standardRecipe = mapLegacyToStandard(recipe);
   // Also normalize data to prevent crashes
   const normalizedRecipe = normalizeRecipe(recipe);
+  
+  // Get the recipe introduction for social media
+  const recipeIntroduction = recipe.data?.introduction || standardRecipe.summary;
+  const recipeImageUrl = recipe.image_url || standardRecipe.heroImage.url;
+  const canonicalUrl = `https://the-bakers-bench.lovable.app/recipes/${slug}`;
 
   return (
     <div className="bg-background text-foreground min-h-screen">
       <EnhancedRecipeSEO 
-        recipe={standardRecipe}
-        canonical={`https://bread-baking-hub.vercel.app/recipes/${slug}`}
+        recipe={{
+          ...standardRecipe,
+          summary: recipeIntroduction,
+          heroImage: {
+            ...standardRecipe.heroImage,
+            url: recipeImageUrl
+          }
+        }}
+        canonical={canonicalUrl}
         fbAppId={process.env.REACT_APP_FB_APP_ID}
       />
       <Header />

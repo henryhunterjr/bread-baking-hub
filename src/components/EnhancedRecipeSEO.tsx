@@ -11,7 +11,12 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
   const title = `${recipe.title} | Baking Great Bread`;
   const description = recipe.seoDescription || recipe.summary || `Recipe: ${recipe.title} by ${recipe.author.name}`;
   const canonicalUrl = canonical || getRecipeURL(recipe);
-  const ogImage = getRecipeOGImage(recipe);
+  
+  // Ensure absolute URL for image
+  let ogImage = recipe.heroImage.url;
+  if (!ogImage.startsWith('http')) {
+    ogImage = `https://the-bakers-bench.lovable.app${ogImage.startsWith('/') ? ogImage : '/' + ogImage}`;
+  }
   
   // Ensure description is under 160 characters for SEO
   const truncatedDescription = description.length > 160 
