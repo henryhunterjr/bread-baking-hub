@@ -58,6 +58,14 @@ const PublicRecipe = () => {
   const recipeIntroduction = recipe.data?.introduction || standardRecipe.summary;
   const recipeImageUrl = recipe.image_url || standardRecipe.heroImage.url;
   const canonicalUrl = `https://bread-baking-hub.vercel.app/recipes/${slug}`;
+  
+  // Debug logging for social media image
+  console.log('Recipe image debug:', {
+    slug,
+    'recipe.image_url': recipe.image_url,
+    'standardRecipe.heroImage.url': standardRecipe.heroImage.url,
+    'final recipeImageUrl': recipeImageUrl
+  });
 
   return (
     <div className="bg-background text-foreground min-h-screen">

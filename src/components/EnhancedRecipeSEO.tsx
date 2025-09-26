@@ -12,8 +12,10 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
   const description = recipe.seoDescription || recipe.summary || `Recipe: ${recipe.title} by ${recipe.author.name}`;
   const canonicalUrl = canonical || getRecipeURL(recipe);
   
-  // Ensure absolute URL for image
+  // Use the actual recipe image URL directly - don't use mappings for social sharing
   let ogImage = recipe.heroImage.url;
+  
+  // Ensure absolute URL for image
   if (!ogImage.startsWith('http')) {
     ogImage = `https://bread-baking-hub.vercel.app${ogImage.startsWith('/') ? ogImage : '/' + ogImage}`;
   }
