@@ -1119,6 +1119,7 @@ export type Database = {
       }
       recipes: {
         Row: {
+          author_name: string | null
           created_at: string
           data: Json
           folder: string | null
@@ -1132,6 +1133,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          author_name?: string | null
           created_at?: string
           data: Json
           folder?: string | null
@@ -1145,6 +1147,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          author_name?: string | null
           created_at?: string
           data?: Json
           folder?: string | null

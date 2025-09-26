@@ -8,6 +8,7 @@ interface UseRecipeEditFormProps {
 export const useRecipeEditForm = ({ recipe, allRecipes = [] }: UseRecipeEditFormProps) => {
   const [formData, setFormData] = useState({
     introduction: recipe.data.introduction || '',
+    author_name: recipe.author_name || recipe.data.author_name || '',
     prep_time: recipe.data.prep_time || '',
     cook_time: recipe.data.cook_time || '',
     total_time: recipe.data.total_time || '',
@@ -86,6 +87,7 @@ export const useRecipeEditForm = ({ recipe, allRecipes = [] }: UseRecipeEditForm
     const cleanedData = {
       ...recipe.data,
       introduction: formData.introduction.trim(),
+      author_name: formData.author_name.trim(),
       prep_time: formData.prep_time.trim(),
       cook_time: formData.cook_time.trim(),
       total_time: formData.total_time.trim(),
@@ -101,6 +103,11 @@ export const useRecipeEditForm = ({ recipe, allRecipes = [] }: UseRecipeEditForm
     };
 
     const updates: any = { data: cleanedData };
+    
+    // Also save author_name as a top-level field for better attribution
+    if (formData.author_name.trim() !== (recipe.author_name || '')) {
+      updates.author_name = formData.author_name.trim() || null;
+    }
     if (formData.image_url !== recipe.image_url) {
       updates.image_url = formData.image_url.trim() || null;
     }

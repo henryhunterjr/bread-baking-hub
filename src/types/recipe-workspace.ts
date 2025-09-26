@@ -1,6 +1,7 @@
 export interface FormattedRecipe {
   title: string;
   introduction: string;
+  author_name?: string;
   prep_time?: string;
   cook_time?: string;
   total_time?: string;

@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 interface BasicInfoSectionProps {
   formData: {
     introduction: string;
+    author_name: string;
     prep_time: string;
     cook_time: string;
     total_time: string;
@@ -26,6 +27,15 @@ export const BasicInfoSection = ({ formData, isOpen, onToggle, onUpdate }: Basic
         <ChevronDown className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")} />
       </CollapsibleTrigger>
       <CollapsibleContent className="space-y-3 mt-2">
+        <div>
+          <Label htmlFor="author_name">Recipe Author</Label>
+          <Input
+            id="author_name"
+            value={formData.author_name}
+            onChange={(e) => onUpdate('author_name', e.target.value)}
+            placeholder="Author name (for proper attribution)"
+          />
+        </div>
         <div>
           <Label htmlFor="introduction">Introduction</Label>
           <Textarea

@@ -17,6 +17,18 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
 
   return (
     <div className="space-y-6">
+      {/* Recipe Introduction */}
+      {recipe.introduction && (
+        <div className="bg-muted/30 rounded-lg p-6 border-l-4 border-primary">
+          <div className="prose prose-sm max-w-none text-foreground">
+            {recipe.author_name && (
+              <div className="text-sm font-medium text-primary mb-2">By {recipe.author_name}</div>
+            )}
+            <div className="whitespace-pre-wrap">{recipe.introduction}</div>
+          </div>
+        </div>
+      )}
+
       {/* Recipe Image */}
       {imageUrl && (
         <div className="relative h-64 rounded-lg overflow-hidden">

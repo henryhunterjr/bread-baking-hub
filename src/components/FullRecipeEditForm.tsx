@@ -50,6 +50,7 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
         <BasicInfoSection
           formData={{
             introduction: formData.introduction,
+            author_name: formData.author_name || '',
             prep_time: formData.prep_time,
             cook_time: formData.cook_time,
             total_time: formData.total_time,
