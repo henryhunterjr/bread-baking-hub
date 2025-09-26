@@ -15,7 +15,7 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
   // Ensure absolute URL for image
   let ogImage = recipe.heroImage.url;
   if (!ogImage.startsWith('http')) {
-    ogImage = `https://the-bakers-bench.lovable.app${ogImage.startsWith('/') ? ogImage : '/' + ogImage}`;
+    ogImage = `https://bread-baking-hub.vercel.app${ogImage.startsWith('/') ? ogImage : '/' + ogImage}`;
   }
   
   // Ensure description is under 160 characters for SEO
