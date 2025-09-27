@@ -19,32 +19,29 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  // More aggressive React availability check
-  const ReactCheck = (globalThis as any).React || React;
-  
-  if (!ReactCheck || !ReactCheck.useState || !ReactCheck.useEffect) {
-    console.warn('React hooks not available in AuthProvider, rendering children without auth functionality');
-    return <>{children}</>;
-  }
-
-  // Additional runtime check
+  // Check if React and hooks are available before using them
   try {
-    // Test that React hooks work in this context
-    const testState = ReactCheck.useState;
-    const testEffect = ReactCheck.useEffect;
-    if (typeof testState !== 'function' || typeof testEffect !== 'function') {
-      console.warn('React hooks are not functions in AuthProvider, skipping auth functionality');
+    if (!React || typeof React.useState !== 'function' || typeof React.useEffect !== 'function') {
+      console.warn('React hooks not available in AuthProvider, rendering children without auth functionality');
       return <>{children}</>;
     }
   } catch (error) {
-    console.warn('React hooks test failed in AuthProvider, falling back:', error);
+    console.warn('React availability check failed in AuthProvider:', error);
     return <>{children}</>;
   }
 
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [initError, setInitError] = useState<string | null>(null);
+  // Use a try-catch around hook calls to prevent crashes
+  let user, setUser, session, setSession, loading, setLoading, initError, setInitError;
+  
+  try {
+    [user, setUser] = React.useState<User | null>(null);
+    [session, setSession] = React.useState<Session | null>(null);
+    [loading, setLoading] = React.useState(true);
+    [initError, setInitError] = React.useState<string | null>(null);
+  } catch (error) {
+    console.error('Failed to initialize auth state:', error);
+    return <>{children}</>;
+  }
 
   useEffect(() => {
     let mounted = true;
