@@ -178,12 +178,12 @@ const SaltConverter: React.FC = () => {
           </section>
 
           {/* Calculator Section */}
-          <section className="bg-card p-6 rounded-lg shadow-lg mb-8">
-            <h3 className="text-2xl font-bold text-primary mb-6">Quick Salt Calculator</h3>
+          <section className="p-6 rounded-lg shadow-lg mb-8" style={{ backgroundColor: 'hsl(var(--bg-medium))' }}>
+            <h3 className="text-2xl font-bold mb-6" style={{ color: 'hsl(var(--accent-gold))' }}>Quick Salt Calculator</h3>
             
             <div className="space-y-4">
               <div className="flex flex-wrap items-center gap-3">
-                <label className="font-semibold min-w-[80px]">I have:</label>
+                <label className="font-semibold min-w-[80px]" style={{ color: 'hsl(var(--text-light))' }}>I have:</label>
                 <input
                   type="number"
                   value={amount}
@@ -192,21 +192,42 @@ const SaltConverter: React.FC = () => {
                   step="0.25"
                   min="0"
                   placeholder="1"
-                  className="w-20 px-3 py-2 border-2 border-input rounded-md text-sm focus:border-primary focus:outline-none"
+                  className="w-20 px-3 py-2 border-2 rounded-md text-sm transition-all duration-200"
+                  style={{ 
+                    backgroundColor: 'hsl(var(--bg-light))', 
+                    color: 'hsl(var(--text-dark))',
+                    borderColor: 'hsl(var(--border-light))'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = 'hsl(var(--border-focus))'}
+                  onBlur={(e) => e.target.style.borderColor = 'hsl(var(--border-light))'}
                 />
                 <select
                   value={unit}
                   onChange={(e) => setUnit(e.target.value)}
-                  className="px-3 py-2 border-2 border-input rounded-md text-sm focus:border-primary focus:outline-none min-w-[120px]"
+                  className="px-3 py-2 border-2 rounded-md text-sm min-w-[120px] transition-all duration-200"
+                  style={{ 
+                    backgroundColor: 'hsl(var(--bg-light))', 
+                    color: 'hsl(var(--text-dark))',
+                    borderColor: 'hsl(var(--border-light))'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = 'hsl(var(--border-focus))'}
+                  onBlur={(e) => e.target.style.borderColor = 'hsl(var(--border-light))'}
                 >
                   <option value="tsp">teaspoon(s)</option>
                   <option value="tbsp">tablespoon(s)</option>
                 </select>
-                <span className="text-sm">of</span>
+                <span className="text-sm" style={{ color: 'hsl(var(--text-light))' }}>of</span>
                 <select
                   value={fromSalt}
                   onChange={(e) => setFromSalt(e.target.value)}
-                  className="flex-1 min-w-[200px] px-3 py-2 border-2 border-input rounded-md text-sm focus:border-primary focus:outline-none"
+                  className="flex-1 min-w-[200px] px-3 py-2 border-2 rounded-md text-sm transition-all duration-200"
+                  style={{ 
+                    backgroundColor: 'hsl(var(--bg-light))', 
+                    color: 'hsl(var(--text-dark))',
+                    borderColor: 'hsl(var(--border-light))'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = 'hsl(var(--border-focus))'}
+                  onBlur={(e) => e.target.style.borderColor = 'hsl(var(--border-light))'}
                 >
                   <option value="table">Table Salt (Morton's)</option>
                   <option value="fine-sea">Fine Sea Salt</option>
@@ -217,11 +238,18 @@ const SaltConverter: React.FC = () => {
               </div>
               
               <div className="flex flex-wrap items-center gap-3">
-                <label className="font-semibold min-w-[80px]">Convert to:</label>
+                <label className="font-semibold min-w-[80px]" style={{ color: 'hsl(var(--text-light))' }}>Convert to:</label>
                 <select
                   value={toSalt}
                   onChange={(e) => setToSalt(e.target.value)}
-                  className="flex-1 min-w-[200px] px-3 py-2 border-2 border-input rounded-md text-sm focus:border-primary focus:outline-none"
+                  className="flex-1 min-w-[200px] px-3 py-2 border-2 rounded-md text-sm transition-all duration-200"
+                  style={{ 
+                    backgroundColor: 'hsl(var(--bg-light))', 
+                    color: 'hsl(var(--text-dark))',
+                    borderColor: 'hsl(var(--border-light))'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = 'hsl(var(--border-focus))'}
+                  onBlur={(e) => e.target.style.borderColor = 'hsl(var(--border-light))'}
                 >
                   <option value="table">Table Salt (Morton's)</option>
                   <option value="fine-sea">Fine Sea Salt</option>
@@ -231,7 +259,19 @@ const SaltConverter: React.FC = () => {
                 </select>
                 <button
                   onClick={convertSalt}
-                  className="px-6 py-2 bg-primary text-primary-foreground rounded-md font-semibold hover:bg-primary/90 transition-colors"
+                  className="px-6 py-2 rounded-md font-semibold transition-all duration-200 hover:shadow-lg hover:scale-105"
+                  style={{ 
+                    backgroundColor: 'hsl(var(--accent-gold))', 
+                    color: 'hsl(var(--text-dark))'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'hsl(var(--accent-gold) / 0.9)';
+                    e.currentTarget.style.boxShadow = '0 0 15px hsl(var(--accent-gold) / 0.5)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'hsl(var(--accent-gold))';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
                 >
                   Convert
                 </button>
@@ -239,51 +279,51 @@ const SaltConverter: React.FC = () => {
             </div>
             
             {showResult && (
-              <div className="mt-6 p-4 bg-green-50 border-2 border-green-500 rounded-md">
-                <div className="font-bold text-green-800">{result}</div>
+              <div className="mt-6 p-4 rounded-md border-2" style={{ backgroundColor: 'hsl(var(--bg-light))', borderColor: 'hsl(var(--accent-gold))' }}>
+                <div className="font-bold" style={{ color: 'hsl(var(--text-dark))' }}>{result}</div>
               </div>
             )}
           </section>
 
           {/* Pro Tips Section */}
-          <section className="bg-gradient-to-br from-muted/30 to-muted/10 border-l-4 border-primary p-6 rounded-lg mb-8">
-            <h3 className="text-2xl font-bold text-primary mb-6">Pro Tips for Salt Conversion</h3>
+          <section className="border-l-4 p-6 rounded-lg mb-8" style={{ backgroundColor: 'hsl(var(--bg-medium))', borderLeftColor: 'hsl(var(--accent-gold))' }}>
+            <h3 className="text-2xl font-bold mb-6" style={{ color: 'hsl(var(--accent-gold))' }}>Pro Tips for Salt Conversion</h3>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <span className="text-xl">🧂</span>
-                <div>
-                  <strong className="text-foreground">Weight is best:</strong> Use 6g per teaspoon of table salt as your baseline if you have a scale
+                <div style={{ color: 'hsl(var(--text-light))' }}>
+                  <strong style={{ color: 'hsl(var(--text-light))' }}>Weight is best:</strong> Use 6g per teaspoon of table salt as your baseline if you have a scale
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-xl">🧂</span>
-                <div>
-                  <strong className="text-foreground">Taste and adjust:</strong> Sea salts vary in mineral content and flavor intensity
+                <div style={{ color: 'hsl(var(--text-light))' }}>
+                  <strong style={{ color: 'hsl(var(--text-light))' }}>Taste and adjust:</strong> Sea salts vary in mineral content and flavor intensity
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-xl">🧂</span>
-                <div>
-                  <strong className="text-foreground">Start conservative:</strong> You can always add more salt, but you can't take it back
+                <div style={{ color: 'hsl(var(--text-light))' }}>
+                  <strong style={{ color: 'hsl(var(--text-light))' }}>Start conservative:</strong> You can always add more salt, but you can't take it back
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-xl">🧂</span>
-                <div>
-                  <strong className="text-foreground">Dissolve test:</strong> Fine salts incorporate faster than coarse salts in dough
+                <div style={{ color: 'hsl(var(--text-light))' }}>
+                  <strong style={{ color: 'hsl(var(--text-light))' }}>Dissolve test:</strong> Fine salts incorporate faster than coarse salts in dough
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-xl">🧂</span>
-                <div>
-                  <strong className="text-foreground">Storage tip:</strong> Keep sea salts in airtight containers to prevent clumping
+                <div style={{ color: 'hsl(var(--text-light))' }}>
+                  <strong style={{ color: 'hsl(var(--text-light))' }}>Storage tip:</strong> Keep sea salts in airtight containers to prevent clumping
                 </div>
               </div>
             </div>
           </section>
 
           {/* Footer Section */}
-          <section className="text-center p-6 bg-primary text-primary-foreground rounded-lg">
+          <section className="text-center p-6 rounded-lg" style={{ backgroundColor: 'hsl(var(--accent-gold))', color: 'hsl(var(--text-dark))' }}>
             <p className="font-bold mb-2">Happy Baking!</p>
             <p className="mb-2">Join us at Baking Great Bread at Home on Facebook</p>
             <p className="mb-4">BakingGreatBread.com</p>
