@@ -169,6 +169,11 @@ const Header = () => {
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
+                        <Link to="/salt-converter" className="w-full cursor-pointer">
+                          Salt Converter
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
                         <Link to="/community" className="w-full cursor-pointer">
                           Community
                         </Link>
@@ -299,6 +304,9 @@ const Header = () => {
                </Link>
                <Link to="/help" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                  Help
+               </Link>
+               <Link to="/salt-converter" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
+                 Salt Converter
                </Link>
               <Link to="/crust-and-crumb" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Crust & Crumb
