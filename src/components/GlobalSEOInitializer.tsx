@@ -86,7 +86,7 @@ export const GlobalSEOInitializer = () => {
           '@type': 'WebSite',
           name: 'Baking Great Bread',
           url: 'https://bread-baking-hub.vercel.app',
-          description: 'Master artisan bread baking with expert guidance, troubleshooting tools, and community support',
+          description: 'Expert guidance for real home bakers. Proven tutorials, troubleshooting guides, and community support.',
           potentialAction: {
             '@type': 'SearchAction',
             target: 'https://bread-baking-hub.vercel.app/search?q={search_term_string}',

@@ -21,8 +21,8 @@ export const SEOOptimizer = ({
   const location = useLocation();
   
   const defaultData = {
-    title: 'Baking Great Bread - Master Artisan Bread Baking at Home',
-    description: 'Learn professional bread baking techniques with expert guidance from Henry Hunter. Troubleshooting guides, recipes, and community support for perfect artisan bread.',
+    title: 'Baking Great Bread at Home - Expert Guidance for Real Home Bakers',
+    description: 'Expert guidance for real home bakers. Proven tutorials, troubleshooting guides, sourdough tips, and a supportive community of passionate bakers.',
     image: 'https://the-bakers-bench.lovable.app/lovable-uploads/46c5de6f-c603-4f84-85ec-bb53a2781939.png?v=20250827-1',
     url: 'https://the-bakers-bench.lovable.app'
   };
