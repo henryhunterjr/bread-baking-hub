@@ -145,28 +145,28 @@ const SaltConverter: React.FC = () => {
                 </thead>
                 <tbody className="text-sm">
                   <tr className="even:bg-muted/50">
-                    <td className="p-3 text-center bg-yellow-100 font-bold">1 tsp</td>
+                    <td className="p-3 text-center bg-yellow-100 font-bold" style={{ color: 'hsl(var(--text-dark))' }}>1 tsp</td>
                     <td className="p-3 text-center">1¼ tsp</td>
                     <td className="p-3 text-center">1½ tsp</td>
                     <td className="p-3 text-center">1½ tsp</td>
                     <td className="p-3 text-center">1¼ tsp</td>
                   </tr>
                   <tr className="even:bg-muted/50">
-                    <td className="p-3 text-center bg-yellow-100 font-bold">½ tsp</td>
+                    <td className="p-3 text-center bg-yellow-100 font-bold" style={{ color: 'hsl(var(--text-dark))' }}>½ tsp</td>
                     <td className="p-3 text-center">⅝ tsp</td>
                     <td className="p-3 text-center">¾ tsp</td>
                     <td className="p-3 text-center">¾ tsp</td>
                     <td className="p-3 text-center">⅝ tsp</td>
                   </tr>
                   <tr className="even:bg-muted/50">
-                    <td className="p-3 text-center bg-yellow-100 font-bold">¼ tsp</td>
+                    <td className="p-3 text-center bg-yellow-100 font-bold" style={{ color: 'hsl(var(--text-dark))' }}>¼ tsp</td>
                     <td className="p-3 text-center">⅓ tsp</td>
                     <td className="p-3 text-center">⅜ tsp</td>
                     <td className="p-3 text-center">⅜ tsp</td>
                     <td className="p-3 text-center">⅓ tsp</td>
                   </tr>
                   <tr className="even:bg-muted/50">
-                    <td className="p-3 text-center bg-yellow-100 font-bold">1 Tbsp</td>
+                    <td className="p-3 text-center bg-yellow-100 font-bold" style={{ color: 'hsl(var(--text-dark))' }}>1 Tbsp</td>
                     <td className="p-3 text-center">1 Tbsp + ¾ tsp</td>
                     <td className="p-3 text-center">1½ Tbsp</td>
                     <td className="p-3 text-center">1½ Tbsp</td>
