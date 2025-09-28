@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
+import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -19,84 +19,55 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  // Check if React and hooks are available before using them
-  try {
-    if (!React || typeof React.useState !== 'function' || typeof React.useEffect !== 'function') {
-      console.warn('React hooks not available in AuthProvider, rendering children without auth functionality');
-      return <>{children}</>;
-    }
-  } catch (error) {
-    console.warn('React availability check failed in AuthProvider:', error);
-    return <>{children}</>;
-  }
-
-  // Use a try-catch around hook calls to prevent crashes
-  let user, setUser, session, setSession, loading, setLoading, initError, setInitError;
-  
-  try {
-    [user, setUser] = React.useState<User | null>(null);
-    [session, setSession] = React.useState<Session | null>(null);
-    [loading, setLoading] = React.useState(true);
-    [initError, setInitError] = React.useState<string | null>(null);
-  } catch (error) {
-    console.error('Failed to initialize auth state:', error);
-    return <>{children}</>;
-  }
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let mounted = true;
 
-    try {
-      // Set up auth state listener
-      const { data: { subscription } } = supabase.auth.onAuthStateChange(
-        (event, session) => {
-          if (!mounted) return;
-          
-          // Only log in development
-          if (process.env.NODE_ENV === 'development') {
-            console.log('Auth state changed:', event, !!session);
-          }
-          
-          setSession(session);
-          setUser(session?.user ?? null);
-          setLoading(false);
-        }
-      );
-
-      // Check for existing session
-      supabase.auth.getSession().then(({ data: { session }, error }) => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
         if (!mounted) return;
         
-        if (error) {
-          console.error('Session check error:', error);
-          setInitError('Failed to check authentication status');
-        } else {
-          // Only log in development
-          if (process.env.NODE_ENV === 'development') {
-            console.log('Initial session check:', !!session);
-          }
-          
-          setSession(session);
-          setUser(session?.user ?? null);
+        // Only log in development
+        if (process.env.NODE_ENV === 'development') {
+          console.log('Auth state changed:', event, !!session);
         }
+        
+        setSession(session);
+        setUser(session?.user ?? null);
         setLoading(false);
-      }).catch((error) => {
-        if (!mounted) return;
-        console.error('Session check failed:', error);
-        setInitError('Authentication check failed');
-        setLoading(false);
-      });
+      }
+    );
 
-      return () => {
-        mounted = false;
-        subscription.unsubscribe();
-      };
-    } catch (error) {
-      console.error('AuthProvider initialization error:', error);
-      setInitError('Authentication initialization failed');
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      if (!mounted) return;
+      
+      if (error) {
+        console.error('Session check error:', error);
+      } else {
+        // Only log in development
+        if (process.env.NODE_ENV === 'development') {
+          console.log('Initial session check:', !!session);
+        }
+        
+        setSession(session);
+        setUser(session?.user ?? null);
+      }
       setLoading(false);
-      return () => {};
-    }
+    }).catch((error) => {
+      if (!mounted) return;
+      console.error('Session check failed:', error);
+      setLoading(false);
+    });
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signUp = async (email: string, password: string, displayName?: string) => {
@@ -129,24 +100,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       console.error('Sign out error:', error);
     }
   };
-
-  // If there's an initialization error, show a minimal fallback
-  if (initError) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="text-center space-y-4">
-          <h2 className="text-lg font-semibold">Authentication Unavailable</h2>
-          <p className="text-muted-foreground">Please refresh the page to try again.</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
-          >
-            Refresh Page
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   const value: AuthContextType = {
     user,
