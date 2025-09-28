@@ -135,7 +135,7 @@ const SaltConverter: React.FC = () => {
             <div className="overflow-x-auto">
               <table className="w-full min-w-[600px] border-collapse">
                 <thead>
-                  <tr className="bg-primary text-primary-foreground">
+                  <tr style={{ backgroundColor: 'hsl(var(--accent-gold))', color: 'hsl(var(--text-dark))' }}>
                     <th className="p-3 text-center font-bold text-sm">Table Salt<br />(Morton's)</th>
                     <th className="p-3 text-center font-bold text-sm">Fine Sea Salt</th>
                     <th className="p-3 text-center font-bold text-sm">Coarse Sea Salt</th>
