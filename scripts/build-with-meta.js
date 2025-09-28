@@ -17,7 +17,7 @@ const BASE_URL = 'https://the-bakers-bench.lovable.app';
 // Meta data for each route
 const routeMetaData = {
   '/': {
-    title: 'Baking Great Bread - Master Baker Henry Hunter\'s Expert Guidance',
+    title: 'Baking Great Bread at Home - Expert Guidance for Real Home Bakers',
     description: 'Master the art of bread baking with expert recipes, troubleshooting guides, and a vibrant community led by Henry Hunter.',
     image: 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-join-our-supportive-baking-community/a-warm-inviting-lifestyle-photograph-sho9sttfiagry2spdvvrlstkqbrxrfijer9-kofpmfryhtg.png'
   },
