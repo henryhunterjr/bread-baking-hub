@@ -58,7 +58,7 @@ const Index = () => {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Baking Great Bread",
-    "description": "Expert bread baking guidance, recipes, and community from master baker Henry Hunter",
+    "description": "Expert bread baking guidance, recipes, and community for passionate home bakers",
     "url": "https://bread-baking-hub.vercel.app",
     "logo": "https://bread-baking-hub.vercel.app/assets/logo.png",
     "contactPoint": {
@@ -100,15 +100,15 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Baking Great Bread - Master Baker Henry Hunter's Expert Guidance</title>
-        <meta name="description" content="Learn bread baking from master baker Henry Hunter. Expert tutorials, troubleshooting guides, sourdough tips, and a supportive community of passionate bakers." />
+        <title>Baking Great Bread at Home - Expert Guidance for Real Home Bakers</title>
+        <meta name="description" content="Expert guidance for real home bakers. Proven tutorials, troubleshooting guides, sourdough tips, and a supportive community of passionate bakers." />
         <meta name="keywords" content="bread baking, sourdough, Henry Hunter, baking tutorials, bread recipes, troubleshooting, artisan bread, home baking" />
         <link rel="canonical" href="https://bread-baking-hub.vercel.app" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Baking Great Bread - Master Baker Henry Hunter's Expert Guidance" />
-        <meta property="og:description" content="Learn bread baking from master baker Henry Hunter. Expert tutorials, troubleshooting guides, and community support." />
+        <meta property="og:title" content="Baking Great Bread at Home - Expert Guidance for Real Home Bakers" />
+        <meta property="og:description" content="Expert guidance for real home bakers. Proven tutorials, troubleshooting guides, and community support." />
         <meta property="og:url" content="https://bread-baking-hub.vercel.app" />
         <meta property="og:site_name" content="Baking Great Bread" />
         <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-join-our-supportive-baking-community/a-warm-inviting-lifestyle-photograph-sho9sttfiagry2spdvvrlstkqbrxrfijer9-kofpmfryhtg.png" />
@@ -117,8 +117,8 @@ const Index = () => {
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Baking Great Bread - Master Baker Henry Hunter's Expert Guidance" />
-        <meta name="twitter:description" content="Learn bread baking from master baker Henry Hunter. Expert tutorials, troubleshooting guides, and community support." />
+        <meta name="twitter:title" content="Baking Great Bread at Home - Expert Guidance for Real Home Bakers" />
+        <meta name="twitter:description" content="Expert guidance for real home bakers. Proven tutorials, troubleshooting guides, and community support." />
         <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-join-our-supportive-baking-community/a-warm-inviting-lifestyle-photograph-sho9sttfiagry2spdvvrlstkqbrxrfijer9-kofpmfryhtg.png" />
         
         {/* Additional SEO */}
