@@ -17,7 +17,7 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
   
   // Ensure absolute URL for image
   if (!ogImage.startsWith('http')) {
-    ogImage = `https://bread-baking-hub.vercel.app${ogImage.startsWith('/') ? ogImage : '/' + ogImage}`;
+    ogImage = `https://bakinggreatbread.com${ogImage.startsWith('/') ? ogImage : '/' + ogImage}`;
   }
   
   // Ensure description is under 160 characters for SEO

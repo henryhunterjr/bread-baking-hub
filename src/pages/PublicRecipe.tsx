@@ -57,7 +57,7 @@ const PublicRecipe = () => {
   // Get the recipe introduction for social media
   const recipeIntroduction = recipe.data?.introduction || standardRecipe.summary;
   const recipeImageUrl = recipe.image_url || standardRecipe.heroImage.url;
-  const canonicalUrl = `https://bread-baking-hub.vercel.app/recipes/${slug}`;
+  const canonicalUrl = `https://bakinggreatbread.com/recipes/${slug}`;
   
   // Debug logging for social media image
   console.log('Recipe image debug:', {
