@@ -4,8 +4,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from '@/hooks/useAuth';
 import { TooltipProvider } from '@/components/ui/safe-tooltip';
 import { ChatProvider } from '@/components/ChatProvider';
-import { AccessibilityProvider } from '@/components/AccessibilityProvider';
-
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false, refetchOnReconnect: false, staleTime: 60_000 } }
 });
