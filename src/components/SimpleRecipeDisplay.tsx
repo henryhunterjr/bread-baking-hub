@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Clock, ChefHat, Users } from 'lucide-react';
 import { SaveRecipeButton } from '@/components/SaveRecipeButton';
 import { RecipeActions } from '@/components/RecipeActions';
+import sourhousePromo from '@/assets/sourhouse-promo.png';
 
 interface SimpleRecipeDisplayProps {
   recipe: any;
@@ -172,6 +173,44 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
           <p className="text-muted-foreground whitespace-pre-wrap">{recipe.notes}</p>
         </div>
       )}
+
+      {/* Sour House Promotional Section */}
+      <div className="py-8 border-t border-border">
+        <div className="text-center space-y-4">
+          <h3 className="text-2xl font-semibold">Keep Your Starter Happy & Your Dough Perfect</h3>
+          <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            I use both the <strong>Sour House Goldie</strong> and the <strong>Dough Bed</strong> in my own kitchen, 
+            and they've made temperature control effortless — no more guessing if your starter's too cold or 
+            your dough's too sluggish. If you bake often, this setup's worth it.
+          </p>
+          
+          <div className="py-4">
+            <p className="text-lg font-medium mb-2">
+              🛒 Use code <span className="text-primary font-bold text-xl">HBK23</span> for <span className="text-primary font-bold">10% off all Sour House products</span>
+            </p>
+            <a 
+              href="https://sourhouse.co?ref=BAKINGGREATBREAD" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-block text-primary hover:underline font-medium"
+            >
+              Shop Sour House →
+            </a>
+          </div>
+
+          <div className="mt-6 max-w-2xl mx-auto">
+            <img 
+              src={sourhousePromo} 
+              alt="10% Off Sour House Products - Use code HBK23" 
+              className="w-full rounded-lg shadow-lg"
+            />
+            <p className="text-sm text-muted-foreground italic mt-3">
+              I keep my starter cozy in the Goldie and my dough perfectly proofed in the Dough Bed. 
+              If you've ever struggled with room temps, this duo's a game-changer.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Recipe Actions */}
       <div className="flex flex-wrap gap-4 pt-6 border-t">
