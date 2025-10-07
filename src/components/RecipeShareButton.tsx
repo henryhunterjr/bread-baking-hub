@@ -24,11 +24,12 @@ export const RecipeShareButton = ({
   const { toast } = useToast();
 
   const getRecipeUrl = () => {
-    // Use Supabase Edge Function for proper OG/social sharing
+    // Generate actual recipe page URL
+    const baseUrl = window.location.origin;
     if (recipe.slug) {
-      return `https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/og-share/${recipe.slug}`;
+      return `${baseUrl}/recipes/${recipe.slug}`;
     }
-    return `https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/og-share/${recipe.id}`;
+    return `${baseUrl}/recipes/${recipe.id}`;
   };
 
   const handleShare = async () => {
