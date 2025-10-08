@@ -34,7 +34,7 @@ All colors MUST be HSL.
     --destructive-foreground: 0 0% 100%;
 
     --border: 21 20% 35%; /* #6A5444 */
-    --input: 32 42% 95%; /* Light background for better contrast */
+    --input: 21 25% 18%; /* Dark input background matching card */
     --ring: 42 70% 57%;
 
     /* Brand Color Tokens for Accessibility */
