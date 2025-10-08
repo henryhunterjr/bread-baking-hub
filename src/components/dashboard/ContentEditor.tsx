@@ -45,9 +45,8 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
 
   const insertVideo = () => {
     if (videoUrl) {
-      const videoEmbed = `<video controls width="100%"><source src="${videoUrl}" type="video/mp4" /></video>`;
-      const newContent = content + '\n\n' + videoEmbed;
-      onChange(newContent);
+      const videoEmbed = `\n\n<video controls width="100%" style="max-width: 100%; height: auto;">\n  <source src="${videoUrl}" type="video/mp4" />\n  Your browser does not support the video tag.\n</video>\n\n`;
+      onChange(content + videoEmbed);
       setVideoUrl('');
       setVideoAltText('');
       setIsVideoDialogOpen(false);
