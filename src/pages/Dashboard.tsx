@@ -31,6 +31,8 @@ import PostsList from '@/components/dashboard/PostsList';
 import DebugPanel from '@/components/dashboard/DebugPanel';
 import { BlogImageUploader } from '@/components/BlogImageUploader';
 import { BlogImageGrid } from '@/components/BlogImageGrid';
+import { BlogVideoUploader } from '@/components/BlogVideoUploader';
+import { BlogVideoGrid } from '@/components/BlogVideoGrid';
 import { UpdateThumbnail } from '@/components/dashboard/UpdateThumbnail';
 import { SiteSettings } from '@/components/dashboard/SiteSettings';
 import { supabase } from '@/integrations/supabase/client';
@@ -693,6 +695,8 @@ const Dashboard = () => {
               />
               <BlogImageUploader />
               <BlogImageGrid />
+              <BlogVideoUploader />
+              <BlogVideoGrid />
             </TabsContent>
 
             <TabsContent value="analytics" className="space-y-6">
