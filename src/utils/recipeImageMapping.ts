@@ -57,6 +57,7 @@ export const recipeImageMapping: Record<string, string> = {
   
   // SWEET BREADS/DESSERTS  
   "apple-cider-bread": "/lovable-uploads/1e7a656f-cd0f-4366-bd61-40b7705681a7.png",
+  "rustic-peach-galette": "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-10/peach-gillette/img5129.JPG",
   "spiced-chocolate-bread": "/lovable-uploads/aa77f34a-2501-4498-889f-ef88dc734116.png",
   "spiced-holiday-bread": "/lovable-uploads/bddd0565-6c16-460c-a13b-729cf16e4930.png",
   "spiced-pear-bread": "/lovable-uploads/63e9053f-5c3c-4ee7-9f9e-61e590b4cfac.png",
@@ -104,7 +105,7 @@ const fallbackImages = [
 ];
 
 export function getRecipeImage(slug: string, imageUrl?: string | null): string {
-  const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread', 'henrys-whole-wheat-sourdough-recipe', 'holiday-star-cinnamon-bread', 'ultimate-dinner-rolls-rosemary-sea-salt', 'henrys-marbled-sourdough-bread', 'henrys-perfect-cinnamon-swirl-bread', 'pumpkin-shaped-sourdough-loaf'];
+  const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread', 'henrys-whole-wheat-sourdough-recipe', 'holiday-star-cinnamon-bread', 'ultimate-dinner-rolls-rosemary-sea-salt', 'henrys-marbled-sourdough-bread', 'henrys-perfect-cinnamon-swirl-bread', 'pumpkin-shaped-sourdough-loaf', 'rustic-peach-galette'];
   if (problematicRecipes.includes(slug) && recipeImageMapping[slug]) {
     return recipeImageMapping[slug];
   }
