@@ -262,6 +262,95 @@ export const useSeasonalRecipes = () => {
     ensureHenryRecipe();
   }, [loading, recipes]);
 
+  // One-time ensure Peach Galette is present
+  useEffect(() => {
+    const ensurePeachGalette = async () => {
+      if (loading) return;
+      const targetSlug = 'rustic-peach-galette';
+      if (recipes.some(r => r.slug === targetSlug)) return;
+      try {
+        const data: SeasonalRecipeData = {
+          season: 'Fall',
+          holidays: [],
+          featuredDates: { start: '10-01', end: '11-30' },
+          category: ['quick bread'],
+          occasion: ['everyday', 'dessert'],
+          prepTime: '20 minutes',
+          bakeTime: '35 minutes',
+          totalTime: '55 minutes (plus cooling)',
+          difficulty: 'beginner',
+          yield: '6-8 servings',
+          ingredients: [
+            'Jiffy Pie Crust Mix — 255g (1 box, 9 oz)',
+            'Cold water — as directed on package',
+            'All-purpose flour for rolling — 2-3 tbsp (optional)',
+            'Ripe peaches, sliced into wedges — 600g (4 medium)',
+            'Granulated sugar — 25g (2 tbsp)',
+            'Ground cinnamon — 1 tsp',
+            'Cornstarch — 1½ tsp',
+            'Salt — pinch',
+            'Vanilla extract (or banana extract) — ½ tsp',
+            'Cold unsalted butter, cut into small cubes — 15g (1 tbsp)',
+            'Large egg, beaten — 1',
+            'Turbinado sugar (or coarse sugar) — 2 tbsp'
+          ],
+          method: [
+            'Make the crust: Prepare the Jiffy Pie Crust Mix according to package directions using cold water. Form the dough into a ball, wrap in plastic, and refrigerate for at least 15 minutes while you prepare the filling.',
+            'Prepare the filling: In a medium bowl, combine the sliced peaches, sugar, cinnamon, cornstarch, salt, and vanilla or banana extract. Toss gently until the peaches are evenly coated. Set aside.',
+            'Roll out the dough: On a lightly floured surface or directly on a sheet of parchment paper, roll the chilled dough into a rough 12-inch circle, about ⅛-inch thick. The edges don\'t need to be perfect. If using parchment, transfer the whole sheet to a baking sheet.',
+            'Preheat the oven: Set your oven to 400°F (200°C).',
+            'Assemble the galette: Spoon the peach filling into the center of the dough, leaving a 2-inch border all around. Arrange the peaches in a single layer if possible. Using the parchment paper to help lift the edges, fold the border of dough up and over the fruit, pleating naturally as you go around. The center should remain open with the peaches visible.',
+            'Add finishing touches: Dot the exposed peaches with the small cubes of cold butter. Brush the folded crust edges with the beaten egg, then sprinkle generously with turbinado sugar.',
+            'Bake: Place in the preheated oven and bake for 30-40 minutes, until the crust is deep golden brown and the peaches are bubbling. If the crust begins browning too quickly, tent loosely with aluminum foil for the last 10-15 minutes.',
+            'Cool before serving: Remove from the oven and let the galette cool completely on the baking sheet, at least 45 minutes to 1 hour. This allows the filling to set properly. Serve at room temperature with vanilla ice cream or whipped cream if desired.'
+          ],
+          notes: 'About Jiffy Pie Crust Mix: This budget-friendly mix (usually under a dollar) is made with real lard, which creates an incredibly tender, flaky crust. Banana extract: This is the surprise ingredient that makes this galette special. Just a few drops brighten the peach flavor in a way vanilla can\'t quite match. Peach selection: Choose peaches that are ripe but still slightly firm. Overripe peaches will release too much liquid and make the galette soggy.',
+          equipment: [
+            'Medium mixing bowl',
+            'Rolling pin',
+            'Parchment paper',
+            'Baking sheet',
+            'Pastry brush',
+            'Measuring cups and spoons'
+          ]
+        };
+
+        const imageUrl = 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-10/peach-gillette/img5129.JPG';
+        const { data: res, error } = await supabase.functions.invoke('upsert-recipe', {
+          body: {
+            title: 'Rustic Peach Galette',
+            slug: targetSlug,
+            data,
+            imageUrl,
+            tags: ['peach', 'galette', 'dessert', 'summer', 'fall', 'stone fruit', 'rustic'],
+            folder: 'Seasonal',
+            isPublic: true,
+          },
+        });
+        if (error) {
+          console.error('Failed to upsert Rustic Peach Galette:', error);
+          return;
+        }
+        const created = res?.data;
+        const newRecipe: SeasonalRecipe = {
+          id: created?.id || crypto.randomUUID(),
+          title: 'Rustic Peach Galette',
+          slug: targetSlug,
+          folder: 'Seasonal',
+          tags: ['peach', 'galette', 'dessert', 'summer', 'fall', 'stone fruit', 'rustic'],
+          is_public: true,
+          image_url: imageUrl,
+          created_at: created?.created_at || new Date().toISOString(),
+          data,
+        };
+        setRecipes(prev => [newRecipe, ...prev]);
+      } catch (e) {
+        console.error('ensurePeachGalette error', e);
+      }
+    };
+    ensurePeachGalette();
+  }, [loading, recipes]);
+
   // One-time ensure Holiday Star Cinnamon Bread is present
   useEffect(() => {
     const ensureHolidayStar = async () => {
