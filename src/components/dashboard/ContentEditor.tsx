@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Eye, Edit3, MousePointer } from 'lucide-react';
+import { Eye, Edit3, MousePointer, Video } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface ContentEditorProps {
@@ -17,6 +17,9 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
   const [buttonText, setButtonText] = useState('');
   const [buttonUrl, setButtonUrl] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [videoUrl, setVideoUrl] = useState('');
+  const [videoAltText, setVideoAltText] = useState('');
+  const [isVideoDialogOpen, setIsVideoDialogOpen] = useState(false);
 
   type MDEModule = typeof import('@uiw/react-md-editor');
   const [mdModule, setMdModule] = useState<MDEModule | null>(null);
@@ -40,6 +43,17 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
     }
   };
 
+  const insertVideo = () => {
+    if (videoUrl) {
+      const videoEmbed = `<video controls width="100%"><source src="${videoUrl}" type="video/mp4" /></video>`;
+      const newContent = content + '\n\n' + videoEmbed;
+      onChange(newContent);
+      setVideoUrl('');
+      setVideoAltText('');
+      setIsVideoDialogOpen(false);
+    }
+  };
+
   // Custom button command for MDEditor toolbar
   const buttonCommand = {
     name: 'button',
@@ -53,6 +67,22 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
     ),
     execute: () => {
       setIsDialogOpen(true);
+    }
+  };
+
+  // Custom video command for MDEditor toolbar
+  const videoCommand = {
+    name: 'video',
+    keyCommand: 'video',
+    buttonProps: {
+      'aria-label': 'Insert Video',
+      title: 'Insert Video'
+    },
+    icon: (
+      <Video style={{ width: 12, height: 12 }} />
+    ),
+    execute: () => {
+      setIsVideoDialogOpen(true);
     }
   };
   return (
@@ -103,7 +133,8 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
                 commands={[
                   ...mdModule.commands.getCommands(),
                   mdModule.commands.divider,
-                  buttonCommand
+                  buttonCommand,
+                  videoCommand
                 ]}
               />
             ) : (
@@ -148,6 +179,46 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
             </div>
             <Button onClick={insertButton} disabled={!buttonText || !buttonUrl}>
               Insert Button
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isVideoDialogOpen} onOpenChange={setIsVideoDialogOpen} modal={true}>
+        <DialogContent className="sm:max-w-[425px]" onPointerDownOutside={(e) => e.preventDefault()}>
+          <DialogHeader>
+            <DialogTitle>Insert Video</DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground mb-4">
+            Position your cursor where you want the video to appear, then paste the video URL below.
+          </p>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="video-url">Video URL</Label>
+              <Input
+                id="video-url"
+                value={videoUrl}
+                onChange={(e) => setVideoUrl(e.target.value)}
+                placeholder="https://yoursite.com/videos/video.mp4"
+                onKeyDown={(e) => e.key === 'Enter' && videoUrl && insertVideo()}
+                autoFocus
+              />
+              <p className="text-xs text-muted-foreground">
+                Upload videos in the Media Library tab first, then copy the URL here.
+              </p>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="video-alt">Video Description (Optional)</Label>
+              <Input
+                id="video-alt"
+                value={videoAltText}
+                onChange={(e) => setVideoAltText(e.target.value)}
+                placeholder="Describe the video content"
+                onKeyDown={(e) => e.key === 'Enter' && videoUrl && insertVideo()}
+              />
+            </div>
+            <Button onClick={insertVideo} disabled={!videoUrl}>
+              Insert Video
             </Button>
           </div>
         </DialogContent>

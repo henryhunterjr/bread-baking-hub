@@ -29,10 +29,7 @@ import InboxTab from '@/components/dashboard/InboxTab';
 import InboxBadge from '@/components/dashboard/InboxBadge';
 import PostsList from '@/components/dashboard/PostsList';
 import DebugPanel from '@/components/dashboard/DebugPanel';
-import { BlogImageUploader } from '@/components/BlogImageUploader';
-import { BlogImageGrid } from '@/components/BlogImageGrid';
-import { BlogVideoUploader } from '@/components/BlogVideoUploader';
-import { BlogVideoGrid } from '@/components/BlogVideoGrid';
+import { MediaUploader } from '@/components/dashboard/MediaUploader';
 import { UpdateThumbnail } from '@/components/dashboard/UpdateThumbnail';
 import { SiteSettings } from '@/components/dashboard/SiteSettings';
 import { supabase } from '@/integrations/supabase/client';
@@ -693,10 +690,7 @@ const Dashboard = () => {
                 selectedPostId={postData.id}
                 selectedPostTitle={postData.title}
               />
-              <BlogImageUploader />
-              <BlogImageGrid />
-              <BlogVideoUploader />
-              <BlogVideoGrid />
+              <MediaUploader />
             </TabsContent>
 
             <TabsContent value="analytics" className="space-y-6">
