@@ -9,7 +9,10 @@ export const addPeachGaletteRecipe = async () => {
     folder: "Seasonal",
     isPublic: true,
     data: {
+      introduction: "This free-form peach galette delivers summer in every bite with tender, flaky crust wrapped around sweet cinnamon peaches. Made with affordable Jiffy Pie Crust Mix and fresh peaches, it's bakery-quality results without the stress. The secret weapon? A touch of banana extract that brightens the fruit in an unexpected way.",
       summary: "This free-form peach galette delivers summer in every bite with tender, flaky crust wrapped around sweet cinnamon peaches. Made with affordable Jiffy Pie Crust Mix and fresh peaches, it's bakery-quality results without the stress. The secret weapon? A touch of banana extract that brightens the fruit in an unexpected way.",
+      description: "This free-form peach galette delivers summer in every bite with tender, flaky crust wrapped around sweet cinnamon peaches. Made with affordable Jiffy Pie Crust Mix and fresh peaches, it's bakery-quality results without the stress. The secret weapon? A touch of banana extract that brightens the fruit in an unexpected way.",
+      author_name: "Henry Hunter",
       prepTime: "20 minutes",
       cookTime: "35 minutes",
       totalTime: "55 minutes (plus cooling)",

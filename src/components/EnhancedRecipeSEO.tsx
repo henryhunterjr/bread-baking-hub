@@ -20,6 +20,10 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
     ogImage = `https://bakinggreatbread.com${ogImage.startsWith('/') ? ogImage : '/' + ogImage}`;
   }
   
+  // Add cache-busting parameter for social media scrapers
+  const cacheBuster = recipe.updatedAt ? `?v=${new Date(recipe.updatedAt).getTime()}` : '';
+  ogImage = ogImage + cacheBuster;
+  
   // Ensure description is under 160 characters for SEO
   const truncatedDescription = description.length > 160 
     ? description.substring(0, 157) + '...' 
