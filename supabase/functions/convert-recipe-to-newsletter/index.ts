@@ -120,7 +120,10 @@ Make it personal, engaging, and newsletter-ready with proper HTML formatting.`;
     }
 
     const data = await response.json();
-    const aiResponse = data.choices[0].message.content;
+    let aiResponse = data.choices[0].message.content;
+
+    // Strip markdown code blocks if present
+    aiResponse = aiResponse.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
 
     // Parse the JSON response
     let newsletterData;
@@ -128,6 +131,7 @@ Make it personal, engaging, and newsletter-ready with proper HTML formatting.`;
       newsletterData = JSON.parse(aiResponse);
     } catch (parseError) {
       console.error('Failed to parse AI response as JSON:', aiResponse);
+      console.error('Parse error:', parseError);
       throw new Error('Failed to parse AI response');
     }
 

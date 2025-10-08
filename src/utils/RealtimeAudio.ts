@@ -114,7 +114,9 @@ class AudioQueue {
       if (import.meta.env.DEV) console.log('🎵 WAV created, size:', wavData.length);
       
       if (import.meta.env.DEV) console.log('🎵 Decoding audio data...');
-      const audioBuffer = await this.audioContext.decodeAudioData(wavData.buffer);
+      const bufferCopy = new ArrayBuffer(wavData.buffer.byteLength);
+      new Uint8Array(bufferCopy).set(new Uint8Array(wavData.buffer));
+      const audioBuffer = await this.audioContext.decodeAudioData(bufferCopy);
       if (import.meta.env.DEV) console.log('🎵 Audio decoded successfully, duration:', audioBuffer.duration);
       
       const source = this.audioContext.createBufferSource();
