@@ -58,6 +58,7 @@ const GithubWriteTest = lazy(() => import("./pages/GithubWriteTest"));
 const GoRedirect = lazy(() => import("./pages/GoRedirect"));
 const MyFavorites = lazy(() => import("./pages/MyFavorites"));
 const MyReviews = lazy(() => import("./pages/MyReviews"));
+const AddRecipe = lazy(() => import("./pages/AddRecipe"));
 const SearchResultsPage = lazy(() => import("./pages/SearchResultsPage"));
 const RecipePrint = lazy(() => import("./pages/print/RecipePrint"));
 const Help = lazy(() => import("./pages/Help"));
@@ -131,6 +132,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/books" element={<Books />} />
               <Route path="/recipes" element={<Recipes />} />
+              <Route path="/add-recipe" element={<AddRecipe />} />
               <Route path="/vitale-starter" element={<VitaleStarter />} />
               <Route path="/preview/vitale-sourdough-mastery" element={<VitalePreview />} />
               <Route path="/newsletter-preview/:id" element={<NewsletterPreview />} />
