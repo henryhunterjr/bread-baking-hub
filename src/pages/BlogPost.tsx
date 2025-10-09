@@ -542,6 +542,7 @@ const BlogPost = () => {
         updatedAt={supabasePost?.updated_at}
         tags={post.tags}
         section="Bread Baking"
+        fbAppId="1511662243358762"
         debug={import.meta.env.DEV}
       />
 

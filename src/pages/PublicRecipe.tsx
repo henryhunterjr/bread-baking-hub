@@ -106,7 +106,7 @@ const PublicRecipe = () => {
           }
         }}
         canonical={canonicalUrl}
-        fbAppId={process.env.REACT_APP_FB_APP_ID}
+        fbAppId="1511662243358762"
       />
       <Header />
       <main className="py-20 px-4">

@@ -4,12 +4,26 @@
   "framework": "vite",
   "rewrites": [
     {
-      "source": "/share/(.*)",
-      "destination": "/api/share/$1"
+      "source": "/recipes/:slug",
+      "destination": "/api/recipe-share?slug=$slug",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp).*"
+        }
+      ]
     },
     {
-      "source": "/blog/(.*)",
-      "destination": "/api/blog-share?slug=$1"
+      "source": "/blog/:slug",
+      "destination": "/api/blog-share?slug=$slug",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp).*"
+        }
+      ]
     },
     {
       "source": "/(.*)",

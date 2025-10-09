@@ -31,6 +31,7 @@ interface MetadataManagerProps {
   // Additional metadata
   keywords?: string;
   robots?: string;
+  fbAppId?: string;
   
   // Recipe specific (for structured data)
   recipe?: {
@@ -78,6 +79,7 @@ export const MetadataManager: React.FC<MetadataManagerProps> = ({
   section,
   keywords,
   robots = 'index, follow, max-image-preview:large',
+  fbAppId,
   recipe,
   debug = false
 }) => {
@@ -202,6 +204,9 @@ export const MetadataManager: React.FC<MetadataManagerProps> = ({
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={finalImageAlt} />
       <meta property="og:locale" content="en_US" />
+      
+      {/* Facebook App ID */}
+      {fbAppId && <meta property="fb:app_id" content={fbAppId} />}
       
       {/* Article specific Open Graph */}
       {type === 'article' && publishedAt && (
