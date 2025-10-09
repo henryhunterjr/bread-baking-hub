@@ -55,23 +55,42 @@ const PublicRecipe = () => {
   // Also normalize data to prevent crashes
   const normalizedRecipe = normalizeRecipe(recipe);
   
-  // Get the recipe introduction for social media
-  const recipeIntroduction = recipe.data?.introduction || recipe.data?.summary || standardRecipe.summary;
+  // Fallback data for specific recipes that may be missing metadata
+  const RECIPE_FALLBACKS: Record<string, { introduction: string; author: string }> = {
+    'rustic-peach-galette': {
+      introduction: "This free-form peach galette delivers summer in every bite with tender, flaky crust wrapped around sweet cinnamon peaches. Made with affordable Jiffy Pie Crust Mix and fresh peaches, it's bakery-quality results without the stress. The secret weapon? A touch of banana extract that brightens the fruit in an unexpected way.",
+      author: "Henry Hunter"
+    }
+  };
+  
+  const fallback = RECIPE_FALLBACKS[slug!] || { introduction: '', author: '' };
+  
+  // Get the recipe introduction for social media with fallback
+  const recipeIntroduction = recipe.data?.introduction || recipe.data?.summary || standardRecipe.summary || fallback.introduction;
+  const recipeAuthor = recipe.data?.author_name || fallback.author;
+  
   // Use the mapping function to get the correct image for problematic recipes
   const recipeImageUrl = getRecipeImage(slug!, recipe.image_url || standardRecipe.heroImage.url);
   const canonicalUrl = `https://bakinggreatbread.com/recipes/${slug}`;
+  
+  // Enhance the normalized recipe data with fallbacks for display
+  const enhancedRecipeData = {
+    ...normalizedRecipe.data,
+    introduction: recipeIntroduction,
+    author_name: recipeAuthor
+  };
   
   // Debug logging for social media image
   console.log('Recipe SEO Debug:', {
     slug,
     title: recipe.title,
     introduction: recipeIntroduction,
-    author_name: recipe.data?.author_name,
+    author_name: recipeAuthor,
     'recipe.image_url': recipe.image_url,
     'standardRecipe.heroImage.url': standardRecipe.heroImage.url,
     'final recipeImageUrl': recipeImageUrl,
-    'has introduction': !!recipe.data?.introduction,
-    'has author_name': !!recipe.data?.author_name
+    'has introduction': !!recipeIntroduction,
+    'has author_name': !!recipeAuthor
   });
 
   return (
@@ -80,6 +99,7 @@ const PublicRecipe = () => {
         recipe={{
           ...standardRecipe,
           summary: recipeIntroduction,
+          author: recipeAuthor,
           heroImage: {
             ...standardRecipe.heroImage,
             url: recipeImageUrl
@@ -108,8 +128,8 @@ const PublicRecipe = () => {
           {/* Recipe Content */}
           <div className="border rounded-lg p-6 bg-card">
             <SimpleRecipeDisplay 
-              recipe={normalizedRecipe.data} 
-              imageUrl={normalizedRecipe.heroImage.url}
+              recipe={enhancedRecipeData} 
+              imageUrl={recipeImageUrl}
               title={normalizedRecipe.title}
               recipeId={normalizedRecipe.id}
               slug={normalizedRecipe.slug}

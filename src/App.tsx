@@ -66,6 +66,7 @@ const MyRecipeLibrary = lazy(() => import("./pages/MyRecipeLibrary"));
 const PasswordReset = lazy(() => import("./pages/PasswordReset"));
 const NewsletterPreview = lazy(() => import("./pages/NewsletterPreview"));
 const SaltConverter = lazy(() => import("./pages/SaltConverter"));
+const RecipeAdmin = lazy(() => import("./pages/RecipeAdmin"));
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -167,6 +168,7 @@ function App() {
               <Route path="/coaching" element={<Coaching />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/salt-converter" element={<SaltConverter />} />
+              <Route path="/recipe-admin" element={<RecipeAdmin />} />
               <Route path="/search-test" element={<SearchTest />} />
               <Route path="/search" element={<SearchResultsPage />} />
               <Route path="/inline-search-test" element={<InlineSearchTestPage />} />
