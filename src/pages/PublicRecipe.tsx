@@ -10,6 +10,7 @@ import { Globe } from 'lucide-react';
 import { EnhancedRecipeSEO } from '@/components/EnhancedRecipeSEO';
 import { mapLegacyToStandard } from '@/types/recipe';
 import { normalizeRecipe } from '@/lib/normalizeRecipe';
+import { getRecipeImage } from '@/utils/recipeImageMapping';
 
 const PublicRecipe = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -56,7 +57,8 @@ const PublicRecipe = () => {
   
   // Get the recipe introduction for social media
   const recipeIntroduction = recipe.data?.introduction || recipe.data?.summary || standardRecipe.summary;
-  const recipeImageUrl = recipe.image_url || standardRecipe.heroImage.url;
+  // Use the mapping function to get the correct image for problematic recipes
+  const recipeImageUrl = getRecipeImage(slug!, recipe.image_url || standardRecipe.heroImage.url);
   const canonicalUrl = `https://bakinggreatbread.com/recipes/${slug}`;
   
   // Debug logging for social media image
