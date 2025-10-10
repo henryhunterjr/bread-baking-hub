@@ -422,6 +422,22 @@
       "coupon": "HBK23"
     },
     {
+      "id": "sour-house-dough-bed",
+      "name": "Sour House Dough Bed",
+      "description": "Proof your dough just right, every time. The Sour House Dough Bed provides consistent temperature control for perfect fermentation and proofing. Get 10% OFF with promo code HBK23.",
+      "brand": "Sour House",
+      "category": "equipment",
+      "price": "Various",
+      "affiliate_link": "https://sourhouse.co?ref=BAKINGGREATBREAD",
+      "keywords": ["proofing", "dough", "fermentation", "temperature control", "proofing box", "bread making", "home baking", "sourdough", "dough proofing", "bulk fermentation"],
+      "regions": ["US", "CA", "EU"],
+      "featured": true,
+      "seasonal_tags": [],
+      "image_url": "/images/products/sour-house-dough-bed.png",
+      "utm_params": "utm_source=bakinggreatbread&utm_medium=affiliate&utm_campaign=henrys_picks",
+      "coupon": "HBK23"
+    },
+    {
       "id": "wire-monkey-lame",
       "name": "Wire Monkey Lame",
       "description": "For scoring, nothing beats the precision and feel of a Wire Monkey Lame. The craftsmanship and control make every score intentional and beautiful—it's what I trust for all my loaves. Get 10% OFF with promo code HBK23.",
