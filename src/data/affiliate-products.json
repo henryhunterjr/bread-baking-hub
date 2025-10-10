@@ -404,6 +404,54 @@
       "seasonal_tags": [],
       "image_url": "http://brodandtaylor.com/cdn/shop/files/A7R06016-231017copy_1024x.jpg?v=1706821317",
       "utm_params": "utm_source=recipe_workspace&utm_medium=product_recommendation&utm_campaign=bread_tools"
+    },
+    {
+      "id": "sour-house-goldie",
+      "name": "Sour House Goldie",
+      "description": "I use the Sour House Goldie every day to keep my starter in that perfect warm zone—steady, active, and predictable. It's one of the best investments I've made in my baking routine. Get 10% OFF with promo code HBK23.",
+      "brand": "Sour House",
+      "category": "equipment",
+      "price": "Various",
+      "affiliate_link": "https://sourhouse.co?ref=BAKINGGREATBREAD",
+      "keywords": ["starter", "sourdough", "warmer", "temperature control", "fermentation", "starter maintenance", "bread baking", "home baking", "sourdough starter", "proofing"],
+      "regions": ["US", "CA", "EU"],
+      "featured": true,
+      "seasonal_tags": [],
+      "image_url": "/images/products/sour-house-goldie.png",
+      "utm_params": "utm_source=bakinggreatbread&utm_medium=affiliate&utm_campaign=henrys_picks",
+      "coupon": "HBK23"
+    },
+    {
+      "id": "wire-monkey-lame",
+      "name": "Wire Monkey Lame",
+      "description": "For scoring, nothing beats the precision and feel of a Wire Monkey Lame. The craftsmanship and control make every score intentional and beautiful—it's what I trust for all my loaves. Get 10% OFF with promo code HBK23.",
+      "brand": "Wire Monkey",
+      "category": "tools",
+      "price": "Various",
+      "affiliate_link": "https://wiremonkey.com/?ref=BAKINGGREATBREAD",
+      "keywords": ["lame", "scoring", "bread scoring", "blade", "bread knife", "artisan bread", "scoring tool", "bread baking", "home baking", "precision"],
+      "regions": ["US", "CA", "EU"],
+      "featured": true,
+      "seasonal_tags": [],
+      "image_url": "/images/products/wire-monkey-lame.jpg",
+      "utm_params": "utm_source=bakinggreatbread&utm_medium=affiliate&utm_campaign=henrys_picks",
+      "coupon": "HBK23"
+    },
+    {
+      "id": "holland-bowl-mill",
+      "name": "Holland Bowl Mill Beechwood Bowl",
+      "description": "Mixing dough in a Holland Bowl Mill Beechwood Bowl connects me to every step of the process. It's hand-turned, beautiful, and built to last generations. Get 10% OFF with promo code bread.",
+      "brand": "Holland Bowl Mill",
+      "category": "equipment",
+      "price": "Various",
+      "affiliate_link": "https://hollandbowlmill.com/baking/?wpam_id=10",
+      "keywords": ["mixing bowl", "wooden bowl", "beechwood", "hand mixing", "artisan", "dough bowl", "bread making", "home baking", "heirloom", "handcrafted"],
+      "regions": ["US", "CA"],
+      "featured": true,
+      "seasonal_tags": [],
+      "image_url": "/images/products/holland-bowl-mill.jpg",
+      "utm_params": "utm_source=bakinggreatbread&utm_medium=affiliate&utm_campaign=henrys_picks",
+      "coupon": "bread"
     }
   ]
 }
