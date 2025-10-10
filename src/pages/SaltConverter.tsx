@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 
 interface SaltFactors {
   [key: string]: number;
@@ -18,13 +20,24 @@ const SaltConverter: React.FC = () => {
   const [toSalt, setToSalt] = useState<string>('fine-sea');
   const [result, setResult] = useState<string>('');
   const [showResult, setShowResult] = useState<boolean>(false);
+  const [isWeightMode, setIsWeightMode] = useState<boolean>(false);
 
+  // Volume conversion factors (relative to table salt)
   const saltFactors: SaltFactors = {
     'table': 1.0,
     'fine-sea': 0.8,
     'coarse-sea': 0.67,
     'kosher-dc': 0.67,
     'kosher-morton': 0.8
+  };
+
+  // Weight in grams per teaspoon
+  const saltWeights: SaltFactors = {
+    'table': 6,
+    'fine-sea': 5,
+    'coarse-sea': 4,
+    'kosher-dc': 3,
+    'kosher-morton': 4.8
   };
 
   const saltNames: SaltNames = {
@@ -73,17 +86,30 @@ const SaltConverter: React.FC = () => {
       return;
     }
 
-    // Convert to table salt equivalent first
-    const tableEquivalent = amountValue * saltFactors[fromSalt];
-    // Then convert to target salt
-    const resultValue = tableEquivalent / saltFactors[toSalt];
-    
-    const resultText = formatResult(resultValue);
-    const unitText = unit === 'tsp' ? 'tsp' : 'Tbsp';
-    
-    setResult(
-      `${amountValue} ${unitText} of ${saltNames[fromSalt]} = ${resultText} ${unitText} of ${saltNames[toSalt]}`
-    );
+    if (isWeightMode) {
+      // Weight mode: convert grams to grams
+      const resultValue = (amountValue / saltWeights[fromSalt]) * saltWeights[toSalt];
+      
+      setResult(
+        `${amountValue}g of ${saltNames[fromSalt]} = ${resultValue.toFixed(1)}g of ${saltNames[toSalt]}`
+      );
+    } else {
+      // Volume mode: convert teaspoons/tablespoons
+      const multiplier = unit === 'tbsp' ? 3 : 1;
+      const amountInTsp = amountValue * multiplier;
+      
+      // Convert to table salt equivalent first
+      const tableEquivalent = amountInTsp * saltFactors[fromSalt];
+      // Then convert to target salt
+      const resultInTsp = tableEquivalent / saltFactors[toSalt];
+      
+      const resultText = formatResult(resultInTsp);
+      const unitText = 'tsp';
+      
+      setResult(
+        `${amountValue} ${unit === 'tsp' ? 'tsp' : 'Tbsp'} of ${saltNames[fromSalt]} = ${resultText} ${unitText} of ${saltNames[toSalt]}`
+      );
+    }
     setShowResult(true);
   };
 
@@ -181,6 +207,29 @@ const SaltConverter: React.FC = () => {
           <section className="p-6 rounded-lg shadow-lg mb-8" style={{ backgroundColor: 'hsl(var(--bg-medium))' }}>
             <h3 className="text-2xl font-bold mb-6" style={{ color: 'hsl(var(--accent-gold))' }}>Quick Salt Calculator</h3>
             
+            {/* Mode Toggle */}
+            <div className="flex items-center justify-center gap-4 mb-6 p-4 rounded-md" style={{ backgroundColor: 'hsl(var(--bg-light))' }}>
+              <Label 
+                htmlFor="mode-toggle" 
+                className="text-base font-semibold"
+                style={{ color: isWeightMode ? 'hsl(var(--text-muted))' : 'hsl(var(--accent-gold))' }}
+              >
+                Volume Mode (tsp/Tbsp)
+              </Label>
+              <Switch
+                id="mode-toggle"
+                checked={isWeightMode}
+                onCheckedChange={setIsWeightMode}
+              />
+              <Label 
+                htmlFor="mode-toggle" 
+                className="text-base font-semibold"
+                style={{ color: isWeightMode ? 'hsl(var(--accent-gold))' : 'hsl(var(--text-muted))' }}
+              >
+                Weight Mode (grams)
+              </Label>
+            </div>
+            
             <div className="space-y-4">
               <div className="flex flex-wrap items-center gap-3">
                 <label className="font-semibold min-w-[80px]" style={{ color: 'hsl(var(--text-light))' }}>I have:</label>
@@ -189,7 +238,7 @@ const SaltConverter: React.FC = () => {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  step="0.25"
+                  step={isWeightMode ? "1" : "0.25"}
                   min="0"
                   placeholder="1"
                   className="w-20 px-3 py-2 border-2 rounded-md text-sm transition-all duration-200"
@@ -201,21 +250,26 @@ const SaltConverter: React.FC = () => {
                   onFocus={(e) => e.target.style.borderColor = 'hsl(var(--border-focus))'}
                   onBlur={(e) => e.target.style.borderColor = 'hsl(var(--border-light))'}
                 />
-                <select
-                  value={unit}
-                  onChange={(e) => setUnit(e.target.value)}
-                  className="px-3 py-2 border-2 rounded-md text-sm min-w-[120px] transition-all duration-200"
-                  style={{ 
-                    backgroundColor: 'hsl(var(--bg-light))', 
-                    color: 'hsl(var(--text-dark))',
-                    borderColor: 'hsl(var(--border-light))'
-                  }}
-                  onFocus={(e) => e.target.style.borderColor = 'hsl(var(--border-focus))'}
-                  onBlur={(e) => e.target.style.borderColor = 'hsl(var(--border-light))'}
-                >
-                  <option value="tsp">teaspoon(s)</option>
-                  <option value="tbsp">tablespoon(s)</option>
-                </select>
+                {!isWeightMode && (
+                  <select
+                    value={unit}
+                    onChange={(e) => setUnit(e.target.value)}
+                    className="px-3 py-2 border-2 rounded-md text-sm min-w-[120px] transition-all duration-200"
+                    style={{ 
+                      backgroundColor: 'hsl(var(--bg-light))', 
+                      color: 'hsl(var(--text-dark))',
+                      borderColor: 'hsl(var(--border-light))'
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = 'hsl(var(--border-focus))'}
+                    onBlur={(e) => e.target.style.borderColor = 'hsl(var(--border-light))'}
+                  >
+                    <option value="tsp">teaspoon(s)</option>
+                    <option value="tbsp">tablespoon(s)</option>
+                  </select>
+                )}
+                {isWeightMode && (
+                  <span className="text-sm font-semibold" style={{ color: 'hsl(var(--text-light))' }}>grams</span>
+                )}
                 <span className="text-sm" style={{ color: 'hsl(var(--text-light))' }}>of</span>
                 <select
                   value={fromSalt}
