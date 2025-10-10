@@ -144,6 +144,30 @@ Deno.serve(async (req) => {
       return ok(html, 404);
     }
 
+    // Handle static pages (salt-converter)
+    if (slug === "salt-converter") {
+      if (!isBot(ua)) {
+        console.log(`Redirecting human to /salt-converter`);
+        return redirect(absoluteUrl(`/salt-converter`), 301);
+      }
+      
+      // Bot request for salt converter - serve OG meta tags
+      console.log(`Rendering OG for salt-converter`);
+      const html = renderHtml({
+        title: "Salt Converter Tool - Not All Salt Weighs the Same | Baking Great Bread",
+        description: "Free tool to convert between table salt, kosher salt, and sea salt. Get accurate measurements for your baking recipes.",
+        canonical: absoluteUrl("/salt-converter"),
+        image: { 
+          url: "https://bakinggreatbread.com/images/salt-converter-thumbnail.png",
+          width: 1200,
+          height: 630,
+          alt: "Salt Converter Tool - Convert between different types of salt"
+        },
+        type: "website"
+      });
+      return ok(html);
+    }
+
     // Humans → redirect to recipes, not blog
     if (!isBot(ua)) {
       console.log(`Redirecting human to /recipes/${slug}`);
