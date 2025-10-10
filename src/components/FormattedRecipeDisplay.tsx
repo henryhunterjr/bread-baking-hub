@@ -5,6 +5,7 @@ import { RecipeScalingControl } from '@/components/ui/RecipeScalingControl';
 import { Printer, Download } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import { ProductRecommendations } from './ProductRecommendations';
+import { AffiliateProductsSection } from './recipe/AffiliateProductsSection';
 import { getRecipeImage } from '@/utils/recipeImageMapping';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 import { standardizeIngredients, validateRecipeData } from '@/utils/recipeDataUtils';
@@ -392,33 +393,42 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
         </Card>
       </div>
       
-      {/* Product Recommendations */}
-      <div className="print:hidden">
-        <ProductRecommendations
+      {/* Affiliate Products Advertisement Section */}
+      {recipe.recommended_products && recipe.recommended_products.length > 0 && (
+        <AffiliateProductsSection 
+          productIds={recipe.recommended_products}
           recipeTitle={recipe.title}
-          recipeContent={useMemo(() => {
-            const isNewIngredientFormat = Array.isArray(recipe.ingredients);
-            const isNewMethodFormat = Array.isArray(recipe.method) && recipe.method.length > 0 && typeof recipe.method[0] === 'object';
-            const intro = recipe.introduction || '';
-            const ingredientsText = isNewIngredientFormat && Array.isArray(recipe.ingredients)
-              ? (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>)
-                  .map((ing) => ing.item || (ing as any))
-                  .join(' ')
-              : !isNewIngredientFormat && (recipe.ingredients as {metric: string[]; volume: string[]})?.metric
-                ? (recipe.ingredients as {metric: string[]; volume: string[]}).metric?.join(' ')
-                : '';
-            const methodText = isNewMethodFormat && Array.isArray(recipe.method)
-              ? (recipe.method as Array<{step: number; instruction: string}>)
-                  .map((step) => step.instruction)
-                  .join(' ')
-              : Array.isArray(recipe.method)
-                ? (recipe.method as string[])?.join(' ')
-                : '';
-            return `${intro} ${ingredientsText} ${methodText}`.trim();
-          }, [recipe])}
-          manualOverrides={recipe.recommended_products}
         />
-      </div>
+      )}
+      
+      {/* Product Recommendations - Only show if no manual products selected */}
+      {(!recipe.recommended_products || recipe.recommended_products.length === 0) && (
+        <div className="print:hidden">
+          <ProductRecommendations
+            recipeTitle={recipe.title}
+            recipeContent={useMemo(() => {
+              const isNewIngredientFormat = Array.isArray(recipe.ingredients);
+              const isNewMethodFormat = Array.isArray(recipe.method) && recipe.method.length > 0 && typeof recipe.method[0] === 'object';
+              const intro = recipe.introduction || '';
+              const ingredientsText = isNewIngredientFormat && Array.isArray(recipe.ingredients)
+                ? (recipe.ingredients as Array<{item: string; amount_metric: string; amount_volume: string; note?: string}>)
+                    .map((ing) => ing.item || (ing as any))
+                    .join(' ')
+                : !isNewIngredientFormat && (recipe.ingredients as {metric: string[]; volume: string[]})?.metric
+                  ? (recipe.ingredients as {metric: string[]; volume: string[]}).metric?.join(' ')
+                  : '';
+              const methodText = isNewMethodFormat && Array.isArray(recipe.method)
+                ? (recipe.method as Array<{step: number; instruction: string}>)
+                    .map((step) => step.instruction)
+                    .join(' ')
+                : Array.isArray(recipe.method)
+                  ? (recipe.method as string[])?.join(' ')
+                  : '';
+              return `${intro} ${ingredientsText} ${methodText}`.trim();
+            }, [recipe])}
+          />
+        </div>
+      )}
       </div>
     </div>
   );

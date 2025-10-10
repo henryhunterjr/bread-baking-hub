@@ -3,6 +3,8 @@ import { Badge } from '@/components/ui/badge';
 import { Clock, ChefHat, Users } from 'lucide-react';
 import { SaveRecipeButton } from '@/components/SaveRecipeButton';
 import { RecipeActions } from '@/components/RecipeActions';
+import { AffiliateProductsSection } from '@/components/recipe/AffiliateProductsSection';
+import { EquipmentWithAffiliates } from '@/components/recipe/EquipmentWithAffiliates';
 import sourhousePromo from '@/assets/sourhouse-promo.png';
 
 interface SimpleRecipeDisplayProps {
@@ -153,17 +155,10 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
 
       {/* Equipment */}
       {recipe.equipment && (
-        <div>
-          <h3 className="text-xl font-semibold mb-4">Equipment</h3>
-          <ul className="space-y-2">
-            {recipe.equipment.map((item: string, index: number) => (
-              <li key={index} className="flex items-start gap-2">
-                <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <EquipmentWithAffiliates 
+          equipment={recipe.equipment}
+          affiliateProductIds={recipe.recommended_products}
+        />
       )}
 
       {/* Notes */}
@@ -207,6 +202,14 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
             </div>
           </div>
         </div>
+      )}
+
+      {/* Affiliate Products Section */}
+      {recipe.recommended_products && recipe.recommended_products.length > 0 && (
+        <AffiliateProductsSection 
+          productIds={recipe.recommended_products}
+          recipeTitle={title || recipe.title}
+        />
       )}
 
       {/* Recipe Actions */}

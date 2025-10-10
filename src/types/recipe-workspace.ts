@@ -14,6 +14,7 @@ export interface FormattedRecipe {
   tips: string[];
   troubleshooting: any;
   tags?: string[];
+  recommended_products?: string[];
 }
 
 export interface RecipeWithImage {
