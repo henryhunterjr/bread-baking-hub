@@ -282,13 +282,10 @@ const SearchResultsPage = () => {
       // Log search analytics (only for admin users)
       try {
         if (user) {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('is_admin')
-            .eq('user_id', user.id)
-            .single();
-            
-          if (profile?.is_admin) {
+          // Use secure role-based check
+          const { data: isAdmin } = await supabase.rpc('is_current_user_admin');
+          
+          if (isAdmin) {
             await supabase.from('search_analytics').insert({
               search_query: query,
               search_type: 'advanced',

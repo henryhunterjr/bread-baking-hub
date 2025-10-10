@@ -28,14 +28,12 @@ export const AdminRoute = ({ children }: AdminRouteProps) => {
         const { data, error } = await supabase.rpc('is_current_user_admin');
         
         if (error) {
-          console.error('Error checking admin status:', error);
           reportError(error, { route: '/dashboard', userId: user.id });
           setIsAdmin(false);
         } else {
           setIsAdmin(data === true);
         }
       } catch (error) {
-        console.error('Error checking admin status:', error);
         reportError(error as Error, { route: '/dashboard', userId: user.id });
         setIsAdmin(false);
       } finally {

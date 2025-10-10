@@ -101,13 +101,9 @@ export const GlobalSearch = ({
         // Check if user is admin before attempting to query search_analytics
         if (!user?.id) return;
         
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('is_admin')
-          .eq('user_id', user.id)
-          .single();
-          
-        if (!profile?.is_admin) return;
+        // Use secure role-based check
+        const { data: isAdmin } = await supabase.rpc('is_current_user_admin');
+        if (!isAdmin) return;
         
         const { data } = await supabase
           .from('search_analytics')
@@ -132,12 +128,8 @@ export const GlobalSearch = ({
   const isUserAdmin = useCallback(async () => {
     if (!user?.id) return false;
     try {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('is_admin')
-        .eq('user_id', user.id)
-        .single();
-      return profile?.is_admin || false;
+      const { data: isAdmin } = await supabase.rpc('is_current_user_admin');
+      return isAdmin || false;
     } catch {
       return false;
     }

@@ -871,7 +871,6 @@ export type Database = {
           created_at: string
           display_name: string | null
           id: string
-          is_admin: boolean | null
           updated_at: string
           user_id: string
         }
@@ -879,7 +878,6 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           id?: string
-          is_admin?: boolean | null
           updated_at?: string
           user_id: string
         }
@@ -887,7 +885,6 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           id?: string
-          is_admin?: boolean | null
           updated_at?: string
           user_id?: string
         }
@@ -1790,10 +1787,6 @@ export type Database = {
         }
         Returns: Json
       }
-      current_user_is_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
       decrypt_mfa_secret: {
         Args: { encrypted_secret: string }
         Returns: string
@@ -1890,10 +1883,6 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
-        Returns: boolean
-      }
-      is_admin_user: {
-        Args: { user_email: string } | { user_id: string }
         Returns: boolean
       }
       is_current_user_admin: {
