@@ -15,6 +15,7 @@ export const useRecipeWorkspace = () => {
   const [workspaceState, setWorkspaceState] = useState<WorkspaceState>('idle');
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorFallback, setErrorFallback] = useState<string>('');
+  const [savedRecipeInfo, setSavedRecipeInfo] = useState<{ id: string; title: string; slug: string | null } | null>(null);
   const { toast } = useToast();
 
   const formatRecipeWithRetry = async (file: File, maxRetries = 3): Promise<any> => {
@@ -128,7 +129,9 @@ export const useRecipeWorkspace = () => {
     });
   };
 
-  const handleRecipeSaved = (recipeId: string) => {
+  const handleRecipeSaved = (recipeId: string, slug: string | null) => {
+    const title = editedRecipe?.title || '';
+    setSavedRecipeInfo({ id: recipeId, title, slug });
     setCurrentStep('save');
     setWorkspaceState('saved');
     toast({
@@ -166,6 +169,7 @@ export const useRecipeWorkspace = () => {
     setWorkspaceState('idle');
     setIsProcessing(false);
     setErrorFallback('');
+    setSavedRecipeInfo(null);
   };
 
   return {
@@ -179,6 +183,7 @@ export const useRecipeWorkspace = () => {
     workspaceState,
     isProcessing,
     errorFallback,
+    savedRecipeInfo,
     
     // Handlers
     handleRecipeFormatted,

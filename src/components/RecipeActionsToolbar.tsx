@@ -5,17 +5,18 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Save, Share2, Tag, FolderOpen, Globe, Lock } from 'lucide-react';
+import { Save, Tag, FolderOpen, Globe, Lock } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import type { FormattedRecipe } from '@/types/recipe-workspace';
 import { logger } from '@/utils/logger';
+import { RecipeShareButton } from '@/components/RecipeShareButton';
 
 interface RecipeActionsToolbarProps {
   recipe: FormattedRecipe;
   imageUrl?: string;
-  onSaved?: (recipeId: string) => void;
+  onSaved?: (recipeId: string, slug: string | null) => void;
 }
 
 
@@ -25,6 +26,7 @@ export const RecipeActionsToolbar = ({ recipe, imageUrl, onSaved }: RecipeAction
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
   const [isSaving, setIsSaving] = useState(false);
+  const [savedRecipe, setSavedRecipe] = useState<{ id: string; slug: string | null } | null>(null);
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -87,12 +89,14 @@ export const RecipeActionsToolbar = ({ recipe, imageUrl, onSaved }: RecipeAction
         throw error;
       }
 
+      setSavedRecipe({ id: data.id, slug: slug });
+      
       toast({
         title: "Success",
         description: "Recipe saved successfully!",
       });
 
-      onSaved?.(data.id);
+      onSaved?.(data.id, slug);
 
     } catch (error) {
       logger.error('Error saving recipe:', error);
@@ -106,22 +110,6 @@ export const RecipeActionsToolbar = ({ recipe, imageUrl, onSaved }: RecipeAction
     }
   };
 
-  const handleShare = async () => {
-    if (!isPublic) {
-      toast({
-        title: "Recipe not public",
-        description: "Make the recipe public first to share it.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // For now, just copy to clipboard (would need actual recipe URL)
-    toast({
-      title: "Coming soon",
-      description: "Sharing functionality will be available after saving.",
-    });
-  };
 
   return (
     <Card className="shadow-warm">
@@ -220,23 +208,25 @@ export const RecipeActionsToolbar = ({ recipe, imageUrl, onSaved }: RecipeAction
         </div>
 
         {/* Share Section */}
-        <div className="flex items-center justify-between pt-4 border-t">
-          <div>
-            <h3 className="font-semibold text-primary">Share Recipe</h3>
-            <p className="text-sm text-muted-foreground">
-              Share your recipe with others
-            </p>
+        {savedRecipe && savedRecipe.slug && (
+          <div className="flex items-center justify-between pt-4 border-t">
+            <div>
+              <h3 className="font-semibold text-primary">Share Recipe</h3>
+              <p className="text-sm text-muted-foreground">
+                Share your recipe with others
+              </p>
+            </div>
+            <RecipeShareButton 
+              recipe={{ 
+                id: savedRecipe.id, 
+                title: recipe.title, 
+                slug: savedRecipe.slug 
+              }}
+              variant="outline"
+              size="default"
+            />
           </div>
-          <Button 
-            onClick={handleShare}
-            variant="outline"
-            disabled={!isPublic}
-            className="touch-manipulation"
-          >
-            <Share2 className="h-4 w-4 mr-2" />
-            Share
-          </Button>
-        </div>
+        )}
       </CardContent>
     </Card>
   );

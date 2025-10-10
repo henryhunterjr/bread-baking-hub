@@ -120,7 +120,10 @@ const RecipeWorkspace = () => {
 
           {/* Success State */}
           {workspace.currentStep === 'save' && (
-            <WorkspaceSuccessState onStartOver={workspace.handleStartOver} />
+            <WorkspaceSuccessState 
+              onStartOver={workspace.handleStartOver} 
+              savedRecipe={workspace.savedRecipeInfo}
+            />
           )}
         </div>
       </main>

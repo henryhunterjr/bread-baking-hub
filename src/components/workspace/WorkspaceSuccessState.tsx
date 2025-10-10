@@ -1,12 +1,18 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Save } from 'lucide-react';
+import { RecipeShareButton } from '@/components/RecipeShareButton';
 
 interface WorkspaceSuccessStateProps {
   onStartOver: () => void;
+  savedRecipe?: {
+    id: string;
+    title: string;
+    slug: string | null;
+  };
 }
 
-export const WorkspaceSuccessState = ({ onStartOver }: WorkspaceSuccessStateProps) => {
+export const WorkspaceSuccessState = ({ onStartOver, savedRecipe }: WorkspaceSuccessStateProps) => {
   return (
     <Card className="shadow-warm text-center">
       <CardContent className="pt-8 pb-8">
@@ -18,9 +24,18 @@ export const WorkspaceSuccessState = ({ onStartOver }: WorkspaceSuccessStateProp
           <p className="text-muted-foreground">
             Your recipe has been saved to your collection. You can find it in "My Recipes".
           </p>
-          <Button onClick={onStartOver} variant="hero" className="touch-manipulation">
-            Create Another Recipe
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button onClick={onStartOver} variant="hero" className="touch-manipulation">
+              Create Another Recipe
+            </Button>
+            {savedRecipe?.slug && (
+              <RecipeShareButton 
+                recipe={savedRecipe}
+                variant="outline"
+                size="default"
+              />
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>

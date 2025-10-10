@@ -16,7 +16,7 @@ interface RecipeDisplaySectionProps {
   onRecipeUpdate: (recipeId: string, updates: any) => Promise<boolean>;
   onImageUploaded: (imageUrl: string) => void;
   onImageRemoved: () => void;
-  onRecipeSaved: (recipeId: string) => void;
+  onRecipeSaved: (recipeId: string, slug: string | null) => void;
   onStartOver: () => void;
 }
 
