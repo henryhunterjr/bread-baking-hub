@@ -55,14 +55,14 @@ const ComingSoonBlock = ({
         </div>
         
         <div className="max-w-2xl mx-auto mb-10">
-          <p className="text-lg text-gray-200 leading-relaxed mb-6">
+          <p className="text-lg text-foreground/90 leading-relaxed mb-6">
             {description}
           </p>
           
           {/* Feature list if provided */}
           {featureList.length > 0 && (
-            <div className="bg-black/40 backdrop-blur-sm border border-white/20 rounded-lg p-6 mb-6">
-              <h3 className="text-lg font-semibold text-white flex items-center justify-center gap-2 mb-4">
+            <div className="bg-card/40 backdrop-blur-sm border border-border rounded-lg p-6 mb-6">
+              <h3 className="text-lg font-semibold text-foreground flex items-center justify-center gap-2 mb-4">
                 <Star className="w-5 h-5 text-primary" />
                 What's Coming
               </h3>
@@ -70,7 +70,7 @@ const ComingSoonBlock = ({
                 {featureList.map((feature, index) => (
                   <li key={index} className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                    <span className="text-gray-300">{feature}</span>
+                    <span className="text-muted-foreground">{feature}</span>
                   </li>
                 ))}
               </ul>

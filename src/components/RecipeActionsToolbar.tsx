@@ -21,7 +21,7 @@ interface RecipeActionsToolbarProps {
 
 
 export const RecipeActionsToolbar = ({ recipe, imageUrl, onSaved }: RecipeActionsToolbarProps) => {
-  const [isPublic, setIsPublic] = useState(false);
+  const [isPublic, setIsPublic] = useState(true);
   const [folder, setFolder] = useState('');
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');

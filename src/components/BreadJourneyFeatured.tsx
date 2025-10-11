@@ -55,7 +55,7 @@ const BreadJourneyFeatured = ({ onListen }: BreadJourneyFeaturedProps) => {
                 <Button 
                   variant="outline" 
                   size="lg"
-                  className="bg-white/90 hover:bg-white text-gray-900 border-0 shadow-lg"
+                  className="bg-card/90 hover:bg-card border-border shadow-lg"
                   asChild
                 >
                   <a href="https://a.co/d/fDyKdyp" target="_blank" rel="noopener noreferrer">
