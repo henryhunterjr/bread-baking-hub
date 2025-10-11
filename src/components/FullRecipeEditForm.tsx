@@ -136,9 +136,7 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
           recommendedProducts={formData.recommended_products}
           isOpen={openSections.products}
           onToggle={() => toggleSection('products')}
-          onAdd={() => addArrayItem('recommended_products')}
           onRemove={(index) => removeArrayItem('recommended_products', index)}
-          onUpdate={(index, value) => updateArrayItem('recommended_products', index, value)}
           onQuickAdd={(productId) => {
             if (!formData.recommended_products.includes(productId)) {
               updateField('recommended_products', [...formData.recommended_products, productId]);

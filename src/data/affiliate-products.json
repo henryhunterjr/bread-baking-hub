@@ -12,6 +12,7 @@
       "regions": ["US", "EU"],
       "featured": false,
       "seasonal_tags": [],
+      "offer_text": "",
       "image_url": "http://brodandtaylor.com/cdn/shop/files/APRONPO73716453-front_1024x.jpg?v=1715621552",
       "utm_params": "utm_source=recipe_workspace&utm_medium=product_recommendation&utm_campaign=bread_tools"
     },
@@ -27,6 +28,7 @@
       "regions": ["US", "EU", "CA"],
       "featured": false,
       "seasonal_tags": [],
+      "offer_text": "",
       "image_url": "https://challengerbreadware.com/wp-content/uploads/2020/02/Challenger-Breadware-Media-Kit-Logo-Color.jpg",
       "utm_params": "utm_source=recipe_workspace&utm_medium=product_recommendation&utm_campaign=bread_tools"
     },
@@ -192,6 +194,7 @@
       "regions": ["US", "EU"],
       "featured": true,
       "seasonal_tags": ["gift-guide", "spring"],
+      "offer_text": "15% off through March",
       "image_url": "http://brodandtaylor.com/cdn/shop/files/Whisk_Scale_BenchKnife_Bundle_1.1_1024x.jpg?v=1722547521",
       "utm_params": "utm_source=recipe_workspace&utm_medium=product_recommendation&utm_campaign=bread_tools"
     },
@@ -207,6 +210,7 @@
       "regions": ["US", "CA"],
       "featured": false,
       "seasonal_tags": [],
+      "offer_text": "10% off with code BAKINGGREATBREAD10",
       "image_url": "http://modkitchn.com/cdn/shop/files/Untitled_design-11_22003064-f3ad-4218-8e0e-ea13b9683ee0.png?height=628&pad_color=ffffff&v=1752200061&width=1200",
       "utm_params": "utm_source=recipe_workspace&utm_medium=product_recommendation&utm_campaign=bread_tools"
     },

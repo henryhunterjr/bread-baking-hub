@@ -4,16 +4,15 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Badge } from '@/components/ui/badge';
-import { ChevronDown, ChevronUp, Plus, X, ShoppingCart } from 'lucide-react';
+import { ChevronDown, ChevronUp, X, ShoppingCart, Search } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import affiliateProducts from '@/data/affiliate-products.json';
 
 interface RecommendedProductsSectionProps {
   recommendedProducts: string[];
   isOpen: boolean;
   onToggle: () => void;
-  onAdd: () => void;
   onRemove: (index: number) => void;
-  onUpdate: (index: number, value: string) => void;
   onQuickAdd: (productId: string) => void;
 }
 
@@ -21,9 +20,7 @@ export const RecommendedProductsSection = ({
   recommendedProducts,
   isOpen,
   onToggle,
-  onAdd,
   onRemove,
-  onUpdate,
   onQuickAdd
 }: RecommendedProductsSectionProps) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -73,26 +70,32 @@ export const RecommendedProductsSection = ({
                 <div className="space-y-2">
                   {recommendedProducts.map((productId, index) => {
                     const product = products.find(p => p.id === productId);
+                    if (!product) return null;
+                    
                     return (
-                      <div key={index} className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
-                        <Input
-                          type="text"
-                          placeholder="Product ID"
-                          value={productId}
-                          onChange={(e) => onUpdate(index, e.target.value)}
-                          className="flex-1"
+                      <div key={index} className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg border border-border">
+                        <img 
+                          src={product.image_url} 
+                          alt={product.name}
+                          className="w-12 h-12 object-cover rounded"
+                          onError={(e) => {
+                            e.currentTarget.src = '/lovable-uploads/default-product.png';
+                          }}
                         />
-                        {product && (
-                          <Badge variant="secondary" className="text-xs">
-                            {product.name}
-                          </Badge>
-                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-sm truncate">{product.name}</p>
+                          {product.offer_text && (
+                            <Badge variant="secondary" className="text-xs mt-1">
+                              {product.offer_text}
+                            </Badge>
+                          )}
+                        </div>
                         <Button
                           type="button"
                           variant="ghost"
                           size="icon"
                           onClick={() => onRemove(index)}
-                          className="text-destructive hover:text-destructive"
+                          className="text-destructive hover:text-destructive flex-shrink-0"
                         >
                           <X className="h-4 w-4" />
                         </Button>
@@ -103,64 +106,70 @@ export const RecommendedProductsSection = ({
               </div>
             )}
 
-            {/* Add Product */}
+            {/* Add Product - Visual Dropdown */}
             <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <h4 className="font-medium text-sm">Add Product:</h4>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={onAdd}
-                  className="h-7 px-2"
-                >
-                  <Plus className="h-3 w-3 mr-1" />
-                  Add by ID
-                </Button>
+              <h4 className="font-medium text-sm">Add Product:</h4>
+              
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search products by name, brand, or category..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-9"
+                />
               </div>
-
-              {/* Product Search & Quick Add */}
-              {products.length > 0 && (
-                <div className="space-y-3">
-                  <Input
-                    type="text"
-                    placeholder="Search available products..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && availableProducts.length > 0) {
-                        onQuickAdd(availableProducts[0].id);
-                        setSearchTerm('');
-                      }
-                    }}
-                    className="w-full"
-                  />
-                  
-                  {searchTerm && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-60 overflow-y-auto">
-                      {availableProducts.slice(0, 6).map((product) => (
-                        <div
-                          key={product.id}
-                          className="flex items-center justify-between p-2 bg-card border rounded-lg hover:bg-muted/50 transition-colors"
-                        >
-                          <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm truncate">{product.name}</p>
-                            <p className="text-xs text-muted-foreground">{product.category}</p>
-                          </div>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={() => onQuickAdd(product.id)}
-                            className="h-7 px-2 ml-2"
-                          >
-                            <Plus className="h-3 w-3" />
-                          </Button>
+              
+              {searchTerm && availableProducts.length > 0 && (
+                <ScrollArea className="h-[400px] rounded-md border border-border">
+                  <div className="p-2 space-y-2">
+                    {availableProducts.map((product) => (
+                      <button
+                        key={product.id}
+                        type="button"
+                        onClick={() => {
+                          onQuickAdd(product.id);
+                          setSearchTerm('');
+                        }}
+                        className="w-full flex items-start gap-3 p-3 bg-card hover:bg-accent/50 rounded-lg border border-border transition-colors text-left"
+                      >
+                        <img 
+                          src={product.image_url} 
+                          alt={product.name}
+                          className="w-16 h-16 object-cover rounded flex-shrink-0"
+                          onError={(e) => {
+                            e.currentTarget.src = '/lovable-uploads/default-product.png';
+                          }}
+                        />
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-sm">{product.name}</p>
+                          <p className="text-xs text-muted-foreground mt-0.5">{product.brand}</p>
+                          {product.offer_text && (
+                            <Badge variant="default" className="text-xs mt-1.5">
+                              {product.offer_text}
+                            </Badge>
+                          )}
+                          {product.price && (
+                            <p className="text-xs font-medium mt-1">${product.price}</p>
+                          )}
                         </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                      </button>
+                    ))}
+                  </div>
+                </ScrollArea>
+              )}
+              
+              {searchTerm && availableProducts.length === 0 && (
+                <p className="text-sm text-muted-foreground text-center py-8">
+                  No products found. Try a different search term.
+                </p>
+              )}
+              
+              {!searchTerm && (
+                <p className="text-sm text-muted-foreground text-center py-8">
+                  Start typing to search for products
+                </p>
               )}
             </div>
           </CardContent>

@@ -13,6 +13,7 @@ const ProductSchema = z.object({
   regions: z.array(z.string()),
   featured: z.boolean().default(false),
   seasonal_tags: z.array(z.string()).default([]),
+  offer_text: z.string().optional().default(''),
   image_url: z.string().optional(),
   utm_params: z.string().optional()
 });
@@ -31,6 +32,7 @@ export interface CSVProduct {
   regions: string; // comma-separated string
   featured?: string; // "true" or "false"
   seasonal_tags?: string; // comma-separated string
+  offer_text?: string;
   image_url?: string;
   utm_params?: string;
 }
@@ -54,6 +56,7 @@ export function processCSVData(csvData: CSVProduct[]): Product[] {
       regions: row.regions.split(',').map(r => r.trim()).filter(r => r.length > 0),
       featured: row.featured?.toLowerCase() === 'true',
       seasonal_tags: row.seasonal_tags ? row.seasonal_tags.split(',').map(t => t.trim()).filter(t => t.length > 0) : [],
+      offer_text: row.offer_text?.trim() || '',
       image_url: row.image_url?.trim() || "/lovable-uploads/default-product.png",
       utm_params: row.utm_params?.trim() || defaultUTMParams
     };
@@ -101,6 +104,6 @@ export function generateProductsJSON(products: Product[]): { products: Product[]
 /**
  * Example CSV format for reference
  */
-export const EXAMPLE_CSV_FORMAT = `id,name,description,brand,category,price,affiliate_link,keywords,regions,featured,seasonal_tags,image_url,utm_params
-example-mixer,Stand Mixer,Professional stand mixer for bread dough,KitchenAid,mixing,$299.99,https://example.com/mixer,"mixer,bread,dough,kitchen","US,EU",true,"holiday,baking",https://example.com/mixer.jpg,utm_source=custom&utm_medium=affiliate
-example-scale,Digital Scale,Precision baking scale,OXO,measuring,$49.99,https://example.com/scale,"scale,weighing,baking,precision","US,EU,CA",false,,https://example.com/scale.jpg,`;
+export const EXAMPLE_CSV_FORMAT = `id,name,description,brand,category,price,affiliate_link,keywords,regions,featured,seasonal_tags,offer_text,image_url,utm_params
+example-mixer,Stand Mixer,Professional stand mixer for bread dough,KitchenAid,mixing,$299.99,https://example.com/mixer,"mixer,bread,dough,kitchen","US,EU",true,"holiday,baking",10% off through March,https://example.com/mixer.jpg,utm_source=custom&utm_medium=affiliate
+example-scale,Digital Scale,Precision baking scale,OXO,measuring,$49.99,https://example.com/scale,"scale,weighing,baking,precision","US,EU,CA",false,,,https://example.com/scale.jpg,`;
