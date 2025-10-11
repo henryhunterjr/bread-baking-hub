@@ -19,7 +19,7 @@ export const usePublicRecipe = (slug: string) => {
           .select('*')
           .eq('slug', slug)
           .eq('is_public', true)
-          .single();
+          .maybeSingle();
         
         if (error) {
           if (error.code === 'PGRST116') {
@@ -28,6 +28,10 @@ export const usePublicRecipe = (slug: string) => {
             setError('Failed to load recipe');
           }
           console.error('Error fetching public recipe:', error);
+        } else if (!data) {
+          // Handle case where no error but also no data (recipe doesn't exist or isn't public)
+          setError('Recipe not found or not public');
+          console.warn('No recipe found for slug:', slug);
         } else {
           setRecipe(data);
         }

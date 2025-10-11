@@ -115,22 +115,30 @@ const SearchResultsPage = () => {
     let cancelled = false;
     const loadClientCache = async () => {
       try {
-        // Load basic recipe data for fallback
+        // Load basic recipe data for fallback with error handling
         const { data: recipes, error: rErr } = await supabase
           .from('recipes')
           .select('id,title,slug,tags,image_url,data,is_public')
           .eq('is_public', true)
           .limit(100);
-        if (rErr) warn('recipes cache load error', rErr);
+        
+        if (rErr) {
+          warn('recipes cache load error', rErr);
+          console.warn('Failed to load recipe cache:', rErr.message);
+        }
 
-        // Load basic blog post data for fallback  
+        // Load basic blog post data for fallback with error handling
         const { data: posts, error: pErr } = await supabase
           .from('blog_posts')
           .select('id,title,slug,subtitle,tags,hero_image_url,published_at,is_draft')
           .eq('is_draft', false)
           .not('published_at', 'is', null)
           .limit(100);
-        if (pErr) warn('blog_posts cache load error', pErr);
+        
+        if (pErr) {
+          warn('blog_posts cache load error', pErr);
+          console.warn('Failed to load blog cache:', pErr.message);
+        }
 
         if (!cancelled) {
           setClientCache({
@@ -138,10 +146,20 @@ const SearchResultsPage = () => {
             posts: posts ?? []
           });
           // Log preload telemetry
-          log('preload', { posts: (posts ?? []).length, recipes: (recipes ?? []).length });
+          log('preload', { 
+            posts: (posts ?? []).length, 
+            recipes: (recipes ?? []).length,
+            recipesError: !!rErr,
+            postsError: !!pErr
+          });
         }
       } catch (e) {
         logError('client cache load failed', e);
+        console.error('Complete failure loading client cache:', e);
+        // Continue anyway with empty cache
+        if (!cancelled) {
+          setClientCache({ recipes: [], posts: [] });
+        }
       }
     };
     loadClientCache();
@@ -181,9 +199,11 @@ const SearchResultsPage = () => {
           });
 
           if (error) {
+            // Log error but don't crash - fall back to client search
             logError('Recipe search RPC error:', error);
+            console.warn('Recipe search error, will use fallback:', error.message);
             hasErrors = true;
-          } else if (recipes) {
+          } else if (recipes && Array.isArray(recipes)) {
             allResults.push(...recipes.map(recipe => ({
               id: recipe.id,
               title: recipe.title,
@@ -196,7 +216,9 @@ const SearchResultsPage = () => {
             })));
           }
         } catch (error) {
+          // Catch all errors and continue gracefully
           logError('Recipe search failed:', error);
+          console.warn('Recipe search exception, will use fallback');
           hasErrors = true;
         }
       }
@@ -211,9 +233,11 @@ const SearchResultsPage = () => {
           });
 
           if (error) {
+            // Log error but don't crash - fall back to client search
             logError('Blog search RPC error:', error);
+            console.warn('Blog search error, will use fallback:', error.message);
             hasErrors = true;
-          } else if (posts) {
+          } else if (posts && Array.isArray(posts)) {
             allResults.push(...posts.map(post => ({
               id: post.id,
               title: post.title,
@@ -227,7 +251,9 @@ const SearchResultsPage = () => {
             })));
           }
         } catch (error) {
+          // Catch all errors and continue gracefully
           logError('Blog search failed:', error);
+          console.warn('Blog search exception, will use fallback');
           hasErrors = true;
         }
       }
@@ -300,9 +326,32 @@ const SearchResultsPage = () => {
       }
 
     } catch (error) {
+      // If search completely fails, show fallback with cached results
       logError('Search error:', error);
-      setResults([]);
-      setTotalResults(0);
+      console.warn('Complete search failure, using client-side fallback');
+      
+      // Try client-side fallback as last resort
+      try {
+        const fallbackResults = clientFilter(query, clientCache.recipes, clientCache.posts);
+        const mappedResults = fallbackResults.map(result => ({
+          id: result.id,
+          title: result.title,
+          excerpt: result.excerpt || '',
+          type: result.type as 'recipe' | 'blog_post',
+          url: result.url,
+          image_url: result.image_url,
+          tags: result.tags,
+          published_at: result.published_at,
+          search_rank: result.search_rank
+        }));
+        setResults(mappedResults);
+        setTotalResults(mappedResults.length);
+      } catch (fallbackError) {
+        // Complete failure - show empty results
+        logError('Fallback search also failed:', fallbackError);
+        setResults([]);
+        setTotalResults(0);
+      }
     } finally {
       setIsLoading(false);
     }
