@@ -181,6 +181,7 @@ const SearchResultsPage = () => {
   }, [query, setSearchParams]);
 
   const performSearch = async () => {
+    console.log('🔍 Starting search for:', query);
     setIsLoading(true);
     try {
       let allResults: SearchResult[] = [];
@@ -188,6 +189,7 @@ const SearchResultsPage = () => {
 
       // Search recipes if not filtering to specific type
       if (filters.contentType === 'all' || filters.contentType === 'recipe') {
+        console.log('📖 Searching recipes...');
         try {
           const { data: recipes, error } = await supabase.rpc('search_recipes', {
             search_query: query,
@@ -201,9 +203,10 @@ const SearchResultsPage = () => {
           if (error) {
             // Log error but don't crash - fall back to client search
             logError('Recipe search RPC error:', error);
-            console.warn('Recipe search error, will use fallback:', error.message);
+            console.warn('⚠️ Recipe search error, will use fallback:', error.message);
             hasErrors = true;
           } else if (recipes && Array.isArray(recipes)) {
+            console.log('✅ Found', recipes.length, 'recipes');
             allResults.push(...recipes.map(recipe => ({
               id: recipe.id,
               title: recipe.title,
@@ -218,7 +221,7 @@ const SearchResultsPage = () => {
         } catch (error) {
           // Catch all errors and continue gracefully
           logError('Recipe search failed:', error);
-          console.warn('Recipe search exception, will use fallback');
+          console.warn('⚠️ Recipe search exception, will use fallback');
           hasErrors = true;
         }
       }

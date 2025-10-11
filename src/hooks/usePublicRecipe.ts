@@ -8,8 +8,12 @@ export const usePublicRecipe = (slug: string) => {
 
   useEffect(() => {
     const fetchPublicRecipe = async () => {
-      if (!slug) return;
+      if (!slug) {
+        console.log('🔍 No slug provided');
+        return;
+      }
       
+      console.log('🔍 Fetching public recipe for slug:', slug);
       setLoading(true);
       setError(null);
       
@@ -21,23 +25,25 @@ export const usePublicRecipe = (slug: string) => {
           .eq('is_public', true)
           .maybeSingle();
         
+        console.log('📊 Query result:', { data, error, hasData: !!data, hasError: !!error });
+        
         if (error) {
+          console.error('❌ Supabase error fetching recipe:', error);
           if (error.code === 'PGRST116') {
             setError('Recipe not found or not public');
           } else {
-            setError('Failed to load recipe');
+            setError(`Failed to load recipe: ${error.message}`);
           }
-          console.error('Error fetching public recipe:', error);
         } else if (!data) {
-          // Handle case where no error but also no data (recipe doesn't exist or isn't public)
+          console.warn('⚠️ No recipe found for slug:', slug);
           setError('Recipe not found or not public');
-          console.warn('No recipe found for slug:', slug);
         } else {
+          console.log('✅ Recipe loaded successfully:', data.title);
           setRecipe(data);
         }
       } catch (error) {
-        setError('An unexpected error occurred');
-        console.error('Error fetching public recipe:', error);
+        console.error('❌ Unexpected error fetching public recipe:', error);
+        setError(error instanceof Error ? error.message : 'An unexpected error occurred');
       } finally {
         setLoading(false);
       }
