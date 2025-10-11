@@ -81,8 +81,24 @@ const SaltConverter: React.FC = () => {
   const convertSalt = () => {
     const amountValue = parseFloat(amount);
     
-    if (!amountValue || amountValue <= 0) {
-      alert('Please enter a valid amount');
+    // Input validation
+    if (!amount || amount.trim() === '') {
+      alert('Please enter an amount');
+      return;
+    }
+    
+    if (isNaN(amountValue) || amountValue <= 0) {
+      alert('Please enter a valid positive number');
+      return;
+    }
+    
+    if (amountValue > 1000) {
+      alert('Amount seems unusually large. Please verify.');
+      return;
+    }
+    
+    if (fromSalt === toSalt) {
+      alert('Please select different salt types to convert');
       return;
     }
 
