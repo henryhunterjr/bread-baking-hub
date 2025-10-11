@@ -34,10 +34,18 @@ export const FullRecipeEditForm = ({ recipe, onSave, onCancel, updating, allReci
   } = useRecipeEditForm({ recipe, allRecipes });
 
   const handleSave = async () => {
+    console.log('💾 Save button clicked');
     const updates = prepareFormDataForSave();
-    const success = await onSave(recipe.id, updates);
-    if (success) {
-      onCancel();
+    console.log('📦 Updates prepared:', updates);
+    
+    try {
+      const success = await onSave(recipe.id, updates);
+      console.log('✅ Save result:', success);
+      if (success) {
+        onCancel();
+      }
+    } catch (error) {
+      console.error('❌ Save error:', error);
     }
   };
 

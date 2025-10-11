@@ -41,8 +41,12 @@ export const ImageSection = ({ imageUrl, isOpen, onToggle, onUpdate }: ImageSect
   };
 
   const handleUpload = async () => {
-    if (!selectedFile || !user) return;
+    if (!selectedFile || !user) {
+      console.log('❌ No file selected or no user');
+      return;
+    }
 
+    console.log('📤 Starting image upload:', selectedFile.name);
     setIsUploading(true);
     try {
       const fileExt = selectedFile.name.split('.').pop();
@@ -58,18 +62,19 @@ export const ImageSection = ({ imageUrl, isOpen, onToggle, onUpdate }: ImageSect
         .from('recipe-uploads')
         .getPublicUrl(uploadData.path);
 
+      console.log('✅ Image uploaded, URL:', publicUrl);
       onUpdate(publicUrl);
       setSelectedFile(null);
 
       toast({
         title: "Success",
-        description: "Image uploaded successfully!",
+        description: "Image uploaded successfully! Remember to save the recipe.",
       });
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.error('❌ Error uploading image:', error);
       toast({
         title: "Upload failed",
-        description: "Failed to upload image. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to upload image. Please try again.",
         variant: "destructive",
       });
     } finally {

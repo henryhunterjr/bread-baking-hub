@@ -38,11 +38,17 @@ export const useRecipes = () => {
   }, [user]);
 
   const updateRecipe = async (recipeId: string, updates: { title?: string; data?: any; image_url?: string; folder?: string; tags?: string[]; is_public?: boolean; slug?: string }) => {
-    if (!user) return false;
+    if (!user) {
+      console.log('❌ No user found');
+      return false;
+    }
 
     try {
       const recipe = recipes.find(r => r.id === recipeId);
-      if (!recipe) return false;
+      if (!recipe) {
+        console.log('❌ Recipe not found:', recipeId);
+        return false;
+      }
 
       const updatePayload: any = {};
       
@@ -74,39 +80,51 @@ export const useRecipes = () => {
         updatePayload.slug = updates.slug;
       }
 
-      const { error } = await supabase
+      console.log('📤 Updating recipe with payload:', updatePayload);
+
+      const { error, data } = await supabase
         .from('recipes')
         .update(updatePayload)
         .eq('id', recipeId)
-        .eq('user_id', user.id);
+        .eq('user_id', user.id)
+        .select();
 
       if (error) {
+        console.error('❌ Supabase error:', error);
         toast({
           title: "Error",
-          description: "Failed to update recipe. Please try again.",
+          description: `Failed to update recipe: ${error.message}`,
           variant: "destructive",
         });
-        console.error('Error updating recipe:', error);
         return false;
-      } else {
-        // Update local state
-        setRecipes(prevRecipes => 
-          prevRecipes.map(r => 
-            r.id === recipeId 
-              ? { 
-                  ...r,
-                  ...updatePayload
-                }
-              : r
-          )
-        );
-        
-        toast({
-          title: "Success",
-          description: "Recipe updated successfully!",
-        });
-        return true;
       }
+      
+      if (!data || data.length === 0) {
+        console.error('❌ No data returned after update');
+        toast({
+          title: "Error",
+          description: "Recipe update returned no data. Please refresh the page.",
+          variant: "destructive",
+        });
+        return false;
+      }
+
+      console.log('✅ Recipe updated successfully:', data);
+      
+      // Update local state
+      setRecipes(prevRecipes => 
+        prevRecipes.map(r => 
+          r.id === recipeId 
+            ? data[0]
+            : r
+        )
+      );
+      
+      toast({
+        title: "Success",
+        description: "Recipe updated successfully!",
+      });
+      return true;
     } catch (error) {
       toast({
         title: "Error",
