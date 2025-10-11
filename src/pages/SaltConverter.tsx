@@ -138,24 +138,32 @@ const SaltConverter: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Salt Conversion Chart for Bakers | The Baker's Bench</title>
+        <title>Salt Converter Tool - Not All Salt Weighs the Same | Baking Great Bread</title>
         <meta 
           name="description" 
-          content="Professional salt conversion calculator for bakers. Convert between table salt, sea salt, and kosher salt with accurate measurements and fractions." 
+          content="Free tool to convert between table salt, kosher salt, and sea salt. Get accurate measurements for your baking recipes." 
         />
-        <meta name="keywords" content="salt conversion, baking calculator, table salt, sea salt, kosher salt, baking measurements" />
-        <link rel="canonical" href="https://the-bakers-bench.lovable.app/salt-converter" />
+        <meta name="keywords" content="salt conversion, salt converter, baking calculator, table salt, sea salt, kosher salt, baking measurements" />
+        <link rel="canonical" href="https://bakinggreatbread.com/salt-converter" />
         
-        {/* Open Graph tags */}
-        <meta property="og:title" content="Salt Conversion Chart for Bakers | The Baker's Bench" />
-        <meta property="og:description" content="Professional salt conversion calculator for bakers. Convert between table salt, sea salt, and kosher salt with accurate measurements." />
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://the-bakers-bench.lovable.app/salt-converter" />
+        <meta property="og:url" content="https://bakinggreatbread.com/salt-converter" />
+        <meta property="og:title" content="Salt Converter Tool - Not All Salt Weighs the Same" />
+        <meta property="og:description" content="Free tool to convert between table salt, kosher salt, and sea salt. Get accurate measurements for your baking recipes." />
+        <meta property="og:site_name" content="Baking Great Bread" />
+        <meta property="og:image" content="https://bakinggreatbread.com/images/salt-converter-thumbnail.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="1200" />
+        <meta property="og:image:alt" content="Salt Converter Tool - Not All Salt Weighs the Same" />
+        <meta property="og:locale" content="en_US" />
         
         {/* Twitter Card tags */}
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="Salt Conversion Chart for Bakers" />
-        <meta name="twitter:description" content="Professional salt conversion calculator for bakers. Convert between different salt types with accurate measurements." />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Salt Converter Tool - Not All Salt Weighs the Same" />
+        <meta name="twitter:description" content="Free tool to convert between table salt, kosher salt, and sea salt. Get accurate measurements for your baking recipes." />
+        <meta name="twitter:image" content="https://bakinggreatbread.com/images/salt-converter-thumbnail.png" />
+        <meta name="twitter:image:alt" content="Salt Converter Tool - Not All Salt Weighs the Same" />
       </Helmet>
 
       <Header />
