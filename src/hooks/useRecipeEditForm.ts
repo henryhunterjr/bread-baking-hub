@@ -86,12 +86,12 @@ export const useRecipeEditForm = ({ recipe, allRecipes = [] }: UseRecipeEditForm
     // Clean up data - remove empty strings and validate
     const cleanedData = {
       ...recipe.data,
-      introduction: formData.introduction.trim(),
-      author_name: formData.author_name.trim(),
-      prep_time: formData.prep_time.trim(),
-      cook_time: formData.cook_time.trim(),
-      total_time: formData.total_time.trim(),
-      servings: formData.servings.trim(),
+      introduction: String(formData.introduction || '').trim(),
+      author_name: String(formData.author_name || '').trim(),
+      prep_time: String(formData.prep_time || '').trim(),
+      cook_time: String(formData.cook_time || '').trim(),
+      total_time: String(formData.total_time || '').trim(),
+      servings: String(formData.servings || '').trim(),
       ingredients: formData.ingredients.filter(item => String(item || '').trim() !== ''),
       method: formData.method.filter(item => String(item || '').trim() !== ''),
       tips: formData.tips.filter(item => String(item || '').trim() !== ''),
