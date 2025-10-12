@@ -244,12 +244,22 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
-              {standardizedIngredients.map((ingredient, index) => (
-                <li key={index} className="flex items-start space-x-2">
-                  <span className="text-primary font-semibold">•</span>
-                  <span>{scaleAmount(ingredient.amount_metric, scale)} {ingredient.item}</span>
-                </li>
-              ))}
+              {standardizedIngredients.map((ingredient, index) => {
+                // Check if this is a header entry
+                if ('header' in ingredient && ingredient.header) {
+                  return (
+                    <li key={index} className="mt-4 first:mt-0">
+                      <h5 className="font-bold text-primary text-base mb-2">{ingredient.header}</h5>
+                    </li>
+                  );
+                }
+                return (
+                  <li key={index} className="flex items-start space-x-2">
+                    <span className="text-primary font-semibold">•</span>
+                    <span>{scaleAmount(ingredient.amount_metric, scale)} {ingredient.item}</span>
+                  </li>
+                );
+              })}
               {standardizedIngredients.length === 0 && (
                 <li className="text-muted-foreground italic">No ingredients found</li>
               )}
@@ -264,6 +274,15 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
           <CardContent>
             <ul className="space-y-2">
               {processedIngredients.map((ingredient, index) => {
+                // Check if this is a header entry
+                if (typeof ingredient === 'object' && ingredient && 'header' in ingredient && ingredient.header) {
+                  return (
+                    <li key={index} className="mt-4 first:mt-0">
+                      <h5 className="font-bold text-primary text-base mb-2">{ingredient.header}</h5>
+                    </li>
+                  );
+                }
+                
                 // Handle different ingredient formats for volume display
                 let item, volume;
                 

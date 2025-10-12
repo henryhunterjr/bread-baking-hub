@@ -1,10 +1,11 @@
 // Utility functions for recipe data processing and validation
 
 export interface StandardizedIngredient {
-  item: string;
-  amount_metric: string;
-  amount_volume: string;
+  item?: string;
+  amount_metric?: string;
+  amount_volume?: string;
   note?: string;
+  header?: string; // For section headers like "For the sauce:", "For the filling:", etc.
 }
 
 export const standardizeIngredients = (ingredients: any): StandardizedIngredient[] => {
