@@ -47,15 +47,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const socialImageUrl = recipe.data?.social_image_url;
     const inlineImageUrl = recipe.data?.inline_image_url;
     const heroImageUrl = recipe.data?.hero_image_url;
-    const imageUrl = socialImageUrl || inlineImageUrl || heroImageUrl || recipe.image_url || 'https://bakinggreatbread.com/images/default-recipe-thumbnail.png';
+    const rawImageUrl = socialImageUrl || inlineImageUrl || heroImageUrl || recipe.image_url || 'https://bakinggreatbread.com/images/default-recipe-thumbnail.png';
     
     const url = `https://bakinggreatbread.com/recipes/${slug}`;
     const updatedAt = recipe.updated_at ? new Date(recipe.updated_at).getTime() : Date.now();
 
-    // Ensure absolute image URL with cache buster
-    const absoluteImageUrl = imageUrl.startsWith('http') 
-      ? `${imageUrl}?v=${updatedAt}` 
-      : `https://bakinggreatbread.com${imageUrl}?v=${updatedAt}`;
+    // Proxy Supabase images through our domain so Facebook shows bakinggreatbread.com
+    const absoluteImageUrl = rawImageUrl.includes('supabase.co')
+      ? `https://bakinggreatbread.com/api/image-proxy?url=${encodeURIComponent(rawImageUrl)}&v=${updatedAt}`
+      : (rawImageUrl.startsWith('http') ? `${rawImageUrl}?v=${updatedAt}` : `https://bakinggreatbread.com${rawImageUrl}?v=${updatedAt}`);
 
     // Generate HTML with OG tags
     const html = `
