@@ -45,19 +45,22 @@ export class AppErrorBoundary extends Component<Props, State> {
               <div className="mx-auto w-12 h-12 bg-destructive/10 rounded-full flex items-center justify-center mb-4">
                 <AlertTriangle className="w-6 h-6 text-destructive" />
               </div>
-              <CardTitle>We hit a snag loading this page</CardTitle>
+              <CardTitle>Something Went Wrong</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground text-center">
-                We encountered an unexpected error. Please try refreshing the page or contact support if the problem persists.
+                We encountered an unexpected error. Your data is safe. Please try again or return to the homepage.
               </p>
-              <div className="flex gap-2 justify-center">
-                <Button onClick={this.handleRetry} variant="outline">
+              <div className="flex flex-col gap-2">
+                <Button onClick={this.handleRetry} variant="default" className="w-full">
                   <RefreshCw className="w-4 h-4 mr-2" />
                   Try Again
                 </Button>
-                <Button onClick={() => window.location.reload()}>
-                  Refresh Page
+                <Button onClick={() => window.location.href = '/recipes'} variant="outline" className="w-full">
+                  Browse Recipes
+                </Button>
+                <Button onClick={() => window.location.href = '/'} variant="ghost" className="w-full">
+                  Go to Homepage
                 </Button>
               </div>
               {process.env.NODE_ENV === 'development' && this.state.error && (

@@ -35,14 +35,22 @@ const PublicRecipe = () => {
       <div className="bg-background text-foreground min-h-screen">
         <Header />
         <main className="py-20 px-4">
-          <div className="max-w-4xl mx-auto text-center space-y-4">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
             <h1 className="text-4xl font-bold text-primary">Recipe Not Found</h1>
             <p className="text-xl text-muted-foreground">
-              {error || 'This recipe does not exist or is no longer public.'}
+              {error || 'This recipe does not exist or is no longer available.'}
             </p>
-            <Button variant="hero" size="lg" asChild>
-              <Link to="/">Go Home</Link>
-            </Button>
+            <p className="text-muted-foreground">
+              The recipe you're looking for might have been removed, made private, or the link may be incorrect.
+            </p>
+            <div className="flex gap-4 justify-center">
+              <Button variant="hero" size="lg" asChild>
+                <Link to="/recipes">Browse Recipes</Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild>
+                <Link to="/">Go Home</Link>
+              </Button>
+            </div>
           </div>
         </main>
         <Footer />
