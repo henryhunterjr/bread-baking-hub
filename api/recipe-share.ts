@@ -47,7 +47,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const socialImageUrl = recipe.data?.social_image_url;
     const inlineImageUrl = recipe.data?.inline_image_url;
     const heroImageUrl = recipe.data?.hero_image_url;
-    const imageUrl = socialImageUrl || inlineImageUrl || heroImageUrl || recipe.image_url || 'https://bakinggreatbread.com/og/default.jpg';
+    const imageUrl = socialImageUrl || inlineImageUrl || heroImageUrl || recipe.image_url || 'https://bakinggreatbread.com/images/default-recipe-thumbnail.png';
     
     const url = `https://bakinggreatbread.com/recipes/${slug}`;
     const updatedAt = recipe.updated_at ? new Date(recipe.updated_at).getTime() : Date.now();
