@@ -249,7 +249,7 @@ const SupabasePostView = ({
           <div className="mt-12 pt-8 border-t border-border text-center">
             <h3 className="text-lg font-semibold mb-4">Share This Post</h3>
             <SocialShare
-              url={`${window.location.origin}/blog/${supabasePost.slug}`}
+              url={`${window.location.origin}/api/blog-share?slug=${supabasePost.slug}`}
               title={supabasePost.title}
               description={supabasePost.subtitle || ''}
               image={getSocialImageUrl(
