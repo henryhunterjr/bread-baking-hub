@@ -87,6 +87,14 @@ export const recipeImageMapping: Record<string, string> = {
   "sun-dried-tomato-feta-bread": "/lovable-uploads/938a48a4-da57-4b7f-a31f-716a0493f585.png",
   "rosemary-garlic-parmesan-loaf": "/lovable-uploads/9b1f8351-f0df-4573-8fe1-fea3a1568962.png",
   
+  // PUMPKIN/CREAM CHEESE BREADS
+  "ultimate-cream-cheese-swirl-pumpkin-bread-1": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
+  "ultimate-cream-cheese-swirl-pumpkin-bread-2": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
+  "ultimate-cream-cheese-swirl-pumpkin-bread-3": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
+  "ultimate-cream-cheese-swirl-pumpkin-bread-4": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
+  "ultimate-cream-cheese-swirl-pumpkin-bread-5": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
+  "ultimate-cream-cheese-swirl-pumpkin-bread-6": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
+  
   // HOLIDAY BREADS
   "hanukkah-challah": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg",
   "special-round-challah": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg",
@@ -105,7 +113,26 @@ const fallbackImages = [
 ];
 
 export function getRecipeImage(slug: string, imageUrl?: string | null): string {
-  const problematicRecipes = ['spiced-holiday-bread', 'nutty-whole-grain-sourdough', 'spiced-chocolate-bread', 'basic-sourdough-loaf', 'apple-cider-bread', 'henrys-whole-wheat-sourdough-recipe', 'holiday-star-cinnamon-bread', 'ultimate-dinner-rolls-rosemary-sea-salt', 'henrys-marbled-sourdough-bread', 'henrys-perfect-cinnamon-swirl-bread', 'pumpkin-shaped-sourdough-loaf', 'rustic-peach-galette'];
+  const problematicRecipes = [
+    'spiced-holiday-bread', 
+    'nutty-whole-grain-sourdough', 
+    'spiced-chocolate-bread', 
+    'basic-sourdough-loaf', 
+    'apple-cider-bread', 
+    'henrys-whole-wheat-sourdough-recipe', 
+    'holiday-star-cinnamon-bread', 
+    'ultimate-dinner-rolls-rosemary-sea-salt', 
+    'henrys-marbled-sourdough-bread', 
+    'henrys-perfect-cinnamon-swirl-bread', 
+    'pumpkin-shaped-sourdough-loaf', 
+    'rustic-peach-galette',
+    'ultimate-cream-cheese-swirl-pumpkin-bread-1',
+    'ultimate-cream-cheese-swirl-pumpkin-bread-2',
+    'ultimate-cream-cheese-swirl-pumpkin-bread-3',
+    'ultimate-cream-cheese-swirl-pumpkin-bread-4',
+    'ultimate-cream-cheese-swirl-pumpkin-bread-5',
+    'ultimate-cream-cheese-swirl-pumpkin-bread-6'
+  ];
   if (problematicRecipes.includes(slug) && recipeImageMapping[slug]) {
     return recipeImageMapping[slug];
   }
