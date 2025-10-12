@@ -191,8 +191,9 @@ const SearchResultsPage = () => {
       if (filters.contentType === 'all' || filters.contentType === 'recipe') {
         console.log('📖 Searching recipes...');
         try {
+          // Enhanced search with full-text search and fuzzy matching
           const { data: recipes, error } = await supabase.rpc('search_recipes', {
-            search_query: query,
+            search_query: query || '',  // Empty query returns featured recipes
             dietary_filters: filters.dietaryRestrictions,
             difficulty_filter: filters.difficulty || null,
             prep_time_max: filters.prepTime ? parseInt(filters.prepTime) : null,
@@ -229,8 +230,9 @@ const SearchResultsPage = () => {
       // Search blog posts
       if (filters.contentType === 'all' || filters.contentType === 'blog_post') {
         try {
+          // Enhanced search with full-text search and fuzzy matching
           const { data: posts, error } = await supabase.rpc('search_blog_posts', {
-            search_query: query,
+            search_query: query || '',  // Empty query returns recent posts
             tag_filters: filters.blogTags,
             limit_count: 20
           });

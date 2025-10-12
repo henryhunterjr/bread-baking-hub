@@ -45,7 +45,7 @@ export const GlobalSearch = ({
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [clientCache, setClientCache] = useState<{posts: any[]; recipes: any[]}>({posts: [], recipes: []});
   
-  const debouncedQuery = useDebounce(query, 200);
+  const debouncedQuery = useDebounce(query, 250);
   const searchRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   
@@ -190,8 +190,36 @@ export const GlobalSearch = ({
 
   // Search suggestions
   useEffect(() => {
+    // If query is empty, show featured/popular content
     if (!debouncedQuery.trim()) {
-      setSuggestions([]);
+      // Load featured recipes when search is empty
+      const loadFeatured = async () => {
+        setIsLoading(true);
+        try {
+          const { data: recipes } = await supabase.rpc('search_recipes', {
+            search_query: '',
+            limit_count: 5
+          });
+          
+          if (recipes) {
+            setSuggestions(recipes.map((r: any) => ({
+              id: r.id,
+              title: r.title,
+              type: 'recipe' as const,
+              excerpt: r.excerpt ?? '',
+              image_url: r.image_url,
+              url: `/recipes/${r.slug ?? r.id}`,
+              search_rank: r.search_rank ?? 0
+            })));
+          }
+        } catch (error) {
+          warn('Failed to load featured content:', error);
+          setSuggestions([]);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      loadFeatured();
       return;
     }
 
@@ -201,7 +229,7 @@ export const GlobalSearch = ({
       try {
         const merged: SearchSuggestion[] = [];
 
-        // Try server-side search first with error handling
+        // Try server-side search first with enhanced full-text search
         try {
           const { data: recipes, error: rErr } = await supabase.rpc('search_recipes', {
             search_query: debouncedQuery,

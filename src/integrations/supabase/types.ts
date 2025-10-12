@@ -1939,6 +1939,7 @@ export type Database = {
             }
           | { limit_count?: number; search_query: string }
         Returns: {
+          author_name: string
           created_at: string
           excerpt: string
           id: string
