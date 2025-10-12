@@ -109,8 +109,8 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
       <meta name="twitter:image:alt" content={recipe.heroImage.alt} />
       <meta name="twitter:creator" content="@bakinggreatbread" />
       
-      {/* Facebook App ID if provided */}
-      {fbAppId && <meta property="fb:app_id" content={fbAppId} />}
+      {/* Facebook App ID */}
+      <meta property="fb:app_id" content={fbAppId || "1511662243358762"} />
       
       {/* Additional meta tags */}
       <meta name="author" content={recipe.author.name} />

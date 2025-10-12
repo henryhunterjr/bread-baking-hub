@@ -169,14 +169,13 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
         </div>
       )}
 
-      {/* Sour House Promotional Section - Only on Holiday Star Cinnamon Bread */}
+      {/* Sourhouse Promotional Section - Only on Holiday Star Cinnamon Bread */}
       {slug === 'holiday-star-cinnamon-bread' && (
         <div className="py-8 border-t border-border">
           <div className="text-center space-y-4">
-            <h3 className="text-2xl font-semibold">Keep Your Starter Happy & Your Dough Perfect</h3>
+            <h3 className="text-2xl font-semibold">Keep Your Dough Perfect</h3>
             <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              I personally use both the <strong>Sour House Goldie</strong> and the <strong>Dough Bed</strong> in my own kitchen — they keep my starter cozy and my dough consistently proofed, even when my kitchen's cold. 
-              They're built by bakers, for bakers, and I can't recommend them enough.
+              I use Sourhouse products in my kitchen. The <strong>DoughBed</strong> has proven invaluable when it comes to knowing exactly the right temperature to keep my dough for proofing, especially as the weather begins to change.
             </p>
             
             <div className="py-4">
@@ -188,7 +187,7 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
                   rel="noopener noreferrer"
                   className="text-primary hover:underline font-medium"
                 >
-                  Sour House
+                  Sourhouse
                 </a>
               </p>
             </div>
@@ -196,7 +195,7 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
             <div className="mt-6 max-w-2xl mx-auto">
               <img 
                 src={sourhousePromo} 
-                alt="Sour House 10% Off Promotion" 
+                alt="Sourhouse 10% Off Promotion"
                 className="w-full rounded-lg shadow-lg"
               />
             </div>

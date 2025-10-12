@@ -333,21 +333,6 @@ const csvData: CSVProduct[] = [
     utm_params: ""
   },
   {
-    id: "sour-house-dough-bed",
-    name: "Sour House Dough Bed",
-    description: "The Dough Bed is the perfect proofing mat—insulated, breathable, and big enough for two baskets. I use it every bake. Get yours at Sour House with code BREADLOVE for a discount.",
-    brand: "Sour House",
-    category: "proofing",
-    price: "",
-    affiliate_link: "https://sourhouse.co/?ref=breadlove",
-    keywords: "dough bed,proofing mat,insulated,breathable,bread proofing,sourdough,fermentation,baking mat,kitchen tool,home baking",
-    regions: "",
-    featured: "FALSE",
-    seasonal_tags: "",
-    image_url: "http://sourhouse.co/cdn/shop/files/link_to_sourhouse.co_3.jpg?v=1671640628",
-    utm_params: ""
-  },
-  {
     id: "vitale-dehydrated-sourdough-starter",
     name: "Vitale Dehydrated Sourdough Starter",
     description: "You will be baking bread in 3-Days with Vitale Sourdough Starter - Let's Break Bread, Not Traditions. 5 out of 5 stars. Ships from South Carolina. Returns & exchanges accepted. With your purchase, you're receiving 40 grams of premium dehydrated sourdough starter. Perfect for baking today, saving some for a rainy day, or sharing the joy of bread-making with friends.",

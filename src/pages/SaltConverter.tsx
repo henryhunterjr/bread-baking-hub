@@ -414,13 +414,13 @@ const SaltConverter: React.FC = () => {
             </p>
           </section>
 
-          {/* SourHouse DoughBed Advertisement */}
+          {/* DoughBed by Sourhouse Advertisement */}
           <section className="mt-8 text-center p-8 rounded-lg shadow-lg" style={{ backgroundColor: 'hsl(var(--bg-medium))' }}>
             <div className="max-w-2xl mx-auto">
               <div className="mb-6">
                 <img 
                   src={sourhousePromo} 
-                  alt="SourHouse DoughBed - Proof your dough just right, every time" 
+                  alt="DoughBed by Sourhouse - Proof your dough just right, every time" 
                   className="w-full max-w-lg mx-auto rounded-lg shadow-md"
                 />
               </div>
@@ -431,13 +431,13 @@ const SaltConverter: React.FC = () => {
                 USE PROMO CODE <span className="font-mono px-3 py-1 rounded" style={{ backgroundColor: 'hsl(var(--accent-gold))', color: 'hsl(var(--text-dark))' }}>HBK23</span>
               </p>
               <h4 className="text-xl font-bold mb-2" style={{ color: 'hsl(var(--text-light))' }}>
-                SourHouse DoughBed
+                DoughBed by Sourhouse
               </h4>
-              <p className="text-lg mb-6 italic" style={{ color: 'hsl(var(--text-muted))' }}>
-                Proof your dough just right, every time.
+              <p className="text-base mb-6 leading-relaxed max-w-xl mx-auto" style={{ color: 'hsl(var(--text-light))' }}>
+                I use Sourhouse products in my kitchen. The DoughBed has proven invaluable when it comes to knowing exactly the right temperature to keep my dough for proofing, especially as the weather begins to change. I was able to get us a 10% discount from Sourhouse when you use my promo code at checkout.
               </p>
               <a
-                href="https://sourhouse.refr.cc/default/u/henryhunter?s=sp&t=cp"
+                href="https://sourhouse.co?ref=BAKINGGREATBREAD"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block px-8 py-3 rounded-lg font-bold text-lg transition-all duration-200 hover:shadow-lg hover:scale-105"
@@ -454,7 +454,7 @@ const SaltConverter: React.FC = () => {
                   e.currentTarget.style.boxShadow = 'none';
                 }}
               >
-                Shop SourHouse DoughBed →
+                Shop DoughBed by Sourhouse →
               </a>
             </div>
           </section>

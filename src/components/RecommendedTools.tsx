@@ -21,13 +21,6 @@ const products: Product[] = [
     image: '/lovable-uploads/2f2d5173-d3d4-47f6-990b-402e68e42818.png'
   },
   {
-    name: 'SourHouse – Goldie Starter Home',
-    description: 'A warm, safe home for your sourdough starter with precise temperature control. Designed for consistent fermentation.',
-    coupon: 'HBK23',
-    url: 'https://sourhouse.co?ref=BAKINGGREATBREAD',
-    image: '/lovable-uploads/6cda5f41-4056-43fc-951f-589a64de6f9f.png'
-  },
-  {
     name: 'ModKitchn – Bread Baking Kit',
     description: 'Includes proofing basket, lame, flour sack towels, and more. A curated kit to elevate your home bread game.',
     coupon: 'BAKINGGREATBREAD10',
@@ -56,10 +49,10 @@ const products: Product[] = [
     image: '/lovable-uploads/d7d9aabf-6578-4161-8a58-e01cac43a3e2.png'
   },
   {
-    name: 'SourHouse Dough Bed',
-    description: 'Creates a warm, humid home for perfect dough proofs. Lightweight and designed for serious bakers.',
+    name: 'DoughBed by Sourhouse',
+    description: 'I use Sourhouse products in my kitchen. The DoughBed has proven invaluable for maintaining the perfect proofing temperature, especially as the weather changes.',
     coupon: 'HBK23',
-    url: 'https://sourhouse.co/products/dough-bed?ref=BAKINGGREATBREAD',
+    url: 'https://sourhouse.co?ref=BAKINGGREATBREAD',
     image: '/lovable-uploads/8c468b20-a99a-4585-ac57-5f00763c34be.png'
   },
   {
