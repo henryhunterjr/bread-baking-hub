@@ -104,10 +104,8 @@ export const useRecipeEditForm = ({ recipe, allRecipes = [] }: UseRecipeEditForm
 
     const updates: any = { data: cleanedData };
     
-    // Also save author_name as a top-level field for better attribution
-    if (formData.author_name.trim() !== (recipe.author_name || '')) {
-      updates.author_name = formData.author_name.trim() || null;
-    }
+    // Always save author_name as a top-level field for proper attribution
+    updates.author_name = formData.author_name.trim() || null;
     if (formData.image_url !== recipe.image_url) {
       updates.image_url = formData.image_url.trim() || null;
     }

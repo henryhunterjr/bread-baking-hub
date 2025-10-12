@@ -37,7 +37,7 @@ export const useRecipes = () => {
     fetchRecipes();
   }, [user]);
 
-  const updateRecipe = async (recipeId: string, updates: { title?: string; data?: any; image_url?: string; folder?: string; tags?: string[]; is_public?: boolean; slug?: string }) => {
+  const updateRecipe = async (recipeId: string, updates: { title?: string; data?: any; image_url?: string; folder?: string; tags?: string[]; is_public?: boolean; slug?: string; author_name?: string | null }) => {
     if (!user) {
       console.log('❌ No user found');
       return false;
@@ -78,6 +78,10 @@ export const useRecipes = () => {
       
       if (updates.slug !== undefined) {
         updatePayload.slug = updates.slug;
+      }
+      
+      if (updates.author_name !== undefined) {
+        updatePayload.author_name = updates.author_name;
       }
 
       console.log('📤 Updating recipe with payload:', updatePayload);
