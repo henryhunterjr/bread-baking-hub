@@ -16,7 +16,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).send('Missing blog post slug');
   }
   
-  console.log('Processing blog share for slug:', slug);
+  console.log('Processing blog post share for slug:', slug);
 
   try {
     // Fetch blog post data from Supabase
@@ -41,8 +41,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const post = posts[0];
     const title = post.title || 'Blog Post';
-    const description = post.subtitle || post.content?.substring(0, 200) || `Read this article: ${title}`;
-    const imageUrl = post.social_image_url || post.hero_image_url || post.inline_image_url || 'https://bakinggreatbread.com/og/default.jpg';
+    const description = post.subtitle || post.content?.substring(0, 160) || `Read this blog post: ${title}`;
+    
+    // Priority: social_image_url → inline_image_url → hero_image_url → default
+    const socialImageUrl = post.social_image_url;
+    const inlineImageUrl = post.inline_image_url;
+    const heroImageUrl = post.hero_image_url;
+    const imageUrl = socialImageUrl || inlineImageUrl || heroImageUrl || 'https://bakinggreatbread.com/images/default-recipe-thumbnail.png';
+    
     const url = `https://bakinggreatbread.com/blog/${slug}`;
     const updatedAt = post.updated_at ? new Date(post.updated_at).getTime() : Date.now();
 
@@ -77,8 +83,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="${title}">
-  ${post.published_at ? `<meta property="article:published_time" content="${post.published_at}">` : ''}
-  ${post.updated_at ? `<meta property="article:modified_time" content="${post.updated_at}">` : ''}
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -102,7 +106,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=3600');
     return res.status(200).send(html);
   } catch (error) {
-    console.error('Error generating blog share page:', error);
+    console.error('Error generating blog post share page:', error);
     return res.status(500).send('Internal server error');
   }
 }
