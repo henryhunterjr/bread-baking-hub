@@ -102,14 +102,46 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
       {recipe.ingredients && (
         <div>
           <h3 className="text-xl font-semibold mb-4">Ingredients</h3>
-          <ul className="space-y-2">
-            {recipe.ingredients.map((ingredient: string, index: number) => (
-              <li key={index} className="flex items-start gap-2">
-                <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
-                <span>{ingredient}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="space-y-4">
+            {Array.isArray(recipe.ingredients) && recipe.ingredients.map((group: any, groupIndex: number) => {
+              // Handle grouped ingredients with headers
+              if (group.header) {
+                return (
+                  <div key={groupIndex} className="space-y-2">
+                    <h4 className="font-bold text-base text-primary mt-4 first:mt-0">{group.header}</h4>
+                    <ul className="space-y-2">
+                      {group.items?.map((ingredient: string, index: number) => (
+                        <li key={index} className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+                          <span>{ingredient}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              }
+              // Handle simple list of items without header
+              if (group.items) {
+                return (
+                  <ul key={groupIndex} className="space-y-2">
+                    {group.items.map((ingredient: string, index: number) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+                        <span>{ingredient}</span>
+                      </li>
+                    ))}
+                  </ul>
+                );
+              }
+              // Handle plain string ingredient (legacy format)
+              return (
+                <li key={groupIndex} className="flex items-start gap-2">
+                  <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+                  <span>{group}</span>
+                </li>
+              );
+            })}
+          </div>
         </div>
       )}
 
@@ -117,39 +149,77 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
       {recipe.method && (
         <div>
           <h3 className="text-xl font-semibold mb-4">Instructions</h3>
-          <ol className="space-y-4">
-            {recipe.method.map((step: any, index: number) => (
-              <li key={index} className="flex gap-3">
-                <span className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium">
-                  {index + 1}
-                </span>
-                <div className="pt-1 flex-1">
-                  {typeof step === 'string' ? (
-                    <span>{step}</span>
-                  ) : (
-                    <div className="space-y-2">
-                      {step.step && (
-                        <h4 className="font-medium text-base">{step.step}</h4>
+          <div className="space-y-6">
+            {Array.isArray(recipe.method) && recipe.method.map((methodGroup: any, groupIndex: number) => {
+              // Handle structured method with headers and subsections
+              if (methodGroup.header && methodGroup.subSections) {
+                return (
+                  <div key={groupIndex} className="space-y-4">
+                    <h4 className="font-bold text-lg text-primary">{methodGroup.header}</h4>
+                    <div className="space-y-4 ml-2">
+                      {methodGroup.subSections.map((subSection: any, subIndex: number) => (
+                        <div key={subIndex} className="space-y-2">
+                          {subSection.title && (
+                            <h5 className="font-bold text-base">{subSection.title}</h5>
+                          )}
+                          <ul className="space-y-2 ml-4">
+                            {subSection.steps?.map((step: string, stepIndex: number) => (
+                              <li key={stepIndex} className="flex items-start gap-2">
+                                <span className="text-primary font-semibold mt-1">•</span>
+                                <span className="flex-1">{step}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+              // Handle legacy numbered format
+              if (typeof methodGroup === 'string') {
+                return (
+                  <div key={groupIndex} className="flex gap-3">
+                    <span className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium">
+                      {groupIndex + 1}
+                    </span>
+                    <div className="pt-1 flex-1">
+                      <span>{methodGroup}</span>
+                    </div>
+                  </div>
+                );
+              }
+              // Handle legacy object format with step and instruction
+              if (methodGroup.step || methodGroup.instruction) {
+                return (
+                  <div key={groupIndex} className="flex gap-3">
+                    <span className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium">
+                      {groupIndex + 1}
+                    </span>
+                    <div className="pt-1 flex-1 space-y-2">
+                      {methodGroup.step && (
+                        <h4 className="font-medium text-base">{methodGroup.step}</h4>
                       )}
-                      {step.instruction && (
-                        <p>{step.instruction}</p>
+                      {methodGroup.instruction && (
+                        <p>{methodGroup.instruction}</p>
                       )}
-                      {step.image && (
+                      {methodGroup.image && (
                         <div className="mt-3">
                           <ResponsiveImage
-                            src={step.image}
-                            alt={`Step ${index + 1} illustration`}
+                            src={methodGroup.image}
+                            alt={`Step ${groupIndex + 1} illustration`}
                             className="w-full max-w-md h-48 object-cover rounded-lg"
                             loading="lazy"
                           />
                         </div>
                       )}
                     </div>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ol>
+                  </div>
+                );
+              }
+              return null;
+            })}
+          </div>
         </div>
       )}
 
@@ -161,11 +231,51 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
         />
       )}
 
-      {/* Notes */}
+      {/* What Makes This Recipe Work */}
+      {recipe.whatMakesThisWork && (
+        <div className="bg-muted/50 rounded-lg p-6">
+          <h3 className="text-xl font-semibold mb-4">What Makes This Recipe Work</h3>
+          <div className="prose prose-sm max-w-none text-foreground whitespace-pre-wrap">{recipe.whatMakesThisWork}</div>
+        </div>
+      )}
+
+      {/* Baker's Notes */}
       {recipe.notes && (
         <div className="bg-muted/50 rounded-lg p-6">
           <h3 className="text-xl font-semibold mb-4">Baker's Notes</h3>
           <p className="text-muted-foreground whitespace-pre-wrap">{recipe.notes}</p>
+        </div>
+      )}
+
+      {/* Troubleshooting */}
+      {recipe.troubleshooting && (
+        <div className="bg-muted/50 rounded-lg p-6">
+          <h3 className="text-xl font-semibold mb-4">Troubleshooting</h3>
+          <div className="prose prose-sm max-w-none text-foreground whitespace-pre-wrap">{recipe.troubleshooting}</div>
+        </div>
+      )}
+
+      {/* Why This Recipe Works */}
+      {recipe.whyThisWorks && (
+        <div className="bg-muted/50 rounded-lg p-6">
+          <h3 className="text-xl font-semibold mb-4">Why This Recipe Works</h3>
+          <div className="prose prose-sm max-w-none text-foreground whitespace-pre-wrap">{recipe.whyThisWorks}</div>
+        </div>
+      )}
+
+      {/* Timing */}
+      {recipe.timing && (
+        <div className="bg-muted/50 rounded-lg p-6">
+          <h3 className="text-xl font-semibold mb-4">Timing</h3>
+          <p className="text-muted-foreground whitespace-pre-wrap">{recipe.timing}</p>
+        </div>
+      )}
+
+      {/* Yield */}
+      {recipe.recipeYield && (
+        <div className="bg-muted/50 rounded-lg p-6">
+          <h3 className="text-xl font-semibold mb-4">Yield</h3>
+          <p className="text-muted-foreground whitespace-pre-wrap">{recipe.recipeYield}</p>
         </div>
       )}
 

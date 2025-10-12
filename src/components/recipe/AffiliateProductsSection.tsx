@@ -83,7 +83,7 @@ export const AffiliateProductsSection = ({ productIds, recipeTitle }: AffiliateP
                 size="lg"
               >
                 <a
-                  href={`${product.affiliate_link}${product.utm_params ? '&' + product.utm_params : ''}`}
+                  href={`${product.affiliate_link}${product.utm_params ? (product.affiliate_link.includes('?') ? '&' : '?') + product.utm_params : ''}`}
                   target="_blank"
                   rel="noopener noreferrer sponsored"
                   className="flex items-center justify-center gap-2"
