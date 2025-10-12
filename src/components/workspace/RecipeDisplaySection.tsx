@@ -3,6 +3,7 @@ import { FormattedRecipeDisplay } from '@/components/FormattedRecipeDisplay';
 import { FullRecipeEditForm } from '@/components/FullRecipeEditForm';
 import { RecipeImageUploader } from '@/components/RecipeImageUploader';
 import { RecipeActionsToolbar } from '@/components/RecipeActionsToolbar';
+import { RecipeShareButton } from '@/components/RecipeShareButton';
 import { Edit, ChefHat } from 'lucide-react';
 import { FormattedRecipe, RecipeWithImage } from '@/types/recipe-workspace';
 
@@ -12,6 +13,7 @@ interface RecipeDisplaySectionProps {
   recipeImageUrl: string;
   isEditMode: boolean;
   user: any;
+  savedRecipeInfo?: { id: string; slug: string | null };
   onEditToggle: () => void;
   onRecipeUpdate: (recipeId: string, updates: any) => Promise<boolean>;
   onImageUploaded: (imageUrl: string) => void;
@@ -26,6 +28,7 @@ export const RecipeDisplaySection = ({
   recipeImageUrl,
   isEditMode,
   user,
+  savedRecipeInfo,
   onEditToggle,
   onRecipeUpdate,
   onImageUploaded,
@@ -41,6 +44,17 @@ export const RecipeDisplaySection = ({
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold text-primary">Formatted Recipe</h2>
             <div className="flex gap-2">
+              {savedRecipeInfo?.slug && (
+                <RecipeShareButton 
+                  recipe={{ 
+                    id: savedRecipeInfo.id, 
+                    title: editedRecipe?.title || formattedRecipe.recipe.title,
+                    slug: savedRecipeInfo.slug 
+                  }}
+                  variant="outline"
+                  size="default"
+                />
+              )}
               <Button onClick={onEditToggle} variant="outline" className="touch-manipulation">
                 <Edit className="h-4 w-4 mr-2" />
                 Edit Recipe

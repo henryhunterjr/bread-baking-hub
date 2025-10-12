@@ -121,7 +121,7 @@ export const RecommendedProductsSection = ({
                 />
               </div>
               
-              {searchTerm && availableProducts.length > 0 && (
+              {availableProducts.length > 0 && (
                 <ScrollArea className="h-[400px] rounded-md border border-border">
                   <div className="p-2 space-y-2">
                     {availableProducts.map((product) => (
@@ -160,15 +160,15 @@ export const RecommendedProductsSection = ({
                 </ScrollArea>
               )}
               
-              {searchTerm && availableProducts.length === 0 && (
+              {availableProducts.length === 0 && searchTerm && (
                 <p className="text-sm text-muted-foreground text-center py-8">
                   No products found. Try a different search term.
                 </p>
               )}
               
-              {!searchTerm && (
+              {availableProducts.length === 0 && !searchTerm && (
                 <p className="text-sm text-muted-foreground text-center py-8">
-                  Start typing to search for products
+                  All products have been added to this recipe.
                 </p>
               )}
             </div>

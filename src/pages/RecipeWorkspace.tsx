@@ -102,6 +102,7 @@ const RecipeWorkspace = () => {
               recipeImageUrl={workspace.recipeImageUrl}
               isEditMode={workspace.isEditMode}
               user={user}
+              savedRecipeInfo={workspace.savedRecipeInfo}
               onEditToggle={workspace.handleEditToggle}
               onRecipeUpdate={workspace.handleRecipeUpdate}
               onImageUploaded={workspace.handleImageUploaded}

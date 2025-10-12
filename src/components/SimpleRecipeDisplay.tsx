@@ -171,7 +171,7 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
 
       {/* Sourhouse Promotional Section - Holiday Star Cinnamon Bread & Pumpkin Cream Cheese Bread */}
       {(slug === 'holiday-star-cinnamon-bread' || 
-        slug?.includes('ultimate-cream-cheese-swirl-pumpkin-bread')) && (
+        slug === 'ultimate-cream-cheese-swirl-pumpkin-bread-6') && (
         <div className="py-8 border-t border-border">
           <div className="text-center space-y-4">
             <h3 className="text-2xl font-semibold">Keep Your Dough Perfect</h3>

@@ -87,12 +87,7 @@ export const recipeImageMapping: Record<string, string> = {
   "sun-dried-tomato-feta-bread": "/lovable-uploads/938a48a4-da57-4b7f-a31f-716a0493f585.png",
   "rosemary-garlic-parmesan-loaf": "/lovable-uploads/9b1f8351-f0df-4573-8fe1-fea3a1568962.png",
   
-  // PUMPKIN/CREAM CHEESE BREADS
-  "ultimate-cream-cheese-swirl-pumpkin-bread-1": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
-  "ultimate-cream-cheese-swirl-pumpkin-bread-2": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
-  "ultimate-cream-cheese-swirl-pumpkin-bread-3": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
-  "ultimate-cream-cheese-swirl-pumpkin-bread-4": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
-  "ultimate-cream-cheese-swirl-pumpkin-bread-5": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
+  // PUMPKIN/CREAM CHEESE BREADS - Keep only the -6 variant
   "ultimate-cream-cheese-swirl-pumpkin-bread-6": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
   
   // HOLIDAY BREADS
@@ -127,11 +122,6 @@ export function getRecipeImage(slug: string, imageUrl?: string | null): string {
     'henrys-perfect-cinnamon-swirl-bread', 
     'pumpkin-shaped-sourdough-loaf', 
     'rustic-peach-galette',
-    'ultimate-cream-cheese-swirl-pumpkin-bread-1',
-    'ultimate-cream-cheese-swirl-pumpkin-bread-2',
-    'ultimate-cream-cheese-swirl-pumpkin-bread-3',
-    'ultimate-cream-cheese-swirl-pumpkin-bread-4',
-    'ultimate-cream-cheese-swirl-pumpkin-bread-5',
     'ultimate-cream-cheese-swirl-pumpkin-bread-6'
   ];
   
