@@ -4,6 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import sourhousePromo from '@/assets/sourhouse-doughbed-promo.png';
 
 interface SaltFactors {
   [key: string]: number;
@@ -146,24 +147,27 @@ const SaltConverter: React.FC = () => {
         <meta name="keywords" content="salt conversion, salt converter, baking calculator, table salt, sea salt, kosher salt, baking measurements" />
         <link rel="canonical" href="https://bakinggreatbread.com/salt-converter" />
         
+        {/* Facebook App ID - Required for social sharing */}
+        <meta property="fb:admins" content="100000000000000" />
+        
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://bakinggreatbread.com/salt-converter" />
-        <meta property="og:title" content="Salt Converter Tool - Not All Salt Weighs the Same" />
-        <meta property="og:description" content="Free tool to convert between table salt, kosher salt, and sea salt. Get accurate measurements for your baking recipes." />
+        <meta property="og:title" content="Salt Conversion Chart for Bakers" />
+        <meta property="og:description" content="Free salt converter tool - Not all salt weighs the same. Convert between table salt, sea salt, and kosher salt." />
         <meta property="og:site_name" content="Baking Great Bread" />
-        <meta property="og:image" content="https://bakinggreatbread.com/images/salt-converter-thumbnail.png" />
+        <meta property="og:image" content="https://bakinggreatbread.com/images/salt-converter-og.png" />
         <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="1200" />
-        <meta property="og:image:alt" content="Salt Converter Tool - Not All Salt Weighs the Same" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Salt comparison showing table salt, kosher salt, and sea salt with measuring spoons" />
         <meta property="og:locale" content="en_US" />
         
         {/* Twitter Card tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Salt Converter Tool - Not All Salt Weighs the Same" />
-        <meta name="twitter:description" content="Free tool to convert between table salt, kosher salt, and sea salt. Get accurate measurements for your baking recipes." />
-        <meta name="twitter:image" content="https://bakinggreatbread.com/images/salt-converter-thumbnail.png" />
-        <meta name="twitter:image:alt" content="Salt Converter Tool - Not All Salt Weighs the Same" />
+        <meta name="twitter:title" content="Salt Conversion Chart for Bakers" />
+        <meta name="twitter:description" content="Free salt converter tool - Not all salt weighs the same. Convert between table salt, sea salt, and kosher salt." />
+        <meta name="twitter:image" content="https://bakinggreatbread.com/images/salt-converter-og.png" />
+        <meta name="twitter:image:alt" content="Salt comparison showing table salt, kosher salt, and sea salt with measuring spoons" />
       </Helmet>
 
       <Header />
@@ -408,6 +412,51 @@ const SaltConverter: React.FC = () => {
             <p className="text-sm opacity-90">
               © 2025 Henry Hunter - Baking Great Bread at Home - All Rights Reserved
             </p>
+          </section>
+
+          {/* SourHouse DoughBed Advertisement */}
+          <section className="mt-8 text-center p-8 rounded-lg shadow-lg" style={{ backgroundColor: 'hsl(var(--bg-medium))' }}>
+            <div className="max-w-2xl mx-auto">
+              <div className="mb-6">
+                <img 
+                  src={sourhousePromo} 
+                  alt="SourHouse DoughBed - Proof your dough just right, every time" 
+                  className="w-full max-w-lg mx-auto rounded-lg shadow-md"
+                />
+              </div>
+              <h3 className="text-3xl font-bold mb-3" style={{ color: 'hsl(var(--accent-gold))' }}>
+                10% OFF ON ALL PRODUCTS
+              </h3>
+              <p className="text-2xl font-semibold mb-4" style={{ color: 'hsl(var(--text-light))' }}>
+                USE PROMO CODE <span className="font-mono px-3 py-1 rounded" style={{ backgroundColor: 'hsl(var(--accent-gold))', color: 'hsl(var(--text-dark))' }}>HBK23</span>
+              </p>
+              <h4 className="text-xl font-bold mb-2" style={{ color: 'hsl(var(--text-light))' }}>
+                SourHouse DoughBed
+              </h4>
+              <p className="text-lg mb-6 italic" style={{ color: 'hsl(var(--text-muted))' }}>
+                Proof your dough just right, every time.
+              </p>
+              <a
+                href="https://sourhouse.refr.cc/default/u/henryhunter?s=sp&t=cp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-8 py-3 rounded-lg font-bold text-lg transition-all duration-200 hover:shadow-lg hover:scale-105"
+                style={{ 
+                  backgroundColor: 'hsl(var(--accent-gold))', 
+                  color: 'hsl(var(--text-dark))'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'hsl(var(--accent-gold) / 0.9)';
+                  e.currentTarget.style.boxShadow = '0 0 20px hsl(var(--accent-gold) / 0.6)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'hsl(var(--accent-gold))';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                Shop SourHouse DoughBed →
+              </a>
+            </div>
           </section>
         </div>
       </main>
