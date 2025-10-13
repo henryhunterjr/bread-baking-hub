@@ -73,31 +73,32 @@ const Recipes = () => {
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Recipes | Sourdough for the Rest of Us" />
-        <meta property="og:description" content="Skip the intimidation. Practical sourdough techniques that turn flour, water, and time into something your family will ask for again and again." />
+        <meta property="og:title" content="Free Bread Recipes - Baking Great Bread at Home" />
+        <meta property="og:description" content="Professional artisan bread recipes with no ads, no pop-ups. Just great recipes from Henry Hunter's Baking Great Bread at Home." />
         <meta property="og:url" content="https://bread-baking-hub.vercel.app/recipes" />
-        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/bread-recipes-baking-great-bread-at-home-the-bakers-bench/the-bakers-bench2.png" />
+        <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-10/free-artisan-bread-recipes-no-ads-or-pop-ups/recipes-thumbnail.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Fresh bread recipes collection with artisan loaves and baking tools - The Baker's Bench Recipe Hub" />
+        <meta property="og:image:alt" content="Free Artisan Bread Recipes - No Ads or Pop-ups" />
         <meta property="og:site_name" content="Baking Great Bread at Home" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Recipes | Sourdough for the Rest of Us" />
-        <meta name="twitter:description" content="Skip the intimidation. Practical sourdough techniques that turn flour, water, and time into something your family will ask for again and again." />
-        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/bread-recipes-baking-great-bread-at-home-the-bakers-bench/the-bakers-bench2.png" />
-        <meta name="twitter:image:alt" content="Fresh bread recipes collection with artisan loaves and baking tools - The Baker's Bench Recipe Hub" />
+        <meta name="twitter:title" content="Free Bread Recipes - Baking Great Bread at Home" />
+        <meta name="twitter:description" content="Professional artisan bread recipes with no ads, no pop-ups. Just great recipes from Henry Hunter's Baking Great Bread at Home." />
+        <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-10/free-artisan-bread-recipes-no-ads-or-pop-ups/recipes-thumbnail.png" />
+        <meta name="twitter:image:alt" content="Free Artisan Bread Recipes - No Ads or Pop-ups" />
       </Helmet>
       
       <main id="main-content" role="main" tabIndex={-1}>
         {/* Hero Section */}
         <div className="relative h-[600px] overflow-hidden">
           <ResponsiveImage 
-            src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/bread-recipes-baking-great-bread-at-home-the-bakers-bench/the-bakers-bench2.png"
-            alt="Fresh bread recipes collection with artisan loaves and baking tools - The Baker's Bench Recipe Hub"
+            src="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-10/free-artisan-bread-recipes-no-ads-or-pop-ups/recipes-thumbnail.png"
+            alt="Artisan sourdough bread loaf with deep golden crust and flour dusting on wooden cutting board, surrounded by wheat stalks, fresh figs, and baking tools in a bright home kitchen"
             className="w-full h-full object-cover"
-            loading="lazy"
+            loading="eager"
+            priority={true}
           />
         </div>
 
