@@ -3,6 +3,7 @@ import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
 // Auth context interface
+// Force rebuild to fix React hook initialization
 export interface AuthContextType {
   user: User | null;
   session: Session | null;
