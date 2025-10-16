@@ -70,17 +70,50 @@ export const RecipeActionsToolbar = ({ recipe, imageUrl, onSaved }: RecipeAction
         }
       }
 
+      // Determine season from current date
+      const getCurrentSeason = () => {
+        const month = new Date().getMonth() + 1; // 1-12
+        if (month >= 12 || month <= 2) return 'Winter';
+        if (month >= 3 && month <= 5) return 'Spring';
+        if (month >= 6 && month <= 8) return 'Summer';
+        return 'Fall';
+      };
+
+      // Infer category from tags or folder
+      const inferCategory = () => {
+        const allText = [...tags, folder].join(' ').toLowerCase();
+        if (allText.includes('sourdough')) return ['sourdough'];
+        if (allText.includes('quick')) return ['quick bread'];
+        if (allText.includes('yeast') || allText.includes('bread')) return ['yeast bread'];
+        if (allText.includes('whole grain') || allText.includes('wheat')) return ['whole grain'];
+        if (allText.includes('enriched') || allText.includes('sweet')) return ['enriched'];
+        if (allText.includes('holiday') || allText.includes('christmas') || allText.includes('festive')) return ['holiday bread'];
+        return ['yeast bread']; // default
+      };
+
+      // Enhance recipe data with seasonal metadata
+      const enhancedRecipeData = {
+        ...recipe,
+        season: getCurrentSeason(),
+        category: inferCategory(),
+        difficulty: 'intermediate' as const,
+        featuredDates: { start: '', end: '' },
+        holidays: [],
+        occasion: []
+      };
+
       const { data, error } = await supabase
         .from('recipes')
         .insert({
           user_id: user.id,
           title: recipe.title,
-          data: recipe as any,
+          data: enhancedRecipeData as any,
           image_url: imageUrl || null,
           folder: folder.trim() || null,
           tags: tags.length > 0 ? tags : null,
           is_public: isPublic,
-          slug: slug
+          slug: slug,
+          author_name: user.user_metadata?.display_name || null
         })
         .select()
         .single();
@@ -93,7 +126,7 @@ export const RecipeActionsToolbar = ({ recipe, imageUrl, onSaved }: RecipeAction
       
       toast({
         title: "Success",
-        description: "Recipe saved successfully!",
+        description: "Recipe saved and will appear in your library immediately!",
       });
 
       onSaved?.(data.id, slug);
