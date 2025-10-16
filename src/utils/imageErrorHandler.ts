@@ -6,6 +6,7 @@ export const handleImageError = (event: Event) => {
   // Check if this is an external image (from external domains)
   const isExternal = img.src && (
     img.src.includes('bakinggreatbread.blog') ||
+    img.src.includes('bakinggreatbread.com') ||
     img.src.includes('secure.gravatar.com') ||
     img.src.includes('i0.wp.com') ||
     img.src.includes('wp.com')
@@ -60,6 +61,7 @@ export const installImageErrorHandler = () => {
       const hasExternalDomain = args.some(arg => 
         typeof arg === 'string' && (
           arg.includes('bakinggreatbread.blog') ||
+          arg.includes('bakinggreatbread.com') ||
           arg.includes('secure.gravatar.com') ||
           arg.includes('googleapis.com')
         )
