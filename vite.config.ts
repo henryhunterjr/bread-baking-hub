@@ -37,9 +37,17 @@ export default defineConfig(({ mode }) => ({
   },
 
   optimizeDeps: {
-    include: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
-    exclude: ["jsdom", "canvas", "iconv-lite", "whatwg-encoding", "html-encoding-sniffer"],
-    force: true, // Force re-optimization to clear cache
+    exclude: [
+      "react",
+      "react-dom", 
+      "react/jsx-runtime",
+      "react/jsx-dev-runtime",
+      "jsdom", 
+      "canvas", 
+      "iconv-lite", 
+      "whatwg-encoding", 
+      "html-encoding-sniffer"
+    ],
   },
 
   define: {
