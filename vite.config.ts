@@ -32,15 +32,14 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
       jsdom: path.resolve(__dirname, "./src/shims/empty-module.ts"),
-      react: path.resolve(__dirname, 'node_modules/react'),
-      'react-dom': path.resolve(__dirname, 'node_modules/react-dom'),
     },
-    dedupe: ['react', 'react-dom', 'react/jsx-runtime'],
+    dedupe: ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime'],
   },
 
   optimizeDeps: {
-    include: ["react", "react-dom", "react/jsx-runtime"],
+    include: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
     exclude: ["jsdom", "canvas", "iconv-lite", "whatwg-encoding", "html-encoding-sniffer"],
+    force: true, // Force re-optimization to clear cache
   },
 
   define: {

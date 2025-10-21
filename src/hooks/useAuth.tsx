@@ -1,9 +1,10 @@
-import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
+import * as React from 'react';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
+const { createContext, useContext, useState, useEffect } = React;
+
 // Auth context interface
-// Force rebuild to fix React hook initialization
 export interface AuthContextType {
   user: User | null;
   session: Session | null;
@@ -16,7 +17,7 @@ export interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 interface AuthProviderProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
