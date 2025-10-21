@@ -1,8 +1,6 @@
-import * as React from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-
-const { createContext, useContext, useState, useEffect } = React;
 
 // Auth context interface
 export interface AuthContextType {
@@ -17,7 +15,7 @@ export interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 interface AuthProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {

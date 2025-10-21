@@ -56,41 +56,38 @@ export default defineConfig(({ mode }) => ({
     assetsInlineLimit: 0, // Prevent image inlining
     rollupOptions: {
       output: {
-        manualChunks: {
-          // Core vendor chunk - keep ALL React-related packages together
-          vendor: [
-            "react", 
-            "react-dom", 
-            "react-router-dom",
-            "@radix-ui/react-dialog",
-            "@radix-ui/react-dropdown-menu", 
-            "@radix-ui/react-tabs",
-            "@radix-ui/react-toast",
-            "@radix-ui/react-progress",
-            "@radix-ui/react-tooltip"
-          ],
-
+        manualChunks: (id) => {
+          // CRITICAL: Keep React as a single chunk to prevent duplication
+          if (id.includes('node_modules/react/') || 
+              id.includes('node_modules/react-dom/') ||
+              id.includes('node_modules/scheduler/')) {
+            return 'react-vendor';
+          }
+          
+          // Other vendor libraries
+          if (id.includes('node_modules/@radix-ui/')) {
+            return 'radix-ui';
+          }
+          
+          // Supabase and React Query
+          if (id.includes('node_modules/@supabase/') || 
+              id.includes('node_modules/@tanstack/react-query')) {
+            return 'data';
+          }
+          
           // Utilities
-          utils: ["date-fns", "clsx", "tailwind-merge", "zustand"],
-
-          // Form & Validation
-          forms: ["react-hook-form", "@hookform/resolvers", "zod"],
-
-          // Data & Query
-          data: ["@tanstack/react-query", "@supabase/supabase-js"],
-
-          // Rich Content - lazy loaded
-          editor: ["@uiw/react-md-editor", "react-markdown", "remark-gfm"],
-
-          // Charts & Visualization - lazy loaded
-          charts: ["recharts"],
-
-          // Heavy Libraries - lazy loaded
-          compression: ["browser-image-compression"],
-          pdf: ["html2pdf.js"],
-
-          // Framer Motion - lazy loaded
-          animation: ["framer-motion"],
+          if (id.includes('node_modules/date-fns') ||
+              id.includes('node_modules/clsx') ||
+              id.includes('node_modules/tailwind-merge') ||
+              id.includes('node_modules/zustand')) {
+            return 'utils';
+          }
+          
+          // Heavy lazy-loaded libraries
+          if (id.includes('node_modules/recharts')) return 'charts';
+          if (id.includes('node_modules/framer-motion')) return 'animation';
+          if (id.includes('node_modules/browser-image-compression')) return 'compression';
+          if (id.includes('node_modules/html2pdf')) return 'pdf';
         },
       },
     },
