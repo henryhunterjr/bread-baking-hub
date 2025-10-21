@@ -58,6 +58,21 @@ serve(async (req) => {
       );
     }
 
+    // Check if user has admin role
+    const { data: isAdmin, error: adminError } = await supabaseClient
+      .rpc('is_current_user_admin');
+
+    if (adminError || !isAdmin) {
+      console.error('Admin check failed:', adminError);
+      return new Response(
+        JSON.stringify({ error: 'Forbidden: Admin access required' }),
+        {
+          status: 403,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
     const { title, excerpt, content, postUrl, slug } = await req.json();
 
     // Get newsletter subscribers
