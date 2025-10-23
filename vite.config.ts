@@ -38,10 +38,6 @@ export default defineConfig(({ mode }) => ({
 
   optimizeDeps: {
     exclude: [
-      "react",
-      "react-dom", 
-      "react/jsx-runtime",
-      "react/jsx-dev-runtime",
       "jsdom", 
       "canvas", 
       "iconv-lite", 

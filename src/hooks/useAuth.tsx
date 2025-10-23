@@ -22,8 +22,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  
-  console.log('[AuthProvider] Initializing - React available:', typeof useState !== 'undefined');
 
   useEffect(() => {
     let mounted = true;
