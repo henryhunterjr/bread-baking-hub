@@ -24,7 +24,7 @@ const validateEnvVar = (name: string, value: string | undefined): string => {
 export const config: AppConfig = {
   supabase: {
     url: validateEnvVar('VITE_SUPABASE_URL', import.meta.env.VITE_SUPABASE_URL),
-    anonKey: validateEnvVar('VITE_SUPABASE_ANON_KEY', import.meta.env.VITE_SUPABASE_ANON_KEY),
+    anonKey: validateEnvVar('VITE_SUPABASE_PUBLISHABLE_KEY', import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY),
   },
   isDevelopment: import.meta.env.DEV,
   isProduction: import.meta.env.PROD,
