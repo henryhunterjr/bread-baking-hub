@@ -37,6 +37,10 @@ export default defineConfig(({ mode }) => ({
   },
 
   optimizeDeps: {
+    include: [
+      "recharts",
+      "recharts/es6"
+    ],
     exclude: [
       "jsdom", 
       "canvas", 
