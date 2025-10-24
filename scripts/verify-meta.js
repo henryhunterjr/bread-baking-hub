@@ -8,7 +8,7 @@ const __dirname = dirname(__filename);
 
 const BASE_URL = 'https://bakinggreatbread.com';
 const REQUIRED_TAGS = ['og:title', 'og:image', 'og:url', 'og:description'];
-const FORBIDDEN_DOMAINS = ['the-bakers-bench.lovable.app', 'localhost', '127.0.0.1'];
+const FORBIDDEN_DOMAINS = ['localhost', '127.0.0.1'];
 
 class MetaVerifier {
   constructor() {

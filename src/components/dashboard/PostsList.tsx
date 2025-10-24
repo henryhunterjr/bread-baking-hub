@@ -101,7 +101,7 @@ export const PostsList = ({ filter, onEditPost }: PostsListProps) => {
   };
 
   const getProdUrl = (post: BlogPost) => {
-    const prodBaseUrl = 'https://bread-baking-hub.lovable.app';
+    const prodBaseUrl = import.meta.env.VITE_SITE_URL || 'https://bakinggreatbread.com';
     return `${prodBaseUrl}/blog/${post.slug}`;
   };
 

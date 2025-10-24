@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Mail, MessageSquare, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Suspense, lazy } from 'react';
+import { absoluteUrl } from '@/utils/absoluteUrl';
 
 const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
@@ -74,12 +75,12 @@ const Contact = () => {
       <Helmet>
         <title>Contact Henry Hunter - Bread Baking Expert | Baking Great Bread</title>
         <meta name="description" content="Get in touch with Henry Hunter for bread baking questions, coaching, or collaborations. Personal responses within 24 hours." />
-        <link rel="canonical" href="https://bread-baking-hub.vercel.app/contact" />
+        <link rel="canonical" href={absoluteUrl('/contact')} />
         <meta property="og:title" content="Contact Henry Hunter - Bread Baking Expert | Baking Great Bread" />
         <meta property="og:description" content="Get in touch with Henry Hunter for bread baking questions, coaching, or collaborations. Personal responses within 24 hours." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://the-bakers-bench.lovable.app/contact" />
-        <meta property="og:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/c851e2b3-f2f7-4b52-9e98-d4e6f7c44ff8.png" />
+        <meta property="og:url" content={absoluteUrl('/contact')} />
+        <meta property="og:image" content={absoluteUrl('/lovable-uploads/c851e2b3-f2f7-4b52-9e98-d4e6f7c44ff8.png')} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Contact Henry Hunter - Bread Baking Expert" />
@@ -89,7 +90,7 @@ const Contact = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Contact Henry Hunter - Bread Baking Expert | Baking Great Bread" />
         <meta name="twitter:description" content="Get in touch with Henry Hunter for bread baking questions, coaching, or collaborations. Personal responses within 24 hours." />
-        <meta name="twitter:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/c851e2b3-f2f7-4b52-9e98-d4e6f7c44ff8.png" />
+        <meta name="twitter:image" content={absoluteUrl('/lovable-uploads/c851e2b3-f2f7-4b52-9e98-d4e6f7c44ff8.png')} />
         <meta name="twitter:image:alt" content="Contact Henry Hunter - Bread Baking Expert" />
       </Helmet>
       

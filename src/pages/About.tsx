@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 import { Suspense, lazy, useState } from 'react';
+import { absoluteUrl } from '@/utils/absoluteUrl';
 
 const LazyAIAssistantSidebar = lazy(() => import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar })));
 
@@ -20,12 +21,12 @@ const About = () => {
       <Helmet>
         <title>About Henry Hunter | Baking Great Bread at Home</title>
         <meta name="description" content="Meet Henry Hunter, master baker and founder of Baking Great Bread at Home. Learn his story, mission, and approach to teaching bread baking." />
-        <link rel="canonical" href="https://bread-baking-hub.vercel.app/about" />
+        <link rel="canonical" href={absoluteUrl('/about')} />
         <meta property="og:title" content="About Henry Hunter | Baking Great Bread at Home" />
         <meta property="og:description" content="Meet Henry Hunter, master baker and founder of Baking Great Bread at Home. Learn his story, mission, and approach to teaching bread baking." />
-        <meta property="og:url" content="https://the-bakers-bench.lovable.app/about" />
+        <meta property="og:url" content={absoluteUrl('/about')} />
         <meta property="og:type" content="profile" />
-        <meta property="og:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png" />
+        <meta property="og:image" content={absoluteUrl('/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png')} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Henry Hunter - Master Baker and Author" />
@@ -35,14 +36,14 @@ const About = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="About Henry Hunter | Baking Great Bread at Home" />
         <meta name="twitter:description" content="Meet Henry Hunter, master baker and founder of Baking Great Bread at Home. Learn his story, mission, and approach to teaching bread baking." />
-        <meta name="twitter:image" content="https://the-bakers-bench.lovable.app/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png" />
+        <meta name="twitter:image" content={absoluteUrl('/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png')} />
         <meta name="twitter:image:alt" content="Henry Hunter - Master Baker and Author" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Person",
           "name": "Henry Hunter",
-          "url": "https://bread-baking-hub.vercel.app/about",
-          "image": "https://bread-baking-hub.vercel.app/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png",
+          "url": absoluteUrl('/about'),
+          "image": absoluteUrl('/lovable-uploads/e9d4e95a-2202-46e4-9b07-ae4646daff63.png'),
           "jobTitle": "Master Baker & Author",
           "sameAs": [
             "https://www.youtube.com/@bakinggreatbread",

@@ -11,8 +11,8 @@ const isRecipesOnly = args.includes('--recipes-only');
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Base URL for the site
-const BASE_URL = 'https://the-bakers-bench.lovable.app';
+// Base URL for the site - use environment variable
+const BASE_URL = process.env.VITE_SITE_URL || 'https://bakinggreatbread.com';
 
 // Meta data for each route
 const routeMetaData = {
