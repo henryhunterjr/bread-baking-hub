@@ -47,7 +47,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const socialImageUrl = post.social_image_url;
     const inlineImageUrl = post.inline_image_url;
     const heroImageUrl = post.hero_image_url;
-    const rawImageUrl = socialImageUrl || inlineImageUrl || heroImageUrl || 'https://bakinggreatbread.com/images/default-recipe-thumbnail.png';
+    // Use existing site logo as fallback instead of non-existent default-recipe-thumbnail.png
+    const rawImageUrl = socialImageUrl || inlineImageUrl || heroImageUrl || 'https://bakinggreatbread.com/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
     
     const url = `https://bakinggreatbread.com/blog/${slug}`;
     const updatedAt = post.updated_at ? new Date(post.updated_at).getTime() : Date.now();
