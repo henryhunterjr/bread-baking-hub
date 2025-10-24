@@ -2,10 +2,7 @@
 import React, { Suspense } from 'react';
 import { SkeletonGrid, SkeletonHero } from './SkeletonLoaders';
 
-// Lazy load heavy below-the-fold components
-export const LazyCharts = React.lazy(() => 
-  import('recharts').then(module => ({ default: module.ResponsiveContainer }))
-);
+// Removed LazyCharts - recharts is now directly imported where needed to avoid circular dependencies
 
 export const LazyMarkdownEditor = React.lazy(() => 
   import('@uiw/react-md-editor').then(module => ({ default: module.default }))
@@ -53,10 +50,4 @@ export const LazyBookShelfWrapper = ({ ...props }) => (
   </Suspense>
 );
 
-export const LazyChartsWrapper = ({ children, ...props }) => (
-  <Suspense fallback={<div className="h-64 bg-muted rounded-lg animate-shimmer"></div>}>
-    <LazyCharts {...props}>
-      {children}
-    </LazyCharts>
-  </Suspense>
-);
+// Removed LazyChartsWrapper - no longer needed

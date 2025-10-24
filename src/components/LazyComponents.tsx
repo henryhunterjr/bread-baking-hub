@@ -7,10 +7,7 @@ export const LazyMarkdownEditor = createLazyComponent(
   () => import('@uiw/react-md-editor').then(module => ({ default: module.default }))
 );
 
-// Example lazy components for future use
-export const LazyCharts = createLazyComponent(
-  () => import('recharts').then(module => ({ default: module.ResponsiveContainer }))
-);
+// Removed LazyCharts - recharts is directly imported to prevent circular dependencies
 
 // Loading fallback components
 export const ComponentLoader = ({ className = '' }: { className?: string }) => (

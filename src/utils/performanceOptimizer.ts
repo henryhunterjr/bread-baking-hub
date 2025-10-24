@@ -260,10 +260,9 @@ export class PerformanceOptimizer {
 
   // Bundle optimization utilities
   public static optimizeBundle() {
-    // Code splitting markers for dynamic imports
+    // Code splitting markers for dynamic imports (recharts removed - now directly imported)
     return {
       loadRecipeEditor: () => import('../components/FullRecipeEditForm'),
-      loadChartComponents: () => import('recharts'),
       loadMarkdownEditor: () => import('@uiw/react-md-editor'),
       loadImageCompression: () => import('browser-image-compression')
     };

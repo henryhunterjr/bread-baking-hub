@@ -15,11 +15,8 @@ const createOptimizedLazy = <T extends ComponentType<any>>(
   );
 };
 
-// Heavy components that should only load when needed
-export const LazyCharts = createOptimizedLazy(
-  () => import('recharts').then(m => ({ default: m.ResponsiveContainer })),
-  <div className="h-64 bg-muted rounded-lg animate-pulse" />
-);
+// Removed LazyCharts - recharts is now directly imported where needed
+// Vite handles code splitting automatically
 
 export const LazyMarkdownEditor = createOptimizedLazy(
   () => import('@uiw/react-md-editor'),

@@ -5,9 +5,8 @@ export const LazyCarousel = React.lazy(() =>
   import('@/components/ui/carousel').then(m => ({ default: m.Carousel }))
 );
 
-export const LazyChart = React.lazy(() => 
-  import('recharts').then(m => ({ default: m.ResponsiveContainer }))
-);
+// Removed LazyChart - recharts is now directly imported where needed
+// Vite handles code splitting via vite.config.ts manualChunks
 
 export const LazyTTS = React.lazy(() => 
   import('@/components/AIAssistantSidebar').then(m => ({ default: m.AIAssistantSidebar }))
