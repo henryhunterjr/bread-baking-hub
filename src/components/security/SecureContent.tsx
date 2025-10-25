@@ -19,7 +19,7 @@ export const SecureContent = ({
   className 
 }: SecureContentProps) => {
   const sanitizedContent = sanitizeHtml(content, {
-    ALLOWED_TAGS: allowedTags || ['b', 'i', 'em', 'strong', 'p', 'ul', 'li', 'a', 'h1', 'h2', 'h3'],
+    ALLOWED_TAGS: allowedTags || ['b', 'i', 'em', 'strong', 'p', 'ul', 'ol', 'li', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
     ALLOWED_ATTR: ['href', 'src', 'alt', 'title'],
   });
 

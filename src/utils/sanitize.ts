@@ -30,7 +30,7 @@ export type SanitizeHtmlOptions = any;
  */
 export const sanitizeHtml = (html: string, options?: SanitizeHtmlOptions): string => {
   const defaultConfig: any = {
-    ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'p', 'ul', 'li', 'a', 'img', 'h1', 'h2', 'h3'],
+    ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'p', 'ul', 'ol', 'li', 'a', 'img', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
     ALLOWED_ATTR: ['href', 'src', 'alt', 'title'],
     ALLOW_DATA_ATTR: false,
   };
