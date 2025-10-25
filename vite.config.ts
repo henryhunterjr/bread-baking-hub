@@ -64,39 +64,42 @@ export default defineConfig(({ mode }) => ({
     assetsInlineLimit: 0, // Prevent image inlining
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          // CRITICAL: Keep React as a single chunk to prevent duplication
-          if (id.includes('node_modules/react/') || 
-              id.includes('node_modules/react-dom/') ||
-              id.includes('node_modules/scheduler/')) {
-            return 'react-vendor';
-          }
-          
-          // Other vendor libraries
-          if (id.includes('node_modules/@radix-ui/')) {
-            return 'radix-ui';
-          }
-          
-          // Supabase and React Query
-          if (id.includes('node_modules/@supabase/') || 
-              id.includes('node_modules/@tanstack/react-query')) {
-            return 'data';
-          }
-          
-          // Utilities
-          if (id.includes('node_modules/date-fns') ||
-              id.includes('node_modules/clsx') ||
-              id.includes('node_modules/tailwind-merge') ||
-              id.includes('node_modules/zustand')) {
-            return 'utils';
-          }
-          
-          // Heavy lazy-loaded libraries
-          if (id.includes('node_modules/recharts')) return 'charts';
-          if (id.includes('node_modules/framer-motion')) return 'animation';
-          if (id.includes('node_modules/browser-image-compression')) return 'compression';
-          if (id.includes('node_modules/html2pdf')) return 'pdf';
-        },
+        // Temporarily disabled manual chunks due to React initialization order issue
+        // causing "Cannot access before initialization" errors on Vercel
+        // Let Vite handle automatic code splitting for optimal performance
+        // manualChunks: (id) => {
+        //   // CRITICAL: Keep React as a single chunk to prevent duplication
+        //   if (id.includes('node_modules/react/') || 
+        //       id.includes('node_modules/react-dom/') ||
+        //       id.includes('node_modules/scheduler/')) {
+        //     return 'react-vendor';
+        //   }
+        //   
+        //   // Other vendor libraries
+        //   if (id.includes('node_modules/@radix-ui/')) {
+        //     return 'radix-ui';
+        //   }
+        //   
+        //   // Supabase and React Query
+        //   if (id.includes('node_modules/@supabase/') || 
+        //       id.includes('node_modules/@tanstack/react-query')) {
+        //     return 'data';
+        //   }
+        //   
+        //   // Utilities
+        //   if (id.includes('node_modules/date-fns') ||
+        //       id.includes('node_modules/clsx') ||
+        //       id.includes('node_modules/tailwind-merge') ||
+        //       id.includes('node_modules/zustand')) {
+        //     return 'utils';
+        //   }
+        //   
+        //   // Heavy lazy-loaded libraries
+        //   if (id.includes('node_modules/recharts')) return 'charts';
+        //   if (id.includes('node_modules/framer-motion')) return 'animation';
+        //   if (id.includes('node_modules/browser-image-compression')) return 'compression';
+        //   if (id.includes('node_modules/html2pdf')) return 'pdf';
+        // },
       },
     },
 
