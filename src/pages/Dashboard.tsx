@@ -654,10 +654,18 @@ const Dashboard = () => {
             <TabsContent value="newsletter" className="space-y-6">
               <div className="space-y-8">
                 <RecipeToNewsletterConverter 
-                  onNewsletterCreated={() => {
+                  onNewsletterCreated={(newsletterData) => {
+                    // Populate the manual editor below with the converted content
+                    setPostData(prev => ({
+                      ...prev,
+                      title: newsletterData.subject,
+                      subtitle: newsletterData.preheader || '',
+                      content: newsletterData.content
+                    }));
+                    
                     toast({
                       title: "Newsletter Ready",
-                      description: "Check the drafts in your posts to review and publish.",
+                      description: "Scroll down to review and customize your newsletter in the editor.",
                     });
                   }}
                 />

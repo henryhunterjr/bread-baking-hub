@@ -20,7 +20,7 @@ interface RecipeData {
 }
 
 interface RecipeToNewsletterConverterProps {
-  onNewsletterCreated?: () => void;
+  onNewsletterCreated?: (newsletterData: { subject: string; content: string; preheader: string }) => void;
 }
 
 export const RecipeToNewsletterConverter: React.FC<RecipeToNewsletterConverterProps> = ({ 
@@ -91,24 +91,33 @@ export const RecipeToNewsletterConverter: React.FC<RecipeToNewsletterConverterPr
         throw new Error(error.message);
       }
 
-      // Submit the newsletter draft
-      await submitContentDraft('newsletter', {
-        subject: data.subject,
-        content: data.content,
-        preheader: data.preheader
-      });
+      // Try to save as draft, but don't fail if it doesn't work
+      try {
+        await submitContentDraft('newsletter', {
+          subject: data.subject,
+          content: data.content,
+          preheader: data.preheader
+        });
+      } catch (draftError) {
+        console.warn('Failed to save draft to database, but conversion succeeded:', draftError);
+      }
 
       toast({
         title: "Success",
-        description: "Newsletter created and saved as draft!",
+        description: "Recipe converted to newsletter! Check the editor below to review and customize.",
+      });
+
+      // Pass the converted newsletter data to parent
+      onNewsletterCreated?.({
+        subject: data.subject,
+        content: data.content,
+        preheader: data.preheader
       });
 
       // Reset form
       setRecipeText('');
       setSelectedImage(null);
       setPreviewUrl('');
-      
-      onNewsletterCreated?.();
 
     } catch (error: any) {
       console.error('Error converting recipe to newsletter:', error);
