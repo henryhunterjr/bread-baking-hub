@@ -9,7 +9,7 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": ".*(facebookexternalhit|Facebot|FacebookBot|Twitterbot|LinkedInBot|WhatsApp).*"
+          "value": ".*(facebookexternalhit|Facebot|FacebookBot|Twitterbot|LinkedInBot|WhatsApp|FBAN|FBAV|MessengerForiOS|Instagram).*"
         }
       ]
     },
@@ -20,7 +20,7 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": ".*(facebookexternalhit|Facebot|FacebookBot|Twitterbot|LinkedInBot|WhatsApp).*"
+          "value": ".*(facebookexternalhit|Facebot|FacebookBot|Twitterbot|LinkedInBot|WhatsApp|FBAN|FBAV|MessengerForiOS|Instagram).*"
         }
       ]
     }
