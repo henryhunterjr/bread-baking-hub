@@ -10,11 +10,11 @@ const Tools = () => {
       <Helmet>
         <title>Baking Tools & Calculator Suite - Essential Bread Making Tools | Baking Great Bread</title>
         <meta name="description" content="Professional bread baking calculator suite with Baker's percentage solver, scaling tools, and essential equipment guides for perfect homemade bread." />
-        <link rel="canonical" href="https://bread-baking-hub.vercel.app/tools" />
+        <link rel="canonical" href="https://bakinggreatbread.com/tools" />
         <meta property="og:title" content="Baking Tools & Calculator Suite - Essential Bread Making Tools | Baking Great Bread" />
         <meta property="og:description" content="Professional bread baking calculator suite with Baker's percentage solver, scaling tools, and essential equipment guides for perfect homemade bread." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://bread-baking-hub.vercel.app/tools" />
+        <meta property="og:url" content="https://bakinggreatbread.com/tools" />
         <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />

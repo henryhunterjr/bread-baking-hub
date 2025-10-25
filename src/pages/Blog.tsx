@@ -138,13 +138,13 @@ const Blog = () => {
         <title>Blog | Baking Great Bread at Home</title>
         <meta name="description" content="Read the latest bread baking tutorials, tips, and stories from our community of home bakers. Learn techniques and discover new recipes." />
         <meta name="keywords" content="bread baking blog, sourdough tips, bread troubleshooting, baking techniques, Henry's bread recipes" />
-        <link rel="canonical" href="https://bread-baking-hub.vercel.app/blog" />
+        <link rel="canonical" href="https://bakinggreatbread.com/blog" />
         
         {/* Open Graph meta tags */}
         <meta property="og:title" content="Blog | Baking Great Bread at Home" />
         <meta property="og:description" content="Read the latest bread baking tutorials, tips, and stories from our community of home bakers. Learn techniques and discover new recipes." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://bread-baking-hub.vercel.app/blog" />
+        <meta property="og:url" content="https://bakinggreatbread.com/blog" />
         <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-blog-recipes-tips-and-expert-guidance/untitled-600-x-300-px-1200-x-630-px-1200-x-600-px-1200-x-500-px-1200-x-450-px.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />

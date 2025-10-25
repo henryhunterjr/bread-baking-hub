@@ -89,13 +89,13 @@ export default function TroubleshootingPage() {
         <title>Troubleshooting | Baking Great Bread at Home</title>
         <meta name="description" content="Professional bread troubleshooting tool with step-by-step diagnosis. Solve sourdough, yeasted, and quick bread problems with expert guidance and visual examples." />
         <meta name="keywords" content="bread troubleshooting, sourdough problems, bread baking help, crust and crumb, bread diagnosis" />
-        <link rel="canonical" href="https://bread-baking-hub.vercel.app/troubleshooting" />
+        <link rel="canonical" href="https://bakinggreatbread.com/troubleshooting" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Troubleshooting | Baking Great Bread at Home" />
         <meta property="og:description" content="Professional bread troubleshooting tool with step-by-step diagnosis. Solve sourdough, yeasted, and quick bread problems with expert guidance and visual examples." />
-        <meta property="og:url" content="https://bread-baking-hub.vercel.app/troubleshooting" />
+        <meta property="og:url" content="https://bakinggreatbread.com/troubleshooting" />
         <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/troubleshooting-solve-your-bread-baking-challenges-and-problems/troubleshooting.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />

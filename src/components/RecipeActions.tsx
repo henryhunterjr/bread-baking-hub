@@ -163,7 +163,7 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
 
   const handleEmailRecipe = async () => {
     const subject = `Recipe: ${recipe.title}`;
-    const baseUrl = 'https://bread-baking-hub.vercel.app';
+    const baseUrl = 'https://bakinggreatbread.com';
     const recipeUrl = recipe.slug 
       ? `${baseUrl}/recipes/${recipe.slug}`
       : window.location.href;
@@ -190,7 +190,7 @@ export const RecipeActions = ({ recipe, className = "" }: RecipeActionsProps) =>
 
   const handleShare = async () => {
     // Generate the correct URL for the individual recipe page
-    const baseUrl = 'https://bread-baking-hub.vercel.app';
+    const baseUrl = 'https://bakinggreatbread.com';
     const recipeUrl = recipe.slug 
       ? `${baseUrl}/recipes/${recipe.slug}` 
       : window.location.href;

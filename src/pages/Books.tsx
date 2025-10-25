@@ -106,7 +106,7 @@ const Books = () => {
   };
 
   // SEO metadata
-  const canonicalUrl = "https://bread-baking-hub.vercel.app/books";
+  const canonicalUrl = "https://bakinggreatbread.com/books";
   const metaTitle = "Books by Henry Hunter Jr – Baking Great Bread";
   const metaDescription = "Explore Henry Hunter Jr’s bread books: Bread: A Journey, Sourdough for the Rest of Us, and more. Previews, audio excerpts, and purchase links.";
 
@@ -135,7 +135,7 @@ const Books = () => {
   };
 
   // Additional structured data for author, featured book, and product listings
-  const siteUrl = "https://bread-baking-hub.vercel.app";
+  const siteUrl = "https://bakinggreatbread.com";
   const ogImageUrl = `${siteUrl}${bookData.journey.coverImage}`;
 
   const authorPersonSchema = {

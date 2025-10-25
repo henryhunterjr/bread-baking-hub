@@ -85,17 +85,17 @@ export const GlobalSEOInitializer = () => {
           '@context': 'https://schema.org',
           '@type': 'WebSite',
           name: 'Baking Great Bread',
-          url: 'https://bread-baking-hub.vercel.app',
+          url: 'https://bakinggreatbread.com',
           description: 'Expert guidance for real home bakers. Proven tutorials, troubleshooting guides, and community support.',
           potentialAction: {
             '@type': 'SearchAction',
-            target: 'https://bread-baking-hub.vercel.app/search?q={search_term_string}',
+            target: 'https://bakinggreatbread.com/search?q={search_term_string}',
             'query-input': 'required name=search_term_string'
           },
           author: {
             '@type': 'Person',
             name: 'Henry Hunter',
-            url: 'https://bread-baking-hub.vercel.app/about'
+            url: 'https://bakinggreatbread.com/about'
           }
         };
 
@@ -115,8 +115,8 @@ export const GlobalSEOInitializer = () => {
           '@context': 'https://schema.org',
           '@type': 'Organization',
           name: 'Baking Great Bread',
-          url: 'https://bread-baking-hub.vercel.app',
-          logo: 'https://bread-baking-hub.vercel.app/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png',
+          url: 'https://bakinggreatbread.com',
+          logo: 'https://bakinggreatbread.com/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png',
           description: 'Expert bread baking education and community for passionate home bakers',
           founder: {
             '@type': 'Person',

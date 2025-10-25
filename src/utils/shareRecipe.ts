@@ -8,7 +8,7 @@ export interface ShareableRecipe {
 }
 
 export const shareRecipe = async (recipe: ShareableRecipe) => {
-  const baseUrl = 'https://bread-baking-hub.vercel.app';
+  const baseUrl = 'https://bakinggreatbread.com';
   const recipeUrl = recipe.slug 
     ? `${baseUrl}/recipes/${recipe.slug}` 
     : `${baseUrl}/recipes/${recipe.id}`;

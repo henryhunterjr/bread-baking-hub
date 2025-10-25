@@ -47,11 +47,11 @@ const MyReviews = () => {
       <Helmet>
         <title>My Reviews | Baking Great Bread</title>
         <meta name="description" content="Your recipe reviews." />
-        <link rel="canonical" href="https://bread-baking-hub.vercel.app/my-reviews" />
+        <link rel="canonical" href="https://bakinggreatbread.com/my-reviews" />
         <meta property="og:title" content="My Reviews | Baking Great Bread" />
         <meta property="og:description" content="Your recipe reviews." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://bread-baking-hub.vercel.app/my-reviews" />
+        <meta property="og:url" content="https://bakinggreatbread.com/my-reviews" />
         <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-07/baking-great-bread-at-home-blog/optimizeduploadedbreadhero.avif" />

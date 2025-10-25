@@ -129,13 +129,13 @@ export const SEOOptimizer = ({
         name: 'Baking Great Bread',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://bread-baking-hub.vercel.app/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png'
+          url: 'https://bakinggreatbread.com/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png'
         }
       },
       author: {
         '@type': 'Person',
         name: 'Henry Hunter',
-        url: 'https://bread-baking-hub.vercel.app/about'
+        url: 'https://bakinggreatbread.com/about'
       }
     };
 
@@ -196,7 +196,7 @@ export const SEOOptimizer = ({
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: 'https://bread-baking-hub.vercel.app'
+                item: 'https://bakinggreatbread.com'
               },
               {
                 '@type': 'ListItem',

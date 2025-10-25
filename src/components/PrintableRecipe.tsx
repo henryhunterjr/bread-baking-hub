@@ -135,7 +135,7 @@ export const PrintableRecipe = ({ recipe }: PrintableRecipeProps) => {
       {/* Footer */}
       <footer className="mt-12 pt-6 border-t border-gray-300 text-center text-sm text-gray-500">
         <p>Recipe from Baking Great Bread</p>
-        <p>Find more recipes at bread-baking-hub.vercel.app</p>
+        <p>Find more recipes at bakinggreatbread.com</p>
         <p className="mt-2">Printed on {new Date().toLocaleDateString()}</p>
       </footer>
 

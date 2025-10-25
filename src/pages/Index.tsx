@@ -59,8 +59,8 @@ const Index = () => {
     "@type": "Organization",
     "name": "Baking Great Bread",
     "description": "Expert bread baking guidance, recipes, and community for passionate home bakers",
-    "url": "https://bread-baking-hub.vercel.app",
-    "logo": "https://bread-baking-hub.vercel.app/assets/logo.png",
+    "url": "https://bakinggreatbread.com",
+    "logo": "https://bakinggreatbread.com/assets/logo.png",
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "customer service",
@@ -77,10 +77,10 @@ const Index = () => {
     "@type": "WebSite",
     "name": "Baking Great Bread",
     "description": "Master the art of bread baking with expert tutorials, troubleshooting guides, and community support",
-    "url": "https://bread-baking-hub.vercel.app",
+    "url": "https://bakinggreatbread.com",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://bread-baking-hub.vercel.app/blog?search={search_term_string}",
+      "target": "https://bakinggreatbread.com/blog?search={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };
@@ -89,8 +89,8 @@ const Index = () => {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Henry Hunter",
-    "url": "https://bread-baking-hub.vercel.app/about",
-    "image": "https://bread-baking-hub.vercel.app/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png",
+    "url": "https://bakinggreatbread.com/about",
+    "image": "https://bakinggreatbread.com/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png",
     "jobTitle": "Master Baker & Author",
     "sameAs": [
       "https://www.youtube.com/@bakinggreatbread",
@@ -103,13 +103,13 @@ const Index = () => {
         <title>Baking Great Bread at Home - Expert Guidance for Real Home Bakers</title>
         <meta name="description" content="Expert guidance for real home bakers. Proven tutorials, troubleshooting guides, sourdough tips, and a supportive community of passionate bakers." />
         <meta name="keywords" content="bread baking, sourdough, Henry Hunter, baking tutorials, bread recipes, troubleshooting, artisan bread, home baking" />
-        <link rel="canonical" href="https://bread-baking-hub.vercel.app" />
+        <link rel="canonical" href="https://bakinggreatbread.com" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Baking Great Bread at Home - Expert Guidance for Real Home Bakers" />
         <meta property="og:description" content="Expert guidance for real home bakers. Proven tutorials, troubleshooting guides, and community support." />
-        <meta property="og:url" content="https://bread-baking-hub.vercel.app" />
+        <meta property="og:url" content="https://bakinggreatbread.com" />
         <meta property="og:site_name" content="Baking Great Bread" />
         <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/baking-great-bread-at-home-join-our-supportive-baking-community/a-warm-inviting-lifestyle-photograph-sho9sttfiagry2spdvvrlstkqbrxrfijer9-kofpmfryhtg.png" />
         <meta property="og:image:width" content="1200" />

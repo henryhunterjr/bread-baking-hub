@@ -69,13 +69,13 @@ const Recipes = () => {
       <Helmet>
         <title>Recipes | Sourdough for the Rest of Us</title>
         <meta name="description" content="Skip the intimidation. Practical sourdough techniques that turn flour, water, and time into something your family will ask for again and again." />
-        <link rel="canonical" href="https://bread-baking-hub.vercel.app/recipes" />
+        <link rel="canonical" href="https://bakinggreatbread.com/recipes" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Free Bread Recipes - Baking Great Bread at Home" />
         <meta property="og:description" content="Professional artisan bread recipes with no ads, no pop-ups. Just great recipes from Henry Hunter's Baking Great Bread at Home." />
-        <meta property="og:url" content="https://bread-baking-hub.vercel.app/recipes" />
+        <meta property="og:url" content="https://bakinggreatbread.com/recipes" />
         <meta property="og:image" content="https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-10/free-artisan-bread-recipes-no-ads-or-pop-ups/recipes-thumbnail.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
