@@ -1,10 +1,8 @@
 {
-  "outputDirectory": "dist",
-  "framework": "vite",
   "rewrites": [
     {
       "source": "/recipes/:slug",
-      "destination": "/api/recipe-share?slug=$slug",
+      "destination": "/api/recipe-share?slug=:slug",
       "has": [
         {
           "type": "header",
@@ -15,7 +13,7 @@
     },
     {
       "source": "/blog/:slug",
-      "destination": "/api/blog-share?slug=$slug",
+      "destination": "/api/blog-share?slug=:slug",
       "has": [
         {
           "type": "header",
@@ -23,39 +21,15 @@
           "value": ".*(facebookexternalhit|Facebot|FacebookBot|Twitterbot|LinkedInBot|WhatsApp).*"
         }
       ]
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
     }
   ],
-  "headers": [
+  "routes": [
     {
-      "source": "/fonts/(.*)\\.woff2",
-      "headers": [
-        { "key": "Content-Type", "value": "font/woff2" },
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
-      ]
+      "handle": "filesystem"
     },
     {
-      "source": "/(.*)\\.(png|jpg|jpeg|webp|svg|avif)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/(.*)\\.(js|css)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" }
-      ]
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
