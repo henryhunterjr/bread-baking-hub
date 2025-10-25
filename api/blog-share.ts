@@ -105,6 +105,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     res.setHeader('Content-Type', 'text/html');
     res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=3600');
+    res.setHeader('Refresh', `0; url=${url}`);
     return res.status(200).send(html);
   } catch (error) {
     console.error('Error generating blog post share page:', error);
