@@ -9,7 +9,7 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": ".*(facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp).*"
+          "value": ".*(facebookexternalhit|Facebot|FacebookBot|Twitterbot|LinkedInBot|WhatsApp).*"
         }
       ]
     },
@@ -20,7 +20,7 @@
         {
           "type": "header",
           "key": "user-agent",
-          "value": ".*(facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp).*"
+          "value": ".*(facebookexternalhit|Facebot|FacebookBot|Twitterbot|LinkedInBot|WhatsApp).*"
         }
       ]
     },
