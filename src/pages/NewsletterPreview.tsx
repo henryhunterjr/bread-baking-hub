@@ -12,6 +12,8 @@ interface NewsletterData {
   subtitle: string;
   content: string;
   heroImageUrl: string;
+  inlineImageUrl?: string;
+  socialImageUrl?: string;
   tags: string[];
 }
 
@@ -54,6 +56,8 @@ const NewsletterPreview = () => {
           subtitle: data.subtitle,
           content: data.content,
           heroImageUrl: data.hero_image_url || '',
+          inlineImageUrl: (data as any).inline_image_url || '',
+          socialImageUrl: (data as any).social_image_url || '',
           tags: data.tags || []
         });
       } catch (error) {
@@ -142,6 +146,16 @@ const NewsletterPreview = () => {
               <p className="text-lg text-muted-foreground leading-relaxed">
                 {newsletter.subtitle}
               </p>
+            )}
+
+            {/* Inline Thumbnail - Auto-displays after subtitle */}
+            {newsletter.inlineImageUrl && (
+              <ResponsiveImage
+                src={newsletter.inlineImageUrl}
+                alt={newsletter.title}
+                className="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-lg my-6"
+                loading="lazy"
+              />
             )}
 
             {/* Author Block */}
