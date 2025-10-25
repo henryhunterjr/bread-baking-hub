@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -18,7 +18,57 @@ export const RecipeTextInput = ({ onRecipeFormatted }: RecipeTextInputProps) => 
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const { toast } = useToast();
+  const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const hasUnsavedChangesRef = useRef(false);
+
+  // Debounced auto-save effect
+  useEffect(() => {
+    if (!recipeText.trim() || isProcessing) return;
+
+    // Clear existing timer
+    if (autoSaveTimerRef.current) {
+      clearTimeout(autoSaveTimerRef.current);
+    }
+
+    // Mark as having unsaved changes
+    hasUnsavedChangesRef.current = true;
+
+    // Set new auto-save timer (3 seconds of inactivity)
+    autoSaveTimerRef.current = setTimeout(async () => {
+      try {
+        await recipeApiClient.saveDraft({
+          source: 'text',
+          raw_text: recipeText
+        });
+        setLastSaved(new Date());
+        hasUnsavedChangesRef.current = false;
+      } catch (err) {
+        logger.error('Auto-save failed:', err);
+      }
+    }, 3000);
+
+    return () => {
+      if (autoSaveTimerRef.current) {
+        clearTimeout(autoSaveTimerRef.current);
+      }
+    };
+  }, [recipeText, isProcessing]);
+
+  // Warn user before leaving with unsaved changes
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChangesRef.current && recipeText.trim()) {
+        e.preventDefault();
+        e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+        return e.returnValue;
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [recipeText]);
 
   const handleSubmit = async () => {
     if (!recipeText.trim()) {
@@ -147,8 +197,13 @@ Method:
           className="min-h-[300px] font-mono text-sm"
           disabled={isProcessing}
         />
-        <div className="mt-2 text-xs text-muted-foreground">
-          {recipeText.length} characters • Supports any text format with ingredients and method sections
+        <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
+          <span>{recipeText.length} characters • Supports any text format with ingredients and method sections</span>
+          {lastSaved && (
+            <span className="text-green-600 dark:text-green-400">
+              Auto-saved {new Date(lastSaved).toLocaleTimeString()}
+            </span>
+          )}
         </div>
       </div>
 

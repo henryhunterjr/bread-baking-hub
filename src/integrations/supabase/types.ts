@@ -88,6 +88,63 @@ export type Database = {
         }
         Relationships: []
       }
+      affiliate_products: {
+        Row: {
+          affiliate_link: string
+          brand: string | null
+          category: string
+          created_at: string
+          description: string
+          featured: boolean
+          id: string
+          image_url: string | null
+          keywords: string[]
+          name: string
+          offer_text: string
+          price: string
+          regions: string[]
+          seasonal_tags: string[]
+          updated_at: string
+          utm_params: string | null
+        }
+        Insert: {
+          affiliate_link: string
+          brand?: string | null
+          category: string
+          created_at?: string
+          description: string
+          featured?: boolean
+          id: string
+          image_url?: string | null
+          keywords?: string[]
+          name: string
+          offer_text?: string
+          price: string
+          regions?: string[]
+          seasonal_tags?: string[]
+          updated_at?: string
+          utm_params?: string | null
+        }
+        Update: {
+          affiliate_link?: string
+          brand?: string | null
+          category?: string
+          created_at?: string
+          description?: string
+          featured?: boolean
+          id?: string
+          image_url?: string | null
+          keywords?: string[]
+          name?: string
+          offer_text?: string
+          price?: string
+          regions?: string[]
+          seasonal_tags?: string[]
+          updated_at?: string
+          utm_params?: string | null
+        }
+        Relationships: []
+      }
       ai_drafts: {
         Row: {
           created_at: string
@@ -127,7 +184,7 @@ export type Database = {
           event_data: Json | null
           event_type: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           page_url: string
           referrer: string | null
           session_id: string
@@ -139,7 +196,7 @@ export type Database = {
           event_data?: Json | null
           event_type: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           page_url: string
           referrer?: string | null
           session_id: string
@@ -151,7 +208,7 @@ export type Database = {
           event_data?: Json | null
           event_type?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           page_url?: string
           referrer?: string | null
           session_id?: string
@@ -1173,6 +1230,7 @@ export type Database = {
           folder: string | null
           id: string
           image_url: string | null
+          is_featured: boolean | null
           is_public: boolean | null
           slug: string | null
           tags: string[] | null
@@ -1187,6 +1245,7 @@ export type Database = {
           folder?: string | null
           id?: string
           image_url?: string | null
+          is_featured?: boolean | null
           is_public?: boolean | null
           slug?: string | null
           tags?: string[] | null
@@ -1201,6 +1260,7 @@ export type Database = {
           folder?: string | null
           id?: string
           image_url?: string | null
+          is_featured?: boolean | null
           is_public?: boolean | null
           slug?: string | null
           tags?: string[] | null
@@ -1258,7 +1318,7 @@ export type Database = {
           event_data: Json | null
           event_type: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           user_agent: string | null
           user_id: string | null
         }
@@ -1267,7 +1327,7 @@ export type Database = {
           event_data?: Json | null
           event_type: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_agent?: string | null
           user_id?: string | null
         }
@@ -1276,7 +1336,7 @@ export type Database = {
           event_data?: Json | null
           event_type?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_agent?: string | null
           user_id?: string | null
         }
@@ -1749,10 +1809,7 @@ export type Database = {
       }
     }
     Functions: {
-      app_analytics_cleanup_old_events: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+      app_analytics_cleanup_old_events: { Args: never; Returns: Json }
       app_analytics_gdpr_delete_by_session: {
         Args: { p_session_id: string }
         Returns: Json
@@ -1761,14 +1818,8 @@ export type Database = {
         Args: { p_user_id: string }
         Returns: Json
       }
-      app_analytics_refresh_materialized_views: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      apply_security_hardening: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      app_analytics_refresh_materialized_views: { Args: never; Returns: Json }
+      apply_security_hardening: { Args: never; Returns: undefined }
       assign_ab_variant: {
         Args: {
           experiment_name: string
@@ -1791,16 +1842,13 @@ export type Database = {
         Args: { encrypted_secret: string }
         Returns: string
       }
-      encrypt_mfa_secret: {
-        Args: { secret_text: string }
-        Returns: string
-      }
+      encrypt_mfa_secret: { Args: { secret_text: string }; Returns: string }
       generate_recipe_slug: {
         Args: { recipe_title: string; recipe_user_id: string }
         Returns: string
       }
       get_admin_submissions: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           created_at: string
           id: string
@@ -1815,14 +1863,8 @@ export type Database = {
           user_id: string
         }[]
       }
-      get_analytics_health_status: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
-      get_auth_security_status: {
-        Args: Record<PropertyKey, never>
-        Returns: Json
-      }
+      get_analytics_health_status: { Args: never; Returns: Json }
+      get_auth_security_status: { Args: never; Returns: Json }
       get_core_web_vitals_summary: {
         Args: { end_date?: string; start_date?: string }
         Returns: {
@@ -1833,10 +1875,7 @@ export type Database = {
           sample_count: number
         }[]
       }
-      get_decrypted_mfa_secret: {
-        Args: { p_user_id: string }
-        Returns: string
-      }
+      get_decrypted_mfa_secret: { Args: { p_user_id: string }; Returns: string }
       get_related_recipes: {
         Args: { limit_count?: number; recipe_id: string }
         Returns: {
@@ -1861,12 +1900,9 @@ export type Database = {
           user_id: string
         }[]
       }
-      get_user_mfa_secret: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
+      get_user_mfa_secret: { Args: never; Returns: string }
       get_user_mfa_status: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           created_at: string
           has_backup_codes: boolean
@@ -1885,10 +1921,7 @@ export type Database = {
         }
         Returns: boolean
       }
-      is_current_user_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      is_current_user_admin: { Args: never; Returns: boolean }
       log_security_event: {
         Args: { p_event_data?: Json; p_event_type: string; p_user_id?: string }
         Returns: undefined
@@ -1906,29 +1939,52 @@ export type Database = {
           text_chunk: string
         }[]
       }
-      search_blog_posts: {
-        Args:
-          | { limit_count?: number; search_query: string }
-          | {
+      search_blog_posts:
+        | {
+            Args: { limit_count?: number; search_query: string }
+            Returns: {
+              excerpt: string
+              hero_image_url: string
+              id: string
+              search_rank: number
+              slug: string
+              tags: string[]
+              title: string
+            }[]
+          }
+        | {
+            Args: {
               limit_count?: number
               search_query: string
               tag_filters?: string[]
             }
-        Returns: {
-          excerpt: string
-          hero_image_url: string
-          id: string
-          published_at: string
-          search_rank: number
-          slug: string
-          subtitle: string
-          tags: string[]
-          title: string
-        }[]
-      }
-      search_recipes: {
-        Args:
-          | {
+            Returns: {
+              excerpt: string
+              hero_image_url: string
+              id: string
+              published_at: string
+              search_rank: number
+              slug: string
+              subtitle: string
+              tags: string[]
+              title: string
+            }[]
+          }
+      search_recipes:
+        | {
+            Args: { limit_count?: number; search_query: string }
+            Returns: {
+              excerpt: string
+              id: string
+              image_url: string
+              search_rank: number
+              slug: string
+              tags: string[]
+              title: string
+            }[]
+          }
+        | {
+            Args: {
               dietary_filters?: string[]
               difficulty_filter?: string
               ingredients_filter?: string[]
@@ -1937,20 +1993,19 @@ export type Database = {
               search_query: string
               total_time_max?: number
             }
-          | { limit_count?: number; search_query: string }
-        Returns: {
-          author_name: string
-          created_at: string
-          excerpt: string
-          id: string
-          image_url: string
-          search_rank: number
-          slug: string
-          tags: string[]
-          title: string
-          user_id: string
-        }[]
-      }
+            Returns: {
+              author_name: string
+              created_at: string
+              excerpt: string
+              id: string
+              image_url: string
+              search_rank: number
+              slug: string
+              tags: string[]
+              title: string
+              user_id: string
+            }[]
+          }
       search_site_content: {
         Args: {
           content_types?: string[]
@@ -1982,10 +2037,7 @@ export type Database = {
         Args: { p_email: string; p_name?: string }
         Returns: Json
       }
-      unsubscribe_from_newsletter: {
-        Args: { p_email: string }
-        Returns: Json
-      }
+      unsubscribe_from_newsletter: { Args: { p_email: string }; Returns: Json }
       verify_backup_code: {
         Args: { p_backup_code: string; p_user_id: string }
         Returns: boolean
