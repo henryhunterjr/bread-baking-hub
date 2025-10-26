@@ -9,11 +9,12 @@ interface EnhancedRecipeSEOProps {
 
 export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipeSEOProps) => {
   const title = `${recipe.title} | Baking Great Bread`;
-  const description = recipe.seoDescription || recipe.summary || `Recipe: ${recipe.title} by ${recipe.author.name}`;
+  const authorName = recipe.author?.name || 'Baking Great Bread';
+  const description = recipe.seoDescription || recipe.summary || `Recipe: ${recipe.title} by ${authorName}`;
   const canonicalUrl = canonical || getRecipeURL(recipe);
   
   // Use the actual recipe image URL directly - don't use mappings for social sharing
-  let ogImage = recipe.heroImage.url;
+  let ogImage = recipe.heroImage?.url || '/lovable-uploads/default-recipe.png';
   
   // Ensure absolute URL for image
   if (!ogImage.startsWith('http')) {
@@ -34,12 +35,12 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
     "@context": "https://schema.org",
     "@type": "Recipe",
     name: recipe.title,
-    description: recipe.summary,
+    description: recipe.summary || recipe.title,
     image: [ogImage],
     author: {
       "@type": "Person",
-      name: recipe.author.name,
-      ...(recipe.author.avatar && { image: recipe.author.avatar })
+      name: authorName,
+      ...(recipe.author?.avatar && { image: recipe.author.avatar })
     },
     datePublished: recipe.createdAt,
     dateModified: recipe.updatedAt,
@@ -90,10 +91,10 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
       <meta property="og:image" content={ogImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content={recipe.heroImage.alt} />
+      <meta property="og:image:alt" content={recipe.heroImage?.alt || recipe.title} />
       
       {/* Article-specific OG tags */}
-      <meta property="article:author" content={recipe.author.name} />
+      <meta property="article:author" content={authorName} />
       <meta property="article:published_time" content={recipe.createdAt} />
       <meta property="article:modified_time" content={recipe.updatedAt} />
       <meta property="article:section" content="Recipes" />
@@ -106,14 +107,14 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
       <meta name="twitter:title" content={recipe.title} />
       <meta name="twitter:description" content={truncatedDescription} />
       <meta name="twitter:image" content={ogImage} />
-      <meta name="twitter:image:alt" content={recipe.heroImage.alt} />
+      <meta name="twitter:image:alt" content={recipe.heroImage?.alt || recipe.title} />
       <meta name="twitter:creator" content="@bakinggreatbread" />
       
       {/* Facebook App ID */}
       <meta property="fb:app_id" content={fbAppId || "1511662243358762"} />
       
       {/* Additional meta tags */}
-      <meta name="author" content={recipe.author.name} />
+      <meta name="author" content={authorName} />
       <meta name="publisher" content="Baking Great Bread" />
       <meta name="robots" content="index, follow, max-image-preview:large" />
       
