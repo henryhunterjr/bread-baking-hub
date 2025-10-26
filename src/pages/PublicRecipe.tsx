@@ -107,7 +107,10 @@ const PublicRecipe = () => {
         recipe={{
           ...standardRecipe,
           summary: recipeIntroduction,
-          author: recipeAuthor,
+          author: {
+            name: recipeAuthor || 'Baking Great Bread',
+            avatar: standardRecipe.author?.avatar
+          },
           heroImage: {
             ...standardRecipe.heroImage,
             url: recipeImageUrl
