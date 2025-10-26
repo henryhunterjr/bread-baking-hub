@@ -15,15 +15,31 @@ export const PrintableRecipe = ({ recipe }: PrintableRecipeProps) => {
             .no-print { display: none !important; }
             .page-break { page-break-before: always; }
             .avoid-break { page-break-inside: avoid; }
+            img { max-width: 100%; height: auto; }
           }
         `}
       </style>
 
-      {/* Header */}
+      {/* Header with Image */}
       <header className="mb-8 text-center border-b-2 border-gray-300 pb-6">
-        <h1 className="text-4xl font-bold mb-2">{recipe.title}</h1>
-        <p className="text-lg text-gray-600 mb-2">{recipe.summary}</p>
-        <div className="flex justify-center items-center gap-4 text-sm text-gray-500">
+        <h1 className="text-4xl font-bold mb-4">{recipe.title}</h1>
+        
+        {/* Recipe Image */}
+        {recipe.imageUrl && (
+          <div className="mb-4 avoid-break">
+            <img 
+              src={recipe.imageUrl} 
+              alt={recipe.title}
+              className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
+              style={{ maxHeight: '400px', objectFit: 'cover' }}
+            />
+          </div>
+        )}
+        
+        {recipe.summary && (
+          <p className="text-lg text-gray-600 mb-2">{recipe.summary}</p>
+        )}
+        <div className="flex justify-center items-center gap-4 text-sm text-gray-500 flex-wrap">
           <span>By {recipe.author.name}</span>
           <span>•</span>
           <span>Serves {recipe.servings}</span>
@@ -98,6 +114,53 @@ export const PrintableRecipe = ({ recipe }: PrintableRecipeProps) => {
           ))}
         </ol>
       </section>
+
+      {/* Equipment */}
+      {recipe.equipment && recipe.equipment.length > 0 && (
+        <section className="mb-8 avoid-break">
+          <h2 className="text-2xl font-bold mb-4 border-b border-gray-200 pb-2">Equipment</h2>
+          <ul className="space-y-2">
+            {recipe.equipment.map((item, index) => (
+              <li key={index} className="flex items-start">
+                <span className="w-4 h-4 border border-gray-400 rounded-sm mr-3 mt-1 flex-shrink-0"></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Tips */}
+      {recipe.tips && recipe.tips.length > 0 && (
+        <section className="mb-8 avoid-break">
+          <h2 className="text-2xl font-bold mb-4 border-b border-gray-200 pb-2">Tips & Notes</h2>
+          <ul className="space-y-3">
+            {recipe.tips.map((tip, index) => (
+              <li key={index} className="flex items-start">
+                <span className="text-yellow-600 mr-2 text-lg flex-shrink-0">💡</span>
+                <span className="text-gray-800">{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Troubleshooting */}
+      {recipe.troubleshooting && recipe.troubleshooting.length > 0 && (
+        <section className="mb-8 avoid-break">
+          <h2 className="text-2xl font-bold mb-4 border-b border-gray-200 pb-2">Troubleshooting</h2>
+          <div className="space-y-4">
+            {recipe.troubleshooting.map((item, index) => (
+              <div key={index} className="bg-yellow-50 p-4 rounded border-l-4 border-yellow-400">
+                <p className="font-semibold text-gray-800 mb-1">
+                  <span className="text-yellow-600">⚠️</span> {item.issue}
+                </p>
+                <p className="text-gray-700 ml-6">{item.solution}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Nutrition Info */}
       {recipe.nutrition && (

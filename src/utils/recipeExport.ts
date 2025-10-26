@@ -10,7 +10,10 @@ interface RecipeForExport {
   ingredients: any;
   method: any;
   tips?: string[];
+  troubleshooting?: Array<{ issue: string; solution: string }>;
+  equipment?: string[];
   image_url?: string;
+  author_name?: string;
 }
 
 export const generateRecipePDF = async (recipe: RecipeForExport) => {
@@ -30,12 +33,24 @@ export const generateRecipePDF = async (recipe: RecipeForExport) => {
       </h1>
   `;
 
-  if (recipe.introduction) {
-    const intro = recipe.introduction.length > 150 
-      ? recipe.introduction.substring(0, 150) + '...' 
-      : recipe.introduction;
-    html += `<p style="margin: 4px 0; font-size: 10pt; color: #333;">${intro}</p>`;
+  // Add recipe image if available
+  if (recipe.image_url) {
+    html += `
+      <div style="margin: 12px 0; text-align: center;">
+        <img src="${recipe.image_url}" alt="${recipe.title}" 
+          style="max-width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+      </div>
+    `;
   }
+
+  if (recipe.introduction) {
+    html += `<p style="margin: 8px 0; font-size: 10pt; color: #333; line-height: 1.5;">${recipe.introduction}</p>`;
+  }
+  
+  if (recipe.author_name) {
+    html += `<p style="margin: 4px 0; font-size: 9pt; color: #666;">By ${recipe.author_name}</p>`;
+  }
+  
   html += `</div>`;
 
   // Recipe metadata - compact format
@@ -134,20 +149,46 @@ export const generateRecipePDF = async (recipe: RecipeForExport) => {
     html += `</ol>`;
   }
 
+  // Equipment
+  if (recipe.equipment && recipe.equipment.length > 0) {
+    html += `<h2 style="font-size: 13pt; font-weight: bold; margin: 15px 0 8px 0; color: #000; border-bottom: 1px solid #666; padding-bottom: 4px;">Equipment</h2>`;
+    html += `<ul style="margin: 0; padding-left: 20px; font-size: 10pt;">`;
+    recipe.equipment.forEach(item => {
+      html += `<li style="margin-bottom: 4px;">${item}</li>`;
+    });
+    html += `</ul>`;
+  }
+
   // Tips - compact format
   if (recipe.tips && recipe.tips.length > 0) {
     html += `<h2 style="font-size: 13pt; font-weight: bold; margin: 15px 0 8px 0; color: #000; border-bottom: 1px solid #666; padding-bottom: 4px;">Tips & Notes</h2>`;
     html += `<ul style="margin: 0; padding-left: 20px; font-size: 10pt;">`;
     recipe.tips.forEach(tip => {
-      html += `<li style="margin-bottom: 6px;">${tip}</li>`;
+      html += `<li style="margin-bottom: 6px; line-height: 1.5;">${tip}</li>`;
     });
     html += `</ul>`;
+  }
+
+  // Troubleshooting
+  if (recipe.troubleshooting && recipe.troubleshooting.length > 0) {
+    html += `<h2 style="font-size: 13pt; font-weight: bold; margin: 15px 0 8px 0; color: #000; border-bottom: 1px solid #666; padding-bottom: 4px;">Troubleshooting</h2>`;
+    html += `<div style="margin: 0; font-size: 10pt;">`;
+    recipe.troubleshooting.forEach(item => {
+      html += `
+        <div style="margin-bottom: 10px; padding: 8px; background: #fff9e6; border-left: 3px solid #f59e0b; border-radius: 4px;">
+          <p style="margin: 0 0 4px 0; font-weight: bold; color: #92400e;">⚠️ ${item.issue}</p>
+          <p style="margin: 0; color: #78350f; padding-left: 20px;">${item.solution}</p>
+        </div>
+      `;
+    });
+    html += `</div>`;
   }
 
   // Minimal footer
   html += `
     <div style="margin-top: 20px; padding-top: 10px; border-top: 1px solid #ccc; font-size: 9pt; color: #666; text-align: center;">
       <p style="margin: 0;">From Baking Great Bread | bakinggreatbread.com</p>
+      <p style="margin: 4px 0 0 0;">Printed on ${new Date().toLocaleDateString()}</p>
     </div>
   `;
 

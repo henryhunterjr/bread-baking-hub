@@ -10,6 +10,7 @@ export interface StandardRecipe {
     width?: number;
     height?: number;
   };
+  imageUrl?: string; // Direct image URL for convenience
   summary: string;
   seoDescription?: string;
   yield: string; // e.g., "8 servings", "2 loaves"
@@ -32,6 +33,9 @@ export interface StandardRecipe {
     carbs?: string;
     fat?: string;
   };
+  tips?: string[];
+  equipment?: string[];
+  troubleshooting?: Array<{ issue: string; solution: string }>;
   createdAt: string;
   updatedAt: string;
   isPublic: boolean;
@@ -104,6 +108,43 @@ export function mapLegacyToStandard(legacy: LegacyRecipe): StandardRecipe {
     });
   }
 
+  // Normalize tips
+  const tips: string[] = [];
+  if (Array.isArray(data.tips)) {
+    data.tips.forEach((tip: any) => {
+      if (typeof tip === 'string') {
+        tips.push(tip);
+      } else if (tip && typeof tip === 'object' && tip.text) {
+        tips.push(tip.text);
+      }
+    });
+  }
+
+  // Normalize equipment
+  const equipment: string[] = [];
+  if (Array.isArray(data.equipment)) {
+    data.equipment.forEach((item: any) => {
+      if (typeof item === 'string') {
+        equipment.push(item);
+      } else if (item && typeof item === 'object' && item.name) {
+        equipment.push(item.name);
+      }
+    });
+  }
+
+  // Normalize troubleshooting
+  const troubleshooting: Array<{ issue: string; solution: string }> = [];
+  if (Array.isArray(data.troubleshooting)) {
+    data.troubleshooting.forEach((item: any) => {
+      if (item && typeof item === 'object' && item.issue && item.solution) {
+        troubleshooting.push({
+          issue: item.issue,
+          solution: item.solution
+        });
+      }
+    });
+  }
+
   return {
     id: legacy.id,
     title: legacy.title || 'Untitled Recipe',
@@ -114,6 +155,7 @@ export function mapLegacyToStandard(legacy: LegacyRecipe): StandardRecipe {
       width: 1200,
       height: 630
     },
+    imageUrl: legacy.image_url,
     summary: data.description || data.introduction || data.notes || `A delicious recipe for ${legacy.title}`,
     seoDescription: data.seoDescription,
     yield: data.servings || data.yield || '4 servings',
@@ -127,10 +169,13 @@ export function mapLegacyToStandard(legacy: LegacyRecipe): StandardRecipe {
     totalTime: data.total_time || data.totalTime,
     difficulty: data.difficulty,
     author: {
-      name: 'Henry Hunter',
+      name: legacy.data?.author_name || data.author_name || 'Henry Hunter',
       avatar: '/author-avatar.jpg'
     },
     nutrition: data.nutrition,
+    tips,
+    equipment,
+    troubleshooting,
     createdAt: legacy.created_at,
     updatedAt: legacy.updated_at,
     isPublic: legacy.is_public || false
