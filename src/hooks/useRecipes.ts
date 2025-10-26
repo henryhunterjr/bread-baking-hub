@@ -150,10 +150,55 @@ export const useRecipes = () => {
     });
   };
 
+  const deleteRecipe = async (recipeId: string) => {
+    if (!user) {
+      console.log('❌ No user found');
+      return false;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('recipes')
+        .delete()
+        .eq('id', recipeId)
+        .eq('user_id', user.id);
+
+      if (error) {
+        console.error('❌ Supabase error:', error);
+        toast({
+          title: "Error",
+          description: `Failed to delete recipe: ${error.message}`,
+          variant: "destructive",
+        });
+        return false;
+      }
+
+      console.log('✅ Recipe deleted successfully');
+      
+      // Update local state
+      setRecipes(prevRecipes => prevRecipes.filter(r => r.id !== recipeId));
+      
+      toast({
+        title: "Success",
+        description: "Recipe deleted successfully!",
+      });
+      return true;
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
+      console.error('Error deleting recipe:', error);
+      return false;
+    }
+  };
+
   return {
     recipes,
     loading,
     updateRecipe,
-    updateRecipeTitle
+    updateRecipeTitle,
+    deleteRecipe
   };
 };

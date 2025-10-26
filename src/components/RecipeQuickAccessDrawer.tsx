@@ -3,7 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Clock, ChevronUp, ChevronDown, FolderOpen } from 'lucide-react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { Clock, ChevronUp, ChevronDown, FolderOpen, Trash2 } from 'lucide-react';
 import { useRecipes } from '@/hooks/useRecipes';
 import { useAuth } from '@/hooks/useAuth';
 import { getImageForRecipe } from '@/utils/heroImageMapping';
@@ -15,8 +16,16 @@ interface RecipeQuickAccessDrawerProps {
 
 export const RecipeQuickAccessDrawer = ({ onRecipeSelect }: RecipeQuickAccessDrawerProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { recipes, loading } = useRecipes();
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const { recipes, loading, deleteRecipe } = useRecipes();
   const { user } = useAuth();
+
+  const handleDelete = async (e: React.MouseEvent, recipeId: string) => {
+    e.stopPropagation();
+    setDeletingId(recipeId);
+    await deleteRecipe(recipeId);
+    setDeletingId(null);
+  };
 
   if (!user || loading) return null;
 
@@ -65,9 +74,42 @@ export const RecipeQuickAccessDrawer = ({ onRecipeSelect }: RecipeQuickAccessDra
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between">
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-primary truncate">
-                            {recipe.title}
-                          </h3>
+                          <div className="flex items-start justify-between gap-2 mb-1">
+                            <h3 className="font-semibold text-primary truncate">
+                              {recipe.title}
+                            </h3>
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-6 w-6 shrink-0"
+                                  disabled={deletingId === recipe.id}
+                                  onClick={(e) => e.stopPropagation()}
+                                  aria-label="Delete recipe"
+                                >
+                                  <Trash2 className="h-3 w-3 text-destructive" />
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent onClick={(e) => e.stopPropagation()}>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Delete Recipe</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    Are you sure you want to delete "{recipe.title}"? This action cannot be undone.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel onClick={(e) => e.stopPropagation()}>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction
+                                    onClick={(e) => handleDelete(e, recipe.id)}
+                                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                  >
+                                    Delete
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </div>
                           <p className="text-sm text-muted-foreground mt-1">
                             {new Date(recipe.created_at).toLocaleDateString()}
                           </p>
