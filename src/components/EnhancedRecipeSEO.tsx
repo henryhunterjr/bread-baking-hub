@@ -30,7 +30,7 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
     ? description.substring(0, 157) + '...' 
     : description;
 
-  // Generate recipe structured data
+  // Generate recipe structured data with safe defaults
   const recipeSchema = {
     "@context": "https://schema.org",
     "@type": "Recipe",
@@ -49,15 +49,19 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
     totalTime: recipe.totalTime ? `PT${recipe.totalTime}` : undefined,
     recipeYield: recipe.yield,
     recipeCategory: recipe.categories,
-    keywords: recipe.tags.join(', '),
-    recipeIngredient: recipe.ingredients.map(ing => 
-      `${ing.amount ? ing.amount + ' ' : ''}${ing.item}${ing.note ? ' (' + ing.note + ')' : ''}`
-    ),
-    recipeInstructions: recipe.steps.map(step => ({
-      "@type": "HowToStep",
-      text: step.instruction,
-      ...(step.image && { image: step.image })
-    })),
+    keywords: Array.isArray(recipe.tags) ? recipe.tags.join(', ') : '',
+    ...(Array.isArray(recipe.ingredients) && recipe.ingredients.length > 0 && {
+      recipeIngredient: recipe.ingredients.map(ing => 
+        `${ing.amount ? ing.amount + ' ' : ''}${ing.item}${ing.note ? ' (' + ing.note + ')' : ''}`
+      )
+    }),
+    ...(Array.isArray(recipe.steps) && recipe.steps.length > 0 && {
+      recipeInstructions: recipe.steps.map(step => ({
+        "@type": "HowToStep",
+        text: step.instruction,
+        ...(step.image && { image: step.image })
+      }))
+    }),
     ...(recipe.nutrition && {
       nutrition: {
         "@type": "NutritionInformation",
@@ -79,7 +83,7 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
       {/* Basic SEO */}
       <title>{title}</title>
       <meta name="description" content={truncatedDescription} />
-      <meta name="keywords" content={recipe.tags.join(', ')} />
+      <meta name="keywords" content={Array.isArray(recipe.tags) ? recipe.tags.join(', ') : ''} />
       <link rel="canonical" href={canonicalUrl} />
       
       {/* Open Graph for Facebook */}
@@ -98,7 +102,7 @@ export const EnhancedRecipeSEO = ({ recipe, canonical, fbAppId }: EnhancedRecipe
       <meta property="article:published_time" content={recipe.createdAt} />
       <meta property="article:modified_time" content={recipe.updatedAt} />
       <meta property="article:section" content="Recipes" />
-      {recipe.tags.map(tag => (
+      {Array.isArray(recipe.tags) && recipe.tags.map(tag => (
         <meta key={tag} property="article:tag" content={tag} />
       ))}
       
