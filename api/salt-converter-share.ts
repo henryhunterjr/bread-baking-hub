@@ -11,7 +11,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const siteUrl = 'https://bakinggreatbread.com';
   const pageUrl = `${siteUrl}/salt-converter`;
-  const imageUrl = `${siteUrl}/lovable-uploads/3850aa1b-5d06-48a3-91c7-d9405d23ea7a.png`;
+  const imageUrl = `${siteUrl}/lovable-uploads/salt-converter-hero.png`;
 
   // Generate HTML with Open Graph tags
   const html = `<!DOCTYPE html>
