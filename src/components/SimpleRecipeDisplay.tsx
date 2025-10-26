@@ -46,22 +46,22 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
 
       {/* Recipe Meta */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {recipe.prepTime && (
+        {(recipe.prepTime || recipe.prep_time) && (
           <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
             <Clock className="w-5 h-5 text-primary" />
             <div>
               <div className="text-sm font-medium">Prep Time</div>
-              <div className="text-xs text-muted-foreground">{recipe.prepTime}</div>
+              <div className="text-xs text-muted-foreground">{recipe.prepTime || recipe.prep_time}</div>
             </div>
           </div>
         )}
         
-        {recipe.bakeTime && (
+        {(recipe.bakeTime || recipe.cook_time) && (
           <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
             <Clock className="w-5 h-5 text-primary" />
             <div>
               <div className="text-sm font-medium">Bake Time</div>
-              <div className="text-xs text-muted-foreground">{recipe.bakeTime}</div>
+              <div className="text-xs text-muted-foreground">{recipe.bakeTime || recipe.cook_time}</div>
             </div>
           </div>
         )}
@@ -76,12 +76,12 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
           </div>
         )}
 
-        {recipe.yield && (
+        {(recipe.yield || recipe.servings) && (
           <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
             <Users className="w-5 h-5 text-primary" />
             <div>
               <div className="text-sm font-medium">Yield</div>
-              <div className="text-xs text-muted-foreground">{recipe.yield}</div>
+              <div className="text-xs text-muted-foreground">{recipe.yield || recipe.servings}</div>
             </div>
           </div>
         )}
@@ -239,6 +239,25 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
         </div>
       )}
 
+      {/* Tips */}
+      {recipe.tips && (
+        <div className="bg-muted/50 rounded-lg p-6">
+          <h3 className="text-xl font-semibold mb-4">Tips</h3>
+          {Array.isArray(recipe.tips) ? (
+            <ul className="space-y-2">
+              {recipe.tips.map((tip: string, index: number) => (
+                <li key={index} className="flex items-start gap-2">
+                  <span className="text-primary font-semibold mt-1">•</span>
+                  <span className="text-muted-foreground flex-1">{tip}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-muted-foreground whitespace-pre-wrap">{recipe.tips}</p>
+          )}
+        </div>
+      )}
+
       {/* Baker's Notes */}
       {recipe.notes && (
         <div className="bg-muted/50 rounded-lg p-6">
@@ -251,7 +270,22 @@ export const SimpleRecipeDisplay = ({ recipe, imageUrl, title, recipeId, slug }:
       {recipe.troubleshooting && (
         <div className="bg-muted/50 rounded-lg p-6">
           <h3 className="text-xl font-semibold mb-4">Troubleshooting</h3>
-          <div className="prose prose-sm max-w-none text-foreground whitespace-pre-wrap">{recipe.troubleshooting}</div>
+          {Array.isArray(recipe.troubleshooting) ? (
+            <ul className="space-y-3">
+              {recipe.troubleshooting.map((item: any, index: number) => (
+                <li key={index} className="space-y-1">
+                  {item.issue && (
+                    <div className="font-medium text-foreground">Issue: {item.issue}</div>
+                  )}
+                  {item.solution && (
+                    <div className="text-muted-foreground ml-4">Solution: {item.solution}</div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="prose prose-sm max-w-none text-foreground whitespace-pre-wrap">{recipe.troubleshooting}</div>
+          )}
         </div>
       )}
 
