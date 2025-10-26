@@ -25,6 +25,17 @@
       ]
     },
     {
+      "source": "/salt-converter",
+      "destination": "/api/salt-converter-share",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(facebookexternalhit|Facebot|FacebookBot|Twitterbot|LinkedInBot).*"
+        }
+      ]
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
