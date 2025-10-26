@@ -38,7 +38,8 @@ const SaltConverter: React.FC = () => {
     'fine-sea': 3.6,
     'coarse-sea': 3.6,
     'kosher-dc': 2.8,
-    'kosher-morton': 4.8
+    'kosher-morton': 4.8,
+    'maldon': 2.0
   };
 
   const saltNames: SaltNames = {
@@ -46,7 +47,8 @@ const SaltConverter: React.FC = () => {
     'fine-sea': 'Fine Sea Salt',
     'coarse-sea': 'Coarse Sea Salt',
     'kosher-dc': 'Kosher Salt (Diamond Crystal)',
-    'kosher-morton': 'Kosher Salt (Morton\'s)'
+    'kosher-morton': 'Kosher Salt (Morton\'s)',
+    'maldon': 'Maldon Sea Salt Flakes'
   };
 
   const fractions: { [key: number]: string } = {
@@ -316,6 +318,7 @@ const SaltConverter: React.FC = () => {
                   <option value="coarse-sea">Coarse Sea Salt</option>
                   <option value="kosher-dc">Kosher (Diamond Crystal)</option>
                   <option value="kosher-morton">Kosher (Morton's)</option>
+                  <option value="maldon">Maldon Sea Salt Flakes</option>
                 </select>
               </div>
               
@@ -338,6 +341,7 @@ const SaltConverter: React.FC = () => {
                   <option value="coarse-sea">Coarse Sea Salt</option>
                   <option value="kosher-dc">Kosher (Diamond Crystal)</option>
                   <option value="kosher-morton">Kosher (Morton's)</option>
+                  <option value="maldon">Maldon Sea Salt Flakes</option>
                 </select>
                 <button
                   onClick={convertSalt}
