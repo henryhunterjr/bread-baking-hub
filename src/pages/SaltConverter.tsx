@@ -32,12 +32,12 @@ const SaltConverter: React.FC = () => {
     'kosher-morton': 0.8
   };
 
-  // Weight in grams per teaspoon
+  // Weight in grams per teaspoon (actual density data)
   const saltWeights: SaltFactors = {
-    'table': 6,
-    'fine-sea': 5,
-    'coarse-sea': 4,
-    'kosher-dc': 3,
+    'table': 6.0,
+    'fine-sea': 3.6,
+    'coarse-sea': 3.6,
+    'kosher-dc': 2.8,
     'kosher-morton': 4.8
   };
 
@@ -104,21 +104,21 @@ const SaltConverter: React.FC = () => {
     }
 
     if (isWeightMode) {
-      // Weight mode: convert grams to grams
-      const resultValue = (amountValue / saltWeights[fromSalt]) * saltWeights[toSalt];
-      
+      // Weight mode: grams to grams is ALWAYS 1:1
+      // 10g of any salt = 10g of any other salt (mass doesn't change)
       setResult(
-        `${amountValue}g of ${saltNames[fromSalt]} = ${resultValue.toFixed(1)}g of ${saltNames[toSalt]}`
+        `${amountValue}g of ${saltNames[fromSalt]} = ${amountValue}g of ${saltNames[toSalt]}`
       );
     } else {
-      // Volume mode: convert teaspoons/tablespoons
+      // Volume mode: use density to convert volume measurements
       const multiplier = unit === 'tbsp' ? 3 : 1;
       const amountInTsp = amountValue * multiplier;
       
-      // Convert to table salt equivalent first
-      const tableEquivalent = amountInTsp * saltFactors[fromSalt];
-      // Then convert to target salt
-      const resultInTsp = tableEquivalent / saltFactors[toSalt];
+      // Calculate actual salt mass from input volume
+      const saltMassInGrams = amountInTsp * saltWeights[fromSalt];
+      
+      // Calculate output volume needed to get same mass
+      const resultInTsp = saltMassInGrams / saltWeights[toSalt];
       
       const resultText = formatResult(resultInTsp);
       const unitText = 'tsp';
