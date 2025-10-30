@@ -57,7 +57,7 @@ class FirstPartyAnalytics {
       return;
     }
 
-    this.endpoint = `${window.location.origin}/api/track`;
+    this.endpoint = 'https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/analytics-track';
     this.hmacKey = 'analytics_ingest_key_placeholder'; // Will be env-configured
     this.sessionId = this.getOrCreateSession();
     

@@ -5,6 +5,8 @@ import { Providers } from './providers/Providers';
 import App from './App';
 import './index.css';
 import { installImageErrorHandler } from './utils/imageErrorHandler';
+// Initialize first-party analytics tracking
+import './utils/firstPartyAnalytics';
 
 // Clear stale mount flag on page load
 delete (window as any).__BGB_APP_MOUNTED__;
