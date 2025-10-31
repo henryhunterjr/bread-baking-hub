@@ -2,6 +2,8 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MediaKitHero from "@/components/mediakit/MediaKitHero";
+import PlatformCards from "@/components/mediakit/PlatformCards";
+import GrowthCharts from "@/components/mediakit/GrowthCharts";
 import { MediaKitProvider } from "@/components/mediakit/MediaKitContext";
 
 const MediaKit = () => {
@@ -21,8 +23,8 @@ const MediaKit = () => {
         
         <main>
           <MediaKitHero />
-          
-          {/* Future sections will go here */}
+          <PlatformCards />
+          <GrowthCharts />
         </main>
         
         <Footer />
