@@ -1,4 +1,7 @@
+import { useMediaKit } from "./MediaKitContext";
+
 const PartnerSection = () => {
+  const { sectionVisibility } = useMediaKit();
   const partners = [
     {
       name: "Brød & Taylor",
@@ -19,6 +22,8 @@ const PartnerSection = () => {
       url: "https://sourhouse.com",
     },
   ];
+
+  if (!sectionVisibility.partners) return null;
 
   return (
     <section className="py-12 md:py-16 bg-muted/30">

@@ -4,9 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useMediaKit } from "./MediaKitContext";
 
 const ContactCTA = () => {
   const { toast } = useToast();
+  const { sectionVisibility } = useMediaKit();
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -22,6 +24,8 @@ const ContactCTA = () => {
     });
     setFormData({ name: "", company: "", email: "", message: "" });
   };
+
+  if (!sectionVisibility.contact) return null;
 
   return (
     <section className="py-12 md:py-16 bg-muted/30">

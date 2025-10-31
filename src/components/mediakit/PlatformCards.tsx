@@ -1,5 +1,6 @@
 import { Facebook, Globe, Mail, FileText } from "lucide-react";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
+import { useMediaKit } from "./MediaKitContext";
 
 interface PlatformCardProps {
   name: string;
@@ -58,6 +59,7 @@ const PlatformCard = ({ name, icon, stat, description, trendData, change }: Plat
 };
 
 const PlatformCards = () => {
+  const { sectionVisibility } = useMediaKit();
   const platforms = [
     {
       name: "Facebook Group",
@@ -100,6 +102,8 @@ const PlatformCards = () => {
       change: "+40%",
     },
   ];
+
+  if (!sectionVisibility.platforms) return null;
 
   return (
     <section className="py-12 md:py-16 bg-muted/30">

@@ -1,4 +1,5 @@
 import { ExternalLink, Eye, Heart } from "lucide-react";
+import { useMediaKit } from "./MediaKitContext";
 
 interface ContentItem {
   title: string;
@@ -11,6 +12,7 @@ interface ContentItem {
 }
 
 const TopContent = () => {
+  const { sectionVisibility } = useMediaKit();
   const topContent: ContentItem[] = [
     {
       title: "Caramel Apple Sticky Buns",
@@ -40,6 +42,8 @@ const TopContent = () => {
       excerpt: "Essential tool for converting between different types of salt...",
     },
   ];
+
+  if (!sectionVisibility.topContent) return null;
 
   return (
     <section className="py-12 md:py-16">

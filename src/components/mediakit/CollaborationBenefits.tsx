@@ -1,6 +1,8 @@
 import { FileText, Users, Award, BookOpen, Utensils } from "lucide-react";
+import { useMediaKit } from "./MediaKitContext";
 
 const CollaborationBenefits = () => {
+  const { sectionVisibility } = useMediaKit();
   const benefits = [
     {
       icon: <FileText className="w-8 h-8 text-primary" />,
@@ -33,6 +35,8 @@ const CollaborationBenefits = () => {
       description: "Showcase how community members use your products with user-generated content.",
     },
   ];
+
+  if (!sectionVisibility.benefits) return null;
 
   return (
     <section className="py-12 md:py-16">

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useMediaKit } from "./MediaKitContext";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
+import AdminPanel from "./AdminPanel";
 
 const ExportControls = () => {
   const { data, refreshData } = useMediaKit();
@@ -64,6 +65,8 @@ Website: https://bakinggreatbread.com
           </div>
           
           <div className="flex flex-wrap items-center gap-2">
+            <AdminPanel />
+            
             <Button
               variant="outline"
               size="sm"

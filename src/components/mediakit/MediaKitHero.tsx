@@ -2,7 +2,7 @@ import { Users, Eye, Mail } from "lucide-react";
 import { useMediaKit } from "./MediaKitContext";
 
 const MediaKitHero = () => {
-  const { data } = useMediaKit();
+  const { data, sectionVisibility } = useMediaKit();
   const { hero } = data;
 
   const stats = [
@@ -25,6 +25,8 @@ const MediaKitHero = () => {
       description: "Active Email List",
     },
   ];
+
+  if (!sectionVisibility.hero) return null;
 
   return (
     <section className="relative py-16 md:py-24 overflow-hidden">

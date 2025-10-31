@@ -13,8 +13,11 @@ import {
   Legend,
   ResponsiveContainer 
 } from "recharts";
+import { useMediaKit } from "./MediaKitContext";
 
 const GrowthCharts = () => {
+  const { sectionVisibility } = useMediaKit();
+
   // Member Growth Data (last 12 months)
   const memberGrowthData = [
     { month: "Nov '24", members: 28000 },
@@ -59,6 +62,8 @@ const GrowthCharts = () => {
     { name: "Desktop", value: 122, color: "hsl(142 71% 45%)" },
     { name: "Tablet", value: 7, color: "hsl(var(--muted))" },
   ];
+
+  if (!sectionVisibility.growth) return null;
 
   return (
     <section className="py-12 md:py-16">

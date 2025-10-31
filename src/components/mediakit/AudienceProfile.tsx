@@ -1,7 +1,9 @@
 import { MapPin, Users, TrendingUp, ShoppingCart } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { useMediaKit } from "./MediaKitContext";
 
 const AudienceProfile = () => {
+  const { sectionVisibility } = useMediaKit();
   // Geographic data from analytics
   const geoData = [
     { name: "United States", value: 237, percentage: 84 },
@@ -25,6 +27,8 @@ const AudienceProfile = () => {
     { name: "Home Cooking", icon: "🏠" },
     { name: "Food Photography", icon: "📸" },
   ];
+
+  if (!sectionVisibility.audience) return null;
 
   return (
     <section className="py-12 md:py-16 bg-muted/30">
