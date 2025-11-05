@@ -48,6 +48,7 @@ const SearchTest = lazyWithRetry(() => import("./pages/SearchTest"), "SearchTest
 const InlineSearchTestPage = lazyWithRetry(() => import("./pages/InlineSearchTest"), "InlineSearchTest");
 const Dashboard = lazyWithRetry(() => import("./pages/Dashboard"), "Dashboard");
 const OwnerAnalytics = lazyWithRetry(() => import("./pages/OwnerAnalytics"), "OwnerAnalytics");
+const WebsiteAnalytics = lazyWithRetry(() => import("./pages/WebsiteAnalytics"), "WebsiteAnalytics");
 const Tools = lazyWithRetry(() => import("./pages/Tools"), "Tools");
 const Guides = lazyWithRetry(() => import("./pages/Guides"), "Guides");
 const Challenges = lazyWithRetry(() => import("./pages/Challenges"), "Challenges");
@@ -164,6 +165,7 @@ function App() {
               <Route path="/share/:slug" element={<ShareRedirect />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/owner/analytics" element={<OwnerAnalytics />} />
+              <Route path="/website-analytics" element={<WebsiteAnalytics />} />
               <Route path="/tools" element={<Tools />} />
               <Route path="/guides" element={<Guides />} />
               <Route path="/challenges" element={<Challenges />} />

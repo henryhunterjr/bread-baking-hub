@@ -1697,6 +1697,150 @@ export type Database = {
         }
         Relationships: []
       }
+      website_analytics_daily: {
+        Row: {
+          avg_session_duration: number | null
+          bounce_rate: number | null
+          created_at: string
+          id: string
+          metric_date: string
+          page_views: number
+          sessions: number
+          unique_visitors: number
+          updated_at: string
+        }
+        Insert: {
+          avg_session_duration?: number | null
+          bounce_rate?: number | null
+          created_at?: string
+          id?: string
+          metric_date: string
+          page_views?: number
+          sessions?: number
+          unique_visitors?: number
+          updated_at?: string
+        }
+        Update: {
+          avg_session_duration?: number | null
+          bounce_rate?: number | null
+          created_at?: string
+          id?: string
+          metric_date?: string
+          page_views?: number
+          sessions?: number
+          unique_visitors?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      website_analytics_imports: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          end_date: string
+          error_message: string | null
+          id: string
+          import_type: string
+          imported_by: string | null
+          records_imported: number | null
+          start_date: string
+          status: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          end_date: string
+          error_message?: string | null
+          id?: string
+          import_type?: string
+          imported_by?: string | null
+          records_imported?: number | null
+          start_date: string
+          status?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          end_date?: string
+          error_message?: string | null
+          id?: string
+          import_type?: string
+          imported_by?: string | null
+          records_imported?: number | null
+          start_date?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      website_analytics_pages: {
+        Row: {
+          avg_time_on_page: number | null
+          bounce_rate: number | null
+          created_at: string
+          id: string
+          metric_date: string
+          path: string
+          unique_visitors: number
+          updated_at: string
+          views: number
+        }
+        Insert: {
+          avg_time_on_page?: number | null
+          bounce_rate?: number | null
+          created_at?: string
+          id?: string
+          metric_date: string
+          path: string
+          unique_visitors?: number
+          updated_at?: string
+          views?: number
+        }
+        Update: {
+          avg_time_on_page?: number | null
+          bounce_rate?: number | null
+          created_at?: string
+          id?: string
+          metric_date?: string
+          path?: string
+          unique_visitors?: number
+          updated_at?: string
+          views?: number
+        }
+        Relationships: []
+      }
+      website_analytics_sources: {
+        Row: {
+          created_at: string
+          direct: number
+          id: string
+          metric_date: string
+          organic: number
+          referral: number
+          social: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          direct?: number
+          id?: string
+          metric_date: string
+          organic?: number
+          referral?: number
+          social?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          direct?: number
+          id?: string
+          metric_date?: string
+          organic?: number
+          referral?: number
+          social?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       analytics_daily_metrics: {
