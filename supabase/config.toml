@@ -68,3 +68,6 @@ verify_jwt = false
 
 [functions.analytics-track]
 verify_jwt = false
+
+[functions.analytics-csv-export]
+verify_jwt = false

@@ -15,7 +15,9 @@ export type EventType =
   | 'error_404'
   | 'error_5xx'
   | 'cwv_metric'
-  | 'og_missing';
+  | 'og_missing'
+  | 'session_end'
+  | 'bounce';
 
 export interface AnalyticsEvent {
   event_id: string;
@@ -37,12 +39,15 @@ export interface AnalyticsEvent {
 
 class FirstPartyAnalytics {
   private sessionId: string;
+  private visitorId: string;
   private queue: AnalyticsEvent[] = [];
   private isDisabled: boolean = false;
   private endpoint: string;
   private hmacKey: string;
   private lastActivity: number = Date.now();
   private readonly SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+  private sessionStart: number = Date.now();
+  private pagesInSession: number = 0;
 
   constructor() {
     // Check for disable flag
@@ -60,9 +65,97 @@ class FirstPartyAnalytics {
     this.endpoint = 'https://ojyckskucneljvuqzrsw.supabase.co/functions/v1/analytics-track';
     this.hmacKey = 'analytics_ingest_key_placeholder'; // Will be env-configured
     this.sessionId = this.getOrCreateSession();
+    this.visitorId = this.getOrCreateVisitorId();
     
+    this.initializeAttribution();
+    this.initializeSessionTracking();
     this.setupEventListeners();
     this.setupPerformanceTracking();
+  }
+
+  private getOrCreateVisitorId(): string {
+    if (typeof localStorage === 'undefined') return this.generateId();
+    
+    let visitorId = localStorage.getItem('_spa_vid');
+    if (!visitorId) {
+      visitorId = 'vis_' + this.generateId();
+      localStorage.setItem('_spa_vid', visitorId);
+    }
+    return visitorId;
+  }
+
+  private initializeAttribution(): void {
+    if (typeof sessionStorage === 'undefined') return;
+    
+    // Only set attribution on first page of session
+    if (!sessionStorage.getItem('_spa_attribution_set')) {
+      const trafficSource = this.classifyTrafficSource();
+      const utmParams = this.parseUtmParams();
+      
+      sessionStorage.setItem('_spa_traffic_type', trafficSource.type);
+      sessionStorage.setItem('_spa_traffic_source', trafficSource.source);
+      sessionStorage.setItem('_spa_utm_source', utmParams.source || 'direct');
+      sessionStorage.setItem('_spa_utm_medium', utmParams.medium || 'none');
+      sessionStorage.setItem('_spa_utm_campaign', utmParams.campaign || 'none');
+      sessionStorage.setItem('_spa_attribution_set', 'true');
+    }
+  }
+
+  private initializeSessionTracking(): void {
+    if (typeof sessionStorage === 'undefined') return;
+    
+    // Track session start time
+    if (!sessionStorage.getItem('_spa_session_start')) {
+      sessionStorage.setItem('_spa_session_start', this.sessionStart.toString());
+    } else {
+      this.sessionStart = parseInt(sessionStorage.getItem('_spa_session_start') || Date.now().toString());
+    }
+    
+    // Track pages in session
+    const currentPages = parseInt(sessionStorage.getItem('_spa_pages') || '0');
+    this.pagesInSession = currentPages;
+  }
+
+  private classifyTrafficSource(): { type: 'organic' | 'direct' | 'social' | 'referral'; source: string } {
+    const referrer = document.referrer;
+    const url = new URL(window.location.href);
+    const utmSource = url.searchParams.get('utm_source');
+    
+    // Priority 1: UTM parameters
+    if (utmSource) {
+      const source = utmSource.toLowerCase();
+      if (['google', 'bing', 'yahoo', 'duckduckgo'].includes(source)) {
+        return { type: 'organic', source: utmSource };
+      }
+      if (['facebook', 'instagram', 'twitter', 'linkedin', 'pinterest', 'tiktok'].includes(source)) {
+        return { type: 'social', source: utmSource };
+      }
+      return { type: 'referral', source: utmSource };
+    }
+    
+    // Priority 2: Referrer analysis
+    if (!referrer) {
+      return { type: 'direct', source: 'direct' };
+    }
+    
+    try {
+      const referrerDomain = new URL(referrer).hostname;
+      
+      // Search engines
+      if (/google|bing|yahoo|duckduckgo|baidu|yandex/.test(referrerDomain)) {
+        return { type: 'organic', source: referrerDomain };
+      }
+      
+      // Social media
+      if (/facebook|instagram|twitter|linkedin|pinterest|tiktok|reddit/.test(referrerDomain)) {
+        return { type: 'social', source: referrerDomain };
+      }
+      
+      // Everything else is referral
+      return { type: 'referral', source: referrerDomain };
+    } catch {
+      return { type: 'direct', source: 'direct' };
+    }
   }
 
   private getOrCreateSession(): string {
@@ -120,9 +213,18 @@ class FirstPartyAnalytics {
       }
     });
 
-    // Before unload
+    // Before unload - track session end
     window.addEventListener('beforeunload', () => {
+      this.trackSessionEnd();
       this.flush(true);
+    });
+
+    // Page load - increment page counter
+    window.addEventListener('load', () => {
+      this.pagesInSession++;
+      if (typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem('_spa_pages', this.pagesInSession.toString());
+      }
     });
 
     // Auto-flush interval
@@ -132,6 +234,32 @@ class FirstPartyAnalytics {
 
     // Track initial page view after LCP or timeout
     this.scheduleInitialPageView();
+  }
+
+  private trackSessionEnd(): void {
+    if (typeof sessionStorage === 'undefined') return;
+    
+    const sessionStart = parseInt(sessionStorage.getItem('_spa_session_start') || Date.now().toString());
+    const sessionDuration = Math.floor((Date.now() - sessionStart) / 1000); // seconds
+    
+    this.track({
+      event_type: 'session_end',
+      meta: {
+        duration: sessionDuration,
+        pages_viewed: this.pagesInSession,
+        is_bounce: this.pagesInSession === 1
+      }
+    });
+    
+    // Track bounce if only 1 page viewed
+    if (this.pagesInSession === 1) {
+      this.track({
+        event_type: 'bounce',
+        meta: {
+          landing_page: window.location.pathname
+        }
+      });
+    }
   }
 
   private scheduleInitialPageView(): void {
@@ -194,6 +322,12 @@ class FirstPartyAnalytics {
   public track(event: Partial<AnalyticsEvent>): void {
     if (this.isDisabled) return;
 
+    // Get attribution data from session storage
+    const getSessionValue = (key: string, fallback: string = '') => {
+      if (typeof sessionStorage === 'undefined') return fallback;
+      return sessionStorage.getItem(key) || fallback;
+    };
+
     const fullEvent: AnalyticsEvent = {
       event_id: this.generateId(),
       ts: Date.now(),
@@ -202,7 +336,16 @@ class FirstPartyAnalytics {
       referrer: document.referrer || undefined,
       session_id: this.sessionId,
       device: this.getDevice(),
-      ...this.parseUtmParams(),
+      source: getSessionValue('_spa_utm_source', 'direct'),
+      medium: getSessionValue('_spa_utm_medium', 'none'),
+      campaign: getSessionValue('_spa_utm_campaign', 'none'),
+      meta: {
+        ...event.meta,
+        visitor_id: this.visitorId,
+        traffic_type: getSessionValue('_spa_traffic_type', 'direct'),
+        traffic_source: getSessionValue('_spa_traffic_source', 'direct'),
+        pages_in_session: this.pagesInSession
+      },
       ...event,
       event_type: event.event_type || 'page_view'
     };
@@ -224,10 +367,19 @@ class FirstPartyAnalytics {
   }
 
   public trackPageView(path?: string): void {
+    this.pagesInSession++;
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('_spa_pages', this.pagesInSession.toString());
+    }
+    
     this.track({
       event_type: 'page_view',
       path: path || window.location.pathname,
-      content_type: this.inferContentType()
+      content_type: this.inferContentType(),
+      meta: {
+        page_number: this.pagesInSession,
+        is_landing_page: this.pagesInSession === 1
+      }
     });
   }
 

@@ -1863,6 +1863,10 @@ export type Database = {
           user_id: string
         }[]
       }
+      get_analytics_export: {
+        Args: { end_date: string; start_date: string }
+        Returns: Json
+      }
       get_analytics_health_status: { Args: never; Returns: Json }
       get_auth_security_status: { Args: never; Returns: Json }
       get_core_web_vitals_summary: {
@@ -1873,6 +1877,17 @@ export type Database = {
           p75_value: number
           p90_value: number
           sample_count: number
+        }[]
+      }
+      get_daily_analytics: {
+        Args: { end_date: string; start_date: string }
+        Returns: {
+          avg_session_duration: number
+          bounce_rate: number
+          date: string
+          page_views: number
+          sessions: number
+          unique_visitors: number
         }[]
       }
       get_decrypted_mfa_secret: { Args: { p_user_id: string }; Returns: string }
@@ -1886,6 +1901,20 @@ export type Database = {
           tags: string[]
           title: string
         }[]
+      }
+      get_top_pages: {
+        Args: { end_date: string; page_limit?: number; start_date: string }
+        Returns: {
+          avg_time_on_page: number
+          bounce_rate: number
+          path: string
+          unique_visitors: number
+          views: number
+        }[]
+      }
+      get_traffic_sources: {
+        Args: { end_date: string; start_date: string }
+        Returns: Json
       }
       get_trending_recipes: {
         Args: { days_back?: number; limit_count?: number }
