@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, AlertTriangle, XCircle, RefreshCw } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { CheckCircle, AlertTriangle, XCircle, RefreshCw, FileText } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { HealthDiagnosticReport } from './HealthDiagnosticReport';
 
 interface HealthCheckProps {
   className?: string;
@@ -169,6 +171,22 @@ export const HealthCheck = ({ className = "" }: HealthCheckProps) => {
                 <p>🚨 Critical issues detected. High error rate may indicate problems with data collection.</p>
               )}
             </div>
+
+            {/* Detailed Report Button */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="default" className="w-full mt-2">
+                  <FileText className="h-4 w-4 mr-2" />
+                  View Detailed Diagnostic Report
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Analytics Health Diagnostic Report</DialogTitle>
+                </DialogHeader>
+                <HealthDiagnosticReport healthStatus={healthStatus} />
+              </DialogContent>
+            </Dialog>
           </div>
         ) : (
           <div className="text-center text-muted-foreground">
