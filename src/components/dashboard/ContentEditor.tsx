@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Eye, Edit3, MousePointer, Video } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import rehypeRaw from 'rehype-raw';
 
 interface ContentEditorProps {
   content: string;
@@ -136,9 +137,7 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
                 data-color-mode="dark"
                 height={400}
                 previewOptions={{
-                  rehypePlugins: [],
-                  allowElement: (element: any) => true,
-                  unwrapDisallowed: false,
+                  rehypePlugins: [rehypeRaw],
                 }}
                 textareaProps={{
                   placeholder: 'Write your newsletter content here...'
