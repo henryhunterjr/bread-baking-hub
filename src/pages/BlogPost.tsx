@@ -17,6 +17,7 @@ import SocialShare from '../components/blog/SocialShare';
 import NewsletterSignup from '../components/NewsletterSignup';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { getHeroBannerUrl, getSocialImageUrl } from '@/utils/imageUtils';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 import { SecureContent } from '@/components/security/SecureContent';
@@ -124,6 +125,7 @@ const SupabasePostView = ({
             // Markdown content
             <ReactMarkdown 
               remarkPlugins={[remarkGfm]}
+              rehypePlugins={[[rehypeRaw, { passThrough: ['element'] }]]}
               components={{
                 img: ({ src, alt, ...props }) => {
                   // Simple clickable image implementation

@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { AffiliateAdvertisement } from '@/components/AffiliateAdvertisement';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -186,6 +187,7 @@ const NewsletterPreview = () => {
               <div className="prose prose-lg max-w-none dark:prose-invert">
                 <ReactMarkdown 
                   remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[[rehypeRaw, { passThrough: ['element'] }]]}
                   skipHtml={false}
                   components={{
                     h1: ({children}) => <h1 className="text-2xl md:text-3xl font-bold font-serif text-foreground mb-4 mt-6 leading-tight">{children}</h1>,

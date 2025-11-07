@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -119,6 +120,7 @@ const PreviewPanel = ({ postData, isNewsletter = false }: PreviewPanelProps) => 
               <div className="prose prose-lg max-w-none dark:prose-invert">
                 <ReactMarkdown 
                   remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[[rehypeRaw, { passThrough: ['element'] }]]}
                   skipHtml={false}
                   components={{
                     h1: ({children}) => <h1 className="text-2xl md:text-3xl font-bold font-serif text-foreground mb-4 mt-6 leading-tight">{children}</h1>,
