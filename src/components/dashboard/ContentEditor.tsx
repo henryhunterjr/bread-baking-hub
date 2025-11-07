@@ -135,6 +135,14 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
                 visibleDragbar={false}
                 data-color-mode="dark"
                 height={400}
+                previewOptions={{
+                  rehypePlugins: [],
+                  allowElement: (element: any) => true,
+                  unwrapDisallowed: false,
+                }}
+                textareaProps={{
+                  placeholder: 'Write your newsletter content here...'
+                }}
                 commands={[
                   ...mdModule.commands.getCommands(),
                   mdModule.commands.divider,
