@@ -137,7 +137,9 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
                 data-color-mode="dark"
                 height={400}
                 previewOptions={{
-                  rehypePlugins: [rehypeRaw],
+                  rehypePlugins: [[rehypeRaw, { passThrough: ['element'] }]],
+                  allowElement: () => true,
+                  unwrapDisallowed: false,
                 }}
                 textareaProps={{
                   placeholder: 'Write your newsletter content here...'
