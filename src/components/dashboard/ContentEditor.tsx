@@ -20,6 +20,7 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
   const [videoUrl, setVideoUrl] = useState('');
   const [videoAltText, setVideoAltText] = useState('');
   const [isVideoDialogOpen, setIsVideoDialogOpen] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState<number>(0);
 
   type MDEModule = typeof import('@uiw/react-md-editor');
   const [mdModule, setMdModule] = useState<MDEModule | null>(null);
@@ -34,8 +35,8 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
 
   const insertButton = () => {
     if (buttonText && buttonUrl) {
-      const buttonSyntax = `[button:${buttonText}](${buttonUrl})`;
-      const newContent = content + '\n\n' + buttonSyntax;
+      const buttonSyntax = `\n\n[button:${buttonText}](${buttonUrl})\n\n`;
+      const newContent = content.slice(0, cursorPosition) + buttonSyntax + content.slice(cursorPosition);
       onChange(newContent);
       setButtonText('');
       setButtonUrl('');
@@ -46,7 +47,8 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
   const insertVideo = () => {
     if (videoUrl) {
       const videoEmbed = `\n\n<video controls width="100%" style="max-width: 100%; height: auto;">\n  <source src="${videoUrl}" type="video/mp4" />\n  Your browser does not support the video tag.\n</video>\n\n`;
-      onChange(content + videoEmbed);
+      const newContent = content.slice(0, cursorPosition) + videoEmbed + content.slice(cursorPosition);
+      onChange(newContent);
       setVideoUrl('');
       setVideoAltText('');
       setIsVideoDialogOpen(false);
@@ -64,7 +66,9 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
     icon: (
       <MousePointer style={{ width: 12, height: 12 }} />
     ),
-    execute: () => {
+    execute: (state: any) => {
+      const cursorPos = state?.selection?.start || content.length;
+      setCursorPosition(cursorPos);
       setIsDialogOpen(true);
     }
   };
@@ -80,7 +84,9 @@ const ContentEditor = ({ content, onChange }: ContentEditorProps) => {
     icon: (
       <Video style={{ width: 12, height: 12 }} />
     ),
-    execute: () => {
+    execute: (state: any) => {
+      const cursorPos = state?.selection?.start || content.length;
+      setCursorPosition(cursorPos);
       setIsVideoDialogOpen(true);
     }
   };
