@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
-const recipeImage = '/lovable-uploads/21d4d7bb-e47a-434d-b2c3-a7c787e13e07.png';
+const recipeImage = '/lovable-uploads/november-challenge-2025.png';
 
 const MonthlyChallenge = () => {
   return (
@@ -50,7 +50,7 @@ const MonthlyChallenge = () => {
           <div className="relative">
             <ResponsiveImage 
               src={recipeImage} 
-              alt="Henry's Foolproof Sourdough Loaf with perfect crumb structure"
+              alt="November 2025 Baking Challenge - Score the Season"
               className="rounded-2xl shadow-stone w-full h-auto"
               loading="lazy"
             />

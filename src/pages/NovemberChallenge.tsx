@@ -63,7 +63,7 @@ const NovemberChallenge = () => {
 
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-foreground mb-4">Challenge Guide</h2>
-              <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
+              <div className="relative w-full" style={{ paddingBottom: '120%', height: 0, minHeight: '800px' }}>
                 <iframe 
                   src="https://scoretheseason-november--i3qc9om.gamma.site/" 
                   style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
