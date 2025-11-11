@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MonthlyChallenge from "@/components/MonthlyChallenge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const Challenges = () => {
   const pastChallenges = [
@@ -50,6 +51,23 @@ const Challenges = () => {
             </p>
             
             <MonthlyChallenge />
+            
+            <section className="mt-12 mb-16">
+              <Card className="bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20">
+                <CardHeader>
+                  <CardTitle className="text-2xl">November 2025 Challenge</CardTitle>
+                  <CardDescription>Master sourdough techniques with our comprehensive guide</CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                  <p className="text-muted-foreground">
+                    Join our November challenge and perfect your sourdough skills with step-by-step guidance.
+                  </p>
+                  <Button asChild className="shrink-0">
+                    <a href="/novemberchallenge">View Challenge →</a>
+                  </Button>
+                </CardContent>
+              </Card>
+            </section>
             
             <section className="mt-16">
               <h2 className="text-2xl font-semibold text-foreground mb-8">Past Challenges</h2>

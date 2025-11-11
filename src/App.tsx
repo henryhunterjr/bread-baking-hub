@@ -70,6 +70,7 @@ const NewsletterPreview = lazyWithRetry(() => import("./pages/NewsletterPreview"
 const SaltConverter = lazyWithRetry(() => import("./pages/SaltConverter"), "SaltConverter");
 const RecipeAdmin = lazyWithRetry(() => import("./pages/RecipeAdmin"), "RecipeAdmin");
 const MediaKit = lazyWithRetry(() => import("./pages/MediaKit"), "MediaKit");
+const NovemberChallenge = lazyWithRetry(() => import("./pages/NovemberChallenge"), "NovemberChallenge");
 
 // Feed redirect component
 const FeedRedirect = () => {
@@ -169,6 +170,7 @@ function App() {
               <Route path="/tools" element={<Tools />} />
               <Route path="/guides" element={<Guides />} />
               <Route path="/challenges" element={<Challenges />} />
+              <Route path="/novemberchallenge" element={<NovemberChallenge />} />
               <Route path="/coaching" element={<Coaching />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/salt-converter" element={<SaltConverter />} />
