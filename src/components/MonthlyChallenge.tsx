@@ -10,33 +10,33 @@ const MonthlyChallenge = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <div className="inline-block bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-semibold">
-              January 29, 2025
+              November 2025 Challenge
             </div>
             <h2 className="text-4xl font-bold text-primary-foreground">
-              Henry's Foolproof Sourdough Loaf
+              Score the Season: Master Sourdough Techniques
             </h2>
             <p className="text-amber-100 text-lg leading-relaxed">
-              A beautifully sliced sourdough loaf with an open crumb structure, golden crust, 
-              and airy interior. This simple, reliable, and flavorful sourdough recipe delivers 
-              great results every time using proven techniques and 75% hydration.
+              Join our community this month as we master sourdough techniques together. 
+              Follow along with our comprehensive guide, perfect your scoring, and share 
+              your beautiful loaves with fellow bakers.
             </p>
             
             <div className="space-y-4">
               <div className="bg-primary-foreground/10 backdrop-blur-sm rounded-lg p-4 border border-primary-foreground/20">
-                <h3 className="text-primary-foreground font-semibold mb-2">Recipe Highlights:</h3>
+                <h3 className="text-primary-foreground font-semibold mb-2">What You'll Learn:</h3>
                 <ul className="space-y-1 text-amber-200 text-sm">
-                  <li>• 75% hydration for perfect texture</li>
-                  <li>• Simplified fermentolyse method</li>
-                  <li>• Foolproof shaping techniques</li>
-                  <li>• Complete troubleshooting guide</li>
+                  <li>• Essential sourdough starter maintenance</li>
+                  <li>• Proper dough mixing and fermentation</li>
+                  <li>• Shaping and scoring techniques</li>
+                  <li>• Baking for the perfect crust</li>
                 </ul>
               </div>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Button variant="default" size="lg" asChild className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
-                <Link to="/henrys-foolproof-recipe">
-                  Go to Recipe
+                <Link to="/novemberchallenge">
+                  View Challenge Guide
                 </Link>
               </Button>
               <Button variant="heroOutline" size="lg" asChild className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">

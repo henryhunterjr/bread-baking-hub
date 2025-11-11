@@ -9,7 +9,8 @@ test.describe('Route Smoke Tests', () => {
     { path: '/books', name: 'Books' },
     { path: '/help', name: 'Help' },
     { path: '/my-recipe-library', name: 'My Library' },
-    { path: '/dashboard', name: 'Dashboard' }
+    { path: '/dashboard', name: 'Dashboard' },
+    { path: '/novemberchallenge', name: 'November Challenge' }
   ];
 
   for (const route of routes) {
