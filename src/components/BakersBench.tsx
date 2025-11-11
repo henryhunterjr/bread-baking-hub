@@ -55,7 +55,7 @@ const BakersBench = () => {
     {
       title: "Score the Season - November 2025",
       description: "Master sourdough techniques with our comprehensive challenge guide",
-      thumbnail: "/lovable-uploads/fecb5d01-9088-44ad-8722-faaccc87696a.png",
+      thumbnail: "/lovable-uploads/november-challenge-2025.png",
       link: "/novemberchallenge",
       type: "technique"
     },
