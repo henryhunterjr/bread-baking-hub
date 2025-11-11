@@ -53,6 +53,13 @@ const BakersBench = () => {
 
   const challenges = [
     {
+      title: "Score the Season - November 2025",
+      description: "Master sourdough techniques with our comprehensive challenge guide",
+      thumbnail: "/lovable-uploads/fecb5d01-9088-44ad-8722-faaccc87696a.png",
+      link: "/novemberchallenge",
+      type: "technique"
+    },
+    {
       title: "The Modern Baker's Toolkit",
       description: "Essential tools and techniques for modern bread baking",
       thumbnail: "/lovable-uploads/6aad1feb-5cbe-4539-830e-5c5b14ef0b79.png",
