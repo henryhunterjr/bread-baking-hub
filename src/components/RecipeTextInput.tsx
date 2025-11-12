@@ -85,6 +85,30 @@ export const RecipeTextInput = ({ onRecipeFormatted }: RecipeTextInputProps) => 
     setError(null);
 
     try {
+      // Check if the input is valid JSON first
+      let parsedRecipe = null;
+      try {
+        parsedRecipe = JSON.parse(recipeText.trim());
+        
+        // Validate it has recipe structure
+        if (parsedRecipe && typeof parsedRecipe === 'object' && parsedRecipe.title) {
+          setProgress(100);
+          
+          toast({
+            title: "Recipe Loaded!",
+            description: "Your formatted recipe is ready to preview."
+          });
+
+          // Directly use the parsed JSON as the formatted recipe
+          onRecipeFormatted(parsedRecipe as FormattedRecipe);
+          hasUnsavedChangesRef.current = false;
+          return;
+        }
+      } catch (e) {
+        // Not valid JSON or not a recipe, proceed with normal API processing
+        logger.debug('Not valid JSON recipe, proceeding with AI formatting');
+      }
+
       setProgress(20);
       
       toast({
