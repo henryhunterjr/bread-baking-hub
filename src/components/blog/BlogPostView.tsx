@@ -11,6 +11,7 @@ import { BlogPost } from '@/utils/blogFetcher';
 import { sanitizeHtml } from '@/utils/sanitize';
 import { SecureContent } from '@/components/security/SecureContent';
 import { SafeImage } from '@/components/ui/SafeImage';
+import { PostActions } from '@/components/PostActions';
 
 interface BlogPostViewProps {
   post: BlogPost;
@@ -162,6 +163,17 @@ export const BlogPostView = ({ post, onBack, showComments = false }: BlogPostVie
                 className="prose-content"
               />
             )}
+          </div>
+
+          {/* Post Actions - PDF and Print */}
+          <div className="border-t pt-6 mb-8">
+            <PostActions
+              title={post.title}
+              content={content}
+              slug={post.link.split('/').pop()}
+              type="blog"
+              className="mb-6"
+            />
           </div>
 
           {/* Social Sharing */}

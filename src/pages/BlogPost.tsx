@@ -21,6 +21,7 @@ import rehypeRaw from 'rehype-raw';
 import { getHeroBannerUrl, getSocialImageUrl } from '@/utils/imageUtils';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 import { SecureContent } from '@/components/security/SecureContent';
+import { PostActions } from '@/components/PostActions';
 
 // Extract YouTube video ID from URL
 const extractYouTubeId = (url: string) => {
@@ -256,6 +257,17 @@ const SupabasePostView = ({
               {supabasePost.content}
             </ReactMarkdown>
           )}
+
+          {/* Post Actions - PDF and Print */}
+          <div className="mt-12 pt-8 border-t border-border">
+            <PostActions
+              title={supabasePost.title}
+              content={supabasePost.content}
+              slug={supabasePost.slug}
+              type="blog"
+              className="justify-center mb-8"
+            />
+          </div>
 
           {/* Social Sharing */}
           <div className="mt-12 pt-8 border-t border-border text-center">

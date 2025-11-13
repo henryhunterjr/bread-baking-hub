@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { AffiliateAdvertisement } from '@/components/AffiliateAdvertisement';
 import { supabase } from '@/integrations/supabase/client';
+import { PostActions } from '@/components/PostActions';
 
 interface NewsletterData {
   title: string;
@@ -222,6 +223,16 @@ const NewsletterPreview = () => {
                 </ReactMarkdown>
               </div>
             )}
+
+            {/* Post Actions - PDF and Print */}
+            <div className="mt-8 pt-6 border-t border-border">
+              <PostActions
+                title={newsletter.title}
+                content={newsletter.content}
+                type="newsletter"
+                className="justify-center"
+              />
+            </div>
 
             {/* Affiliate Advertisement */}
             {newsletter.content.toLowerCase().includes('sourdough') && (

@@ -2,6 +2,80 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Print styles - clean layout for printing */
+@media print {
+  /* Hide navigation, buttons, and UI elements */
+  nav,
+  header,
+  footer,
+  button,
+  .print-hide,
+  [data-print-hide],
+  .no-print,
+  aside,
+  .sidebar {
+    display: none !important;
+  }
+
+  /* Ensure clean white background for print */
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Optimize content for print */
+  .blog-content,
+  .prose,
+  article,
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Ensure images print well */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Better text rendering */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    color: black !important;
+  }
+
+  p {
+    widows: 3;
+    orphans: 3;
+  }
+
+  /* Avoid breaking inside these elements */
+  blockquote,
+  pre,
+  code {
+    page-break-inside: avoid;
+  }
+
+  /* Remove shadows and backgrounds */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Show link URLs after links (optional) */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */

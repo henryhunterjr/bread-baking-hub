@@ -9,6 +9,7 @@ import { AffiliateProductsSection } from './recipe/AffiliateProductsSection';
 import { getRecipeImage } from '@/utils/recipeImageMapping';
 import { ResponsiveImage } from '@/components/ResponsiveImage';
 import { standardizeIngredients, validateRecipeData } from '@/utils/recipeDataUtils';
+import { PostActions } from '@/components/PostActions';
 interface FormattedRecipe {
   title: string;
   introduction: string;
@@ -170,25 +171,13 @@ export const FormattedRecipeDisplay = ({ recipe, imageUrl, recipeData }: Formatt
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-primary">Formatted Recipe</h2>
-        <div className="flex flex-col sm:flex-row gap-2 print:hidden">
-          <Button
-            onClick={handlePrint}
-            variant="outline"
-            size="sm"
-            className="flex items-center justify-center gap-2 w-full sm:w-auto h-11 touch-manipulation"
-          >
-            <Printer className="h-4 w-4" />
-            Print
-          </Button>
-          <Button
-            onClick={handleDownloadPDF}
-            variant="outline"
-            size="sm"
-            className="flex items-center justify-center gap-2 w-full sm:w-auto h-11 touch-manipulation"
-          >
-            <Download className="h-4 w-4" />
-            Download PDF
-          </Button>
+        <div className="print:hidden">
+          <PostActions
+            title={recipe.title}
+            content={printRef.current || ''}
+            slug={recipeData?.slug}
+            type="recipe"
+          />
         </div>
       </div>
       
