@@ -46,6 +46,12 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ classNam
   const [hasError, setHasError] = useState(false);
   const [coreWebVitals, setCoreWebVitals] = useState<any[]>([]);
 
+  function normalizeArray(value: any): any[] {
+    if (!value) return [];
+    if (Array.isArray(value)) return value;
+    return [];
+  }
+
   const periods = {
     '1d': { label: '24 Hours', days: 1 },
     '7d': { label: '7 Days', days: 7 },
@@ -86,8 +92,8 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ classNam
       });
 
       if (reportData?.success) {
-        setData(reportData.data || []);
-        setSummary(reportData.summary || {});
+        setData(normalizeArray(reportData?.data));
+        setSummary(reportData?.summary || {});
       }
     } catch (error) {
       console.error('Error loading analytics data:', error);
@@ -108,7 +114,7 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ classNam
       });
 
       if (vitals) {
-        setCoreWebVitals(vitals);
+        setCoreWebVitals(normalizeArray(vitals));
       }
     } catch (error) {
       console.error('Error loading Core Web Vitals:', error);

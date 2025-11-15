@@ -42,6 +42,12 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
   const [hasError, setHasError] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
+  function normalizeArray(value: any): any[] {
+    if (!value) return [];
+    if (Array.isArray(value)) return value;
+    return [];
+  }
+
   const periods = {
     '24h': { label: '24 Hours', hours: 24 },
     '7d': { label: '7 Days', hours: 168 },
@@ -86,13 +92,15 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
   };
 
   const calculateMetrics = (events: any[]): OverviewMetrics => {
+    const normalizedEvents = normalizeArray(events);
+    
     // Group by session for session-based calculations
     const sessionMap = new Map<string, any[]>();
-    const pageviews = events.filter(e => e.event === 'page_view');
-    const errors = events.filter(e => e.event === 'error_404' || e.event === 'error_5xx');
+    const pageviews = normalizedEvents.filter(e => e.event === 'page_view');
+    const errors = normalizedEvents.filter(e => e.event === 'error_404' || e.event === 'error_5xx');
     
     // Group events by session
-    events.forEach(event => {
+    normalizedEvents.forEach(event => {
       const sessionId = event.session_id;
       if (!sessionMap.has(sessionId)) {
         sessionMap.set(sessionId, []);
@@ -153,16 +161,16 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
       .sort((a, b) => b.sessions - a.sessions);
 
     // Performance and health scoring
-    const performanceEvents = events.filter(e => e.event === 'cwv_metric');
+    const performanceEvents = normalizedEvents.filter(e => e.event === 'cwv_metric');
     const performanceScore = calculatePerformanceScore(performanceEvents);
-    const healthStatus = calculateHealthStatus(events, errors.length);
+    const healthStatus = calculateHealthStatus(normalizedEvents, errors.length);
 
     return {
       pageviews: pageviews.length,
       sessions,
       bounce_rate: bounceRate,
       avg_session_duration: avgSessionDuration,
-      conversions: events.filter(e => ['subscribe_submit', 'affiliate_click'].includes(e.event)).length,
+      conversions: normalizedEvents.filter(e => ['subscribe_submit', 'affiliate_click'].includes(e.event)).length,
       errors: errors.length,
       top_pages: topPages,
       sources,
@@ -357,7 +365,7 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
-                  data={metrics?.sources || []}
+                  data={normalizeArray(metrics?.sources)}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
@@ -366,7 +374,7 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
                   fill="#8884d8"
                   dataKey="sessions"
                 >
-                  {(metrics?.sources || []).map((entry, index) => (
+                  {normalizeArray(metrics?.sources).map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={`hsl(${index * 60}, 70%, 60%)`} />
                   ))}
                 </Pie>
@@ -386,7 +394,7 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={metrics?.top_pages || []}>
+              <BarChart data={normalizeArray(metrics?.top_pages)}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="path" 
