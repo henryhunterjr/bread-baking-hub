@@ -43,6 +43,7 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ classNam
   const [data, setData] = useState<any[]>([]);
   const [summary, setSummary] = useState<MetricsSummary>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   const [coreWebVitals, setCoreWebVitals] = useState<any[]>([]);
 
   const periods = {
@@ -59,6 +60,7 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ classNam
 
   const loadAnalyticsData = async () => {
     setIsLoading(true);
+    setHasError(false);
     try {
       const endDate = new Date().toISOString();
       const startDate = new Date(Date.now() - periods[selectedPeriod].days * 24 * 60 * 60 * 1000).toISOString();
@@ -81,6 +83,7 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ classNam
       }
     } catch (error) {
       console.error('Error loading analytics data:', error);
+      setHasError(true);
     } finally {
       setIsLoading(false);
     }
@@ -156,6 +159,33 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ classNam
       default: return 'text-gray-600 bg-gray-100';
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="p-6 text-center text-muted-foreground">
+        Loading analytics…
+      </div>
+    );
+  }
+
+  if (hasError) {
+    return (
+      <div className="p-6 text-center text-red-600">
+        There was a problem loading analytics data.
+      </div>
+    );
+  }
+
+  const hasNoData = !data || data.length === 0;
+  const hasSummaryData = summary && Object.keys(summary).length > 0;
+
+  if (hasNoData && !hasSummaryData) {
+    return (
+      <div className="p-6 text-center text-muted-foreground">
+        No analytics data available yet.
+      </div>
+    );
+  }
 
   return (
     <div className={`space-y-6 ${className}`}>

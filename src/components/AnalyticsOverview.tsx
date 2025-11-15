@@ -39,6 +39,7 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
   const [selectedPeriod, setSelectedPeriod] = useState('7d');
   const [metrics, setMetrics] = useState<OverviewMetrics | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   const periods = {
@@ -53,6 +54,7 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
 
   const loadOverviewData = async () => {
     setIsLoading(true);
+    setHasError(false);
     try {
       const hoursBack = periods[selectedPeriod].hours;
       const startTime = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();
@@ -70,6 +72,7 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
       }
     } catch (error) {
       console.error('Error loading analytics overview:', error);
+      setHasError(true);
     } finally {
       setIsLoading(false);
     }
@@ -196,8 +199,24 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <div className="p-6 text-center text-muted-foreground">
+        Loading analytics…
+      </div>
+    );
+  }
+
+  if (hasError) {
+    return (
+      <div className="p-6 text-center text-red-600">
+        There was a problem loading analytics data.
+      </div>
+    );
+  }
+
+  if (!metrics) {
+    return (
+      <div className="p-6 text-center text-muted-foreground">
+        No analytics data available yet.
       </div>
     );
   }
