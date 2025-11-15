@@ -56,6 +56,14 @@ export const AnalyticsDashboard: React.FC<AnalyticsDashboardProps> = ({ classNam
   useEffect(() => {
     loadAnalyticsData();
     loadCoreWebVitals();
+    
+    // Auto-refresh every 30 seconds
+    const intervalId = setInterval(() => {
+      loadAnalyticsData();
+      loadCoreWebVitals();
+    }, 30000);
+
+    return () => clearInterval(intervalId);
   }, [selectedPeriod, selectedMetric]);
 
   const loadAnalyticsData = async () => {

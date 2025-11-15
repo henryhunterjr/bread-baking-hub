@@ -50,6 +50,13 @@ export const AnalyticsOverview: React.FC<AnalyticsOverviewProps> = ({ className 
 
   useEffect(() => {
     loadOverviewData();
+    
+    // Auto-refresh every 30 seconds
+    const intervalId = setInterval(() => {
+      loadOverviewData();
+    }, 30000);
+
+    return () => clearInterval(intervalId);
   }, [selectedPeriod]);
 
   const loadOverviewData = async () => {
