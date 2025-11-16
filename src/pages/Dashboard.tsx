@@ -20,8 +20,15 @@ import {
   Mail,
   Inbox,
   Image as ImageIcon,
-  BarChart3
+  BarChart3,
+  Menu
 } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import ContentEditor from '@/components/dashboard/ContentEditor';
 import PreviewPanel from '@/components/dashboard/PreviewPanel';
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar';
@@ -60,6 +67,8 @@ const Dashboard = () => {
   const { isAdmin, loading: adminLoading } = useAdminCheck();
   const [searchParams, setSearchParams] = useSearchParams();
   const [authChecked, setAuthChecked] = useState(false);
+  const isMobile = useIsMobile();
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [fallbackAuth, setFallbackAuth] = useState<{ user: any; isAuthenticated: boolean } | null>(null);
   const [activeTab, setActiveTab] = useState(() => {
     const newParam = searchParams.get('new');
@@ -540,12 +549,30 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex">
-      {/* Sidebar */}
-      <DashboardSidebar />
+    <div className="min-h-screen bg-background flex flex-col md:flex-row">
+      {/* Mobile Header with Hamburger */}
+      {isMobile && (
+        <div className="sticky top-0 z-50 flex items-center justify-between p-4 bg-card border-b border-border">
+          <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+            <DrawerTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-11 w-11">
+                <Menu className="h-5 w-5" />
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent className="h-[80vh]">
+              <DashboardSidebar onNavigate={() => setDrawerOpen(false)} />
+            </DrawerContent>
+          </Drawer>
+          <h1 className="text-lg font-semibold">Content Hub</h1>
+          <div className="w-11" /> {/* Spacer for centering */}
+        </div>
+      )}
+
+      {/* Desktop Sidebar */}
+      {!isMobile && <DashboardSidebar />}
 
       {/* Main Content */}
-      <div className="flex-1 p-6 overflow-auto">
+      <div className="flex-1 p-4 md:p-6 overflow-auto">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2">Content Dashboard</h1>
