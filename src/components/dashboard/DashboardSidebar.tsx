@@ -2,7 +2,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { FileText, Plus, Settings, Home, PenTool } from 'lucide-react';
 
-const DashboardSidebar = () => {
+interface DashboardSidebarProps {
+  onNavigate?: () => void;
+}
+
+const DashboardSidebar = ({ onNavigate }: DashboardSidebarProps) => {
   const location = useLocation();
 
   const navItems = [
@@ -62,8 +66,9 @@ const DashboardSidebar = () => {
             <li key={item.href}>
               <Link
                 to={item.href}
+                onClick={onNavigate}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+                  "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors min-h-[44px]",
                   item.active
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted"
