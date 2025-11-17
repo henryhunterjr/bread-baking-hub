@@ -1,0 +1,416 @@
+{
+  "affiliate_products": [
+    {
+      "id": "brod-taylor-apron",
+      "name": "Brod & Taylor Apron",
+      "description": "Durable, professional-quality apron designed for everyday baking and cooking with comfort and protection in mind.",
+      "brand": "Brod & Taylor",
+      "category": "accessories",
+      "price": "$60",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/files/APRONPO73716453-front_1024x.jpg?v=1715621552",
+      "keywords": ["apron", "kitchen", "baking", "bread", "cooking", "professional"]
+    },
+    {
+      "id": "challenger-parchment-papers",
+      "name": "Challenger Parchment Papers",
+      "description": "Pre-cut parchment papers that fit perfectly in the Challenger Bread Pan for easy bread release and cleanup.",
+      "brand": "Challenger Breadware",
+      "category": "accessories",
+      "price": "$12.95",
+      "affiliate_link": "https://challengerbreadware.com/?ref=henryhunterjr",
+      "image_url": "https://challengerbreadware.com/wp-content/uploads/2020/02/Challenger-Breadware-Media-Kit-Logo-Color.jpg",
+      "keywords": ["parchment paper", "challenger", "bread baking"]
+    },
+    {
+      "id": "classic-vg2-knife-sharpener",
+      "name": "Classic VG2 Knife Sharpener",
+      "description": "Professional-grade knife sharpener to keep bread and kitchen knives at peak performance for precise cutting and slicing.",
+      "brand": "Brod & Taylor",
+      "category": "accessories",
+      "price": "$59",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/products/ks_610_1_1024x.jpg?v=1645470566",
+      "keywords": ["knife sharpener", "kitchen tool", "professional"]
+    },
+    {
+      "id": "spice-coffee-grinder",
+      "name": "Spice & Coffee Grinder",
+      "description": "Compact, powerful grinder for freshly milled spices and coffee beans, enhancing flavor in baking and brewing.",
+      "brand": "Brod & Taylor",
+      "category": "accessories",
+      "price": "$24.95",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/products/1_1024x.jpg?v=1665423750",
+      "keywords": ["grinder", "spice", "coffee", "kitchen tool"]
+    },
+    {
+      "id": "water-kettle-french-press",
+      "name": "Water Kettle and French Press",
+      "description": "Combined water kettle and French press for brewing coffee or tea, ideal for the complete baking and beverage experience.",
+      "brand": "Collabs",
+      "category": "accessories",
+      "price": "$117.53",
+      "affiliate_link": "https://collabs.shop/b8bht0",
+      "image_url": "/lovable-uploads/default-product.png",
+      "keywords": ["kettle", "french press", "coffee", "tea"]
+    },
+    {
+      "id": "sahara-folding-bread-proofer",
+      "name": "Sahara Folding Bread Proofer",
+      "description": "The Sahara Folding Proofer & Slow Cooker offers precise temperature control from 70°F to 195°F, perfect for proofing dough, making yogurt, and slow cooking. Its foldable design saves space and makes it ideal for home bakers seeking versatility.",
+      "brand": "Brod & Taylor",
+      "category": "proofing",
+      "price": "From $189",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/files/Sahara_Folding_Proofer_-_Side_1024x.jpg?v=1708536002",
+      "keywords": ["proofer", "temperature control", "bread making", "versatile"]
+    },
+    {
+      "id": "sourdough-home",
+      "name": "Sourdough Home",
+      "description": "Specialized temperature-controlled container that maintains optimal sourdough starter conditions with precise temperature management for consistent fermentation.",
+      "brand": "Brod & Taylor",
+      "category": "proofing",
+      "price": "From $189",
+      "affiliate_link": "https://collabs.shop/bnlqi7",
+      "image_url": "/lovable-uploads/default-product.png",
+      "keywords": ["sourdough starter", "fermentation", "temperature control"]
+    },
+    {
+      "id": "proofer-home-plus",
+      "name": "Proofer & Slow Cooker",
+      "description": "Versatile countertop appliance that maintains precise temperatures for bread proofing, yogurt making, and slow cooking, all in one compact unit.",
+      "brand": "Brod & Taylor",
+      "category": "proofing",
+      "price": "From $189",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/files/ProoferHome-04-1024_1024x.jpg?v=1708535927",
+      "keywords": ["proofer", "slow cooker", "temperature control", "versatile", "multi-use"]
+    },
+    {
+      "id": "sourdough-crock",
+      "name": "Sourdough Crock",
+      "description": "Elegant ceramic crock designed specifically for storing and maintaining sourdough starter with proper air circulation and temperature stability.",
+      "brand": "Brod & Taylor",
+      "category": "storage",
+      "price": "$44.95",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/files/Sourdough_Crock_-_Lifestyle_-_Feeding_-_Vertical_1024x.jpg?v=1708535783",
+      "keywords": ["sourdough", "crock", "storage", "ceramic", "starter container"]
+    },
+    {
+      "id": "scale",
+      "name": "Bakers Math Kitchen Scale",
+      "description": "Precision digital scale specifically designed for bakers, featuring baker's percentage calculations and measurements in grams, ounces, and pounds for accurate recipe scaling.",
+      "brand": "Brod & Taylor",
+      "category": "tools",
+      "price": "$49.95",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/products/BMK_1024x.jpg?v=1645470516",
+      "keywords": ["scale", "baker's math", "precision", "measurements", "digital scale"]
+    },
+    {
+      "id": "dough-whisk",
+      "name": "Dough Whisk",
+      "description": "Essential hand tool with a unique looped wire design that efficiently mixes dough without overworking it, preventing gluten overdevelopment.",
+      "brand": "Brod & Taylor",
+      "category": "tools",
+      "price": "$14.95",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/products/TL101_1024x.jpg?v=1645470615",
+      "keywords": ["dough whisk", "hand tool", "mixing", "bread making"]
+    },
+    {
+      "id": "bread-lame",
+      "name": "Bread Lame",
+      "description": "Professional bread scoring tool with replaceable blades for creating beautiful patterns and proper expansion cuts in artisan bread.",
+      "brand": "Brod & Taylor",
+      "category": "tools",
+      "price": "$14.95",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/products/TL200_1024x.jpg?v=1645470636",
+      "keywords": ["lame", "bread scoring", "artisan", "blade", "scoring tool"]
+    },
+    {
+      "id": "bench-scraper",
+      "name": "Stainless Bench Scraper",
+      "description": "Multi-purpose stainless steel tool for cutting, portioning, and handling dough, plus cleaning work surfaces efficiently.",
+      "brand": "Brod & Taylor",
+      "category": "tools",
+      "price": "$19.95",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/products/TL301_2_1024x.jpg?v=1666800953",
+      "keywords": ["bench scraper", "dough cutter", "stainless steel", "kitchen tool"]
+    },
+    {
+      "id": "dough-bowl-scraper",
+      "name": "Dough & Bowl Scraper",
+      "description": "Flexible plastic scraper that conforms to bowl curves for efficient dough removal and clean mixing bowls.",
+      "brand": "Brod & Taylor",
+      "category": "tools",
+      "price": "$4.95",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/products/TL401_1024x.jpg?v=1645470676",
+      "keywords": ["bowl scraper", "dough scraper", "flexible", "cleaning"]
+    },
+    {
+      "id": "thermometer",
+      "name": "Pro-Surface Thermometer",
+      "description": "Instant-read infrared thermometer for checking dough temperature, water temperature, and surface temperatures without contact.",
+      "brand": "Brod & Taylor",
+      "category": "tools",
+      "price": "$39.95",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/products/TL501_1024x.jpg?v=1645470691",
+      "keywords": ["thermometer", "infrared", "temperature", "instant-read", "no-contact"]
+    },
+    {
+      "id": "banneton-oval",
+      "name": "Oval Banneton Basket",
+      "description": "Traditional rattan proofing basket that creates beautiful spiral patterns while supporting dough structure during final rise.",
+      "brand": "Brod & Taylor",
+      "category": "proofing",
+      "price": "$24.95",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/products/BR_Oval_1024x.jpg?v=1645470714",
+      "keywords": ["banneton", "proofing basket", "rattan", "oval", "bread shaping"]
+    },
+    {
+      "id": "banneton-round",
+      "name": "Round Banneton Basket",
+      "description": "Classic round rattan proofing basket for boules and round loaves, creating traditional concentric circle patterns.",
+      "brand": "Brod & Taylor",
+      "category": "proofing",
+      "price": "$22.95",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/products/BR_Round_1024x.jpg?v=1645470733",
+      "keywords": ["banneton", "proofing basket", "round", "boule", "rattan"]
+    },
+    {
+      "id": "proving-cloth",
+      "name": "Proving Cloth",
+      "description": "Natural linen cloth that absorbs moisture during proofing while preventing dough from sticking, essential for professional-quality bread.",
+      "brand": "Brod & Taylor",
+      "category": "proofing",
+      "price": "$19.95",
+      "affiliate_link": "https://brodandtaylor.com/henrysbreadkitchen",
+      "image_url": "http://brodandtaylor.com/cdn/shop/products/TL701_1024x.jpg?v=1645470757",
+      "keywords": ["proving cloth", "linen", "couche", "proofing", "non-stick"]
+    },
+    {
+      "id": "challenger-bread-pan",
+      "name": "Challenger Bread Pan",
+      "description": "Revolutionary cast iron bread pan designed specifically for home ovens, featuring a shallow base and deep lid for easy loading and superior steam retention.",
+      "brand": "Challenger Breadware",
+      "category": "bakeware",
+      "price": "$270",
+      "affiliate_link": "https://challengerbreadware.com/?ref=henryhunterjr",
+      "image_url": "https://challengerbreadware.com/wp-content/uploads/2020/02/Challenger-Breadware-Media-Kit-Logo-Color.jpg",
+      "keywords": ["challenger", "bread pan", "cast iron", "dutch oven", "steam", "artisan bread"]
+    },
+    {
+      "id": "mockmill-100",
+      "name": "mockmill 100 Stone Grain Mill",
+      "description": "Compact electric grain mill with stone burrs for grinding fresh flour from whole grains, perfect for small kitchens and home bakers.",
+      "brand": "mockmill",
+      "category": "tools",
+      "price": "$279",
+      "affiliate_link": "https://collabs.shop/ggyqco",
+      "image_url": "/lovable-uploads/default-product.png",
+      "keywords": ["grain mill", "stone mill", "flour", "whole grain", "mockmill", "grinding"]
+    },
+    {
+      "id": "mockmill-lino-200",
+      "name": "mockmill Lino 200",
+      "description": "Professional-grade stone grain mill with sustainable linseed oil finish, offering precise grinding control for home milling enthusiasts.",
+      "brand": "mockmill",
+      "category": "tools",
+      "price": "$449",
+      "affiliate_link": "https://collabs.shop/kfxbbt",
+      "image_url": "/lovable-uploads/default-product.png",
+      "keywords": ["grain mill", "stone mill", "lino 200", "professional", "whole grain"]
+    },
+    {
+      "id": "vitamix-a2300",
+      "name": "Vitamix A2300",
+      "description": "High-performance blender perfect for making dough, grinding grains into flour, and creating smooth batters for bread and pastry applications.",
+      "brand": "Vitamix",
+      "category": "appliances",
+      "price": "$399",
+      "affiliate_link": "https://collabs.shop/dcx28g",
+      "image_url": "/lovable-uploads/default-product.png",
+      "keywords": ["vitamix", "blender", "dough", "flour grinding", "high-performance"]
+    }
+  ],
+  "books": [
+    {
+      "id": "seasonal",
+      "title": "Baking Great Bread at Home: A Journey Through the Seasons",
+      "author": "Henry Hunter",
+      "description": "This isn't just a cookbook. It's a year-long journey through time, temperature, and tradition. Baking Great Bread at Home is the culmination of Henry Hunter's decades of hands-in-the-dough experience, told through seasonal rhythms, family memories, and the deep, ancient craft of breadmaking. Inside, you'll find master-level techniques made accessible, recipes that evolve with the weather and the baker, and stories that remind us why bread has always been at the heart of community. From crisp winter loaves to sun-drenched summer crusts, this book is a love letter to the home baker's calendar.",
+      "cover_image": "/lovable-uploads/43da7651-de36-46f7-ab6a-22e594aed31b.png",
+      "availability": "Coming December 2025 - Pre-orders opening soon",
+      "purchase_link": "https://bakinggreatbread.com/books",
+      "key_features": [
+        "Seasonal baking techniques that work with nature's rhythm",
+        "Master-level methods explained for home bakers",
+        "Family stories and the tradition of breadmaking",
+        "Recipes that celebrate each season's unique ingredients",
+        "The deep connection between bread and community"
+      ]
+    },
+    {
+      "id": "sourdough",
+      "title": "Sourdough for the Rest of Us: No Perfection Required",
+      "author": "Henry Hunter",
+      "description": "Forget the sourdough snobbery—this book is for real bakers who want great bread without the stress. Whether you're just getting started or tired of conflicting advice, Sourdough for the Rest of Us breaks down the process in plain, no-nonsense terms so you can bake with confidence. No artisan jargon. No Instagram-perfect expectations. Just straightforward guidance that meets you where you are and gets you baking bread you'll actually want to eat.",
+      "cover_image": "/lovable-uploads/73deb0d3-e387-4693-bdf8-802f89a1ae85.png",
+      "availability": "Available Now",
+      "purchase_link": "https://www.amazon.com/Sourdough-Rest-Us-Perfection-Required/dp/B0DPRZ5NYL",
+      "video_preview": "https://drive.google.com/file/d/16k5bvqiZ6prA180ZbE3VvEZeyhnqftXq/view?usp=sharing",
+      "key_features": [
+        "Honest, no-nonsense sourdough guidance",
+        "Practical starter maintenance tips",
+        "Flexible techniques that work with your schedule",
+        "Troubleshooting real problems",
+        "Recipes for everyday bakers"
+      ]
+    },
+    {
+      "id": "bread-journey",
+      "title": "The Bread Journey: From Kitchen to Community",
+      "author": "Henry Hunter",
+      "description": "A heartfelt memoir and practical guide about how bread can transform your life and bring people together. Henry Hunter shares his personal journey from hobbyist baker to community builder, revealing how the simple act of baking and sharing bread created connections, healed relationships, and built a thriving local community. More than recipes, this is a story about finding purpose, building authentic relationships, and discovering that the most meaningful moments happen around a shared loaf.",
+      "cover_image": "/lovable-uploads/171c5ec1-d38e-4257-a2e4-60b75d2e2909.png",
+      "availability": "Available Now",
+      "purchase_link": "https://www.amazon.com/Bread-Journey-Kitchen-Community/dp/B0DPRZM8VG",
+      "key_features": [
+        "Personal stories of transformation through baking",
+        "How to build community around bread",
+        "Practical tips for sharing your baking",
+        "Recipes that bring people together",
+        "Life lessons from the bread oven"
+      ]
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "testimonial-1",
+      "name": "Sarah Mitchell",
+      "location": "Portland, OR",
+      "rating": 5,
+      "text": "Henry's sourdough method changed everything for me. After years of dense, flat loaves, I finally achieved that perfect open crumb and crispy crust. His step-by-step approach makes it accessible for anyone.",
+      "recipe_used": "Basic Sourdough",
+      "source": "facebook",
+      "baking_experience": "Intermediate",
+      "verified": true
+    },
+    {
+      "id": "testimonial-2",
+      "name": "James Chen",
+      "location": "San Francisco, CA",
+      "rating": 5,
+      "text": "I've been baking professionally for 10 years, and Henry's techniques still taught me something new. The way he explains fermentation is brilliant.",
+      "recipe_used": "Whole Wheat Sourdough",
+      "source": "instagram",
+      "baking_experience": "Professional",
+      "verified": true
+    },
+    {
+      "id": "testimonial-3",
+      "name": "Emily Rodriguez",
+      "location": "Austin, TX",
+      "rating": 5,
+      "text": "As a complete beginner, I was intimidated by bread baking. Henry's clear instructions and encouraging tone gave me the confidence to try. My first loaf was a success!",
+      "recipe_used": "Beginner's White Bread",
+      "source": "website",
+      "baking_experience": "Beginner",
+      "verified": true
+    },
+    {
+      "id": "testimonial-4",
+      "name": "Michael Thompson",
+      "location": "Seattle, WA",
+      "rating": 5,
+      "text": "The science behind the bread-making process is fascinating, and Henry explains it in a way that's both educational and practical. My bakes have improved dramatically.",
+      "recipe_used": "Ciabatta",
+      "source": "facebook",
+      "baking_experience": "Advanced",
+      "verified": true
+    },
+    {
+      "id": "testimonial-5",
+      "name": "Lisa Wang",
+      "location": "Boston, MA",
+      "rating": 5,
+      "text": "I love how Henry emphasizes that bread baking is a journey, not a destination. His philosophy helped me stop stressing about perfection and just enjoy the process.",
+      "recipe_used": "Rye Bread",
+      "source": "instagram",
+      "baking_experience": "Intermediate",
+      "verified": true
+    },
+    {
+      "id": "testimonial-6",
+      "name": "David Kumar",
+      "location": "Chicago, IL",
+      "rating": 5,
+      "text": "The troubleshooting section saved my baking! Henry addresses every problem I encountered and offers clear solutions. It's like having a master baker in your kitchen.",
+      "recipe_used": "Baguettes",
+      "source": "website",
+      "baking_experience": "Intermediate",
+      "verified": true
+    },
+    {
+      "id": "testimonial-7",
+      "name": "Rachel Green",
+      "location": "Denver, CO",
+      "rating": 5,
+      "text": "My family can't get enough of the sourdough I make using Henry's recipes. Even my picky kids ask for 'daddy's special bread' every week.",
+      "recipe_used": "Sandwich Bread",
+      "source": "facebook",
+      "baking_experience": "Beginner",
+      "verified": true
+    },
+    {
+      "id": "testimonial-8",
+      "name": "Tom Anderson",
+      "location": "Minneapolis, MN",
+      "rating": 5,
+      "text": "Henry's approach to bread scoring transformed my loaves from good to bakery-quality. The patterns I can create now are stunning, and the technique is so simple.",
+      "recipe_used": "Country Loaf",
+      "source": "instagram",
+      "baking_experience": "Advanced",
+      "verified": true
+    },
+    {
+      "id": "testimonial-9",
+      "name": "Priya Patel",
+      "location": "Atlanta, GA",
+      "rating": 5,
+      "text": "I appreciate how Henry respects different dietary needs. His whole grain recipes are wholesome, delicious, and my family loves them.",
+      "recipe_used": "Multigrain Bread",
+      "source": "website",
+      "baking_experience": "Intermediate",
+      "verified": true
+    },
+    {
+      "id": "testimonial-10",
+      "name": "Chris Martinez",
+      "location": "Phoenix, AZ",
+      "rating": 5,
+      "text": "Learning to maintain my sourdough starter seemed impossible until I found Henry's guide. Now my starter is healthy and consistent, and my bread proves it.",
+      "recipe_used": "Classic Sourdough",
+      "source": "facebook",
+      "baking_experience": "Beginner",
+      "verified": true
+    }
+  ],
+  "metadata": {
+    "generated_date": "2025-01-17",
+    "source": "bakinggreatbread.com",
+    "purpose": "Holiday Shopping Guide",
+    "author": "Henry Hunter",
+    "affiliate_note": "As an affiliate, Henry earns from qualifying purchases through these links."
+  }
+}
