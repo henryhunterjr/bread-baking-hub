@@ -62,6 +62,8 @@ export const getBlogPostHeroImage = (
   return result;
 };
 
+import { getBlogImage } from './blogImageMapping';
+
 // Get the best social image for sharing (with fallback chain) including hero image mapping
 export const getSocialImageUrl = (
   socialImageUrl?: string,
@@ -71,6 +73,15 @@ export const getSocialImageUrl = (
   slug?: string
 ): string => {
   console.log('getSocialImageUrl called with:', { socialImageUrl, inlineImageUrl, heroBannerUrl, updatedAt, slug });
+  
+  // Check blog image mapping first if slug is provided
+  if (slug) {
+    const mappedImage = getBlogImage(slug, socialImageUrl, heroBannerUrl, inlineImageUrl);
+    if (mappedImage !== "/og/default.jpg") {
+      console.log('getSocialImageUrl using mapped image:', mappedImage);
+      return mappedImage;
+    }
+  }
   
   // Direct implementation to avoid circular dependencies and browser compatibility issues
   const defaultImageUrl = '/lovable-uploads/f2a6c7d6-5a78-4068-94bd-1810dd3ebd96.png';
