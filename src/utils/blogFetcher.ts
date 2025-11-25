@@ -62,6 +62,7 @@ interface WordPressCategory {
 
 interface BlogPost {
   id: number | string;
+  slug: string;
   title: string;
   excerpt: string;
   date: string;
@@ -163,6 +164,7 @@ const mapSupabasePost = (post: SupabasePost): BlogPost => {
   
   return {
     id: post.id,
+    slug: post.slug,
     title: post.title,
     excerpt: stripHtml(post.content || '', 20),
     date: publishedDate.toLocaleDateString('en-US', {
@@ -266,8 +268,12 @@ export const fetchBlogPosts = async (
             avatar: authorData?.avatar_urls?.['48'] || authorData?.avatar_urls?.['96'] || '/placeholder-avatar.png'
           };
           
+          // Extract slug from link
+          const slug = post.link.split('/').filter(Boolean).pop() || '';
+          
           return {
             id: post.id,
+            slug,
             title: decodeHtmlEntities(post.title.rendered),
             excerpt: stripHtml(post.excerpt.rendered, 20),
             date: new Date(post.date).toLocaleDateString('en-US', {

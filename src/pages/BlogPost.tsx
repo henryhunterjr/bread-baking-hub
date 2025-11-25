@@ -357,6 +357,7 @@ const BlogPost = () => {
           // Convert Supabase post to BlogPost format
           const convertedPost: BlogPost = {
             id: parseInt(supabasePost.id.slice(0, 8), 16),
+            slug: supabasePost.slug,
             title: supabasePost.title,
             excerpt: supabasePost.subtitle || '',
             author: {
@@ -447,6 +448,7 @@ const BlogPost = () => {
                 // Convert WordPress post to BlogPost format
                 const convertedPost: BlogPost = {
                   id: wpPost.id,
+                  slug: normalizedSlug,
                   title: wpPost.title.rendered,
                   excerpt: wpPost.excerpt.rendered.replace(/<[^>]*>/g, '').slice(0, 160),
                   author: {
