@@ -19,8 +19,13 @@ export function getBlogImage(
 ): string {
   // Check mapping first
   if (blogImageMapping[slug]) {
-    console.log(`[getBlogImage] Using mapping for ${slug}:`, blogImageMapping[slug]);
-    return blogImageMapping[slug];
+    const mappedPath = blogImageMapping[slug];
+    console.log(`[getBlogImage] Using mapping for ${slug}:`, mappedPath);
+    // Ensure absolute URL for social media
+    if (!mappedPath.startsWith('http')) {
+      return `${window.location.origin}${mappedPath.startsWith('/') ? '' : '/'}${mappedPath}`;
+    }
+    return mappedPath;
   }
   
   // Fall back to provided URLs in priority order
