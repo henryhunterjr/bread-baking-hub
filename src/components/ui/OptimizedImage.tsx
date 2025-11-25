@@ -225,7 +225,7 @@ export const BlogPostImage = ({ src, alt, className = '' }: {
     sizes="(max-width: 768px) 100vw, 800px"
     quality={80}
     className={className}
-    objectFit="cover"
+    objectFit="contain"
   />
 );
 

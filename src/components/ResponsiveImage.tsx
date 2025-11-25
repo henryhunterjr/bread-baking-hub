@@ -105,7 +105,7 @@ export const ResponsiveImage = ({
   const srcSet = generateSrcSet(imageSrc);
 
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative ${className}`}>
       {/* Loading placeholder */}
       {!imageLoaded && !imageError && (
         <div 
