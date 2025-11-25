@@ -22,6 +22,12 @@ export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl, inli
   // Generate canonical URL (use provided or fall back to post link)
   const canonicalUrl = canonical || post.link;
   
+  // Determine the OG/Twitter title (custom for Wire Monkey interview)
+  let socialTitle = post.title;
+  if (post.slug === 'the-man-behind-wire-monkey') {
+    socialTitle = 'Tyler Cartner | The Man Behind Wire Monkey | By Henry Hunter';
+  }
+  
   // Convert date to ISO format for structured data
   const publishedDate = new Date(post.date).toISOString();
   const modifiedDate = new Date(post.modified).toISOString();
@@ -61,7 +67,7 @@ export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl, inli
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="article" />
-      <meta property="og:title" content={post.title} />
+      <meta property="og:title" content={socialTitle} />
       <meta property="og:description" content={cleanDescription} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content="Baking Great Bread" />
@@ -79,7 +85,7 @@ export const BlogPostSEO = ({ post, fullContent, canonical, socialImageUrl, inli
       
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={post.title} />
+      <meta name="twitter:title" content={socialTitle} />
       <meta name="twitter:description" content={cleanDescription} />
       {finalImageUrl && <meta name="twitter:image" content={finalImageUrl} />}
       {finalImageUrl && <meta name="twitter:image:alt" content={post.imageAlt} />}

@@ -40,7 +40,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const post = posts[0];
-    const title = post.title || 'Blog Post';
+    let title = post.title || 'Blog Post';
+    
+    // Custom OG title for Wire Monkey interview
+    if (slug === 'the-man-behind-wire-monkey') {
+      title = 'Tyler Cartner | The Man Behind Wire Monkey | By Henry Hunter';
+    }
+    
     const description = post.subtitle || post.content?.substring(0, 160) || `Read this blog post: ${title}`;
     
     // Priority: social_image_url → inline_image_url → hero_image_url → default
