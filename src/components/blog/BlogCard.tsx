@@ -36,8 +36,8 @@ const BlogCard = ({ post, categories = [], enableSEO = false }: BlogCardProps) =
         onClick={handlePostClick}
         className="block"
       >
-        <div className="relative overflow-hidden">
-          <div className="w-full aspect-[16/9] bg-muted">
+        <div className="relative">
+          <div className="w-full aspect-[16/9] bg-muted overflow-hidden rounded-t-xl">
             {post.image ? (
               <ResponsiveImage 
                 src={post.image} 
