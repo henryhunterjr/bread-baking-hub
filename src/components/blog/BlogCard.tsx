@@ -37,14 +37,15 @@ const BlogCard = ({ post, categories = [], enableSEO = false }: BlogCardProps) =
         className="block"
       >
         <div className="relative overflow-hidden">
-          <div className="w-full h-48 bg-muted">
+          <div className="w-full aspect-[16/9] bg-muted">
             {post.image ? (
               <ResponsiveImage 
                 src={post.image} 
                 alt={post.imageAlt || `Featured image for ${post.title}`}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                className="w-full h-full group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
                 aspectRatio="16/9"
+                objectFit="contain"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
