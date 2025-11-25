@@ -15,6 +15,7 @@ interface ResponsiveImageProps {
   width?: number;
   height?: number;
   aspectRatio?: string;
+  objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
   onLoad?: () => void;
   onError?: () => void;
 }
@@ -34,6 +35,7 @@ export const ResponsiveImage = ({
   width,
   height,
   aspectRatio,
+  objectFit = 'cover',
   onLoad,
   onError
 }: ResponsiveImageProps) => {
@@ -150,7 +152,7 @@ export const ResponsiveImage = ({
               el.setAttribute('fetchpriority', 'high');
             }
           }}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${
+          className={`w-full h-full object-${objectFit} transition-opacity duration-300 ${
             imageLoaded ? 'opacity-100' : 'opacity-0'
           }`}
           style={{
