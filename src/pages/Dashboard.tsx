@@ -21,7 +21,8 @@ import {
   Inbox,
   Image as ImageIcon,
   BarChart3,
-  Menu
+  Menu,
+  X
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
@@ -923,6 +924,14 @@ const PostForm = ({ postData, setPostData, onImageUpload, showNewsletterToggle }
                 <p>✓ Hero image set</p>
                 <p>Top banner for post</p>
               </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setPostData(prev => ({ ...prev, heroImageUrl: '' }))}
+                className="text-destructive hover:text-destructive"
+              >
+                <X className="w-4 h-4" />
+              </Button>
             </div>
           )}
         </div>
@@ -982,6 +991,14 @@ const PostForm = ({ postData, setPostData, onImageUpload, showNewsletterToggle }
                 <p>✓ Inline image set</p>
                 <p>Appears in post body</p>
               </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setPostData(prev => ({ ...prev, inlineImageUrl: '' }))}
+                className="text-destructive hover:text-destructive"
+              >
+                <X className="w-4 h-4" />
+              </Button>
             </div>
           )}
         </div>
@@ -1041,6 +1058,14 @@ const PostForm = ({ postData, setPostData, onImageUpload, showNewsletterToggle }
                 <p>✓ Social preview set</p>
                 <p>Optimized for sharing</p>
               </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setPostData(prev => ({ ...prev, socialImageUrl: '' }))}
+                className="text-destructive hover:text-destructive"
+              >
+                <X className="w-4 h-4" />
+              </Button>
             </div>
           )}
         </div>
