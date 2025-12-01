@@ -59,7 +59,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Hard override for Wire Monkey interview post to use the new thumbnail
     if (slug === 'the-man-behind-wire-monkey') {
-      rawImageUrl = 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-11/tyler-displaying-his-product/interview-with-tyler-cartner-of-wire-monkey-sourdough-bread-scoring-lames-in-connecticut-united-states-82139-949x1024.png';
+      rawImageUrl = 'https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-12/the-man-behind-wire-monkey/tyler.png';
     }
     
     const url = `https://bakinggreatbread.com/blog/${slug}`;

@@ -4,7 +4,7 @@
  */
 
 export const blogImageMapping: Record<string, string> = {
-  "the-man-behind-wire-monkey": "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-11/tyler-displaying-his-product/interview-with-tyler-cartner-of-wire-monkey-sourdough-bread-scoring-lames-in-connecticut-united-states-82139-949x1024.png",
+  "the-man-behind-wire-monkey": "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-12/the-man-behind-wire-monkey/tyler.png",
 };
 
 /**
