@@ -4,7 +4,7 @@
  */
 
 export const blogImageMapping: Record<string, string> = {
-  "the-man-behind-wire-monkey": "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-12/the-man-behind-wire-monkey/tyler.png",
+  "the-man-behind-wire-monkey": "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-12/tyler-cartner/interview-with-tyley.png",
 };
 
 /**
