@@ -78,7 +78,7 @@ export const recipeImageMapping: Record<string, string> = {
   "hot-cross-buns": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/2A65D6F2-40DC-4045-83B6-B4C0A1F82697_Original.jpg",
   "hot-dog-buns": "/lovable-uploads/d20be4b4-50d3-4390-aa14-133b1aa80872.png",
   "spring-herb-rolls": "/lovable-uploads/6300d418-e64d-4a40-a868-b8bdf5c5c522.png",
-  "ultimate-dinner-rolls-rosemary-sea-salt": "/lovable-uploads/adc95d46-1f13-4867-8ba4-5db361645604.png",
+  "ultimate-dinner-rolls-rosemary-sea-salt": "/images/recipes/ultimate-dinner-rolls.jpg",
   
   // SPECIALTY/SAVORY
   "cheddar-chive-biscuits": "/lovable-uploads/3b52b71d-ce38-4980-9964-91a64f30e26d.png",
