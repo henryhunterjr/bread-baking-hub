@@ -74,7 +74,7 @@ export const recipeImageMapping: Record<string, string> = {
   
   // ROLLS/BUNS
   "brioche-hamburger-buns": "/lovable-uploads/1a0c34fd-69be-42d0-8dc6-1e4cecc5f1ae.png",
-  "buttermilk-potato-rolls": "/hero-images/yeasted-dinner-rolls.jpg",
+  "buttermilk-potato-rolls": "https://bakinggreatbread.blog/wp-content/uploads/2024/12/yeasted-dinner-rolls.jpg",
   "hot-cross-buns": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/2A65D6F2-40DC-4045-83B6-B4C0A1F82697_Original.jpg",
   "hot-dog-buns": "/lovable-uploads/d20be4b4-50d3-4390-aa14-133b1aa80872.png",
   "spring-herb-rolls": "/lovable-uploads/6300d418-e64d-4a40-a868-b8bdf5c5c522.png",
@@ -102,21 +102,20 @@ export const recipeImageMapping: Record<string, string> = {
   // MUFFINS
   "mandarin-holiday-muffins": "/images/recipes/mandarin-holiday-muffins.jpg",
   
-  // HOLIDAY/SEASONAL RECIPES (Phase 1 - Social sharing images)
-  "festive-christmas-banana-bread": "/hero-images/festive-christmas-banana-bread.jpg",
-  "festive-christmas-banana-bread-1": "/hero-images/festive-christmas-banana-bread.jpg",
-  "cranberrywalnut-sourdough-2023-driedfruit-version": "/hero-images/cranberry-walnut-sourdough-loaf.jpg",
-  "holiday-monkey-bread": "/hero-images/holiday-monkey-bread.jpg",
-  "holiday-cranberrywalnut-sourdough-2024": "/hero-images/holiday-cranberry-walnut-sourdough-recipe.jpg",
-  "north-dakota-caramel-rolls": "/hero-images/north-dakota-caramel-rolls.jpg",
+  // HOLIDAY/SEASONAL RECIPES (Full blog URLs for social sharing)
+  "festive-christmas-banana-bread": "https://bakinggreatbread.blog/wp-content/uploads/2024/12/festive-christmas-banana-bread.jpg",
+  "cranberrywalnut-sourdough-2023-driedfruit-version": "https://bakinggreatbread.blog/wp-content/uploads/2024/12/cranberry-walnut-sourdough-loaf.jpg",
+  "holiday-monkey-bread": "https://bakinggreatbread.blog/wp-content/uploads/2024/12/holiday-monkey-bread.jpg",
+  "holiday-cranberrywalnut-sourdough-2024": "https://bakinggreatbread.blog/wp-content/uploads/2024/12/holiday-cranberry-walnut-sourdough-recipe.jpg",
+  "north-dakota-caramel-rolls": "https://bakinggreatbread.blog/wp-content/uploads/2024/12/north-dakota-caramel-rolls.jpg",
   
   // STAR BREADS & PANETTONE
-  "classic-christmas-panettone-refreshed-2025-edition": "/hero-images/classic-christmas-panettone.jpg",
+  "classic-christmas-panettone-refreshed-2025-edition": "https://bakinggreatbread.blog/wp-content/uploads/2024/12/classic-christmas-panettone.jpg",
   "garlicherb-parmesan-star-bread": "/images/recipes/garlic-herb-starbread.jpg",
   "cinnamonorange-star-bread": "/images/recipes/cinnamon-orange-star-bread.jpg",
   
   // KUCHEN
-  "cinnamonsugar-kuchen-2025-edition": "/hero-images/cinnamon-sugar-kuchen.jpg"
+  "cinnamonsugar-kuchen-2025-edition": "https://bakinggreatbread.blog/wp-content/uploads/2024/12/cinnamon-sugar-kuchen.jpg"
 };
 
 // Fallback images:
