@@ -79,6 +79,7 @@ export const recipeImageMapping: Record<string, string> = {
   "hot-dog-buns": "/lovable-uploads/d20be4b4-50d3-4390-aa14-133b1aa80872.png",
   "spring-herb-rolls": "/lovable-uploads/6300d418-e64d-4a40-a868-b8bdf5c5c522.png",
   "ultimate-dinner-rolls-rosemary-sea-salt": "/images/recipes/ultimate-dinner-rolls.jpg",
+  "ultimate-dinner-rolls-with-rosemaryand-sea-salt": "/images/recipes/ultimate-dinner-rolls.jpg",
   
   // SPECIALTY/SAVORY
   "cheddar-chive-biscuits": "/lovable-uploads/3b52b71d-ce38-4980-9964-91a64f30e26d.png",
@@ -157,7 +158,8 @@ export function getRecipeImage(slug: string, imageUrl?: string | null): string {
     'buttermilk-potato-rolls',
     'rustic-italian-ciabatta',
     'sourdough-pretzels',
-    'stollen'
+    'stollen',
+    'ultimate-dinner-rolls-with-rosemaryand-sea-salt'
   ];
   
   // If this recipe should ALWAYS use the mapping, return it immediately
