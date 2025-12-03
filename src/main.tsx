@@ -5,8 +5,25 @@ import { Providers } from './providers/Providers';
 import App from './App';
 import './index.css';
 import { installImageErrorHandler } from './utils/imageErrorHandler';
-// Initialize first-party analytics tracking
-import './utils/firstPartyAnalytics';
+
+// Suppress extension and third-party script errors from crashing the app
+window.addEventListener('unhandledrejection', (event) => {
+  const reason = String(event.reason || '');
+  // Suppress errors from browser extensions and external scripts
+  if (reason.includes('Extension context') ||
+      reason.includes('chrome-extension') ||
+      reason.includes('speed-insights') ||
+      reason.includes('_vercel') ||
+      (reason.includes('Failed to fetch') && !reason.includes('supabase'))) {
+    event.preventDefault();
+    return;
+  }
+});
+
+// Initialize first-party analytics tracking (safe import that won't throw)
+import('./utils/firstPartyAnalytics').catch(() => {
+  // Silently fail if analytics can't load
+});
 
 // Clear stale mount flag on page load
 delete (window as any).__BGB_APP_MOUNTED__;
