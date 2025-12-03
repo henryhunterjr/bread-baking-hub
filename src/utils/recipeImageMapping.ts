@@ -107,7 +107,12 @@ export const recipeImageMapping: Record<string, string> = {
   "cranberrywalnut-sourdough-2023-driedfruit-version": "/images/recipes/cranberrywalnut-sourdough-2023.webp",
   "holiday-monkey-bread": "/images/recipes/holiday-monkey-bread.webp",
   "holiday-cranberrywalnut-sourdough-2024": "/images/recipes/holiday-cranberrywalnut-sourdough-2024.jpg",
-  "north-dakota-caramel-rolls": "/images/recipes/north-dakota-caramel-rolls.webp"
+  "north-dakota-caramel-rolls": "/images/recipes/north-dakota-caramel-rolls.webp",
+  
+  // STAR BREADS & PANETTONE
+  "classic-christmas-panettone-refreshed-2025-edition": "/images/recipes/panettone.jpg",
+  "garlicherb-parmesan-star-bread": "/images/recipes/garlic-herb-starbread.jpg",
+  "cinnamonorange-star-bread": "/images/recipes/cinnamon-orange-star-bread.jpg"
 };
 
 // Fallback images:
@@ -140,7 +145,10 @@ export function getRecipeImage(slug: string, imageUrl?: string | null): string {
     'cranberrywalnut-sourdough-2023-driedfruit-version',
     'holiday-monkey-bread',
     'holiday-cranberrywalnut-sourdough-2024',
-    'north-dakota-caramel-rolls'
+    'north-dakota-caramel-rolls',
+    'classic-christmas-panettone-refreshed-2025-edition',
+    'garlicherb-parmesan-star-bread',
+    'cinnamonorange-star-bread'
   ];
   
   // If this recipe should ALWAYS use the mapping, return it immediately
