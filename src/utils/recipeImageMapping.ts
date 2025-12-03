@@ -112,7 +112,10 @@ export const recipeImageMapping: Record<string, string> = {
   // STAR BREADS & PANETTONE
   "classic-christmas-panettone-refreshed-2025-edition": "/images/recipes/panettone.jpg",
   "garlicherb-parmesan-star-bread": "/images/recipes/garlic-herb-starbread.jpg",
-  "cinnamonorange-star-bread": "/images/recipes/cinnamon-orange-star-bread.jpg"
+  "cinnamonorange-star-bread": "/images/recipes/cinnamon-orange-star-bread.jpg",
+  
+  // KUCHEN
+  "cinnamonsugar-kuchen-2025-edition": "/images/recipes/cinnamonsugar-kuchen-2025-edition.webp"
 };
 
 // Fallback images:
@@ -148,7 +151,8 @@ export function getRecipeImage(slug: string, imageUrl?: string | null): string {
     'north-dakota-caramel-rolls',
     'classic-christmas-panettone-refreshed-2025-edition',
     'garlicherb-parmesan-star-bread',
-    'cinnamonorange-star-bread'
+    'cinnamonorange-star-bread',
+    'cinnamonsugar-kuchen-2025-edition'
   ];
   
   // If this recipe should ALWAYS use the mapping, return it immediately
