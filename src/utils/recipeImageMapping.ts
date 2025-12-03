@@ -96,7 +96,10 @@ export const recipeImageMapping: Record<string, string> = {
   "henrys-round-challah-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg",
   "challah-bread": "https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg",
   "easter-paska": "/lovable-uploads/6eded5fa-0dd5-4b7b-b7fc-108afbc3f96e.png",
-  "holiday-star-cinnamon-bread": "/lovable-uploads/d7809864-6aac-432c-98e6-a38878473e1b.png"
+  "holiday-star-cinnamon-bread": "/lovable-uploads/d7809864-6aac-432c-98e6-a38878473e1b.png",
+  
+  // MUFFINS
+  "mandarin-holiday-muffins": "/images/recipes/mandarin-holiday-muffins.jpg"
 };
 
 // Fallback images:
@@ -122,7 +125,8 @@ export function getRecipeImage(slug: string, imageUrl?: string | null): string {
     'henrys-perfect-cinnamon-swirl-bread', 
     'pumpkin-shaped-sourdough-loaf', 
     'rustic-peach-galette',
-    'ultimate-cream-cheese-swirl-pumpkin-bread-6'
+    'ultimate-cream-cheese-swirl-pumpkin-bread-6',
+    'mandarin-holiday-muffins'
   ];
   
   // If this recipe should ALWAYS use the mapping, return it immediately
