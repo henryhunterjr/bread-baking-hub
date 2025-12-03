@@ -74,7 +74,7 @@ export const recipeImageMapping: Record<string, string> = {
   
   // ROLLS/BUNS
   "brioche-hamburger-buns": "/lovable-uploads/1a0c34fd-69be-42d0-8dc6-1e4cecc5f1ae.png",
-  "buttermilk-potato-rolls": "/images/recipes/buttermilk-potato-rolls.jpg",
+  "buttermilk-potato-rolls": "/hero-images/yeasted-dinner-rolls.jpg",
   "hot-cross-buns": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/2A65D6F2-40DC-4045-83B6-B4C0A1F82697_Original.jpg",
   "hot-dog-buns": "/lovable-uploads/d20be4b4-50d3-4390-aa14-133b1aa80872.png",
   "spring-herb-rolls": "/lovable-uploads/6300d418-e64d-4a40-a868-b8bdf5c5c522.png",
@@ -88,7 +88,7 @@ export const recipeImageMapping: Record<string, string> = {
   "sun-dried-tomato-feta-bread": "/lovable-uploads/938a48a4-da57-4b7f-a31f-716a0493f585.png",
   "rosemary-garlic-parmesan-loaf": "/lovable-uploads/9b1f8351-f0df-4573-8fe1-fea3a1568962.png",
   
-  // PUMPKIN/CREAM CHEESE BREADS - Keep only the -6 variant
+  // PUMPKIN/CREAM CHEESE BREADS
   "ultimate-cream-cheese-swirl-pumpkin-bread-6": "https://bakinggreatbread.blog/wp-content/uploads/2024/09/creamy-pumpkin-swirl-bread-og.jpg",
   
   // HOLIDAY BREADS
@@ -102,21 +102,21 @@ export const recipeImageMapping: Record<string, string> = {
   // MUFFINS
   "mandarin-holiday-muffins": "/images/recipes/mandarin-holiday-muffins.jpg",
   
-  // HOLIDAY/SEASONAL RECIPES
-  "festive-christmas-banana-bread": "/images/recipes/festive-christmas-banana-bread.webp",
-  "festive-christmas-banana-bread-1": "/images/recipes/festive-christmas-banana-bread.webp",
-  "cranberrywalnut-sourdough-2023-driedfruit-version": "/images/recipes/cranberrywalnut-sourdough-2023.webp",
-  "holiday-monkey-bread": "/images/recipes/holiday-monkey-bread.webp",
-  "holiday-cranberrywalnut-sourdough-2024": "/images/recipes/holiday-cranberrywalnut-sourdough-2024.jpg",
-  "north-dakota-caramel-rolls": "/images/recipes/north-dakota-caramel-rolls.webp",
+  // HOLIDAY/SEASONAL RECIPES (Phase 1 - Social sharing images)
+  "festive-christmas-banana-bread": "/hero-images/festive-christmas-banana-bread.jpg",
+  "festive-christmas-banana-bread-1": "/hero-images/festive-christmas-banana-bread.jpg",
+  "cranberrywalnut-sourdough-2023-driedfruit-version": "/hero-images/cranberry-walnut-sourdough-loaf.jpg",
+  "holiday-monkey-bread": "/hero-images/holiday-monkey-bread.jpg",
+  "holiday-cranberrywalnut-sourdough-2024": "/hero-images/holiday-cranberry-walnut-sourdough-recipe.jpg",
+  "north-dakota-caramel-rolls": "/hero-images/north-dakota-caramel-rolls.jpg",
   
   // STAR BREADS & PANETTONE
-  "classic-christmas-panettone-refreshed-2025-edition": "/images/recipes/panettone.jpg",
+  "classic-christmas-panettone-refreshed-2025-edition": "/hero-images/classic-christmas-panettone.jpg",
   "garlicherb-parmesan-star-bread": "/images/recipes/garlic-herb-starbread.jpg",
   "cinnamonorange-star-bread": "/images/recipes/cinnamon-orange-star-bread.jpg",
   
   // KUCHEN
-  "cinnamonsugar-kuchen-2025-edition": "/images/recipes/cinnamonsugar-kuchen-2025-edition.webp"
+  "cinnamonsugar-kuchen-2025-edition": "/hero-images/cinnamon-sugar-kuchen.jpg"
 };
 
 // Fallback images:
