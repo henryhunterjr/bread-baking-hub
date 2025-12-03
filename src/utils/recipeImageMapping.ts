@@ -11,7 +11,7 @@ export const recipeImageMapping: Record<string, string> = {
   "grilled-flatbread-with-toppings": "/lovable-uploads/fa994734-07ee-4234-aa90-3e73a78f6cdd.png",
   
   // CIABATTA - Use ciabatta image
-  "rustic-italian-ciabatta": "https://bakinggreatbread.blog/wp-content/uploads/2025/01/OIP-4-1.webp",
+  "rustic-italian-ciabatta": "/images/recipes/rustic-italian-ciabatta.jpg",
   
   // JAPANESE MILK BREAD - Use milk bread image
   "japanese-milk-bread": "https://bakinggreatbread.blog/wp-content/uploads/2024/11/IMG_8582.webp",
@@ -74,7 +74,7 @@ export const recipeImageMapping: Record<string, string> = {
   
   // ROLLS/BUNS
   "brioche-hamburger-buns": "/lovable-uploads/1a0c34fd-69be-42d0-8dc6-1e4cecc5f1ae.png",
-  "buttermilk-potato-rolls": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/IMG_7806.png",
+  "buttermilk-potato-rolls": "/images/recipes/buttermilk-potato-rolls.jpg",
   "hot-cross-buns": "https://bakinggreatbread.blog/wp-content/uploads/2024/01/2A65D6F2-40DC-4045-83B6-B4C0A1F82697_Original.jpg",
   "hot-dog-buns": "/lovable-uploads/d20be4b4-50d3-4390-aa14-133b1aa80872.png",
   "spring-herb-rolls": "/lovable-uploads/6300d418-e64d-4a40-a868-b8bdf5c5c522.png",
@@ -83,7 +83,7 @@ export const recipeImageMapping: Record<string, string> = {
   // SPECIALTY/SAVORY
   "cheddar-chive-biscuits": "/lovable-uploads/3b52b71d-ce38-4980-9964-91a64f30e26d.png",
   "jalapeno-cheddar-cornbread": "/lovable-uploads/92bf5337-70cc-4019-a7a1-4556c35ba5f8.png",
-  "caramelized-onion-gruyere-fougasse": "https://bakinggreatbread.blog/wp-content/uploads/2025/02/475992172_1777767306347357_602858855922001730_n.jpg",
+  "caramelized-onion-gruyere-fougasse": "/images/recipes/caramelized-onion-gruyere-fougasse.jpg",
   "sun-dried-tomato-feta-bread": "/lovable-uploads/938a48a4-da57-4b7f-a31f-716a0493f585.png",
   "rosemary-garlic-parmesan-loaf": "/lovable-uploads/9b1f8351-f0df-4573-8fe1-fea3a1568962.png",
   
@@ -152,7 +152,10 @@ export function getRecipeImage(slug: string, imageUrl?: string | null): string {
     'classic-christmas-panettone-refreshed-2025-edition',
     'garlicherb-parmesan-star-bread',
     'cinnamonorange-star-bread',
-    'cinnamonsugar-kuchen-2025-edition'
+    'cinnamonsugar-kuchen-2025-edition',
+    'caramelized-onion-gruyere-fougasse',
+    'buttermilk-potato-rolls',
+    'rustic-italian-ciabatta'
   ];
   
   // If this recipe should ALWAYS use the mapping, return it immediately
