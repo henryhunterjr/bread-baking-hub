@@ -26,6 +26,13 @@ class AnalyticsErrorBoundary extends Component<{ children: ReactNode }, { hasErr
   render() { return this.state.hasError ? null : this.props.children; }
 }
 
+// Only render Vercel analytics when deployed on Vercel (check for _vercel in hostname or production mode on expected domains)
+const isVercelEnvironment = typeof window !== 'undefined' && (
+  window.location.hostname.includes('vercel.app') ||
+  window.location.hostname === 'bakinggreatbread.com' ||
+  window.location.hostname === 'www.bakinggreatbread.com'
+);
+
 // Import Index directly to avoid lazy loading issues on main page
 import Index from "./pages/Index";
 
@@ -120,8 +127,12 @@ function App() {
       <AccessibilityEnhancements />
       <ContentQualityChecker enabled={false} />
       <AnalyticsErrorBoundary>
-        <SpeedInsights />
-        <Analytics />
+        {isVercelEnvironment && (
+          <>
+            <SpeedInsights />
+            <Analytics />
+          </>
+        )}
       </AnalyticsErrorBoundary>
       <Toaster />
       <Sonner />

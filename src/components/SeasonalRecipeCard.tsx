@@ -146,16 +146,27 @@ export const SeasonalRecipeCard = ({ recipe, onRecipeClick, className = '' }: Se
 
           {/* Categories */}
           <div className="flex flex-wrap gap-1">
-            {recipe.data?.category?.slice(0, 2).map((cat) => (
-              <Badge key={cat} variant="outline" className="text-xs">
-                {cat}
-              </Badge>
-            )) || null}
-            {recipe.data?.category && recipe.data.category.length > 2 && (
-              <Badge variant="outline" className="text-xs">
-                +{recipe.data.category.length - 2}
-              </Badge>
-            )}
+            {(() => {
+              const categories = Array.isArray(recipe.data?.category) 
+                ? recipe.data.category 
+                : recipe.data?.category 
+                  ? [recipe.data.category] 
+                  : [];
+              return (
+                <>
+                  {categories.slice(0, 2).map((cat) => (
+                    <Badge key={cat} variant="outline" className="text-xs">
+                      {cat}
+                    </Badge>
+                  ))}
+                  {categories.length > 2 && (
+                    <Badge variant="outline" className="text-xs">
+                      +{categories.length - 2}
+                    </Badge>
+                  )}
+                </>
+              );
+            })()}
           </div>
 
           {/* Bottom Row */}
