@@ -266,12 +266,16 @@ class FirstPartyAnalytics {
     let tracked = false;
     
     // Track after LCP
-    new PerformanceObserver((list) => {
-      if (!tracked) {
-        tracked = true;
-        this.trackPageView();
-      }
-    }).observe({ entryTypes: ['largest-contentful-paint'] });
+    try {
+      new PerformanceObserver((list) => {
+        if (!tracked) {
+          tracked = true;
+          this.trackPageView();
+        }
+      }).observe({ entryTypes: ['largest-contentful-paint'] });
+    } catch {
+      // PerformanceObserver not supported or failed
+    }
 
     // Fallback timeout
     setTimeout(() => {
@@ -284,39 +288,51 @@ class FirstPartyAnalytics {
 
   private setupPerformanceTracking(): void {
     // LCP
-    new PerformanceObserver((list) => {
-      const entries = list.getEntries();
-      const lastEntry = entries[entries.length - 1];
-      this.track({
-        event_type: 'cwv_metric',
-        meta: { metric: 'lcp', value: lastEntry.startTime }
-      });
-    }).observe({ entryTypes: ['largest-contentful-paint'] });
-
-    // CLS
-    let clsValue = 0;
-    new PerformanceObserver((list) => {
-      for (const entry of list.getEntries()) {
-        if (!(entry as any).hadRecentInput) {
-          clsValue += (entry as any).value;
-        }
-      }
-      this.track({
-        event_type: 'cwv_metric',
-        meta: { metric: 'cls', value: clsValue }
-      });
-    }).observe({ entryTypes: ['layout-shift'] });
-
-    // INP (Interaction to Next Paint)
-    new PerformanceObserver((list) => {
-      for (const entry of list.getEntries()) {
-        const inp = (entry as any).processingStart - entry.startTime;
+    try {
+      new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        const lastEntry = entries[entries.length - 1];
         this.track({
           event_type: 'cwv_metric',
-          meta: { metric: 'inp', value: inp }
+          meta: { metric: 'lcp', value: lastEntry.startTime }
         });
-      }
-    }).observe({ entryTypes: ['first-input'] });
+      }).observe({ entryTypes: ['largest-contentful-paint'] });
+    } catch {
+      // Silently fail
+    }
+
+    // CLS
+    try {
+      let clsValue = 0;
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (!(entry as any).hadRecentInput) {
+            clsValue += (entry as any).value;
+          }
+        }
+        this.track({
+          event_type: 'cwv_metric',
+          meta: { metric: 'cls', value: clsValue }
+        });
+      }).observe({ entryTypes: ['layout-shift'] });
+    } catch {
+      // Silently fail
+    }
+
+    // INP (Interaction to Next Paint)
+    try {
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          const inp = (entry as any).processingStart - entry.startTime;
+          this.track({
+            event_type: 'cwv_metric',
+            meta: { metric: 'inp', value: inp }
+          });
+        }
+      }).observe({ entryTypes: ['first-input'] });
+    } catch {
+      // Silently fail
+    }
   }
 
   public track(event: Partial<AnalyticsEvent>): void {
@@ -484,10 +500,16 @@ class FirstPartyAnalytics {
   }
 }
 
-// Create singleton instance
-export const firstPartyAnalytics = typeof window !== 'undefined' 
-  ? new FirstPartyAnalytics() 
-  : null;
+// Create singleton instance - wrapped in try-catch to prevent crashes
+export const firstPartyAnalytics = (() => {
+  if (typeof window === 'undefined') return null;
+  try {
+    return new FirstPartyAnalytics();
+  } catch (e) {
+    console.debug('Analytics initialization failed:', e);
+    return null;
+  }
+})();
 
 // Export convenience functions
 export const trackPageView = (path?: string) => firstPartyAnalytics?.trackPageView(path);

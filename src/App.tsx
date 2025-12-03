@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, Component, ReactNode } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -17,6 +17,14 @@ import MetadataManager from "./components/MetadataManager";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 import RouteCleanupHandler from "./components/RouteCleanupHandler";
 import { lazyWithRetry } from "./components/withChunkErrorBoundary";
+
+// Silent error boundary for analytics - never crashes the app
+class AnalyticsErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  state = { hasError: false };
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch() { /* Silently ignore analytics errors */ }
+  render() { return this.state.hasError ? null : this.props.children; }
+}
 
 // Import Index directly to avoid lazy loading issues on main page
 import Index from "./pages/Index";
@@ -111,8 +119,10 @@ function App() {
       <PerformanceOptimizer />
       <AccessibilityEnhancements />
       <ContentQualityChecker enabled={false} />
-      <SpeedInsights />
-      <Analytics />
+      <AnalyticsErrorBoundary>
+        <SpeedInsights />
+        <Analytics />
+      </AnalyticsErrorBoundary>
       <Toaster />
       <Sonner />
       <OfflineBanner />
