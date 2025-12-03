@@ -99,7 +99,15 @@ export const recipeImageMapping: Record<string, string> = {
   "holiday-star-cinnamon-bread": "/lovable-uploads/d7809864-6aac-432c-98e6-a38878473e1b.png",
   
   // MUFFINS
-  "mandarin-holiday-muffins": "/images/recipes/mandarin-holiday-muffins.jpg"
+  "mandarin-holiday-muffins": "/images/recipes/mandarin-holiday-muffins.jpg",
+  
+  // HOLIDAY/SEASONAL RECIPES
+  "festive-christmas-banana-bread": "/images/recipes/festive-christmas-banana-bread.webp",
+  "festive-christmas-banana-bread-1": "/images/recipes/festive-christmas-banana-bread.webp",
+  "cranberrywalnut-sourdough-2023-driedfruit-version": "/images/recipes/cranberrywalnut-sourdough-2023.webp",
+  "holiday-monkey-bread": "/images/recipes/holiday-monkey-bread.webp",
+  "holiday-cranberrywalnut-sourdough-2024": "/images/recipes/holiday-cranberrywalnut-sourdough-2024.jpg",
+  "north-dakota-caramel-rolls": "/images/recipes/north-dakota-caramel-rolls.webp"
 };
 
 // Fallback images:
@@ -126,7 +134,13 @@ export function getRecipeImage(slug: string, imageUrl?: string | null): string {
     'pumpkin-shaped-sourdough-loaf', 
     'rustic-peach-galette',
     'ultimate-cream-cheese-swirl-pumpkin-bread-6',
-    'mandarin-holiday-muffins'
+    'mandarin-holiday-muffins',
+    'festive-christmas-banana-bread',
+    'festive-christmas-banana-bread-1',
+    'cranberrywalnut-sourdough-2023-driedfruit-version',
+    'holiday-monkey-bread',
+    'holiday-cranberrywalnut-sourdough-2024',
+    'north-dakota-caramel-rolls'
   ];
   
   // If this recipe should ALWAYS use the mapping, return it immediately
