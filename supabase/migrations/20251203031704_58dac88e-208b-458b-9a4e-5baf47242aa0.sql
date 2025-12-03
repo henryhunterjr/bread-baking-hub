@@ -1,0 +1,40 @@
+
+-- Fix staging URLs with working images from recipeImageMapping
+
+UPDATE recipes SET image_url = '/lovable-uploads/bb7c5e63-3ec6-4f3e-9fda-52740b5db7e7.png' WHERE slug = 'apricot-almond-sourdough';
+UPDATE recipes SET image_url = 'https://bakinggreatbread.blog/wp-content/uploads/2025/05/495571415_10235709364576315_7915392766389904392_n.jpg' WHERE slug = 'blueberry-lemon-scones';
+UPDATE recipes SET image_url = '/lovable-uploads/1a0c34fd-69be-42d0-8dc6-1e4cecc5f1ae.png' WHERE slug = 'brioche-hamburger-buns';
+UPDATE recipes SET image_url = '/lovable-uploads/3b52b71d-ce38-4980-9964-91a64f30e26d.png' WHERE slug = 'cheddar-chive-biscuits';
+UPDATE recipes SET image_url = '/lovable-uploads/8c576450-cbf8-47f0-a751-48a4efc4d7d3.png' WHERE slug = 'cherry-vanilla-sourdough';
+UPDATE recipes SET image_url = 'https://bakinggreatbread.blog/wp-content/uploads/2023/10/20200930_191335_compress18.webp' WHERE slug = 'classic-white-sandwich-bread';
+UPDATE recipes SET image_url = 'https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_4433_Original-1.jpg' WHERE slug = 'cranberry-walnut-loaf';
+UPDATE recipes SET image_url = '/lovable-uploads/6eded5fa-0dd5-4b7b-b7fc-108afbc3f96e.png' WHERE slug = 'easter-paska';
+UPDATE recipes SET image_url = '/lovable-uploads/62cdefc6-8b59-4f26-8f61-c7466fdf4fbe.png' WHERE slug = 'fig-walnut-sourdough';
+UPDATE recipes SET image_url = '/lovable-uploads/fa994734-07ee-4234-aa90-3e73a78f6cdd.png' WHERE slug = 'grilled-flatbread-with-toppings';
+UPDATE recipes SET image_url = 'https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_3677.jpg' WHERE slug = 'hanukkah-challah';
+UPDATE recipes SET image_url = 'https://bakinggreatbread.blog/wp-content/uploads/2023/11/IMG_1158_Original-1200x1200-1.webp' WHERE slug = 'henrys-crusty-white-bread';
+UPDATE recipes SET image_url = '/lovable-uploads/d918db3e-65b1-427a-85e4-4d14a0789195.png' WHERE slug = 'honey-oatmeal-bread';
+UPDATE recipes SET image_url = 'https://bakinggreatbread.blog/wp-content/uploads/2024/01/2A65D6F2-40DC-4045-83B6-B4C0A1F82697_Original.jpg' WHERE slug = 'hot-cross-buns';
+UPDATE recipes SET image_url = '/lovable-uploads/92bf5337-70cc-4019-a7a1-4556c35ba5f8.png' WHERE slug = 'jalapeno-cheddar-cornbread';
+UPDATE recipes SET image_url = 'https://bakinggreatbread.blog/wp-content/uploads/2024/11/IMG_8582.webp' WHERE slug = 'japanese-milk-bread';
+UPDATE recipes SET image_url = 'https://bakinggreatbread.blog/wp-content/uploads/2023/08/img_5045.jpg' WHERE slug = 'lemon-thyme-focaccia';
+UPDATE recipes SET image_url = '/lovable-uploads/fd01d2cb-fc25-444f-b935-8125023ad76e.png' WHERE slug = 'light-sourdough-batard';
+UPDATE recipes SET image_url = '/lovable-uploads/bcc3e53d-83a5-4975-b0a2-e75370e9e9c7.png' WHERE slug = 'maple-walnut-sticky-buns';
+UPDATE recipes SET image_url = '/lovable-uploads/6d60ec6e-fa92-4e9e-a544-81b4960cc757.png' WHERE slug = 'multigrain-sandwich-loaf';
+UPDATE recipes SET image_url = '/lovable-uploads/d59937f5-fe00-49e8-8bf2-603d0d3e366e.png' WHERE slug = 'no-knead-white-bread';
+UPDATE recipes SET image_url = '/lovable-uploads/cf118c0c-51d5-44b8-a355-8e2bcb89da47.png' WHERE slug = 'olive-rosemary-focaccia';
+UPDATE recipes SET image_url = '/lovable-uploads/2c4b7075-6963-4ba1-bc31-e2129773be19.png' WHERE slug = 'roasted-garlic-rosemary-sourdough';
+UPDATE recipes SET image_url = '/lovable-uploads/1b1a84b9-ba95-4edc-8e1d-e27d3506d425.png' WHERE slug = 'rosemary-garlic-focaccia';
+UPDATE recipes SET image_url = '/images/recipes/rustic-italian-ciabatta.jpg' WHERE slug = 'rustic-italian-ciabatta';
+UPDATE recipes SET image_url = 'https://bakinggreatbread.blog/wp-content/uploads/2023/06/img_2890.jpg' WHERE slug = 'rye-sourdough-caraway';
+UPDATE recipes SET image_url = '/lovable-uploads/b1f81606-ae96-4033-b3ad-33d3b9cebdd3.png' WHERE slug = 'sourdough-bagels';
+UPDATE recipes SET image_url = '/lovable-uploads/9e4eccd7-3e1c-4647-ad75-0ccaafef3446.png' WHERE slug = 'sourdough-discard-crackers';
+UPDATE recipes SET image_url = '/lovable-uploads/fbe1cde7-a245-4bdf-a3a8-41b97e70baa1.png' WHERE slug = 'sourdough-discard-pancakes';
+UPDATE recipes SET image_url = '/lovable-uploads/5ea300ed-c0be-4247-bba1-b8969f51db23.png' WHERE slug = 'sourdough-english-muffins';
+UPDATE recipes SET image_url = '/lovable-uploads/e8ee634e-98ff-49ea-8716-6eb44d89fd24.png' WHERE slug = 'sourdough-pizza-dough';
+UPDATE recipes SET image_url = '/images/recipes/sourdough-pretzels.jpg' WHERE slug = 'sourdough-pretzels';
+UPDATE recipes SET image_url = '/lovable-uploads/76ed96bc-9d9f-4bf6-9a42-103bd5378240.png' WHERE slug = 'spring-herb-focaccia';
+UPDATE recipes SET image_url = '/images/recipes/stollen.jpg' WHERE slug = 'stollen';
+UPDATE recipes SET image_url = '/lovable-uploads/938a48a4-da57-4b7f-a31f-716a0493f585.png' WHERE slug = 'sun-dried-tomato-feta-bread';
+UPDATE recipes SET image_url = '/lovable-uploads/06971d11-8ec2-417f-8518-8e179926a6f8.png' WHERE slug = 'super-seeded-sourdough-loaf';
+UPDATE recipes SET image_url = '/lovable-uploads/416ed08f-f6a2-455a-a3fd-44e161a2a282.png' WHERE slug = 'wildflower-honey-wheat-bread';
