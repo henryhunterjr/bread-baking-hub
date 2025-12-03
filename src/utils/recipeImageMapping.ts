@@ -32,7 +32,7 @@ export const recipeImageMapping: Record<string, string> = {
   
   // SOURDOUGH ITEMS - Bagels, pretzels, etc.
   "sourdough-bagels": "/lovable-uploads/b1f81606-ae96-4033-b3ad-33d3b9cebdd3.png",
-  "sourdough-pretzels": "https://bakinggreatbread.blog/wp-content/uploads/2024/02/th-14.jpeg",
+  "sourdough-pretzels": "/images/recipes/sourdough-pretzels.jpg",
   "sourdough-discard-crackers": "/lovable-uploads/9e4eccd7-3e1c-4647-ad75-0ccaafef3446.png",
   "sourdough-discard-pancakes": "/lovable-uploads/fbe1cde7-a245-4bdf-a3a8-41b97e70baa1.png",
   "sourdough-english-muffins": "/lovable-uploads/5ea300ed-c0be-4247-bba1-b8969f51db23.png",
@@ -65,7 +65,7 @@ export const recipeImageMapping: Record<string, string> = {
   "henrys-perfect-banana-nut-bread": "/lovable-uploads/bec877a1-0c80-40fe-b8e8-d7ecc9392c6c.png",
   "henrys-perfect-cinnamon-swirl-bread": "/lovable-uploads/43372cab-5967-486d-a367-8f8f7ad9eca9.png",
   "pumpkin-shaped-sourdough-loaf": "https://ojyckskucneljvuqzrsw.supabase.co/storage/v1/object/public/blog-images/2025-08/pumpkin-shaped-sourdough-loaf/harvest-is-near-1200-x-675-px.png",
-  "stollen": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/stollen-1500-58a70c393df78c345b67af14.jpg",
+  "stollen": "/images/recipes/stollen.jpg",
   "mocha-angel-pie": "https://bakinggreatbread.blog/wp-content/uploads/2023/10/d42ac36a6091c134254580b5fdc6fbdb.jpg",
   "cardamom-cinnamon-rolls-yudane": "/lovable-uploads/7baba166-3864-4e61-aacb-d26d3b0db10b.png",
   
@@ -155,7 +155,9 @@ export function getRecipeImage(slug: string, imageUrl?: string | null): string {
     'cinnamonsugar-kuchen-2025-edition',
     'caramelized-onion-gruyere-fougasse',
     'buttermilk-potato-rolls',
-    'rustic-italian-ciabatta'
+    'rustic-italian-ciabatta',
+    'sourdough-pretzels',
+    'stollen'
   ];
   
   // If this recipe should ALWAYS use the mapping, return it immediately
