@@ -63,12 +63,14 @@ export class AppErrorBoundary extends Component<Props, State> {
                   Go to Homepage
                 </Button>
               </div>
-              {process.env.NODE_ENV === 'development' && this.state.error && (
-                <details className="mt-4">
+              {import.meta.env.DEV && this.state.error && (
+                <details className="mt-4" open>
                   <summary className="text-xs text-muted-foreground cursor-pointer">
                     Error Details (Development)
                   </summary>
-                  <pre className="text-xs bg-muted p-2 rounded mt-2 overflow-auto">
+                  <pre className="text-xs bg-muted p-2 rounded mt-2 overflow-auto max-h-48">
+                    {this.state.error.message}
+                    {'\n\n'}
                     {this.state.error.stack}
                   </pre>
                 </details>

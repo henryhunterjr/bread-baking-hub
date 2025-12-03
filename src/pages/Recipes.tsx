@@ -1,4 +1,4 @@
-import { useState, Suspense, lazy } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import Header from "../components/Header";
@@ -169,13 +169,12 @@ const Recipes = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
-              {recipes.map((recipe, index) => {
+            {recipes.map((recipe, index) => {
                 // Insert book section after 6th recipe (index 5) - moved down for better flow
                 if (index === 5) {
                   return (
-                    <>
+                    <React.Fragment key={recipe.id}>
                       <motion.div
-                        key={recipe.id}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.05 * index }}
@@ -224,7 +223,7 @@ const Recipes = () => {
                           </div>
                         </div>
                       </motion.div>
-                    </>
+                    </React.Fragment>
                   );
                 }
                 
