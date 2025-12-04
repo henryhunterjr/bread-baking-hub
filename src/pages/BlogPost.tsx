@@ -283,6 +283,7 @@ const SupabasePostView = ({
                 supabasePost.updated_at,
                 supabasePost.slug
               )}
+              facebookShareUrl={`https://bakinggreatbread.com/api/blog-share?slug=${supabasePost.slug}`}
             />
           </div>
 

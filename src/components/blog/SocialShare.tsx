@@ -16,6 +16,8 @@ interface SocialShareProps {
   image?: string;
   className?: string;
   compact?: boolean;
+  /** For SPAs: provide a server-rendered URL for Facebook that serves proper OG tags */
+  facebookShareUrl?: string;
 }
 
 export const SocialShare = ({ 
@@ -24,7 +26,8 @@ export const SocialShare = ({
   description = '', 
   image = '',
   className = '',
-  compact = false 
+  compact = false,
+  facebookShareUrl
 }: SocialShareProps) => {
   const [copied, setCopied] = useState(false);
 
@@ -34,6 +37,9 @@ export const SocialShare = ({
     description: encodeURIComponent(description),
     image: encodeURIComponent(image)
   };
+
+  // Use facebookShareUrl for Facebook if provided (for server-rendered OG tags)
+  const facebookUrl = facebookShareUrl ? encodeURIComponent(facebookShareUrl) : shareData.url;
 
   const shareLinks = [
     {
@@ -45,7 +51,7 @@ export const SocialShare = ({
     {
       name: 'Facebook',
       icon: Facebook,
-      url: `https://www.facebook.com/sharer/sharer.php?u=${shareData.url}`,
+      url: `https://www.facebook.com/sharer/sharer.php?u=${facebookUrl}`,
       color: 'hover:text-blue-600'
     },
     {
