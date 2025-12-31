@@ -183,6 +183,11 @@ const Header = () => {
                           Legal Information
                         </Link>
                       </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <a href="/year-review-2025/index.html" className="w-full cursor-pointer font-medium text-amber-600">
+                          🎉 2025 Year in Review
+                        </a>
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </NavigationMenuItem>
@@ -314,6 +319,9 @@ const Header = () => {
               <Link to="/legal" className="text-header-foreground hover:text-primary block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
                 Legal Information
               </Link>
+              <a href="/year-review-2025/index.html" className="text-amber-600 hover:text-amber-500 block px-3 py-3 min-h-11 rounded-md text-base font-medium transition-colors" onClick={closeMenu}>
+                🎉 2025 Year in Review
+              </a>
               {user ? (
                 <>
                   <div className="border-t border-border my-2"></div>
