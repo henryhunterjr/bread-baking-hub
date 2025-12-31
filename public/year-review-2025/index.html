@@ -594,41 +594,240 @@
         }
 
         .country-card {
-            background: rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
             padding: 24px;
             border-radius: var(--radius-sm);
             text-align: center;
             transition: var(--transition);
         }
 
+        .country-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.85;
+            z-index: 0;
+            transition: var(--transition);
+        }
+
+        .country-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* USA - Red, White, Blue */
+        .country-card.usa::before {
+            background: linear-gradient(135deg, #3C3B6E 0%, #3C3B6E 40%, #FFFFFF 40%, #FFFFFF 50%, #B22234 50%, #B22234 100%);
+        }
+        
+        /* Canada - Red, White */
+        .country-card.canada::before {
+            background: linear-gradient(135deg, #FF0000 0%, #FF0000 30%, #FFFFFF 30%, #FFFFFF 70%, #FF0000 70%, #FF0000 100%);
+        }
+        
+        /* Malaysia - Red, White, Blue, Yellow */
+        .country-card.malaysia::before {
+            background: linear-gradient(135deg, #010066 0%, #010066 40%, #CC0001 40%, #CC0001 60%, #FFCC00 60%, #FFFFFF 100%);
+        }
+        
+        /* UK - Red, White, Blue */
+        .country-card.uk::before {
+            background: linear-gradient(135deg, #012169 0%, #012169 35%, #FFFFFF 35%, #FFFFFF 45%, #C8102E 45%, #C8102E 55%, #FFFFFF 55%, #FFFFFF 65%, #012169 65%, #012169 100%);
+        }
+        
+        /* Australia - Blue, White, Red */
+        .country-card.australia::before {
+            background: linear-gradient(135deg, #00008B 0%, #00008B 50%, #FFFFFF 50%, #FFFFFF 60%, #FF0000 60%, #FF0000 100%);
+        }
+
         .country-card:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .country-card:hover::before {
+            opacity: 0.95;
         }
 
         .country-flag {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 12px;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
         }
 
         .country-name {
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 4px;
             color: white;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            font-size: 1.1rem;
         }
 
         .country-members {
-            color: var(--honey);
+            color: white;
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
         }
 
         .country-percent {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+            font-weight: 600;
+        }
+
+        /* 3D Globe Container */
+        #globe-container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .globe-3d {
+            width: 320px;
+            height: 320px;
+            margin: 0 auto;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: globeFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes globeFloat {
+            0%, 100% { transform: translateY(0) rotateX(5deg); }
+            50% { transform: translateY(-15px) rotateX(-5deg); }
+        }
+
+        .globe-sphere {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, transparent 40%),
+                radial-gradient(circle at 70% 60%, rgba(0,0,0,0.2) 0%, transparent 50%),
+                linear-gradient(145deg, #4A90D9 0%, #2E5A8A 30%, #1E3A5F 60%, #0D2137 100%);
+            box-shadow: 
+                inset -30px -30px 60px rgba(0,0,0,0.4),
+                inset 20px 20px 40px rgba(255,255,255,0.1),
+                0 0 80px rgba(74, 144, 217, 0.3),
+                0 20px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+            animation: globeRotate 20s linear infinite;
+        }
+
+        @keyframes globeRotate {
+            0% { background-position: 0 0, 0 0, 0 0; }
+            100% { background-position: 200px 0, 0 0, 0 0; }
+        }
+
+        /* Continents overlay */
+        .globe-continents {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: 
+                radial-gradient(ellipse 25% 20% at 25% 35%, #5D8C4A 0%, transparent 100%),
+                radial-gradient(ellipse 35% 25% at 65% 40%, #5D8C4A 0%, transparent 100%),
+                radial-gradient(ellipse 20% 15% at 75% 65%, #6B9E56 0%, transparent 100%),
+                radial-gradient(ellipse 15% 25% at 30% 70%, #4A7A3A 0%, transparent 100%),
+                radial-gradient(ellipse 10% 8% at 50% 55%, #7AAD66 0%, transparent 100%);
+            opacity: 0.7;
+            animation: continentsMove 30s linear infinite;
+        }
+
+        @keyframes continentsMove {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        /* Atmosphere glow */
+        .globe-atmosphere {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, transparent 60%, rgba(100, 180, 255, 0.15) 80%, rgba(100, 180, 255, 0.3) 100%);
+            pointer-events: none;
+        }
+
+        /* Orbiting satellites */
+        .orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 2px dashed rgba(232, 168, 56, 0.4);
+            border-radius: 50%;
+            animation: orbitSpin 15s linear infinite;
+        }
+
+        .orbit-ring-1 {
+            width: 380px;
+            height: 380px;
+            margin: -190px 0 0 -190px;
+        }
+
+        .orbit-ring-2 {
+            width: 420px;
+            height: 420px;
+            margin: -210px 0 0 -210px;
+            animation-duration: 20s;
+            animation-direction: reverse;
+            border-color: rgba(212, 165, 116, 0.3);
+        }
+
+        @keyframes orbitSpin {
+            0% { transform: rotateX(60deg) rotateZ(0deg); }
+            100% { transform: rotateX(60deg) rotateZ(360deg); }
+        }
+
+        .orbit-dot {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: linear-gradient(135deg, var(--honey) 0%, var(--honey-glow) 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--honey), 0 0 40px rgba(232, 168, 56, 0.5);
+        }
+
+        .globe-stat-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .globe-stat-overlay .number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            line-height: 1;
+        }
+
+        .globe-stat-overlay .label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            margin-top: 8px;
         }
 
         /* === SUNDAY FUNDAY === */
@@ -1803,103 +2002,55 @@
                 <p>50+ countries. Six continents. One love of bread.</p>
             </div>
             
-            <div class="globe-visual fade-up" style="display: flex; justify-content: center; align-items: center; padding: 60px 0;">
-                <div style="position: relative; width: 300px; height: 300px;">
-                    <!-- Outer spinning ring -->
-                    <div style="
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                        border: 3px solid rgba(232, 168, 56, 0.3);
-                        border-radius: 50%;
-                        animation: spinRing 15s linear infinite;
-                    "></div>
-                    <div style="
-                        position: absolute;
-                        top: 10px;
-                        left: 10px;
-                        right: 10px;
-                        bottom: 10px;
-                        border: 2px dashed rgba(212, 165, 116, 0.4);
-                        border-radius: 50%;
-                        animation: spinRing 20s linear infinite reverse;
-                    "></div>
-                    <!-- Globe body -->
-                    <div style="
-                        position: absolute;
-                        top: 30px;
-                        left: 30px;
-                        right: 30px;
-                        bottom: 30px;
-                        border-radius: 50%;
-                        background: linear-gradient(145deg, #E8C9A0 0%, #D4A574 50%, #B8956A 100%);
-                        box-shadow: 
-                            inset -15px -15px 30px rgba(0,0,0,0.2),
-                            inset 15px 15px 30px rgba(255,255,255,0.2),
-                            0 10px 40px rgba(0,0,0,0.3);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        flex-direction: column;
-                    ">
-                        <div style="font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 700; color: white; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); line-height: 1;">50+</div>
-                        <div style="font-size: 1rem; text-transform: uppercase; letter-spacing: 4px; color: white; text-shadow: 1px 1px 4px rgba(0,0,0,0.3); margin-top: 8px;">Countries</div>
+            <!-- 3D Globe -->
+            <div id="globe-container" class="fade-up">
+                <div class="globe-3d">
+                    <!-- Orbit rings -->
+                    <div class="orbit-ring orbit-ring-1"></div>
+                    <div class="orbit-ring orbit-ring-2"></div>
+                    
+                    <!-- Main globe -->
+                    <div class="globe-sphere">
+                        <div class="globe-continents"></div>
                     </div>
-                    <!-- Orbiting dots -->
-                    <div class="orbit-dot" style="
-                        position: absolute;
-                        width: 12px;
-                        height: 12px;
-                        background: var(--honey);
-                        border-radius: 50%;
-                        top: 0;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        box-shadow: 0 0 10px var(--honey);
-                        animation: orbitDot 15s linear infinite;
-                    "></div>
+                    
+                    <!-- Atmosphere glow -->
+                    <div class="globe-atmosphere"></div>
+                    
+                    <!-- Center stat -->
+                    <div class="globe-stat-overlay">
+                        <div class="number">50+</div>
+                        <div class="label">Countries</div>
+                    </div>
                 </div>
             </div>
             
-            <style>
-                @keyframes spinRing {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-                @keyframes orbitDot {
-                    0% { transform: rotate(0deg) translateX(150px) rotate(0deg); }
-                    100% { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
-                }
-            </style>
-            
             <div class="country-cards">
-                <div class="country-card fade-up stagger-1">
+                <div class="country-card usa fade-up stagger-1">
                     <div class="country-flag">🇺🇸</div>
                     <div class="country-name">United States</div>
                     <div class="country-members">21,310</div>
                     <div class="country-percent">56.1%</div>
                 </div>
-                <div class="country-card fade-up stagger-2">
+                <div class="country-card canada fade-up stagger-2">
                     <div class="country-flag">🇨🇦</div>
                     <div class="country-name">Canada</div>
                     <div class="country-members">2,316</div>
                     <div class="country-percent">6.1%</div>
                 </div>
-                <div class="country-card fade-up stagger-3">
+                <div class="country-card malaysia fade-up stagger-3">
                     <div class="country-flag">🇲🇾</div>
                     <div class="country-name">Malaysia</div>
                     <div class="country-members">1,669</div>
                     <div class="country-percent">4.4%</div>
                 </div>
-                <div class="country-card fade-up stagger-4">
+                <div class="country-card uk fade-up stagger-4">
                     <div class="country-flag">🇬🇧</div>
                     <div class="country-name">United Kingdom</div>
                     <div class="country-members">1,460</div>
                     <div class="country-percent">3.8%</div>
                 </div>
-                <div class="country-card fade-up stagger-5">
+                <div class="country-card australia fade-up stagger-5">
                     <div class="country-flag">🇦🇺</div>
                     <div class="country-name">Australia</div>
                     <div class="country-members">1,423</div>
