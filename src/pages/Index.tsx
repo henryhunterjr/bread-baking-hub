@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
+import YearReviewBanner from "../components/YearReviewBanner";
+const YearReviewSection = lazy(() => import("../components/YearReviewSection"));
 const SocialProofBanner = lazy(() => import("../components/SocialProofBanner").then(m => ({ default: m.SocialProofBanner })));
 const Testimonials = lazy(() => import("../components/Testimonials").then(m => ({ default: m.Testimonials })));
 const AboutHenry = lazy(() => import("../components/AboutHenry"));
@@ -152,6 +154,7 @@ const Index = () => {
       </Helmet>
       
     <div className="bg-background text-foreground">
+      <YearReviewBanner />
       <Header />
       <nav aria-label="Main navigation" className="sr-only">
         <ul>
@@ -163,6 +166,9 @@ const Index = () => {
       <main id="main-content" role="main" tabIndex={-1}>
         <ImagePreloader images={CRITICAL_IMAGES} />
         <HeroSection />
+        <Suspense fallback={null}>
+          <YearReviewSection />
+        </Suspense>
         <Suspense fallback={null}>
           <SocialProofBanner />
         </Suspense>

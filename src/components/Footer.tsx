@@ -56,6 +56,7 @@ const Footer = () => {
               <li><Link to="/challenges" className="text-muted-foreground hover:text-primary transition-colors">Monthly Challenges</Link></li>
               <li><Link to="/coaching" className="text-muted-foreground hover:text-primary transition-colors">Personal Coaching</Link></li>
               <li><Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">Contact Henry</Link></li>
+              <li><a href="/year-review-2025/index.html" className="text-amber-500 hover:text-amber-400 transition-colors font-medium">🎉 2025 Year in Review</a></li>
             </ul>
           </div>
           
