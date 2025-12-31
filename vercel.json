@@ -36,7 +36,11 @@
       ]
     },
     {
-      "source": "/((?!api/).*)",
+      "source": "/2025-review",
+      "destination": "/year-review-2025/index.html"
+    },
+    {
+      "source": "/((?!api/|year-review-2025/).*)",
       "destination": "/index.html"
     }
   ],

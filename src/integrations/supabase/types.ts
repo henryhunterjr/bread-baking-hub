@@ -2145,18 +2145,6 @@ export type Database = {
           }
       search_recipes:
         | {
-            Args: { limit_count?: number; search_query: string }
-            Returns: {
-              excerpt: string
-              id: string
-              image_url: string
-              search_rank: number
-              slug: string
-              tags: string[]
-              title: string
-            }[]
-          }
-        | {
             Args: {
               dietary_filters?: string[]
               difficulty_filter?: string
@@ -2177,6 +2165,18 @@ export type Database = {
               tags: string[]
               title: string
               user_id: string
+            }[]
+          }
+        | {
+            Args: { limit_count?: number; search_query: string }
+            Returns: {
+              excerpt: string
+              id: string
+              image_url: string
+              search_rank: number
+              slug: string
+              tags: string[]
+              title: string
             }[]
           }
       search_site_content: {
