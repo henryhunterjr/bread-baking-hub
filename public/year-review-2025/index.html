@@ -684,6 +684,42 @@
             font-weight: 600;
         }
 
+        /* Moderator Badges with hover effects */
+        .moderator-badge {
+            background: var(--cream-dark);
+            color: var(--crust);
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: default;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .moderator-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(232, 168, 56, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .moderator-badge:hover {
+            background: var(--wheat);
+            color: var(--crust-dark);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(212, 165, 116, 0.4);
+        }
+
+        .moderator-badge:hover::before {
+            left: 100%;
+        }
+
         /* 3D Globe Container */
         #globe-container {
             width: 100%;
@@ -2450,12 +2486,14 @@
                 <div>
                     <p style="text-align: center; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: #888; margin-bottom: 12px; font-weight: 600;">Moderators</p>
                     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 800px; margin: 0 auto;">
-                        <div style="background: var(--cream-dark); color: var(--crust); padding: 10px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">Marsha Pope</div>
-                        <div style="background: var(--cream-dark); color: var(--crust); padding: 10px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">Moe Mastrapasqua</div>
-                        <div style="background: var(--cream-dark); color: var(--crust); padding: 10px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">Adam Sellers</div>
-                        <div style="background: var(--cream-dark); color: var(--crust); padding: 10px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">Steve Schwartz</div>
-                        <div style="background: var(--cream-dark); color: var(--crust); padding: 10px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">Kathy Judd</div>
-                        <div style="background: var(--cream-dark); color: var(--crust); padding: 10px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">Martin Drazen</div>
+                        <div class="moderator-badge">Marsha Pope</div>
+                        <div class="moderator-badge">Moe Mastrapasqua</div>
+                        <div class="moderator-badge">Adam Sellers</div>
+                        <div class="moderator-badge">Steve Schwartz</div>
+                        <div class="moderator-badge">Kathy Judd</div>
+                        <div class="moderator-badge">Martin Drazen</div>
+                        <div class="moderator-badge">Ted Machart</div>
+                        <div class="moderator-badge">Angela Amoroso</div>
                     </div>
                 </div>
                 
@@ -2572,6 +2610,7 @@
             <p><strong>Baking Great Bread at Home</strong></p>
             <p>Founded 2019 | <a href="https://bakinggreatbread.blog" target="_blank">bakinggreatbread.blog</a></p>
             <p class="footer-tagline">"Real Bread for the Rest of Us"</p>
+            <p style="margin-top: 20px; font-size: 0.85rem; color: rgba(255,255,255,0.6);">© 2025 Henry Hunter · Baking Great Bread at Home</p>
         </div>
     </footer>
 
