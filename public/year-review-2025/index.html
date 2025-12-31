@@ -97,6 +97,254 @@
             .node-left { left: -16px; }
         }
 
+        /* === TESTIMONIAL CAROUSEL === */
+        .testimonial-carousel {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .testimonial-slides {
+            position: relative;
+            min-height: 280px;
+            overflow: hidden;
+        }
+
+        .testimonial-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.7s ease-in-out, visibility 0.7s ease-in-out;
+        }
+
+        .testimonial-slide.active {
+            position: relative;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .testimonial-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .testimonial-avatar {
+            flex-shrink: 0;
+        }
+
+        .testimonial-avatar img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--wheat);
+            box-shadow: 0 4px 12px rgba(109, 76, 65, 0.15);
+        }
+
+        .avatar-placeholder {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--wheat-light) 0%, var(--wheat) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--wheat);
+            box-shadow: 0 4px 12px rgba(109, 76, 65, 0.15);
+        }
+
+        .avatar-placeholder i {
+            font-size: 32px;
+            color: var(--white);
+        }
+
+        .testimonial-text {
+            flex: 1;
+        }
+
+        .testimonial-text h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--crust);
+            margin-bottom: 6px;
+        }
+
+        .testimonial-category {
+            display: inline-block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--white);
+            background: var(--wheat);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .testimonial-text blockquote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-style: italic;
+            line-height: 1.7;
+            color: #555;
+            margin: 0;
+            position: relative;
+        }
+
+        .testimonial-text blockquote::before {
+            content: '"';
+            font-size: 3rem;
+            position: absolute;
+            top: -10px;
+            left: -20px;
+            color: var(--wheat-light);
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+            opacity: 0.5;
+        }
+
+        /* Navigation Arrows */
+        .testimonial-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border: none;
+            border-radius: 50%;
+            background: var(--white);
+            color: var(--crust);
+            cursor: pointer;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .testimonial-nav:hover {
+            background: var(--wheat);
+            color: var(--white);
+            box-shadow: var(--shadow-medium);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .testimonial-prev {
+            left: 0;
+        }
+
+        .testimonial-next {
+            right: 0;
+        }
+
+        /* Dot Indicators */
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .testimonial-dot {
+            width: 10px;
+            height: 10px;
+            border: none;
+            border-radius: 50%;
+            background: var(--wheat-light);
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 0;
+        }
+
+        .testimonial-dot:hover {
+            background: var(--wheat);
+            transform: scale(1.2);
+        }
+
+        .testimonial-dot.active {
+            background: var(--crust);
+            transform: scale(1.2);
+        }
+
+        /* Responsive Testimonial Carousel */
+        @media (max-width: 768px) {
+            .testimonial-carousel {
+                padding: 0 40px;
+            }
+
+            .testimonial-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 30px 24px;
+            }
+
+            .testimonial-text blockquote::before {
+                left: 50%;
+                transform: translateX(-50%);
+                top: -20px;
+            }
+
+            .testimonial-nav {
+                width: 36px;
+                height: 36px;
+            }
+
+            .testimonial-slides {
+                min-height: 350px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .testimonial-carousel {
+                padding: 0 12px;
+            }
+
+            .testimonial-nav {
+                width: 32px;
+                height: 32px;
+                font-size: 0.8rem;
+            }
+
+            .testimonial-prev {
+                left: -4px;
+            }
+
+            .testimonial-next {
+                right: -4px;
+            }
+
+            .avatar-placeholder,
+            .testimonial-avatar img {
+                width: 70px;
+                height: 70px;
+            }
+
+            .avatar-placeholder i {
+                font-size: 24px;
+            }
+
+            .testimonial-content {
+                padding: 24px 16px;
+            }
+
+            .testimonial-slides {
+                min-height: 400px;
+            }
+        }
+
         /* === ANIMATIONS === */
         .fade-up { 
             opacity: 0; 
@@ -2433,6 +2681,258 @@
         </div>
     </section>
 
+    <!-- TESTIMONIAL CAROUSEL -->
+    <section id="testimonials" style="background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);">
+        <div class="container">
+            <div class="section-header fade-up">
+                <span class="overline">In Your Words</span>
+                <h2>What Our Bakers Say</h2>
+                <p>Real stories from real bakers in our community.</p>
+            </div>
+            
+            <div class="testimonial-carousel fade-up" role="region" aria-label="Testimonials carousel" aria-roledescription="carousel">
+                <div class="testimonial-slides" id="testimonialSlides">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-slide active" role="group" aria-roledescription="slide" aria-label="1 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Jami Steiger</h4>
+                                <span class="testimonial-category">Learning &amp; Transformation</span>
+                                <blockquote>"I have learned so much from you. You are the best!"</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="2 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Bern Lee</h4>
+                                <span class="testimonial-category">Community Leadership &amp; Gratitude</span>
+                                <blockquote>"You have given years of dedication to hosting this group. Your generosity, guidance, and steady presence have made you an inspiration, an educator, and a faithful friend to so many of us. The knowledge you shared and the community you nurtured will continue to matter. Your kindness and impact are truly appreciated."</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="3 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Sharon Stubbs</h4>
+                                <span class="testimonial-category">Recipe Quality &amp; Value</span>
+                                <blockquote>"Your recipes never disappoint. Every single one turns out perfectly!"</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 4 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="4 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Larry Christl Wagner</h4>
+                                <span class="testimonial-category">Learning &amp; Growth</span>
+                                <blockquote>"Picked up SO much this year from Baking Great Bread at Home!"</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 5 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="5 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Mike Morrell</h4>
+                                <span class="testimonial-category">Expertise &amp; Guidance</span>
+                                <blockquote>"Thank you for all of your sage advice too!"</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 6 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="6 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Insay Guanzon</h4>
+                                <span class="testimonial-category">Community Impact</span>
+                                <blockquote>"Thanks for spreading baking knowledge and helping our community grow."</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 7 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="7 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Bernadette Gomms</h4>
+                                <span class="testimonial-category">Year-Long Engagement</span>
+                                <blockquote>"Thank you for a wonderful year of baking and sharing!"</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 8 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="8 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Tina Weidner</h4>
+                                <span class="testimonial-category">Trust &amp; Appreciation</span>
+                                <blockquote>"Thank you for all you do and this great site."</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 9 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="9 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Allison Quaglia Micciche</h4>
+                                <span class="testimonial-category">Support &amp; Guidance</span>
+                                <blockquote>"Thank you for all the guidance and support to all of us!"</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 10 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="10 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Eric Dobis</h4>
+                                <span class="testimonial-category">Instruction &amp; Expertise</span>
+                                <blockquote>"You are the best Baking Instructor I have ever had!"</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 11 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="11 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Shirley Glenn Suttle</h4>
+                                <span class="testimonial-category">Transformation &amp; Magic</span>
+                                <blockquote>"Henry Hunter is my magic! The Ultimate Dinner Rolls are out of this world!"</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 12 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="12 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Tracy Havlik</h4>
+                                <span class="testimonial-category">Community Connection</span>
+                                <blockquote>"If you haven't joined us for a bake along, you really are missing out on an amazing opportunity to learn something new, improve your skills, share great ideas and enjoy baking with some of the best bakers you'll ever meet."</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 13 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="13 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Kristie G Pickering</h4>
+                                <span class="testimonial-category">Success Stories</span>
+                                <blockquote>"First attempt at sourdough, using the classic recipe and it turned out perfect!"</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 14 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="14 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Renee Williams Mikulin</h4>
+                                <span class="testimonial-category">Recipe Results</span>
+                                <blockquote>"I followed the recipe exactly, baked on steel and got excellent results!"</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 15 -->
+                    <div class="testimonial-slide" role="group" aria-roledescription="slide" aria-label="15 of 15">
+                        <div class="testimonial-content">
+                            <div class="testimonial-avatar">
+                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                            </div>
+                            <div class="testimonial-text">
+                                <h4>Julie Reis</h4>
+                                <span class="testimonial-category">Product Quality</span>
+                                <blockquote>"I read the book. Love how it's organized and the photos!"</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Arrows -->
+                <button class="testimonial-nav testimonial-prev" aria-label="Previous testimonial" id="testimonialPrev">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="testimonial-nav testimonial-next" aria-label="Next testimonial" id="testimonialNext">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                
+                <!-- Dot Indicators -->
+                <div class="testimonial-dots" role="tablist" aria-label="Testimonial navigation">
+                    <button class="testimonial-dot active" role="tab" aria-selected="true" aria-label="Go to testimonial 1" data-index="0"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 2" data-index="1"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 3" data-index="2"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 4" data-index="3"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 5" data-index="4"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 6" data-index="5"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 7" data-index="6"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 8" data-index="7"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 9" data-index="8"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 10" data-index="9"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 11" data-index="10"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 12" data-index="11"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 13" data-index="12"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 14" data-index="13"></button>
+                    <button class="testimonial-dot" role="tab" aria-selected="false" aria-label="Go to testimonial 15" data-index="14"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- FOUNDER STORY -->
     <section id="founder">
         <div class="container">
@@ -2904,6 +3404,100 @@
                 }
             });
         });
+
+        // === TESTIMONIAL CAROUSEL ===
+        (function() {
+            const slides = document.querySelectorAll('.testimonial-slide');
+            const dots = document.querySelectorAll('.testimonial-dot');
+            const prevBtn = document.getElementById('testimonialPrev');
+            const nextBtn = document.getElementById('testimonialNext');
+            const carousel = document.querySelector('.testimonial-carousel');
+            
+            if (!slides.length) return;
+            
+            let currentIndex = 0;
+            let autoRotateInterval;
+            const AUTO_ROTATE_DELAY = 7000; // 7 seconds
+            
+            function showSlide(index) {
+                // Handle looping
+                if (index >= slides.length) index = 0;
+                if (index < 0) index = slides.length - 1;
+                
+                currentIndex = index;
+                
+                // Update slides
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+                
+                // Update dots
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                    dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+                });
+            }
+            
+            function nextSlide() {
+                showSlide(currentIndex + 1);
+            }
+            
+            function prevSlide() {
+                showSlide(currentIndex - 1);
+            }
+            
+            function startAutoRotate() {
+                stopAutoRotate();
+                autoRotateInterval = setInterval(nextSlide, AUTO_ROTATE_DELAY);
+            }
+            
+            function stopAutoRotate() {
+                if (autoRotateInterval) {
+                    clearInterval(autoRotateInterval);
+                    autoRotateInterval = null;
+                }
+            }
+            
+            // Navigation button events
+            prevBtn?.addEventListener('click', () => {
+                prevSlide();
+                startAutoRotate(); // Reset timer after manual navigation
+            });
+            
+            nextBtn?.addEventListener('click', () => {
+                nextSlide();
+                startAutoRotate(); // Reset timer after manual navigation
+            });
+            
+            // Dot click events
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', () => {
+                    showSlide(i);
+                    startAutoRotate(); // Reset timer after manual navigation
+                });
+            });
+            
+            // Pause on hover
+            carousel?.addEventListener('mouseenter', stopAutoRotate);
+            carousel?.addEventListener('mouseleave', startAutoRotate);
+            
+            // Keyboard navigation
+            carousel?.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                    startAutoRotate();
+                } else if (e.key === 'ArrowRight') {
+                    nextSlide();
+                    startAutoRotate();
+                }
+            });
+            
+            // Make carousel focusable for keyboard navigation
+            carousel?.setAttribute('tabindex', '0');
+            
+            // Start auto-rotate
+            startAutoRotate();
+        })();
 
     </script>
 </body>
