@@ -90,6 +90,15 @@
         }
         .scale-in.visible { opacity: 1; transform: scale(1); }
 
+        /* === MEDIA CARDS HOVER === */
+        #explore-media .fade-up:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        #explore-media .fade-up a:hover > div:last-child {
+            opacity: 1 !important;
+        }
+
         .stagger-1 { transition-delay: 0.1s; }
         .stagger-2 { transition-delay: 0.2s; }
         .stagger-3 { transition-delay: 0.3s; }
@@ -2580,6 +2589,86 @@
             </div>
             
             <p class="flywheel-tagline fade-up">"High-value content empowers peer leadership, which fosters engagement, drives growth, and inspires new leaders to emerge."</p>
+        </div>
+    </section>
+
+    <!-- EXPLORE MORE MEDIA -->
+    <section id="explore-media" style="background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%); padding: 80px 0;">
+        <div class="container">
+            <div class="section-header fade-up">
+                <span class="overline">Explore More</span>
+                <h2>Experience the Story</h2>
+                <p>Dive deeper with our video presentation, podcast discussion, and infographic summary.</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: 50px;">
+                
+                <!-- Video Presentation Card -->
+                <div class="fade-up" style="background: rgba(255,255,255,0.05); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease;">
+                    <div style="position: relative; padding-top: 56.25%; background: #000;">
+                        <iframe 
+                            src="https://drive.google.com/file/d/1nu9YS46uieO4HJshewO1TxBXDq-Ads_F/preview" 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                            allow="autoplay; encrypted-media"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div style="padding: 24px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <i class="fa-solid fa-video" style="color: #D97706; font-size: 1.2rem;"></i>
+                            <span style="color: #D97706; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Video Presentation</span>
+                        </div>
+                        <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 8px;">Year in Review: The Full Story</h3>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.6;">Watch our comprehensive video walkthrough of the community's incredible 2025 journey.</p>
+                    </div>
+                </div>
+                
+                <!-- Podcast Card -->
+                <div class="fade-up" style="background: rgba(255,255,255,0.05); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease;">
+                    <div style="position: relative; padding-top: 56.25%; background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%); display: flex; align-items: center; justify-content: center;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                            <i class="fa-solid fa-podcast" style="font-size: 4rem; color: #D97706; margin-bottom: 15px; display: block;"></i>
+                            <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Audio Discussion</span>
+                        </div>
+                    </div>
+                    <div style="padding: 24px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <i class="fa-solid fa-microphone" style="color: #D97706; font-size: 1.2rem;"></i>
+                            <span style="color: #D97706; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Podcast Episode</span>
+                        </div>
+                        <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 8px;">Two-Person Deep Dive</h3>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">Listen to our hosts discuss the highlights, challenges, and victories of 2025.</p>
+                        <audio controls style="width: 100%; height: 40px;">
+                            <source src="https://drive.google.com/uc?export=download&id=15wm7GFGiqC3vVJgSrEeSn3E1bWzdpwip" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <a href="https://drive.google.com/file/d/15wm7GFGiqC3vVJgSrEeSn3E1bWzdpwip/view" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; color: #D97706; font-size: 0.9rem; margin-top: 12px; text-decoration: none;">
+                            <i class="fa-solid fa-external-link"></i> Open in Google Drive
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Infographic Card -->
+                <div class="fade-up" style="background: rgba(255,255,255,0.05); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease;">
+                    <a href="images/infographic-2025.png" target="_blank" style="display: block; position: relative;">
+                        <img src="images/infographic-2025.png" alt="2025 Year in Review Infographic" style="width: 100%; height: auto; display: block;">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;">
+                            <span style="color: #fff; font-size: 1rem; background: rgba(217,119,6,0.9); padding: 10px 20px; border-radius: 25px;">
+                                <i class="fa-solid fa-expand"></i> View Full Size
+                            </span>
+                        </div>
+                    </a>
+                    <div style="padding: 24px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <i class="fa-solid fa-image" style="color: #D97706; font-size: 1.2rem;"></i>
+                            <span style="color: #D97706; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Infographic</span>
+                        </div>
+                        <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 8px;">Visual Summary</h3>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.6;">A beautiful visual overview of our community-powered growth story.</p>
+                    </div>
+                </div>
+                
+            </div>
         </div>
     </section>
 
