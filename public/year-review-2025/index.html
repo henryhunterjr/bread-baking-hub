@@ -39,7 +39,7 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
 
         body {
             font-family: 'Source Sans 3', sans-serif;
@@ -47,6 +47,7 @@
             color: var(--charcoal);
             line-height: 1.7;
             overflow-x: hidden;
+            max-width: 100%;
             font-size: 17px;
         }
 
@@ -60,6 +61,24 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         section { padding: 120px 0; position: relative; }
         a { text-decoration: none; color: inherit; transition: var(--transition); }
+
+        /* Mobile stability: prevent horizontal "swimming" */
+        @media (max-width: 640px) {
+            .container { padding: 0 16px; }
+            section { padding: 80px 0; }
+
+            #globe-container { height: 340px; }
+            .globe-3d { width: 260px; height: 260px; }
+            .orbit-ring-1 { width: 320px; height: 320px; margin: -160px 0 0 -160px; }
+            .orbit-ring-2 { width: 360px; height: 360px; margin: -180px 0 0 -180px; }
+
+            .flywheel-container {
+                width: min(400px, calc(100vw - 32px));
+                height: min(400px, calc(100vw - 32px));
+            }
+            .node-right { right: -16px; }
+            .node-left { left: -16px; }
+        }
 
         /* === ANIMATIONS === */
         .fade-up { 
