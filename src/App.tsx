@@ -107,6 +107,12 @@ const ShareRedirect = () => {
   return <div>Redirecting to share...</div>;
 };
 
+// Year in Review pretty URL redirect
+const YearInReviewRedirect = () => {
+  window.location.href = '/year-review-2025/index.html';
+  return <div>Redirecting to 2025 Year in Review...</div>;
+};
+
 // Recipe redirect component for backward compatibility
 const RecipeRedirect = () => {
   const { slug } = useParams<{ slug: string }>();
